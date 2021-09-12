@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="imgs/icon.png" type="image/jpg">
-    <title>Register</title>
+    <title>dagama</title>
 </head>
 <body>
   <main>    
