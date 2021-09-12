@@ -9,7 +9,7 @@
 </head>
 <body>
   <main>    
-    <form action="mar.php" method="POST">
+    <form action="./mar.php" method="POST">
       <label for="email">Email: <input type="email" required></label>
       <br>
       <label for="password">Password:<input type="password" required></label>
