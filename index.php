@@ -18,7 +18,7 @@
   <script>
       const url='https://dagama.herokuapp.com'
       //const url='localhost:8080'
-      const button=document.getElementsById('register').onclick=()=>{
+      const button=document.getElementById('register').onclick=()=>{
         window.location.href(`${url}/register.php`)
       }
   </script>
