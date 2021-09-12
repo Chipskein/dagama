@@ -8,15 +8,14 @@
     <title>Register</title>
 </head>
 <body>
-  <main class="container">
-    <article>
-    <label for="email">Email: <input type="email"></label>
-    <label for="password">Password:<input type="password"></label>
-    <br>
-    <button id='login'>login</button>
-    <br>
-    <button id='register'>register</button>
-    </article>           
+  <main>    
+    <form action="mar.php" method="post">
+      <label for="email">Email: <input type="email"></label>
+      <label for="password">Password:<input type="password"></label>
+      <br>
+      <button id='login' type="submit">login</button>
+      <button id='register'>register</button>
+    </form>
   </main>
   <script>
       const url='https://dagama.herokuapp.com';
