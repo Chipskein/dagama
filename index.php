@@ -10,9 +10,9 @@
 <body>
   <main>    
     <form action="mar.php" method="POST">
-      <label for="email">Email: <input type="email"></label>
+      <label for="email">Email: <input type="email" required></label>
       <br>
-      <label for="password">Password:<input type="password"></label>
+      <label for="password">Password:<input type="password" required></label>
       <br>
       <button id='login' type="submit">login</button>
     </form>
