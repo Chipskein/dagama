@@ -287,9 +287,9 @@
         <label for="banner">
           Select image to upload:<input type="file" name="banner" id="banner">
         </label>
+        <br>
         <button type="submit">Submit</button>
       </form>
-      
     </article>           
   </main>
 </body>
