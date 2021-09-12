@@ -9,17 +9,6 @@
 </head>
 <body>
     <main class="container">
-          <nav>
-            <ul>
-              <li><a href="#" class="secondary">...</a></li>
-            </ul>
-            <ul>
-              <li id="logo"><img src="imgs/site.png" alt="logo da empresa"></li>
-            </ul>
-            <ul>
-              <li><a href="#" class="secondary">...</a></li>
-            </ul>
-          </nav>
           <article>
             <form action="/test.php" method="POST">
                 
