@@ -11,26 +11,26 @@
   <main class="container">
     <article>
       <form action="validar.php" method="POST">
-        <label for="complete_name">
-          Complete Name:<input type="text" id="complete_name" name="complete_name" placeholder="Complete name" required>
+        <label for="email">
+          Email:<input type="email" id="email" name="email" placeholder="email@example.com" required>
         </label>
         <br>
-        <label for="cpf">
-          CPF:<input type="text" id="cpf" name="cpf" placeholder="CPF/cpnj" required>
+        <label for="username">
+          Username:<input type="text" id="username" name="username" required>
         </label>
         <br>
         <label for="password">
           Password:<input type="password" id="password" name="password" placeholder="password" required>
         </label>
         <br>
-        <label for="state">
+        <label for="confirm passowrd">
           Confirm Password:<input type="password" id="confirm_password" name="confirm_password" placeholder="confirm password" required>
         </label>
          <br>
-        <label for="email">
-          Email address:<input type="email" id="email" name="email" placeholder="Email address" required>
+        <label for="birth date">
+          Birth Date:<input type="date" id="date" name="date" required>
         </label>
-        <br>
+         <br>
         <label for="country">
           <select id="country" name="country">
             <option value="Afghanistan">Afghanistan</option>
@@ -280,14 +280,6 @@
           </select>
         </label>
         <br>
-        <label for="state">
-          state/province/region:<input type="text" id="state" name="state" placeholder="state" required>
-        </label>
-        <br>
-        <label for="city">
-          city:<input type="text" id="city" name="city" placeholder="city" required>
-        </label>
-         <br>
         <button type="submit">Submit</button>
       </form>
     </article>           
