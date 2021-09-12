@@ -16,11 +16,11 @@
     </article>           
   </main>
   <script>
-      const url='https://dagama.herokuapp.com'
-      //const url='localhost:8080'
+      const url='https://dagama.herokuapp.com';
+      //const url='localhost:8080';
       const button=document.getElementById('register').onclick=()=>{
-        window.location.href(`${url}/register.php`)
-      }
+        window.location.href=`${url}/register.php`;
+      };
   </script>
 </body>
 </html>
