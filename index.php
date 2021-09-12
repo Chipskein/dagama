@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="framework-css/css/pico.css">
-    <link rel="stylesheet" href="framework-css/css/corrections_s.css">
+    <link rel="icon" href="imgs/icon.png" type="image/jpg">
     <title>Register</title>
 </head>
 <body>
@@ -23,9 +22,7 @@
           </nav>
           <article>
             <form action="/test.php" method="POST">
-                <!-- Grid -->
-                <div class="grid">
-                  <!-- Markup example 1: input is inside label -->
+                
                   <label for="complete_name">
                     Complete Name
                     <input type="text" id="complete_name" name="complete_name" placeholder="Complete name" required>
@@ -35,8 +32,7 @@
                     CPF
                     <input type="text" id="cpf" name="cpf" placeholder="CPF/cpnj" required>
                   </label>
-                </div>
-                <div class="grid">
+                
                     <label for="password">
                         Password
                         <input type="password" id="password" name="password" placeholder="password" required>
@@ -45,11 +41,10 @@
                         Confirm Password
                         <input type="password" id="confirm_password" name="confirm_password" placeholder="confirm password" required>
                     </label>
-                </div>
+               
                 <!-- Markup example 2: input is after label -->
                 <label for="email">Email address</label>
                 <input type="email" id="email" name="email" placeholder="Email address" required>
-                <div class="grid">
                     <label for="country">
                         <select id="country" name="country">
                             <option value="Afghanistan">Afghanistan</option>
@@ -306,8 +301,6 @@
                         city
                         <input type="text" id="city" name="city" placeholder="city" required>
                     </label>
-                </div>
-                <!-- Button -->
                 <button type="submit">Submit</button>
               </form>
           </article> 
