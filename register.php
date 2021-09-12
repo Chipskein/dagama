@@ -281,11 +281,11 @@
         </label>
         <br>
         <label for="perfil">
-          Select image to upload:<input type="file" name="perfil" id="perfil">
+          Select image perfil to upload:<input type="file" name="perfil" id="perfil">
         </label>
         <br>
         <label for="banner">
-          Select image to upload:<input type="file" name="banner" id="banner">
+          Select image banner to upload:<input type="file" name="banner" id="banner">
         </label>
         <br>
         <button type="submit">Submit</button>
