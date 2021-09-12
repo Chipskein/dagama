@@ -12,7 +12,7 @@
     <article>
     <button>login</button>
     <br>
-    <button onclick="window.location.href='https://www.hyperlinkcode.com/register.php'">register</button>
+    <button>register</button>
     </article>           
   </main>
 </body>
