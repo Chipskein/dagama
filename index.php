@@ -9,8 +9,9 @@
 </head>
 <body>
   <main>    
-    <form action="mar.php" method="post">
+    <form action="mar.php" method="POST">
       <label for="email">Email: <input type="email"></label>
+      <br>
       <label for="password">Password:<input type="password"></label>
       <br>
       <button id='login' type="submit">login</button>
