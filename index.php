@@ -15,7 +15,6 @@
       <label for="password">Password:<input type="password" required></label>
       <br>
       <button id='login' type="submit">login</button>
-      <button id='register'>registrar</button>
     </form>
   </main>
   <script>
