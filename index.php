@@ -10,10 +10,17 @@
 <body>
   <main class="container">
     <article>
-    <button>login</button>
+    <button id='login'>login</button>
     <br>
-    <button>register</button>
+    <button id='register'>register</button>
     </article>           
   </main>
+  <script>
+      const url='https://dagama.herokuapp.com'
+      //const url='localhost:8080'
+      const button=document.getElementsByid('register').onclick=()=>{
+        window.location.href(`${url}/register.php`)
+      }
+  </script>
 </body>
 </html>
