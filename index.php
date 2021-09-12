@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="framework-css/css/pico.css">
     <link rel="stylesheet" href="framework-css/css/corrections_s.css">
-    <title>$register</title>
+    <title>Register</title>
 </head>
 <body>
     <main class="container">
@@ -309,7 +309,6 @@
                 </div>
                 <!-- Button -->
                 <button type="submit">Submit</button>
-              
               </form>
           </article> 
     </main>
