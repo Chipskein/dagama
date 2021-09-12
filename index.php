@@ -22,7 +22,7 @@
             </ul>
           </nav>
           <article>
-            <form action="/test.php" target="_self" method="POST">
+            <form action="/test.php" method="POST">
                 <!-- Grid -->
                 <div class="grid">
                   <!-- Markup example 1: input is inside label -->
