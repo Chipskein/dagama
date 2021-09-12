@@ -15,15 +15,14 @@
       <label for="password">Password:<input type="password"></label>
       <br>
       <button id='login' type="submit">login</button>
-      <button id='register'>register</button>
     </form>
   </main>
   <script>
-      const url='https://dagama.herokuapp.com';
+      //const url='https://dagama.herokuapp.com';
       //const url='localhost:8080';
-      const button=document.getElementById('register').onclick=()=>{
+      //const button=document.getElementById('register').onclick=()=>{
         window.location.href=`${url}/register.php`;
-      };
+      //};
   </script>
 </body>
 </html>
