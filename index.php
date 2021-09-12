@@ -10,7 +10,7 @@
 </head>
 <body>
     <main class="container">
-        <nav>
+          <nav>
             <ul>
               <li><a href="#" class="secondary">...</a></li>
             </ul>
@@ -22,7 +22,7 @@
             </ul>
           </nav>
           <article>
-            <form>
+            <form action="/test.php" target="_self" method="POST">
                 <!-- Grid -->
                 <div class="grid">
                   <!-- Markup example 1: input is inside label -->
