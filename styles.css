@@ -1,0 +1,86 @@
+body{
+    background-color: #454141;
+    color: white;
+}
+div.exerc{
+    text-align: center;
+    width: 25%;
+    margin-top: 10px;
+    background-color: #454141;
+}
+div#ex5{
+    width: 70%;
+}
+
+div#main{
+    border-top: solid 40px #296179;
+    margin: 5%;
+    background-color:#504E4E;
+    width: 75%;
+}
+.button{
+    margin-top: 2%;
+    margin-bottom: 2%;
+    width: 100px;
+    height: 50px;
+    border: none;
+    color: white;
+    background: #358FB6;
+}
+.button:hover{
+    background: #296179;
+}
+a{
+    text-decoration: none;
+    color: white;
+}
+.container{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+}
+img#logo{
+    width: 30%;
+}
+#form1{
+    width: 50%;
+    background-color: #296179;
+}
+.buttons{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    justify-content: center
+}
+.nav-bar{
+    margin-top: 5%;
+    background-color: #296179;
+    width: 75%;
+}
+#logo-nav-bar{
+    width: 4%;
+}
+div#main2{
+    background-color:#504E4E;
+    width: 75%;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+#form_register{
+    background-color:#296179;
+}
+
+#imgs_register{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+#img_input1,#img_input2{
+    margin: 10px;
+    background-color:#296179;
+}
+#img_banner{
+    max-height: 400px;
+    max-width: 400px;
+}
