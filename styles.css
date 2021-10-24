@@ -84,3 +84,13 @@ div#main2{
     max-height: 400px;
     max-width: 400px;
 }
+div#img_perfil{
+    width: 200px;
+    height: 200px;
+    background-image: url("imgs/icon.png");
+    background-size: cover;
+    border-radius: 50%;
+}
+div#img_banner{
+    background-size: cover;
+}

@@ -16,14 +16,15 @@
         <div id="main2">
             <div id="imgs_register">
                 <div id="img_input1">
-                    <div >
-                        <img id="img_perfil" src="#" >
+                    <!-- Adicionar Crop-->
+                    <div id="img_perfil">
+                        
                     </div>
                     <input id="imgInp" type="file" accept="image/png,image/jpeg">
                 </div>
                 <div id="img_input2">
-                    <div>
-                        <img src="#" id="img_banner">
+                    <div id="img_banner">
+                        
                     </div>
                     <input id="imgInp2" type="file" accept="image/png,image/jpeg">
                 </div>
@@ -69,14 +70,19 @@
 <script>
     imgInp.onchange = evt => {
         const [file] = imgInp.files
+        const img_perfil=document.getElementById("img_perfil");
         if (file) {
-            img_perfil.src = URL.createObjectURL(file)
+            img_perfil.style.backgroundImage=`url(${URL.createObjectURL(file)})`;
+        }
+        else{
+            img_perfil.style.backgroundImage="url(imgs/icon.png)"
         }
     }
     imgInp2.onchange = evt => {
         const [file] = imgInp2.files
+        const img_banner=document.getElementById("img_banner");
         if (file) {
-            img_banner.src = URL.createObjectURL(file)
+            img_banner.style.backgroundImage=`url(${URL.createObjectURL(file)})`;
         }
     }
 </script>
