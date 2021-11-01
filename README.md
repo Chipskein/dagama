@@ -9,7 +9,7 @@
 
 # [Design](https://www.figma.com/file/WmCnbvOqMdXhFGvoKSXfjT/dagama.com?node-id=2%3A2)
 
-# Protótipos do banco
+## Protótipos do banco
     (Bruno e Silvio)
    ![Image of Silvao](https://github.com/Chipskein/dagama/blob/main/imgs/facebook_silvio.png)
     (Victor e Adriele) 
