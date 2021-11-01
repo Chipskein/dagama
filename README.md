@@ -4,7 +4,7 @@
 ## Integrantes do projeto
 * [Bruno Nascimento](https://github.com/Chipskein)
 * [Victor Amaral](https://github.com/VictorAmaral22)
-* [Silvio Quintana](https://github.com/VictorAmaral22)
+* [Silvio Quintana](https://github.com/SilvioGQ)
 * [Adriele Colossi](https://github.com/adrielecolossi)
 
 # [Design](https://www.figma.com/file/WmCnbvOqMdXhFGvoKSXfjT/dagama.com?node-id=2%3A2)
