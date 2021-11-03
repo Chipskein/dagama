@@ -30,6 +30,7 @@ function getAllfiles() {
       }
 };
 //folders
+$FOLDERS=array("root"=>"14oQWzTorITdqsK7IiFwfTYs91Gh_NcjS","avatares"=>"1Z3A4iqIe1eMerkdTEkXnjApRPupaPq-M","portos"=>"1e5T21RxDQ-4Kqw8EDVUBICGPeGIRSNHx");
 $gdrive_root="14oQWzTorITdqsK7IiFwfTYs91Gh_NcjS";
 $gdrive_avatar="1Z3A4iqIe1eMerkdTEkXnjApRPupaPq-M";
 function insertFile($mimeType, $filename,$folderID,$newfilename) {
@@ -54,13 +55,16 @@ function insertFile($mimeType, $filename,$folderID,$newfilename) {
       print "An error occurred: " . $e->getMessage();
     }
 }
+
 if(isset($_FILES["foto"])){
   $file=$_FILES["foto"];
   $server_path=$file["tmp_name"];
   $filename=$file["name"];
   $filetype=$file["type"];
-  var_dump($file);
-  insertFile("$filetype","$server_path",$gdrive_avatar,"$filename");
+  echo "PATH:$server_path<br>";
+  echo "FILE:$filename<br>";
+  echo "TYPE:$filetype<br>";
+  insertFile("$filetype","$server_path",$FOLDERS["avatares"],"$filename");
 }
 
 
