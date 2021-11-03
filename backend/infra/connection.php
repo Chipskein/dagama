@@ -7,7 +7,7 @@
     }
     if(preg_match("/dagama.herokuapp/","$_SERVER[HTTP_HOST]")){
         echo "Connect with postgresql<br>";
-        echo getenv("DATABASE_URL") ? "$url":"ERRO";
+        echo getenv($DATABASE_URL) ? "$url":"ERRO";
         //$db=pg_connect("");
     }
     if(!preg_match("/localhost/","$_SERVER[HTTP_HOST]")&&!preg_match("/dagama.herokuapp/","$_SERVER[HTTP_HOST]")){
