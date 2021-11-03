@@ -15,7 +15,7 @@
                 <img id="logo" src="imgs/icon.png" alt="logo">
             </div>
             <div align="center">
-                <form action="" method="post" >
+                <form action="backend/login.php" method="post" id="form">
                     <div id="form1">
                     <label>
                         Email:<br><input name="email"type="email" placeholder="you@example.com">

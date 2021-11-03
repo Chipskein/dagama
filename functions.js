@@ -1,3 +1,4 @@
 function verificar(){
-    console.log("teste ai po");
+    //validar inputs
+    document.getElementById("form").submit();
 };
