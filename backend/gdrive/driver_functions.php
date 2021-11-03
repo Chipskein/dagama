@@ -54,6 +54,13 @@ function insertFile($mimeType, $filename,$folderID,$newfilename) {
       print "An error occurred: " . $e->getMessage();
     }
 }
-
+if(isset($_FILES["foto"])){
+  $file=$_FILES["foto"];
+  $server_path=$file["tmp_name"];
+  $filename=$file["name"];
+  $filetype=$file["type"];
+  var_dump($file);
+  insertFile("$filetype","$server_path",$gdrive_avatar,"$filename");
+}
 
 
