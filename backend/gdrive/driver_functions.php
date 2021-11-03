@@ -29,18 +29,18 @@ function getAllfiles() {
           }
       }
 };
-function insertFile($mimeType, $filename) {
+//folders
+$gdrive_root="14oQWzTorITdqsK7IiFwfTYs91Gh_NcjS";
+$gdrive_avatar="1Z3A4iqIe1eMerkdTEkXnjApRPupaPq-M";
+function insertFile($mimeType, $filename,$folderID,$newfilename) {
     $client=getClient();
     $service=new Google\Service\Drive($client);
-    //folders
-    $gdrive_root="14oQWzTorITdqsK7IiFwfTYs91Gh_NcjS";
-    $gdrive_avatar="1Z3A4iqIe1eMerkdTEkXnjApRPupaPq-M";
     
     $file = new Google\Service\Drive\DriveFile();
     $file->setMimeType($mimeType);
     //set to user id
-    $file->setName("testando");
-    $file->setParents(array($gdrive_avatar));
+    $file->setName($newfilename);
+    $file->setParents(array($folderID));
     try {
       $data = file_get_contents($filename);
       $createdFile = $service->files->create($file, array(
@@ -54,7 +54,6 @@ function insertFile($mimeType, $filename) {
       print "An error occurred: " . $e->getMessage();
     }
 }
-insertFile("image/jpeg","icon.jpg");
-getAllfiles();
+
 
 
