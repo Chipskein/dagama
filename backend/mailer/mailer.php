@@ -5,10 +5,10 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\OAuth;
 use League\OAuth2\Client\Provider\Google;
-function send_mail($addr_mail){
+function send_mail($addr_mail,$subject,$html){
     $mail = new PHPMailer();
     $mail->isSMTP();
-    $mail->SMTPDebug = SMTP::DEBUG_SERVER;
+    $mail->SMTPDebug = SMTP::DEBUG_OFF;
     $mail->Host = 'smtp.gmail.com';
     $mail->Port = 465;
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
@@ -38,17 +38,16 @@ function send_mail($addr_mail){
     $mail->setFrom($email);
     $mail->addAddress($addr_mail);
     $mail->isHTML(true);                                  //Set email format to HTML
-    $mail->Subject = 'Here is the subject';
-    $mail->Body    = 'This is the HTML message body <b>in bold!</b>';
-    $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+    $mail->Subject = $subject;
+    $mail->Body    = $html;
     if (!$mail->send()) {
         echo 'Mailer Error: ' . $mail->ErrorInfo;
     } else {
-        echo 'Message sent!';
+        echo 'Mensagem Enviada';
     }
 }
-
-
+$teste=file_get_contents("pages/page1.html");
+send_mail("abfn0905@gmail.com","TESTANDO","$teste");
 
 
  
