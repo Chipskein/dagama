@@ -5,5 +5,5 @@
       //  var_dump($row);
     //}
     //$db->close();
-
+    var_dump($_SERVER["HTTP_HOST"]);
 ?>

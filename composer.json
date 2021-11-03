@@ -1,0 +1,20 @@
+{
+    "name": "chipskein/dagama",
+    "type": "project",
+    "require": {
+        "phpmailer/phpmailer": "^6.5",
+        "league/oauth2-google": "^4.0"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Chipskein\\Dagama\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Chipskein",
+            "email": "abfn0905@gmail.com"
+        }
+    ]
+}
