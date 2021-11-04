@@ -1,6 +1,6 @@
 <?php
   require_once '../../vendor/autoload.php';
-  $FOLDERS=array("root"=>"14oQWzTorITdqsK7IiFwfTYs91Gh_NcjS","avatares"=>"1Z3A4iqIe1eMerkdTEkXnjApRPupaPq-M","portos"=>"1e5T21RxDQ-4Kqw8EDVUBICGPeGIRSNHx");
+  $FOLDERS=array("root"=>"14oQWzTorITdqsK7IiFwfTYs91Gh_NcjS","avatares"=>"1Z3A4iqIe1eMerkdTEkXnjApRPupaPq-M","portos"=>"1e5T21RxDQ-4Kqw8EDVUBICGPeGIRSNHx","users"=>"1j2ivb8gBxV_AINaQ7FHjbd1OI0otCpEO");
   function getClient(){
       $client = new Google\Client();
       $client->setApplicationName("dagama-gdrive");
@@ -24,17 +24,15 @@
         if (count($results->getFiles()) == 0) {
             print "No files found.\n";
         } else {
-            print "Files:\n";
+            print "Files:\n<br>";
             foreach ($results->getFiles() as $file) {
-                printf("%s (%s)\n", $file->getName(), $file->getId());
+                printf("%s (%s)\n<br>", $file->getName(), $file->getId());
             }
         }
-  };
-  //folders
+  }; 
   function insertFile($mimeType, $filename,$folderID,$newfilename) {
       $client=getClient();
-      $service=new Google\Service\Drive($client);
-      
+      $service=new Google\Service\Drive($client);      
       $file = new Google\Service\Drive\DriveFile();
       $file->setMimeType($mimeType);
       //set to user id
@@ -53,7 +51,40 @@
         print "An error occurred: " . $e->getMessage();
       }
   }
-  //testing
+  function createFolder($name,$FOLDER_ID){
+      $client=getClient();
+      $service = new \Google\Service\Drive($client);
+      $file= new \Google\Service\Drive\DriveFile();     
+      $file->setName($name);
+      $file->setParents(array($FOLDER_ID));
+      $file->setMimeType("application/vnd.google-apps.folder");
+      $createFile= $service->files->create($file, array('fields' => 'id'));
+      return ['file_name'=>$name,'file_id'=>$createFile->id];
+  }
+  function rmFile($file_id){
+    $client=getClient();
+    $service=new \Google\Service\Drive($client);
+    try{
+        $service->files->delete($file_id);
+        return true;
+    }
+    catch(Exception $e){
+      return $e->getMessage();
+    }
+  };
+  function getFile($file_id){
+    $client=getClient();
+    $service=new \Google\Service\Drive($client);
+    try{
+      $result=$service->files->get($file_id);
+      return $result;
+    }
+    catch(Exception $e){
+      return false;
+    }
+  };
+  getAllfiles();
+  //testando
   if(isset($_FILES["foto"])){
     $file=$_FILES["foto"];
     $server_path=$file["tmp_name"];
@@ -62,7 +93,7 @@
     echo "PATH:$server_path<br>";
     echo "FILE:$filename<br>";
     echo "TYPE:$filetype<br>";
-    insertFile("$filetype","$server_path",$FOLDERS["avatares"],"$filename");
+    insertFile("$filetype","$server_path",$FOLDERS['avatares'],"$filename");
   }
 ?>
 
