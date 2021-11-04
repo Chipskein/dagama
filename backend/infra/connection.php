@@ -12,7 +12,7 @@
         }
         if(preg_match("/dagama.herokuapp/","$_SERVER[HTTP_HOST]")){
             echo "Connect with postgresql<br>";
-            $db_connect=getenv("DATABASE_URL") ?: "";
+            $db_connect=getenv("DATABASE_URL");
             if (!$db_connect) {
                 echo "An error occurred1.\n";
                 exit;
