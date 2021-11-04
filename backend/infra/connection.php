@@ -14,7 +14,7 @@
             echo "Connect with postgresql<br>";
             $db_connect=pg_connect($DATABASE_URL);
             if (!$db_connect) {
-                echo "An error occurred.\n";
+                echo "An error occurred1.\n";
                 exit;
               }
               
