@@ -4,16 +4,16 @@
         echo "<h2>Inválido</h2>";
     }
     else{
-        $db=false;
+        //$db=false;
         if(preg_match("/localhost/","$_SERVER[HTTP_HOST]")){
             echo "Connect with sqlite<br>";
-            //$db=new SQLite3("");
-            //$db->exec("");
+            $db=new SQLite3("");
+            $db->exec("");
         }
         if(preg_match("/dagama.herokuapp/","$_SERVER[HTTP_HOST]")){
             echo "Connect with postgresql<br>";
-            $db_connect=pg_connect(getenv("DATABASE_URL"));
-            if (!$db_connect) {
+            $db=pg_connect(getenv("DATABASE_URL"));
+            if (!$db) {
                 echo "An error occurred1.\n";
                 exit;
               }
@@ -25,7 +25,7 @@
               }
               
               while ($row = pg_fetch_row($result)) {
-                echo $row['teste'];
+                var_dump($row);
                 echo "<br />\n";
               }
         }
