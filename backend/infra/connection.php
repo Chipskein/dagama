@@ -18,7 +18,7 @@
                 exit;
               }
               
-              $result = pg_query($db_connect, "SELECT * FROM teste");
+              $result = pg_query($db, "SELECT * FROM teste");
               if (!$result) {
                 echo "An error occurred.\n";
                 exit;
