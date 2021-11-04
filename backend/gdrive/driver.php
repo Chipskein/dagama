@@ -72,17 +72,23 @@
       return $e->getMessage();
     }
   };
-  function getFile($file_id){
-    $client=getClient();
-    $service=new \Google\Service\Drive($client);
-    try{
-      $result=$service->files->get($file_id);
-      return $result;
-    }
-    catch(Exception $e){
-      return false;
-    }
-  };
+  /* 
+  SEM PERMISSÂO;
+    function getFile($file_id){
+      $client=getClient();
+      $service=new \Google\Service\Drive($client);
+      try{
+        $result=$service->files->get($file_id);
+        echo "<br>";
+        echo '<pre>' , var_dump($result) , '</pre>';
+        return $result;
+      }
+      catch(Exception $e){
+        return false;
+      }
+    };
+  */
+  
   getAllfiles();
   //testando
   if(isset($_FILES["foto"])){
