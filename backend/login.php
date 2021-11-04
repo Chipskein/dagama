@@ -9,6 +9,25 @@
 </head>
 <body>
 <?php
+    echo "<div align=center>";
+    if(isset($_POST['email'])&&isset($_POST['password'])){
+        echo "<h2>Logando...</h2>";
+        $regex_email="/^[a-zA-Z0-9\.]*@[a-z0-9\.]*\.[a-z]*$/";
+        if(preg_match($regex_email,$_POST['email'])){
+            echo "REGEX_EMAIL=PASSED";
+        }
+        else{
+            echo "<h2>Credenciais Inválidas</h2>";
+            header("refresh:1;url=../index.html");
+            die();
+        }
+    }
+    else{ 
+        echo "<h2>Credenciais Inválidas</h2>";
+        header("refresh:1;url=../index.html");
+        die();
+    }
+    echo "</div>";
 
 ?>    
 </body>
