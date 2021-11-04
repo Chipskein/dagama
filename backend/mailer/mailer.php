@@ -47,7 +47,8 @@ function send_mail($addr_mail,$subject,$html){
     }
 }
 $teste=file_get_contents("pages/page1.html");
-send_mail("abfn0905@gmail.com","TESTANDO","$teste");
+$email_to_send="abfn0905@gmail.com";
+send_mail("$email_to_send","EMAIL DE TESTE","$teste");
 
 
  
