@@ -12,7 +12,7 @@
 # [Design](https://www.figma.com/file/WmCnbvOqMdXhFGvoKSXfjT/dagama.com?node-id=2%3A2)
 
 ## Protótipos do banco
-    (Novo Protótipo)
+    (Novo Protótipo(Use o tema negro))
    ![dagama_proto](https://github.com/Chipskein/dagama/blob/main/imgs/dagama.png)
    
     (Bruno e Silvio)
