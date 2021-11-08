@@ -1,7 +1,9 @@
 # [Dagama](https://dagama.herokuapp.com/)
 ## Descrição
     Rede Social em PHP para disciplina de banco de dados(2021)
-## Integrantes do projeto
+## Requisitos
+* [PDF](https://github.com/Chipskein/dagama/blob/main/lista9-projeto.pdf)
+## Inqtegrantes do projeto
 * [Bruno Nascimento](https://github.com/Chipskein)
 * [Victor Amaral](https://github.com/VictorAmaral22)
 * [Silvio Quintana](https://github.com/SilvioGQ)
