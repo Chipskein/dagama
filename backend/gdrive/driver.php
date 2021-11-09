@@ -89,8 +89,9 @@
       }
     };
   */
+  getAllfiles();
+
   /*
- //getAllfiles();
   //testando
   if(isset($_FILES["foto"])){
     $file=$_FILES["foto"];

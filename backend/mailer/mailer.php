@@ -46,9 +46,9 @@ function send_mail($addr_mail,$subject,$html){
         echo 'Mensagem Enviada';
     }
 }
-$teste=file_get_contents("pages/page1.html");
-$email_to_send="abfn0905@gmail.com";
-send_mail("$email_to_send","EMAIL DE TESTE","$teste");
+//$teste=file_get_contents("pages/page1.html");
+//$email_to_send="abfn0905@gmail.com";
+//send_mail("$email_to_send","EMAIL DE TESTE","$teste");
 
 
  
