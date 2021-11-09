@@ -9,12 +9,13 @@
 </head>
 <body>
 <?php
+    include './infra/connection.php';
     echo "<div align=center>";
     if(isset($_POST['email'])&&isset($_POST['password'])){
         echo "<h2>Logando...</h2>";
         $regex_email="/^[a-zA-Z0-9\.]*@[a-z0-9\.]*\.[a-z]*$/";
         if(preg_match($regex_email,$_POST['email'])){
-            echo "REGEX_EMAIL=PASSED";
+            Login($_POST['email'],$_POST['password']);
         }
         else{
             echo "<h2>Credenciais Inválidas</h2>";

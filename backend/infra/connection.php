@@ -5,7 +5,7 @@
         $db_type=false;
         if(preg_match("/localhost/","$_SERVER[HTTP_HOST]")){
             //echo "Connect with sqlite<br>";
-            $db=new SQLite3("./backend/infra/dagama.db");
+            $db=new SQLite3("$_SERVER[DOCUMENT_ROOT]/backend/infra/dagama.db");
             $test=$db->exec("PRAGMA FOREIGN_KEYS=ON");
             if(!$test){
                 echo "<br>Um erro de conexão com banco ocorreu<br>"; 
@@ -40,6 +40,20 @@
             if($db_type=='postgresql'){
                 $result=pg_fetch_all(pg_query($db,"select * from porto"));
                 return $result;
+            }
+        }
+        else exit;
+    }
+    function Login($email,$hashpassword){
+        $db_connection=db_connection();
+        $db=$db_connection['db'];
+        $db_type=$db_connection['db_type'];
+        if($db){
+            if($db_type=='sqlite'){
+                echo "sqlite";
+            }
+            if($db_type=='postgresql'){
+                echo "postgresql";
             }
         }
         else exit;
