@@ -50,8 +50,8 @@
         $db_type=$db_connection['db_type'];
         if($db){
             if($db_type=='sqlite'){
-                $verify=$db->query("select senha as pass from perfil where perfil.email='$email'")->fetchArray();
-                if(password_verify($password,$verify['pass'])) return true;
+                $verify=$db->query("select codigo,senha as pass from perfil where perfil.email='$email'")->fetchArray();
+                if(password_verify($password,$verify['pass'])) return $verify;
                 else return false;
             }
             if($db_type=='postgresql'){

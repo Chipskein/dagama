@@ -24,6 +24,8 @@
             if($passed){
                 echo "<br>Logado</br>";
                 //pegar dados do usuario;
+                $USERID=$passed['codigo'];
+                echo $USERID;
                 //iniciar sessão e armazenar os dados do usuario em na sessão.
             }
             else{
