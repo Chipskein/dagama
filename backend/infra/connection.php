@@ -44,15 +44,14 @@
         }
         else exit;
     }
-    function Login($email,$hashpassword){
+    function Login($email,$password){
         $db_connection=db_connection();
         $db=$db_connection['db'];
         $db_type=$db_connection['db_type'];
         if($db){
             if($db_type=='sqlite'){
                 $verify=$db->query("select senha as pass from perfil where perfil.email='$email'")->fetchArray();
-                //password_verify;
-                if($verify['pass']==$hashpassword) return true;
+                if(password_verify($password,$verify['pass'])) return true;
                 else return false;
             }
             if($db_type=='postgresql'){
