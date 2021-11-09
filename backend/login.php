@@ -15,7 +15,15 @@
         echo "<h2>Logando...</h2>";
         $regex_email="/^[a-zA-Z0-9\.]*@[a-z0-9\.]*\.[a-z]*$/";
         if(preg_match($regex_email,$_POST['email'])){
-            Login($_POST['email'],$_POST['password']);
+            $email="$_POST[email]";
+            $hashpass="$_POST[password]";//need be hashed
+            $passed=Login("$email","$hashpass");
+            if($passed) echo "<br>Logado</br>";
+            else{
+                echo "<h2>Credenciais Inválidas</h2>";
+                header("refresh:1;url=../index.html");
+                die();
+            }
         }
         else{
             echo "<h2>Credenciais Inválidas</h2>";
