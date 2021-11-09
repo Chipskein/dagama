@@ -1,96 +1,81 @@
 body{
-    background-color: #454141;
+    background-color: #504E4E;
     color: white;
 }
-div.exerc{
-    text-align: center;
-    width: 25%;
-    margin-top: 10px;
-    background-color: #454141;
+input{
+	background-color:'#fff';
+	margin-top: 20px;
+	margin-bottom: 20px;
+	width:364px;
+	height:52px;
+	border-radius:10px;
 }
-div#ex5{
-    width: 70%;
+p{
+	font-size: 24px;
+	color: white;
+	margin-top: 10px;
+}
+a.linkMenor{
+	font-size: 18px;
+}
+.aa{
+	font-size: 48px;
+	position:relative;
+	left:62%;
+	top:10%;
+};
+div{
+    width: 25%;
 }
 
 div#main{
-    border-top: solid 40px #296179;
-    margin: 5%;
-    background-color:#504E4E;
-    width: 75%;
+    margin: 10%;
 }
+
 .button{
-    margin-top: 2%;
-    margin-bottom: 2%;
-    width: 100px;
-    height: 50px;
-    border: none;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	width:364px;
+	height:52px;
+	border-radius:10px;
     color: white;
-    background: #358FB6;
+    background: #7A9EFB;
+	font-size: 24px;
 }
-.button:hover{
+.button2 {
+	background: #DB6624;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	width:364px;
+	height:52px;
+	border-radius:10px;
+}
+input[type="email"]
+{
+    font-size:24px;
+}
+input[type="password"]
+{
+    font-size:24px;
+}
+/* .button:hover{
     background: #296179;
-}
-a{
+} */
+a {
     text-decoration: none;
     color: white;
 }
-.container{
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr;
-}
 img#logo{
-    width: 30%;
+	position: absolute;
+	width: 600px;
+    height: 600px;
 }
 #form1{
-    width: 50%;
-    background-color: #296179;
-}
-.buttons{
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
-    justify-content: center
-}
-.nav-bar{
-    margin-top: 5%;
-    background-color: #296179;
-    width: 75%;
-}
-#logo-nav-bar{
-    width: 4%;
-}
-div#main2{
-    background-color:#504E4E;
-    width: 75%;
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
-}
-#form_register{
-    background-color:#296179;
-}
-
-#imgs_register{
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-#img_input1,#img_input2{
-    margin: 10px;
-    background-color:#296179;
-}
-#img_banner{
-    max-height: 400px;
-    max-width: 400px;
-}
-div#img_perfil{
-    width: 200px;
-    height: 200px;
-    background-image: url("imgs/icon.png");
-    background-size: cover;
-    border-radius: 50%;
-}
-div#img_banner{
-    background-size: cover;
+	background-color: #296179;
+	width:424px;
+	height:431px;
+	position:relative;
+	right:20%;
+	top:30%;
+	border-radius:10px;
 }
