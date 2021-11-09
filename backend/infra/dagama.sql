@@ -175,3 +175,4 @@ INSERT INTO INTERACAO(perfil,post,texto,isSharing) VALUES(1,2,'compartilhou ',1)
 
 
 
+
