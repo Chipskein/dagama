@@ -89,7 +89,7 @@
       }
     };
   */
-  getAllfiles();
+  //getAllfiles();
 
   /*
   //testando
