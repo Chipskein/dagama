@@ -41,9 +41,9 @@ function send_mail($addr_mail,$subject,$html){
     $mail->Subject = $subject;
     $mail->Body    = $html;
     if (!$mail->send()) {
-        echo 'Mailer Error: ' . $mail->ErrorInfo;
+        return $mail->ErrorInfo;
     } else {
-        echo 'Mensagem Enviada';
+        return true;
     }
 }
 //$teste=file_get_contents("pages/page1.html");

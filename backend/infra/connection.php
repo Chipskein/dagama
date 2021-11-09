@@ -1,5 +1,6 @@
 <?php
     include $_SERVER['DOCUMENT_ROOT'].'/backend/gdrive/driver.php';
+    include $_SERVER['DOCUMENT_ROOT'].'/backend/mailer/mailer.php';
     function db_connection(){
         $db=false;
         $db_type=false;
@@ -62,4 +63,7 @@
         }
         else exit;
     }
+    function Register($email,$password,$bdate,$username,$pais,$photo = null){
+        
+    };
 ?>
