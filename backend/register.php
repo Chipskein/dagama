@@ -70,8 +70,8 @@
             $password=password_hash("$_POST[password]",PASSWORD_DEFAULT);
             $bdate="$_POST[bdate]";
             $pais="$_POST[pais]";
-
-            $registered=Register($email,$password,$bdate,$username,$pais,$_FILES['photo']);
+            $photo= isset($_FILES['photo']) ? $_FILES['photo']:null;
+            $registered=Register($email,$password,$bdate,$username,$pais,$photo);
             if($registered) echo "Registrado,Porfavor confirme seu email";
             else echo "Um erro ocorreu no registro";        
         }
