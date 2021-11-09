@@ -17,9 +17,15 @@
         if(preg_match($regex_email,$_POST['email'])){
             $email="$_POST[email]";
             //to HASH password_hash($password,PASSWORD_DEFAULT);
+            //email=abfn@gmail.com
+            //password=kasjfkajsfjaisf
             $pass="$_POST[password]";//need be hashed
             $passed=Login("$email","$pass");
-            if($passed) echo "<br>Logado</br>";
+            if($passed){
+                echo "<br>Logado</br>";
+                //pegar dados do usuario;
+                //iniciar sessão e armazenar os dados do usuario em na sessão.
+            }
             else{
                 echo "<h2>Credenciais Inválidas</h2>";
                 header("refresh:1;url=../index.html");
