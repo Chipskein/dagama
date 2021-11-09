@@ -127,8 +127,8 @@ CREATE TABLE INTERACAO_ASSUNTO(
 --pais
 INSERT INTO PAIS(nome) VALUES('Brasil');
 --perfil
-INSERT INTO PERFIL(pais,email,username,senha,genero,datanasc) VALUES(1,'abfn0905@gmail.com','testoman','kasjfkajsfjaisf','M','2002-09-05');
-INSERT INTO PERFIL(pais,email,username,senha,genero,datanasc) VALUES(1,'abfn@gmail.com','testoman2','kasjfkajsfjaisf','M','2002-09-05');
+INSERT INTO PERFIL(pais,email,username,senha,genero,datanasc) VALUES(1,'abfn0905@gmail.com','testoman','$2y$10$vL5SKzTYBXYzYCHYrxF8P.ZACVQNwWD3n4txiC4CZFgpvWuGRqQ4u','M','2002-09-05');
+INSERT INTO PERFIL(pais,email,username,senha,genero,datanasc) VALUES(1,'abfn@gmail.com','testoman2','$2y$10$vL5SKzTYBXYzYCHYrxF8P.ZACVQNwWD3n4txiC4CZFgpvWuGRqQ4u','M','2002-09-05');
 --porto
 INSERT INTO PORTO(perfil,nome,descr) VALUES(1,'PORTO DE TESTE','è isso ai parceria');
 INSERT INTO PORTO(perfil,nome,descr) VALUES(1,'PORTO DE TESTE2','è isso ai parceria2');

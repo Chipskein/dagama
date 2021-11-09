@@ -1,10 +1,11 @@
 <?php
-  require_once '../../vendor/autoload.php';
+  require_once $_SERVER['DOCUMENT_ROOT'].'/vendor/autoload.php';
+  
   $FOLDERS=array("root"=>"14oQWzTorITdqsK7IiFwfTYs91Gh_NcjS","avatares"=>"1Z3A4iqIe1eMerkdTEkXnjApRPupaPq-M","portos"=>"1e5T21RxDQ-4Kqw8EDVUBICGPeGIRSNHx","users"=>"1j2ivb8gBxV_AINaQ7FHjbd1OI0otCpEO");
   function getClient(){
       $client = new Google\Client();
       $client->setApplicationName("dagama-gdrive");
-      $client->setAuthConfig('credentials.json');
+      $client->setAuthConfig($_SERVER['DOCUMENT_ROOT'].'/backend/gdrive/credentials.json');
       $client->addScope('https://www.googleapis.com/auth/drive');
       $client->addScope('https://www.googleapis.com/auth/drive.file');
       $client->addScope('https://www.googleapis.com/auth/drive.readonly');
@@ -88,8 +89,9 @@
       }
     };
   */
-  
-  getAllfiles();
+  //getAllfiles();
+
+  /*
   //testando
   if(isset($_FILES["foto"])){
     $file=$_FILES["foto"];
@@ -101,5 +103,6 @@
     echo "TYPE:$filetype<br>";
     insertFile("$filetype","$server_path",$FOLDERS['avatares'],"$filename");
   }
+  */
 ?>
 
