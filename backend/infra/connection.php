@@ -55,6 +55,9 @@
                 else return false;
             }
             if($db_type=='postgresql'){
+                $verify=pg_fetch_array(pg_query($db,"select codigo,senha as pass from perfil where perfil.email='$email'"));
+                if(password_verify($password,$verify['pass'])) return $verify;
+                else return false;
             }
         }
         else exit;
