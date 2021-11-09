@@ -9,11 +9,6 @@
             echo "Connect with sqlite<br>";
             $db=new SQLite3("dagama.db");
             $db->exec("PRAGMA FOREIGN_KEYS=ON");
-            $result=$db->query("SELECT * FROM teste");
-            while($row=$result->fetchArray()){
-                var_dump($row);
-                echo "<br />\n";
-            }
             exit;            
         }
         if(preg_match("/dagama.herokuapp/","$_SERVER[HTTP_HOST]")){
@@ -24,7 +19,7 @@
                 exit;
               }
               
-              $result = pg_query($db, "SELECT * FROM teste");
+              $result = false;//pg_query($db, "SELECT * FROM teste");
               if (!$result) {
                 echo "An error occurred.\n";
                 exit;
