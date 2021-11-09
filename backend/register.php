@@ -65,6 +65,15 @@
        
         if(preg_match("/^[a-zA-Z0-9\.]*@[a-z0-9\.]*\.[a-z]*$/",$_POST['email'])&&preg_match("/^([0-9]{2}\/[0-9]{2}\/[0-9]{4})$/",$_POST['bdate'])&&validar_data($_POST['bdate'])&&preg_match("/^[1-9][0-9]*$/",$_POST['pais'])&&$_POST['cpassword']==$_POST['password']){
             echo "<h2 align=center>Registrando...</h2>";
+            $email="$_POST[email]";
+            $username="$_POST[username]";
+            $password=password_hash("$_POST[password]",PASSWORD_DEFAULT);
+            $bdate="$_POST[bdate]";
+            $pais="$_POST[pais]";
+
+            $registered=Register($email,$password,$bdate,$username,$pais,$_FILES['photo']);
+            if($registered) echo "Registrado,Porfavor confirme seu email";
+            else echo "Um erro ocorreu no registro";        
         }
         else{
             echo "<h2>Um erro ocorreu Retornando</h2>";

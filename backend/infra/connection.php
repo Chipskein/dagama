@@ -63,5 +63,7 @@
         }
         else exit;
     }
-    function Register(){};
+    function Register($email,$password,$bdate,$username,$pais,$photo = null){
+        
+    };
 ?>
