@@ -77,13 +77,13 @@
         }
         else{
             echo "<h2>Um erro ocorreu Retornando</h2>";
-            header("refresh:1;url=../index.html");
+            header("refresh:1;url=../index.php");
             die();
         }
     }
     else{
         echo "<h2>Um erro ocorreu Retornando</h2>";
-        header("refresh:1;url=../index.html");
+        header("refresh:1;url=../index.php");
         die();
     }
 ?>    
