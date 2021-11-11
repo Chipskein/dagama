@@ -57,6 +57,7 @@
             <select class="inputHalf" name="genero">
                 <option value="M">Masculino</option>
                 <option value="F">Feminino</option>
+                <option value="O">Outro</option>
             </select>
             <br>
             <div id="divTermos">

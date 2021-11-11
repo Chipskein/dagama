@@ -65,6 +65,7 @@
     $erros = [];
     // var_dump($_POST);
     echo "<br>";
+    // TODO: Validação de gênero, termos
     if(isset($_POST['email']) && isset($_POST['username']) && isset($_POST['password']) && isset($_POST['cpassword']) && isset($_POST['bdate']) &&
         isset($_POST['pais']) && isset($_POST['termos'])){
        
