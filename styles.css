@@ -69,9 +69,9 @@ body {
 
 .inputHalf {
 	width: 122px;
-	height: 42px;
+	height: 36px;
 	border-radius: 10px;
-	font-size: 22px;
+	font-size: 15px;
 	margin-bottom: 5px;
 }
 
@@ -82,9 +82,12 @@ body {
 	font-size: 22px;
 	margin-bottom: 30px;
 }
-#registerBtn {
+.registerBtn {
 	background-color: #DB6624;
 	color: white;
+}
+#registerBtn {
+	margin-top: -7px !important;
 }
 #loginBtn {
 	background-color: #7A9EFB;
@@ -134,6 +137,7 @@ button, .arrowBack {
 
 .containerRegister {
 	padding: 30px;
+	padding-top: 10px !important;
 }
 
 #imgs_register {
@@ -164,6 +168,7 @@ div#img_perfil {
 	display: flex;
 	font-size: 18px;
 	align-items: center;
-	margin-bottom: 5px;
+	margin-top: -4px !important;
+	margin-bottom: 1px;
 	margin-left: 1px;
 }

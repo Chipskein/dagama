@@ -25,7 +25,7 @@
             <div class="containerLinkMenor">
               <a class="linkMenor">Esqueceu sua senha?</a>
             </div>
-            <input type="button" class="button" id="registerBtn" onclick="register()" value="Cadastrar-se"/>
+            <input type="button" class="button registerBtn"  onclick="showRegister()" value="Cadastrar-se"/>
           </div>
         </form>
       </div>
@@ -50,15 +50,19 @@
             <input class="inputs" name="username" type="text" placeholder='Username'>
             <input class="inputs" name="password" type="password" placeholder='Senha'>
             <input class="inputs" name="cpassword" type="password" placeholder='Confirmar senha'>
-            <input class="inputHalf" name="bdate" type="date" placeholder='Nascimento'>
-            <select class="inputHalf" name="pais" placeholder='Nascimento'>
-                <option value="1">Brasil</option>
+            <input class="inputs" name="bdate" type="date" placeholder='Nascimento'>
+            <select class="inputHalf" name="pais">
+                <option value="1" selected>Brasil</option>
+            </select>
+            <select class="inputHalf" name="genero">
+                <option value="M">Masculino</option>
+                <option value="F">Feminino</option>
             </select>
             <br>
             <div id="divTermos">
               <input name="termos" type="checkbox"> <p>Concordo com os <a href="LICENSE" target="_blank" style="color: #7ED8FF;">termos de uso</a></p>
             </div>
-            <input type="button" class="button" id="registerBtn" onclick="register()" value="Enviar"/>
+            <input type="button" class="button registerBtn" id="registerBtn" onclick="register()" value="Enviar"/>
           </div>
         </form>
       </div>

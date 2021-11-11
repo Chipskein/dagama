@@ -10,9 +10,10 @@
 <body>
 <?php
     function validar_data($data){
-        $day=substr($data,0,2);
-        $month=substr($data,3,2);
-        $year=substr($data,6);    
+        $dataArr = explode('-', $data);
+        $day = $dataArr[2];
+        $month = $dataArr[1];
+        $year = $dataArr[0];
         $day_qt=0;
         $bissexto = false;
         if (($year % 4 == 0 && $year % 100 !== 0) || ($year % 400 == 0)) $bissexto = true;
@@ -61,30 +62,64 @@
 ?>
 <?php
     include './infra/connection.php';
-    if(isset($_POST['email'])&&isset($_POST['username'])&&isset($_POST['password'])&&isset($_POST['cpassword'])&&isset($_POST['bdate'])&&isset($_POST['pais'])){
+    $erros = [];
+    // var_dump($_POST);
+    echo "<br>";
+    if(isset($_POST['email']) && isset($_POST['username']) && isset($_POST['password']) && isset($_POST['cpassword']) && isset($_POST['bdate']) &&
+        isset($_POST['pais']) && isset($_POST['termos'])){
        
-        if(preg_match("/^[a-zA-Z0-9\.]*@[a-z0-9\.]*\.[a-z]*$/",$_POST['email'])&&preg_match("/^([0-9]{2}\/[0-9]{2}\/[0-9]{4})$/",$_POST['bdate'])&&validar_data($_POST['bdate'])&&preg_match("/^[1-9][0-9]*$/",$_POST['pais'])&&$_POST['cpassword']==$_POST['password']){
-            echo "<h2 align=center>Registrando...</h2>";
-            $email="$_POST[email]";
-            $username="$_POST[username]";
-            $password=password_hash("$_POST[password]",PASSWORD_DEFAULT);
-            $bdate="$_POST[bdate]";
-            $pais="$_POST[pais]";
-            $photo= isset($_FILES['photo']) ? $_FILES['photo']:null;
-            $registered=Register($email,$password,$bdate,$username,$pais,$photo);
-            if($registered) echo "Registrado,Porfavor confirme seu email";
-            else echo "Um erro ocorreu no registro";        
+        if(!preg_match("/^[a-zA-Z0-9\.]*@[a-z0-9\.]*\.[a-z]*$/", $_POST['email'])){
+            $erros[] = "email inválido";
+        } else {
+            if(in_array($_POST['email'], getEmails())){
+                $erros[] = "email já cadastrado";
+            }
         }
-        else{
-            echo "<h2>Um erro ocorreu Retornando</h2>";
-            header("refresh:1;url=../index.php");
-            die();
+        if(!preg_match("/^[a-zA-Z0-9\. ]*$/", $_POST['username']) || trim($_POST['username']) == ""){
+            $erros[] = "username inválido";
         }
+        if(!preg_match("/^([0-9]{4}-[0-9]{2}-[0-9]{2})$/", $_POST['bdate'])){
+            $erros[] = "formato de data inválido";
+        } else {
+            if(!validar_data($_POST['bdate'])){
+                $erros[] = "data inválida";
+            }
+        }
+        if(!preg_match("/^[1-9][0-9]*$/", $_POST['pais'])){
+            $erros[] = "país inválido";
+        } else {
+            if(!in_array($_POST['pais'], getPaises())){
+                $erros[] = "pais não cadastrado";
+            }
+        }
+        if(!preg_match("/^[a-zA-Z0-9]{6}$/", $_POST['password'])){
+            $erros[] = "senha inválido: ela precisa ter no mínimo 6 caracteres ou números";
+        }
+        if($_POST['cpassword'] != $_POST['password']){
+            $erros[] = "as senhas precisam ser iguais";
+        }
+    } else {
+        $erros[] = "campos faltando";
     }
-    else{
-        echo "<h2>Um erro ocorreu Retornando</h2>";
-        header("refresh:1;url=../index.php");
+    if($erros != []) {
+        echo "<h2>Erro: ".implode(", ", $erros)."</h2>";
+        header("refresh:2;url=../index.php");
         die();
+    } else {
+        echo "<h2 align=center>Registrando...</h2>";
+            $email = "$_POST[email]";
+            $username = "$_POST[username]";
+            $password = password_hash("$_POST[password]", PASSWORD_DEFAULT);
+            $bdate = "$_POST[bdate]";
+            $pais = "$_POST[pais]";
+            $genero = "$_POST[genero]";
+            $photo = isset($_FILES['photo']) ? $_FILES['photo'] : null;
+            $registered = Register($email, $password, $bdate, $username, $genero, $pais, $photo);
+            if($registered){
+                header("refresh:2;url=validEmail.php");
+                die();
+            } 
+            else echo "Um erro ocorreu no registro!";
     }
 ?>    
 </body>

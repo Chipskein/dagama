@@ -26,6 +26,10 @@
                 //pegar dados do usuario;
                 $USERID=$passed['codigo'];
                 echo $USERID;
+
+                session_start();
+                $_SESSION["userid"] = $USERID;
+                echo "<br>".$_SESSION["userid"];
                 //iniciar sessão e armazenar os dados do usuario em na sessão.
             }
             else{

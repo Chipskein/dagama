@@ -3,11 +3,16 @@ function verificar(){
     document.getElementById("form").submit();
 };
 
-function register(){
+function showRegister(){
     var login = document.getElementById('loginContainer');
     var register = document.getElementById('registerContainerHidden');
     login.id = 'loginContainerHidden';
     register.id = 'registerContainer';
+}
+
+function register(){
+    //validar inputs
+    document.getElementById("formRegister").submit();
 }
 
 function login(){
