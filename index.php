@@ -42,11 +42,9 @@
             <div id="imgs_register">
                 <div id="img_input1">
                     <!-- Adicionar Crop-->
-                    <div id="img_perfil">
-                        
-                    </div>
-                    <input id="imgInp" type="file" accept="image/png,image/jpeg" name="photo">
+                    <div id="img_perfil"></div>
                 </div>
+                <input id="imgInp" type="file" accept="image/png,image/jpeg" name="photo">
             </div>
             <input class="inputs" name="email" type="email" placeholder="Email">
             <input class="inputs" name="username" type="text" placeholder='Username'>

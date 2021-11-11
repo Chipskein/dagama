@@ -21,8 +21,8 @@ body {
 }
 
 .logo {
-	width: 600px;
-	height: 600px;
+	width: 500px;
+	height: 500px;
 }
 
 .divLogo {
@@ -43,12 +43,12 @@ body {
 
 .divLogin {
 	background-color: #296179;
-	width: 424px;
-	height: 431px;
+	width: 324px;
+	height: 331px;
 	border-radius: 10px;
 }
 .headerTxt {
-	font-size: 35px;
+	font-size: 30px;
 	color: white;
 	text-align: center;
 	font-weight: bold;
@@ -60,25 +60,24 @@ body {
 }
 
 .inputs {
-	width: 356px;
-	height: 52px;
+	width: 256px;
+	height: 38px;
 	border-radius: 10px;
-	font-size: 22px;
-	margin-bottom: 30px;
+	font-size: 18px;
+	margin-bottom: 17px;
 }
 
 .inputHalf {
-	width: 170px;
-	height: 52px;
+	width: 122px;
+	height: 42px;
 	border-radius: 10px;
 	font-size: 22px;
-	margin-bottom: 30px;
-	margin-left: 2%;
+	margin-bottom: 5px;
 }
 
 .button {
-	width: 356px;
-	height: 52px;
+	width: 256px;
+	height: 42px;
 	border-radius: 10px;
 	font-size: 22px;
 	margin-bottom: 30px;
@@ -93,11 +92,11 @@ body {
 }
 
 .containerLinkMenor {
-	margin-left: 27%;
-	margin-bottom: 8%;
+	margin-left: 22%;
+	margin-bottom: 7%;
 }
 .linkMenor {
-	font-size: 18px;
+	font-size: 16px;
 	font-weight: bold;
 	color: white;
 }
@@ -115,8 +114,8 @@ body {
 button, .arrowBack {
 	background-color: transparent;
 	border: none;
-	margin-right: 25%;
-	margin-top: 20px;
+	margin-right: 30px;
+	margin-top: 13px;
 	width: 40px;
 	height: 40px;
 }
@@ -128,8 +127,8 @@ button, .arrowBack {
 
 .divRegister {
 	background-color: #296179;
-	width: 450px;
-	height: 778px;
+	width: 324px;
+	height: 560px;
 	border-radius: 10px;
 }
 
@@ -139,9 +138,13 @@ button, .arrowBack {
 
 #imgs_register {
 	display: flex;
-	flex-direction: column;
+	flex-direction: row;
 	gap: 10px;
-	margin-left: 10%;
+	margin-left: 1%;
+}
+
+#imgs_register input {
+	margin-top: 20%;
 }
 
 #img_input1 {
@@ -150,8 +153,8 @@ button, .arrowBack {
 }
 
 div#img_perfil {
-	width: 120px;
-	height: 120px;
+	width: 90px;
+	height: 90px;
 	background-image: url("imgs/icons/user-icon.png");
 	background-size: cover;
 	border-radius: 50%;
@@ -159,8 +162,8 @@ div#img_perfil {
 
 #divTermos {
 	display: flex;
-	font-size: 20px;
+	font-size: 18px;
 	align-items: center;
-	margin-bottom: 5%;
-	margin-left: 5%;
+	margin-bottom: 5px;
+	margin-left: 1px;
 }
