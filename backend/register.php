@@ -105,7 +105,8 @@ include './infra/connection.php';
             $photo= is_uploaded_file($_FILES['photo']['tmp_name']) ? $_FILES['photo']:null;
             $registered = Register($email, $password, $bdate, $username, $genero, $pais, $photo);
             if($registered){
-                header("refresh:2;url=../validarEmail.php");
+                $id=getIdbyEmail($email);
+                header("refresh:2;url=sendmail.php?id=$id");
                 die();
             } 
             else echo "Um erro ocorreu no registro!";

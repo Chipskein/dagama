@@ -182,9 +182,10 @@ div#img_perfil {
 	color:var(--white-color);
 	width: 80%;
 }
-.header{
+header.header{
 	background-color: var(--azulEscuro-color);
 	height: 70px;
+	width: 100%;
 }
 div.mar_porto{
 	background-color: var(--cinza-color);
@@ -222,17 +223,19 @@ body.mar_porto{
 img.ancora{
 	width: 40px;
 	height: 40px;
+	margin-top: 20px;
+	margin-left: 20px;
 }
-.header>img.logo{
-	width: 40px;
-	height: 40px;
+img.header_logo{
+	width: 45px;
+	height: 45px;
+	margin-top: 15px;
+	margin-left: 20px;
 }
-img.pesquisar{
-	width: 20px;
-	height: 20px;
-}
+
+
 a.header{
-	font-size: 28px;
+	font-size: 20px;
 	text-decoration: none;
 	color: var(--white-color);
 }
@@ -243,4 +246,30 @@ a.header:visited{
 }
 a.onIt{
 	color: var(--roxoClaro-color);
+}
+.links{
+	width: 200px;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	margin-top: 20px;
+}
+.header-container{
+	display: flex;
+	flex-direction: row;
+}
+img.pesquisar{
+	width: 20px;
+	height: 20px;
+}
+input.pesquisar{
+	background-color: var(--white-color);
+	height: 25px;
+	width: 500px;
+}
+.pesquisar-pool{
+	margin-top: 20px;
+	flex-grow: 2;
+	display: flex;
+	justify-content: center;
 }
