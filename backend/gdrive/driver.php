@@ -1,7 +1,5 @@
 <?php
   require_once $_SERVER['DOCUMENT_ROOT'].'/vendor/autoload.php';
-  
-  $FOLDERS=array("root"=>"14oQWzTorITdqsK7IiFwfTYs91Gh_NcjS","avatares"=>"1Z3A4iqIe1eMerkdTEkXnjApRPupaPq-M","portos"=>"1e5T21RxDQ-4Kqw8EDVUBICGPeGIRSNHx","users"=>"1j2ivb8gBxV_AINaQ7FHjbd1OI0otCpEO");
   function getClient(){
       $client = new Google\Client();
       $client->setApplicationName("dagama-gdrive");
@@ -36,7 +34,6 @@
       $service=new Google\Service\Drive($client);      
       $file = new Google\Service\Drive\DriveFile();
       $file->setMimeType($mimeType);
-      //set to user id
       $file->setName($newfilename);
       $file->setParents(array($folderID));
       try {
@@ -45,9 +42,7 @@
           'data' => $data,
           'mimeType' => $mimeType,
         ));
-    
-
-        return $createdFile;
+        return $createdFile->id;
       } catch (Exception $e) {
         print "An error occurred: " . $e->getMessage();
       }

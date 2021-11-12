@@ -1,6 +1,6 @@
 <?php
-    include $_SERVER['DOCUMENT_ROOT'].'/backend/gdrive/driver.php';
     include $_SERVER['DOCUMENT_ROOT'].'/backend/mailer/mailer.php';
+    include $_SERVER['DOCUMENT_ROOT'].'/backend/gdrive/driver.php';
     function db_connection(){
         $db=false;
         $db_type=false;
@@ -67,16 +67,22 @@
         $db_connection=db_connection();
         $db=$db_connection['db'];
         $db_type=$db_connection['db_type'];
+        $FOLDERS=array("root"=>"14oQWzTorITdqsK7IiFwfTYs91Gh_NcjS","avatares"=>"1Z3A4iqIe1eMerkdTEkXnjApRPupaPq-M","portos"=>"1e5T21RxDQ-4Kqw8EDVUBICGPeGIRSNHx","users"=>"1j2ivb8gBxV_AINaQ7FHjbd1OI0otCpEO");
+        $link='https://upload.wikimedia.org/wikipedia/commons/4/4a/Pirate_icon.gif';
+        if($photo){
+            $type=$photo['type'];
+            $server_path=$photo['tmp_name'];
+            $link="https://drive.google.com/uc?id=".insertFile("$type","$server_path","$FOLDERS[avatares]","avatar");
+        }
         if($db){
             if($db_type == 'sqlite'){
-                $verify = $db->exec("insert into perfil (pais, email, senha, genero, username, datanasc) values ('".$pais."', '".$email."', '".$password."', '".$genero."', '".$username."', '".$bdate."')");
+                $verify = $db->exec("insert into perfil (pais, email, senha, genero, username, datanasc,img) values ('".$pais."', '".$email."', '".$password."', '".$genero."', '".$username."', '".$bdate."', '".$link."'".")");
                 if($verify) return $verify;
                 else return false;
             }
         }
-        else exit;
+        else exit;  
     };
-
     /* QUERIES PARA VALIDAÇÃO */
     function getPaises(){
         $db_connection = db_connection();

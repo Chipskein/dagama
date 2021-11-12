@@ -84,15 +84,15 @@ include './infra/connection.php';
             else {
                 if(!in_array($_POST['pais'], getPaises())) $erros[] = "pais não cadastrado";
             }
-            if(!preg_match("/^[a-zA-Z0-9]{6}$/", $_POST['password'])) $erros[] = "senha inválido: ela precisa ter no mínimo 6 caracteres ou números";
+            if(trim($_POST['passowrd'])!=''&&strlen($_POST['passowrd'])>=6) $erros[] = "senha inválido: ela precisa ter no mínimo 6 caracteres ou números";
             if($_POST['cpassword'] != $_POST['password']) $erros[] = "as senhas precisam ser iguais";
         } 
         else $erros[] = "campos faltando";
 
         if($erros != []) {
             echo "<h2>Erro: ".implode(", ", $erros)."</h2>";
-           //header("refresh:2;url=../index.php");
-           // die();
+            header("refresh:2;url=../index.php");
+            die();
         } 
         else {
             echo "<h2 align=center>Registrando...</h2>";
@@ -102,7 +102,7 @@ include './infra/connection.php';
             $bdate = "$_POST[bdate]";//converter bdate to yyyy/mm/dd
             $pais = "$_POST[pais]";
             $genero = "$_POST[genero]";
-            $photo = isset($_FILES['photo']) ? $_FILES['photo'] : null;
+            $photo= is_uploaded_file($_FILES['photo']['tmp_name']) ? $_FILES['photo']:null;
             $registered = Register($email, $password, $bdate, $username, $genero, $pais, $photo);
             if($registered){
                 header("refresh:2;url=../validarEmail.php");
