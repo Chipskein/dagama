@@ -10,6 +10,14 @@
   <title>Dagama</title>
 </head>
 <body>
+  <?php 
+    session_start();
+    if($_SESSION['userid']){
+      echo "<h2>Voce já esta logado</h2>";
+      header("refresh:1;url=mar.php");
+      die();
+    }
+  ?>
   <div id="main">
     <div class="divLogo">
       <img class="logo" src="imgs/icon.png" alt="logo">
