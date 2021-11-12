@@ -22,14 +22,18 @@
   }
 ?>
   <header class=header>
-  <?php
-    echo "<a href=backend/logoff.php><img class=ancora src=imgs/icons/ancora.png alt=logoff></a>";
-  ?>  
-  <img class=logo src="imgs/icon.png" alt="logo">
-  <label><a class=pesquisar><img class=pesquisar src="imgs/icons/search.png" alt="pesquisar"></a><input type="text" placeholder="Faça sua pesquisa"></label>
-    <?php echo "<a class=header href=feed.php?user=$_SESSION[userid]>Feed</a> ";?>
-    <a class="onIt header">Mar</a>
-    <?php echo "<a class=header href=navio.php?user=$_SESSION[userid]>Meu navio</a> ";?>
+    <div class=header-container>
+      <div class=logos>
+        <?php echo "<a href=backend/logoff.php><img class=ancora src=imgs/icons/ancora.png alt=logoff></a>";?>  
+        <img class=header_logo src="imgs/icon.png" alt="logo">
+      </div>
+      <div class=pesquisar-pool><a class=pesquisar><img class=pesquisar src="imgs/icons/search.png" alt="pesquisar"></a><input class=pesquisar type="text" placeholder="Faça sua pesquisa"></div>
+      <div class="links">
+        <?php echo "<a class=header href=feed.php?user=$_SESSION[userid]>Feed</a> ";?>
+        <a class="onIt header">Mar</a>
+        <?php echo "<a class=header href=navio.php?user=$_SESSION[userid]>Meu navio</a> ";?>
+      </div> 
+    </div>
   </header> 
   <main>
     <br>
