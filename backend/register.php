@@ -68,7 +68,7 @@
     // TODO: Validação de gênero, termos
     if(isset($_POST['email']) && isset($_POST['username']) && isset($_POST['password']) && isset($_POST['cpassword']) && isset($_POST['bdate']) &&
         isset($_POST['pais']) && isset($_POST['termos'])){
-       
+        // FIXME: erro ao usar email institucional
         if(!preg_match("/^[a-zA-Z0-9\.]*@[a-z0-9\.]*\.[a-z]*$/", $_POST['email'])){
             $erros[] = "email inválido";
         } else {
