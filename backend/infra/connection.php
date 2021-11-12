@@ -138,4 +138,22 @@
         }
         else exit;
     };
+    function getUserInfo($id){
+        $db_connection = db_connection();
+        $db = $db_connection['db'];
+        $db_type = $db_connection['db_type'];
+        if($db){
+            if($db_type == 'sqlite'){
+                $response = $db->query("select * from perfil where codigo='$id'");
+                if($response) return $response->fetchArray();
+                else return false;
+            }
+            if($db_type == 'postgresql'){
+                //$response = pg_fetch_array(pg_query($db, "select email from perfil"));
+                //if($response) return $response;
+                //else return false;
+            }
+        }
+        else exit;
+    };
 ?>
