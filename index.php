@@ -45,14 +45,14 @@
         <p class="headerTxt">Cadastro</p>
       </div>
       <div class="divRegister">
-        <form action="backend/register.php" method="post" id="formRegister" name="formRegister">
+        <form action="backend/register.php" method="post" id="formRegister" name="formRegister" enctype="multipart/form-data">
           <div class="containerRegister">
             <div id="imgs_register">
                 <div id="img_input1">
                     <!-- Adicionar Crop-->
                     <div id="img_perfil"></div>
                 </div>
-                <input id="imgInp" type="file" accept="image/png,image/jpeg" name="photo">
+                <input id="imgInp" type="file"  name="photo">
             </div>
             <input class="inputs" name="email" type="email" placeholder="Email">
             <input class="inputs" name="username" type="text" placeholder='Username'>
