@@ -12,29 +12,14 @@
 <?php
   include './backend/infra/connection.php';
   session_start();
-  $user=[];
-  if(!$_SESSION['userid']){
+  if($_SESSION['userid']){
+    
+  }
+  else {
     echo "<h2 align=center>Para ver este conteudo faça um cadastro no dagama!!!</h2>";
     header("refresh:1;url=index.php");
     die();
   }
-  else{
-      $user=getUserInfo($_SESSION['userid']);
-      echo "<script>";
-      //colocar as variaveis do php aqui;
-      echo "let val='$user[img]'";
-      echo "</script>";
-  }
 ?>
-<main>
-    <div align=center>
-    <!--Add onlick change-->
-      <div id="img_perfil" class=perfil></div>
-      <?php echo "<h3>$user[username]</h3>";?>
-    </div>
-</main>
-<script>
-    img_perfil.style.backgroundImage=`url(${val})`;
-</script>
 </body>
 </html>

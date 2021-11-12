@@ -6,6 +6,9 @@
 	--cinza-color: #454141;
 	--white-color:white;
 	--cinza2-color:#504E4E;
+	--azulEscuro2-color: #358FB6;
+	--roxoClaro-color:#D39AFF;
+	
 }
 
 body {
@@ -178,4 +181,66 @@ div#img_perfil {
 	background-color: var(--cinza2-color);
 	color:var(--white-color);
 	width: 80%;
+}
+.header{
+	background-color: var(--azulEscuro-color);
+	height: 70px;
+}
+div.mar_porto{
+	background-color: var(--cinza-color);
+	height: 265px;
+	width: 80%;
+	text-align: left;
+}
+img.mar_porto{
+	width: 191px;
+	height: 174px;
+	float: left;
+	margin-top: 45px;
+	margin-left: 20px;
+}
+h2.mar_porto{
+	padding-top: 30px;
+}
+p.mar_porto{
+	font-size: 20px;
+	margin-top: 60px;
+}
+
+body.mar_porto{
+	background-color: var(--cinza2-color);
+}
+.mar_porto>a{
+	color: var(--azulEscuro2-color);
+	text-decoration: none;
+}
+.mar_porto>a:visited{
+	color: var(--azulEscuro2-color);
+	text-decoration: none;
+}
+
+img.ancora{
+	width: 40px;
+	height: 40px;
+}
+.header>img.logo{
+	width: 40px;
+	height: 40px;
+}
+img.pesquisar{
+	width: 20px;
+	height: 20px;
+}
+a.header{
+	font-size: 28px;
+	text-decoration: none;
+	color: var(--white-color);
+}
+a.header:visited{
+	font-size: 20px;
+	text-decoration: none;
+	color: var(--white-color);
+}
+a.onIt{
+	color: var(--roxoClaro-color);
 }

@@ -144,7 +144,7 @@
         $db_type = $db_connection['db_type'];
         if($db){
             if($db_type == 'sqlite'){
-                $response = $db->query("select * from perfil where codigo='$id'");
+                $response = $db->query("select img,username from perfil where codigo='$id'");
                 if($response) return $response->fetchArray();
                 else return false;
             }
