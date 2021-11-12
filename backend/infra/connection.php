@@ -25,7 +25,7 @@
         return ['db'=>$db,'db_type'=>$db_type];
     }
     //querys example
-    function getAllPorto($limit,$offset){
+    function getAllPorto($offset,$limit=10){
         $db_connection=db_connection();
         $db=$db_connection['db'];
         $db_type=$db_connection['db_type'];
@@ -39,7 +39,7 @@
                 return $results;
             }
             if($db_type=='postgresql'){
-                $result=pg_fetch_all(pg_query($db,"select * from porto"));
+                $result=pg_fetch_all(pg_query($db,"select * from porto limit $limit offset $offset"));
                 return $result;
             }
         }
@@ -63,7 +63,7 @@
         }
         else exit;
     }
-    function Register($email, $password, $bdate, $username, $genero, $pais, $photo){
+    function Register($email, $password, $bdate, $username, $genero, $pais,$photo){
         $db_connection=db_connection();
         $db=$db_connection['db'];
         $db_type=$db_connection['db_type'];
@@ -73,11 +73,6 @@
                 if($verify) return $verify;
                 else return false;
             }
-            // if($db_type=='postgresql'){
-            //     $verify=pg_fetch_array(pg_query($db,"select codigo,senha as pass from perfil where perfil.email='$email'"));
-            //     if(password_verify($password,$verify['pass'])) return $verify;
-            //     else return false;
-            // }
         }
         else exit;
     };
@@ -115,6 +110,24 @@
                 $response = pg_fetch_array(pg_query($db, "select email from perfil"));
                 if($response) return $response;
                 else return false;
+            }
+        }
+        else exit;
+    };
+    function emailExists($email){
+        $db_connection = db_connection();
+        $db = $db_connection['db'];
+        $db_type = $db_connection['db_type'];
+        if($db){
+            if($db_type == 'sqlite'){
+                $response = $db->query("select email from perfil where email='$email'");
+                if($response) return $response->fetchArray();
+                else return false;
+            }
+            if($db_type == 'postgresql'){
+                //$response = pg_fetch_array(pg_query($db, "select email from perfil"));
+                //if($response) return $response;
+                //else return false;
             }
         }
         else exit;

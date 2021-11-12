@@ -69,7 +69,7 @@
             </select>
             <br>
             <div id="divTermos">
-              <input name="termos" type="checkbox"> <p>Concordo com os <a href="LICENSE" target="_blank" style="color: #7ED8FF;">termos de uso</a></p>
+              <input value='pass' name="termos" type="checkbox"> <p>Concordo com os <a href="LICENSE" target="_blank" style="color: #7ED8FF;">termos de uso</a></p>
             </div>
             <input type="button" class="button registerBtn" id="registerBtn" onclick="register()" value="Enviar"/>
           </div>

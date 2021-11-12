@@ -8,8 +8,10 @@
 </head>
 <body>
 <?php
+include './infra/connection.php';
 echo "<h2>Registrado, por favor confirme seu email!</h2><br>";
 echo "<input type=\"button\" class=\"button\" id=\"loginBtn\" onclick=\"verificar()\" value=\"Entrar\"/>";
+
 ?>
 </body>
 </html>
