@@ -12,7 +12,7 @@
 <body>
   <?php 
     session_start();
-    if($_SESSION['userid']){
+    if(isset($_SESSION['userid'])){
       echo "<h2>Voce já esta logado</h2>";
       header("refresh:1;url=mar.php");
       die();
