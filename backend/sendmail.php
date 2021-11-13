@@ -15,11 +15,7 @@
     if(isset($_GET['id'])){
         $user=getUserInfo($_GET['id']);
         if($user){
-            //user[ativo]==0
-            echo "<pre>";
-            var_dump($user);
-            echo "</pre>";
-            if(!$user['ativo']){
+            if(!$user['ativo']||$user['ativo']=='f'){
                 $email="$user[email]";
                 echo "<h2 align=center>Enviando Email para $email</h2>";
                 $link=(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http")."://$_SERVER[HTTP_HOST]/backend/validate_acc.php?id="."$_GET[id]";
