@@ -11,9 +11,11 @@
 <body>
 <?php
   include './backend/infra/connection.php';
-  session_start();
+  if(!isset($_SESSION)) { 
+    session_start(); 
+  }
   $user=[];
-  if(!$_SESSION['userid']){
+  if(!isset($_SESSION['userid'])){
     echo "<h2 align=center>Para ver este conteudo faça um cadastro no dagama!!!</h2>";
     header("refresh:1;url=index.php");
     die();

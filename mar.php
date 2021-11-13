@@ -11,8 +11,10 @@
 <body class="mar_porto">
 <?php
   include './backend/infra/connection.php';
-  session_start();
-  if($_SESSION['userid']){
+  if(!isset($_SESSION)) { 
+    session_start(); 
+  }
+  if(isset($_SESSION['userid'])){
     $portos=getAllPorto(0);
   }
   else {

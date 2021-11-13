@@ -5,12 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../styles.css">
-    <title>Dagama</title>
+    <link rel="icon" href="../imgs/icon.png" type="image/jpg">
+    <title>Dagama | Login</title>
 </head>
 <body>
 <?php
 include './infra/connection.php';
-session_start();
+if(!isset($_SESSION)) { 
+    session_start(); 
+}
 if(isset($_SESSION['email'])&&isset($_SESSION['password'])){
     $login=Login2($_SESSION['email'],$_SESSION['password']);
     session_destroy();

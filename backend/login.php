@@ -10,9 +10,11 @@
 <body>
 <?php
     include './infra/connection.php';
-    session_start();
+    if(!isset($_SESSION)) { 
+        session_start(); 
+    } 
     echo "<div align=center>";
-    if(!$_SESSION['userid']){
+    if(!isset($_SESSION['userid'])){
         if(isset($_POST['email'])&&isset($_POST['password'])){
             echo "<h2 align=center>Logando...</h2>";
             $regex_email="/^[a-zA-Z0-9\.]*@[a-z0-9\.]*\.[a-z]*$/";
@@ -26,7 +28,6 @@
                     if($passed['ativo']==1){
                         echo "<h2 align=center>Logado</h2>";
                         $USERID=$passed['codigo'];
-                        session_start();
                         $_SESSION["userid"] = $USERID;
                         header("refresh:1;url=../mar.php");
                         die();
@@ -61,7 +62,6 @@
         die();
     }
     echo "</div>";
-
 ?>    
 </body>
 </html>

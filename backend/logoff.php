@@ -9,8 +9,10 @@
 </head>
 <body>
 <?php
-    session_start();
-    if($_SESSION['userid']){
+    if(!isset($_SESSION)) { 
+        session_start(); 
+    } 
+    if(isset($_SESSION['userid'])){
         unset($_SESSION['userid']);
         session_destroy();
         echo "<h2 align=center>Tchau Tchau Volte sempre</h2>";

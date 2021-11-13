@@ -20,9 +20,11 @@ if(isset($_GET['id'])){
             if($activated){
                 echo "<h2 align=center>Seu usuario foi ativado</h2>";
                 //auto-login
-                session_start();
-                $_SESSION['email']=$activated['email'];
-                $_SESSION['password']=$activated['password'];
+                if(!isset($_SESSION)) { 
+                    session_start(); 
+                    $_SESSION['email']=$activated['email'];
+                    $_SESSION['password']=$activated['password'];
+                } 
                 header("refresh:2;url=login2.php");               
             }
             else{

@@ -11,7 +11,9 @@
 <body>
 <?php
 include './backend/infra/connection.php';
-session_start();
+if(!isset($_SESSION)) { 
+    session_start(); 
+}
 if(isset($_SESSION['userid'])){
     echo "<h2 align=center>Você já esta logado!</h2>";
     header("refresh:1;url=mar.php");

@@ -63,8 +63,11 @@
 ?>
 <?php
 include './infra/connection.php';
-    session_start();
-    if(!$_SESSION['userid']){
+
+    if(!isset($_SESSION)) { 
+        session_start(); 
+    } 
+    if(!isset($_SESSION['userid'])){
         $erros = [];
         echo "<br>";
         if(isset($_POST['email']) && isset($_POST['username']) && isset($_POST['password']) && isset($_POST['cpassword']) && isset($_POST['bdate']) &&isset($_POST['pais']) && isset($_POST['termos']) && isset($_POST['genero']))
@@ -84,7 +87,7 @@ include './infra/connection.php';
             else {
                 if(!in_array($_POST['pais'], getPaises())) $erros[] = "pais não cadastrado";
             }
-            if(trim($_POST['passowrd'])!=''&&strlen($_POST['passowrd'])>=6) $erros[] = "senha inválido: ela precisa ter no mínimo 6 caracteres ou números";
+            if(trim($_POST['password'])!=''&&strlen($_POST['password'])>=6) $erros[] = "senha inválido: ela precisa ter no mínimo 6 caracteres ou números";
             if($_POST['cpassword'] != $_POST['password']) $erros[] = "as senhas precisam ser iguais";
         } 
         else $erros[] = "campos faltando";
