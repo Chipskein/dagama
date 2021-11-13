@@ -211,4 +211,24 @@
         }
         else exit;
     }
+    function addPorto($perfil,$nome,$descr,$img){
+        $db_connection=db_connection();
+        $db=$db_connection['db'];
+        $db_type=$db_connection['db_type'];
+        $FOLDERS=array("root"=>"14oQWzTorITdqsK7IiFwfTYs91Gh_NcjS","avatares"=>"1Z3A4iqIe1eMerkdTEkXnjApRPupaPq-M","portos"=>"1e5T21RxDQ-4Kqw8EDVUBICGPeGIRSNHx","users"=>"1j2ivb8gBxV_AINaQ7FHjbd1OI0otCpEO");
+        $link='https://upload.wikimedia.org/wikipedia/commons/4/4a/Pirate_icon.gif';
+        if($img){
+            $type=$img['type'];
+            $server_path=$img['tmp_name'];
+            $link="https://drive.google.com/uc?id=".insertFile("$type","$server_path","$FOLDERS[portos]","porto-avatar");
+        }
+        if($db){
+            if($db_type == 'sqlite'){
+                $verify = $db->exec("insert into porto (perfil,nome,descr,img) values ('".$perfil."', '".$nome."', '".$descr."', '".$link."'".")");
+                if($verify) return $verify;
+                else return false;
+            }
+        }
+        else exit; 
+    }
 ?>
