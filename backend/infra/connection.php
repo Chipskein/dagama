@@ -265,4 +265,23 @@
         }
         else exit; 
     }
+    function getTotalPorto(){
+        $db_connection=db_connection();
+        $db=$db_connection['db'];
+        $db_type=$db_connection['db_type'];
+        if($db){
+            if($db_type=='sqlite'){
+                $result=$db->query("select count(*) as total from porto");
+                if($result){
+                    return $result->fetchArray()['total'];
+                }
+                return false;
+            }
+            if($db_type=='postgresql'){
+                $result=pg_fetch_array(pg_query($db,"select count(*) as total from porto"));
+                return $result['total'];
+            }
+        }
+        else exit;
+    }
 ?>

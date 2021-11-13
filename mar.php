@@ -10,12 +10,22 @@
 </head>
 <body class="mar_porto">
 <?php
+  function url($campo, $valor) {
+    $result = array();
+    if (isset($_GET["offset"])) $result["offset"] = "offset=".$_GET["offset"];
+    $result[$campo] = $campo."=".$valor;
+    return("mar.php?".strtr(implode("&", $result), " ", "+"));
+  }
   include './backend/infra/connection.php';
   if(!isset($_SESSION)) { 
     session_start(); 
   }
   if(isset($_SESSION['userid'])){
-    $portos=getAllPorto(0);
+    $limit=2;//mudar pra 10 dps
+    $offset= isset($_GET['offset']) ? $_GET['offset']:0;
+    //falta o pesquisar e ordenar
+    $portos=getAllPorto($offset,$limit);
+    $total=getTotalPorto();
   }
   else {
     echo "<h2 align=center>Para ver este conteudo faça um cadastro no dagama!!!</h2>";
@@ -53,7 +63,16 @@
   </main>
   <footer>
     <div align=center>
-        <h3><< 1 2 3 >></h3>
+        <h3>
+          <<  
+          <?php
+            //provisório
+            for ($page = 0; $page < ceil($total/$limit); $page++) {
+              echo (($offset == $page*$limit) ? ($page+1) : "<a class=page-link href=\"".url("offset", $page*$limit)."\">".($page+1)."</a>")." \n";
+            }
+          ?>
+          >>
+       </h3>  
     </div>
   </footer>
 </body>
