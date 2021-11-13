@@ -73,7 +73,11 @@ if (!in_array($providerName, ['Google', 'Microsoft', 'Yahoo'])) {
 //or whichever provider you're using.
 
 //adicionado porque por algum motivo eu não consigo pegar o protocolo no $_SERVER['HTTP_HOST'0]
-$redirectUri = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http")."://$_SERVER[HTTP_HOST]"."/vendor/phpmailer/phpmailer/get_oauth_token.php";
+$start_link='';
+if(preg_match("/localhost/","$_SERVER[HTTP_HOST]")) $start_link="http://";
+if(preg_match("/dagama.herokuapp/","$_SERVER[HTTP_HOST]")) $start_link="https://";
+
+$redirectUri = $start_link."/$_SERVER[HTTP_HOST]"."/vendor/phpmailer/phpmailer/get_oauth_token.php";
 $clientId = '971777937005-dqnkd7sef0410teq7etqnl5es07ocha5.apps.googleusercontent.com';
 $clientSecret = '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';
 echo "$redirectUri";
