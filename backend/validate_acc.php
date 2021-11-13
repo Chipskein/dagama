@@ -15,7 +15,7 @@ if(isset($_GET['id'])){
     $user=getUserInfo($_GET['id']);
     if($user){
         //user[ativo]==0
-        if(!$user['ativo']){
+        if(!$user['ativo']||$user['ativo']=='f'){
             $activated=activateUser($_GET['id']);
             if($activated){
                 echo "<h2 align=center>Seu usuario foi ativado</h2>";
