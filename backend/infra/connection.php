@@ -24,8 +24,6 @@
         }
         return ['db'=>$db,'db_type'=>$db_type];
     }
-    
-    //querys example
     function getAllPorto($offset,$limit=10){
         $db_connection=db_connection();
         $db=$db_connection['db'];
@@ -99,11 +97,19 @@
                 if($verify) return $verify;
                 else return false;
             }
+            if($db_type == 'postgresql'){
+                $preparing = pg_prepare($db, "Register", "insert into perfil (pais, email, senha, genero, username, datanasc,img) values ($1,$2,$3,$4,$5,$6,$7)");
+                if($preparing){
+                    $verify = pg_execute($db, "Register", array("$pais","$email","$password","$genero","$username","$bdate","$link"));
+                    if($verify) return $verify;
+                    else return false;
+                }
+                else return false;
+            }
         }
         else exit;  
     };
-    
-    /* QUERIES PARA VALIDAÇÃO */
+    //transformar para um exists
     function getPaises(){
         $db_connection = db_connection();
         $db = $db_connection['db'];
@@ -122,6 +128,7 @@
         }
         else exit;
     };
+    //remover
     function getEmails(){
         $db_connection = db_connection();
         $db = $db_connection['db'];
@@ -140,6 +147,7 @@
         }
         else exit;
     };
+    //substitui getEmails na validação
     function emailExists($email){
         $db_connection = db_connection();
         $db = $db_connection['db'];
@@ -151,9 +159,9 @@
                 else return false;
             }
             if($db_type == 'postgresql'){
-                //$response = pg_fetch_array(pg_query($db, "select email from perfil"));
-                //if($response) return $response;
-                //else return false;
+                $response = pg_query($db,"select email from perfil where email='$email'");
+                if($response) return pg_fetch_array($response);
+                else return false;
             }
         }
         else exit;
@@ -169,9 +177,11 @@
                 else return false;
             }
             if($db_type == 'postgresql'){
-                //$response = pg_fetch_array(pg_query($db, "select email from perfil"));
-                //if($response) return $response;
-                //else return false;
+                if($db_type == 'postgresql'){
+                    $response = pg_query($db,"select email,ativo,img,username from perfil where codigo='$id'");
+                    if($response) return pg_fetch_array($response);
+                    else return false;
+                }
             }
         }
         else exit;
@@ -185,6 +195,13 @@
                 $response = $db->query("select codigo from perfil where email='$email'");
                 if($response) return $response->fetchArray()['codigo'];
                 else return false;
+            }
+            if($db_type == 'postgresql'){
+                if($db_type == 'postgresql'){
+                    $response = pg_query($db,"select codigo from perfil where email='$email'");
+                    if($response) return pg_fetch_array($response)['codigo'];
+                    else return false;
+                }
             }
         }
         else exit;
