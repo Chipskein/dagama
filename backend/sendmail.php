@@ -16,6 +16,9 @@
         $user=getUserInfo($_GET['id']);
         if($user){
             //user[ativo]==0
+            echo "<pre>";
+            var_dump($user);
+            echo "</pre>";
             if(!$user['ativo']){
                 $email="$user[email]";
                 echo "<h2 align=center>Enviando Email para $email</h2>";
