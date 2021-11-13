@@ -225,7 +225,9 @@
                 if($preparing){
                     $verify = pg_execute($db, "ActivateUser", array("$id"));
                     if($verify){
-                        return pg_fetch_array($verify);
+                        $response = pg_query($db,"select email,senha as password from perfil where codigo=$id");
+                        if($response) return pg_fetch_array($response)['codigo'];
+                        else return false;
                     } 
                     else return false;
                 }
