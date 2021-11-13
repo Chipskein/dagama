@@ -221,9 +221,15 @@
                 else return false;
             }
             if($db_type == 'postgresql'){
-                //$response = pg_fetch_array(pg_query($db, "select email from perfil"));
-                //if($response) return $response;
-                //else return false;
+                $preparing = pg_prepare($db, "ActivateUser","update perfil set ativo=true where codigo=$1 returning *");
+                if($preparing){
+                    $verify = pg_execute($db, "ActivateUser", array("$id"));
+                    if($verify){
+                        return pg_fetch_array($verify);
+                    } 
+                    else return false;
+                }
+                else return false;
             }
         }
         else exit;
