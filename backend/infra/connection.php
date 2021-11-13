@@ -51,13 +51,31 @@
         $db_type=$db_connection['db_type'];
         if($db){
             if($db_type=='sqlite'){
-                $verify=$db->query("select codigo,senha as pass from perfil where perfil.email='$email'")->fetchArray();
+                $verify=$db->query("select codigo,senha as pass,ativo from perfil where perfil.email='$email'")->fetchArray();
                 if(password_verify($password,$verify['pass'])) return $verify;
                 else return false;
             }
             if($db_type=='postgresql'){
                 $verify=pg_fetch_array(pg_query($db,"select codigo,senha as pass from perfil where perfil.email='$email'"));
                 if(password_verify($password,$verify['pass'])) return $verify;
+                else return false;
+            }
+        }
+        else exit;
+    }
+    function Login2($email,$password){
+        $db_connection=db_connection();
+        $db=$db_connection['db'];
+        $db_type=$db_connection['db_type'];
+        if($db){
+            if($db_type=='sqlite'){
+                $verify=$db->query("select codigo,senha as pass from perfil where perfil.email='$email'")->fetchArray();
+                if("$password"=="$verify[pass]") return $verify;
+                else return false;
+            }
+            if($db_type=='postgresql'){
+                $verify=pg_fetch_array(pg_query($db,"select codigo,senha as pass from perfil where perfil.email='$email'"));
+                if("$password"=="$verify[pass]") return $verify;
                 else return false;
             }
         }
@@ -169,4 +187,26 @@
         }
         else exit;
     };
+    function activateUser($id){
+        $db_connection = db_connection();
+        $db = $db_connection['db'];
+        $db_type = $db_connection['db_type'];
+        if($db){
+            if($db_type == 'sqlite'){
+                $response = $db->exec("update perfil set ativo='1' where codigo=$id");
+                if($response) {
+                    $res=$db->query("select email,senha as password from perfil where codigo='$id'");
+                    if($res) return $res->fetchArray();
+                    else return false;
+                }
+                else return false;
+            }
+            if($db_type == 'postgresql'){
+                //$response = pg_fetch_array(pg_query($db, "select email from perfil"));
+                //if($response) return $response;
+                //else return false;
+            }
+        }
+        else exit;
+    }
 ?>
