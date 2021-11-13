@@ -24,6 +24,7 @@
         }
         return ['db'=>$db,'db_type'=>$db_type];
     }
+    
     //querys example
     function getAllPorto($offset,$limit=10){
         $db_connection=db_connection();
@@ -101,6 +102,7 @@
         }
         else exit;  
     };
+    
     /* QUERIES PARA VALIDAÇÃO */
     function getPaises(){
         $db_connection = db_connection();

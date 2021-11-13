@@ -67,10 +67,10 @@ include './infra/connection.php';
     if(!$_SESSION['userid']){
         $erros = [];
         echo "<br>";
-        if(isset($_POST['email']) && isset($_POST['username']) && isset($_POST['password']) && isset($_POST['cpassword']) && isset($_POST['bdate']) &&isset($_POST['pais']) && isset($_POST['termos'])&&isset($_POST['genero']))
+        if(isset($_POST['email']) && isset($_POST['username']) && isset($_POST['password']) && isset($_POST['cpassword']) && isset($_POST['bdate']) &&isset($_POST['pais']) && isset($_POST['termos']) && isset($_POST['genero']))
         {
             if($_POST['termos']!='pass') $erros[] = "Você não concordou com os termos de uso";
-            if($_POST['genero']!='M'&&$_POST['genero']!='F'&&$_POST['genero']!='O') $erros[] = "gêneno inválido";
+            if($_POST['genero'] != 'M' && $_POST['genero'] != 'F' && $_POST['genero'] != 'O') $erros[] = "gêneno inválido";
             if(!preg_match("/^[a-zA-Z0-9\.]*@[a-z0-9\.]*\.[a-z]*$/", $_POST['email'])) $erros[] = "email inválido";
             else {
                 if(emailExists($_POST['email'])) $erros[] = "email já cadastrado";   
