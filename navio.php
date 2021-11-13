@@ -21,11 +21,17 @@
     die();
   }
   else{
-      $user=getUserInfo($_SESSION['userid']);
-      echo "<script>";
-      //colocar as variaveis do php aqui;
-      echo "let val='$user[img]'";
-      echo "</script>";
+      if(isset($_GET['user'])){
+        $user=getUserInfo("$_GET[user]");
+        if(!$user){
+          echo "Usuario inválido";
+          header("refresh:1;url=mar.php");
+        }
+      }
+      else{
+        echo "Usuario inválido";
+        header("refresh:1;url=mar.php");
+      }
   }
 ?>
 <main>
@@ -35,8 +41,11 @@
       <?php echo "<h3>$user[username]</h3>";?>
     </div>
 </main>
+<?php 
+  echo "<script>img_perfil.style.backgroundImage=\"url($user[img])\"</script>";
+?>
 <script>
-    img_perfil.style.backgroundImage=`url(${val})`;
+
 </script>
 </body>
 </html>
