@@ -17,7 +17,7 @@ function send_mail($addr_mail,$subject,$html){
     $email = "dagama.ifrs@gmail.com";
     $clientId = '971777937005-dqnkd7sef0410teq7etqnl5es07ocha5.apps.googleusercontent.com';
     $clientSecret = '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';
-    $refreshToken = '1//0h8NFG9y7CvcTCgYIARAAGBESNwF-L9Ir7YVXsCFyOGedjirP9o5GdAanrM21VsBzA-4FS2pbjMsBHfXE6eaR20R3wLwpDeR2B9Q';
+    $refreshToken = ' 1//0hGzmqq3Cf8GbCgYIARAAGBESNwF-L9IrJWQhg67jczuYQ1qrntB_V1w5hT6J8kbV9yQWHe93tB61jqHOozbWKvNyVGPyazmUB4o';
     $provider = new Google(
         [
             'clientId' => $clientId,
@@ -46,6 +46,7 @@ function send_mail($addr_mail,$subject,$html){
         return true;
     }
 }
+
 //$teste=file_get_contents("pages/page1.html");
 //$email_to_send="abfn0905@gmail.com";
 //send_mail("$email_to_send","EMAIL DE TESTE","$teste");

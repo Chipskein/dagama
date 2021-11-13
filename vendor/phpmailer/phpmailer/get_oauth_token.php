@@ -71,10 +71,12 @@ if (!in_array($providerName, ['Google', 'Microsoft', 'Yahoo'])) {
 
 //These details are obtained by setting up an app in the Google developer console,
 //or whichever provider you're using.
-$redirectUri = '$_SERVER[HTTP_HOST]/vendor/phpmailer/phpmailer/get_oauth_token.php';
+
+//adicionado porque por algum motivo eu não consigo pegar o protocolo no $_SERVER['HTTP_HOST'0]
+$redirectUri = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http")."://$_SERVER[HTTP_HOST]"."/vendor/phpmailer/phpmailer/get_oauth_token.php";
 $clientId = '971777937005-dqnkd7sef0410teq7etqnl5es07ocha5.apps.googleusercontent.com';
 $clientSecret = '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';
-
+echo "$redirectUri";
 $params = [
     'clientId' => $clientId,
     'clientSecret' => $clientSecret,
