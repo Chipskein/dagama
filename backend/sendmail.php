@@ -18,8 +18,12 @@
             if(!$user['ativo']||$user['ativo']=='f'){
                 $email="$user[email]";
                 echo "<h2 align=center>Enviando Email para $email</h2>";
-                var_dump($_SERVER);
-                $link=(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http")."://$_SERVER[HTTP_HOST]/backend/validate_acc.php?id="."$_GET[id]";
+
+                $start_link='';
+                if(preg_match("/localhost/","$_SERVER[HTTP_HOST]")) $start_link="http://";
+                if(preg_match("/dagama.herokuapp/","$_SERVER[HTTP_HOST]")) $start_link="https://";
+                
+                $link=$start_link."$_SERVER[HTTP_HOST]/backend/validate_acc.php?id="."$_GET[id]";
                 $html="
                     <html lang=pt-BR>
                     <head>
