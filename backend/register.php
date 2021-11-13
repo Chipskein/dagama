@@ -87,7 +87,7 @@ include './infra/connection.php';
             else {
                 if(!in_array($_POST['pais'], getPaises())) $erros[] = "pais não cadastrado";
             }
-            if(trim($_POST['password'])!=''&&strlen($_POST['password'])>=6) $erros[] = "senha inválido: ela precisa ter no mínimo 6 caracteres ou números";
+            if(trim("$_POST[password]")!=''&&strlen("$_POST[password]")>=6) $erros[] = "senha inválido: ela precisa ter no mínimo 6 caracteres ou números";
             if($_POST['cpassword'] != $_POST['password']) $erros[] = "as senhas precisam ser iguais";
         } 
         else $erros[] = "campos faltando";
