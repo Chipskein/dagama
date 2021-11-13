@@ -106,7 +106,7 @@ include './infra/connection.php';
             $registered = Register($email, $password, $bdate, $username, $genero, $pais, $photo);
             if($registered){
                 $id=getIdbyEmail($email);
-                header("refresh:2;url=sendmail.php?id=$id");
+                header("refresh:2;url=../validarEmail.php?id=$id");
                 die();
             } 
             else echo "Um erro ocorreu no registro!";

@@ -8,6 +8,7 @@
 	--cinza2-color:#504E4E;
 	--azulEscuro2-color: #358FB6;
 	--roxoClaro-color:#D39AFF;
+	--azulClaro2-color:#7ED8FF;
 	
 }
 
@@ -177,11 +178,7 @@ div#img_perfil {
 	margin-bottom: 1px;
 	margin-left: 1px;
 }
-#main_Validar_email{
-	background-color: var(--cinza2-color);
-	color:var(--white-color);
-	width: 80%;
-}
+
 header.header{
 	background-color: var(--azulEscuro-color);
 	height: 70px;
@@ -272,4 +269,49 @@ input.pesquisar{
 	flex-grow: 2;
 	display: flex;
 	justify-content: center;
+}
+.logo-Vemail{
+	width: 120px;
+	height: 120px;
+}
+.main-Vemail{
+	margin-top: 2%;
+	width: 60%;
+	height: 500px;
+	color:var(--white-color);
+	position: relative;
+}
+.main-Vemail>h1{
+	color:var(--azulClaro2-color);
+}
+.main-Vemail>h3{
+	color:var(--azulEscuro2-color);
+}
+.main-Vemail>p{
+	font-size: 24px;
+}
+a.main-button{
+	text-decoration: none;
+	color:var(--white-color);
+	font-size: 24px;
+}
+a.main-button:visited{
+	text-decoration: none;
+	color:var(--white-color);
+	
+}
+div.main-button{
+	border-radius: 15px;
+	width: 365px;
+	height: 60px;
+	background-color: var(--azulEscuro2-color);
+}
+p.main-button{
+	padding-top: 4%;
+}
+.main-container{
+	width: 60%;
+	margin: 8%;
+	background-color: var(--cinza2-color);
+	border-radius: 15px;
 }

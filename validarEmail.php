@@ -12,24 +12,39 @@
 <?php
 include './backend/infra/connection.php';
 session_start();
-if($_SESSION['userid']){
+if(isset($_SESSION['userid'])){
     echo "<h2 align=center>Você já esta logado!</h2>";
     header("refresh:1;url=mar.php");
     die();
 }
-//echo "<h2>Registrado, por favor confirme seu email!</h2><br>";
-//echo "<input type=\"button\" class=\"button\" id=\"loginBtn\" onclick=\"verificar()\" value=\"Entrar\"/>";
+if(isset($_GET["id"])){
+    $user=getUserInfo($_GET["id"]);
+    if($user){
+        echo "
+        <div align=center>
+        <div class=main-container>
+            <main class=main-Vemail>
+            <img src=./imgs/icon.png alt=logo class=logo-Vemail>
+                <h1>Validação Enviada</h1>
+                <h3>$user[email]</h3>
+                <p>Por favor, acesse o link no email para confirmar seu cadastro e navegar conosco! </p>
+                <p>Após a confirmação, você será logado automaticamente.</p>
+                <div class=main-button>
+                    <p class=main-button><a href=./backend/sendmail.php?id=$_GET[id] class=main-button>Renviar<a></p>
+                </div>
+            </main>  
+        </div>
+        </div>";
+    }
+    else{
+        echo "<h2 align=center>Um erro ocorreu</h2>";
+        header("refresh:2;url=index.php");
+    }
+}
+else{
+    echo "<h2 align=center>ID inválido</h2>";
+    header("refresh:2;url=index.php");
+}
 ?>
-<div align=center>
-    <!--REVER DESIGN-->
-    <main id=main_Validar_email>
-        <h1>Validação Enviada</h1>
-        <h3>user@email.com</h3>
-        <p>Obrigado por se cadastrar no dagama ,para concluir seu cadastro deves clicar no link enviado para o email cadastrado</p>
-        <button>Renviar</button>
-        <button>Logar</button>
-        <img src="./imgs/icon.png" alt="">
-    </main>
-</div>
 </body>
 </html>
