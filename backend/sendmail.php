@@ -19,8 +19,7 @@
             if(!$user['ativo']){
                 $email="$user[email]";
                 echo "<h2 align=center>Enviando Email para $email</h2>";
-                $link=(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http")."://$_SERVER[HTTP_HOST]/backend/validate_acc.php?id=".password_hash($_GET['id'],PASSWORD_DEFAULT);
-
+                $link=(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http")."://$_SERVER[HTTP_HOST]/backend/validate_acc.php?id="."$_GET[id]";
                 $html="
                     <html lang=pt-BR>
                     <head>
@@ -29,7 +28,6 @@
                         <meta name=viewport content=width=device-width, initial-scale=1.0>
                     </head>
                     <body>
-                        <img src=https://sucodemanga.com.br/wp-content/uploads/2018/07/pirataria-anime-manga-thumb.jpg alt=pirata-waifu>
                         <a href=$link>link</a>
                     </body>
                     </html>
