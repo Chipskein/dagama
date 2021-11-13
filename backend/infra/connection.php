@@ -221,12 +221,12 @@
                 else return false;
             }
             if($db_type == 'postgresql'){
-                $preparing = pg_prepare($db, "ActivateUser","update perfil set ativo=true where codigo=$1 returning *");
+                $preparing = pg_prepare($db, "ActivateUser","update perfil set ativo=true where codigo=$1");
                 if($preparing){
                     $verify = pg_execute($db, "ActivateUser", array("$id"));
                     if($verify){
                         $response = pg_query($db,"select email,senha as password from perfil where codigo=$id");
-                        if($response) return pg_fetch_array($response)['codigo'];
+                        if($response) return pg_fetch_array($response);
                         else return false;
                     } 
                     else return false;
