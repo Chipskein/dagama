@@ -25,7 +25,6 @@
                 $pass="$_POST[password]";
                 $passed=Login("$email","$pass");
                 if($passed){
-                    var_dump($passed);
                     if($passed['ativo']==1||$passed['ativo']=='t'){
                         echo "<h2 align=center>Logado</h2>";
                         $USERID=$passed['codigo'];
