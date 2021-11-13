@@ -25,6 +25,7 @@
                 $pass="$_POST[password]";
                 $passed=Login("$email","$pass");
                 if($passed){
+                    var_dump($passed);
                     if($passed['ativo']==1||$passed['ativo']=='t'){
                         echo "<h2 align=center>Logado</h2>";
                         $USERID=$passed['codigo'];
@@ -34,7 +35,7 @@
                     }
                     else{
                         echo "<h2 align=center>Ative seu usuario</h2>";
-                        header("refresh:1;url=../validarEmail.php?id=$passed[codigo]");
+                        //header("refresh:1;url=../validarEmail.php?id=$passed[codigo]");
                         die();
                     }
                 }
