@@ -256,7 +256,7 @@
             if($db_type == 'postgresql'){
                 $preparing = pg_prepare($db, "addPorto", "insert into porto (perfil,nome,descr,img) values ($1,$2,$3,$4)");
                 if($preparing){
-                    $verify = pg_execute($db, "addPorto", array("$perfil","$nome","$descr","$img"));
+                    $verify = pg_execute($db, "addPorto", array("$perfil","$nome","$descr","$link"));
                     if($verify) return $verify;
                     else return false;
                 }
