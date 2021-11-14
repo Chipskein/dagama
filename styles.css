@@ -196,18 +196,17 @@
 		text-align: left;
 	}
 	img.mar_porto{
-		width: 191px;
-		height: 174px;
+		width: 225px;
+		height: 100%;
 		float: left;
-		margin-top: 45px;
-		margin-left: 20px;
 	}
 	h2.mar_porto{
 		padding-top: 30px;
 	}
 	p.mar_porto{
 		font-size: 20px;
-		margin-top: 60px;
+		text-align: justify;
+		width: 95%;
 	}
 
 	body.mar_porto{
@@ -216,10 +215,16 @@
 	.mar_porto>a{
 		color: var(--azulEscuro2-color);
 		text-decoration: none;
+		margin-left: 3%;
 	}
 	.mar_porto>a:visited{
 		color: var(--azulEscuro2-color);
 		text-decoration: none;
+	}
+	.text-porto{
+		margin-left: 25%;
+		text-align: left;
+		margin-top: 50px;
 	}
 	img.ancora{
 		width: 40px;

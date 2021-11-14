@@ -55,7 +55,7 @@
           echo "<div class=mar_porto>";
             echo "<img class=mar_porto src=$porto[img]>";
             echo "<h2 class=mar_porto><a href=porto.php?porto=$porto[codigo]>$porto[nome]</a></h2>";
-            echo "<p class=mar_porto>$porto[descr]</p>";
+            echo "<div class=text-porto> <p class=mar_porto>$porto[descr] </p> </div>";
           echo "</div>";
         }
       ?>
