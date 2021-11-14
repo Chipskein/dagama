@@ -411,7 +411,7 @@ div.perfil-amigos{
 body.perfil{
 	background-color: var(--cinza2-color);
 }
-/*<Comentario>*/
+/*Post*/
 div.make-post{
 	width: 60%;
 	height: 200px;
@@ -437,5 +437,3 @@ textarea.post-input{
 	position: absolute;
 	margin-left:7% ;
 }
-
-/*</Comentario>*/
