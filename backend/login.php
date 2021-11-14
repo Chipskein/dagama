@@ -29,8 +29,10 @@
                         echo "<h2 align=center>Logado</h2>";
                         $USERID=$passed['codigo'];
                         $USERIMG=$passed['img'];
+                        $USERNAME=$passed['username'];
                         $_SESSION["userid"] = $USERID;
                         $_SESSION["userimg"] = $USERIMG;
+                        $_SESSION["username"] = $USERNAME;
                         header("refresh:1;url=../mar.php");
                         die();
                     }

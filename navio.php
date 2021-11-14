@@ -63,7 +63,7 @@
         <div class=make-post>
           <?php
             echo "<div class=post-icon style=background-image:url($_SESSION[userimg]);></div>";
-            echo "<h3 class=post-name>$user[username]:</h3>";
+            echo "<h3 class=post-name>$_SESSION[username]:</h3>";
           ?>
           <div>
               <textarea class=post-input name="post-input" placeholder="Escreva um post"></textarea>

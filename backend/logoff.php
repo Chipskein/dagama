@@ -15,6 +15,7 @@
     if(isset($_SESSION['userid'])){
         unset($_SESSION['userid']);
         unset($_SESSION['userimg']);
+        unset($_SESSION['username']);
         session_destroy();
         echo "<h2 align=center>Tchau Tchau Volte sempre</h2>";
         header("refresh:1;url=../index.php");
