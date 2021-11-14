@@ -1,3 +1,4 @@
+/*GLOBAL*/
 :root {
 	--laranja-color: #DB6624;
 	--rosa-color: #ea526f;
@@ -12,428 +13,414 @@
 	
 }
 
-body {
-	background-color: var(--cinza-color);
-	color: var(--white-color);
-}
+/*<index.php>*/
+	body {
+		background-color: var(--cinza-color);
+		color: var(--white-color);
+	}
 
-#main {
-	flex-direction: row;
-}
+	#main {
+		flex-direction: row;
+	}
 
-.row {
-	display: flex;
-	flex-direction: row;
-}
+	.row {
+		display: flex;
+		flex-direction: row;
+	}
 
-.logo {
-	width: 500px;
-	height: 500px;
-}
+	.logo {
+		width: 500px;
+		height: 500px;
+	}
 
-.divLogo {
-	position: absolute;
-	top: 20%;
-	left: 10%;
-}
+	.divLogo {
+		position: absolute;
+		top: 20%;
+		left: 10%;
+	}
 
-#loginContainerHidden {
-	display: none;
-}
+	#loginContainerHidden {
+		display: none;
+	}
 
-#loginContainer {
-	position: absolute;
-	right: 23%;
-	top: 23%;
-}
+	#loginContainer {
+		position: absolute;
+		right: 23%;
+		top: 23%;
+	}
 
-.divLogin {
-	background-color: var(--azulEscuro-color);
-	width: 324px;
-	height: 331px;
-	border-radius: 10px;
-}
-.headerTxt {
-	font-size: 30px;
-	color: var(--white-color);
-	text-align: center;
-	font-weight: bold;
-	margin-bottom: 4%;
-}
+	.divLogin {
+		background-color: var(--azulEscuro-color);
+		width: 324px;
+		height: 331px;
+		border-radius: 10px;
+	}
+	.headerTxt {
+		font-size: 30px;
+		color: var(--white-color);
+		text-align: center;
+		font-weight: bold;
+		margin-bottom: 4%;
+	}
 
-.containerLogin {
-	padding: 30px;
-}
+	.containerLogin {
+		padding: 30px;
+	}
 
-.inputs {
-	width: 256px;
-	height: 38px;
-	border-radius: 10px;
-	font-size: 18px;
-	margin-bottom: 17px;
-}
+	.inputs {
+		width: 256px;
+		height: 38px;
+		border-radius: 10px;
+		font-size: 18px;
+		margin-bottom: 17px;
+	}
 
-.inputHalf {
-	width: 122px;
-	height: 36px;
-	border-radius: 10px;
-	font-size: 15px;
-	margin-bottom: 5px;
-}
+	.inputHalf {
+		width: 122px;
+		height: 36px;
+		border-radius: 10px;
+		font-size: 15px;
+		margin-bottom: 5px;
+	}
 
-.button {
-	width: 256px;
-	height: 42px;
-	border-radius: 10px;
-	font-size: 22px;
-	margin-bottom: 30px;
-}
-.registerBtn {
-	background-color: var(--laranja-color);
-	color: var(--white-color);
-}
-#registerBtn {
-	margin-top: -5px !important;
-}
-#loginBtn {
-	background-color: var(--azulClaro-color);
-	color: var(--white-color);
-}
+	.button {
+		width: 256px;
+		height: 42px;
+		border-radius: 10px;
+		font-size: 22px;
+		margin-bottom: 30px;
+	}
+	.registerBtn {
+		background-color: var(--laranja-color);
+		color: var(--white-color);
+	}
+	#registerBtn {
+		margin-top: -5px !important;
+	}
+	#loginBtn {
+		background-color: var(--azulClaro-color);
+		color: var(--white-color);
+	}
 
-.containerLinkMenor {
-	margin-left: 22%;
-	margin-bottom: 7%;
-}
-.linkMenor {
-	font-size: 16px;
-	font-weight: bold;
-	color: var(--white-color);
-}
+	.containerLinkMenor {
+		margin-left: 22%;
+		margin-bottom: 7%;
+	}
+	.linkMenor {
+		font-size: 16px;
+		font-weight: bold;
+		color: var(--white-color);
+	}
 
-#registerContainerHidden {
-	display: none;
-}
+	#registerContainerHidden {
+		display: none;
+	}
 
-#registerContainer {
-	position: absolute;
-	right: 23%;
-	top: 3%;
-}
+	#registerContainer {
+		position: absolute;
+		right: 23%;
+		top: 3%;
+	}
 
-button, .arrowBack {
-	background-color: transparent;
-	border: none;
-	margin-right: 30px;
-	margin-top: 13px;
-	width: 40px;
-	height: 40px;
-}
+	button, .arrowBack {
+		background-color: transparent;
+		border: none;
+		margin-right: 30px;
+		margin-top: 13px;
+		width: 40px;
+		height: 40px;
+	}
 
-.arrowBack {
-	width: 40px;
-	height: 40px;
-}
+	.arrowBack {
+		width: 40px;
+		height: 40px;
+	}
 
-.divRegister {
-	background-color: var(--azulEscuro-color);
-	width: 324px;
-	height: 580px;
-	border-radius: 10px;
-}
+	.divRegister {
+		background-color: var(--azulEscuro-color);
+		width: 324px;
+		height: 580px;
+		border-radius: 10px;
+	}
 
-.containerRegister {
-	padding: 30px;
-	padding-top: 10px !important;
-}
+	.containerRegister {
+		padding: 30px;
+		padding-top: 10px !important;
+	}
 
-#imgs_register {
-	display: flex;
-	flex-direction: row;
-	gap: 10px;
-	margin-left: 1%;
-}
+	#imgs_register {
+		display: flex;
+		flex-direction: row;
+		gap: 10px;
+		margin-left: 1%;
+	}
 
-#imgs_register input {
-	margin-top: 20%;
-}
+	#imgs_register input {
+		margin-top: 20%;
+	}
 
-#img_input1 {
-	margin: 10px;
-	background-color: var(--azulEscuro-color);
-}
+	#img_input1 {
+		margin: 10px;
+		background-color: var(--azulEscuro-color);
+	}
 
-div#img_perfil {
-	width: 90px;
-	height: 90px;
-	background-image: url("imgs/icons/user-icon.png");
-	background-size: cover;
-	border-radius: 50%;
-}
+	div#img_perfil {
+		width: 90px;
+		height: 90px;
+		background-image: url("imgs/icons/user-icon.png");
+		background-size: cover;
+		border-radius: 50%;
+	}
 
-#divTermos {
-	display: flex;
-	font-size: 18px;
-	align-items: center;
-	margin-top: -4px !important;
-	margin-bottom: 1px;
-	margin-left: 1px;
-}
+	#divTermos {
+		display: flex;
+		font-size: 18px;
+		align-items: center;
+		margin-top: -4px !important;
+		margin-bottom: 1px;
+		margin-left: 1px;
+	}
 
+/*</index.php>*/
+/*--------------------------------------------------------------------------------------------------------------*/
+/*<mar.php>*/
+	header.header{
+		background-color: var(--azulEscuro-color);
+		height: 70px;
+		width: 100%;
+	}
+	div.mar_porto{
+		background-color: var(--cinza-color);
+		height: 265px;
+		width: 80%;
+		text-align: left;
+	}
+	img.mar_porto{
+		width: 191px;
+		height: 174px;
+		float: left;
+		margin-top: 45px;
+		margin-left: 20px;
+	}
+	h2.mar_porto{
+		padding-top: 30px;
+	}
+	p.mar_porto{
+		font-size: 20px;
+		margin-top: 60px;
+	}
 
+	body.mar_porto{
+		background-color: var(--cinza2-color);
+	}
+	.mar_porto>a{
+		color: var(--azulEscuro2-color);
+		text-decoration: none;
+	}
+	.mar_porto>a:visited{
+		color: var(--azulEscuro2-color);
+		text-decoration: none;
+	}
+	img.ancora{
+		width: 40px;
+		height: 40px;
+		margin-top: 20px;
+		margin-left: 20px;
+	}
+	img.header_logo{
+		width: 45px;
+		height: 45px;
+		margin-top: 15px;
+		margin-left: 20px;
+	}
+	a.header{
+		font-size: 20px;
+		text-decoration: none;
+		color: var(--white-color);
+	}
+	a.header:visited{
+		font-size: 20px;
+		text-decoration: none;
+		color: var(--white-color);
+	}
+	a.onIt{
+		color: var(--roxoClaro-color);
+	}
+	.links{
+		width: 200px;
+		display: flex;
+		flex-direction: row;
+		justify-content: space-around;
+		margin-top: 20px;
+	}
+	.header-container{
+		display: flex;
+		flex-direction: row;
+	}
+	img.pesquisar{
+		width: 20px;
+		height: 20px;
+	}
+	input.pesquisar{
+		background-color: var(--white-color);
+		height: 25px;
+		width: 500px;
+	}
+	.pesquisar-pool{
+		margin-top: 20px;
+		flex-grow: 2;
+		display: flex;
+		justify-content: center;
+	}
+	.page-link{
+		color:var(--white-color);
+		text-decoration: none;
+	}
+	.page-link:visited{
+		color:var(--white-color);
+		text-decoration: none;
+	}
+/*</mar.php>*/
+/*--------------------------------------------------------------------------------------------------------------------------------------*/
+/*<validarEmail.php>*/
+	.logo-Vemail{
+		width: 120px;
+		height: 120px;
+	}
+	.main-Vemail{
+		margin-top: 2%;
+		width: 60%;
+		height: 500px;
+		color:var(--white-color);
+		position: relative;
+	}
+	.main-Vemail>h1{
+		color:var(--azulClaro2-color);
+	}
+	.main-Vemail>h3{
+		color:var(--azulEscuro2-color);
+	}
+	.main-Vemail>p{
+		font-size: 24px;
+	}
+	a.main-button{
+		text-decoration: none;
+		color:var(--white-color);
+		font-size: 24px;
+	}
+	a.main-button:visited{
+		text-decoration: none;
+		color:var(--white-color);
+		
+	}
+	div.main-button{
+		border-radius: 15px;
+		width: 365px;
+		height: 60px;
+		background-color: var(--azulEscuro2-color);
+	}
+	p.main-button{
+		padding-top: 4%;
+	}
+	.main-container{
+		width: 60%;
+		margin: 8%;
+		background-color: var(--cinza2-color);
+		border-radius: 15px;
+	}
+/*</validarEmail.php>*/
+/*--------------------------------------------------------------------------------------------------------------------------------------*/
+/*<animation.html>*/
+	@keyframes float{
+		50% {transform: rotate(15deg);}
+	}
+	.loader {
+		border: 5px solid #f3f3f3;
+		border-radius: 50%;
+		border-top: 5px solid #3498db;
+		width: 20px;
+		height: 20px;
+		-webkit-animation: spin 2s linear infinite; /* Safari */
+		animation: spin 2s linear infinite;
+	}
+	@keyframes spin {
+		0% { transform: rotate(0deg); }
+		100% { transform: rotate(360deg); }
+	}
+	body.animation{
+		background-color: var(--azulEscuro-color);
+	}
+	.container-animation{
+		display: grid;
+		grid-template-rows:1fr 1fr 1fr ;
+		grid-template-columns: 1fr 1fr 1fr;
+	}
+	div.container-animation>div.navio>img{
+		width: 38%;
+		animation: float 5s infinite;
+		transform: rotate(-10deg);
+	}
+	div.container-animation>div.navio{
+		grid-row: 2;
+		grid-column: 2;
+		text-align: center;
+	}
+/*</animation.html>*/
+/*--------------------------------------------------------------------------------------------------------------------------------------*/
+/*<navio.php>*/
+	div.perfil{
+		width: 180px !important;
+		height: 180px !important;
+	}
+	h3.perfil{
+		font-size: 24px;
+	}
+	div.camera-icon{
+		background-color: var(--white-color);
+		border-radius: 50%;
+		width: 40px;
+		height: 40px;
+		background-image: url('imgs/icons/camera.png');
+		background-size: 25px 25px;
+		background-repeat: no-repeat;
+		background-position: center;
+	}
+	div.perfil-amigos{
+		width: 60%;
+		display: flex;
+		background-color: var(--cinza-color);
+		flex-direction: row;
+		justify-content: space-around;
+		border-radius: 10px;
+	}
+	body.perfil{
+		background-color: var(--cinza2-color);
+	}
 
-
-header.header{
-	background-color: var(--azulEscuro-color);
-	height: 70px;
-	width: 100%;
-}
-div.mar_porto{
-	background-color: var(--cinza-color);
-	height: 265px;
-	width: 80%;
-	text-align: left;
-}
-img.mar_porto{
-	width: 191px;
-	height: 174px;
-	float: left;
-	margin-top: 45px;
-	margin-left: 20px;
-}
-h2.mar_porto{
-	padding-top: 30px;
-}
-p.mar_porto{
-	font-size: 20px;
-	margin-top: 60px;
-}
-
-body.mar_porto{
-	background-color: var(--cinza2-color);
-}
-.mar_porto>a{
-	color: var(--azulEscuro2-color);
-	text-decoration: none;
-}
-.mar_porto>a:visited{
-	color: var(--azulEscuro2-color);
-	text-decoration: none;
-}
-
-
-
-
-
-
-
-
-
-
-img.ancora{
-	width: 40px;
-	height: 40px;
-	margin-top: 20px;
-	margin-left: 20px;
-}
-img.header_logo{
-	width: 45px;
-	height: 45px;
-	margin-top: 15px;
-	margin-left: 20px;
-}
-
-
-a.header{
-	font-size: 20px;
-	text-decoration: none;
-	color: var(--white-color);
-}
-a.header:visited{
-	font-size: 20px;
-	text-decoration: none;
-	color: var(--white-color);
-}
-a.onIt{
-	color: var(--roxoClaro-color);
-}
-.links{
-	width: 200px;
-	display: flex;
-	flex-direction: row;
-	justify-content: space-around;
-	margin-top: 20px;
-}
-.header-container{
-	display: flex;
-	flex-direction: row;
-}
-img.pesquisar{
-	width: 20px;
-	height: 20px;
-}
-input.pesquisar{
-	background-color: var(--white-color);
-	height: 25px;
-	width: 500px;
-}
-.pesquisar-pool{
-	margin-top: 20px;
-	flex-grow: 2;
-	display: flex;
-	justify-content: center;
-}
-.page-link{
-	color:var(--white-color);
-	text-decoration: none;
-}
-.page-link:visited{
-	color:var(--white-color);
-	text-decoration: none;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-.logo-Vemail{
-	width: 120px;
-	height: 120px;
-}
-.main-Vemail{
-	margin-top: 2%;
-	width: 60%;
-	height: 500px;
-	color:var(--white-color);
-	position: relative;
-}
-.main-Vemail>h1{
-	color:var(--azulClaro2-color);
-}
-.main-Vemail>h3{
-	color:var(--azulEscuro2-color);
-}
-.main-Vemail>p{
-	font-size: 24px;
-}
-a.main-button{
-	text-decoration: none;
-	color:var(--white-color);
-	font-size: 24px;
-}
-a.main-button:visited{
-	text-decoration: none;
-	color:var(--white-color);
-	
-}
-div.main-button{
-	border-radius: 15px;
-	width: 365px;
-	height: 60px;
-	background-color: var(--azulEscuro2-color);
-}
-p.main-button{
-	padding-top: 4%;
-}
-.main-container{
-	width: 60%;
-	margin: 8%;
-	background-color: var(--cinza2-color);
-	border-radius: 15px;
-}
-
-/*Animation*/
-@keyframes float{
-    50% {transform: rotate(15deg);}
-}
-.loader {
-	border: 5px solid #f3f3f3;
-	border-radius: 50%;
-	border-top: 5px solid #3498db;
-	width: 20px;
-	height: 20px;
-	-webkit-animation: spin 2s linear infinite; /* Safari */
-	animation: spin 2s linear infinite;
-  }
-  @keyframes spin {
-	0% { transform: rotate(0deg); }
-	100% { transform: rotate(360deg); }
-  }
-body.animation{
-	background-color: var(--azulEscuro-color);
-}
-.container-animation{
-    display: grid;
-    grid-template-rows:1fr 1fr 1fr ;
-    grid-template-columns: 1fr 1fr 1fr;
-}
-div.container-animation>div.navio>img{
-    width: 38%;
-    animation: float 5s infinite;
-    transform: rotate(-10deg);
-}
-div.container-animation>div.navio{
-    grid-row: 2;
-    grid-column: 2;
-    text-align: center;
-}
-div.perfil{
-	width: 180px !important;
-	height: 180px !important;
-}
-h3.perfil{
-	font-size: 24px;
-}
-div.camera-icon{
-	background-color: var(--white-color);
-	border-radius: 50%;
-	width: 40px;
-	height: 40px;
-	background-image: url('imgs/icons/camera.png');
-	background-size: 25px 25px;
-	background-repeat: no-repeat;
-	background-position: center;
-}
-div.perfil-amigos{
-	width: 60%;
-	display: flex;
-	background-color: var(--cinza-color);
-	flex-direction: row;
-	justify-content: space-around;
-	border-radius: 10px;
-}
-body.perfil{
-	background-color: var(--cinza2-color);
-}
-
-div.make-post{
-	width: 60%;
-	height: 200px;
-	background-color: var(--cinza-color);
-}
-div.post-icon{
-	position: absolute;
-	margin-top:1%;
-	margin-left:1% ;
-	width: 64px;
-	height: 64px;
-	border-radius: 50% !important;
-	background-size: cover;
-	background-repeat: no-repeat;
-	background-position: center;
-}
-textarea.post-input{
-	border-radius: 10px;
-	width: 80%;
-	margin-top: 10%;
-}
-.post-name{
-	position: absolute;
-	margin-left:7% ;
-}
+	div.make-post{
+		width: 60%;
+		height: 200px;
+		background-color: var(--cinza-color);
+	}
+	div.post-icon{
+		position: absolute;
+		margin-top:1%;
+		margin-left:1% ;
+		width: 64px;
+		height: 64px;
+		border-radius: 50% !important;
+		background-size: cover;
+		background-repeat: no-repeat;
+		background-position: center;
+	}
+	textarea.post-input{
+		border-radius: 10px;
+		width: 80%;
+		margin-top: 10%;
+	}
+	.post-name{
+		position: absolute;
+		margin-left:7% ;
+	}
+/*</navio.php>*/
+/*--------------------------------------------------------------------------------------------------------------------------------------*/
