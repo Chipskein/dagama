@@ -383,3 +383,59 @@ div.container-animation>div.navio{
     grid-column: 2;
     text-align: center;
 }
+div.perfil{
+	width: 180px !important;
+	height: 180px !important;
+}
+h3.perfil{
+	font-size: 24px;
+}
+div.camera-icon{
+	background-color: var(--white-color);
+	border-radius: 50%;
+	width: 40px;
+	height: 40px;
+	background-image: url('imgs/icons/camera.png');
+	background-size: 25px 25px;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+div.perfil-amigos{
+	width: 60%;
+	display: flex;
+	background-color: var(--cinza-color);
+	flex-direction: row;
+	justify-content: space-around;
+	border-radius: 10px;
+}
+body.perfil{
+	background-color: var(--cinza2-color);
+}
+/*<Comentario>*/
+div.make-post{
+	width: 60%;
+	height: 200px;
+	background-color: var(--cinza-color);
+}
+div.post-icon{
+	position: absolute;
+	margin-top:1%;
+	margin-left:1% ;
+	width: 64px;
+	height: 64px;
+	border-radius: 50% !important;
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+textarea.post-input{
+	border-radius: 10px;
+	width: 80%;
+	margin-top: 10%;
+}
+.post-name{
+	position: absolute;
+	margin-left:7% ;
+}
+
+/*</Comentario>*/

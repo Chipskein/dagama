@@ -28,7 +28,9 @@
                     if($passed['ativo']==1||$passed['ativo']=='t'){
                         echo "<h2 align=center>Logado</h2>";
                         $USERID=$passed['codigo'];
+                        $USERIMG=$passed['img'];
                         $_SESSION["userid"] = $USERID;
+                        $_SESSION["userimg"] = $USERIMG;
                         header("refresh:1;url=../mar.php");
                         die();
                     }
