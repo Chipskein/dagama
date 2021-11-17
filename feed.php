@@ -6,13 +6,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="../imgs/icon.png" type="image/jpg">
   <link rel="stylesheet" href="styles.css">
-  <title>Dagama | Mar</title>
+  <title>Dagama | Feed</title>
 </head>
 <body>
 <?php
   include './backend/infra/connection.php';
   session_start();
-  if($_SESSION['userid']){
+  if(isset($_SESSION['userid'])){
     
   }
   else {

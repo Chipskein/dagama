@@ -11,8 +11,10 @@
 <body>
 <?php
   include './backend/infra/connection.php';
-  session_start();
-  if($_SESSION['userid']){
+  if(!isset($_SESSION)) { 
+    session_start(); 
+  }
+  if(isset($_SESSION['userid'])){
       //pegar valores do get
   }
   else {

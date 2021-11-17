@@ -10,11 +10,13 @@
 <body>
 <?php
     include './infra/connection.php';
-    session_start();
+    if(!isset($_SESSION)) { 
+        session_start(); 
+    } 
     echo "<div align=center>";
-    if(!$_SESSION['userid']){
+    if(!isset($_SESSION['userid'])){
         if(isset($_POST['email'])&&isset($_POST['password'])){
-            echo "<h2>Logando...</h2>";
+            echo "<h2 align=center>Logando...</h2>";
             $regex_email="/^[a-zA-Z0-9\.]*@[a-z0-9\.]*\.[a-z]*$/";
             if(preg_match($regex_email,$_POST['email'])){
                 $email="$_POST[email]";
@@ -23,12 +25,22 @@
                 $pass="$_POST[password]";
                 $passed=Login("$email","$pass");
                 if($passed){
-                    echo "<br>Logado</br>";
-                    $USERID=$passed['codigo'];
-                    echo $USERID;;
-                    $_SESSION["userid"] = $USERID;
-                    header("refresh:1;url=../mar.php");
-                    die();
+                    if($passed['ativo']==1||$passed['ativo']=='t'){
+                        echo "<h2 align=center>Logado</h2>";
+                        $USERID=$passed['codigo'];
+                        $USERIMG=$passed['img'];
+                        $USERNAME=$passed['username'];
+                        $_SESSION["userid"] = $USERID;
+                        $_SESSION["userimg"] = $USERIMG;
+                        $_SESSION["username"] = $USERNAME;
+                        header("refresh:1;url=../mar.php");
+                        die();
+                    }
+                    else{
+                        echo "<h2 align=center>Ative seu usuario</h2>";
+                        header("refresh:1;url=../validarEmail.php?id=$passed[codigo]");
+                        die();
+                    }
                 }
                 else{
                     echo "<h2>Credenciais Inválidas</h2>";
@@ -54,7 +66,6 @@
         die();
     }
     echo "</div>";
-
 ?>    
 </body>
 </html>

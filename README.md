@@ -3,7 +3,7 @@
     Rede Social em PHP para disciplina de banco de dados(2021)
 ## Requisitos
 * [PDF](https://github.com/Chipskein/dagama/blob/main/lista9-projeto.pdf)
-## Inqtegrantes do projeto
+## Integrantes do projeto
 * [Bruno Nascimento](https://github.com/Chipskein)
 * [Victor Amaral](https://github.com/VictorAmaral22)
 * [Silvio Quintana](https://github.com/SilvioGQ)

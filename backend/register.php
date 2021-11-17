@@ -63,14 +63,17 @@
 ?>
 <?php
 include './infra/connection.php';
-    session_start();
-    if(!$_SESSION['userid']){
+
+    if(!isset($_SESSION)) { 
+        session_start(); 
+    } 
+    if(!isset($_SESSION['userid'])){
         $erros = [];
         echo "<br>";
-        if(isset($_POST['email']) && isset($_POST['username']) && isset($_POST['password']) && isset($_POST['cpassword']) && isset($_POST['bdate']) &&isset($_POST['pais']) && isset($_POST['termos'])&&isset($_POST['genero']))
+        if(isset($_POST['email']) && isset($_POST['username']) && isset($_POST['password']) && isset($_POST['cpassword']) && isset($_POST['bdate']) &&isset($_POST['pais']) && isset($_POST['termos']) && isset($_POST['genero']))
         {
             if($_POST['termos']!='pass') $erros[] = "Você não concordou com os termos de uso";
-            if($_POST['genero']!='M'&&$_POST['genero']!='F'&&$_POST['genero']!='O') $erros[] = "gêneno inválido";
+            if($_POST['genero'] != 'M' && $_POST['genero'] != 'F' && $_POST['genero'] != 'O') $erros[] = "gêneno inválido";
             if(!preg_match("/^[a-zA-Z0-9\.]*@[a-z0-9\.]*\.[a-z]*$/", $_POST['email'])) $erros[] = "email inválido";
             else {
                 if(emailExists($_POST['email'])) $erros[] = "email já cadastrado";   
@@ -84,7 +87,8 @@ include './infra/connection.php';
             else {
                 if(!in_array($_POST['pais'], getPaises())) $erros[] = "pais não cadastrado";
             }
-            if(trim($_POST['passowrd'])!=''&&strlen($_POST['passowrd'])>=6) $erros[] = "senha inválido: ela precisa ter no mínimo 6 caracteres ou números";
+            //ta travando o heroku ver o porque
+            //if(trim("$_POST[password]")!=''&&strlen("$_POST[password]")>=6) $erros[] = "senha inválido: ela precisa ter no mínimo 6 caracteres ou números";
             if($_POST['cpassword'] != $_POST['password']) $erros[] = "as senhas precisam ser iguais";
         } 
         else $erros[] = "campos faltando";
@@ -106,7 +110,7 @@ include './infra/connection.php';
             $registered = Register($email, $password, $bdate, $username, $genero, $pais, $photo);
             if($registered){
                 $id=getIdbyEmail($email);
-                header("refresh:2;url=sendmail.php?id=$id");
+                header("refresh:2;url=../validarEmail.php?id=$id");
                 die();
             } 
             else echo "Um erro ocorreu no registro!";

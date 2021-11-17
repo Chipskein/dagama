@@ -127,40 +127,40 @@ CREATE TABLE INTERACAO_ASSUNTO(
 --pais
 INSERT INTO PAIS(nome) VALUES('Brasil');
 --perfil
-INSERT INTO PERFIL(pais,email,username,senha,genero,datanasc) VALUES(1,'abfn0905@gmail.com','testoman','$2y$10$vL5SKzTYBXYzYCHYrxF8P.ZACVQNwWD3n4txiC4CZFgpvWuGRqQ4u','M','2002-09-05');
-INSERT INTO PERFIL(pais,email,username,senha,genero,datanasc) VALUES(1,'abfn@gmail.com','testoman2','$2y$10$vL5SKzTYBXYzYCHYrxF8P.ZACVQNwWD3n4txiC4CZFgpvWuGRqQ4u','M','2002-09-05');
+--INSERT INTO PERFIL(pais,email,username,senha,genero,datanasc) VALUES(1,'abfn0905@gmail.com','testoman','$2y$10$vL5SKzTYBXYzYCHYrxF8P.ZACVQNwWD3n4txiC4CZFgpvWuGRqQ4u','M','2002-09-05');
+--INSERT INTO PERFIL(pais,email,username,senha,genero,datanasc) VALUES(1,'abfn@gmail.com','testoman2','$2y$10$vL5SKzTYBXYzYCHYrxF8P.ZACVQNwWD3n4txiC4CZFgpvWuGRqQ4u','M','2002-09-05');
 --porto
-INSERT INTO PORTO(perfil,nome,descr) VALUES(1,'PORTO DE TESTE','è isso ai parceria');
-INSERT INTO PORTO(perfil,nome,descr) VALUES(1,'PORTO DE TESTE2','è isso ai parceria2');
-INSERT INTO PORTO_PARTICIPA(porto,perfil) VALUES(1,1),(2,1),(1,2);
+--INSERT INTO PORTO(perfil,nome,descr) VALUES(1,'PORTO DE TESTE','è isso ai parceria');
+--INSERT INTO PORTO(perfil,nome,descr) VALUES(1,'PORTO DE TESTE2','è isso ai parceria2');
+--INSERT INTO PORTO_PARTICIPA(porto,perfil) VALUES(1,1),(2,1),(1,2);
 --amigos
-INSERT INTO SOLICITACAO_AMIGO(perfil,amigo,dateEnvio,ativo) VALUES(1,2,CURRENT_TIMESTAMP,0);
-INSERT INTO AMIGO(perfil,amigo,dateAceito,ativo) VALUES(1,2,CURRENT_TIMESTAMP,1);
-UPDATE SOLICITACAO_AMIGO SET ATIVO=0 WHERE PERFIL=1 AND AMIGO=2;
+--INSERT INTO SOLICITACAO_AMIGO(perfil,amigo,dateEnvio,ativo) VALUES(1,2,CURRENT_TIMESTAMP,0);
+--INSERT INTO AMIGO(perfil,amigo,dateAceito,ativo) VALUES(1,2,CURRENT_TIMESTAMP,1);
+--UPDATE SOLICITACAO_AMIGO SET ATIVO=0 WHERE PERFIL=1 AND AMIGO=2;
 --selos
-INSERT INTO SELO(porto,texto) VALUES(1,'SELO DE TESTE');
-INSERT INTO SELO(porto,texto) VALUES(1,'SELO DE TESTE2');
-INSERT INTO SELOUSER(perfil,selo,dateVal) VALUES(2,1,CURRENT_TIMESTAMP),(2,2,CURRENT_TIMESTAMP);
+--INSERT INTO SELO(porto,texto) VALUES(1,'SELO DE TESTE');
+--INSERT INTO SELO(porto,texto) VALUES(1,'SELO DE TESTE2');
+--INSERT INTO SELOUSER(perfil,selo,dateVal) VALUES(2,1,CURRENT_TIMESTAMP),(2,2,CURRENT_TIMESTAMP);
 --interacao post
-INSERT INTO INTERACAO(perfil,porto,texto) VALUES
-(1,1,'POST DE TESTE EM PORTO DE TESTE'),--1
-(2,1,'POST DE TESTE EM PORTO DE TESTE'),--2
-(1,2,'POST DE TESTE2.1 EM PORTO DE TESTE2'),--3
-(2,2,'POST DE TESTE2.2 EM PORTO DE TESTE2');--4
+--INSERT INTO INTERACAO(perfil,porto,texto) VALUES
+--(1,1,'POST DE TESTE EM PORTO DE TESTE'),--1
+--(2,1,'POST DE TESTE EM PORTO DE TESTE'),--2
+--(1,2,'POST DE TESTE2.1 EM PORTO DE TESTE2'),--3
+--(2,2,'POST DE TESTE2.2 EM PORTO DE TESTE2');--4
 --interacao comentarios
-INSERT INTO INTERACAO(perfil,post,texto) values 
-(1,1,'comentario em no post de teste'),--5
-(1,5,'comentario no comentario do no post de teste')--6
-;
-INSERT INTO INTERACAO(perfil,perfil_posting,texto) values 
-(1,1,'POST NO PERFIL'),--7
-(1,2,'POST NO PERFIL2')--8
-;
+--INSERT INTO INTERACAO(perfil,post,texto) values 
+--(1,1,'comentario em no post de teste'),--5
+--(1,5,'comentario no comentario do no post de teste')--6
+--;
+--INSERT INTO INTERACAO(perfil,perfil_posting,texto) values 
+--(1,1,'POST NO PERFIL'),--7
+--(1,2,'POST NO PERFIL2')--8
+--;
 --REAÇÕES
-INSERT INTO INTERACAO(perfil,post,texto,isReaction,emote) VALUES
-(1,6,'Like',1,'https://en.wikipedia.org/wiki/Facebook_like_button#/media/File:Facebook_Thumb_icon.svg');
+--INSERT INTO INTERACAO(perfil,post,texto,isReaction,emote) VALUES
+--(1,6,'Like',1,'https://en.wikipedia.org/wiki/Facebook_like_button#/media/File:Facebook_Thumb_icon.svg');
 --COMPARTILHAMENTO
-INSERT INTO INTERACAO(perfil,post,texto,isSharing) VALUES(1,2,'compartilhou ',1);
+--INSERT INTO INTERACAO(perfil,post,texto,isSharing) VALUES(1,2,'compartilhou ',1);
 
 
 
