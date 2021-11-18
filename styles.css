@@ -637,6 +637,16 @@ body {
 	border-width: 0px;
 	margin-top: -15px;
 }
+.add-amigo-card-button-selected {
+	width: 139px;
+	height: 38px;
+	background-color: #fff;
+	color: var(--azulEscuro2-color);
+	border-color: var(--azulEscuro2-color);
+	border-radius: 10px;
+	border-width: 1px;
+	margin-top: -15px;
+}
 
 /*</feed.php>*/
 /*--------------------------------------------------------------------------------------------------------------------------------------*/

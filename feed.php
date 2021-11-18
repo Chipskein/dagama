@@ -18,6 +18,11 @@
     $offset = isset($_GET['offset']) ? $_GET['offset'] : 0;
     $feedArray = getFeed($offset,$limit);
     $suggestFriends = suggestFriends($user['codigo'], 4, 0);
+
+    // var_dump($_POST);
+    if(isset($_POST['person'])){
+      sendFriendRequest($user['codigo'], $_POST['person']);
+    } 
 ?>
   <header class="header-main">
     <img class="header-icon" src="imgs/icon.png" alt="">
@@ -60,27 +65,37 @@
     echo "</div>";
 
     // add friends
-    echo "<div class=\"add-amigo\">";
-    echo "<div class=\"add-amigo-top\">";
-    echo "<p class=\"add-amigo-suggesTxt\">Sugestão de amigos:</p>";
-    echo "<p class=\"add-amigo-verMais\">VER MAIS</p>";
-    echo "</div>";
-    echo "<div class=\"add-amigo-cards\">";
-    foreach ($suggestFriends as $person) {
-      echo "<div id=\"".$person['codigo']."\" class=\"add-amigo-card\">";
-      echo "<img class=\"add-amigo-card-icon\" src=\"".$person['img']."\" alt=\"\" srcset=\"\">";
-      echo "<p class=\"add-amigo-card-name\">".$person['username']."</p>";
-      echo "<input class=\"add-amigo-card-button\" type=\"submit\" value=\"Adicionar\" />";
-      echo "</div>";        
+    if(count($suggestFriends) > 0){
+      echo "<div class=\"add-amigo\">";
+      echo "<div class=\"add-amigo-top\">";
+      echo "<p class=\"add-amigo-suggesTxt\">Sugestão de amigos:</p>";
+      echo "<p class=\"add-amigo-verMais\">VER MAIS</p>";
+      echo "</div>";
+      echo "<div class=\"add-amigo-cards\">";
+      foreach ($suggestFriends as $person) {
+        echo "<div id=\"card".$person['codigo']."\" class=\"add-amigo-card\">";
+        echo "<img class=\"add-amigo-card-icon\" src=\"".$person['img']."\" alt=\"\" srcset=\"\">";
+        echo "<p class=\"add-amigo-card-name\">".$person['username']."</p>";
+        echo "<form action=\"feed.php?user=$_SESSION[userid]\" method=\"post\" >";
+        echo "<input type=\"hidden\" name=\"person\" value=\"".$person['codigo']."\" />";
+        echo "<input id=\"cardInput".$person['codigo']."\" class=\"".((isset($_POST['person']) && $_POST['person'] == $person['codigo'] ) || ($person['enviado']) ? "add-amigo-card-button-selected" : "add-amigo-card-button")."\"  type=\"submit\" onclick=\"
+          let cardInput = document.getElementById('cardInput'+".$person['codigo'].");
+          cardInput.className = 'add-amigo-card-button-selected'; cardInput.value = 'Enviado'";
+        echo "\" value=\"".((isset($_POST['person']) && $_POST['person'] == $person['codigo'] ) || ($person['enviado']) ? "Enviado" : "Adicionar")."\" />";
+        echo "</form>";
+        echo "</div>";        
+      }
+      echo "</div>";
+      echo "</div>";
     }
-    echo "</div>";
-    echo "</div>";
 
     // posts
     echo "</main>";
+
     // print_r($feedArray);
     // print_r($user);
     // print_r($suggestFriends);
+
   }
   else {
     echo "<h2 align=center>Para ver este conteudo faça um cadastro no dagama!!!</h2>";

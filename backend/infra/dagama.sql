@@ -164,20 +164,23 @@ INSERT INTO PAIS(nome) VALUES('Brasil');
 
 
 -- TESTE DE COMANDOS
--- select perfil.codigo, perfil.username, perfil.img from perfil 
--- where 
---     perfil.codigo != 1 and
---     perfil.codigo not in (
---     select tmp.codigo from (
---         select perfil.codigo, 
---             case
---                 when amigo.perfil = perfil.codigo then amigo.amigo
---                 when amigo.amigo = perfil.codigo then amigo.perfil
---             end as amigoCodigo
---         from perfil
---             join amigo on perfil.codigo = amigo.perfil or perfil.codigo = amigo.amigo
---     ) as tmp
---         join perfil on tmp.amigoCodigo = perfil.codigo
---     where perfil.codigo = 1
---     group by perfil.codigo
--- );
+select perfil.codigo, perfil.username, perfil.img, SOLICITACAO_AMIGO.amigo as enviado from perfil 
+    left join SOLICITACAO_AMIGO on SOLICITACAO_AMIGO.amigo = perfil.codigo and SOLICITACAO_AMIGO.perfil = 7
+where
+    perfil.codigo != 7 and
+    perfil.codigo not in (
+    select tmp.codigo from (
+        select perfil.codigo, 
+            case
+                when amigo.perfil = perfil.codigo then amigo.amigo
+                when amigo.amigo = perfil.codigo then amigo.perfil
+            end as amigoCodigo
+        from perfil
+            join amigo on perfil.codigo = amigo.perfil or perfil.codigo = amigo.amigo
+    ) as tmp
+        join perfil on tmp.amigoCodigo = perfil.codigo
+    where perfil.codigo = 7
+    group by perfil.codigo
+)
+group by perfil.codigo
+order by SOLICITACAO_AMIGO.amigo asc;

@@ -25,7 +25,7 @@
         return ['db'=>$db,'db_type'=>$db_type];
     }
 
-    /* <FEED> */
+    /* FEED */
     function getFeed($offset,$limit=10){
         $db_connection=db_connection();
         $db=$db_connection['db'];
@@ -40,7 +40,7 @@
                 return $results;
             }
             if($db_type=='postgresql'){
-                $result=pg_fetch_all(pg_query($db, "select * from interacao where isReaction is null and isSharing is null and ativo = 1 limit $limit offset $offset"));
+                $result=pg_fetch_all(pg_query($db, "select * from interacao where isReaction is null and isSharing is null and ativo = true limit $limit offset $offset"));
                 return $result;
             }
         }
@@ -53,8 +53,9 @@
         if($db){
             if($db_type=='sqlite'){
                 $results=[];
-                $result = $db->query("select perfil.codigo, perfil.username, perfil.img from perfil 
-                where 
+                $result = $db->query("select perfil.codigo, perfil.username, perfil.img, SOLICITACAO_AMIGO.amigo as enviado from perfil 
+                    left join SOLICITACAO_AMIGO on SOLICITACAO_AMIGO.amigo = perfil.codigo and SOLICITACAO_AMIGO.perfil = $user
+                where
                     perfil.codigo != $user and
                     perfil.codigo not in (
                     select tmp.codigo from (
@@ -70,6 +71,8 @@
                     where perfil.codigo = $user
                     group by perfil.codigo
                 )
+                group by perfil.codigo
+                order by SOLICITACAO_AMIGO.amigo asc
                 limit $limit
                 offset $offset");
                 while ($row = $result->fetchArray()) {
@@ -78,8 +81,9 @@
                 return $results;
             }
             if($db_type=='postgresql'){
-                $result=pg_fetch_all(pg_query($db, "select perfil.codigo, perfil.username, perfil.img from perfil 
-                where 
+                $result=pg_fetch_all(pg_query($db, "select perfil.codigo, perfil.username, perfil.img, SOLICITACAO_AMIGO.amigo as enviado from perfil 
+                    left join SOLICITACAO_AMIGO on SOLICITACAO_AMIGO.amigo = perfil.codigo and SOLICITACAO_AMIGO.perfil = $user
+                where
                     perfil.codigo != $user and
                     perfil.codigo not in (
                     select tmp.codigo from (
@@ -95,6 +99,8 @@
                     where perfil.codigo = $user
                     group by perfil.codigo
                 )
+                group by perfil.codigo
+                order by SOLICITACAO_AMIGO.amigo asc
                 limit $limit
                 offset $offset"));
                 return $result;
@@ -102,7 +108,27 @@
         }
         else exit;
     }
-    /* </FEED> */
+    function sendFriendRequest($user, $friend) {
+        $db_connection=db_connection();
+        $db=$db_connection['db'];
+        $db_type=$db_connection['db_type'];
+        if($db_type == 'sqlite'){
+            $friendRequest = $db->exec("insert into SOLICITACAO_AMIGO (perfil, amigo, dateEnvio) values ($user, $friend, CURRENT_TIMESTAMP)");
+            if($friendRequest) return $friendRequest;
+            else return false;
+        }
+        if($db_type == 'postgresql'){
+            $preparing = pg_prepare($db, "Register", "insert into SOLICITACAO_AMIGO (perfil, amigo, dateEnvio) values ($1, $2, CURRENT_TIMESTAMP)");
+            if($preparing){
+                $friendRequest = pg_execute($db, "Register", array("$user","$friend"));
+                if($friendRequest) return $friendRequest;
+                else return false;
+            }
+            else return false;
+        }
+        else exit;
+    }
+    /* -------- */
     function getAllPorto($offset,$limit=10){
         $db_connection=db_connection();
         $db=$db_connection['db'];
@@ -117,7 +143,7 @@
                 return $results;
             }
             if($db_type=='postgresql'){
-                $result=pg_fetch_all(pg_query($db,"select * from porto where ativo=true limit $limit offset $offset"));
+                $result=pg_fetch_all(pg_query($db,"select * from porto where ativo = true limit $limit offset $offset"));
                 return $result;
             }
         }
@@ -188,7 +214,8 @@
         }
         else exit;  
     };
-    //transformar para um exists
+
+    // BASICS
     function getPaises(){
         $db_connection = db_connection();
         $db = $db_connection['db'];
