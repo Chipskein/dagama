@@ -24,6 +24,8 @@
         }
         return ['db'=>$db,'db_type'=>$db_type];
     }
+
+    /* <FEED> */
     function getFeed($offset,$limit=10){
         $db_connection=db_connection();
         $db=$db_connection['db'];
@@ -44,6 +46,63 @@
         }
         else exit;
     }
+    function suggestFriends($user, $limit, $offset) {
+        $db_connection=db_connection();
+        $db=$db_connection['db'];
+        $db_type=$db_connection['db_type'];
+        if($db){
+            if($db_type=='sqlite'){
+                $results=[];
+                $result = $db->query("select perfil.codigo, perfil.username, perfil.img from perfil 
+                where 
+                    perfil.codigo != $user and
+                    perfil.codigo not in (
+                    select tmp.codigo from (
+                        select perfil.codigo, 
+                            case
+                                when amigo.perfil = perfil.codigo then amigo.amigo
+                                when amigo.amigo = perfil.codigo then amigo.perfil
+                            end as amigoCodigo
+                        from perfil
+                            join amigo on perfil.codigo = amigo.perfil or perfil.codigo = amigo.amigo
+                    ) as tmp
+                        join perfil on tmp.amigoCodigo = perfil.codigo
+                    where perfil.codigo = $user
+                    group by perfil.codigo
+                )
+                limit $limit
+                offset $offset");
+                while ($row = $result->fetchArray()) {
+                    array_push($results, $row);
+                }
+                return $results;
+            }
+            if($db_type=='postgresql'){
+                $result=pg_fetch_all(pg_query($db, "select perfil.codigo, perfil.username, perfil.img from perfil 
+                where 
+                    perfil.codigo != $user and
+                    perfil.codigo not in (
+                    select tmp.codigo from (
+                        select perfil.codigo, 
+                            case
+                                when amigo.perfil = perfil.codigo then amigo.amigo
+                                when amigo.amigo = perfil.codigo then amigo.perfil
+                            end as amigoCodigo
+                        from perfil
+                            join amigo on perfil.codigo = amigo.perfil or perfil.codigo = amigo.amigo
+                    ) as tmp
+                        join perfil on tmp.amigoCodigo = perfil.codigo
+                    where perfil.codigo = $user
+                    group by perfil.codigo
+                )
+                limit $limit
+                offset $offset"));
+                return $result;
+            }
+        }
+        else exit;
+    }
+    /* </FEED> */
     function getAllPorto($offset,$limit=10){
         $db_connection=db_connection();
         $db=$db_connection['db'];
@@ -192,13 +251,13 @@
         $db_type = $db_connection['db_type'];
         if($db){
             if($db_type == 'sqlite'){
-                $response = $db->query("select email,ativo,img,username from perfil where codigo='$id'");
+                $response = $db->query("select codigo, email, ativo, img, username from perfil where codigo='$id'");
                 if($response) return $response->fetchArray();
                 else return false;
             }
             if($db_type == 'postgresql'){
                 if($db_type == 'postgresql'){
-                    $response = pg_query($db,"select email,ativo,img,username from perfil where codigo='$id'");
+                    $response = pg_query($db,"select codigo, email, ativo, img, username from perfil where codigo='$id'");
                     if($response) return pg_fetch_array($response);
                     else return false;
                 }

@@ -20,18 +20,16 @@ body {
 
 .header-main {
 	display: flex;
-	height: 75px;
+	height: 55px;
 	width: 100%;
 	background-color: var(--azulEscuro-color);
 }
-
 .header-icon {
-	width: 55px;
-	height: 53px;
+	width: 52px;
+	height: 50px;
 	align-self: center;
 	margin-left: 10px;
 }
-
 .header-searchBar {
 	width: 611px;
 	height: 37px;
@@ -41,7 +39,6 @@ body {
 	background-color: var(--white-color);
 	border: 1px solid #000;
 }
-
 .header-searchBar-icon {
 	width: 22px;
 	height: 23px;
@@ -68,7 +65,7 @@ body {
 	margin-right: 20px;
 }
 .header-links-a {
-	font-size: 23px;
+	font-size: 18px;
 	color: var(--white-color);
 	text-decoration: none;
 	padding-inline: 10px;
@@ -85,9 +82,27 @@ body {
 	align-self: center;
 }
 
+/* GENERAL */
+.container-left {
+	float: left;
+}
+.container-center {
+	/* position: absolute; */
+	margin-left: 20%;
+	margin-right: 20%;
+	margin-top: 40px;
+	margin-bottom: 50px;
+}
+.container-right {
+	float: right;
+}
+.container-bottom {
+	margin-top: 40px;
+}
+
 /*<index.php>*/
 	body {
-		background-color: var(--cinza-color);
+		background-color: var(--cinza2-color);
 		color: var(--white-color);
 	}
 
@@ -500,4 +515,128 @@ body {
 		margin-left:7% ;
 	}
 /*</navio.php>*/
+/*--------------------------------------------------------------------------------------------------------------------------------------*/
+/*<feed.php>*/
+.insert-interacao {
+	background-color: var(--cinza-color);
+	width: 909px;
+	height: 262px;
+	padding: 10px;
+	padding-left: 20px;
+	padding-right: 20px;
+	border-radius: 10px;
+}
+.insert-interacao-user {
+	display: flex;
+	align-items: center;
+}
+.interaction-mainuser-user-icon {
+	width: 64px;
+	height: 64px;
+	border-radius: 50px;
+}
+.insert-interacao-user-name {
+	margin-left: 10px;
+	font-style: italic;
+	font-size: 16px;
+}
+.insert-interacao-input {
+	width: 886px;
+	height: 105px;
+	margin-top: 15px;
+	border-radius: 20px;
+	padding: 10px;
+}
+
+.insert-interacao-smallBtns {
+	display: flex;
+	margin-top: 20px;
+	margin-left: 10px;
+}
+.insert-interacao-smallBtns-a {
+	color: #fff;
+	text-decoration: none;
+	margin-right: 20px;
+	display: flex;
+}
+.insert-interacao-smallBtns-icon {
+	width: 19px;
+	height: 19px;
+	margin-right: 5px;
+}
+.insert-interacao-submit {
+	position: relative;
+	width: 139px;
+	height: 38px;
+	background-color: var(--laranja-color);
+	color: #fff;
+	border-radius: 10px;
+	border-width: 0px;
+	float: right;
+	margin-top: -25px;
+}
+
+.add-amigo {
+	background-color: var(--cinza-color);
+	width: 909px;
+	height: 351px;
+	margin-top: 20px;
+	padding: 10px;
+	padding-left: 20px;
+	padding-right: 20px;
+	border-radius: 10px;
+}
+.add-amigo-top {
+	display: flex;
+	align-items: center;
+	margin-top: -20px;
+}
+.add-amigo-suggesTxt {
+	font-size: 36px;
+}
+.add-amigo-verMais {
+	font-size: 18px;
+	color: var(--azulEscuro2-color);
+	margin-left: 500px;
+}
+.add-amigo-cards {
+	display: flex;
+	/* justify-content: center; */
+	justify-content: space-between;
+	margin-left: 15px;
+	margin-right: 15px;
+}
+.add-amigo-card {
+	width: 195px;
+	height: 204px;
+	display: flex;
+	flex-direction: column;
+	background-color: #fff;
+	color: #000;
+	border-radius: 10px;
+	border-width: 0px;
+	align-items: center;
+}
+.add-amigo-card-icon {
+	width: 75px;
+	height: 75px;
+	border-radius: 50px;
+	align-self: center;
+	margin-top: 20px;
+}
+.add-amigo-card-name {
+	font-size: 24px;
+	margin-top: 15px;
+}
+.add-amigo-card-button {
+	width: 139px;
+	height: 38px;
+	background-color: var(--azulEscuro2-color);
+	color: #fff;
+	border-radius: 10px;
+	border-width: 0px;
+	margin-top: -15px;
+}
+
+/*</feed.php>*/
 /*--------------------------------------------------------------------------------------------------------------------------------------*/

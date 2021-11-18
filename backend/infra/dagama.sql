@@ -163,13 +163,21 @@ INSERT INTO PAIS(nome) VALUES('Brasil');
 --INSERT INTO INTERACAO(perfil,post,texto,isSharing) VALUES(1,2,'compartilhou ',1);
 
 
-
-
-
-
-
-
-
-
-
-
+-- TESTE DE COMANDOS
+-- select perfil.codigo, perfil.username, perfil.img from perfil 
+-- where 
+--     perfil.codigo != 1 and
+--     perfil.codigo not in (
+--     select tmp.codigo from (
+--         select perfil.codigo, 
+--             case
+--                 when amigo.perfil = perfil.codigo then amigo.amigo
+--                 when amigo.amigo = perfil.codigo then amigo.perfil
+--             end as amigoCodigo
+--         from perfil
+--             join amigo on perfil.codigo = amigo.perfil or perfil.codigo = amigo.amigo
+--     ) as tmp
+--         join perfil on tmp.amigoCodigo = perfil.codigo
+--     where perfil.codigo = 1
+--     group by perfil.codigo
+-- );

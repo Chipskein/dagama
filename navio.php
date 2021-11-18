@@ -73,19 +73,27 @@
         </div>
     </div>
     <br>
-    <div align=center>
-        <div class=make-post>
-          <?php
-            echo "<div class=post-icon style=background-image:url($_SESSION[userimg]);></div>";
-            echo "<h3 class=post-name>$_SESSION[username]:</h3>";
-          ?>
-          <div>
-              <textarea class=post-input name="post-input" placeholder="Escreva um post"></textarea>
-          </div>
-        </div>
+    <div class="container-center">
+    <?php
+      echo "<div class=\"insert-interacao\">";
+      echo "<div class=\"insert-interacao-user\">";
+      echo "<img class=\"interaction-mainuser-user-icon\" src=\"".$user["img"]."\" alt=\"\" srcset=\"\">";
+      echo "<p class=\"insert-interacao-user-name\">".$user["username"].":</p>";
+      echo "</div>";
+      echo "<form name=\"newPost\" action=\"\" method=\"\">";
+      echo "<textarea name=\"texto\" class=\"insert-interacao-input\" type=\"text\" placeholder=\"Escreva um post ...\" ></textarea>";
+      echo "<div class=\"insert-interacao-smallBtns\">";
+      echo "<a class=\"insert-interacao-smallBtns-a\" href=\"\"><img class=\"insert-interacao-smallBtns-icon\" src=\"imgs/icons/maps-and-flags.png\" alt=\"\" srcset=\"\">Adicionar um Local</a>";
+      echo "<a class=\"insert-interacao-smallBtns-a\" href=\"\"><img class=\"insert-interacao-smallBtns-icon\" src=\"imgs/icons/multiple-users-silhouette.png\" alt=\"\" srcset=\"\">Citar Pessoas</a>";
+      echo "<a class=\"insert-interacao-smallBtns-a\" href=\"\"><img class=\"insert-interacao-smallBtns-icon\" src=\"imgs/icons/price-tag.png\" alt=\"\" srcset=\"\">Assunto</a>";
+      echo "</div>";
+      echo "<input class=\"insert-interacao-submit\" type=\"submit\" name=\"insert-interacao-submit\" />";
+      echo "</form>";
+      echo "</div>";
+    ?>
     </div>
 </main>
-<footer><h3 align=center><< 1 2 3 >></h3></footer>
+<footer class="container-bottom" ><p align="center"><< 1 2 3 >></p></footer>
 <?php 
   echo "<script>img_perfil.style.backgroundImage=\"url($user[img])\"</script>";
 ?>
