@@ -6,7 +6,7 @@
         $db_type=false;
         if(preg_match("/localhost/","$_SERVER[HTTP_HOST]")){
             //echo "Connect with sqlite<br>";
-            $db=new SQLite3("$_SERVER[DOCUMENT_ROOT]/backend/infra/dagama.db");
+            $db=new SQLite3("$_SERVER[DOCUMENT_ROOT]/backend/infra/new-dagama.db");
             $test=$db->exec("PRAGMA FOREIGN_KEYS=ON");
             if(!$test){
                 echo "<br>Um erro de conexão com banco ocorreu<br>"; 
