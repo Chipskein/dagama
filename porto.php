@@ -19,7 +19,12 @@
     if(isset($_GET['porto'])){
       $portoInfo=getPortInfo($_GET['porto']);
       var_dump($portoInfo);
-    } 
+    }
+    else {
+      echo "<h2 align=center>Porto Inválido</h2>";
+      header("refresh:1;url=mar.php");
+      die();
+    }
   }
   else {
     echo "<h2 align=center>Para ver este conteudo faça um cadastro no dagama!!!</h2>";
