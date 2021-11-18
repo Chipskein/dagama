@@ -25,15 +25,16 @@
                 $pass="$_POST[password]";
                 $passed=Login("$email","$pass");
                 if($passed){
-                    if($passed['ativo']==1||$passed['ativo']=='t'){
+                    if($passed['ativo']=='1'||$passed['ativo']==='t'){
                         echo "<h2 align=center>Logado</h2>";
+                        var_dump($passed);
                         $USERID=$passed['codigo'];
                         $USERIMG=$passed['img'];
                         $USERNAME=$passed['username'];
                         $_SESSION["userid"] = $USERID;
                         $_SESSION["userimg"] = $USERIMG;
                         $_SESSION["username"] = $USERNAME;
-                        header("refresh:1;url=../mar.php");
+                        //header("refresh:1;url=../mar.php");
                         die();
                     }
                     else{
