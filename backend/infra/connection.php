@@ -53,56 +53,186 @@
         if($db){
             if($db_type=='sqlite'){
                 $results=[];
-                $result = $db->query("select perfil.codigo, perfil.username, perfil.img, SOLICITACAO_AMIGO.amigo as enviado from perfil 
-                    left join SOLICITACAO_AMIGO on SOLICITACAO_AMIGO.amigo = perfil.codigo and SOLICITACAO_AMIGO.perfil = $user
+                // Variáveis M - meses, A - min assuntos em comum, $B - top x assuntos, $U - usuario
+                $M = 3; $A = 1; $B = 5; $U = $user;
+                $result = $db->query("
+                select perfil.codigo, perfil.username, perfil.img,
+                    case
+                        when solicitacao_amigo.amigo is null then 'false'
+                        when solicitacao_amigo.amigo is not null then 'true'
+                    end as enviado, 
+                    1 as camadas from perfil
+                    join (select perfil.codigo as user, tmp1.assuntoCodigo, tmp1.assuntoNome, tmp1.qtd, count(*) as qtd2 from perfil
+                            join (select interacao.perfil as perfil, assunto.codigo as assuntoCodigo, assunto.nome as assuntoNome, count(*) as qtd from interacao
+                                join INTERACAO_ASSUNTO on interacao.codigo = INTERACAO_ASSUNTO.interacao
+                                join assunto on interacao_assunto.assunto = assunto.codigo
+                            where
+                                datetime(interacao.data) between datetime('now','start of month', '-$M months') and datetime('now')
+                            group by interacao.perfil, assunto.codigo
+                            having 
+                                qtd > $A
+                            order by qtd desc) as tmp1 on tmp1.perfil = perfil.codigo
+                        where 
+                            tmp1.qtd <= $B
+                        group by perfil.codigo) 
+                        as tmp2 on perfil.codigo = tmp2.user
+                    left join solicitacao_amigo on solicitacao_amigo.amigo = perfil.codigo and solicitacao_amigo.perfil = $U
                 where
-                    perfil.codigo != $user and
-                    perfil.codigo not in (
-                    select tmp.codigo from (
-                        select perfil.codigo, 
-                            case
-                                when amigo.perfil = perfil.codigo then amigo.amigo
-                                when amigo.amigo = perfil.codigo then amigo.perfil
-                            end as amigoCodigo
-                        from perfil
-                            join amigo on perfil.codigo = amigo.perfil or perfil.codigo = amigo.amigo
-                    ) as tmp
-                        join perfil on tmp.amigoCodigo = perfil.codigo
-                    where perfil.codigo = $user
-                    group by perfil.codigo
-                )
+                    perfil.codigo != $U
                 group by perfil.codigo
-                order by SOLICITACAO_AMIGO.amigo asc
-                limit $limit
-                offset $offset");
+                having
+                    tmp2.assuntoCodigo in (select tmp1.assuntoCodigo from perfil
+                        join (select interacao.perfil as perfil, assunto.codigo as assuntoCodigo, assunto.nome as assuntoNome, count(*) as qtd from interacao
+                            join INTERACAO_ASSUNTO on interacao.codigo = INTERACAO_ASSUNTO.interacao
+                            join assunto on interacao_assunto.assunto = assunto.codigo
+                        where
+                            datetime(interacao.data) between datetime('now','start of month', '-$M months') and datetime('now')
+                        group by interacao.perfil, assunto.codigo
+                        having 
+                            qtd > $A
+                        order by qtd desc) as tmp1 on tmp1.perfil = perfil.codigo
+                    where
+                        perfil.codigo = $U
+                    limit $B)
+                union
+                select perfil.codigo, perfil.username, perfil.img,
+                    case
+                        when solicitacao_amigo.amigo is null then 'false'
+                        when solicitacao_amigo.amigo is not null then 'true'
+                    end as enviado, 
+                    2 as camadas from perfil
+                    left join solicitacao_amigo on solicitacao_amigo.amigo = perfil.codigo and solicitacao_amigo.perfil = $U
+                where 
+                    perfil.codigo != $U and
+                    perfil.codigo not in (
+                    select perfil.codigo from perfil
+                        join (select perfil.codigo as user, tmp1.assuntoCodigo, tmp1.assuntoNome, tmp1.qtd, count(*) as qtd2 from perfil
+                                join (select interacao.perfil as perfil, assunto.codigo as assuntoCodigo, assunto.nome as assuntoNome, count(*) as qtd from interacao
+                                    join INTERACAO_ASSUNTO on interacao.codigo = INTERACAO_ASSUNTO.interacao
+                                    join assunto on interacao_assunto.assunto = assunto.codigo
+                                where
+                                    datetime(interacao.data) between datetime('now','start of month', '-$M months') and datetime('now')
+                                group by interacao.perfil, assunto.codigo
+                                having 
+                                    qtd > $A
+                                order by qtd desc) as tmp1 on tmp1.perfil = perfil.codigo
+                            where 
+                                tmp1.qtd <= $B
+                            group by perfil.codigo) 
+                            as tmp2 on perfil.codigo = tmp2.user
+                    where
+                        perfil.codigo != $U
+                    group by perfil.codigo
+                    having
+                        tmp2.assuntoCodigo in (select tmp1.assuntoCodigo from perfil
+                            join (select interacao.perfil as perfil, assunto.codigo as assuntoCodigo, assunto.nome as assuntoNome, count(*) as qtd from interacao
+                                join INTERACAO_ASSUNTO on interacao.codigo = INTERACAO_ASSUNTO.interacao
+                                join assunto on interacao_assunto.assunto = assunto.codigo
+                            where
+                                datetime(interacao.data) between datetime('now','start of month', '-$M months') and datetime('now')
+                            group by interacao.perfil, assunto.codigo
+                            having 
+                                qtd > $A
+                            order by qtd desc) as tmp1 on tmp1.perfil = perfil.codigo
+                        where
+                            perfil.codigo = $U           
+                        limit $B)   
+                ) 
+                group by perfil.codigo
+                order by camadas asc
+                limit $limit offset $offset");
                 while ($row = $result->fetchArray()) {
                     array_push($results, $row);
                 }
                 return $results;
             }
             if($db_type=='postgresql'){
-                $result=pg_fetch_all(pg_query($db, "select perfil.codigo, perfil.username, perfil.img, SOLICITACAO_AMIGO.amigo as enviado from perfil 
-                    left join SOLICITACAO_AMIGO on SOLICITACAO_AMIGO.amigo = perfil.codigo and SOLICITACAO_AMIGO.perfil = $user
+                $result=pg_fetch_all(pg_query($db, "
+                select perfil.codigo, perfil.username, perfil.img,
+                    case
+                        when solicitacao_amigo.amigo is null then 'false'
+                        when solicitacao_amigo.amigo is not null then 'true'
+                    end as enviado, 
+                    1 as camadas from perfil
+                    join (select perfil.codigo as user, tmp1.assuntoCodigo, tmp1.assuntoNome, tmp1.qtd, count(*) as qtd2 from perfil
+                            join (select interacao.perfil as perfil, assunto.codigo as assuntoCodigo, assunto.nome as assuntoNome, count(*) as qtd from interacao
+                                join INTERACAO_ASSUNTO on interacao.codigo = INTERACAO_ASSUNTO.interacao
+                                join assunto on interacao_assunto.assunto = assunto.codigo
+                            where
+                                datetime(interacao.data) between datetime('now','start of month', '-$M months') and datetime('now')
+                            group by interacao.perfil, assunto.codigo
+                            having 
+                                qtd > $A
+                            order by qtd desc) as tmp1 on tmp1.perfil = perfil.codigo
+                        where 
+                            tmp1.qtd <= $B
+                        group by perfil.codigo) 
+                        as tmp2 on perfil.codigo = tmp2.user
+                    left join solicitacao_amigo on solicitacao_amigo.amigo = perfil.codigo and solicitacao_amigo.perfil = $U
                 where
-                    perfil.codigo != $user and
-                    perfil.codigo not in (
-                    select tmp.codigo from (
-                        select perfil.codigo, 
-                            case
-                                when amigo.perfil = perfil.codigo then amigo.amigo
-                                when amigo.amigo = perfil.codigo then amigo.perfil
-                            end as amigoCodigo
-                        from perfil
-                            join amigo on perfil.codigo = amigo.perfil or perfil.codigo = amigo.amigo
-                    ) as tmp
-                        join perfil on tmp.amigoCodigo = perfil.codigo
-                    where perfil.codigo = $user
-                    group by perfil.codigo
-                )
+                    perfil.codigo != $U
                 group by perfil.codigo
-                order by SOLICITACAO_AMIGO.amigo asc
-                limit $limit
-                offset $offset"));
+                having
+                    tmp2.assuntoCodigo in (select tmp1.assuntoCodigo from perfil
+                        join (select interacao.perfil as perfil, assunto.codigo as assuntoCodigo, assunto.nome as assuntoNome, count(*) as qtd from interacao
+                            join INTERACAO_ASSUNTO on interacao.codigo = INTERACAO_ASSUNTO.interacao
+                            join assunto on interacao_assunto.assunto = assunto.codigo
+                        where
+                            datetime(interacao.data) between datetime('now','start of month', '-$M months') and datetime('now')
+                        group by interacao.perfil, assunto.codigo
+                        having 
+                            qtd > $A
+                        order by qtd desc) as tmp1 on tmp1.perfil = perfil.codigo
+                    where
+                        perfil.codigo = $U
+                    limit $B)
+                union
+                select perfil.codigo, perfil.username, perfil.img,
+                    case
+                        when solicitacao_amigo.amigo is null then 'false'
+                        when solicitacao_amigo.amigo is not null then 'true'
+                    end as enviado, 
+                    2 as camadas from perfil
+                    left join solicitacao_amigo on solicitacao_amigo.amigo = perfil.codigo and solicitacao_amigo.perfil = $U
+                where 
+                    perfil.codigo != $U and
+                    perfil.codigo not in (
+                    select perfil.codigo from perfil
+                        join (select perfil.codigo as user, tmp1.assuntoCodigo, tmp1.assuntoNome, tmp1.qtd, count(*) as qtd2 from perfil
+                                join (select interacao.perfil as perfil, assunto.codigo as assuntoCodigo, assunto.nome as assuntoNome, count(*) as qtd from interacao
+                                    join INTERACAO_ASSUNTO on interacao.codigo = INTERACAO_ASSUNTO.interacao
+                                    join assunto on interacao_assunto.assunto = assunto.codigo
+                                where
+                                    datetime(interacao.data) between datetime('now','start of month', '-$M months') and datetime('now')
+                                group by interacao.perfil, assunto.codigo
+                                having 
+                                    qtd > $A
+                                order by qtd desc) as tmp1 on tmp1.perfil = perfil.codigo
+                            where 
+                                tmp1.qtd <= $B
+                            group by perfil.codigo) 
+                            as tmp2 on perfil.codigo = tmp2.user
+                    where
+                        perfil.codigo != $U
+                    group by perfil.codigo
+                    having
+                        tmp2.assuntoCodigo in (select tmp1.assuntoCodigo from perfil
+                            join (select interacao.perfil as perfil, assunto.codigo as assuntoCodigo, assunto.nome as assuntoNome, count(*) as qtd from interacao
+                                join INTERACAO_ASSUNTO on interacao.codigo = INTERACAO_ASSUNTO.interacao
+                                join assunto on interacao_assunto.assunto = assunto.codigo
+                            where
+                                datetime(interacao.data) between datetime('now','start of month', '-$M months') and datetime('now')
+                            group by interacao.perfil, assunto.codigo
+                            having 
+                                qtd > $A
+                            order by qtd desc) as tmp1 on tmp1.perfil = perfil.codigo
+                        where
+                            perfil.codigo = $U           
+                        limit $B)   
+                ) 
+                group by perfil.codigo
+                order by camadas asc
+                limit $limit offset $offset"));
                 return $result;
             }
         }

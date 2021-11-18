@@ -2,7 +2,7 @@ DROP TABLE IF EXISTS INTERACAO_ASSUNTO ;
 DROP TABLE IF EXISTS INTERACAO;
 DROP TABLE IF EXISTS CITACAOPERFIL;
 DROP TABLE IF EXISTS CITACAO;
-DROP TABLE IF EXISTS SOLICITACAO_AMIGO;
+DROP TABLE IF EXISTS solicitacao_amigo;
 DROP TABLE IF EXISTS AMIGO;
 DROP TABLE IF EXISTS SELOUSER;
 DROP TABLE IF EXISTS SELO;
@@ -78,7 +78,7 @@ CREATE TABLE AMIGO(
     FOREIGN KEY (amigo) REFERENCES PERFIL(codigo),
     FOREIGN KEY (perfil) REFERENCES PERFIL(codigo)
 );
-CREATE TABLE SOLICITACAO_AMIGO(
+CREATE TABLE solicitacao_amigo(
     amigo INTEGER NOT NULL CHECK(amigo!=perfil),
     perfil INTEGER NOT NULL CHECK(amigo!=perfil),
     dateEnvio DATETIME NOT NULL,
@@ -124,8 +124,19 @@ CREATE TABLE INTERACAO_ASSUNTO(
     FOREIGN KEY (interacao) REFERENCES INTERACAO(codigo)
 );
 --TESTES
+
 --pais
 INSERT INTO PAIS(nome) VALUES('Brasil');
+
+--assuntos
+INSERT INTO ASSUNTO(nome) VALUES 
+('Banco de dados'),
+('Homem Aranha Sem volta pra casa'),
+('GOTY'),
+("Assassin's Creed IV Black Flag"),
+('Pilantras do Clibre'),
+('Barba Azul');
+
 --perfil
 --INSERT INTO PERFIL(pais,email,username,senha,genero,datanasc) VALUES(1,'abfn0905@gmail.com','testoman','$2y$10$vL5SKzTYBXYzYCHYrxF8P.ZACVQNwWD3n4txiC4CZFgpvWuGRqQ4u','M','2002-09-05');
 --INSERT INTO PERFIL(pais,email,username,senha,genero,datanasc) VALUES(1,'abfn@gmail.com','testoman2','$2y$10$vL5SKzTYBXYzYCHYrxF8P.ZACVQNwWD3n4txiC4CZFgpvWuGRqQ4u','M','2002-09-05');
@@ -134,9 +145,9 @@ INSERT INTO PAIS(nome) VALUES('Brasil');
 --INSERT INTO PORTO(perfil,nome,descr) VALUES(1,'PORTO DE TESTE2','è isso ai parceria2');
 --INSERT INTO PORTO_PARTICIPA(porto,perfil) VALUES(1,1),(2,1),(1,2);
 --amigos
---INSERT INTO SOLICITACAO_AMIGO(perfil,amigo,dateEnvio,ativo) VALUES(1,2,CURRENT_TIMESTAMP,0);
+--INSERT INTO solicitacao_amigo(perfil,amigo,dateEnvio,ativo) VALUES(1,2,CURRENT_TIMESTAMP,0);
 --INSERT INTO AMIGO(perfil,amigo,dateAceito,ativo) VALUES(1,2,CURRENT_TIMESTAMP,1);
---UPDATE SOLICITACAO_AMIGO SET ATIVO=0 WHERE PERFIL=1 AND AMIGO=2;
+--UPDATE solicitacao_amigo SET ATIVO=0 WHERE PERFIL=1 AND AMIGO=2;
 --selos
 --INSERT INTO SELO(porto,texto) VALUES(1,'SELO DE TESTE');
 --INSERT INTO SELO(porto,texto) VALUES(1,'SELO DE TESTE2');
@@ -163,24 +174,97 @@ INSERT INTO PAIS(nome) VALUES('Brasil');
 --INSERT INTO INTERACAO(perfil,post,texto,isSharing) VALUES(1,2,'compartilhou ',1);
 
 
--- TESTE DE COMANDOS
-select perfil.codigo, perfil.username, perfil.img, SOLICITACAO_AMIGO.amigo as enviado from perfil 
-    left join SOLICITACAO_AMIGO on SOLICITACAO_AMIGO.amigo = perfil.codigo and SOLICITACAO_AMIGO.perfil = 7
-where
-    perfil.codigo != 7 and
-    perfil.codigo not in (
-    select tmp.codigo from (
-        select perfil.codigo, 
-            case
-                when amigo.perfil = perfil.codigo then amigo.amigo
-                when amigo.amigo = perfil.codigo then amigo.perfil
-            end as amigoCodigo
-        from perfil
-            join amigo on perfil.codigo = amigo.perfil or perfil.codigo = amigo.amigo
-    ) as tmp
-        join perfil on tmp.amigoCodigo = perfil.codigo
-    where perfil.codigo = 7
-    group by perfil.codigo
-)
-group by perfil.codigo
-order by SOLICITACAO_AMIGO.amigo asc;
+-- select perfil.codigo, perfil.username, perfil.img, solicitacao_amigo.amigo as enviado from perfil 
+--     left join solicitacao_amigo on solicitacao_amigo.amigo = perfil.codigo and solicitacao_amigo.perfil = 7
+-- where
+--     perfil.codigo != 7 and
+--     perfil.codigo not in (
+--     select tmp.codigo from (
+--         select perfil.codigo, 
+--             case
+--                 when amigo.perfil = perfil.codigo then amigo.amigo
+--                 when amigo.amigo = perfil.codigo then amigo.perfil
+--             end as amigoCodigo
+--         from perfil
+--             join amigo on perfil.codigo = amigo.perfil or perfil.codigo = amigo.amigo
+--     ) as tmp
+--         join perfil on tmp.amigoCodigo = perfil.codigo
+--     where perfil.codigo = 7
+--     group by perfil.codigo
+-- )
+-- group by perfil.codigo
+-- order by solicitacao_amigo.amigo asc;
+
+-- 14)
+
+INSERT INTO INTERACAO (codigo, perfil, texto) VALUES
+(1, 8, '...'),
+(2, 8, '...'),
+(3, 8, '...'),
+(4, 8, '...'),
+(5, 8, '...'),
+(6, 8, '...'),
+(7, 8, '...'),
+(8, 8, '...'),
+(9, 8, '...'),
+(10, 8, '...'),
+(11, 7, '...'),
+(12, 7, '...'),
+(13, 2, '...'),
+(14, 2, '...'),
+(15, 7, '...'),
+(16, 7, '...'),
+(17, 2, '...'),
+(18, 2, '...'),
+(19, 7, '...'),
+(20, 7, '...'),
+(21, 2, '...'),
+(22, 2, '...'),
+(23, 7, '...'),
+(24, 7, '...'),
+(25, 2, '...'),
+(26, 2, '...'),
+(27, 7, '...'),
+(28, 7, '...'),
+(29, 8, '...'),
+(30, 8, '...'),
+(31, 8, '...'),
+(32, 8, '...'),
+(33, 8, '...'),
+(34, 8, '...');
+
+INSERT INTO INTERACAO_ASSUNTO (assunto, interacao) VALUES 
+(5, 1), (1, 1),
+(2, 2), (4, 2),
+(3, 3), (6, 3),
+(2, 4), (6, 4),
+(1, 5), (5, 5),
+(2, 6), (4, 6),
+(3, 7), (6, 7),
+(5, 8), (1, 8),
+(4, 9), (2, 9),
+(4, 10), (6, 10),
+(3, 11), (2, 11),
+(1, 12), (2, 12),
+(1, 13), (3, 13),
+(1, 14), (3, 14),
+(2, 15), (1, 15),
+(2, 16), (1, 16),
+(2, 17), (4, 17),
+(2, 18), (4, 18),
+(3, 19), (5, 19),
+(3, 20), (5, 20),
+(3, 21), (6, 21),
+(3, 22), (6, 22),
+(4, 23), (3, 23),
+(4, 24), (2, 24),
+(4, 25), (2, 25),
+(4, 26), (2, 26),
+(5, 27), (4, 27),
+(5, 28), (4, 28),
+(5, 29), (1, 29),
+(5, 30), (2, 30),
+(3, 31), (1, 31),
+(4, 32), (6, 32),
+(2, 33), (5, 33),
+(1, 34), (6, 34);

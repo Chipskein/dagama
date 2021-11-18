@@ -601,8 +601,6 @@ body {
 }
 .add-amigo-cards {
 	display: flex;
-	/* justify-content: center; */
-	justify-content: space-between;
 	margin-left: 15px;
 	margin-right: 15px;
 }
@@ -616,7 +614,11 @@ body {
 	border-radius: 10px;
 	border-width: 0px;
 	align-items: center;
+	margin-right: 20px;
 }
+.add-amigo-card:last-child{
+	margin-right: 0px !important;
+} 
 .add-amigo-card-icon {
 	width: 75px;
 	height: 75px;
