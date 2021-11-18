@@ -10,6 +10,8 @@ DROP TABLE IF EXISTS PORTO_PARTICIPA;
 DROP TABLE IF EXISTS PORTO;
 DROP TABLE IF EXISTS PERFIL;
 DROP TABLE IF EXISTS ASSUNTO;
+DROP TABLE IF EXISTS CIDADE;
+DROP TABLE IF EXISTS UF;
 DROP TABLE IF EXISTS PAIS;
 
 --Alterar todas INTEGER --> SERIAL caso for Postgresql
@@ -18,6 +20,22 @@ CREATE TABLE PAIS(
     nome    VARCHAR(250) NOT NULL,
     PRIMARY KEY(codigo)
 );
+CREATE TABLE UF(
+    codigo  INTEGER NOT NULL,
+    pais    INTEGER NOT NULL,
+    nome    VARCHAR(250) NOT NULL,
+    PRIMARY KEY(codigo),
+    FOREIGN KEY (pais) REFERENCES PAIS(codigo) 
+
+);
+CREATE TABLE CIDADE(
+    codigo  INTEGER NOT NULL,
+    uf      INTEGER NOT NULL,
+    nome    VARCHAR(250) NOT NULL,
+    PRIMARY KEY(codigo),
+    FOREIGN KEY (uf) REFERENCES UF(codigo) 
+);
+
 CREATE TABLE ASSUNTO(
     codigo  INTEGER NOT NULL,
     nome    VARCHAR(250) NOT NULL,
@@ -126,6 +144,8 @@ CREATE TABLE INTERACAO_ASSUNTO(
 --TESTES
 --pais
 INSERT INTO PAIS(nome) VALUES('Brasil');
+INSERT INTO UF(nome,pais) VALUES('RS',1);
+INSERT INTO CIDADE(nome,uf) VALUES('Rio Grande',1);
 --perfil
 --INSERT INTO PERFIL(pais,email,username,senha,genero,datanasc) VALUES(1,'abfn0905@gmail.com','testoman','$2y$10$vL5SKzTYBXYzYCHYrxF8P.ZACVQNwWD3n4txiC4CZFgpvWuGRqQ4u','M','2002-09-05');
 --INSERT INTO PERFIL(pais,email,username,senha,genero,datanasc) VALUES(1,'abfn@gmail.com','testoman2','$2y$10$vL5SKzTYBXYzYCHYrxF8P.ZACVQNwWD3n4txiC4CZFgpvWuGRqQ4u','M','2002-09-05');
@@ -163,6 +183,7 @@ INSERT INTO PAIS(nome) VALUES('Brasil');
 --INSERT INTO INTERACAO(perfil,post,texto,isSharing) VALUES(1,2,'compartilhou ',1);
 
 
+/*
 -- TESTE DE COMANDOS
 select perfil.codigo, perfil.username, perfil.img, SOLICITACAO_AMIGO.amigo as enviado from perfil 
     left join SOLICITACAO_AMIGO on SOLICITACAO_AMIGO.amigo = perfil.codigo and SOLICITACAO_AMIGO.perfil = 7
@@ -184,3 +205,4 @@ where
 )
 group by perfil.codigo
 order by SOLICITACAO_AMIGO.amigo asc;
+*/
