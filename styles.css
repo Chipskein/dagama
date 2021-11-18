@@ -469,6 +469,10 @@ body {
 	}
 	div.camera-icon{
 		background-color: var(--white-color);
+		position: absolute;
+		align-self: center;
+		left: 51%;
+		top:185px;
 		border-radius: 50%;
 		width: 40px;
 		height: 40px;
@@ -535,10 +539,9 @@ body {
 	align-items: center;
 }
 .interaction-mainuser-user-icon {
-	width: 90px;
-	height: 90px;
-	background-size: cover;
-	border-radius: 50%;
+	width: 64px;
+	height: 64px;
+	border-radius: 50px;
 }
 .insert-interacao-user-name {
 	margin-left: 10px;
