@@ -33,20 +33,21 @@
     die();
   }
 ?>
-  <header class=header>
-    <div class=header-container>
-      <div class=logos>
-        <?php echo "<a href=backend/logoff.php><img class=ancora src=imgs/icons/ancora.png alt=logoff></a>";?>  
-        <img class=header_logo src="imgs/icon.png" alt="logo">
-      </div>
-      <div class=pesquisar-pool><a class=pesquisar><img class=pesquisar src="imgs/icons/search.png" alt="pesquisar"></a><input class=pesquisar type="text" placeholder="Faça sua pesquisa"></div>
-      <div class="links">
-        <?php echo "<a class=header href=feed.php?user=$_SESSION[userid]>Feed</a> ";?>
-        <a class="onIt header">Mar</a>
-        <?php echo "<a class=header href=navio.php?user=$_SESSION[userid]>Meu navio</a> ";?>
-      </div> 
+   <header class="header-main">
+    <img class="header-icon" src="imgs/icon.png" alt="">
+    <div class="header-searchBar">
+      <img class="header-searchBar-icon" src="imgs/icons/search.png" alt="" srcset="">
+      <input class="header-searchBar-input" type="text" placeholder="Faça sua pesquisa ..." />
     </div>
-  </header> 
+    <div class="header-links">
+    <?php 
+      echo "<a class=\"header-links-a\" href=feed.php?user=$_SESSION[userid]>Feed</a> ";
+      echo "<a class=\"header-links-a a-selected\" href=mar.php?user=$_SESSION[userid]>Mar</a> ";
+      echo "<a class=\"header-links-a\" href=navio.php?user=$_SESSION[userid]>Navio</a> ";
+      echo "<a class=\"header-links-a\" href=backend/logoff.php>Sair </a><img class=\"header-links-icon\" src=\"imgs/icons/sair.png\" alt=\"\">";
+    ?>
+    </div>
+  </header>
   <main>
     <br>
     <div align=center>

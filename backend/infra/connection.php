@@ -24,6 +24,26 @@
         }
         return ['db'=>$db,'db_type'=>$db_type];
     }
+    function getFeed($offset,$limit=10){
+        $db_connection=db_connection();
+        $db=$db_connection['db'];
+        $db_type=$db_connection['db_type'];
+        if($db){
+            if($db_type=='sqlite'){
+                $results=[];
+                $result = $db->query("select * from interacao where isReaction is null and isSharing is null and ativo = 1 limit $limit offset $offset");
+                while ($row = $result->fetchArray()) {
+                    array_push($results, $row);
+                }
+                return $results;
+            }
+            if($db_type=='postgresql'){
+                $result=pg_fetch_all(pg_query($db, "select * from interacao where isReaction is null and isSharing is null and ativo = 1 limit $limit offset $offset"));
+                return $result;
+            }
+        }
+        else exit;
+    }
     function getAllPorto($offset,$limit=10){
         $db_connection=db_connection();
         $db=$db_connection['db'];

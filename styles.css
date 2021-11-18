@@ -13,6 +13,78 @@
 	
 }
 
+/* HEADER */
+body {
+	margin: 0px;
+}
+
+.header-main {
+	display: flex;
+	height: 75px;
+	width: 100%;
+	background-color: var(--azulEscuro-color);
+}
+
+.header-icon {
+	width: 55px;
+	height: 53px;
+	align-self: center;
+	margin-left: 10px;
+}
+
+.header-searchBar {
+	width: 611px;
+	height: 37px;
+	align-self: center;
+	display: flex;
+	margin-left: 30px;
+	background-color: var(--white-color);
+	border: 1px solid #000;
+}
+
+.header-searchBar-icon {
+	width: 22px;
+	height: 23px;
+	margin-top: 7px;
+	margin-left: 13px;
+}
+.header-searchBar-input {
+	width: 500px;
+	height: 30px;
+	margin-left: 13px;
+	margin-top: 2px;
+	background-color: transparent;
+}
+.header-searchBar-input,
+.header-searchBar-input:focus {
+	outline: none;
+	border: none;
+}
+.header-links {
+	display: flex;
+	position: absolute;
+	right: 0;
+	align-self: center;
+	margin-right: 20px;
+}
+.header-links-a {
+	font-size: 23px;
+	color: var(--white-color);
+	text-decoration: none;
+	padding-inline: 10px;
+	align-self: center;
+	font-weight: bold;
+}
+.a-selected {
+	color: var(--roxoClaro-color);
+}
+.header-links-icon {
+	width: 30px;
+	height: 29px;
+	margin-top: 3px;
+	align-self: center;
+}
+
 /*<index.php>*/
 	body {
 		background-color: var(--cinza-color);

@@ -37,7 +37,21 @@
       }
   }
 ?>
-<header class=header></header> 
+ <header class="header-main">
+    <img class="header-icon" src="imgs/icon.png" alt="">
+    <div class="header-searchBar">
+      <img class="header-searchBar-icon" src="imgs/icons/search.png" alt="" srcset="">
+      <input class="header-searchBar-input" type="text" placeholder="Faça sua pesquisa ..." />
+    </div>
+    <div class="header-links">
+    <?php 
+      echo "<a class=\"header-links-a\" href=feed.php?user=$_SESSION[userid]>Feed</a> ";
+      echo "<a class=\"header-links-a\" href=mar.php?user=$_SESSION[userid]>Mar</a> ";
+      echo "<a class=\"header-links-a a-selected\" href=navio.php?user=$_SESSION[userid]>Navio</a> ";
+      echo "<a class=\"header-links-a\" href=backend/logoff.php>Sair </a><img class=\"header-links-icon\" src=\"imgs/icons/sair.png\" alt=\"\">";
+    ?>
+    </div>
+  </header>
 <main>
     <div align=center>
     <!--Add onlick change-->
