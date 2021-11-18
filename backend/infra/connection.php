@@ -304,4 +304,24 @@
         }
         else exit;
     }
+    function getPortInfo($porto){
+        $db_connection = db_connection();
+        $db = $db_connection['db'];
+        $db_type = $db_connection['db_type'];
+        if($db){
+            if($db_type == 'sqlite'){
+                $response = $db->query("select nome,descr,img from porto where codigo='$porto' and ativo=1");
+                if($response) return $response->fetchArray();
+                else return false;
+            }
+            if($db_type == 'postgresql'){
+                if($db_type == 'postgresql'){
+                    $response = pg_query($db,"select nome,descr,img from porto where codigo='$porto' and ativo=true");
+                    if($response) return pg_fetch_array($response);
+                    else return false;
+                }
+            }
+        }
+        else exit;
+    }
 ?>

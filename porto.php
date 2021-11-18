@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="../imgs/icon.png" type="image/jpg">
   <link rel="stylesheet" href="styles.css">
-  <title>Dagama | Mar</title>
+  <title>Dagama | Porto</title>
 </head>
 <body>
 <?php
@@ -15,7 +15,11 @@
     session_start(); 
   }
   if(isset($_SESSION['userid'])){
-      //pegar valores do get
+    //validar porto
+    if(isset($_GET['porto'])){
+      $portoInfo=getPortInfo($_GET['porto']);
+      var_dump($portoInfo);
+    } 
   }
   else {
     echo "<h2 align=center>Para ver este conteudo faça um cadastro no dagama!!!</h2>";
