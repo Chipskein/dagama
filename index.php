@@ -73,7 +73,6 @@
               <option value="">SC</option>
               <option value="">PR</option>
             </select>
-            <br>
             <select class="inputs" name="cidade">
               <option value="1" selected>Rio Grande</option>
             </select>
