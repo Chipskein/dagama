@@ -10,6 +10,8 @@ DROP TABLE IF EXISTS PORTO_PARTICIPA;
 DROP TABLE IF EXISTS PORTO;
 DROP TABLE IF EXISTS PERFIL;
 DROP TABLE IF EXISTS ASSUNTO;
+DROP TABLE IF EXISTS CIDADE;
+DROP TABLE IF EXISTS UF;
 DROP TABLE IF EXISTS PAIS;
 
 --Alterar todas INTEGER --> SERIAL caso for Postgresql
@@ -18,6 +20,22 @@ CREATE TABLE PAIS(
     nome    VARCHAR(250) NOT NULL,
     PRIMARY KEY(codigo)
 );
+CREATE TABLE UF(
+    codigo  INTEGER NOT NULL,
+    pais    INTEGER NOT NULL,
+    nome    VARCHAR(250) NOT NULL,
+    PRIMARY KEY(codigo),
+    FOREIGN KEY (pais) REFERENCES PAIS(codigo) 
+
+);
+CREATE TABLE CIDADE(
+    codigo  INTEGER NOT NULL,
+    uf      INTEGER NOT NULL,
+    nome    VARCHAR(250) NOT NULL,
+    PRIMARY KEY(codigo),
+    FOREIGN KEY (uf) REFERENCES UF(codigo) 
+);
+
 CREATE TABLE ASSUNTO(
     codigo  INTEGER NOT NULL,
     nome    VARCHAR(250) NOT NULL,
@@ -127,16 +145,8 @@ CREATE TABLE INTERACAO_ASSUNTO(
 
 --pais
 INSERT INTO PAIS(nome) VALUES('Brasil');
-
---assuntos
-INSERT INTO ASSUNTO(nome) VALUES 
-('Banco de dados'),
-('Homem Aranha Sem volta pra casa'),
-('GOTY'),
-("Assassin's Creed IV Black Flag"),
-('Pilantras do Clibre'),
-('Barba Azul');
-
+INSERT INTO UF(nome,pais) VALUES('RS',1);
+INSERT INTO CIDADE(nome,uf) VALUES('Rio Grande',1);
 --perfil
 --INSERT INTO PERFIL(pais,email,username,senha,genero,datanasc) VALUES(1,'abfn0905@gmail.com','testoman','$2y$10$vL5SKzTYBXYzYCHYrxF8P.ZACVQNwWD3n4txiC4CZFgpvWuGRqQ4u','M','2002-09-05');
 --INSERT INTO PERFIL(pais,email,username,senha,genero,datanasc) VALUES(1,'abfn@gmail.com','testoman2','$2y$10$vL5SKzTYBXYzYCHYrxF8P.ZACVQNwWD3n4txiC4CZFgpvWuGRqQ4u','M','2002-09-05');
@@ -174,97 +184,26 @@ INSERT INTO ASSUNTO(nome) VALUES
 --INSERT INTO INTERACAO(perfil,post,texto,isSharing) VALUES(1,2,'compartilhou ',1);
 
 
--- select perfil.codigo, perfil.username, perfil.img, solicitacao_amigo.amigo as enviado from perfil 
---     left join solicitacao_amigo on solicitacao_amigo.amigo = perfil.codigo and solicitacao_amigo.perfil = 7
--- where
---     perfil.codigo != 7 and
---     perfil.codigo not in (
---     select tmp.codigo from (
---         select perfil.codigo, 
---             case
---                 when amigo.perfil = perfil.codigo then amigo.amigo
---                 when amigo.amigo = perfil.codigo then amigo.perfil
---             end as amigoCodigo
---         from perfil
---             join amigo on perfil.codigo = amigo.perfil or perfil.codigo = amigo.amigo
---     ) as tmp
---         join perfil on tmp.amigoCodigo = perfil.codigo
---     where perfil.codigo = 7
---     group by perfil.codigo
--- )
--- group by perfil.codigo
--- order by solicitacao_amigo.amigo asc;
-
--- 14)
-
-INSERT INTO INTERACAO (codigo, perfil, texto) VALUES
-(1, 8, '...'),
-(2, 8, '...'),
-(3, 8, '...'),
-(4, 8, '...'),
-(5, 8, '...'),
-(6, 8, '...'),
-(7, 8, '...'),
-(8, 8, '...'),
-(9, 8, '...'),
-(10, 8, '...'),
-(11, 7, '...'),
-(12, 7, '...'),
-(13, 2, '...'),
-(14, 2, '...'),
-(15, 7, '...'),
-(16, 7, '...'),
-(17, 2, '...'),
-(18, 2, '...'),
-(19, 7, '...'),
-(20, 7, '...'),
-(21, 2, '...'),
-(22, 2, '...'),
-(23, 7, '...'),
-(24, 7, '...'),
-(25, 2, '...'),
-(26, 2, '...'),
-(27, 7, '...'),
-(28, 7, '...'),
-(29, 8, '...'),
-(30, 8, '...'),
-(31, 8, '...'),
-(32, 8, '...'),
-(33, 8, '...'),
-(34, 8, '...');
-
-INSERT INTO INTERACAO_ASSUNTO (assunto, interacao) VALUES 
-(5, 1), (1, 1),
-(2, 2), (4, 2),
-(3, 3), (6, 3),
-(2, 4), (6, 4),
-(1, 5), (5, 5),
-(2, 6), (4, 6),
-(3, 7), (6, 7),
-(5, 8), (1, 8),
-(4, 9), (2, 9),
-(4, 10), (6, 10),
-(3, 11), (2, 11),
-(1, 12), (2, 12),
-(1, 13), (3, 13),
-(1, 14), (3, 14),
-(2, 15), (1, 15),
-(2, 16), (1, 16),
-(2, 17), (4, 17),
-(2, 18), (4, 18),
-(3, 19), (5, 19),
-(3, 20), (5, 20),
-(3, 21), (6, 21),
-(3, 22), (6, 22),
-(4, 23), (3, 23),
-(4, 24), (2, 24),
-(4, 25), (2, 25),
-(4, 26), (2, 26),
-(5, 27), (4, 27),
-(5, 28), (4, 28),
-(5, 29), (1, 29),
-(5, 30), (2, 30),
-(3, 31), (1, 31),
-(4, 32), (6, 32),
-(2, 33), (5, 33),
-(1, 34), (6, 34);
+/*
+-- TESTE DE COMANDOS
+select perfil.codigo, perfil.username, perfil.img, SOLICITACAO_AMIGO.amigo as enviado from perfil 
+    left join SOLICITACAO_AMIGO on SOLICITACAO_AMIGO.amigo = perfil.codigo and SOLICITACAO_AMIGO.perfil = 7
+where
+    perfil.codigo != 7 and
+    perfil.codigo not in (
+    select tmp.codigo from (
+        select perfil.codigo, 
+            case
+                when amigo.perfil = perfil.codigo then amigo.amigo
+                when amigo.amigo = perfil.codigo then amigo.perfil
+            end as amigoCodigo
+        from perfil
+            join amigo on perfil.codigo = amigo.perfil or perfil.codigo = amigo.amigo
+    ) as tmp
+        join perfil on tmp.amigoCodigo = perfil.codigo
+    where perfil.codigo = 7
+    group by perfil.codigo
+)
+group by perfil.codigo
+order by SOLICITACAO_AMIGO.amigo asc;
+*/

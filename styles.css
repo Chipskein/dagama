@@ -461,14 +461,18 @@ body {
 /*--------------------------------------------------------------------------------------------------------------------------------------*/
 /*<navio.php>*/
 	div.perfil{
-		width: 180px !important;
-		height: 180px !important;
+		width: 150px !important;
+		height: 150px !important;
 	}
 	h3.perfil{
 		font-size: 24px;
 	}
 	div.camera-icon{
 		background-color: var(--white-color);
+		position: absolute;
+		align-self: center;
+		left: 51%;
+		top:185px;
 		border-radius: 50%;
 		width: 40px;
 		height: 40px;
@@ -478,7 +482,7 @@ body {
 		background-position: center;
 	}
 	div.perfil-amigos{
-		width: 60%;
+		width: 909px;
 		display: flex;
 		background-color: var(--cinza-color);
 		flex-direction: row;
@@ -517,6 +521,10 @@ body {
 /*</navio.php>*/
 /*--------------------------------------------------------------------------------------------------------------------------------------*/
 /*<feed.php>*/
+.center {
+	display: flex;
+	justify-content: center;
+}
 .insert-interacao {
 	background-color: var(--cinza-color);
 	width: 909px;

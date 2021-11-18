@@ -13,4 +13,4 @@
 
 ## Protótipos do banco
     Novo Protótipo(Use o tema escuro no github)
-   ![dagama_proto](https://github.com/Chipskein/dagama/blob/main/imgs/dagama.png)
+   ![dagama_proto](https://github.com/Chipskein/dagama/blob/main/backend/infra/dagama.png)
