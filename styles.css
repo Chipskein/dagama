@@ -461,8 +461,8 @@ body {
 /*--------------------------------------------------------------------------------------------------------------------------------------*/
 /*<navio.php>*/
 	div.perfil{
-		width: 180px !important;
-		height: 180px !important;
+		width: 150px !important;
+		height: 150px !important;
 	}
 	h3.perfil{
 		font-size: 24px;
@@ -478,7 +478,7 @@ body {
 		background-position: center;
 	}
 	div.perfil-amigos{
-		width: 60%;
+		width: 909px;
 		display: flex;
 		background-color: var(--cinza-color);
 		flex-direction: row;
@@ -517,6 +517,10 @@ body {
 /*</navio.php>*/
 /*--------------------------------------------------------------------------------------------------------------------------------------*/
 /*<feed.php>*/
+.center {
+	display: flex;
+	justify-content: center;
+}
 .insert-interacao {
 	background-color: var(--cinza-color);
 	width: 909px;
@@ -531,9 +535,10 @@ body {
 	align-items: center;
 }
 .interaction-mainuser-user-icon {
-	width: 64px;
-	height: 64px;
-	border-radius: 50px;
+	width: 90px;
+	height: 90px;
+	background-size: cover;
+	border-radius: 50%;
 }
 .insert-interacao-user-name {
 	margin-left: 10px;

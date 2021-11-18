@@ -69,12 +69,12 @@
           <?php
             if($isOwner) echo "<h3>Seus Portos:0</h3>";
           ?>
-          <h3>Portos:0</h3>
         </div>
     </div>
     <br>
     <div class="container-center">
     <?php
+      echo "<div class=\"center\">";
       echo "<div class=\"insert-interacao\">";
       echo "<div class=\"insert-interacao-user\">";
       echo "<img class=\"interaction-mainuser-user-icon\" src=\"".$user["img"]."\" alt=\"\" srcset=\"\">";
@@ -89,6 +89,7 @@
       echo "</div>";
       echo "<input class=\"insert-interacao-submit\" type=\"submit\" name=\"insert-interacao-submit\" />";
       echo "</form>";
+      echo "</div>";
       echo "</div>";
     ?>
     </div>
