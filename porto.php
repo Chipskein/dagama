@@ -68,7 +68,7 @@
       echo "</div>";
       echo "<a class=\"share\" href=\"\"><img class=\"share\" src=\"imgs/icons/send.png\" alt=\"\" srcset=\"\"></a>";
       echo "<p class=\"insert-interacao-user-name\">askldjfkasdhfjksahfkjsdhfkjahsd j asdjklfhajklsdhfjklas jksdahfkjsahfkjasd kjsda hsdjkafhsdkajfhsakdjf s kjsahfkjsadhfkjsahdjk sadkj asdjkfhsakjfsakjfasdjk fsadkj sdajkfsjkadfhjkasdhfjkasdhkjsadfksadjkasdf</p>";
-      echo "<div class=\"row\">";
+      echo "<div class=\"row2\">";
       echo "<p class=\"nLikes\">12</p>";
       echo "<a class=\"\" href=\"\"><img class=\"commentPorto\" src=\"imgs/icons/Like.png\" alt=\"\" srcset=\"\"></a>";
       echo "</div>";
