@@ -298,7 +298,7 @@
                 return false;
             }
             if($db_type=='postgresql'){
-                $result=pg_fetch_array(pg_query($db,"select count(*) as total from porto ativo=true"));
+                $result=pg_fetch_array(pg_query($db,"select count(*) as total from porto where ativo=true"));
                 return $result['total'];
             }
         }
