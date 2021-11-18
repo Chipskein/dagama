@@ -110,14 +110,14 @@
         if($db){
             if($db_type=='sqlite'){
                 $results=[];
-                $result=$db->query("select * from porto limit $limit offset $offset");
+                $result=$db->query("select * from porto where ativo=1 limit $limit offset $offset");
                 while ($row = $result->fetchArray()) {
                     array_push($results,$row);
                 }
                 return $results;
             }
             if($db_type=='postgresql'){
-                $result=pg_fetch_all(pg_query($db,"select * from porto limit $limit offset $offset"));
+                $result=pg_fetch_all(pg_query($db,"select * from porto where ativo=true limit $limit offset $offset"));
                 return $result;
             }
         }
@@ -350,15 +350,35 @@
         $db_type=$db_connection['db_type'];
         if($db){
             if($db_type=='sqlite'){
-                $result=$db->query("select count(*) as total from porto");
+                $result=$db->query("select count(*) as total from porto where ativo=1");
                 if($result){
                     return $result->fetchArray()['total'];
                 }
                 return false;
             }
             if($db_type=='postgresql'){
-                $result=pg_fetch_array(pg_query($db,"select count(*) as total from porto"));
+                $result=pg_fetch_array(pg_query($db,"select count(*) as total from porto where ativo=true"));
                 return $result['total'];
+            }
+        }
+        else exit;
+    }
+    function getPortInfo($porto){
+        $db_connection = db_connection();
+        $db = $db_connection['db'];
+        $db_type = $db_connection['db_type'];
+        if($db){
+            if($db_type == 'sqlite'){
+                $response = $db->query("select nome,descr,img from porto where codigo='$porto' and ativo=1");
+                if($response) return $response->fetchArray();
+                else return false;
+            }
+            if($db_type == 'postgresql'){
+                if($db_type == 'postgresql'){
+                    $response = pg_query($db,"select nome,descr,img from porto where codigo='$porto' and ativo=true");
+                    if($response) return pg_fetch_array($response);
+                    else return false;
+                }
             }
         }
         else exit;
