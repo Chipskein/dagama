@@ -54,20 +54,29 @@
                 </div>
                 <input id="imgInp" type="file"  name="photo">
             </div>
-            <input class="inputs" name="email" type="email" placeholder="Email">
             <input class="inputs" name="username" type="text" placeholder='Username'>
+            <input class="inputs" name="email" type="email" placeholder="Email">
             <input class="inputs" name="password" type="password" placeholder='Senha'>
             <input class="inputs" name="cpassword" type="password" placeholder='Confirmar senha'>
             <input class="inputs" name="bdate" type="date" placeholder='Nascimento'>
-            <select class="inputHalf" name="pais">
-                <option value="1" selected>Brasil</option>
-            </select>
-            <select class="inputHalf" name="genero">
+            <!-- <p>Genero</p> -->
+            <select class="inputs" name="genero">
                 <option value="M">Masculino</option>
                 <option value="F">Feminino</option>
                 <option value="O">Outro</option>
             </select>
+            <select class="inputHalf" name="pais">
+                <option value="1" selected>Brasil</option>
+            </select>
+            <select class="inputHalf" name="estado">
+              <option value="">RS</option>
+              <option value="">SC</option>
+              <option value="">PR</option>
+            </select>
             <br>
+            <select class="inputs" name="cidade">
+              <option value="1" selected>Rio Grande</option>
+            </select>
             <div id="divTermos">
               <input value='pass' name="termos" type="checkbox"> <p>Concordo com os <a href="LICENSE" target="_blank" style="color: #7ED8FF;">termos de uso</a></p>
             </div>

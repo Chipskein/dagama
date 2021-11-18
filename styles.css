@@ -163,7 +163,7 @@ body {
 	}
 
 	.inputHalf {
-		width: 122px;
+		width: 128px;
 		height: 36px;
 		border-radius: 10px;
 		font-size: 15px;
@@ -226,7 +226,7 @@ body {
 	.divRegister {
 		background-color: var(--azulEscuro-color);
 		width: 324px;
-		height: 580px;
+		height: 690px;
 		border-radius: 10px;
 	}
 
@@ -548,6 +548,12 @@ body {
 	font-style: italic;
 	font-size: 16px;
 }
+.insert-interacao-user-assunto {
+	margin-left: 10px;
+	font-weight: bold;
+	font-size: 16px;
+	margin-top: -8px;
+}
 .insert-interacao-input {
 	width: 886px;
 	height: 105px;
@@ -660,3 +666,65 @@ body {
 
 /*</feed.php>*/
 /*--------------------------------------------------------------------------------------------------------------------------------------*/
+/*</porto.php>*/
+.commentPorto {
+	position: relative;
+	width: 30px;
+	height: 30px;
+	color: #fff;
+	float: right;
+	margin-right: 20px;
+}
+.commentPorto {
+	width: 30px;
+	height: 30px;
+}
+.darkbluebg {
+	background-color: var(--cinza-color);
+	width: 909px;
+	padding: 20px;
+	padding-left: 20px;
+	padding-right: 20px;
+	border-radius: 10px;
+}
+.headerPost {
+	display: flex;
+}
+.share {
+	position: relative;
+	bottom: 25px;
+	width: 30px;
+	height: 30px;
+	color: #fff;
+	float: right;
+	margin-right: 20px;
+}
+.row {
+	display: flex;
+	flex-direction: row;
+	margin-right: 22px;
+	float: right;
+}
+.nLikes{
+	font-size: 24px;
+	margin-right: 10px;
+	margin-top: 5px;
+}
+.insert-interacao-entrar {
+	position: relative;
+	width: 139px;
+	height: 38px;
+	background-color: var(--azulEscuro2-color);
+	color: #fff;
+	border-radius: 10px;
+	border-width: 0px;
+	float: right;
+	margin-right: 40px;
+	margin-top: 40px;
+	align-self: center;
+
+}
+.insert-interacao-entrar-text {
+	text-align: center;
+	margin-top: 10px;
+}
