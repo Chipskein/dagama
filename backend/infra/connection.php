@@ -51,10 +51,10 @@
         $db=$db_connection['db'];
         $db_type=$db_connection['db_type'];
         if($db){
+            // Variáveis M - meses, A - min assuntos em comum, $B - top x assuntos, $U - usuario
+            $M = 3; $A = 1; $B = 5; $U = $user;
             if($db_type=='sqlite'){
                 $results=[];
-                // Variáveis M - meses, A - min assuntos em comum, $B - top x assuntos, $U - usuario
-                $M = 3; $A = 1; $B = 5; $U = $user;
                 $result = $db->query("
                 select tmp1.codigo, tmp1.username, tmp1.img, tmp1.enviado, 
                     case
