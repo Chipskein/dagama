@@ -21,3 +21,14 @@ function login(){
     login.id = 'loginContainer';
     register.id = 'registerContainerHidden';
 }
+
+function openModal(id){
+    var modal = document.getElementById(id);
+    modal.style.opacity = 1;
+    modal.style.pointerEvents = 'auto';
+}
+function closeModal(id){
+    var modal = document.getElementById(id);
+    modal.style.opacity = 0;
+    modal.style.pointerEvents = 'none';
+}

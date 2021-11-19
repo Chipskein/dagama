@@ -156,7 +156,7 @@ INSERT INTO CIDADE(nome,uf) VALUES('Rio Grande',1);
 --INSERT INTO PORTO_PARTICIPA(porto,perfil) VALUES(1,1),(2,1),(1,2);
 --amigos
 --INSERT INTO solicitacao_amigo(perfil,amigo,dateEnvio,ativo) VALUES(1,2,CURRENT_TIMESTAMP,0);
---INSERT INTO AMIGO(perfil,amigo,dateAceito,ativo) VALUES(1,2,CURRENT_TIMESTAMP,1);
+-- INSERT INTO AMIGO(perfil,amigo,dateAceito,ativo) VALUES(1,2,CURRENT_TIMESTAMP,1);
 --UPDATE solicitacao_amigo SET ATIVO=0 WHERE PERFIL=1 AND AMIGO=2;
 --selos
 --INSERT INTO SELO(porto,texto) VALUES(1,'SELO DE TESTE');

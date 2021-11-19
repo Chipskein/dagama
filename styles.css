@@ -87,9 +87,6 @@ body {
 	float: left;
 }
 .container-center {
-	/* position: absolute; */
-	/* margin-left: 20%;
-	margin-right: 20%; */
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -100,6 +97,39 @@ body {
 }
 .container-bottom {
 	margin-top: 40px;
+}
+
+.modal {
+	position: fixed;
+	width: 600px;
+	height: 400px;
+	font-family: Arial, Helvetica, sans-serif;
+	background: #fff;
+	border-radius: 20px;
+	border-width: 0px;
+	z-index: 99999;
+	opacity: 0;
+	-webkit-transition: opacity 400ms ease-in;
+	-moz-transition: opacity 400ms ease-in;
+	transition: opacity 400ms ease-in;
+	pointer-events: none;
+}
+.modal:target {
+	opacity: 1;
+	pointer-events: auto;
+}
+
+.fechar {
+	position: absolute;
+	width: 35px;
+	height: 35px;
+	right: 10px;
+	top: 10px;
+	text-align: center;
+	background: #ff4545;
+	border-radius: 50px;
+	font-size: 16px;
+	color: #8d0000;
 }
 
 /*<index.php>*/
