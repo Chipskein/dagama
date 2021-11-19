@@ -13,7 +13,7 @@
   include './backend/infra/connection.php';
   session_start();
   if(isset($_SESSION['userid'])){
-    $user = getUserInfo("$_GET[user]");
+    $user = getUserInfo("$_SESSION[userid]");
     $limit = 10;
     $offset = isset($_GET['offset']) ? $_GET['offset'] : 0;
     $feedArray = getFeed($offset,$limit);
