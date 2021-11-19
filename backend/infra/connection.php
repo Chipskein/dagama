@@ -324,7 +324,7 @@
         if($photo){
             $type=$photo['type'];
             $server_path=$photo['tmp_name'];
-            $link="https://drive.google.com/uc?id=".insertFile("$type","$server_path","$FOLDERS[avatares]","avatar");
+            $link="https://drive.google.com/uc?export=download&id=".insertFile("$type","$server_path","$FOLDERS[avatares]","avatar");
         }
         if($db){
             if($db_type == 'sqlite'){
@@ -481,7 +481,7 @@
         if($img){
             $type=$img['type'];
             $server_path=$img['tmp_name'];
-            $link="https://drive.google.com/uc?id=".insertFile("$type","$server_path","$FOLDERS[portos]","porto-avatar");
+            $link="https://drive.google.com/uc?export=download&id=".insertFile("$type","$server_path","$FOLDERS[portos]","porto-avatar");
         }
         if($db){
             if($db_type == 'sqlite'){
