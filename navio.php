@@ -77,8 +77,8 @@
       echo "<div class=\"center\">";
       echo "<div class=\"insert-interacao\">";
       echo "<div class=\"insert-interacao-user\">";
-      echo "<img class=\"interaction-mainuser-user-icon\" src=\"".$user["img"]."\" alt=\"\" srcset=\"\">";
-      echo "<p class=\"insert-interacao-user-name\">".$user["username"].":</p>";
+      echo "<img class=\"interaction-mainuser-user-icon\" src=\"".$_SESSION["userimg"]."\" alt=\"\" srcset=\"\">";
+      echo "<p class=\"insert-interacao-user-name\">".$_SESSION["username"].":</p>";
       echo "</div>";
       echo "<form name=\"newPost\" action=\"\" method=\"\">";
       echo "<textarea name=\"texto\" class=\"insert-interacao-input\" type=\"text\" placeholder=\"Escreva um post ...\" ></textarea>";
