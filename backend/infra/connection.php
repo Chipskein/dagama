@@ -182,7 +182,7 @@
                                     join INTERACAO_ASSUNTO on interacao.codigo = INTERACAO_ASSUNTO.interacao
                                     join assunto on interacao_assunto.assunto = assunto.codigo
                                 where
-                                    datetime(interacao.data) between datetime('now','start of month', '-$M months') and datetime('now')
+                                    to_timestamp(interacao.data) between to_timestamp('now','start of month', '-$M months') and to_timestamp('now')
                                 group by interacao.perfil, assunto.codigo
                                 having 
                                     qtd > $A
@@ -201,7 +201,7 @@
                                 join INTERACAO_ASSUNTO on interacao.codigo = INTERACAO_ASSUNTO.interacao
                                 join assunto on interacao_assunto.assunto = assunto.codigo
                             where
-                                datetime(interacao.data) between datetime('now','start of month', '-$M months') and datetime('now')
+                                to_timestamp(interacao.data) between datetime('now','start of month', '-$M months') and to_timestamp('now')
                             group by interacao.perfil, assunto.codigo
                             having 
                                 qtd > $A
@@ -226,7 +226,7 @@
                                         join INTERACAO_ASSUNTO on interacao.codigo = INTERACAO_ASSUNTO.interacao
                                         join assunto on interacao_assunto.assunto = assunto.codigo
                                     where
-                                        datetime(interacao.data) between datetime('now','start of month', '-$M months') and datetime('now')
+                                        to_timestamp(interacao.data) between to_timestamp('now','start of month', '-$M months') and to_timestamp('now')
                                     group by interacao.perfil, assunto.codigo
                                     having 
                                         qtd > $A
@@ -244,7 +244,7 @@
                                     join INTERACAO_ASSUNTO on interacao.codigo = INTERACAO_ASSUNTO.interacao
                                     join assunto on interacao_assunto.assunto = assunto.codigo
                                 where
-                                    datetime(interacao.data) between datetime('now','start of month', '-$M months') and datetime('now')
+                                    to_timestamp(interacao.data) between to_timestamp('now','start of month', '-$M months') and to_timestamp('now')
                                 group by interacao.perfil, assunto.codigo
                                 having 
                                     qtd > $A
