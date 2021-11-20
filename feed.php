@@ -18,27 +18,32 @@
     $offset = isset($_GET['offset']) ? $_GET['offset'] : 0;
     $feedArray = getFeed($offset,$limit);
     $suggestFriends = suggestFriends($_SESSION['userid'], 4, 0);
+    $errorMessage = [];
 
-    var_dump($_POST);
-    // addPerson para confirmar solicitação
-    // removePerson para desfazer amizade
-    // enviarSolperson para enviar solicitacao
-    // removeSolPerson para cancelar o envio da solicitacao
-    if(isset($_POST['enviarSolPerson']) || isset($_POST['removeSolPerson']) || isset($_POST['addPerson'])){
-      // validar se a pessoa em questão existe, está ativa e não é amiga do user
-      if(isset($_POST['enviarSolPerson'])){
-        // validar se a solicitação já foi enviada e está ativa
-        sendFriendRequest($user['codigo'], $_POST['enviarSolPerson']);
-      } 
-      if(isset($_POST['removeSolPerson'])){
-        // validar se a solicitação existe e está ativa
-        // removeFriendRequest($user['codigo'], $_POST['removeSolPerson']);
-      } 
-      if(isset($_POST['addPerson'])){
-        // validar se o user recebeu uma solicitação da pessoa
-        // removeFriendRequest($user['codigo'], $_POST['removeSolPerson']);
+    // var_dump($_POST);
+    // sendFriendRequest para enviar solicitacao
+    if(isset($_POST['sendFriendRequest'])){
+      $erros = [];
+      if(!preg_match('#^[0-9]+$#', $_POST['sendFriendRequest'])){
+        $erros[] = "A pessoa precisa ser um número";
+      } else {
+        $response = getRequestAndFriends($user['codigo'], true);
+        for($c = 0; $c < count($response); $c++) {
+          if($response[$c]['amigo'] == $_POST['sendFriendRequest'] && $response[$c]['ativo'] == 1){
+            $erros[] = "Solicitação já enviada";
+          }
+          if(($response[$c]['otherPerfil'] != $user['codigo'] ? $response[$c]['otherPerfil'] : $response[$c]['otherAmigo']) == $_POST['sendFriendRequest'] && $response[$c]['otherAtivo'] == 1){
+            $erros[] = "Você já é amigo deste usuário";
+          }
+        }
       }
-    }
+      if($erros == []){
+        sendFriendRequest($user['codigo'], $_POST['sendFriendRequest']);
+        header("refresh:0;url=feed.php?user=$_SESSION[userid]"); 
+      } else {
+        $errorMessage['friendRequest'] = ['sendFriendRequest', $_POST['sendFriendRequest'], implode(', ', $erros)];
+      }
+    } 
 ?>
   <header class="header-main">
     <img class="header-icon" src="imgs/icon.png" alt="">
@@ -63,13 +68,15 @@
   </aside> -->
   <main class="container-center">
 
-  <div id="abrirModal" class="modal">
-    <div onclick="closeModal('abrirModal')" class="fechar">x</div>
-    <h2>Janela Modal</h2>
-    <p>Esta é uma simples janela de modal.</p>
-    <p>Você pode fazer qualquer coisa aqui, página de Login, pop-ups, ou formulários</p>
-  </div>
 <?php
+    echo array_key_exists('friendRequest',$errorMessage) ? $errorMessage['friendRequest'][2] : '';
+    // modal pros erros
+    // echo "<div id=\"abrirModal\" class=\"modal\">";
+    // echo "<div onclick=\"closeModal('abrirModal')\" class=\"fechar\">x</div>";
+    // echo "<h2>".$errorMessage['friendRequest']."</h2>";
+    // echo "<p>Err message: ".$errorMessage['friendRequest'][2]."</p>";
+    // echo "</div>";
+
     // initial insert post
     echo "<div class=\"insert-interacao\">";
     echo "<div class=\"insert-interacao-user\">";
@@ -100,31 +107,12 @@
         echo "<img class=\"add-amigo-card-icon\" src=\"".$person['img']."\" alt=\"\" srcset=\"\">";
         echo "<p class=\"add-amigo-card-name\">".$person['username']."</p>";
         echo "<form action=\"feed.php?user=$_SESSION[userid]\" method=\"post\" >";
-        if($person['recebido'] == 'true' && !isset($_POST['addPerson']) && !isset($_POST['removePerson'])){
-          echo "<input type=\"hidden\" name=\"addPerson\" value=\"".$person['codigo']."\" />";
-          echo "<input id=\"cardInput".$person['codigo']."\" class=\"add-amigo-card-button\"  type=\"submit\" onclick=\"
-            let cardInput = document.getElementById('cardInput'+".$person['codigo'].");
-            cardInput.className = 'add-amigo-card-button-selected'; cardInput.value = 'Cancelar Amizade'";
-          echo "\" value=\"Confirmar solicitação\" />";
-        } 
-        if (isset($_POST['addPerson']) && $_POST['addPerson'] == $person['codigo']) {
-          echo "<input type=\"hidden\" name=\"removePerson\" value=\"".$person['codigo']."\" />";
-          echo "<input id=\"cardInput".$person['codigo']."\" class=\"add-amigo-card-button-selected\"  type=\"submit\" onclick=\"
-            let cardInput = document.getElementById('cardInput'+".$person['codigo'].");
-            cardInput.className = 'add-amigo-card-button'; cardInput.value = 'Adicionar'";
-          echo "\" value=\"Cancelar Amizade\" />";
+        if($person['enviado'] == 'true' || (isset($_POST['sendFriendRequest']) && $_POST['sendFriendRequest'] == $person['codigo'])){
+          echo "<input type=\"hidden\" name=\"unsendFriendRequest\" value=\"".$person['codigo']."\" />";
+          echo "<input id=\"cardInput".$person['codigo']."\" class=\"add-amigo-card-button-selected\" disabled  type=\"submit\" value=\"Enviado\" />";  
         }
-        if(($person['enviado'] == 'true' || (isset($_POST['enviarSolPerson']) && $_POST['enviarSolPerson'] == $person['codigo'])) && (!isset($_POST['removeSolPerson']) || $_POST['removeSolPerson'] != $person['codigo'])){
-          echo "<input type=\"hidden\" name=\"removeSolPerson\" value=\"".$person['codigo']."\" />";
-          echo "<input id=\"cardInput".$person['codigo']."\" class=\"add-amigo-card-button-selected\"  type=\"submit\" onclick=\"
-            let cardInput = document.getElementById('cardInput'+".$person['codigo'].");
-            cardInput.className = 'add-amigo-card-button'; cardInput.value = 'Adicionar'";
-          echo "\" value=\"Enviado\" />";  
-        }
-        if(($person['recebido'] != 'true' && $person['enviado'] != 'true' && (isset($_POST['enviarSolPerson']) ? $_POST['enviarSolPerson'] != $person['codigo'] : true)) || 
-        (!isset($_POST['enviarSolPerson']) && isset($_POST['removePerson']) && $_POST['removePerson'] == $person['codigo']) || 
-        (isset($_POST['removeSolPerson']) && $_POST['removeSolPerson'] == $person['codigo'])) {
-          echo "<input type=\"hidden\" name=\"enviarSolPerson\" value=\"".$person['codigo']."\" />";
+        if($person['recebido'] != 'true' && $person['enviado'] != 'true' && (isset($_POST['sendFriendRequest']) ? $_POST['sendFriendRequest'] != $person['codigo'] : true)) {
+          echo "<input type=\"hidden\" name=\"sendFriendRequest\" value=\"".$person['codigo']."\" />";
           echo "<input id=\"cardInput".$person['codigo']."\" class=\"add-amigo-card-button\"  type=\"submit\" onclick=\"
             let cardInput = document.getElementById('cardInput'+".$person['codigo'].");
             cardInput.className = 'add-amigo-card-button-selected'; cardInput.value = 'Enviado'";
@@ -142,7 +130,10 @@
 
     // print_r($feedArray);
     // print_r($user);
-    // print_r($suggestFriends);
+    // foreach ($suggestFriends as $value) {
+    //   echo "$value[codigo] - $value[username] - $value[enviado] - $value[recebido]";
+    //   echo "<br>";
+    // }
   }
   else {
     echo "<h2 align=center>Para ver este conteudo faça um cadastro no dagama!!!</h2>";
