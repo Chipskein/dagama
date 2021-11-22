@@ -714,6 +714,66 @@ body {
 	border-width: 1px;
 	margin-top: -15px;
 }
+.div-post {
+	width: 909px;
+	height: 1022px;
+	margin-top: 20px;
+	padding: 20px;
+	background-color: var(--cinza-color);
+	border-radius: 10px;
+}
+.div-post-top {
+	margin-left: 10px;
+	display: flex;
+	flex-direction: row;
+}
+.div-post-top-icon {
+	width: 64px;
+	height: 64px;
+	border-radius: 50px;
+}
+.div-post-top-infos {
+	display: flex;
+	flex-direction: column;
+	margin-left: 13px;
+}
+/* .div-post-top-username {} */
+.div-post-top-subjects {
+	margin-top: -12px;
+}
+.div-post-txt {
+	margin-left: 10px;
+	margin-right: 10px;
+}
+.div-post-icons-bar {
+	display: flex;
+	flex-direction: row;
+	float: right;
+}
+.div-post-icons-bar-divs {
+	display: flex;
+	flex-direction: row;
+}
+.div-post-icons-bar-divs p {
+	color: var(--azulEscuro2-color);
+}
+.div-post-icons-bar-icons {
+	width: 25px;
+	height: 25px;
+	margin-left: 10px;
+	margin-right: 40px;
+	margin-top: 7px;
+}
+.post-hr {
+	margin-top: 15px;
+	border-color: var(--azulEscuro2-color);
+	border-width: 2px;
+}
+.post-hr-small {
+	margin-top: 15px;
+	border-color: #fff;
+	border-width: 2px;
+}
 
 /*</feed.php>*/
 /*--------------------------------------------------------------------------------------------------------------------------------------*/

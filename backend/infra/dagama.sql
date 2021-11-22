@@ -123,18 +123,14 @@ CREATE TABLE INTERACAO(
     FOREIGN KEY (post) REFERENCES INTERACAO(codigo)
 );
 CREATE TABLE CITACAO(
-    codigo INTEGER NOT NULL,
     interacao INTEGER NOT NULL,
+    perfil INTEGER NOT NULL,
     ativo BOOLEAN NOT NULL DEFAULT 1 CHECK(ativo=1 OR ativo=0),
-    PRIMARY KEY(codigo),
+    PRIMARY KEY(interacao, perfil),
+    FOREIGN KEY (perfil) REFERENCES PERFIL(codigo),
     FOREIGN KEY (interacao) REFERENCES INTERACAO(codigo)
 );
-CREATE TABLE CITACAOPERFIL(
-    citacao INTEGER NOT NULL,
-    perfil INTEGER NOT NULL,
-    FOREIGN KEY (citacao) REFERENCES CITACAO(codigo),
-    FOREIGN KEY (perfil) REFERENCES PERFIL(codigo)
-);
+
 CREATE TABLE INTERACAO_ASSUNTO(
     assunto INTEGER NOT NULL,
     interacao INTEGER NOT NULL,
@@ -181,11 +177,11 @@ INSERT INTO PORTO(perfil,nome,descr) VALUES(1, 'Devs dagama', 'è isso ai parcer
 --INSERT INTO SELOUSER(perfil,selo,dateVal) VALUES(2,1,CURRENT_TIMESTAMP),(2,2,CURRENT_TIMESTAMP);
 
 --interacao post
---INSERT INTO INTERACAO(perfil,porto,texto) VALUES
---(1,1,'POST DE TESTE EM PORTO DE TESTE'),--1
---(2,1,'POST DE TESTE EM PORTO DE TESTE'),--2
---(1,2,'POST DE TESTE2.1 EM PORTO DE TESTE2'),--3
---(2,2,'POST DE TESTE2.2 EM PORTO DE TESTE2');--4
+INSERT INTO INTERACAO(perfil, texto) VALUES
+(7, 'TEstando postar nessa bagaça'),--1
+(7, 'Sla mermão'),--2
+(7, 'Oh rapaiz'),--3
+(8, 'Vishhh');--4
 
 --interacao comentarios
 --INSERT INTO INTERACAO(perfil,post,texto) values 

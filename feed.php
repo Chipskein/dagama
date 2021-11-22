@@ -21,6 +21,7 @@
     $assuntosArray = getAssuntos();
     $pessoasArray = getPessoas();
     $suggestFriends = suggestFriends($_SESSION['userid'], 4, 0);
+    $postsArray = getPosts(0, 10);
     $errorMessage = [];
 
     // var_dump($_POST);
@@ -30,6 +31,8 @@
     // print_r($assuntosArray);
     // echo "<br>";
     // print_r($pessoasArray);
+    // echo "<br>";
+    // print_r($postsArray);
     // echo "<br>";
 
     // sendFriendRequest para enviar solicitacao
@@ -166,14 +169,36 @@
     }
 
     // posts
-    echo "</main>";
+?>
+  <div class="div-post">
+    <div class="div-post-top">
+      <img src="imgs/icons/user-icon.png" alt="" class="div-post-top-icon">
+      <div class="div-post-top-infos">
+        <p class="div-post-top-username">@fulaninho 20/04/2021 00:00</p>
+        <p class="div-post-top-subjects"><b>Cripto moedas, bitcoin e elon musk...</b></p>
+      </div>
+    </div>
+    <div class="div-post-txt">
+      <p><b>@pedrinho66</b> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sit amet lectus sodales, varius dui ac, aliquet dui. Morbi bibendum sem odio, nec cursus dolor bibendum vel. Vestibulum cursus magna ante, commodo sagittis lorem semper in. Etiam non iaculis lectus. In hac habitasse platea dictumst. In id tristique diam, id posuere eros. Phasellus at lorem fermentum, ullamcorper mauris eget, cursus lectus. Quisque elementum ipsum urna, sed ornare dolor dictum et. Etiam condimentum odio ante, et tristique augue rutrum sit amet. Cras faucibus nibh enim, ac facilisis mi ornare sit amet. Donec vitae posuere lacus. Pellentesque rutrum ac ex lacinia ultrices. Ut sodales quam quis est dapibus lacinia. Maecenas leo turpis, luctus non justo at, dapibus consequat neque.</p>
+    </div>
+    <div class="div-post-icons-bar">
+      <div class="div-post-icons-bar-divs">
+        <p>12</p><img src="imgs/icons/Like.png" class="div-post-icons-bar-icons" alt="">
+      </div>
+      <div class="div-post-icons-bar-divs">
+        <p>5</p><img src="imgs/icons/chat.png" class="div-post-icons-bar-icons" alt="">
+      </div>
+      <div class="div-post-icons-bar-divs">
+        <p>2</p><img src="imgs/icons/send.png" class="div-post-icons-bar-icons" alt="">
+      </div>
+    </div>
+    <br>
+    <br>
+    <hr class="post-hr">
+  </div>
+<?php
 
-    // print_r($feedArray);
-    // print_r($user);
-    // foreach ($suggestFriends as $value) {
-    //   echo "$value[codigo] - $value[username] - $value[enviado] - $value[recebido]";
-    //   echo "<br>";
-    // }
+    echo "</main>";
   }
   else {
     echo "<h2 align=center>Para ver este conteudo faça um cadastro no dagama!!!</h2>";
