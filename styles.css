@@ -621,11 +621,30 @@ body {
 	float: right;
 	margin-top: -25px;
 }
+#post-hr {
+	margin-top: 25px;
+	border-color: var(--azulEscuro2-color);
+	border-width: 2px;
+	display: none;
+}
+.post-divLocal {
+	display: none;
+}
+.post-divPessoas {
+	display: none;
+}
+.post-divAssuntos {
+	display: none;
+}
+.post-selectUser-icon {
+	width: 12px;
+	height: 12px;
+}
 
 .add-amigo {
 	background-color: var(--cinza-color);
 	width: 909px;
-	height: 351px;
+	height: 321px;
 	margin-top: 20px;
 	padding: 10px;
 	padding-left: 20px;

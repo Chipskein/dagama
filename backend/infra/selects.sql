@@ -1,3 +1,14 @@
+-- Pegar locais
+select cidade.codigo as codCidade, cidade.nome as nomeCidade, uf.codigo as codUf, uf.nome as nomeUf, pais.codigo as codPais, pais.nome as nomePais from cidade
+    join uf on cidade.uf = uf.codigo
+    join pais on uf.pais = pais.codigo;
+
+-- pegar assuntos
+select * from assunto;
+
+-- pegar pessoas e amigos
+select codigo, username, img from perfil where ativo = 1;
+
 -- Sugerir amigos ao usuário U, considerando que, se U e V não são amigos mas possuem no mínimo A assuntos em comum entre os B assuntos mais comentados por cada um nos últimos M meses, V deve ser sugerido como amigo de U
 
 -- U - 7

@@ -17,10 +17,21 @@
     $limit = 10;
     $offset = isset($_GET['offset']) ? $_GET['offset'] : 0;
     $feedArray = getFeed($offset,$limit);
+    $locaisArray = getLocais();
+    $assuntosArray = getAssuntos();
+    $pessoasArray = getPessoas();
     $suggestFriends = suggestFriends($_SESSION['userid'], 4, 0);
     $errorMessage = [];
 
     // var_dump($_POST);
+    // echo "<br>";
+    // print_r($locaisArray);
+    // echo "<br>";
+    // print_r($assuntosArray);
+    // echo "<br>";
+    // print_r($pessoasArray);
+    // echo "<br>";
+
     // sendFriendRequest para enviar solicitacao
     if(isset($_POST['sendFriendRequest'])){
       $erros = [];
@@ -79,19 +90,48 @@
 
     // initial insert post
     echo "<div class=\"insert-interacao\">";
-    echo "<div class=\"insert-interacao-user\">";
-    echo "<img class=\"interaction-mainuser-user-icon\" src=\"".$user["img"]."\" alt=\"\" srcset=\"\">";
-    echo "<p class=\"insert-interacao-user-name\">".$user["username"].":</p>";
-    echo "</div>";
-    echo "<form name=\"newPost\" action=\"\" method=\"\">";
-    echo "<textarea name=\"texto\" class=\"insert-interacao-input\" type=\"text\" placeholder=\"Escreva um post ...\" ></textarea>";
-    echo "<div class=\"insert-interacao-smallBtns\">";
-    echo "<a class=\"insert-interacao-smallBtns-a\" href=\"\"><img class=\"insert-interacao-smallBtns-icon\" src=\"imgs/icons/maps-and-flags.png\" alt=\"\" srcset=\"\">Adicionar um Local</a>";
-    echo "<a class=\"insert-interacao-smallBtns-a\" href=\"\"><img class=\"insert-interacao-smallBtns-icon\" src=\"imgs/icons/multiple-users-silhouette.png\" alt=\"\" srcset=\"\">Citar Pessoas</a>";
-    echo "<a class=\"insert-interacao-smallBtns-a\" href=\"\"><img class=\"insert-interacao-smallBtns-icon\" src=\"imgs/icons/price-tag.png\" alt=\"\" srcset=\"\">Assunto</a>";
-    echo "</div>";
-    echo "<input class=\"insert-interacao-submit\" type=\"submit\" name=\"insert-interacao-submit\" />";
-    echo "</form>";
+      echo "<div class=\"insert-interacao-user\">";
+        echo "<img class=\"interaction-mainuser-user-icon\" src=\"".$user["img"]."\" alt=\"\" srcset=\"\">";
+        echo "<p class=\"insert-interacao-user-name\">".$user["username"].":</p>";
+      echo "</div>";
+      echo "<form name=\"newPost\" action=\"feed.php?user=$_SESSION[userid]\" method=\"post\" >";
+        echo "<textarea name=\"texto\" class=\"insert-interacao-input\" type=\"text\" placeholder=\"Escreva um post ...\" ></textarea>";
+        echo "<div class=\"insert-interacao-smallBtns\">";
+          echo "<div class=\"insert-interacao-smallBtns-a\" onclick=\"newPostSelect('local')\"><img class=\"insert-interacao-smallBtns-icon\" src=\"imgs/icons/maps-and-flags.png\" alt=\"\" srcset=\"\">Adicionar um Local</div>";
+          echo "<div class=\"insert-interacao-smallBtns-a\" onclick=\"newPostSelect('pessoas')\"><img class=\"insert-interacao-smallBtns-icon\" src=\"imgs/icons/multiple-users-silhouette.png\" alt=\"\" srcset=\"\">Citar Pessoas</div>";
+          echo "<div class=\"insert-interacao-smallBtns-a\" onclick=\"newPostSelect('assuntos')\"><img class=\"insert-interacao-smallBtns-icon\" src=\"imgs/icons/price-tag.png\" alt=\"\" srcset=\"\">Assunto</div>";
+        echo "</div>";
+        echo "<input class=\"insert-interacao-submit\" type=\"submit\" name=\"novoPost\" />";
+        echo "<hr id=\"post-hr\" class=\"post-hr\" >";
+        echo "<div class=\"post-divLocal\">";
+        echo "<select name=\"local\">";
+          foreach ($locaisArray as $value) {
+            echo "<option value=\"".$value['codCidade']."\">".$value['nomeCidade'].", ".$value['nomeUf']." - ".$value['nomePais']."</option>";
+          }
+          echo "<option value=\"0\">Outro</option>";
+        echo "</select>";
+        echo "</div>";
+          
+        echo "<div class=\"post-divPessoas\">";
+        echo "<select name=\"pessoas\">";
+          foreach ($pessoasArray as $value) {
+            echo "<option value=\"".$value['codigo']."\">";
+            echo "<img class=\"post-selectUser-icon\" src=\"".$value["img"]."\" alt=\"\" srcset=\"\">";
+            echo $value['username']."</option>";
+          }
+        echo "</select>";
+        echo "</div>";
+
+        echo "<div class=\"post-divAssuntos\">";
+        echo "<select name=\"assuntos\">";
+        foreach ($assuntosArray as $value) {
+          echo "<option value=\"".$value['codigo']."\">".$value['nome']."</option>";
+        }
+        echo "<option value=\"0\">Outro</option>";
+        echo "</select>";
+        echo "</div>";
+
+      echo "</form>";
     echo "</div>";
 
     // add friends
@@ -141,7 +181,7 @@
     die();
   }
 ?>
-<div onclick="openModal('abrirModal')" ><p>Open Modal</p></div>
+<!-- <div onclick="openModal('abrirModal')" ><p>Open Modal</p></div> -->
 <script src="functions.js"></script>
 </body>
 </html>

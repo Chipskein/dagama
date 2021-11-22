@@ -104,7 +104,7 @@
         }
         else exit;
     }
-    function Register($email, $password, $bdate, $username, $genero, $pais,$photo){
+    function Register($email, $password, $bdate, $username, $genero, $cidade,$photo){
         $db_connection=db_connection();
         $db=$db_connection['db'];
         $db_type=$db_connection['db_type'];
@@ -117,14 +117,14 @@
         }
         if($db){
             if($db_type == 'sqlite'){
-                $verify = $db->exec("insert into perfil (pais, email, senha, genero, username, datanasc,img) values ('".$pais."', '".$email."', '".$password."', '".$genero."', '".$username."', '".$bdate."', '".$link."'".")");
+                $verify = $db->exec("insert into perfil (cidade, email, senha, genero, username, datanasc,img) values ('".$cidade."', '".$email."', '".$password."', '".$genero."', '".$username."', '".$bdate."', '".$link."'".")");
                 if($verify) return $verify;
                 else return false;
             }
             if($db_type == 'postgresql'){
-                $preparing = pg_prepare($db, "Register", "insert into perfil (pais, email, senha, genero, username, datanasc,img) values ($1,$2,$3,$4,$5,$6,$7)");
+                $preparing = pg_prepare($db, "Register", "insert into perfil (cidade, email, senha, genero, username, datanasc,img) values ($1,$2,$3,$4,$5,$6,$7)");
                 if($preparing){
-                    $verify = pg_execute($db, "Register", array("$pais","$email","$password","$genero","$username","$bdate","$link"));
+                    $verify = pg_execute($db, "Register", array("$cidade","$email","$password","$genero","$username","$bdate","$link"));
                     if($verify) return $verify;
                     else return false;
                 }
@@ -510,6 +510,101 @@
         }
         else exit;
     };
+    function getLocais(){
+        $db_connection = db_connection();
+        $db = $db_connection['db'];
+        $db_type = $db_connection['db_type'];
+        if($db){
+            $results=[];
+            if($db_type == 'sqlite'){
+                $response = $db->query("select cidade.codigo as codCidade, cidade.nome as nomeCidade, uf.codigo as codUf, uf.nome as nomeUf, pais.codigo as codPais, pais.nome as nomePais from cidade
+                    join uf on cidade.uf = uf.codigo
+                    join pais on uf.pais = pais.codigo
+                group by cidade.codigo");
+                if($response){
+                    while ($row = $response->fetchArray()) {
+                        array_push($results, $row);
+                    }
+                    return $results; 
+                }
+                else return false;
+            }
+            if($db_type == 'postgresql'){
+                $response = pg_query($db, "select cidade.codigo as codCidade, cidade.nome as nomeCidade, uf.codigo as codUf, uf.nome as nomeUf, pais.codigo as codPais, pais.nome as nomePais from cidade
+                    join uf on cidade.uf = uf.codigo
+                    join pais on uf.pais = pais.codigo
+                group by cidade.codigo");
+                if($response){
+                    while ($row = pg_fetch_array($response)) {
+                        array_push($results, $row);
+                    }
+                    return $results; 
+                }
+                else return false;
+            }
+        }
+        else exit;
+    };
+    function getAssuntos(){
+        $db_connection = db_connection();
+        $db = $db_connection['db'];
+        $db_type = $db_connection['db_type'];
+        if($db){
+            $results=[];
+            if($db_type == 'sqlite'){
+                $response = $db->query("select * from assunto");
+                if($response){
+                    while ($row = $response->fetchArray()) {
+                        array_push($results, $row);
+                    }
+                    return $results; 
+                }
+                else return false;
+            }
+            if($db_type == 'postgresql'){
+                $response = pg_query($db, "select * from assunto");
+                if($response){
+                    while ($row = pg_fetch_array($response)) {
+                        array_push($results, $row);
+                    }
+                    return $results; 
+                }
+                else return false;
+            }
+        }
+        else exit;
+    };
+    function getPessoas(){
+        $db_connection = db_connection();
+        $db = $db_connection['db'];
+        $db_type = $db_connection['db_type'];
+        if($db){
+            $results=[];
+            if($db_type == 'sqlite'){
+                $response = $db->query("select codigo, username, img from perfil where ativo = 1");
+                if($response){
+                    while ($row = $response->fetchArray()) {
+                        array_push($results, $row);
+                    }
+                    return $results; 
+                }
+                else return false;
+            }
+            if($db_type == 'postgresql'){
+                $response = pg_query($db, "select codigo, username, img from perfil where ativo = true");
+                if($response){
+                    while ($row = pg_fetch_array($response)) {
+                        array_push($results, $row);
+                    }
+                    return $results; 
+                }
+                else return false;
+            }
+        }
+        else exit;
+    }
+    /*---------------------------------------------------------*/
+
     //remover
     function getEmails(){
         $db_connection = db_connection();
