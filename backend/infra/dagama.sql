@@ -182,6 +182,14 @@ INSERT INTO INTERACAO(perfil, texto) VALUES
 (7, 'Sla mermão'),--2
 (7, 'Oh rapaiz'),--3
 (8, 'Vishhh');--4
+INSERT INTO INTERACAO_ASSUNTO(assunto, interacao) VALUES
+(1, 1),
+(2, 1),
+(3, 1),
+(2, 2),
+(3, 2),
+(4, 3),
+(4, 3);
 
 --interacao comentarios
 --INSERT INTO INTERACAO(perfil,post,texto) values 

@@ -58,24 +58,21 @@
                     interacao.codigo as codInteracao, 
                     interacao.post as codPost, 
                     interacao.isReaction as isReaction, 
+                    interacao.texto as textoPost, 
+                    interacao.data as dataPost, 
                     interacao.isSharing as isSharing, 
                     interacao.emote as emote,
                     interacao.ativo as ativo,
                     porto.codigo as codPorto, porto.nome as nomePorto, 
-                    perfil.codigo as codPerfil, perfil.username as nomePerfil, perfil.img as iconPerfil,
-                    assunto.codigo as codAssunto,
-                    assunto.nome as nomeAssunto
+                    perfil.codigo as codPerfil, perfil.username as nomePerfil, perfil.img as iconPerfil
                 from interacao
                     join perfil on interacao.perfil = perfil.codigo
                     left join porto on porto.codigo = interacao.porto
-                    left join citacao on interacao.codigo = citacao.interacao
-                    left join interacao_assunto on interacao.codigo = interacao_assunto.interacao
-                    left join assunto on interacao_assunto.assunto = assunto.codigo
                 where
                     interacao.ativo = 1 and
                     interacao.isReaction is null and
                     (interacao.post is null || interacao.isSharing is not null)
-                    limit $limit offset $offset");
+                limit $limit offset $offset");
                 while ($row = $result->fetchArray()) {
                     array_push($results, $row);
                 }
@@ -87,24 +84,21 @@
                     interacao.codigo as codInteracao, 
                     interacao.post as codPost, 
                     interacao.isReaction as isReaction, 
+                    interacao.texto as textoPost, 
+                    interacao.data as dataPost, 
                     interacao.isSharing as isSharing, 
                     interacao.emote as emote,
                     interacao.ativo as ativo,
                     porto.codigo as codPorto, porto.nome as nomePorto, 
-                    perfil.codigo as codPerfil, perfil.username as nomePerfil, perfil.img as iconPerfil,
-                    assunto.codigo as codAssunto,
-                    assunto.nome as nomeAssunto
+                    perfil.codigo as codPerfil, perfil.username as nomePerfil, perfil.img as iconPerfil
                 from interacao
                     join perfil on interacao.perfil = perfil.codigo
                     left join porto on porto.codigo = interacao.porto
-                    left join citacao on interacao.codigo = citacao.interacao
-                    left join interacao_assunto on interacao.codigo = interacao_assunto.interacao
-                    left join assunto on interacao_assunto.assunto = assunto.codigo
                 where
-                    interacao.ativo = true and
+                    interacao.ativo = 1 and
                     interacao.isReaction is null and
                     (interacao.post is null || interacao.isSharing is not null)
-                    limit $limit offset $offset"));
+                limit $limit offset $offset"));
                 return $result;
             }
         }

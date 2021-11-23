@@ -169,34 +169,62 @@
     }
 
     // posts
-?>
-  <div class="div-post">
-    <div class="div-post-top">
-      <img src="imgs/icons/user-icon.png" alt="" class="div-post-top-icon">
-      <div class="div-post-top-infos">
-        <p class="div-post-top-username">@fulaninho 20/04/2021 00:00</p>
-        <p class="div-post-top-subjects"><b>Cripto moedas, bitcoin e elon musk...</b></p>
-      </div>
-    </div>
-    <div class="div-post-txt">
-      <p><b>@pedrinho66</b> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sit amet lectus sodales, varius dui ac, aliquet dui. Morbi bibendum sem odio, nec cursus dolor bibendum vel. Vestibulum cursus magna ante, commodo sagittis lorem semper in. Etiam non iaculis lectus. In hac habitasse platea dictumst. In id tristique diam, id posuere eros. Phasellus at lorem fermentum, ullamcorper mauris eget, cursus lectus. Quisque elementum ipsum urna, sed ornare dolor dictum et. Etiam condimentum odio ante, et tristique augue rutrum sit amet. Cras faucibus nibh enim, ac facilisis mi ornare sit amet. Donec vitae posuere lacus. Pellentesque rutrum ac ex lacinia ultrices. Ut sodales quam quis est dapibus lacinia. Maecenas leo turpis, luctus non justo at, dapibus consequat neque.</p>
-    </div>
-    <div class="div-post-icons-bar">
-      <div class="div-post-icons-bar-divs">
-        <p>12</p><img src="imgs/icons/Like.png" class="div-post-icons-bar-icons" alt="">
-      </div>
-      <div class="div-post-icons-bar-divs">
-        <p>5</p><img src="imgs/icons/chat.png" class="div-post-icons-bar-icons" alt="">
-      </div>
-      <div class="div-post-icons-bar-divs">
-        <p>2</p><img src="imgs/icons/send.png" class="div-post-icons-bar-icons" alt="">
-      </div>
-    </div>
-    <br>
-    <br>
-    <hr class="post-hr">
-  </div>
-<?php
+    if($postsArray){
+      foreach ($postsArray as $post) {
+        echo "<div class=\"div-post\">";
+          //Top
+          echo "<div class=\"div-post-top\">";
+            echo "<img src=\"".$post['iconPerfil']."\" alt=\"\" class=\"div-post-top-icon\">";
+            echo "<div class=\"div-post-top-infos\">";
+              echo "<p class=\"div-post-top-username\">".$post['nomePerfil']." ".$post['dataPost']."</p>";
+              echo "<p class=\"div-post-top-subjects\"><b>Cripto moedas, bitcoin e elon musk...</b></p>";
+            echo "</div>";
+          echo "</div>";
+          //Texto
+          echo "<div class=\"div-post-txt\">";
+            echo "<p><b>$post[nomePerfil]</b> $post[textoPost]</p>";
+          echo "</div>";
+          //Ícones
+          echo "<div class=\"div-post-icons-bar\">";
+            echo "<div class=\"div-post-icons-bar-divs\">";
+              echo "<p>12</p><img src=\"imgs/icons/Like.png\" class=\"div-post-icons-bar-icons\" alt=\"\">";
+            echo "</div>";
+            echo "<div class=\"div-post-icons-bar-divs\">";
+              echo "<p>5</p><img src=\"imgs/icons/chat.png\" class=\"div-post-icons-bar-icons\" alt=\"\">";
+            echo "</div>";
+            echo "<div class=\"div-post-icons-bar-divs\">";
+              echo "<p>2</p><img src=\"imgs/icons/send.png\" class=\"div-post-icons-bar-icons\" alt=\"\">";
+            echo "</div>";
+          echo "</div>";
+          echo "<br><br>";
+          echo "<hr class=\"post-hr\">";
+          //Comentários
+          echo "<div class=\"comment-container\">";
+            echo "<div class=\"comment-container-top\">";
+              echo "<img src=\"imgs/icons/user-icon.png\" alt=\"\" class=\"comment-icon\">";
+              echo "<p class=\"comment-txt\">@asdasddsa reagiu com <img src=\"imgs/icons/reactions/laughing.png\" alt=\"\" class=\"comment-emoji\">, marcando @bigSmoke2002 - “Olha isso aquLorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sit amet lectus sodales, varius dui ac, alLorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sit amet lectus sodales, varius dui ac, alLorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sit amet lectus sodales, varius dui ac, ali man”, em  Rio Grande, RS - 10/09/2021 00:00</p>";
+            echo "</div>";
+            echo "<div class=\"comment-reagir\"><p>Reagir</p></div>";
+
+              echo "<div class=\"inner-comment-container\">";
+                echo "<div class=\"comment-container-top\">";
+                  echo "<img src=\"imgs/icons/user-icon.png\" alt=\"\" class=\"comment-icon\">";
+                  echo "<p class=\"comment-txt\">@asdasddsa reagiu com <img src=\"imgs/icons/reactions/laughing.png\" alt=\"\" class=\"comment-emoji\">, marcando @bigSmoke2002 - “Olha isso aquLorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sit amet lectus sodales, varius dui ac, alLorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sit amet lectus sodales, varius dui ac, alLorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sit amet lectus sodales, varius dui ac, ali man”, em  Rio Grande, RS - 10/09/2021 00:00</p>";
+                echo "</div>";
+                echo "<div class=\"comment-reagir\"><p>Reagir</p></div>";
+              echo "</div>";
+
+                  
+            echo "<div class=\"comment-container-top\">";
+              echo "<img src=\"imgs/icons/user-icon.png\" alt=\"\" class=\"comment-icon\">";
+              echo "<p class=\"comment-txt\">@asdasddsa reagiu com <img src=\"imgs/icons/reactions/laughing.png\" alt=\"\" class=\"comment-emoji\">, marcando @bigSmoke2002 - “Olha isso aquLorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sit amet lectus sodales, varius dui ac, alLorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sit amet lectus sodales, varius dui ac, alLorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sit amet lectus sodales, varius dui ac, ali man”, em  Rio Grande, RS - 10/09/2021 00:00</p>";
+            echo "</div>";
+            echo "<div class=\"comment-reagir\"><p>Reagir</p></div>";
+
+          echo "</div>";
+        echo "</div>";
+      }
+    }
 
     echo "</main>";
   }

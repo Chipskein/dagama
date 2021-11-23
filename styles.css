@@ -716,9 +716,10 @@ body {
 }
 .div-post {
 	width: 909px;
-	height: 1022px;
-	margin-top: 20px;
+	min-height: 185px;
+	margin-top: 30px;
 	padding: 20px;
+	padding-bottom: 10px !important;
 	background-color: var(--cinza-color);
 	border-radius: 10px;
 }
@@ -767,12 +768,45 @@ body {
 .post-hr {
 	margin-top: 15px;
 	border-color: var(--azulEscuro2-color);
+	background-color: var(--azulEscuro2-color);
 	border-width: 2px;
 }
 .post-hr-small {
 	margin-top: 15px;
 	border-color: #fff;
-	border-width: 2px;
+	background-color: #fff;
+	width: 750px;
+	border-width: 1px;
+}
+.comment-container {
+	margin-top: 20px;
+	padding-right: 10px;
+}
+.comment-container-top {
+	display: flex;
+	flex-direction: row;
+}
+.comment-icon{
+	width: 40px;
+	height: 40px;
+}
+.comment-txt{
+	margin-left: 10px;
+	margin-top: 0px;
+}
+.comment-emoji{
+	width: 20px;
+	height: 20px;
+}
+.comment-reagir{
+	margin-top: -20px;
+	margin-left: 50px;
+	color: var(--azulClaro-color);
+}
+
+.inner-comment-container {
+	margin-top: 20px;
+	margin-left: 50px;
 }
 
 /*</feed.php>*/
