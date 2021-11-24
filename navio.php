@@ -65,7 +65,7 @@
     <br>
     <div align=center>
         <div class=perfil-amigos>
-          <h3>Amigos:0</h3>
+          <a href=amigos.php class=header>Amigos:0</a>
           <?php
             if($isOwner) echo "<h3>Seus Portos:0</h3>";
           ?>

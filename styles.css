@@ -10,7 +10,6 @@
 	--azulEscuro2-color: #358FB6;
 	--roxoClaro-color:#D39AFF;
 	--azulClaro2-color:#7ED8FF;
-	
 }
 
 /* HEADER */
@@ -81,7 +80,6 @@ body {
 	margin-top: 3px;
 	align-self: center;
 }
-
 /* GENERAL */
 .container-left {
 	float: left;
@@ -98,7 +96,6 @@ body {
 .container-bottom {
 	margin-top: 40px;
 }
-
 .modal {
 	position: fixed;
 	width: 600px;
@@ -118,7 +115,6 @@ body {
 	opacity: 1;
 	pointer-events: auto;
 }
-
 .fechar {
 	position: absolute;
 	width: 35px;
@@ -131,22 +127,18 @@ body {
 	font-size: 16px;
 	color: #8d0000;
 }
-
 /*<index.php>*/
 	body {
 		background-color: var(--cinza2-color);
 		color: var(--white-color);
 	}
-
 	#main {
 		flex-direction: row;
 	}
-
 	.row {
 		display: flex;
 		flex-direction: row;
 	}
-
 	.logo {
 		width: 500px;
 		height: 500px;
@@ -872,4 +864,36 @@ body {
 .insert-interacao-entrar-text {
 	text-align: center;
 	margin-top: 10px;
+}
+
+
+
+/*<amigos.php*/
+
+
+.div-amigo {
+	width: 909px;
+	margin-top: 30px;
+	padding: 5px;
+	padding-bottom: 10px !important;
+	background-color: var(--cinza-color);
+	border-radius: 10px;
+
+}
+.div-amigo-row {
+	display: flex;
+	justify-content: space-between;
+	margin: 3%;
+	align-items: center;
+}
+.div-amigo-image {
+	width: 115px;
+	height: 115px;
+	border-radius: 50%;
+}
+.div-amigo-textos {
+	margin-left: 2%;
+}
+.red {
+	color: var(--rosa-color);
 }
