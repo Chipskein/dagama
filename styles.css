@@ -16,12 +16,18 @@
 body {
 	margin: 0px;
 }
-
+#principal {
+	display: grid;
+	grid-template: 6vh 82vh 10vh/1fr 2fr 1fr;
+	grid-template-areas:
+	  "h h h"
+	  "a1 m a";
+}
 .header-main {
 	display: flex;
-	height: 55px;
-	width: 100%;
 	background-color: var(--azulEscuro-color);
+	height: 100%;
+	grid-area: h;
 }
 .header-icon {
 	width: 52px;
@@ -484,6 +490,15 @@ body {
 /*</animation.html>*/
 /*--------------------------------------------------------------------------------------------------------------------------------------*/
 /*<navio.php>*/
+#esquerda {
+	height: 100%;
+	grid-area: a;
+}
+
+main {
+		height: 100%;
+		grid-area: m;
+}
 	div.perfil{
 		width: 150px !important;
 		height: 150px !important;
@@ -541,6 +556,54 @@ body {
 	.post-name{
 		position: absolute;
 		margin-left:7% ;
+	}
+	#direta {
+		height: 100%;
+		grid-area: a1;
+	}
+	.background{
+		margin-top: 240px;
+		margin-left:40px;
+		margin-right: 40px;
+		background-color: var(--cinza-color);
+		border-radius: 10px;
+	}
+	.background2{
+		margin-top: 40px;
+		margin-left:40px;
+		margin-right: 40px;
+		background-color: var(--cinza-color);
+		border-radius: 10px;
+	}
+	.SeusAmigos{
+		font-size: 32px;
+	}
+	.verMaisAmigos{
+		font-size: 20px;
+		position: relative;
+		top: -30px;
+	}
+	.nomeAmigo {
+		font-size: 24px;
+		position: relative;
+		top: -15px;
+	}
+	.portosAtracados {
+		font-size: 32px;
+		color: #7A9EFB;
+		font-weight: bold;
+		padding-top: 20px;
+	}
+	.nomePort {
+		font-size: 24px;
+		position: relative;
+		top: 15px;
+		left: 15px;
+	}
+	.portos-img {
+		width: 90px;
+		height: 90px;
+		margin-left: 15px;
 	}
 /*</navio.php>*/
 /*--------------------------------------------------------------------------------------------------------------------------------------*/
@@ -708,7 +771,6 @@ body {
 }
 .div-post {
 	width: 909px;
-	min-height: 185px;
 	margin-top: 30px;
 	padding: 20px;
 	padding-bottom: 10px !important;
@@ -764,16 +826,10 @@ body {
 	background-color: var(--azulEscuro2-color);
 	border-width: 2px;
 }
-.post-hr-small {
-	margin-top: 15px;
-	border-color: #fff;
-	background-color: #fff;
-	width: 750px;
-	border-width: 1px;
-}
 .comment-container {
 	margin-top: 20px;
 	padding-right: 10px;
+	background-color: var(--cinza-color);
 }
 .comment-container-top {
 	display: flex;

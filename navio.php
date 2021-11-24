@@ -37,6 +37,7 @@
       }
   }
 ?>
+<div id=principal> 
  <header class="header-main">
     <img class="header-icon" src="imgs/icon.png" alt="">
     <div class="header-searchBar">
@@ -52,7 +53,16 @@
     ?>
     </div>
   </header>
-<main>
+  <aside id=direita>
+  <div align=center class=background>
+        <p class=portosAtracados>Portos atracados</p>
+      <div class=row>
+        <img src=imgs/icon.png class=portos-img>
+        <p class=nomePort>Nome</p>
+      </div>
+    </div>
+    </aside>
+  <main>
     <div align=center>
     <!--Add onlick change-->
       <br>
@@ -89,15 +99,27 @@
       echo "</div>";
       echo "<input class=\"insert-interacao-submit\" type=\"submit\" name=\"insert-interacao-submit\" />";
       echo "</form>";
+      echo "<p align=center><< 1 2 3 >></p>";
       echo "</div>";
       echo "</div>";
     ?>
     </div>
 </main>
-<footer class="container-bottom" ><p align="center"><< 1 2 3 >></p></footer>
+<aside id=esquerda>
+    <div align=center class=background>
+      <div>
+        <p class=SeusAmigos>Seus amigos </p>
+        <a class=verMaisAmigos href=amigos.php>Ver mais</a>
+      </div>
+      <div>
+        <img src=imgs/icons/user-icon.png class=div-amigo-image>
+        <p class=nomeAmigo>Nome</p>
+      </div>
+    </div>
+</aside>
 <?php 
   echo "<script>img_perfil.style.backgroundImage=\"url($user[img])\"</script>";
 ?>
-
+</div>
 </body>
 </html>

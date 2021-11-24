@@ -59,6 +59,7 @@
       }
     } 
 ?>
+<div id=principal>
   <header class="header-main">
     <img class="header-icon" src="imgs/icon.png" alt="">
     <div class="header-searchBar">
@@ -74,11 +75,24 @@
     ?>
     </div>
   </header>
-  <aside class="container-left">
-    <p>Portos Atracados:</p>
+  <aside id=direita>
+  <div align=center class=background2>
+        <p class=portosAtracados>Portos atracados:</p>
+      <div class=row>
+        <img src=imgs/icon.png class=portos-img>
+        <p class=nomePort>Nome</p>
+      </div>
+    </div>
   </aside>
-  <aside class="container-right">
-    <p>Ondas do momento:</p>
+  <aside id=esquerda>
+  <div align=center class=background2>
+        <p class=portosAtracados>Ondas do momento:</p>
+      <div align=start>
+        <p class=nomeAmigo>1ª Elon musk</p>
+        <p class=nomeAmigo>1ª Elon musk</p>
+        <p class=nomeAmigo>1ª Elon musk</p>
+      </div>
+    </div>
   </aside>
   <main class="container-center">
 
@@ -256,7 +270,8 @@
     header("refresh:1;url=index.php");
     die();
   }
-?>
+  ?>
+  </div>
 <!-- <div onclick="openModal('abrirModal')" ><p>Open Modal</p></div> -->
 <script src="functions.js"></script>
 </body>
