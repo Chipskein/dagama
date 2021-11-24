@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="../imgs/icon.png" type="image/jpg">
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="../responsive.css" media="screen and (max-width: 1680px)"/>
   <title>Dagama | Feed</title>
 </head>
 <body>
@@ -88,9 +89,9 @@
   <div align=center class=background2>
         <p class=portosAtracados>Ondas do momento:</p>
       <div align=start>
-        <p class=nomeAmigo>1ª Elon musk</p>
-        <p class=nomeAmigo>1ª Elon musk</p>
-        <p class=nomeAmigo>1ª Elon musk</p>
+        <p class=trending>1ª Elon musk</p>
+        <p class=trending>1ª Elon musk</p>
+        <p class=trending>1ª Elon musk</p>
       </div>
     </div>
   </aside>

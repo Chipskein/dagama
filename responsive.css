@@ -1,0 +1,97 @@
+.background{
+    margin-left:20px;
+    margin-right: 20px;
+    border-radius: 10px;
+}
+.background2{
+    margin-top: 40px;
+    margin-left:20px;
+    margin-right: 20px;
+    border-radius: 10px;
+}
+.SeusAmigos{
+    font-size: 26px;
+}
+.verMaisAmigos{
+    font-size: 16px;
+    position: relative;
+    top: -30px;
+}
+.nomeAmigo {
+    font-size: 18px;
+    position: relative;
+    top: -15px;
+}
+.portosAtracados {
+    font-size: 26px;
+    padding-top: 20px;
+}
+.nomePort {
+    font-size: 16px;
+    position: relative;
+    top: 10px;
+    left: 10px;
+}
+.portos-img {
+    width: 60px;
+    height: 60px;
+    margin-left: 15px;
+}
+.insert-interacao {
+	width: 775px;
+	height: 262px;
+	padding: 10px;
+	padding-left: 20px;
+	padding-right: 20px;
+	border-radius: 10px;
+}
+.div.perfil-amigos{
+    width: 775px;
+    display: flex;
+    background-color: var(--cinza-color);
+    flex-direction: row;
+    justify-content: space-around;
+    border-radius: 10px;
+}
+.add-amigo {
+	width: 775px;
+	height: 321px;
+	margin-top: 20px;
+	padding: 5px;
+	padding-left: 20px;
+	padding-right: 20px;
+	border-radius: 10px;
+}
+.div-post {
+	width: 775px;
+	margin-top: 30px;
+	padding: 20px;
+	padding-bottom: 10px !important;
+	border-radius: 10px;
+}
+.darkbluebg {
+	width: 775px;
+	padding: 20px;
+	padding-left: 20px;
+	padding-right: 20px;
+	border-radius: 10px;
+}
+.div-amigo {
+	width: 775px;
+	margin-top: 30px;
+	padding: 5px;
+	padding-bottom: 10px !important;
+	border-radius: 10px;
+}
+.add-amigo-suggesTxt {
+	font-size: 28px;
+}
+.add-amigo-verMais {
+	font-size: 14px;
+	color: var(--azulEscuro2-color);
+	margin-left: 450px;
+}
+.add-amigo-card-name {
+	font-size: 18px;
+	margin-top: 10px;
+}
