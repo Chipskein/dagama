@@ -192,10 +192,12 @@ INSERT INTO INTERACAO_ASSUNTO(assunto, interacao) VALUES
 (4, 3);
 
 --interacao comentarios
---INSERT INTO INTERACAO(perfil,post,texto) values 
---(1,1,'comentario em no post de teste'),--5
---(1,5,'comentario no comentario do no post de teste')--6
---;
+INSERT INTO INTERACAO(perfil,post,texto) values 
+(1, 1, 'comentario em no post de teste'),--5
+(1, 1, 'comentario no comentario do no post de teste'),--6
+(8, 2, 'comentario no comentario do no post de teste'),--7
+(8, 2, 'comentario no comentario do no post de teste'),--8
+(7, 3, 'comentario no comentario do no post de teste');--8
 --INSERT INTO INTERACAO(perfil,perfil_posting,texto) values 
 --(1,1,'POST NO PERFIL'),--7
 --(1,2,'POST NO PERFIL2')--8
