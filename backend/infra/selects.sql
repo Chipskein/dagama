@@ -169,10 +169,32 @@ from interacao
 where
     interacao.ativo = 1 and
     interacao.isReaction is null and
-    (interacao.post is null || interacao.isSharing is not null);
+    (interacao.post is null or interacao.isSharing is not null);
 
 --tem que pegar por fora os assuntos, as citações e intercações
 
 select interacao.codigo as interacao, assunto.codigo as codAssunto, assunto.nome as nomeAssunto from interacao
     left join interacao_assunto on interacao.codigo = interacao_assunto.interacao
     left join assunto on interacao_assunto.assunto = assunto.codigo
+where
+    interacao.ativo = 1
+
+select 
+    interacao.codigo as codInteracao, 
+    interacao.post as codPost, 
+    interacao.isReaction as isReaction, 
+    interacao.texto as textoPost, 
+    interacao.data as dataPost, 
+    interacao.isSharing as isSharing, 
+    interacao.emote as emote,
+    interacao.ativo as ativo,
+    porto.codigo as codPorto, porto.nome as nomePorto, 
+    perfil.codigo as codPerfil, perfil.username as nomePerfil, perfil.img as iconPerfil
+from interacao
+    join perfil on interacao.perfil = perfil.codigo
+    left join porto on porto.codigo = interacao.porto
+where
+    interacao.ativo = 1 and
+    interacao.isReaction is null and
+    interacao.post is not null and 
+    interacao.isSharing is null;

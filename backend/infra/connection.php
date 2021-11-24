@@ -71,11 +71,60 @@
                 where
                     interacao.ativo = 1 and
                     interacao.isReaction is null and
-                    (interacao.post is null || interacao.isSharing is not null)
+                    (interacao.post is null or interacao.isSharing is not null)
                 limit $limit offset $offset");
+                
+                $results2 = $db->query("
+                select interacao.codigo as interacao, assunto.codigo as codAssunto, assunto.nome as nomeAssunto from interacao
+                    left join interacao_assunto on interacao.codigo = interacao_assunto.interacao
+                    left join assunto on interacao_assunto.assunto = assunto.codigo
+                where
+                    interacao.ativo = 1");
+                $assuntos = [];
+                while ($row = $results2->fetchArray()) {
+                    $assuntos[$row['interacao']][$row['codAssunto']] = $row;
+                }
+
+                $results3 = $db->query("
+                select 
+                    interacao.codigo as codInteracao, 
+                    interacao.post as codPost, 
+                    interacao.isReaction as isReaction, 
+                    interacao.texto as textoPost, 
+                    interacao.data as dataPost, 
+                    interacao.isSharing as isSharing, 
+                    interacao.emote as emote,
+                    interacao.ativo as ativo,
+                    porto.codigo as codPorto, porto.nome as nomePorto, 
+                    perfil.codigo as codPerfil, perfil.username as nomePerfil, perfil.img as iconPerfil
+                from interacao
+                    join perfil on interacao.perfil = perfil.codigo
+                    left join porto on porto.codigo = interacao.porto
+                where
+                    interacao.ativo = 1 and
+                    interacao.isReaction is null and
+                    interacao.post is not null and 
+                    interacao.isSharing is null");
+                $interacoes = [];
+                while ($row = $results3->fetchArray()) {
+                    $interacoes[$row['codPost']][$row['codInteracao']] = $row;
+                }
+
                 while ($row = $result->fetchArray()) {
+                    $row['assuntos'] = $assuntos[$row['codInteracao']];
+                    if(in_array($row['codInteracao'], array_keys($interacoes))){
+                        $row['comentarios'] = $interacoes[$row['codInteracao']];
+                    } else {
+                        $row['comentarios'] = [];
+                    }
+                    // echo $row['codInteracao']."<br>";
+                    // echo "<br>";
+                    // print_r($row['comentarios']);
                     array_push($results, $row);
                 }
+                // array[0] = post 1, vitão, asdasdasdsa
+                // array[0]['assuntos'] = 'assuntos'
+                // array[0]['interacoes'][] = 'interacao'
                 return $results;
             }
             if($db_type=='postgresql'){
@@ -97,7 +146,7 @@
                 where
                     interacao.ativo = 1 and
                     interacao.isReaction is null and
-                    (interacao.post is null || interacao.isSharing is not null)
+                    (interacao.post is null or interacao.isSharing is not null)
                 limit $limit offset $offset"));
                 return $result;
             }
@@ -105,6 +154,7 @@
         else exit;
     }
     /* -------- */
+    getPosts(0,10);
 
     function getAllPorto($offset,$limit=10){
         $db_connection=db_connection();

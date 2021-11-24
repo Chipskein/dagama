@@ -74,12 +74,12 @@
     ?>
     </div>
   </header>
-  <!-- <aside class="container-left">
+  <aside class="container-left">
     <p>Portos Atracados:</p>
   </aside>
   <aside class="container-right">
     <p>Ondas do momento:</p>
-  </aside> -->
+  </aside>
   <main class="container-center">
 
 <?php
@@ -176,13 +176,22 @@
           echo "<div class=\"div-post-top\">";
             echo "<img src=\"".$post['iconPerfil']."\" alt=\"\" class=\"div-post-top-icon\">";
             echo "<div class=\"div-post-top-infos\">";
-              echo "<p class=\"div-post-top-username\">".$post['nomePerfil']." ".$post['dataPost']."</p>";
-              echo "<p class=\"div-post-top-subjects\"><b>Cripto moedas, bitcoin e elon musk...</b></p>";
+              echo "<p class=\"div-post-top-username\"><i>@".$post['nomePerfil']."</i> ".$post['dataPost']."</p>";
+              echo "<p class=\"div-post-top-subjects\"><b>";
+              $tmpArray = [];
+              // print_r($post['assuntos']);
+              foreach($post['assuntos'] as $elements){
+                foreach ($elements as $key => $value) {
+                  if($key === 'nomeAssunto') $tmpArray[] = $value;
+                }
+              }
+              echo implode($tmpArray, ', ');
+              echo "</b></p>";
             echo "</div>";
           echo "</div>";
           //Texto
           echo "<div class=\"div-post-txt\">";
-            echo "<p><b>$post[nomePerfil]</b> $post[textoPost]</p>";
+            echo "<p>$post[textoPost]</p>";
           echo "</div>";
           //Ícones
           echo "<div class=\"div-post-icons-bar\">";
@@ -197,31 +206,45 @@
             echo "</div>";
           echo "</div>";
           echo "<br><br>";
-          echo "<hr class=\"post-hr\">";
           //Comentários
-          echo "<div class=\"comment-container\">";
-            echo "<div class=\"comment-container-top\">";
-              echo "<img src=\"imgs/icons/user-icon.png\" alt=\"\" class=\"comment-icon\">";
-              echo "<p class=\"comment-txt\">@asdasddsa reagiu com <img src=\"imgs/icons/reactions/laughing.png\" alt=\"\" class=\"comment-emoji\">, marcando @bigSmoke2002 - “Olha isso aquLorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sit amet lectus sodales, varius dui ac, alLorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sit amet lectus sodales, varius dui ac, alLorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sit amet lectus sodales, varius dui ac, ali man”, em  Rio Grande, RS - 10/09/2021 00:00</p>";
-            echo "</div>";
-            echo "<div class=\"comment-reagir\"><p>Reagir</p></div>";
-
-              echo "<div class=\"inner-comment-container\">";
+          if($post['comentarios'] && $post['comentarios'] != []){
+            echo "<hr class=\"post-hr\">";
+            foreach ($post['comentarios'] as $elem) {
+              echo "<div class=\"comment-container\">";
                 echo "<div class=\"comment-container-top\">";
-                  echo "<img src=\"imgs/icons/user-icon.png\" alt=\"\" class=\"comment-icon\">";
-                  echo "<p class=\"comment-txt\">@asdasddsa reagiu com <img src=\"imgs/icons/reactions/laughing.png\" alt=\"\" class=\"comment-emoji\">, marcando @bigSmoke2002 - “Olha isso aquLorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sit amet lectus sodales, varius dui ac, alLorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sit amet lectus sodales, varius dui ac, alLorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sit amet lectus sodales, varius dui ac, ali man”, em  Rio Grande, RS - 10/09/2021 00:00</p>";
+                  echo "<img src=\"".$elem['iconPerfil']."\" alt=\"\" class=\"comment-icon\">";
+                  echo "<p class=\"comment-txt\"><i>@".$elem['nomePerfil']."</i> ";
+                  echo ($elem['textoPost'] ? $elem['textoPost'] : '');
+                  echo ", em ".$elem['dataPost'];
+                  echo "</p>";
                 echo "</div>";
                 echo "<div class=\"comment-reagir\"><p>Reagir</p></div>";
               echo "</div>";
+            }
+          }
+          // echo "<div class=\"comment-container\">";
+          //   echo "<div class=\"comment-container-top\">";
+          //     echo "<img src=\"imgs/icons/user-icon.png\" alt=\"\" class=\"comment-icon\">";
+          //     echo "<p class=\"comment-txt\">@asdasddsa reagiu com <img src=\"imgs/icons/reactions/laughing.png\" alt=\"\" class=\"comment-emoji\">, marcando @bigSmoke2002 - “Olha isso aquLorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sit amet lectus sodales, varius dui ac, alLorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sit amet lectus sodales, varius dui ac, alLorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sit amet lectus sodales, varius dui ac, ali man”, em  Rio Grande, RS - 10/09/2021 00:00</p>";
+          //   echo "</div>";
+          //   echo "<div class=\"comment-reagir\"><p>Reagir</p></div>";
+
+          //     echo "<div class=\"inner-comment-container\">";
+          //       echo "<div class=\"comment-container-top\">";
+          //         echo "<img src=\"imgs/icons/user-icon.png\" alt=\"\" class=\"comment-icon\">";
+          //         echo "<p class=\"comment-txt\">@asdasddsa reagiu com <img src=\"imgs/icons/reactions/laughing.png\" alt=\"\" class=\"comment-emoji\">, marcando @bigSmoke2002 - “Olha isso aquLorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sit amet lectus sodales, varius dui ac, alLorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sit amet lectus sodales, varius dui ac, alLorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sit amet lectus sodales, varius dui ac, ali man”, em  Rio Grande, RS - 10/09/2021 00:00</p>";
+          //       echo "</div>";
+          //       echo "<div class=\"comment-reagir\"><p>Reagir</p></div>";
+          //     echo "</div>";
 
                   
-            echo "<div class=\"comment-container-top\">";
-              echo "<img src=\"imgs/icons/user-icon.png\" alt=\"\" class=\"comment-icon\">";
-              echo "<p class=\"comment-txt\">@asdasddsa reagiu com <img src=\"imgs/icons/reactions/laughing.png\" alt=\"\" class=\"comment-emoji\">, marcando @bigSmoke2002 - “Olha isso aquLorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sit amet lectus sodales, varius dui ac, alLorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sit amet lectus sodales, varius dui ac, alLorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sit amet lectus sodales, varius dui ac, ali man”, em  Rio Grande, RS - 10/09/2021 00:00</p>";
-            echo "</div>";
-            echo "<div class=\"comment-reagir\"><p>Reagir</p></div>";
+          //   echo "<div class=\"comment-container-top\">";
+          //     echo "<img src=\"imgs/icons/user-icon.png\" alt=\"\" class=\"comment-icon\">";
+          //     echo "<p class=\"comment-txt\">@asdasddsa reagiu com <img src=\"imgs/icons/reactions/laughing.png\" alt=\"\" class=\"comment-emoji\">, marcando @bigSmoke2002 - “Olha isso aquLorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sit amet lectus sodales, varius dui ac, alLorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sit amet lectus sodales, varius dui ac, alLorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sit amet lectus sodales, varius dui ac, ali man”, em  Rio Grande, RS - 10/09/2021 00:00</p>";
+          //   echo "</div>";
+          //   echo "<div class=\"comment-reagir\"><p>Reagir</p></div>";
 
-          echo "</div>";
+          // echo "</div>";
         echo "</div>";
       }
     }
