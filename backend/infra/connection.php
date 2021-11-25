@@ -606,18 +606,55 @@
         $db_type = $db_connection['db_type'];
         if($db){
             if($db_type == 'sqlite'){
-                $response = $db->query("select codigo from pais")->fetchArray();
-                if($response) return $response;
-                else return false;
-            }
-            if($db_type == 'postgresql'){
-                $response = pg_fetch_array(pg_query($db, "select codigo from pais"));
-                if($response) return $response;
-                else return false;
+                $results=[];
+                $result = $db->query("select codigo,nome from pais");
+                while ($row = $result->fetchArray()) {
+                    array_push($results,$row);
+                }
+                return $results;
             }
         }
         else exit;
     };
+    function getStates(){
+        $db_connection = db_connection();
+        $db = $db_connection['db'];
+        $db_type = $db_connection['db_type'];
+        if($db){
+            if($db_type == 'sqlite'){
+                $results=[];
+                $result = $db->query("select * from uf");
+                while ($row = $result->fetchArray()) {
+                    array_push($results,$row);
+                }
+                return $results;
+            }
+        }
+        else exit;
+    };
+    function getCities(){
+        $db_connection = db_connection();
+        $db = $db_connection['db'];
+        $db_type = $db_connection['db_type'];
+        if($db){
+            if($db_type == 'sqlite'){
+                $results=[];
+                $result = $db->query("select * from cidade");
+                while ($row = $result->fetchArray()) {
+                    array_push($results,$row);
+                }
+                return $results;
+            }
+        }
+        else exit;
+    };
+
+
+
+
+
+
+
     function getLocais(){
         $db_connection = db_connection();
         $db = $db_connection['db'];

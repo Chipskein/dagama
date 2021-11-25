@@ -11,12 +11,38 @@
 </head>
 <body>
   <?php 
+    include './backend/infra/connection.php';
     session_start();
     if(isset($_SESSION['userid'])){
       echo "<h2>Voce já esta logado</h2>";
       header("refresh:1;url=mar.php");
       die();
     }
+    $paises=getPaises();
+    $estados=getStates();
+    $cidades=getCities();
+    echo "<script>";
+      echo "let states=[];";
+      echo "let cities=[];";
+      foreach($estados as $estado){
+        echo "estado={";
+        echo "pais:$estado[pais],";
+        echo "codigo:$estado[codigo],";
+        echo "nome:\"$estado[nome]\"";
+        echo "};";
+        echo "states.push(estado);";
+      }
+      foreach($cidades as $cidade){
+        echo "cidade={";
+        echo "uf:$cidade[uf],";
+        echo "codigo:$cidade[codigo],";
+        echo "nome:\"$cidade[nome]\"";
+        echo "};";
+        echo "cities.push(cidade);";
+      }
+      echo "estado=null;";
+      echo "cidade=null;";
+    echo "</script>";
   ?>
   <div id="main">
     <div class="divLogo">
@@ -65,17 +91,24 @@
                 <option value="F">Feminino</option>
                 <option value="O">Outro</option>
             </select>
-            <select class="inputHalf" name="pais">
+            <select class="inputs" name="pais" id='pais'>
+              <option value="null" selected>Selecione o seu pais:</option>
+              <?php
+                foreach($paises as $pais){
+                    echo "<option value=$pais[codigo]>$pais[nome]</option>";
+                }
+              ?>
+            </select>
+            <select class="inputHalf hide" name="estado" id=estado>
+            <option value="null" selected>Selecione o seu estado:</option>
+              <!--
                 <option value="1" selected>Brasil</option>
+              -->
             </select>
-            <select class="inputHalf" name="estado">
-              <option value="">RS</option>
-              <option value="">SC</option>
-              <option value="">PR</option>
+            <select class="inputHalf hide" name="cidade" id=cidade>
+                <option value="null" selected>Selecione o sua cidade:</option>
             </select>
-            <select class="inputs" name="cidade">
-              <option value="1" selected>Rio Grande</option>
-            </select>
+           
             <div id="divTermos">
               <input value='pass' name="termos" type="checkbox"> <p>Concordo com os <a href="LICENSE" target="_blank" style="color: #7ED8FF;">termos de uso</a></p>
             </div>
@@ -96,6 +129,61 @@
           img_perfil.style.backgroundImage="url(imgs/icons/user-icon.png)"
       }
     }
+    let select_pais=document.getElementById("pais")
+    let select_estado=document.getElementById("estado")
+    let select_cidade=document.getElementById("cidade")
+    select_pais.onchange=()=>{
+      if(select_pais.selectedIndex!=0){
+        
+        pais=select_pais.value;
+        select_estado.classList.remove("hide");
+        Array.from(select_estado.options).forEach(function(e) {
+          if (e.value!="null") e.remove();
+        });
+        states.forEach(e=>{
+          if(e.pais==pais){
+            option=document.createElement("option");
+            option.value=e.codigo;
+            option.innerHTML=e.nome;
+            select_estado.append(option);
+          };
+        })
+      }
+      else{
+        select_estado.classList.add("hide");
+        Array.from(select_estado.options).forEach(function(e) {
+          if (e.value!="null") e.remove();
+        });
+        select_cidade.classList.add("hide");
+        Array.from(select_cidade.options).forEach(function(e) {
+          if (e.value!="null") e.remove();
+        });
+      }
+    }
+    select_estado.onchange=()=>{
+      if(select_estado.selectedIndex!=0){
+        select_cidade.classList.remove("hide");
+        Array.from(select_cidade.options).forEach(function(e) {
+          if (e.value!="null") e.remove();
+        });
+        cities.forEach(e=>{
+          estado=select_estado.value;
+          if(e.uf==estado){
+            option=document.createElement("option");
+            option.value=e.codigo;
+            option.innerHTML=e.nome;
+            select_cidade.append(option);
+          };
+        })
+      }
+      else{
+        select_cidade.classList.add("hide");
+        Array.from(select_cidade.options).forEach(function(e) {
+          if (e.value!="null") e.remove();
+        });
+      }
+    }
+
   </script>
 </body>
 </html>

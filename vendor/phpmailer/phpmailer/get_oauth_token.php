@@ -53,8 +53,6 @@ if (!isset($_GET['code']) && !isset($_GET['provider'])) {
 }
 
 require '../../autoload.php';
-
-
 session_start();
 
 $providerName = '';
@@ -77,7 +75,7 @@ $start_link='';
 if(preg_match("/localhost/","$_SERVER[HTTP_HOST]")) $start_link="http://";
 if(preg_match("/dagama.herokuapp/","$_SERVER[HTTP_HOST]")) $start_link="https://";
 
-$redirectUri = $start_link."/$_SERVER[HTTP_HOST]"."/vendor/phpmailer/phpmailer/get_oauth_token.php";
+$redirectUri = $start_link."$_SERVER[HTTP_HOST]"."/vendor/phpmailer/phpmailer/get_oauth_token.php";
 $clientId = '971777937005-dqnkd7sef0410teq7etqnl5es07ocha5.apps.googleusercontent.com';
 $clientSecret = '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';
 echo "$redirectUri";

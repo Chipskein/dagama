@@ -85,7 +85,7 @@ include './infra/connection.php';
             }
             if(!preg_match("/^[1-9][0-9]*$/", $_POST['pais'])) $erros[] = "país inválido";
             else {
-                if(!in_array($_POST['pais'], getPaises())) $erros[] = "pais não cadastrado";
+                //if(!in_array($_POST['pais'], getPaises())) $erros[] = "pais não cadastrado";
             }
             //ta travando o heroku ver o porque
             //if(trim("$_POST[password]")!=''&&strlen("$_POST[password]")>=6) $erros[] = "senha inválido: ela precisa ter no mínimo 6 caracteres ou números";
@@ -104,10 +104,10 @@ include './infra/connection.php';
             $username = "$_POST[username]";
             $password = password_hash("$_POST[password]", PASSWORD_DEFAULT);
             $bdate = "$_POST[bdate]";//converter bdate to yyyy/mm/dd
-            $pais = "$_POST[pais]";
+            $cidade = "$_POST[cidade]";
             $genero = "$_POST[genero]";
             $photo= is_uploaded_file($_FILES['photo']['tmp_name']) ? $_FILES['photo']:null;
-            $registered = Register($email, $password, $bdate, $username, $genero, $pais, $photo);
+            $registered = Register($email, $password, $bdate, $username, $genero, $cidade, $photo);
             if($registered){
                 $id=getIdbyEmail($email);
                 header("refresh:2;url=../validarEmail.php?id=$id");
