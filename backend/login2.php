@@ -21,7 +21,11 @@ if(isset($_SESSION['email'])&&isset($_SESSION['password'])){
         session_start();
         echo "<h2 align=center>Logado</h2>";
         $USERID=$login['codigo'];
+        $USERIMG=$login['img'];
+        $USERNAME=$login['username'];
         $_SESSION["userid"] = $USERID;
+        $_SESSION["userimg"] = $USERIMG;
+        $_SESSION["username"] = $USERNAME;
         header("refresh:1;url=../mar.php");
         die();
     }
