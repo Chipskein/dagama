@@ -69,6 +69,7 @@ CREATE TABLE PORTO(
 CREATE TABLE PORTO_PARTICIPA(
     porto INTEGER NOT NULL,
     perfil INTEGER NOT NULL,
+    ativo BOOLEAN NOT NULL DEFAULT 1,
     FOREIGN KEY (porto) REFERENCES PORTO(codigo),
     FOREIGN KEY (perfil) REFERENCES PERFIL(codigo)
 );
@@ -137,5168 +138,5168 @@ CREATE TABLE INTERACAO_ASSUNTO(
     FOREIGN KEY (assunto) REFERENCES ASSUNTO(codigo),
     FOREIGN KEY (interacao) REFERENCES INTERACAO(codigo)
 );
---locais
---pais
-INSERT INTO PAIS (codigo, nome) VALUES
-    (1, 'Afghanistan'),
-    (2, 'Aland Islands'),
-    (3, 'Albania'),
-    (4, 'Algeria'),
-    (5, 'American Samoa'),
-    (6, 'Andorra'),
-    (7, 'Angola'),
-    (8, 'Anguilla'),
-    (9, 'Antarctica'),
-    (10, 'Antigua And Barbuda'),
-    (11, 'Argentina'),
-    (12, 'Armenia'),
-    (13, 'Aruba'),
-    (14, 'Australia'),
-    (15, 'Austria'),
-    (16, 'Azerbaijan'),
-    (17, 'Bahamas The'),
-    (18, 'Bahrain'),
-    (19, 'Bangladesh'),
-    (20, 'Barbados'),
-    (21, 'Belarus'),
-    (22, 'Belgium'),
-    (23, 'Belize'),
-    (24, 'Benin'),
-    (25, 'Bermuda'),
-    (26, 'Bhutan'),
-    (27, 'Bolivia'),
-    (28, 'Bosnia and Herzegovina'),
-    (29, 'Botswana'),
-    (30, 'Bouvet Island'),
-    (31, 'Brazil'),
-    (32, 'British Indian Ocean Territory'),
-    (33, 'Brunei'),
-    (34, 'Bulgaria'),
-    (35, 'Burkina Faso'),
-    (36, 'Burundi'),
-    (37, 'Cambodia'),
-    (38, 'Cameroon'),
-    (39, 'Canada'),
-    (40, 'Cape Verde'),
-    (41, 'Cayman Islands'),
-    (42, 'Central African Republic'),
-    (43, 'Chad'),
-    (44, 'Chile'),
-    (45, 'China'),
-    (46, 'Christmas Island'),
-    (47, 'Cocos (Keeling) Islands'),
-    (48, 'Colombia'),
-    (49, 'Comoros'),
-    (50, 'Congo'),
-    (51, 'Democratic Republic of the Congo'),
-    (52, 'Cook Islands'),
-    (53, 'Costa Rica'),
-    (54, 'Cote D Ivoire (Ivory Coast)'),
-    (55, 'Croatia'),
-    (56, 'Cuba'),
-    (57, 'Cyprus'),
-    (58, 'Czech Republic'),
-    (59, 'Denmark'),
-    (60, 'Djibouti'),
-    (61, 'Dominica'),
-    (62, 'Dominican Republic'),
-    (63, 'East Timor'),
-    (64, 'Ecuador'),
-    (65, 'Egypt'),
-    (66, 'El Salvador'),
-    (67, 'Equatorial Guinea'),
-    (68, 'Eritrea'),
-    (69, 'Estonia'),
-    (70, 'Ethiopia'),
-    (71, 'Falkland Islands'),
-    (72, 'Faroe Islands'),
-    (73, 'Fiji Islands'),
-    (74, 'Finland'),
-    (75, 'France'),
-    (76, 'French Guiana'),
-    (77, 'French Polynesia'),
-    (78, 'French Southern Territories'),
-    (79, 'Gabon'),
-    (80, 'Gambia The'),
-    (81, 'Georgia'),
-    (82, 'Germany'),
-    (83, 'Ghana'),
-    (84, 'Gibraltar'),
-    (85, 'Greece'),
-    (87, 'Grenada'),
-    (88, 'Guadeloupe'),
-    (89, 'Guam'),
-    (90, 'Guatemala'),
-    (91, 'Guernsey and Alderney'),
-    (92, 'Guinea'),
-    (93, 'Guinea-Bissau'),
-    (94, 'Guyana'),
-    (95, 'Haiti'),
-    (96, 'Heard Island and McDonald Islands'),
-    (97, 'Honduras'),
-    (98, 'Hong Kong S.A.R.'),
-    (99, 'Hungary'),
-    (100, 'Iceland'),
-    (101, 'India'),
-    (102, 'Indonesia'),
-    (103, 'Iran'),
-    (104, 'Iraq'),
-    (105, 'Ireland'),
-    (106, 'Israel'),
-    (107, 'Italy'),
-    (108, 'Jamaica'),
-    (109, 'Japan'),
-    (110, 'Jersey'),
-    (111, 'Jordan'),
-    (112, 'Kazakhstan'),
-    (113, 'Kenya'),
-    (114, 'Kiribati'),
-    (115, 'North Korea'),
-    (116, 'South Korea'),
-    (117, 'Kuwait'),
-    (118, 'Kyrgyzstan'),
-    (119, 'Laos'),
-    (120, 'Latvia'),
-    (121, 'Lebanon'),
-    (122, 'Lesotho'),
-    (123, 'Liberia'),
-    (124, 'Libya'),
-    (125, 'Liechtenstein'),
-    (126, 'Lithuania'),
-    (127, 'Luxembourg'),
-    (128, 'Macau S.A.R.'),
-    (129, 'Macedonia'),
-    (130, 'Madagascar'),
-    (131, 'Malawi'),
-    (132, 'Malaysia'),
-    (133, 'Maldives'),
-    (134, 'Mali'),
-    (135, 'Malta'),
-    (136, 'Man (Isle of)'),
-    (137, 'Marshall Islands'),
-    (138, 'Martinique'),
-    (139, 'Mauritania'),
-    (140, 'Mauritius'),
-    (141, 'Mayotte'),
-    (142, 'Mexico'),
-    (143, 'Micronesia'),
-    (144, 'Moldova'),
-    (145, 'Monaco'),
-    (146, 'Mongolia'),
-    (147, 'Montenegro'),
-    (148, 'Montserrat'),
-    (149, 'Morocco'),
-    (150, 'Mozambique'),
-    (151, 'Myanmar'),
-    (152, 'Namibia'),
-    (153, 'Nauru'),
-    (154, 'Nepal'),
-    (155, 'Bonaire'),
-    (156, 'Netherlands'),
-    (157, 'New Caledonia'),
-    (158, 'New Zealand'),
-    (159, 'Nicaragua'),
-    (160, 'Niger'),
-    (161, 'Nigeria'),
-    (162, 'Niue'),
-    (163, 'Norfolk Island'),
-    (164, 'Northern Mariana Islands'),
-    (165, 'Norway'),
-    (166, 'Oman'),
-    (167, 'Pakistan'),
-    (168, 'Palau'),
-    (169, 'Palestinian Territory Occupied'),
-    (170, 'Panama'),
-    (171, 'Papua new Guinea'),
-    (172, 'Paraguay'),
-    (173, 'Peru'),
-    (174, 'Philippines'),
-    (175, 'Pitcairn Island'),
-    (176, 'Poland'),
-    (177, 'Portugal'),
-    (178, 'Puerto Rico'),
-    (179, 'Qatar'),
-    (180, 'Reunion'),
-    (181, 'Romania'),
-    (182, 'Russia'),
-    (183, 'Rwanda'),
-    (184, 'Saint Helena'),
-    (185, 'Saint Kitts And Nevis'),
-    (186, 'Saint Lucia'),
-    (187, 'Saint Pierre and Miquelon'),
-    (188, 'Saint Vincent And The Grenadines'),
-    (189, 'Saint-Barthelemy'),
-    (190, 'Saint-Martin (French part)'),
-    (191, 'Samoa'),
-    (192, 'San Marino'),
-    (193, 'Sao Tome and Principe'),
-    (194, 'Saudi Arabia'),
-    (195, 'Senegal'),
-    (196, 'Serbia'),
-    (197, 'Seychelles'),
-    (198, 'Sierra Leone'),
-    (199, 'Singapore'),
-    (200, 'Slovakia'),
-    (201, 'Slovenia'),
-    (202, 'Solomon Islands'),
-    (203, 'Somalia'),
-    (204, 'South Africa'),
-    (205, 'South Georgia'),
-    (206, 'South Sudan'),
-    (207, 'Spain'),
-    (208, 'Sri Lanka'),
-    (209, 'Sudan'),
-    (210, 'Suriname'),
-    (211, 'Svalbard And Jan Mayen Islands'),
-    (212, 'Swaziland'),
-    (213, 'Sweden'),
-    (214, 'Switzerland'),
-    (215, 'Syria'),
-    (216, 'Taiwan'),
-    (217, 'Tajikistan'),
-    (218, 'Tanzania'),
-    (219, 'Thailand'),
-    (220, 'Togo'),
-    (221, 'Tokelau'),
-    (222, 'Tonga'),
-    (223, 'Trinidad And Tobago'),
-    (224, 'Tunisia'),
-    (225, 'Turkey'),
-    (226, 'Turkmenistan'),
-    (227, 'Turks And Caicos Islands'),
-    (228, 'Tuvalu'),
-    (229, 'Uganda'),
-    (230, 'Ukraine'),
-    (231, 'United Arab Emirates'),
-    (232, 'United Kingdom'),
-    (233, 'United States'),
-    (234, 'United States Minor Outlying Islands'),
-    (235, 'Uruguay'),
-    (236, 'Uzbekistan'),
-    (237, 'Vanuatu'),
-    (238, 'Vatican City State (Holy See)'),
-    (239, 'Venezuela'),
-    (240, 'Vietnam'),
-    (241, 'Virgin Islands (British)'),
-    (242, 'Virgin Islands (US)'),
-    (243, 'Wallis And Futuna Islands'),
-    (244, 'Western Sahara'),
-    (245, 'Yemen'),
-    (246, 'Zambia'),
-    (247, 'Zimbabwe'),
-    (248, 'Kosovo'),
-    (249, 'Curaçao'),
-    (250, 'Sint Maarten (Dutch part)')
-;
-INSERT INTO UF (codigo,nome,pais) VALUES
-    (1	,	 'Southern Nations Nationalities  and Peoples Region'	,	70	),																			
-    (2	,	 'Somali Region'	,	70	),																			
-    (3	,	 'Amhara Region'	,	70	),																			
-    (4	,	 'Tigray Region'	,	70	),																			
-    (5	,	 'Oromia Region'	,	70	),																			
-    (6	,	 'Afar Region'	,	70	),																			
-    (7	,	 'Harari Region'	,	70	),																			
-    (8	,	 'Dire Dawa'	,	70	),																			
-    (9	,	 'Benishangul-Gumuz Region'	,	70	),																			
-    (10	,	 'Gambela Region'	,	70	),																			
-    (11	,	 'Addis Ababa'	,	70	),																			
-    (12	,	 'Petnjica Municipality'	,	147	),																			
-    (13	,	 'Bar Municipality'	,	147	),																			
-    (14	,	 'Danilovgrad Municipality'	,	147	),																			
-    (15	,	 'Rožaje Municipality'	,	147	),																			
-    (16	,	 'Plužine Municipality'	,	147	),																			
-    (17	,	 'Nikšić Municipality'	,	147	),																			
-    (18	,	 'Šavnik Municipality'	,	147	),																			
-    (19	,	 'Plav Municipality'	,	147	),																			
-    (20	,	 'Pljevlja Municipality'	,	147	),																			
-    (21	,	 'Berane Municipality'	,	147	),																			
-    (22	,	 'Mojkovac Municipality'	,	147	),																			
-    (23	,	 'Andrijevica Municipality'	,	147	),																			
-    (24	,	 'Gusinje Municipality'	,	147	),																			
-    (25	,	 'Bijelo Polje Municipality'	,	147	),																			
-    (26	,	 'Kotor Municipality'	,	147	),																			
-    (27	,	 'Podgorica Municipality'	,	147	),																			
-    (28	,	 'Old Royal Capital Cetinje'	,	147	),																			
-    (29	,	 'Tivat Municipality'	,	147	),																			
-    (30	,	 'Budva Municipality'	,	147	),																			
-    (31	,	 'Kolašin Municipality'	,	147	),																			
-    (32	,	 'Žabljak Municipality'	,	147	),																			
-    (33	,	 'Ulcinj Municipality'	,	147	),																			
-    (34	,	 'Kunene Region'	,	152	),																			
-    (35	,	 'Kavango West Region'	,	152	),																			
-    (36	,	 'Kavango East Region'	,	152	),																			
-    (37	,	 'Oshana Region'	,	152	),																			
-    (38	,	 'Hardap Region'	,	152	),																			
-    (39	,	 'Omusati Region'	,	152	),																			
-    (40	,	 'Ohangwena Region'	,	152	),																			
-    (41	,	 'Omaheke Region'	,	152	),																			
-    (42	,	 'Oshikoto Region'	,	152	),																			
-    (43	,	 'Erongo Region'	,	152	),																			
-    (44	,	 'Khomas Region'	,	152	),																			
-    (45	,	 'Karas Region'	,	152	),																			
-    (46	,	 'Otjozondjupa Region'	,	152	),																			
-    (47	,	 'Zambezi Region'	,	152	),																			
-    (48	,	 'Ashanti'	,	83	),																			
-    (49	,	 'Western'	,	83	),																			
-    (50	,	 'Eastern'	,	83	),																			
-    (51	,	 'Northern'	,	83	),																			
-    (52	,	 'Central'	,	83	),																			
-    (53	,	 'Ahafo'	,	83	),																			
-    (54	,	 'Greater Accra'	,	83	),																			
-    (55	,	 'Upper East'	,	83	),																			
-    (56	,	 'Volta'	,	83	),																			
-    (57	,	 'Upper West'	,	83	),																			
-    (58	,	 'San Marino'	,	192	),																			
-    (59	,	 'Acquaviva'	,	192	),																			
-    (60	,	 'Chiesanuova'	,	192	),																			
-    (61	,	 'Borgo Maggiore'	,	192	),																			
-    (62	,	 'Faetano'	,	192	),																			
-    (63	,	 'Montegiardino'	,	192	),																			
-    (64	,	 'Domagnano'	,	192	),																			
-    (65	,	 'Serravalle'	,	192	),																			
-    (66	,	 'Fiorentino'	,	192	),																			
-    (67	,	 'Tillabéri Region'	,	160	),																			
-    (68	,	 'Dosso Region'	,	160	),																			
-    (69	,	 'Zinder Region'	,	160	),																			
-    (70	,	 'Maradi Region'	,	160	),																			
-    (71	,	 'Agadez Region'	,	160	),																			
-    (72	,	 'Diffa Region'	,	160	),																			
-    (73	,	 'Tahoua Region'	,	160	),																			
-    (74	,	 'Mqabba'	,	135	),																			
-    (75	,	 'San Ġwann'	,	135	),																			
-    (76	,	 'Żurrieq'	,	135	),																			
-    (77	,	 'Luqa'	,	135	),																			
-    (78	,	 'Marsaxlokk'	,	135	),																			
-    (79	,	 'Qala'	,	135	),																			
-    (80	,	 'Żebbuġ Malta'	,	135	),																			
-    (81	,	 'Xgħajra'	,	135	),																			
-    (82	,	 'Kirkop'	,	135	),																			
-    (83	,	 'Rabat'	,	135	),																			
-    (84	,	 'Floriana'	,	135	),																			
-    (85	,	 'Żebbuġ Gozo'	,	135	),																			
-    (86	,	 'Swieqi'	,	135	),																			
-    (87	,	 'Saint Lawrence'	,	135	),																			
-    (88	,	 'Birżebbuġa'	,	135	),																			
-    (89	,	 'Mdina'	,	135	),																			
-    (90	,	 'Santa Venera'	,	135	),																			
-    (91	,	 'Kerċem'	,	135	),																			
-    (92	,	 'Għarb'	,	135	),																			
-    (93	,	 'Iklin'	,	135	),																			
-    (94	,	 'Santa Luċija'	,	135	),																			
-    (95	,	 'Valletta'	,	135	),																			
-    (96	,	 'Msida'	,	135	),																			
-    (97	,	 'Birkirkara'	,	135	),																			
-    (98	,	 'Siġġiewi'	,	135	),																			
-    (99	,	 'Kalkara'	,	135	),																			
-    (100	,	 'St. Julian s'	,	135	),																			
-    (101	,	 'Victoria'	,	135	),																			
-    (102	,	 'Mellieħa'	,	135	),																			
-    (103	,	 'Tarxien'	,	135	),																			
-    (104	,	 'Sliema'	,	135	),																			
-    (105	,	 'Ħamrun'	,	135	),																			
-    (106	,	 'Għasri'	,	135	),																			
-    (107	,	 'Birgu'	,	135	),																			
-    (108	,	 'Balzan'	,	135	),																			
-    (109	,	 'Mġarr'	,	135	),																			
-    (110	,	 'Attard'	,	135	),																			
-    (111	,	 'Qrendi'	,	135	),																			
-    (112	,	 'Naxxar'	,	135	),																			
-    (113	,	 'Gżira'	,	135	),																			
-    (114	,	 'Xagħra'	,	135	),																			
-    (115	,	 'Paola'	,	135	),																			
-    (116	,	 'Sannat'	,	135	),																			
-    (117	,	 'Dingli'	,	135	),																			
-    (118	,	 'Gudja'	,	135	),																			
-    (119	,	 'Qormi'	,	135	),																			
-    (120	,	 'Għargħur'	,	135	),																			
-    (121	,	 'Xewkija'	,	135	),																			
-    (122	,	 'Ta Xbiex'	,	135	),																			
-    (123	,	 'Żabbar'	,	135	),																			
-    (124	,	 'Għaxaq'	,	135	),																			
-    (125	,	 'Pembroke'	,	135	),																			
-    (126	,	 'Lija'	,	135	),																			
-    (127	,	 'Pietà'	,	135	),																			
-    (128	,	 'Marsa'	,	135	),																			
-    (129	,	 'Fgura'	,	135	),																			
-    (130	,	 'Għajnsielem'	,	135	),																			
-    (131	,	 'Mtarfa'	,	135	),																			
-    (132	,	 'Munxar'	,	135	),																			
-    (133	,	 'Nadur'	,	135	),																			
-    (134	,	 'Fontana'	,	135	),																			
-    (135	,	 'Żejtun'	,	135	),																			
-    (136	,	 'Senglea'	,	135	),																			
-    (137	,	 'Marsaskala'	,	135	),																			
-    (138	,	 'Cospicua'	,	135	),																			
-    (139	,	 'St. Pauls Bay'	,	135	),																			
-    (140	,	 'Mosta'	,	135	),																			
-    (141	,	 'Mangystau Region'	,	112	),																			
-    (142	,	 'Kyzylorda Region'	,	112	),																			
-    (143	,	 'Almaty Region'	,	112	),																			
-    (144	,	 'North Kazakhstan Region'	,	112	),																			
-    (145	,	 'Akmola Region'	,	112	),																			
-    (146	,	 'Pavlodar Region'	,	112	),																			
-    (147	,	 'Jambyl Region'	,	112	),																			
-    (148	,	 'West Kazakhstan Province'	,	112	),																			
-    (149	,	 'Turkestan Region'	,	112	),																			
-    (150	,	 'Karaganda Region'	,	112	),																			
-    (151	,	 'Aktobe Region'	,	112	),																			
-    (152	,	 'Almaty'	,	112	),																			
-    (153	,	 'Atyrau Region'	,	112	),																			
-    (154	,	 'East Kazakhstan Region'	,	112	),																			
-    (155	,	 'Baikonur'	,	112	),																			
-    (156	,	 'Nur-Sultan'	,	112	),																			
-    (157	,	 'Kostanay Region'	,	112	),																			
-    (158	,	 'Kakamega County'	,	113	),																			
-    (159	,	 'Kisii County'	,	113	),																			
-    (160	,	 'Central Province'	,	113	),																			
-    (161	,	 'Busia County'	,	113	),																			
-    (162	,	 'North Eastern Province'	,	113	),																			
-    (163	,	 'Embu County'	,	113	),																			
-    (164	,	 'Laikipia County'	,	113	),																			
-    (165	,	 'Nandi District'	,	113	),																			
-    (166	,	 'Lamu County'	,	113	),																			
-    (167	,	 'Kirinyaga County'	,	113	),																			
-    (168	,	 'Bungoma County'	,	113	),																			
-    (169	,	 'Uasin Gishu'	,	113	),																			
-    (170	,	 'Isiolo County'	,	113	),																			
-    (171	,	 'Kisumu County'	,	113	),																			
-    (172	,	 'Coast Province'	,	113	),																			
-    (173	,	 'Kwale County'	,	113	),																			
-    (174	,	 'Kilifi County'	,	113	),																			
-    (175	,	 'Narok County'	,	113	),																			
-    (176	,	 'Taita–Taveta County'	,	113	),																			
-    (177	,	 'Western Province'	,	113	),																			
-    (178	,	 'Muranga County'	,	113	),																			
-    (179	,	 'Rift Valley Province'	,	113	),																			
-    (180	,	 'Nyeri County'	,	113	),																			
-    (181	,	 'Baringo County'	,	113	),																			
-    (182	,	 'Wajir County'	,	113	),																			
-    (183	,	 'Trans-Nzoia District'	,	113	),																			
-    (184	,	 'Machakos County'	,	113	),																			
-    (185	,	 'Tharaka Nithi County'	,	113	),																			
-    (186	,	 'Siaya County'	,	113	),																			
-    (187	,	 'Mandera County'	,	113	),																			
-    (188	,	 'Makueni County'	,	113	),																			
-    (189	,	 'Eastern Province'	,	113	),																			
-    (190	,	 'Migori County'	,	113	),																			
-    (191	,	 'Nairobi'	,	113	),																			
-    (192	,	 'Nyandarua County'	,	113	),																			
-    (193	,	 'Kericho County'	,	113	),																			
-    (194	,	 'Marsabit County'	,	113	),																			
-    (195	,	 'Homa Bay County'	,	113	),																			
-    (196	,	 'Garissa County'	,	113	),																			
-    (197	,	 'Kajiado County'	,	113	),																			
-    (198	,	 'Meru County'	,	113	),																			
-    (199	,	 'Kiambu County'	,	113	),																			
-    (200	,	 'Mombasa County'	,	113	),																			
-    (201	,	 'Elgeyo-Marakwet County'	,	113	),																			
-    (202	,	 'Vihiga County'	,	113	),																			
-    (203	,	 'Nakuru County'	,	113	),																			
-    (204	,	 'Nyanza Province'	,	113	),																			
-    (205	,	 'Tana River County'	,	113	),																			
-    (206	,	 'Turkana County'	,	113	),																			
-    (207	,	 'Samburu County'	,	113	),																			
-    (208	,	 'West Pokot County'	,	113	),																			
-    (209	,	 'Nyamira County'	,	113	),																			
-    (210	,	 'Bomet County'	,	113	),																			
-    (211	,	 'Kitui County'	,	113	),																			
-    (212	,	 'Bié Province'	,	7	),																			
-    (213	,	 'Huambo Province'	,	7	),																			
-    (214	,	 'Zaire Province'	,	7	),																			
-    (215	,	 'Cunene Province'	,	7	),																			
-    (216	,	 'Cuanza Sul'	,	7	),																			
-    (217	,	 'Cuanza Norte Province'	,	7	),																			
-    (218	,	 'Benguela Province'	,	7	),																			
-    (219	,	 'Moxico Province'	,	7	),																			
-    (220	,	 'Lunda Sul Province'	,	7	),																			
-    (221	,	 'Bengo Province'	,	7	),																			
-    (222	,	 'Luanda Province'	,	7	),																			
-    (223	,	 'Lunda Norte Province'	,	7	),																			
-    (224	,	 'Uíge Province'	,	7	),																			
-    (225	,	 'Huíla Province'	,	7	),																			
-    (226	,	 'Cuando Cubango Province'	,	7	),																			
-    (227	,	 'Malanje Province'	,	7	),																			
-    (228	,	 'Cabinda Province'	,	7	),																			
-    (229	,	 'Gasa District'	,	26	),																			
-    (230	,	 'Tsirang District'	,	26	),																			
-    (231	,	 'Wangdue Phodrang District'	,	26	),																			
-    (232	,	 'Haa District'	,	26	),																			
-    (233	,	 'Zhemgang District'	,	26	),																			
-    (234	,	 'Lhuntse District'	,	26	),																			
-    (235	,	 'Punakha District'	,	26	),																			
-    (236	,	 'Trashigang District'	,	26	),																			
-    (237	,	 'Paro District'	,	26	),																			
-    (238	,	 'Dagana District'	,	26	),																			
-    (239	,	 'Chukha District'	,	26	),																			
-    (240	,	 'Bumthang District'	,	26	),																			
-    (241	,	 'Thimphu District'	,	26	),																			
-    (242	,	 'Mongar District'	,	26	),																			
-    (243	,	 'Samdrup Jongkhar District'	,	26	),																			
-    (244	,	 'Pemagatshel District'	,	26	),																			
-    (245	,	 'Trongsa District'	,	26	),																			
-    (246	,	 'Samtse District'	,	26	),																			
-    (247	,	 'Sarpang District'	,	26	),																			
-    (248	,	 'Tombouctou Region'	,	134	),																			
-    (249	,	 'Ségou Region'	,	134	),																			
-    (250	,	 'Koulikoro Region'	,	134	),																			
-    (251	,	 'Ménaka Region'	,	134	),																			
-    (252	,	 'Kayes Region'	,	134	),																			
-    (253	,	 'Bamako'	,	134	),																			
-    (254	,	 'Sikasso Region'	,	134	),																			
-    (255	,	 'Mopti Region'	,	134	),																			
-    (256	,	 'Taoudénit Region'	,	134	),																			
-    (257	,	 'Kidal Region'	,	134	),																			
-    (258	,	 'Gao Region'	,	134	),																			
-    (259	,	 'Southern Province'	,	183	),																			
-    (260	,	 'Western Province'	,	183	),																			
-    (261	,	 'Eastern Province'	,	183	),																			
-    (262	,	 'Kigali district'	,	183	),																			
-    (263	,	 'Northern Province'	,	183	),																			
-    (264	,	 'Belize District'	,	23	),																			
-    (265	,	 'Stann Creek District'	,	23	),																			
-    (266	,	 'Corozal District'	,	23	),																			
-    (267	,	 'Toledo District'	,	23	),																			
-    (268	,	 'Orange Walk District'	,	23	),																			
-    (269	,	 'Cayo District'	,	23	),																			
-    (270	,	 'Príncipe Province'	,	193	),																			
-    (271	,	 'São Tomé Province'	,	193	),																			
-    (272	,	 'Havana Province'	,	56	),																			
-    (273	,	 'Santiago de Cuba Province'	,	56	),																			
-    (274	,	 'Sancti Spíritus Province'	,	56	),																			
-    (275	,	 'Granma Province'	,	56	),																			
-    (276	,	 'Mayabeque Province'	,	56	),																			
-    (277	,	 'Pinar del Río Province'	,	56	),																			
-    (278	,	 'Isla de la Juventud'	,	56	),																			
-    (279	,	 'Holguín Province'	,	56	),																			
-    (280	,	 'Villa Clara Province'	,	56	),																			
-    (281	,	 'Las Tunas Province'	,	56	),																			
-    (282	,	 'Ciego de Ávila Province'	,	56	),																			
-    (283	,	 'Artemisa Province'	,	56	),																			
-    (284	,	 'Matanzas Province'	,	56	),																			
-    (285	,	 'Guantánamo Province'	,	56	),																			
-    (286	,	 'Camagüey Province'	,	56	),																			
-    (287	,	 'Cienfuegos Province'	,	56	),																			
-    (288	,	 'Jigawa'	,	161	),																			
-    (289	,	 'Enugu'	,	161	),																			
-    (290	,	 'Kebbi'	,	161	),																			
-    (291	,	 'Benue'	,	161	),																			
-    (292	,	 'Sokoto'	,	161	),																			
-    (293	,	 'Abuja Federal Capital Territory'	,	161	),																			
-    (294	,	 'Kaduna'	,	161	),																			
-    (295	,	 'Kwara'	,	161	),																			
-    (296	,	 'Oyo'	,	161	),																			
-    (297	,	 'Yobe'	,	161	),																			
-    (298	,	 'Kogi'	,	161	),																			
-    (299	,	 'Zamfara'	,	161	),																			
-    (300	,	 'Kano'	,	161	),																			
-    (301	,	 'Nasarawa'	,	161	),																			
-    (302	,	 'Plateau'	,	161	),																			
-    (303	,	 'Abia'	,	161	),																			
-    (304	,	 'Akwa Ibom'	,	161	),																			
-    (305	,	 'Bayelsa'	,	161	),																			
-    (306	,	 'Lagos'	,	161	),																			
-    (307	,	 'Borno'	,	161	),																			
-    (308	,	 'Imo'	,	161	),																			
-    (309	,	 'Ekiti'	,	161	),																			
-    (310	,	 'Gombe'	,	161	),																			
-    (311	,	 'Ebonyi'	,	161	),																			
-    (312	,	 'Bauchi'	,	161	),																			
-    (313	,	 'Katsina'	,	161	),																			
-    (314	,	 'Cross River'	,	161	),																			
-    (315	,	 'Anambra'	,	161	),																			
-    (316	,	 'Delta'	,	161	),																			
-    (317	,	 'Niger'	,	161	),																			
-    (318	,	 'Edo'	,	161	),																			
-    (319	,	 'Taraba'	,	161	),																			
-    (320	,	 'Adamawa'	,	161	),																			
-    (321	,	 'Ondo'	,	161	),																			
-    (322	,	 'Osun'	,	161	),																			
-    (323	,	 'Ogun'	,	161	),																			
-    (324	,	 'Rukungiri District'	,	229	),																			
-    (325	,	 'Kyankwanzi District'	,	229	),																			
-    (326	,	 'Kabarole District'	,	229	),																			
-    (327	,	 'Mpigi District'	,	229	),																			
-    (328	,	 'Apac District'	,	229	),																			
-    (329	,	 'Abim District'	,	229	),																			
-    (330	,	 'Yumbe District'	,	229	),																			
-    (331	,	 'Rukiga District'	,	229	),																			
-    (332	,	 'Northern Region'	,	229	),																			
-    (333	,	 'Serere District'	,	229	),																			
-    (334	,	 'Kamuli District'	,	229	),																			
-    (335	,	 'Amuru District'	,	229	),																			
-    (336	,	 'Kaberamaido District'	,	229	),																			
-    (337	,	 'Namutumba District'	,	229	),																			
-    (338	,	 'Kibuku District'	,	229	),																			
-    (339	,	 'Ibanda District'	,	229	),																			
-    (340	,	 'Iganga District'	,	229	),																			
-    (341	,	 'Dokolo District'	,	229	),																			
-    (342	,	 'Lira District'	,	229	),																			
-    (343	,	 'Bukedea District'	,	229	),																			
-    (344	,	 'Alebtong District'	,	229	),																			
-    (345	,	 'Koboko District'	,	229	),																			
-    (346	,	 'Kiryandongo District'	,	229	),																			
-    (347	,	 'Kiboga District'	,	229	),																			
-    (348	,	 'Kitgum District'	,	229	),																			
-    (349	,	 'Bududa District'	,	229	),																			
-    (350	,	 'Mbale District'	,	229	),																			
-    (351	,	 'Namayingo District'	,	229	),																			
-    (352	,	 'Amuria District'	,	229	),																			
-    (353	,	 'Amudat District'	,	229	),																			
-    (354	,	 'Masindi District'	,	229	),																			
-    (355	,	 'Kiruhura District'	,	229	),																			
-    (356	,	 'Masaka District'	,	229	),																			
-    (357	,	 'Pakwach District'	,	229	),																			
-    (358	,	 'Rubanda District'	,	229	),																			
-    (359	,	 'Tororo District'	,	229	),																			
-    (360	,	 'Kamwenge District'	,	229	),																			
-    (361	,	 'Adjumani District'	,	229	),																			
-    (362	,	 'Wakiso District'	,	229	),																			
-    (363	,	 'Moyo District'	,	229	),																			
-    (364	,	 'Mityana District'	,	229	),																			
-    (365	,	 'Butaleja District'	,	229	),																			
-    (366	,	 'Gomba District'	,	229	),																			
-    (367	,	 'Jinja District'	,	229	),																			
-    (368	,	 'Kayunga District'	,	229	),																			
-    (369	,	 'Kween District'	,	229	),																			
-    (370	,	 'Western Region'	,	229	),																			
-    (371	,	 'Mubende District'	,	229	),																			
-    (372	,	 'Eastern Region'	,	229	),																			
-    (373	,	 'Kanungu District'	,	229	),																			
-    (374	,	 'Omoro District'	,	229	),																			
-    (375	,	 'Bukomansimbi District'	,	229	),																			
-    (376	,	 'Lyantonde District'	,	229	),																			
-    (377	,	 'Buikwe District'	,	229	),																			
-    (378	,	 'Nwoya District'	,	229	),																			
-    (379	,	 'Zombo District'	,	229	),																			
-    (380	,	 'Buyende District'	,	229	),																			
-    (381	,	 'Bunyangabu District'	,	229	),																			
-    (382	,	 'Kampala District'	,	229	),																			
-    (383	,	 'Isingiro District'	,	229	),																			
-    (384	,	 'Butambala District'	,	229	),																			
-    (385	,	 'Bukwo District'	,	229	),																			
-    (386	,	 'Bushenyi District'	,	229	),																			
-    (387	,	 'Bugiri District'	,	229	),																			
-    (388	,	 'Butebo District'	,	229	),																			
-    (389	,	 'Buliisa District'	,	229	),																			
-    (390	,	 'Otuke District'	,	229	),																			
-    (391	,	 'Buhweju District'	,	229	),																			
-    (392	,	 'Agago District'	,	229	),																			
-    (393	,	 'Nakapiripirit District'	,	229	),																			
-    (394	,	 'Kalungu District'	,	229	),																			
-    (395	,	 'Moroto District'	,	229	),																			
-    (396	,	 'Central Region'	,	229	),																			
-    (397	,	 'Oyam District'	,	229	),																			
-    (398	,	 'Kaliro District'	,	229	),																			
-    (399	,	 'Kakumiro District'	,	229	),																			
-    (400	,	 'Namisindwa District'	,	229	),																			
-    (401	,	 'Kole District'	,	229	),																			
-    (402	,	 'Kyenjojo District'	,	229	),																			
-    (403	,	 'Kagadi District'	,	229	),																			
-    (404	,	 'Ntungamo District'	,	229	),																			
-    (405	,	 'Kalangala District'	,	229	),																			
-    (406	,	 'Nakasongola District'	,	229	),																			
-    (407	,	 'Sheema District'	,	229	),																			
-    (408	,	 'Pader District'	,	229	),																			
-    (409	,	 'Kisoro District'	,	229	),																			
-    (410	,	 'Mukono District'	,	229	),																			
-    (411	,	 'Lamwo District'	,	229	),																			
-    (412	,	 'Pallisa District'	,	229	),																			
-    (413	,	 'Gulu District'	,	229	),																			
-    (414	,	 'Buvuma District'	,	229	),																			
-    (415	,	 'Mbarara District'	,	229	),																			
-    (416	,	 'Amolatar District'	,	229	),																			
-    (417	,	 'Lwengo District'	,	229	),																			
-    (418	,	 'Mayuge District'	,	229	),																			
-    (419	,	 'Bundibugyo District'	,	229	),																			
-    (420	,	 'Katakwi District'	,	229	),																			
-    (421	,	 'Maracha District'	,	229	),																			
-    (422	,	 'Ntoroko District'	,	229	),																			
-    (423	,	 'Nakaseke District'	,	229	),																			
-    (424	,	 'Ngora District'	,	229	),																			
-    (425	,	 'Kumi District'	,	229	),																			
-    (426	,	 'Kabale District'	,	229	),																			
-    (427	,	 'Sembabule District'	,	229	),																			
-    (428	,	 'Bulambuli District'	,	229	),																			
-    (429	,	 'Sironko District'	,	229	),																			
-    (430	,	 'Napak District'	,	229	),																			
-    (431	,	 'Busia District'	,	229	),																			
-    (432	,	 'Kapchorwa District'	,	229	),																			
-    (433	,	 'Luwero District'	,	229	),																			
-    (434	,	 'Kaabong District'	,	229	),																			
-    (435	,	 'Mitooma District'	,	229	),																			
-    (436	,	 'Kibaale District'	,	229	),																			
-    (437	,	 'Kyegegwa District'	,	229	),																			
-    (438	,	 'Manafwa District'	,	229	),																			
-    (439	,	 'Rakai District'	,	229	),																			
-    (440	,	 'Kasese District'	,	229	),																			
-    (441	,	 'Budaka District'	,	229	),																			
-    (442	,	 'Rubirizi District'	,	229	),																			
-    (443	,	 'Kotido District'	,	229	),																			
-    (444	,	 'Soroti District'	,	229	),																			
-    (445	,	 'Luuka District'	,	229	),																			
-    (446	,	 'Nebbi District'	,	229	),																			
-    (447	,	 'Arua District'	,	229	),																			
-    (448	,	 'Kyotera District'	,	229	),																			
-    (449	,	 'Schellenberg'	,	125	),																			
-    (450	,	 'Schaan'	,	125	),																			
-    (451	,	 'Eschen'	,	125	),																			
-    (452	,	 'Vaduz'	,	125	),																			
-    (453	,	 'Ruggell'	,	125	),																			
-    (454	,	 'Planken'	,	125	),																			
-    (455	,	 'Mauren'	,	125	),																			
-    (456	,	 'Triesenberg'	,	125	),																			
-    (457	,	 'Gamprin'	,	125	),																			
-    (458	,	 'Balzers'	,	125	),																			
-    (459	,	 'Triesen'	,	125	),																			
-    (460	,	 'Brčko District'	,	28	),																			
-    (461	,	 'Tuzla Canton'	,	28	),																			
-    (462	,	 'Central Bosnia Canton'	,	28	),																			
-    (463	,	 'Herzegovina-Neretva Canton'	,	28	),																			
-    (464	,	 'Posavina Canton'	,	28	),																			
-    (465	,	 'Una-Sana Canton'	,	28	),																			
-    (466	,	 'Sarajevo Canton'	,	28	),																			
-    (467	,	 'Federation of Bosnia and Herzegovina'	,	28	),																			
-    (468	,	 'Zenica-Doboj Canton'	,	28	),																			
-    (469	,	 'West Herzegovina Canton'	,	28	),																			
-    (470	,	 'Republika Srpska'	,	28	),																			
-    (471	,	 'Canton 10'	,	28	),																			
-    (472	,	 'Bosnian Podrinje Canton'	,	28	),																			
-    (473	,	 'Dakar'	,	195	),																			
-    (474	,	 'Kolda'	,	195	),																			
-    (475	,	 'Kaffrine'	,	195	),																			
-    (476	,	 'Matam'	,	195	),																			
-    (477	,	 'Saint-Louis'	,	195	),																			
-    (478	,	 'Ziguinchor'	,	195	),																			
-    (479	,	 'Fatick'	,	195	),																			
-    (480	,	 'Diourbel Region'	,	195	),																			
-    (481	,	 'Kédougou'	,	195	),																			
-    (482	,	 'Sédhiou'	,	195	),																			
-    (483	,	 'Kaolack'	,	195	),																			
-    (484	,	 'Thiès Region'	,	195	),																			
-    (485	,	 'Louga'	,	195	),																			
-    (486	,	 'Tambacounda Region'	,	195	),																			
-    (487	,	 'Encamp'	,	6	),																			
-    (488	,	 'Andorra la Vella'	,	6	),																			
-    (489	,	 'Canillo'	,	6	),																			
-    (490	,	 'Sant Julià de Lòria'	,	6	),																			
-    (491	,	 'Ordino'	,	6	),																			
-    (492	,	 'Escaldes-Engordany'	,	6	),																			
-    (493	,	 'La Massana'	,	6	),																			
-    (494	,	 'Mont Buxton'	,	197	),																			
-    (495	,	 'La Digue'	,	197	),																			
-    (496	,	 'Saint Louis'	,	197	),																			
-    (497	,	 'Baie Lazare'	,	197	),																			
-    (498	,	 'Mont Fleuri'	,	197	),																			
-    (499	,	 'Les Mamelles'	,	197	),																			
-    (500	,	 'Grand Anse Mahé'	,	197	),																			
-    (501	,	 'Roche Caiman'	,	197	),																			
-    (502	,	 'Anse Royale'	,	197	),																			
-    (503	,	 'Glacis'	,	197	),																			
-    (504	,	 'Grand Anse Praslin'	,	197	),																			
-    (505	,	 'Bel Ombre'	,	197	),																			
-    (506	,	 'Anse-aux-Pins'	,	197	),																			
-    (507	,	 'Port Glaud'	,	197	),																			
-    (508	,	 'Au Cap'	,	197	),																			
-    (509	,	 'Takamaka'	,	197	),																			
-    (510	,	 'Pointe La Rue'	,	197	),																			
-    (511	,	 'Plaisance'	,	197	),																			
-    (512	,	 'Beau Vallon'	,	197	),																			
-    (513	,	 'Anse Boileau'	,	197	),																			
-    (514	,	 'Baie Sainte Anne'	,	197	),																			
-    (515	,	 'Bel Air'	,	197	),																			
-    (516	,	 'La Rivière Anglaise'	,	197	),																			
-    (517	,	 'Cascade'	,	197	),																			
-    (518	,	 'Shaki'	,	16	),																			
-    (519	,	 'Tartar District'	,	16	),																			
-    (520	,	 'Shirvan'	,	16	),																			
-    (521	,	 'Qazakh District'	,	16	),																			
-    (522	,	 'Sadarak District'	,	16	),																			
-    (523	,	 'Yevlakh District'	,	16	),																			
-    (524	,	 'Khojali District'	,	16	),																			
-    (525	,	 'Kalbajar District'	,	16	),																			
-    (526	,	 'Qakh District'	,	16	),																			
-    (527	,	 'Fizuli District'	,	16	),																			
-    (528	,	 'Astara District'	,	16	),																			
-    (529	,	 'Shamakhi District'	,	16	),																			
-    (530	,	 'Neftchala District'	,	16	),																			
-    (531	,	 'Goychay'	,	16	),																			
-    (532	,	 'Bilasuvar District'	,	16	),																			
-    (533	,	 'Tovuz District'	,	16	),																			
-    (534	,	 'Ordubad District'	,	16	),																			
-    (535	,	 'Sharur District'	,	16	),																			
-    (536	,	 'Samukh District'	,	16	),																			
-    (537	,	 'Khizi District'	,	16	),																			
-    (538	,	 'Yevlakh'	,	16	),																			
-    (539	,	 'Ujar District'	,	16	),																			
-    (540	,	 'Absheron District'	,	16	),																			
-    (541	,	 'Lachin District'	,	16	),																			
-    (542	,	 'Qabala District'	,	16	),																			
-    (543	,	 'Agstafa District'	,	16	),																			
-    (544	,	 'Imishli District'	,	16	),																			
-    (545	,	 'Salyan District'	,	16	),																			
-    (546	,	 'Lerik District'	,	16	),																			
-    (547	,	 'Agsu District'	,	16	),																			
-    (548	,	 'Qubadli District'	,	16	),																			
-    (549	,	 'Kurdamir District'	,	16	),																			
-    (550	,	 'Yardymli District'	,	16	),																			
-    (551	,	 'Goranboy District'	,	16	),																			
-    (552	,	 'Baku'	,	16	),																			
-    (553	,	 'Agdash District'	,	16	),																			
-    (554	,	 'Beylagan District'	,	16	),																			
-    (555	,	 'Masally District'	,	16	),																			
-    (556	,	 'Oghuz District'	,	16	),																			
-    (557	,	 'Saatly District'	,	16	),																			
-    (558	,	 'Lankaran District'	,	16	),																			
-    (559	,	 'Agdam District'	,	16	),																			
-    (560	,	 'Balakan District'	,	16	),																			
-    (561	,	 'Dashkasan District'	,	16	),																			
-    (562	,	 'Nakhchivan Autonomous Republic'	,	16	),																			
-    (563	,	 'Quba District'	,	16	),																			
-    (564	,	 'Ismailli District'	,	16	),																			
-    (565	,	 'Sabirabad District'	,	16	),																			
-    (566	,	 'Zaqatala District'	,	16	),																			
-    (567	,	 'Kangarli District'	,	16	),																			
-    (568	,	 'Martuni'	,	16	),																			
-    (569	,	 'Barda District'	,	16	),																			
-    (570	,	 'Jabrayil District'	,	16	),																			
-    (571	,	 'Hajigabul District'	,	16	),																			
-    (572	,	 'Julfa District'	,	16	),																			
-    (573	,	 'Gobustan District'	,	16	),																			
-    (574	,	 'Goygol District'	,	16	),																			
-    (575	,	 'Babek District'	,	16	),																			
-    (576	,	 'Zardab District'	,	16	),																			
-    (577	,	 'Aghjabadi District'	,	16	),																			
-    (578	,	 'Jalilabad District'	,	16	),																			
-    (579	,	 'Shahbuz District'	,	16	),																			
-    (580	,	 'Mingachevir'	,	16	),																			
-    (581	,	 'Zangilan District'	,	16	),																			
-    (582	,	 'Sumqayit'	,	16	),																			
-    (583	,	 'Shamkir District'	,	16	),																			
-    (584	,	 'Siazan District'	,	16	),																			
-    (585	,	 'Ganja'	,	16	),																			
-    (586	,	 'Shaki District'	,	16	),																			
-    (587	,	 'Lankaran'	,	16	),																			
-    (588	,	 'Qusar District'	,	16	),																			
-    (589	,	 'Gədəbəy'	,	16	),																			
-    (590	,	 'Khachmaz District'	,	16	),																			
-    (591	,	 'Shabran District'	,	16	),																			
-    (592	,	 'Shusha District'	,	16	),																			
-    (593	,	 'Skrapar District'	,	3	),																			
-    (594	,	 'Kavajë District'	,	3	),																			
-    (595	,	 'Lezhë District'	,	3	),																			
-    (596	,	 'Librazhd District'	,	3	),																			
-    (597	,	 'Korçë District'	,	3	),																			
-    (598	,	 'Elbasan County'	,	3	),																			
-    (599	,	 'Lushnjë District'	,	3	),																			
-    (600	,	 'Has District'	,	3	),																			
-    (601	,	 'Kukës County'	,	3	),																			
-    (602	,	 'Malësi e Madhe District'	,	3	),																			
-    (603	,	 'Berat County'	,	3	),																			
-    (604	,	 'Gjirokastër County'	,	3	),																			
-    (605	,	 'Dibër District'	,	3	),																			
-    (606	,	 'Pogradec District'	,	3	),																			
-    (607	,	 'Bulqizë District'	,	3	),																			
-    (608	,	 'Devoll District'	,	3	),																			
-    (609	,	 'Lezhë County'	,	3	),																			
-    (610	,	 'Dibër County'	,	3	),																			
-    (611	,	 'Shkodër County'	,	3	),																			
-    (612	,	 'Kuçovë District'	,	3	),																			
-    (613	,	 'Vlorë District'	,	3	),																			
-    (614	,	 'Krujë District'	,	3	),																			
-    (615	,	 'Tirana County'	,	3	),																			
-    (616	,	 'Tepelenë District'	,	3	),																			
-    (617	,	 'Gramsh District'	,	3	),																			
-    (618	,	 'Delvinë District'	,	3	),																			
-    (619	,	 'Peqin District'	,	3	),																			
-    (620	,	 'Pukë District'	,	3	),																			
-    (621	,	 'Gjirokastër District'	,	3	),																			
-    (622	,	 'Kurbin District'	,	3	),																			
-    (623	,	 'Kukës District'	,	3	),																			
-    (624	,	 'Sarandë District'	,	3	),																			
-    (625	,	 'Përmet District'	,	3	),																			
-    (626	,	 'Shkodër District'	,	3	),																			
-    (627	,	 'Fier District'	,	3	),																			
-    (628	,	 'Kolonjë District'	,	3	),																			
-    (629	,	 'Berat District'	,	3	),																			
-    (630	,	 'Korçë County'	,	3	),																			
-    (631	,	 'Fier County'	,	3	),																			
-    (632	,	 'Durrës County'	,	3	),																			
-    (633	,	 'Tirana District'	,	3	),																			
-    (634	,	 'Vlorë County'	,	3	),																			
-    (635	,	 'Mat District'	,	3	),																			
-    (636	,	 'Tropojë District'	,	3	),																			
-    (637	,	 'Mallakastër District'	,	3	),																			
-    (638	,	 'Mirditë District'	,	3	),																			
-    (639	,	 'Durrës District'	,	3	),																			
-    (640	,	 'Sveti Nikole Municipality'	,	129	),																			
-    (641	,	 'Kratovo Municipality'	,	129	),																			
-    (642	,	 'Zajas Municipality'	,	129	),																			
-    (643	,	 'Staro Nagoričane Municipality'	,	129	),																			
-    (644	,	 'Češinovo-Obleševo Municipality'	,	129	),																			
-    (645	,	 'Debarca Municipality'	,	129	),																			
-    (646	,	 'Probištip Municipality'	,	129	),																			
-    (647	,	 'Krivogaštani Municipality'	,	129	),																			
-    (648	,	 'Gevgelija Municipality'	,	129	),																			
-    (649	,	 'Bogdanci Municipality'	,	129	),																			
-    (650	,	 'Vraneštica Municipality'	,	129	),																			
-    (651	,	 'Veles Municipality'	,	129	),																			
-    (652	,	 'Bosilovo Municipality'	,	129	),																			
-    (653	,	 'Mogila Municipality'	,	129	),																			
-    (654	,	 'Tearce Municipality'	,	129	),																			
-    (655	,	 'Demir Kapija Municipality'	,	129	),																			
-    (656	,	 'Aračinovo Municipality'	,	129	),																			
-    (657	,	 'Drugovo Municipality'	,	129	),																			
-    (658	,	 'Vasilevo Municipality'	,	129	),																			
-    (659	,	 'Lipkovo Municipality'	,	129	),																			
-    (660	,	 'Brvenica Municipality'	,	129	),																			
-    (661	,	 'Štip Municipality'	,	129	),																			
-    (662	,	 'Vevčani Municipality'	,	129	),																			
-    (663	,	 'Tetovo Municipality'	,	129	),																			
-    (664	,	 'Negotino Municipality'	,	129	),																			
-    (665	,	 'Konče Municipality'	,	129	),																			
-    (666	,	 'Prilep Municipality'	,	129	),																			
-    (667	,	 'Saraj Municipality'	,	129	),																			
-    (668	,	 'Želino Municipality'	,	129	),																			
-    (669	,	 'Mavrovo and Rostuša Municipality'	,	129	),																			
-    (670	,	 'Plasnica Municipality'	,	129	),																			
-    (671	,	 'Valandovo Municipality'	,	129	),																			
-    (672	,	 'Vinica Municipality'	,	129	),																			
-    (673	,	 'Zrnovci Municipality'	,	129	),																			
-    (674	,	 'Karbinci'	,	129	),																			
-    (675	,	 'Dolneni Municipality'	,	129	),																			
-    (676	,	 'Čaška Municipality'	,	129	),																			
-    (677	,	 'Kriva Palanka Municipality'	,	129	),																			
-    (678	,	 'Jegunovce Municipality'	,	129	),																			
-    (679	,	 'Bitola Municipality'	,	129	),																			
-    (680	,	 'Šuto Orizari Municipality'	,	129	),																			
-    (681	,	 'Karpoš Municipality'	,	129	),																			
-    (682	,	 'Oslomej Municipality'	,	129	),																			
-    (683	,	 'Kumanovo Municipality'	,	129	),																			
-    (684	,	 'Greater Skopje'	,	129	),																			
-    (685	,	 'Pehčevo Municipality'	,	129	),																			
-    (686	,	 'Kisela Voda Municipality'	,	129	),																			
-    (687	,	 'Demir Hisar Municipality'	,	129	),																			
-    (688	,	 'Kičevo Municipality'	,	129	),																			
-    (689	,	 'Vrapčište Municipality'	,	129	),																			
-    (690	,	 'Ilinden Municipality'	,	129	),																			
-    (691	,	 'Rosoman Municipality'	,	129	),																			
-    (692	,	 'Makedonski Brod Municipality'	,	129	),																			
-    (693	,	 'Gostivar Municipality'	,	129	),																			
-    (694	,	 'Butel Municipality'	,	129	),																			
-    (695	,	 'Delčevo Municipality'	,	129	),																			
-    (696	,	 'Novaci Municipality'	,	129	),																			
-    (697	,	 'Dojran Municipality'	,	129	),																			
-    (698	,	 'Petrovec Municipality'	,	129	),																			
-    (699	,	 'Ohrid Municipality'	,	129	),																			
-    (700	,	 'Struga Municipality'	,	129	),																			
-    (701	,	 'Makedonska Kamenica Municipality'	,	129	),																			
-    (702	,	 'Centar Municipality'	,	129	),																			
-    (703	,	 'Aerodrom Municipality'	,	129	),																			
-    (704	,	 'Čair Municipality'	,	129	),																			
-    (705	,	 'Lozovo Municipality'	,	129	),																			
-    (706	,	 'Zelenikovo Municipality'	,	129	),																			
-    (707	,	 'Gazi Baba Municipality'	,	129	),																			
-    (708	,	 'Gradsko Municipality'	,	129	),																			
-    (709	,	 'Radoviš Municipality'	,	129	),																			
-    (710	,	 'Strumica Municipality'	,	129	),																			
-    (711	,	 'Studeničani Municipality'	,	129	),																			
-    (712	,	 'Resen Municipality'	,	129	),																			
-    (713	,	 'Kavadarci Municipality'	,	129	),																			
-    (714	,	 'Kruševo Municipality'	,	129	),																			
-    (715	,	 'Čučer-Sandevo Municipality'	,	129	),																			
-    (716	,	 'Berovo Municipality'	,	129	),																			
-    (717	,	 'Rankovce Municipality'	,	129	),																			
-    (718	,	 'Novo Selo Municipality'	,	129	),																			
-    (719	,	 'Sopište Municipality'	,	129	),																			
-    (720	,	 'Centar Župa Municipality'	,	129	),																			
-    (721	,	 'Bogovinje Municipality'	,	129	),																			
-    (722	,	 'Gjorče Petrov Municipality'	,	129	),																			
-    (723	,	 'Kočani Municipality'	,	129	),																			
-    (724	,	 'Požega-Slavonia County'	,	55	),																			
-    (725	,	 'Split-Dalmatia County'	,	55	),																			
-    (726	,	 'Međimurje County'	,	55	),																			
-    (727	,	 'Zadar County'	,	55	),																			
-    (728	,	 'Dubrovnik-Neretva County'	,	55	),																			
-    (729	,	 'Krapina-Zagorje County'	,	55	),																			
-    (730	,	 'Šibenik-Knin County'	,	55	),																			
-    (731	,	 'Lika-Senj County'	,	55	),																			
-    (732	,	 'Virovitica-Podravina County'	,	55	),																			
-    (733	,	 'Sisak-Moslavina County'	,	55	),																			
-    (734	,	 'Bjelovar-Bilogora County'	,	55	),																			
-    (735	,	 'Primorje-Gorski Kotar County'	,	55	),																			
-    (736	,	 'Zagreb County'	,	55	),																			
-    (737	,	 'Brod-Posavina County'	,	55	),																			
-    (738	,	 'Zagreb'	,	55	),																			
-    (739	,	 'Varaždin County'	,	55	),																			
-    (740	,	 'Osijek-Baranja County'	,	55	),																			
-    (741	,	 'Vukovar-Syrmia County'	,	55	),																			
-    (742	,	 'Koprivnica-Križevci County'	,	55	),																			
-    (743	,	 'Istria County'	,	55	),																			
-    (744	,	 'Kyrenia District (Keryneia)'	,	57	),																			
-    (745	,	 'Nicosia District (Lefkoşa)'	,	57	),																			
-    (746	,	 'Paphos District (Pafos)'	,	57	),																			
-    (747	,	 'Larnaca District (Larnaka)'	,	57	),																			
-    (748	,	 'Limassol District (Leymasun)'	,	57	),																			
-    (749	,	 'Famagusta District (Mağusa)'	,	57	),																			
-    (750	,	 'Rangpur Division'	,	19	),																			
-    (751	,	 'Coxs Bazar District'	,	19	),																			
-    (752	,	 'Bandarban District'	,	19	),																			
-    (753	,	 'Rajshahi Division'	,	19	),																			
-    (754	,	 'Pabna District'	,	19	),																			
-    (755	,	 'Sherpur District'	,	19	),																			
-    (756	,	 'Bhola District'	,	19	),																			
-    (757	,	 'Jessore District'	,	19	),																			
-    (758	,	 'Mymensingh Division'	,	19	),																			
-    (759	,	 'Rangpur District'	,	19	),																			
-    (760	,	 'Dhaka Division'	,	19	),																			
-    (761	,	 'Chapai Nawabganj District'	,	19	),																			
-    (762	,	 'Faridpur District'	,	19	),																			
-    (763	,	 'Comilla District'	,	19	),																			
-    (764	,	 'Netrokona District'	,	19	),																			
-    (765	,	 'Sylhet Division'	,	19	),																			
-    (766	,	 'Mymensingh District'	,	19	),																			
-    (767	,	 'Sylhet District'	,	19	),																			
-    (768	,	 'Chandpur District'	,	19	),																			
-    (769	,	 'Narail District'	,	19	),																			
-    (770	,	 'Narayanganj District'	,	19	),																			
-    (771	,	 'Dhaka District'	,	19	),																			
-    (772	,	 'Nilphamari District'	,	19	),																			
-    (773	,	 'Rajbari District'	,	19	),																			
-    (774	,	 'Kushtia District'	,	19	),																			
-    (775	,	 'Khulna Division'	,	19	),																			
-    (776	,	 'Meherpur District'	,	19	),																			
-    (777	,	 'Patuakhali District'	,	19	),																			
-    (778	,	 'Jhalokati District'	,	19	),																			
-    (779	,	 'Kishoreganj District'	,	19	),																			
-    (780	,	 'Lalmonirhat District'	,	19	),																			
-    (781	,	 'Sirajganj District'	,	19	),																			
-    (782	,	 'Tangail District'	,	19	),																			
-    (783	,	 'Dinajpur District'	,	19	),																			
-    (784	,	 'Barguna District'	,	19	),																			
-    (785	,	 'Chittagong District'	,	19	),																			
-    (786	,	 'Khagrachari District'	,	19	),																			
-    (787	,	 'Natore District'	,	19	),																			
-    (788	,	 'Chuadanga District'	,	19	),																			
-    (789	,	 'Jhenaidah District'	,	19	),																			
-    (790	,	 'Munshiganj District'	,	19	),																			
-    (791	,	 'Pirojpur District'	,	19	),																			
-    (792	,	 'Gopalganj District'	,	19	),																			
-    (793	,	 'Kurigram District'	,	19	),																			
-    (794	,	 'Moulvibazar District'	,	19	),																			
-    (795	,	 'Gaibandha District'	,	19	),																			
-    (796	,	 'Bagerhat District'	,	19	),																			
-    (797	,	 'Bogra District'	,	19	),																			
-    (798	,	 'Gazipur District'	,	19	),																			
-    (799	,	 'Satkhira District'	,	19	),																			
-    (800	,	 'Panchagarh District'	,	19	),																			
-    (801	,	 'Shariatpur District'	,	19	),																			
-    (802	,	 'Bahadia'	,	19	),																			
-    (803	,	 'Chittagong Division'	,	19	),																			
-    (804	,	 'Thakurgaon District'	,	19	),																			
-    (805	,	 'Habiganj District'	,	19	),																			
-    (806	,	 'Joypurhat District'	,	19	),																			
-    (807	,	 'Barisal Division'	,	19	),																			
-    (808	,	 'Jamalpur District'	,	19	),																			
-    (809	,	 'Rangamati Hill District'	,	19	),																			
-    (810	,	 'Brahmanbaria District'	,	19	),																			
-    (811	,	 'Khulna District'	,	19	),																			
-    (812	,	 'Sunamganj District'	,	19	),																			
-    (813	,	 'Rajshahi District'	,	19	),																			
-    (814	,	 'Naogaon District'	,	19	),																			
-    (815	,	 'Noakhali District'	,	19	),																			
-    (816	,	 'Feni District'	,	19	),																			
-    (817	,	 'Madaripur District'	,	19	),																			
-    (818	,	 'Barisal District'	,	19	),																			
-    (819	,	 'Lakshmipur District'	,	19	),																			
-    (820	,	 'Okayama Prefecture'	,	109	),																			
-    (821	,	 'Chiba Prefecture'	,	109	),																			
-    (822	,	 'Ōita Prefecture'	,	109	),																			
-    (823	,	 'Tokyo'	,	109	),																			
-    (824	,	 'Nara Prefecture'	,	109	),																			
-    (825	,	 'Shizuoka Prefecture'	,	109	),																			
-    (826	,	 'Shimane Prefecture'	,	109	),																			
-    (827	,	 'Aichi Prefecture'	,	109	),																			
-    (828	,	 'Hiroshima Prefecture'	,	109	),																			
-    (829	,	 'Akita Prefecture'	,	109	),																			
-    (830	,	 'Ishikawa Prefecture'	,	109	),																			
-    (831	,	 'Hyōgo Prefecture'	,	109	),																			
-    (832	,	 'Hokkaidō Prefecture'	,	109	),																			
-    (833	,	 'Mie Prefecture'	,	109	),																			
-    (834	,	 'Kyōto Prefecture'	,	109	),																			
-    (835	,	 'Yamaguchi Prefecture'	,	109	),																			
-    (836	,	 'Tokushima Prefecture'	,	109	),																			
-    (837	,	 'Yamagata Prefecture'	,	109	),																			
-    (838	,	 'Toyama Prefecture'	,	109	),																			
-    (839	,	 'Aomori Prefecture'	,	109	),																			
-    (840	,	 'Kagoshima Prefecture'	,	109	),																			
-    (841	,	 'Niigata Prefecture'	,	109	),																			
-    (842	,	 'Kanagawa Prefecture'	,	109	),																			
-    (843	,	 'Nagano Prefecture'	,	109	),																			
-    (844	,	 'Wakayama Prefecture'	,	109	),																			
-    (845	,	 'Shiga Prefecture'	,	109	),																			
-    (846	,	 'Kumamoto Prefecture'	,	109	),																			
-    (847	,	 'Fukushima Prefecture'	,	109	),																			
-    (848	,	 'Fukui Prefecture'	,	109	),																			
-    (849	,	 'Nagasaki Prefecture'	,	109	),																			
-    (850	,	 'Tottori Prefecture'	,	109	),																			
-    (851	,	 'Ibaraki Prefecture'	,	109	),																			
-    (852	,	 'Yamanashi Prefecture'	,	109	),																			
-    (853	,	 'Okinawa Prefecture'	,	109	),																			
-    (854	,	 'Tochigi Prefecture'	,	109	),																			
-    (855	,	 'Miyazaki Prefecture'	,	109	),																			
-    (856	,	 'Iwate Prefecture'	,	109	),																			
-    (857	,	 'Miyagi Prefecture'	,	109	),																			
-    (858	,	 'Gifu Prefecture'	,	109	),																			
-    (859	,	 'Ōsaka Prefecture'	,	109	),																			
-    (860	,	 'Saitama Prefecture'	,	109	),																			
-    (861	,	 'Fukuoka Prefecture'	,	109	),																			
-    (862	,	 'Gunma Prefecture'	,	109	),																			
-    (863	,	 'Saga Prefecture'	,	109	),																			
-    (864	,	 'Kagawa Prefecture'	,	109	),																			
-    (865	,	 'Ehime Prefecture'	,	109	),																			
-    (866	,	 'Ontario'	,	39	),																			
-    (867	,	 'Manitoba'	,	39	),																			
-    (868	,	 'New Brunswick'	,	39	),																			
-    (869	,	 'Yukon'	,	39	),																			
-    (870	,	 'Saskatchewan'	,	39	),																			
-    (871	,	 'Prince Edward Island'	,	39	),																			
-    (872	,	 'Alberta'	,	39	),																			
-    (873	,	 'Quebec'	,	39	),																			
-    (874	,	 'Nova Scotia'	,	39	),																			
-    (875	,	 'British Columbia'	,	39	),																			
-    (876	,	 'Nunavut'	,	39	),																			
-    (877	,	 'Newfoundland and Labrador'	,	39	),																			
-    (878	,	 'Northwest Territories'	,	39	),																			
-    (879	,	 'White Nile'	,	209	),																			
-    (880	,	 'Red Sea'	,	209	),																			
-    (881	,	 'Khartoum'	,	209	),																			
-    (882	,	 'Sennar'	,	209	),																			
-    (883	,	 'South Kordofan'	,	209	),																			
-    (884	,	 'Kassala'	,	209	),																			
-    (885	,	 'Al Jazirah'	,	209	),																			
-    (886	,	 'Al Qadarif'	,	209	),																			
-    (887	,	 'Blue Nile'	,	209	),																			
-    (888	,	 'West Darfur'	,	209	),																			
-    (889	,	 'West Kordofan'	,	209	),																			
-    (890	,	 'North Darfur'	,	209	),																			
-    (891	,	 'River Nile'	,	209	),																			
-    (892	,	 'East Darfur'	,	209	),																			
-    (893	,	 'North Kordofan'	,	209	),																			
-    (894	,	 'South Darfur'	,	209	),																			
-    (895	,	 'Northern'	,	209	),																			
-    (896	,	 'Central Darfur'	,	209	),																			
-    (897	,	 'Khelvachauri Municipality'	,	81	),																			
-    (898	,	 'Senaki Municipality'	,	81	),																			
-    (899	,	 'Tbilisi'	,	81	),																			
-    (900	,	 'Adjara'	,	81	),																			
-    (901	,	 'Autonomous Republic of Abkhazia'	,	81	),																			
-    (902	,	 'Mtskheta-Mtianeti'	,	81	),																			
-    (903	,	 'Shida Kartli'	,	81	),																			
-    (904	,	 'Kvemo Kartli'	,	81	),																			
-    (905	,	 'Imereti'	,	81	),																			
-    (906	,	 'Samtskhe-Javakheti'	,	81	),																			
-    (907	,	 'Guria'	,	81	),																			
-    (908	,	 'Samegrelo-Zemo Svaneti'	,	81	),																			
-    (909	,	 'Racha-Lechkhumi and Kvemo Svaneti'	,	81	),																			
-    (910	,	 'Kakheti'	,	81	),																			
-    (911	,	 'Northern Province'	,	198	),																			
-    (912	,	 'Southern Province'	,	198	),																			
-    (913	,	 'Western Area'	,	198	),																			
-    (914	,	 'Eastern Province'	,	198	),																			
-    (915	,	 'Hiran'	,	203	),																			
-    (916	,	 'Mudug'	,	203	),																			
-    (917	,	 'Bakool'	,	203	),																			
-    (918	,	 'Galguduud'	,	203	),																			
-    (919	,	 'Sanaag Region'	,	203	),																			
-    (920	,	 'Nugal'	,	203	),																			
-    (921	,	 'Lower Shebelle'	,	203	),																			
-    (922	,	 'Middle Juba'	,	203	),																			
-    (923	,	 'Middle Shebelle'	,	203	),																			
-    (924	,	 'Lower Juba'	,	203	),																			
-    (925	,	 'Awdal Region'	,	203	),																			
-    (926	,	 'Bay'	,	203	),																			
-    (927	,	 'Banaadir'	,	203	),																			
-    (928	,	 'Gedo'	,	203	),																			
-    (929	,	 'Togdheer Region'	,	203	),																			
-    (930	,	 'Bari'	,	203	),																			
-    (931	,	 'Northern Cape'	,	204	),																			
-    (932	,	 'Free State'	,	204	),																			
-    (933	,	 'Limpopo'	,	204	),																			
-    (934	,	 'North West'	,	204	),																			
-    (935	,	 'KwaZulu-Natal'	,	204	),																			
-    (936	,	 'Gauteng'	,	204	),																			
-    (937	,	 'Mpumalanga'	,	204	),																			
-    (938	,	 'Eastern Cape'	,	204	),																			
-    (939	,	 'Western Cape'	,	204	),																			
-    (940	,	 'Chontales'	,	159	),																			
-    (941	,	 'Managua'	,	159	),																			
-    (942	,	 'Rivas'	,	159	),																			
-    (943	,	 'Granada'	,	159	),																			
-    (944	,	 'León'	,	159	),																			
-    (945	,	 'Estelí'	,	159	),																			
-    (946	,	 'Boaco'	,	159	),																			
-    (947	,	 'Matagalpa'	,	159	),																			
-    (948	,	 'Madriz'	,	159	),																			
-    (949	,	 'Río San Juan'	,	159	),																			
-    (950	,	 'Carazo'	,	159	),																			
-    (951	,	 'North Caribbean Coast'	,	159	),																			
-    (952	,	 'South Caribbean Coast'	,	159	),																			
-    (953	,	 'Masaya'	,	159	),																			
-    (954	,	 'Chinandega'	,	159	),																			
-    (955	,	 'Jinotega'	,	159	),																			
-    (956	,	 'Karak Governorate'	,	111	),																			
-    (957	,	 'Tafilah Governorate'	,	111	),																			
-    (958	,	 'Madaba Governorate'	,	111	),																			
-    (959	,	 'Aqaba Governorate'	,	111	),																			
-    (960	,	 'Irbid Governorate'	,	111	),																			
-    (961	,	 'Balqa Governorate'	,	111	),																			
-    (962	,	 'Mafraq Governorate'	,	111	),																			
-    (963	,	 'Ajloun Governorate'	,	111	),																			
-    (964	,	 'Ma an Governorate'	,	111	),																			
-    (965	,	 'Amman Governorate'	,	111	),																			
-    (966	,	 'Jerash Governorate'	,	111	),																			
-    (967	,	 'Zarqa Governorate'	,	111	),																			
-    (968	,	 'Manzini District'	,	212	),																			
-    (969	,	 'Hhohho District'	,	212	),																			
-    (970	,	 'Lubombo District'	,	212	),																			
-    (971	,	 'Shiselweni District'	,	212	),																			
-    (972	,	 'Al Jahra Governorate'	,	117	),																			
-    (973	,	 'Hawalli Governorate'	,	117	),																			
-    (974	,	 'Mubarak Al-Kabeer Governorate'	,	117	),																			
-    (975	,	 'Al Farwaniyah Governorate'	,	117	),																			
-    (976	,	 'Capital Governorate'	,	117	),																			
-    (977	,	 'Al Ahmadi Governorate'	,	117	),																			
-    (978	,	 'Luang Prabang Province'	,	119	),																			
-    (979	,	 'Vientiane Prefecture'	,	119	),																			
-    (980	,	 'Vientiane Province'	,	119	),																			
-    (981	,	 'Salavan Province'	,	119	),																			
-    (982	,	 'Attapeu Province'	,	119	),																			
-    (983	,	 'Xaisomboun Province'	,	119	),																			
-    (984	,	 'Sekong Province'	,	119	),																			
-    (985	,	 'Bolikhamsai Province'	,	119	),																			
-    (986	,	 'Khammouane Province'	,	119	),																			
-    (987	,	 'Phongsaly Province'	,	119	),																			
-    (988	,	 'Oudomxay Province'	,	119	),																			
-    (989	,	 'Houaphanh Province'	,	119	),																			
-    (990	,	 'Savannakhet Province'	,	119	),																			
-    (991	,	 'Bokeo Province'	,	119	),																			
-    (992	,	 'Luang Namtha Province'	,	119	),																			
-    (993	,	 'Sainyabuli Province'	,	119	),																			
-    (994	,	 'Xaisomboun'	,	119	),																			
-    (995	,	 'Xiangkhouang Province'	,	119	),																			
-    (996	,	 'Champasak Province'	,	119	),																			
-    (997	,	 'Talas Region'	,	118	),																			
-    (998	,	 'Batken Region'	,	118	),																			
-    (999	,	 'Naryn Region'	,	118	),																			
-    (1000	,	 'Jalal-Abad Region'	,	118	),																			
-    (1001	,	 'Bishkek'	,	118	),																			
-    (1002	,	 'Issyk-Kul Region'	,	118	),																			
-    (1003	,	 'Osh'	,	118	),																			
-    (1004	,	 'Chuy Region'	,	118	),																			
-    (1005	,	 'Osh Region'	,	118	),																			
-    (1006	,	 'Trøndelag'	,	165	),																			
-    (1007	,	 'Oslo'	,	165	),																			
-    (1008	,	 'Vestfold'	,	165	),																			
-    (1009	,	 'Oppland'	,	165	),																			
-    (1010	,	 'Sør-Trøndelag'	,	165	),																			
-    (1011	,	 'Buskerud'	,	165	),																			
-    (1012	,	 'Nord-Trøndelag'	,	165	),																			
-    (1013	,	 'Svalbard'	,	165	),																			
-    (1014	,	 'Vest-Agder'	,	165	),																			
-    (1015	,	 'Troms'	,	165	),																			
-    (1016	,	 'Finnmark'	,	165	),																			
-    (1017	,	 'Akershus'	,	165	),																			
-    (1018	,	 'Sogn og Fjordane'	,	165	),																			
-    (1019	,	 'Hedmark'	,	165	),																			
-    (1020	,	 'Møre og Romsdal'	,	165	),																			
-    (1021	,	 'Rogaland'	,	165	),																			
-    (1022	,	 'Østfold'	,	165	),																			
-    (1023	,	 'Hordaland'	,	165	),																			
-    (1024	,	 'Telemark'	,	165	),																			
-    (1025	,	 'Nordland'	,	165	),																			
-    (1026	,	 'Jan Mayen'	,	165	),																			
-    (1027	,	 'Hódmezővásárhely'	,	99	),																			
-    (1028	,	 'Érd'	,	99	),																			
-    (1029	,	 'Szeged'	,	99	),																			
-    (1030	,	 'Nagykanizsa'	,	99	),																			
-    (1031	,	 'Csongrád County'	,	99	),																			
-    (1032	,	 'Debrecen'	,	99	),																			
-    (1033	,	 'Székesfehérvár'	,	99	),																			
-    (1034	,	 'Nyíregyháza'	,	99	),																			
-    (1035	,	 'Somogy County'	,	99	),																			
-    (1036	,	 'Békéscsaba'	,	99	),																			
-    (1037	,	 'Eger'	,	99	),																			
-    (1038	,	 'Tolna County'	,	99	),																			
-    (1039	,	 'Vas County'	,	99	),																			
-    (1040	,	 'Heves County'	,	99	),																			
-    (1041	,	 'Győr'	,	99	),																			
-    (1042	,	 'Győr-Moson-Sopron County'	,	99	),																			
-    (1043	,	 'Jász-Nagykun-Szolnok County'	,	99	),																			
-    (1044	,	 'Fejér County'	,	99	),																			
-    (1045	,	 'Szabolcs-Szatmár-Bereg County'	,	99	),																			
-    (1046	,	 'Zala County'	,	99	),																			
-    (1047	,	 'Szolnok'	,	99	),																			
-    (1048	,	 'Bács-Kiskun County'	,	99	),																			
-    (1049	,	 'Dunaújváros'	,	99	),																			
-    (1050	,	 'Zalaegerszeg'	,	99	),																			
-    (1051	,	 'Nógrád County'	,	99	),																			
-    (1052	,	 'Szombathely'	,	99	),																			
-    (1053	,	 'Pécs'	,	99	),																			
-    (1054	,	 'Veszprém County'	,	99	),																			
-    (1055	,	 'Baranya County'	,	99	),																			
-    (1056	,	 'Kecskemét'	,	99	),																			
-    (1057	,	 'Sopron'	,	99	),																			
-    (1058	,	 'Borsod-Abaúj-Zemplén County'	,	99	),																			
-    (1059	,	 'Pest County'	,	99	),																			
-    (1060	,	 'Békés County'	,	99	),																			
-    (1061	,	 'Szekszárd'	,	99	),																			
-    (1062	,	 'Veszprém'	,	99	),																			
-    (1063	,	 'Hajdú-Bihar County'	,	99	),																			
-    (1064	,	 'Budapest'	,	99	),																			
-    (1065	,	 'Miskolc'	,	99	),																			
-    (1066	,	 'Tatabánya'	,	99	),																			
-    (1067	,	 'Kaposvár'	,	99	),																			
-    (1068	,	 'Salgótarján'	,	99	),																			
-    (1069	,	 'County Tipperary'	,	105	),																			
-    (1070	,	 'County Sligo'	,	105	),																			
-    (1071	,	 'County Donegal'	,	105	),																			
-    (1072	,	 'County Dublin'	,	105	),																			
-    (1073	,	 'Leinster'	,	105	),																			
-    (1074	,	 'County Cork'	,	105	),																			
-    (1075	,	 'County Monaghan'	,	105	),																			
-    (1076	,	 'County Longford'	,	105	),																			
-    (1077	,	 'County Kerry'	,	105	),																			
-    (1078	,	 'County Offaly'	,	105	),																			
-    (1079	,	 'County Galway'	,	105	),																			
-    (1080	,	 'Munster'	,	105	),																			
-    (1081	,	 'County Roscommon'	,	105	),																			
-    (1082	,	 'County Kildare'	,	105	),																			
-    (1083	,	 'County Louth'	,	105	),																			
-    (1084	,	 'County Mayo'	,	105	),																			
-    (1085	,	 'County Wicklow'	,	105	),																			
-    (1086	,	 'Ulster'	,	105	),																			
-    (1087	,	 'Connacht'	,	105	),																			
-    (1088	,	 'County Cavan'	,	105	),																			
-    (1089	,	 'County Waterford'	,	105	),																			
-    (1090	,	 'County Kilkenny'	,	105	),																			
-    (1091	,	 'County Clare'	,	105	),																			
-    (1092	,	 'County Meath'	,	105	),																			
-    (1093	,	 'County Wexford'	,	105	),																			
-    (1094	,	 'County Limerick'	,	105	),																			
-    (1095	,	 'County Carlow'	,	105	),																			
-    (1096	,	 'County Laois'	,	105	),																			
-    (1097	,	 'County Westmeath'	,	105	),																			
-    (1098	,	 'Djelfa'	,	4	),																			
-    (1099	,	 'El Oued'	,	4	),																			
-    (1100	,	 'El Tarf'	,	4	),																			
-    (1101	,	 'Oran'	,	4	),																			
-    (1102	,	 'Naama'	,	4	),																			
-    (1103	,	 'Annaba'	,	4	),																			
-    (1104	,	 'Bouïra'	,	4	),																			
-    (1105	,	 'Chlef'	,	4	),																			
-    (1106	,	 'Tiaret'	,	4	),																			
-    (1107	,	 'Tlemcen'	,	4	),																			
-    (1108	,	 'Béchar'	,	4	),																			
-    (1109	,	 'Médéa'	,	4	),																			
-    (1110	,	 'Skikda'	,	4	),																			
-    (1111	,	 'Blida'	,	4	),																			
-    (1112	,	 'Illizi'	,	4	),																			
-    (1113	,	 'Jijel'	,	4	),																			
-    (1114	,	 'Biskra'	,	4	),																			
-    (1115	,	 'Tipasa'	,	4	),																			
-    (1116	,	 'Bordj Bou Arréridj'	,	4	),																			
-    (1117	,	 'Tébessa'	,	4	),																			
-    (1118	,	 'Adrar'	,	4	),																			
-    (1119	,	 'Aïn Defla'	,	4	),																			
-    (1120	,	 'Tindouf'	,	4	),																			
-    (1121	,	 'Constantine'	,	4	),																			
-    (1122	,	 'Aïn Témouchent'	,	4	),																			
-    (1123	,	 'Saïda'	,	4	),																			
-    (1124	,	 'Mascara'	,	4	),																			
-    (1125	,	 'Boumerdès'	,	4	),																			
-    (1126	,	 'Khenchela'	,	4	),																			
-    (1127	,	 'Ghardaïa'	,	4	),																			
-    (1128	,	 'Béjaïa'	,	4	),																			
-    (1129	,	 'El Bayadh'	,	4	),																			
-    (1130	,	 'Relizane'	,	4	),																			
-    (1131	,	 'Tizi Ouzou'	,	4	),																			
-    (1132	,	 'Mila'	,	4	),																			
-    (1133	,	 'Tissemsilt'	,	4	),																			
-    (1134	,	 'M Sila'	,	4	),																			
-    (1135	,	 'Tamanghasset'	,	4	),																			
-    (1136	,	 'Oum El Bouaghi'	,	4	),																			
-    (1137	,	 'Guelma'	,	4	),																			
-    (1138	,	 'Laghouat'	,	4	),																			
-    (1139	,	 'Ouargla'	,	4	),																			
-    (1140	,	 'Mostaganem'	,	4	),																			
-    (1141	,	 'Sétif'	,	4	),																			
-    (1142	,	 'Batna'	,	4	),																			
-    (1143	,	 'Souk Ahras'	,	4	),																			
-    (1144	,	 'Algiers'	,	4	),																			
-    (1146	,	 'Burgos Province'	,	207	),																			
-    (1147	,	 'Salamanca Province'	,	207	),																			
-    (1157	,	 'Palencia Province'	,	207	),																			
-    (1158	,	 'Madrid'	,	207	),																			
-    (1159	,	 'Melilla'	,	207	),																			
-    (1160	,	 'Asturias'	,	207	),																			
-    (1161	,	 'Zamora Province'	,	207	),																			
-    (1167	,	 'Galicia'	,	207	),																			
-    (1170	,	 'Cantabria'	,	207	),																			
-    (1171	,	 'La Rioja'	,	207	),																			
-    (1174	,	 'Balearic Islands'	,	207	),																			
-    (1175	,	 'Valencia'	,	207	),																			
-    (1176	,	 'Murcia'	,	207	),																			
-    (1177	,	 'Aragon'	,	207	),																			
-    (1183	,	 'Valladolid Province'	,	207	),																			
-    (1184	,	 'Castile and León'	,	207	),																			
-    (1185	,	 'Canary Islands'	,	207	),																			
-    (1189	,	 'Ávila'	,	207	),																			
-    (1190	,	 'Extremadura'	,	207	),																			
-    (1191	,	 'Basque Country'	,	207	),																			
-    (1192	,	 'Segovia Province'	,	207	),																			
-    (1193	,	 'Andalusia'	,	207	),																			
-    (1200	,	 'Léon'	,	207	),																			
-    (1203	,	 'Catalonia'	,	207	),																			
-    (1204	,	 'Navarra'	,	207	),																			
-    (1205	,	 'Castilla La Mancha'	,	207	),																			
-    (1206	,	 'Ceuta'	,	207	),																			
-    (1208	,	 'Soria Province'	,	207	),																			
-    (1209	,	 'Guanacaste Province'	,	53	),																			
-    (1210	,	 'Puntarenas Province'	,	53	),																			
-    (1211	,	 'Provincia de Cartago'	,	53	),																			
-    (1212	,	 'Heredia Province'	,	53	),																			
-    (1213	,	 'Limón Province'	,	53	),																			
-    (1214	,	 'San José Province'	,	53	),																			
-    (1215	,	 'Alajuela Province'	,	53	),																			
-    (1216	,	 'Brunei-Muara District'	,	33	),																			
-    (1217	,	 'Belait District'	,	33	),																			
-    (1218	,	 'Temburong District'	,	33	),																			
-    (1219	,	 'Tutong District'	,	33	),																			
-    (1220	,	 'Saint Philip'	,	20	),																			
-    (1221	,	 'Saint Lucy'	,	20	),																			
-    (1222	,	 'Saint Peter'	,	20	),																			
-    (1223	,	 'Saint Joseph'	,	20	),																			
-    (1224	,	 'Saint James'	,	20	),																			
-    (1225	,	 'Saint Thomas'	,	20	),																			
-    (1226	,	 'Saint George'	,	20	),																			
-    (1227	,	 'Saint John'	,	20	),																			
-    (1228	,	 'Christ Church'	,	20	),																			
-    (1229	,	 'Saint Andrew'	,	20	),																			
-    (1230	,	 'Saint Michael'	,	20	),																			
-    (1231	,	 'Ta izz Governorate'	,	245	),																			
-    (1232	,	 'Sana a'	,	245	),																			
-    (1233	,	 'Ibb Governorate'	,	245	),																			
-    (1234	,	 'Ma rib Governorate'	,	245	),																			
-    (1235	,	 'Al Mahwit Governorate'	,	245	),																			
-    (1236	,	 'Sana a Governorate'	,	245	),																			
-    (1237	,	 'Abyan Governorate'	,	245	),																			
-    (1238	,	 'Hadhramaut Governorate'	,	245	),																			
-    (1239	,	 'Socotra Governorate'	,	245	),																			
-    (1240	,	 'Al Bayda  Governorate'	,	245	),																			
-    (1241	,	 'Al Hudaydah Governorate'	,	245	),																			
-    (1242	,	 ' Adan Governorate'	,	245	),																			
-    (1243	,	 'Al Jawf Governorate'	,	245	),																			
-    (1244	,	 'Hajjah Governorate'	,	245	),																			
-    (1245	,	 'Lahij Governorate'	,	245	),																			
-    (1246	,	 'Dhamar Governorate'	,	245	),																			
-    (1247	,	 'Shabwah Governorate'	,	245	),																			
-    (1248	,	 'Raymah Governorate'	,	245	),																			
-    (1249	,	 'Saada Governorate'	,	245	),																			
-    (1250	,	 ' Amran Governorate'	,	245	),																			
-    (1251	,	 'Al Mahrah Governorate'	,	245	),																			
-    (1252	,	 'Sangha-Mbaéré'	,	42	),																			
-    (1253	,	 'Nana-Grébizi Economic Prefecture'	,	42	),																			
-    (1254	,	 'Ouham Prefecture'	,	42	),																			
-    (1255	,	 'Ombella-M Poko Prefecture'	,	42	),																			
-    (1256	,	 'Lobaye Prefecture'	,	42	),																			
-    (1257	,	 'Mambéré-Kadéï'	,	42	),																			
-    (1258	,	 'Haut-Mbomou Prefecture'	,	42	),																			
-    (1259	,	 'Bamingui-Bangoran Prefecture'	,	42	),																			
-    (1260	,	 'Nana-Mambéré Prefecture'	,	42	),																			
-    (1261	,	 'Vakaga Prefecture'	,	42	),																			
-    (1262	,	 'Bangui'	,	42	),																			
-    (1263	,	 'Kémo Prefecture'	,	42	),																			
-    (1264	,	 'Basse-Kotto Prefecture'	,	42	),																			
-    (1265	,	 'Ouaka Prefecture'	,	42	),																			
-    (1266	,	 'Mbomou Prefecture'	,	42	),																			
-    (1267	,	 'Ouham-Pendé Prefecture'	,	42	),																			
-    (1268	,	 'Haute-Kotto Prefecture'	,	42	),																			
-    (1269	,	 'Romblon'	,	174	),																			
-    (1270	,	 'Bukidnon'	,	174	),																			
-    (1271	,	 'Rizal'	,	174	),																			
-    (1272	,	 'Bohol'	,	174	),																			
-    (1273	,	 'Quirino'	,	174	),																			
-    (1274	,	 'Biliran'	,	174	),																			
-    (1275	,	 'Quezon'	,	174	),																			
-    (1276	,	 'Siquijor'	,	174	),																			
-    (1277	,	 'Sarangani'	,	174	),																			
-    (1278	,	 'Bulacan'	,	174	),																			
-    (1279	,	 'Cagayan'	,	174	),																			
-    (1280	,	 'South Cotabato'	,	174	),																			
-    (1281	,	 'Sorsogon'	,	174	),																			
-    (1282	,	 'Sultan Kudarat'	,	174	),																			
-    (1283	,	 'Camarines Norte'	,	174	),																			
-    (1284	,	 'Southern Leyte'	,	174	),																			
-    (1285	,	 'Camiguin'	,	174	),																			
-    (1286	,	 'Surigao del Norte'	,	174	),																			
-    (1287	,	 'Camarines Sur'	,	174	),																			
-    (1288	,	 'Sulu'	,	174	),																			
-    (1289	,	 'Davao Oriental'	,	174	),																			
-    (1290	,	 'Eastern Samar'	,	174	),																			
-    (1291	,	 'Dinagat Islands'	,	174	),																			
-    (1292	,	 'Capiz'	,	174	),																			
-    (1293	,	 'Tawi-Tawi'	,	174	),																			
-    (1294	,	 'Calabarzon'	,	174	),																			
-    (1295	,	 'Tarlac'	,	174	),																			
-    (1296	,	 'Surigao del Sur'	,	174	),																			
-    (1297	,	 'Zambales'	,	174	),																			
-    (1298	,	 'Ilocos Norte'	,	174	),																			
-    (1299	,	 'Mimaropa'	,	174	),																			
-    (1300	,	 'Ifugao'	,	174	),																			
-    (1301	,	 'Catanduanes'	,	174	),																			
-    (1302	,	 'Zamboanga del Norte'	,	174	),																			
-    (1303	,	 'Guimaras'	,	174	),																			
-    (1304	,	 'Bicol Region'	,	174	),																			
-    (1305	,	 'Western Visayas'	,	174	),																			
-    (1306	,	 'Cebu'	,	174	),																			
-    (1307	,	 'Cavite'	,	174	),																			
-    (1308	,	 'Central Visayas'	,	174	),																			
-    (1309	,	 'Davao Occidental'	,	174	),																			
-    (1310	,	 'Soccsksargen'	,	174	),																			
-    (1311	,	 'Compostela Valley'	,	174	),																			
-    (1312	,	 'Kalinga'	,	174	),																			
-    (1313	,	 'Isabela'	,	174	),																			
-    (1314	,	 'Caraga'	,	174	),																			
-    (1315	,	 'Iloilo'	,	174	),																			
-    (1316	,	 'Autonomous Region in Muslim Mindanao'	,	174	),																			
-    (1317	,	 'La Union'	,	174	),																			
-    (1318	,	 'Davao del Sur'	,	174	),																			
-    (1319	,	 'Davao del Norte'	,	174	),																			
-    (1320	,	 'Cotabato'	,	174	),																			
-    (1321	,	 'Ilocos Sur'	,	174	),																			
-    (1322	,	 'Eastern Visayas'	,	174	),																			
-    (1323	,	 'Agusan del Norte'	,	174	),																			
-    (1324	,	 'Abra'	,	174	),																			
-    (1325	,	 'Zamboanga Peninsula'	,	174	),																			
-    (1326	,	 'Agusan del Sur'	,	174	),																			
-    (1327	,	 'Lanao del Norte'	,	174	),																			
-    (1328	,	 'Laguna'	,	174	),																			
-    (1329	,	 'Marinduque'	,	174	),																			
-    (1330	,	 'Maguindanao'	,	174	),																			
-    (1331	,	 'Aklan'	,	174	),																			
-    (1332	,	 'Leyte'	,	174	),																			
-    (1333	,	 'Lanao del Sur'	,	174	),																			
-    (1334	,	 'Apayao'	,	174	),																			
-    (1335	,	 'Cordillera Administrative Region'	,	174	),																			
-    (1336	,	 'Antique'	,	174	),																			
-    (1337	,	 'Albay'	,	174	),																			
-    (1338	,	 'Masbate'	,	174	),																			
-    (1339	,	 'Northern Mindanao'	,	174	),																			
-    (1340	,	 'Davao Region'	,	174	),																			
-    (1341	,	 'Aurora'	,	174	),																			
-    (1342	,	 'Cagayan Valley'	,	174	),																			
-    (1343	,	 'Misamis Occidental'	,	174	),																			
-    (1344	,	 'Bataan'	,	174	),																			
-    (1345	,	 'Central Luzon'	,	174	),																			
-    (1346	,	 'Basilan'	,	174	),																			
-    (1347	,	 'Metro Manila'	,	174	),																			
-    (1348	,	 'Misamis Oriental'	,	174	),																			
-    (1349	,	 'Northern Samar'	,	174	),																			
-    (1350	,	 'Negros Oriental'	,	174	),																			
-    (1351	,	 'Negros Occidental'	,	174	),																			
-    (1352	,	 'Batanes'	,	174	),																			
-    (1353	,	 'Mountain Province'	,	174	),																			
-    (1354	,	 'Oriental Mindoro'	,	174	),																			
-    (1355	,	 'Ilocos Region'	,	174	),																			
-    (1356	,	 'Occidental Mindoro'	,	174	),																			
-    (1357	,	 'Zamboanga del Sur'	,	174	),																			
-    (1358	,	 'Nueva Vizcaya'	,	174	),																			
-    (1359	,	 'Batangas'	,	174	),																			
-    (1360	,	 'Nueva Ecija'	,	174	),																			
-    (1361	,	 'Palawan'	,	174	),																			
-    (1362	,	 'Zamboanga Sibugay'	,	174	),																			
-    (1363	,	 'Benguet'	,	174	),																			
-    (1364	,	 'Pangasinan'	,	174	),																			
-    (1365	,	 'Pampanga'	,	174	),																			
-    (1366	,	 'Northern District'	,	106	),																			
-    (1367	,	 'Central District'	,	106	),																			
-    (1368	,	 'Southern District'	,	106	),																			
-    (1369	,	 'Haifa District'	,	106	),																			
-    (1370	,	 'Jerusalem District'	,	106	),																			
-    (1371	,	 'Tel Aviv District'	,	106	),																			
-    (1372	,	 'Limburg'	,	22	),																			
-    (1373	,	 'Flanders'	,	22	),																			
-    (1374	,	 'Flemish Brabant'	,	22	),																			
-    (1375	,	 'Hainaut'	,	22	),																			
-    (1376	,	 'Brussels-Capital Region'	,	22	),																			
-    (1377	,	 'East Flanders'	,	22	),																			
-    (1378	,	 'Namur'	,	22	),																			
-    (1379	,	 'Luxembourg'	,	22	),																			
-    (1380	,	 'Wallonia'	,	22	),																			
-    (1381	,	 'Antwerp'	,	22	),																			
-    (1382	,	 'Walloon Brabant'	,	22	),																			
-    (1383	,	 'West Flanders'	,	22	),																			
-    (1384	,	 'Liège'	,	22	),																			
-    (1385	,	 'Darién Province'	,	170	),																			
-    (1386	,	 'Colón Province'	,	170	),																			
-    (1387	,	 'Coclé Province'	,	170	),																			
-    (1388	,	 'Guna Yala'	,	170	),																			
-    (1389	,	 'Herrera Province'	,	170	),																			
-    (1390	,	 'Los Santos Province'	,	170	),																			
-    (1391	,	 'Ngöbe-Buglé Comarca'	,	170	),																			
-    (1392	,	 'Veraguas Province'	,	170	),																			
-    (1393	,	 'Bocas del Toro Province'	,	170	),																			
-    (1394	,	 'Panamá Oeste Province'	,	170	),																			
-    (1395	,	 'Panamá Province'	,	170	),																			
-    (1396	,	 'Emberá-Wounaan Comarca'	,	170	),																			
-    (1397	,	 'Chiriquí Province'	,	170	),																			
-    (1398	,	 'Howland Island'	,	233	),																			
-    (1399	,	 'Delaware'	,	233	),																			
-    (1400	,	 'Alaska'	,	233	),																			
-    (1401	,	 'Maryland'	,	233	),																			
-    (1402	,	 'Baker Island'	,	233	),																			
-    (1403	,	 'Kingman Reef'	,	233	),																			
-    (1404	,	 'New Hampshire'	,	233	),																			
-    (1405	,	 'Wake Island'	,	233	),																			
-    (1406	,	 'Kansas'	,	233	),																			
-    (1407	,	 'Texas'	,	233	),																			
-    (1408	,	 'Nebraska'	,	233	),																			
-    (1409	,	 'Vermont'	,	233	),																			
-    (1410	,	 'Jarvis Island'	,	233	),																			
-    (1411	,	 'Hawaii'	,	233	),																			
-    (1412	,	 'Guam'	,	233	),																			
-    (1413	,	 'United States Virgin Islands'	,	233	),																			
-    (1414	,	 'Utah'	,	233	),																			
-    (1415	,	 'Oregon'	,	233	),																			
-    (1416	,	 'California'	,	233	),																			
-    (1417	,	 'New Jersey'	,	233	),																			
-    (1418	,	 'North Dakota'	,	233	),																			
-    (1419	,	 'Kentucky'	,	233	),																			
-    (1420	,	 'Minnesota'	,	233	),																			
-    (1421	,	 'Oklahoma'	,	233	),																			
-    (1422	,	 'Pennsylvania'	,	233	),																			
-    (1423	,	 'New Mexico'	,	233	),																			
-    (1424	,	 'American Samoa'	,	233	),																			
-    (1425	,	 'Illinois'	,	233	),																			
-    (1426	,	 'Michigan'	,	233	),																			
-    (1427	,	 'Virginia'	,	233	),																			
-    (1428	,	 'Johnston Atoll'	,	233	),																			
-    (1429	,	 'West Virginia'	,	233	),																			
-    (1430	,	 'Mississippi'	,	233	),																			
-    (1431	,	 'Northern Mariana Islands'	,	233	),																			
-    (1432	,	 'United States Minor Outlying Islands'	,	233	),																			
-    (1433	,	 'Massachusetts'	,	233	),																			
-    (1434	,	 'Arizona'	,	233	),																			
-    (1435	,	 'Connecticut'	,	233	),																			
-    (1436	,	 'Florida'	,	233	),																			
-    (1437	,	 'District of Columbia'	,	233	),																			
-    (1438	,	 'Midway Atoll'	,	233	),																			
-    (1439	,	 'Navassa Island'	,	233	),																			
-    (1440	,	 'Indiana'	,	233	),																			
-    (1441	,	 'Wisconsin'	,	233	),																			
-    (1442	,	 'Wyoming'	,	233	),																			
-    (1443	,	 'South Carolina'	,	233	),																			
-    (1444	,	 'Arkansas'	,	233	),																			
-    (1445	,	 'South Dakota'	,	233	),																			
-    (1446	,	 'Montana'	,	233	),																			
-    (1447	,	 'North Carolina'	,	233	),																			
-    (1448	,	 'Palmyra Atoll'	,	233	),																			
-    (1449	,	 'Puerto Rico'	,	233	),																			
-    (1450	,	 'Colorado'	,	233	),																			
-    (1451	,	 'Missouri'	,	233	),																			
-    (1452	,	 'New York'	,	233	),																			
-    (1453	,	 'Maine'	,	233	),																			
-    (1454	,	 'Tennessee'	,	233	),																			
-    (1455	,	 'Georgia'	,	233	),																			
-    (1456	,	 'Alabama'	,	233	),																			
-    (1457	,	 'Louisiana'	,	233	),																			
-    (1458	,	 'Nevada'	,	233	),																			
-    (1459	,	 'Iowa'	,	233	),																			
-    (1460	,	 'Idaho'	,	233	),																			
-    (1461	,	 'Rhode Island'	,	233	),																			
-    (1462	,	 'Washington'	,	233	),																			
-    (1463	,	 'Shinyanga'	,	218	),																			
-    (1464	,	 'Simiyu'	,	218	),																			
-    (1465	,	 'Kagera'	,	218	),																			
-    (1466	,	 'Dodoma'	,	218	),																			
-    (1467	,	 'Kilimanjaro'	,	218	),																			
-    (1468	,	 'Mara'	,	218	),																			
-    (1469	,	 'Tabora'	,	218	),																			
-    (1470	,	 'Morogoro'	,	218	),																			
-    (1471	,	 'Zanzibar South'	,	218	),																			
-    (1472	,	 'Pemba South'	,	218	),																			
-    (1473	,	 'Zanzibar North'	,	218	),																			
-    (1474	,	 'Singida'	,	218	),																			
-    (1475	,	 'Zanzibar West'	,	218	),																			
-    (1476	,	 'Mtwara'	,	218	),																			
-    (1477	,	 'Rukwa'	,	218	),																			
-    (1478	,	 'Kigoma'	,	218	),																			
-    (1479	,	 'Mwanza'	,	218	),																			
-    (1480	,	 'Njombe'	,	218	),																			
-    (1481	,	 'Geita'	,	218	),																			
-    (1482	,	 'Katavi'	,	218	),																			
-    (1483	,	 'Lindi'	,	218	),																			
-    (1484	,	 'Manyara'	,	218	),																			
-    (1485	,	 'Pwani'	,	218	),																			
-    (1486	,	 'Ruvuma'	,	218	),																			
-    (1487	,	 'Tanga'	,	218	),																			
-    (1488	,	 'Pemba North'	,	218	),																			
-    (1489	,	 'Iringa'	,	218	),																			
-    (1490	,	 'Dar es Salaam'	,	218	),																			
-    (1491	,	 'Arusha'	,	218	),																			
-    (1492	,	 'Eastern Finland Province'	,	74	),																			
-    (1493	,	 'Tavastia Proper'	,	74	),																			
-    (1494	,	 'Central Ostrobothnia'	,	74	),																			
-    (1495	,	 'Southern Savonia'	,	74	),																			
-    (1496	,	 'Kainuu'	,	74	),																			
-    (1497	,	 'South Karelia'	,	74	),																			
-    (1498	,	 'Southern Ostrobothnia'	,	74	),																			
-    (1499	,	 'Oulu Province'	,	74	),																			
-    (1500	,	 'Lapland'	,	74	),																			
-    (1501	,	 'Satakunta'	,	74	),																			
-    (1502	,	 'Päijänne Tavastia'	,	74	),																			
-    (1503	,	 'Northern Savonia'	,	74	),																			
-    (1504	,	 'North Karelia'	,	74	),																			
-    (1505	,	 'Northern Ostrobothnia'	,	74	),																			
-    (1506	,	 'Pirkanmaa'	,	74	),																			
-    (1507	,	 'Finland Proper'	,	74	),																			
-    (1508	,	 'Ostrobothnia'	,	74	),																			
-    (1509	,	 'Åland Islands'	,	74	),																			
-    (1510	,	 'Uusimaa'	,	74	),																			
-    (1511	,	 'Central Finland'	,	74	),																			
-    (1512	,	 'Kymenlaakso'	,	74	),																			
-    (1513	,	 'Canton of Diekirch'	,	127	),																			
-    (1514	,	 'Luxembourg District'	,	127	),																			
-    (1515	,	 'Canton of Echternach'	,	127	),																			
-    (1516	,	 'Canton of Redange'	,	127	),																			
-    (1517	,	 'Canton of Esch-sur-Alzette'	,	127	),																			
-    (1518	,	 'Canton of Capellen'	,	127	),																			
-    (1519	,	 'Canton of Remich'	,	127	),																			
-    (1520	,	 'Grevenmacher District'	,	127	),																			
-    (1521	,	 'Canton of Clervaux'	,	127	),																			
-    (1522	,	 'Canton of Mersch'	,	127	),																			
-    (1523	,	 'Canton of Vianden'	,	127	),																			
-    (1524	,	 'Diekirch District'	,	127	),																			
-    (1525	,	 'Canton of Grevenmacher'	,	127	),																			
-    (1526	,	 'Canton of Wiltz'	,	127	),																			
-    (1527	,	 'Canton of Luxembourg'	,	127	),																			
-    (1528	,	 'Region Zealand'	,	59	),																			
-    (1529	,	 'Region of Southern Denmark'	,	59	),																			
-    (1530	,	 'Capital Region of Denmark'	,	59	),																			
-    (1531	,	 'Central Denmark Region'	,	59	),																			
-    (1532	,	 'North Denmark Region'	,	59	),																			
-    (1533	,	 'Gävleborg County'	,	213	),																			
-    (1534	,	 'Dalarna County'	,	213	),																			
-    (1535	,	 'Värmland County'	,	213	),																			
-    (1536	,	 'Östergötland County'	,	213	),																			
-    (1537	,	 'Blekinge'	,	213	),																			
-    (1538	,	 'Norrbotten County'	,	213	),																			
-    (1539	,	 'Örebro County'	,	213	),																			
-    (1540	,	 'Södermanland County'	,	213	),																			
-    (1541	,	 'Skåne County'	,	213	),																			
-    (1542	,	 'Kronoberg County'	,	213	),																			
-    (1543	,	 'Västerbotten County'	,	213	),																			
-    (1544	,	 'Kalmar County'	,	213	),																			
-    (1545	,	 'Uppsala County'	,	213	),																			
-    (1546	,	 'Gotland County'	,	213	),																			
-    (1547	,	 'Västra Götaland County'	,	213	),																			
-    (1548	,	 'Halland County'	,	213	),																			
-    (1549	,	 'Västmanland County'	,	213	),																			
-    (1550	,	 'Jönköping County'	,	213	),																			
-    (1551	,	 'Stockholm County'	,	213	),																			
-    (1552	,	 'Västernorrland County'	,	213	),																			
-    (1553	,	 'Plungė District Municipality'	,	126	),																			
-    (1554	,	 'Šiauliai District Municipality'	,	126	),																			
-    (1555	,	 'Jurbarkas District Municipality'	,	126	),																			
-    (1556	,	 'Kaunas County'	,	126	),																			
-    (1557	,	 'Mažeikiai District Municipality'	,	126	),																			
-    (1558	,	 'Panevėžys County'	,	126	),																			
-    (1559	,	 'Elektrėnai municipality'	,	126	),																			
-    (1560	,	 'Švenčionys District Municipality'	,	126	),																			
-    (1561	,	 'Akmenė District Municipality'	,	126	),																			
-    (1562	,	 'Ignalina District Municipality'	,	126	),																			
-    (1563	,	 'Neringa Municipality'	,	126	),																			
-    (1564	,	 'Visaginas Municipality'	,	126	),																			
-    (1565	,	 'Kaunas District Municipality'	,	126	),																			
-    (1566	,	 'Biržai District Municipality'	,	126	),																			
-    (1567	,	 'Jonava District Municipality'	,	126	),																			
-    (1568	,	 'Radviliškis District Municipality'	,	126	),																			
-    (1569	,	 'Telšiai County'	,	126	),																			
-    (1570	,	 'Marijampolė County'	,	126	),																			
-    (1571	,	 'Kretinga District Municipality'	,	126	),																			
-    (1572	,	 'Tauragė District Municipality'	,	126	),																			
-    (1573	,	 'Tauragė County'	,	126	),																			
-    (1574	,	 'Alytus County'	,	126	),																			
-    (1575	,	 'Kazlų Rūda municipality'	,	126	),																			
-    (1576	,	 'Šakiai District Municipality'	,	126	),																			
-    (1577	,	 'Šalčininkai District Municipality'	,	126	),																			
-    (1578	,	 'Prienai District Municipality'	,	126	),																			
-    (1579	,	 'Druskininkai municipality'	,	126	),																			
-    (1580	,	 'Kaunas City Municipality'	,	126	),																			
-    (1581	,	 'Joniškis District Municipality'	,	126	),																			
-    (1582	,	 'Molėtai District Municipality'	,	126	),																			
-    (1583	,	 'Kaišiadorys District Municipality'	,	126	),																			
-    (1584	,	 'Kėdainiai District Municipality'	,	126	),																			
-    (1585	,	 'Kupiškis District Municipality'	,	126	),																			
-    (1586	,	 'Šiauliai County'	,	126	),																			
-    (1587	,	 'Raseiniai District Municipality'	,	126	),																			
-    (1588	,	 'Palanga City Municipality'	,	126	),																			
-    (1589	,	 'Panevėžys City Municipality'	,	126	),																			
-    (1590	,	 'Rietavas municipality'	,	126	),																			
-    (1591	,	 'Kalvarija municipality'	,	126	),																			
-    (1592	,	 'Vilnius District Municipality'	,	126	),																			
-    (1593	,	 'Trakai District Municipality'	,	126	),																			
-    (1594	,	 'Širvintos District Municipality'	,	126	),																			
-    (1595	,	 'Pakruojis District Municipality'	,	126	),																			
-    (1596	,	 'Ukmergė District Municipality'	,	126	),																			
-    (1597	,	 'Klaipeda City Municipality'	,	126	),																			
-    (1598	,	 'Utena District Municipality'	,	126	),																			
-    (1599	,	 'Alytus District Municipality'	,	126	),																			
-    (1600	,	 'Klaipėda County'	,	126	),																			
-    (1601	,	 'Vilnius County'	,	126	),																			
-    (1602	,	 'Varėna District Municipality'	,	126	),																			
-    (1603	,	 'Birštonas Municipality'	,	126	),																			
-    (1604	,	 'Klaipėda District Municipality'	,	126	),																			
-    (1605	,	 'Alytus City Municipality'	,	126	),																			
-    (1606	,	 'Vilnius City Municipality'	,	126	),																			
-    (1607	,	 'Šilutė District Municipality'	,	126	),																			
-    (1608	,	 'Telšiai District Municipality'	,	126	),																			
-    (1609	,	 'Šiauliai City Municipality'	,	126	),																			
-    (1610	,	 'Marijampolė Municipality'	,	126	),																			
-    (1611	,	 'Lazdijai District Municipality'	,	126	),																			
-    (1612	,	 'Pagėgiai municipality'	,	126	),																			
-    (1613	,	 'Šilalė District Municipality'	,	126	),																			
-    (1614	,	 'Panevėžys District Municipality'	,	126	),																			
-    (1615	,	 'Rokiškis District Municipality'	,	126	),																			
-    (1616	,	 'Pasvalys District Municipality'	,	126	),																			
-    (1617	,	 'Skuodas District Municipality'	,	126	),																			
-    (1618	,	 'Kelmė District Municipality'	,	126	),																			
-    (1619	,	 'Zarasai District Municipality'	,	126	),																			
-    (1620	,	 'Vilkaviškis District Municipality'	,	126	),																			
-    (1621	,	 'Utena County'	,	126	),																			
-    (1622	,	 'Opole Voivodeship'	,	176	),																			
-    (1623	,	 'Silesian Voivodeship'	,	176	),																			
-    (1624	,	 'Pomeranian Voivodeship'	,	176	),																			
-    (1625	,	 'Kuyavian-Pomeranian Voivodeship'	,	176	),																			
-    (1626	,	 'Podkarpackie Voivodeship'	,	176	),																			
-    (1628	,	 'Warmian-Masurian Voivodeship'	,	176	),																			
-    (1629	,	 'Lower Silesian Voivodeship'	,	176	),																			
-    (1630	,	 'Świętokrzyskie Voivodeship'	,	176	),																			
-    (1631	,	 'Lubusz Voivodeship'	,	176	),																			
-    (1632	,	 'Podlaskie Voivodeship'	,	176	),																			
-    (1633	,	 'West Pomeranian Voivodeship'	,	176	),																			
-    (1634	,	 'Greater Poland Voivodeship'	,	176	),																			
-    (1635	,	 'Lesser Poland Voivodeship'	,	176	),																			
-    (1636	,	 'Łódź Voivodeship'	,	176	),																			
-    (1637	,	 'Masovian Voivodeship'	,	176	),																			
-    (1638	,	 'Lublin Voivodeship'	,	176	),																			
-    (1639	,	 'Aargau'	,	214	),																			
-    (1640	,	 'Fribourg'	,	214	),																			
-    (1641	,	 'Basel-Land'	,	214	),																			
-    (1642	,	 'Uri'	,	214	),																			
-    (1643	,	 'Ticino'	,	214	),																			
-    (1644	,	 'St. Gallen'	,	214	),																			
-    (1645	,	 'Bern'	,	214	),																			
-    (1646	,	 'Zug'	,	214	),																			
-    (1647	,	 'Geneva'	,	214	),																			
-    (1648	,	 'Valais'	,	214	),																			
-    (1649	,	 'Appenzell Innerrhoden'	,	214	),																			
-    (1650	,	 'Obwalden'	,	214	),																			
-    (1651	,	 'Vaud'	,	214	),																			
-    (1652	,	 'Nidwalden'	,	214	),																			
-    (1653	,	 'Schwyz'	,	214	),																			
-    (1654	,	 'Schaffhausen'	,	214	),																			
-    (1655	,	 'Appenzell Ausserrhoden'	,	214	),																			
-    (1656	,	 'Zürich'	,	214	),																			
-    (1657	,	 'Thurgau'	,	214	),																			
-    (1658	,	 'Jura'	,	214	),																			
-    (1659	,	 'Neuchâtel'	,	214	),																			
-    (1660	,	 'Graubünden'	,	214	),																			
-    (1661	,	 'Glarus'	,	214	),																			
-    (1662	,	 'Solothurn'	,	214	),																			
-    (1663	,	 'Lucerne'	,	214	),																			
-    (1664	,	 'Tuscany'	,	107	),																			
-    (1665	,	 'Province of Padua'	,	107	),																			
-    (1666	,	 'Province of Parma'	,	107	),																			
-    (1667	,	 'Libero consorzio comunale di Siracusa'	,	107	),																			
-    (1668	,	 'Metropolitan City of Palermo'	,	107	),																			
-    (1669	,	 'Campania'	,	107	),																			
-    (1670	,	 'Marche'	,	107	),																			
-    (1671	,	 'Metropolitan City of Reggio Calabria'	,	107	),																			
-    (1672	,	 'Province of Ancona'	,	107	),																			
-    (1673	,	 'Metropolitan City of Venice'	,	107	),																			
-    (1674	,	 'Province of Latina'	,	107	),																			
-    (1675	,	 'Province of Lecce'	,	107	),																			
-    (1676	,	 'Province of Pavia'	,	107	),																			
-    (1677	,	 'Province of Lecco'	,	107	),																			
-    (1678	,	 'Lazio'	,	107	),																			
-    (1679	,	 'Abruzzo'	,	107	),																			
-    (1680	,	 'Metropolitan City of Florence'	,	107	),																			
-    (1681	,	 'Province of Ascoli Piceno'	,	107	),																			
-    (1682	,	 'Metropolitan City of Cagliari'	,	107	),																			
-    (1683	,	 'Umbria'	,	107	),																			
-    (1684	,	 'Metropolitan City of Bologna'	,	107	),																			
-    (1685	,	 'Province of Pisa'	,	107	),																			
-    (1686	,	 'Province of Barletta-Andria-Trani'	,	107	),																			
-    (1687	,	 'Province of Pistoia'	,	107	),																			
-    (1688	,	 'Apulia'	,	107	),																			
-    (1689	,	 'Province of Belluno'	,	107	),																			
-    (1690	,	 'Province of Pordenone'	,	107	),																			
-    (1691	,	 'Province of Perugia'	,	107	),																			
-    (1692	,	 'Province of Avellino'	,	107	),																			
-    (1693	,	 'Pesaro and Urbino Province'	,	107	),																			
-    (1694	,	 'Province of Pescara'	,	107	),																			
-    (1695	,	 'Molise'	,	107	),																			
-    (1696	,	 'Province of Piacenza'	,	107	),																			
-    (1697	,	 'Province of Potenza'	,	107	),																			
-    (1698	,	 'Metropolitan City of Milan'	,	107	),																			
-    (1699	,	 'Metropolitan City of Genoa'	,	107	),																			
-    (1700	,	 'Province of Prato'	,	107	),																			
-    (1701	,	 'Benevento Province'	,	107	),																			
-    (1702	,	 'Piedmont'	,	107	),																			
-    (1703	,	 'Calabria'	,	107	),																			
-    (1704	,	 'Province of Bergamo'	,	107	),																			
-    (1705	,	 'Lombardy'	,	107	),																			
-    (1706	,	 'Basilicata'	,	107	),																			
-    (1707	,	 'Province of Ravenna'	,	107	),																			
-    (1708	,	 'Province of Reggio Emilia'	,	107	),																			
-    (1709	,	 'Sicily'	,	107	),																			
-    (1710	,	 'Metropolitan City of Turin'	,	107	),																			
-    (1711	,	 'Metropolitan City of Rome'	,	107	),																			
-    (1712	,	 'Province of Rieti'	,	107	),																			
-    (1713	,	 'Province of Rimini'	,	107	),																			
-    (1714	,	 'Province of Brindisi'	,	107	),																			
-    (1715	,	 'Sardinia'	,	107	),																			
-    (1716	,	 'Aosta Valley'	,	107	),																			
-    (1717	,	 'Province of Brescia'	,	107	),																			
-    (1718	,	 'Libero consorzio comunale di Caltanissetta'	,	107	),																			
-    (1719	,	 'Province of Rovigo'	,	107	),																			
-    (1720	,	 'Province of Salerno'	,	107	),																			
-    (1721	,	 'Province of Campobasso'	,	107	),																			
-    (1722	,	 'Province of Sassari'	,	107	),																			
-    (1723	,	 'Libero consorzio comunale di Enna'	,	107	),																			
-    (1724	,	 'Metropolitan City of Naples'	,	107	),																			
-    (1725	,	 'Trentino-South Tyrol'	,	107	),																			
-    (1726	,	 'Province of Verbano-Cusio-Ossola'	,	107	),																			
-    (1727	,	 'Libero consorzio comunale di Agrigento'	,	107	),																			
-    (1728	,	 'Province of Catanzaro'	,	107	),																			
-    (1729	,	 'Libero consorzio comunale di Ragusa'	,	107	),																			
-    (1730	,	 'Province of Carbonia-Iglesias'	,	107	),																			
-    (1731	,	 'Province of Caserta'	,	107	),																			
-    (1732	,	 'Province of Savona'	,	107	),																			
-    (1733	,	 'Libero consorzio comunale di Trapani'	,	107	),																			
-    (1734	,	 'Province of Siena'	,	107	),																			
-    (1735	,	 'Province of Viterbo'	,	107	),																			
-    (1736	,	 'Province of Verona'	,	107	),																			
-    (1737	,	 'Province of Vibo Valentia'	,	107	),																			
-    (1738	,	 'Province of Vicenza'	,	107	),																			
-    (1739	,	 'Province of Chieti'	,	107	),																			
-    (1740	,	 'Province of Como'	,	107	),																			
-    (1741	,	 'Province of Sondrio'	,	107	),																			
-    (1742	,	 'Province of Cosenza'	,	107	),																			
-    (1743	,	 'Province of Taranto'	,	107	),																			
-    (1744	,	 'Province of Fermo'	,	107	),																			
-    (1745	,	 'Province of Livorno'	,	107	),																			
-    (1746	,	 'Province of Ferrara'	,	107	),																			
-    (1747	,	 'Province of Lodi'	,	107	),																			
-    (1748	,	 'Trentino'	,	107	),																			
-    (1749	,	 'Province of Lucca'	,	107	),																			
-    (1750	,	 'Province of Macerata'	,	107	),																			
-    (1751	,	 'Province of Cremona'	,	107	),																			
-    (1752	,	 'Province of Teramo'	,	107	),																			
-    (1753	,	 'Veneto'	,	107	),																			
-    (1754	,	 'Province of Crotone'	,	107	),																			
-    (1755	,	 'Province of Terni'	,	107	),																			
-    (1756	,	 'Friuli–Venezia Giulia'	,	107	),																			
-    (1757	,	 'Province of Modena'	,	107	),																			
-    (1758	,	 'Province of Mantua'	,	107	),																			
-    (1759	,	 'Province of Massa and Carrara'	,	107	),																			
-    (1760	,	 'Province of Matera'	,	107	),																			
-    (1761	,	 'Province of Medio Campidano'	,	107	),																			
-    (1762	,	 'Province of Treviso'	,	107	),																			
-    (1763	,	 'Province of Trieste'	,	107	),																			
-    (1764	,	 'Province of Udine'	,	107	),																			
-    (1765	,	 'Province of Varese'	,	107	),																			
-    (1766	,	 'Metropolitan City of Catania'	,	107	),																			
-    (1767	,	 'South Tyrol'	,	107	),																			
-    (1768	,	 'Liguria'	,	107	),																			
-    (1769	,	 'Province of Monza and Brianza'	,	107	),																			
-    (1770	,	 'Metropolitan City of Messina'	,	107	),																			
-    (1771	,	 'Province of Foggia'	,	107	),																			
-    (1772	,	 'Metropolitan City of Bari'	,	107	),																			
-    (1773	,	 'Emilia-Romagna'	,	107	),																			
-    (1774	,	 'Province of Novara'	,	107	),																			
-    (1775	,	 'Province of Cuneo'	,	107	),																			
-    (1776	,	 'Province of Frosinone'	,	107	),																			
-    (1777	,	 'Province of Gorizia'	,	107	),																			
-    (1778	,	 'Province of Biella'	,	107	),																			
-    (1779	,	 'Province of Forlì-Cesena'	,	107	),																			
-    (1780	,	 'Province of Asti'	,	107	),																			
-    (1781	,	 'Province of L Aquila'	,	107	),																			
-    (1782	,	 'Province of Ogliastra'	,	107	),																			
-    (1783	,	 'Province of Alessandria'	,	107	),																			
-    (1784	,	 'Province of Olbia-Tempio'	,	107	),																			
-    (1785	,	 'Province of Vercelli'	,	107	),																			
-    (1786	,	 'Province of Oristano'	,	107	),																			
-    (1787	,	 'Province of Grosseto'	,	107	),																			
-    (1788	,	 'Province of Imperia'	,	107	),																			
-    (1789	,	 'Province of Isernia'	,	107	),																			
-    (1790	,	 'Province of Nuoro'	,	107	),																			
-    (1791	,	 'Province of La Spezia'	,	107	),																			
-    (1792	,	 'Sumatera Utara'	,	102	),																			
-    (1793	,	 'Bengkulu'	,	102	),																			
-    (1794	,	 'Kalimantan Tengah'	,	102	),																			
-    (1795	,	 'Sulawesi Selatan'	,	102	),																			
-    (1796	,	 'Sulawesi Tenggara'	,	102	),																			
-    (1798	,	 'Papua'	,	102	),																			
-    (1799	,	 'Papua Barat'	,	102	),																			
-    (1800	,	 'Maluku'	,	102	),																			
-    (1801	,	 'Maluku Utara'	,	102	),																			
-    (1802	,	 'Jawa Tengah'	,	102	),																			
-    (1804	,	 'Kalimantan Timur'	,	102	),																			
-    (1805	,	 'DKI Jakarta'	,	102	),																			
-    (1806	,	 'Kalimantan Barat'	,	102	),																			
-    (1807	,	 'Kepulauan Riau'	,	102	),																			
-    (1808	,	 'Sulawesi Utara'	,	102	),																			
-    (1809	,	 'Riau'	,	102	),																			
-    (1810	,	 'Banten'	,	102	),																			
-    (1811	,	 'Lampung'	,	102	),																			
-    (1812	,	 'Gorontalo'	,	102	),																			
-    (1813	,	 'Sulawesi Tengah'	,	102	),																			
-    (1814	,	 'Nusa Tenggara Barat'	,	102	),																			
-    (1815	,	 'Jambi'	,	102	),																			
-    (1816	,	 'Sumatera Selatan'	,	102	),																			
-    (1817	,	 'Sulawesi Barat'	,	102	),																			
-    (1818	,	 'Nusa Tenggara Timur'	,	102	),																			
-    (1819	,	 'Kalimantan Selatan'	,	102	),																			
-    (1820	,	 'Kepulauan Bangka Belitung'	,	102	),																			
-    (1822	,	 'Aceh'	,	102	),																			
-    (1824	,	 'Kalimantan Utara'	,	102	),																			
-    (1825	,	 'Jawa Barat'	,	102	),																			
-    (1826	,	 'Bali'	,	102	),																			
-    (1827	,	 'Jawa Timur'	,	102	),																			
-    (1828	,	 'Sumatera Barat'	,	102	),																			
-    (1829	,	 'DI Yogyakarta'	,	102	),																			
-    (1830	,	 'Phoenix Islands'	,	114	),																			
-    (1831	,	 'Gilbert Islands'	,	114	),																			
-    (1832	,	 'Line Islands'	,	114	),																			
-    (1833	,	 'Primorsky Krai'	,	182	),																			
-    (1834	,	 'Novgorod Oblast'	,	182	),																			
-    (1835	,	 'Jewish Autonomous Oblast'	,	182	),																			
-    (1836	,	 'Nenets Autonomous Okrug'	,	182	),																			
-    (1837	,	 'Rostov Oblast'	,	182	),																			
-    (1838	,	 'Khanty-Mansi Autonomous Okrug'	,	182	),																			
-    (1839	,	 'Magadan Oblast'	,	182	),																			
-    (1840	,	 'Krasnoyarsk Krai'	,	182	),																			
-    (1841	,	 'Republic of Karelia'	,	182	),																			
-    (1842	,	 'Republic of Buryatia'	,	182	),																			
-    (1843	,	 'Murmansk Oblast'	,	182	),																			
-    (1844	,	 'Kaluga Oblast'	,	182	),																			
-    (1845	,	 'Chelyabinsk Oblast'	,	182	),																			
-    (1846	,	 'Omsk Oblast'	,	182	),																			
-    (1847	,	 'Yamalo-Nenets Autonomous Okrug'	,	182	),																			
-    (1848	,	 'Sakha Republic'	,	182	),																			
-    (1849	,	 'Arkhangelsk'	,	182	),																			
-    (1850	,	 'Republic of Dagestan'	,	182	),																			
-    (1851	,	 'Yaroslavl Oblast'	,	182	),																			
-    (1852	,	 'Republic of Adygea'	,	182	),																			
-    (1853	,	 'Republic of North Ossetia-Alania'	,	182	),																			
-    (1854	,	 'Republic of Bashkortostan'	,	182	),																			
-    (1855	,	 'Kursk Oblast'	,	182	),																			
-    (1856	,	 'Ulyanovsk Oblast'	,	182	),																			
-    (1857	,	 'Nizhny Novgorod Oblast'	,	182	),																			
-    (1858	,	 'Amur Oblast'	,	182	),																			
-    (1859	,	 'Chukotka Autonomous Okrug'	,	182	),																			
-    (1860	,	 'Tver Oblast'	,	182	),																			
-    (1861	,	 'Republic of Tatarstan'	,	182	),																			
-    (1862	,	 'Samara Oblast'	,	182	),																			
-    (1863	,	 'Pskov Oblast'	,	182	),																			
-    (1864	,	 'Ivanovo Oblast'	,	182	),																			
-    (1865	,	 'Kamchatka Krai'	,	182	),																			
-    (1866	,	 'Astrakhan Oblast'	,	182	),																			
-    (1867	,	 'Bryansk Oblast'	,	182	),																			
-    (1868	,	 'Stavropol Krai'	,	182	),																			
-    (1869	,	 'Karachay-Cherkess Republic'	,	182	),																			
-    (1870	,	 'Mari El Republic'	,	182	),																			
-    (1871	,	 'Perm Krai'	,	182	),																			
-    (1872	,	 'Tomsk Oblast'	,	182	),																			
-    (1873	,	 'Khabarovsk Krai'	,	182	),																			
-    (1874	,	 'Vologda Oblast'	,	182	),																			
-    (1875	,	 'Sakhalin'	,	182	),																			
-    (1876	,	 'Altai Republic'	,	182	),																			
-    (1877	,	 'Republic of Khakassia'	,	182	),																			
-    (1878	,	 'Tambov Oblast'	,	182	),																			
-    (1879	,	 'Saint Petersburg'	,	182	),																			
-    (1880	,	 'Irkutsk'	,	182	),																			
-    (1881	,	 'Vladimir Oblast'	,	182	),																			
-    (1882	,	 'Moscow Oblast'	,	182	),																			
-    (1883	,	 'Republic of Kalmykia'	,	182	),																			
-    (1884	,	 'Republic of Ingushetia'	,	182	),																			
-    (1885	,	 'Smolensk Oblast'	,	182	),																			
-    (1886	,	 'Orenburg Oblast'	,	182	),																			
-    (1887	,	 'Saratov Oblast'	,	182	),																			
-    (1888	,	 'Novosibirsk'	,	182	),																			
-    (1889	,	 'Lipetsk Oblast'	,	182	),																			
-    (1890	,	 'Kirov Oblast'	,	182	),																			
-    (1891	,	 'Krasnodar Krai'	,	182	),																			
-    (1892	,	 'Kabardino-Balkar Republic'	,	182	),																			
-    (1893	,	 'Chechen Republic'	,	182	),																			
-    (1894	,	 'Sverdlovsk'	,	182	),																			
-    (1895	,	 'Tula Oblast'	,	182	),																			
-    (1896	,	 'Leningrad Oblast'	,	182	),																			
-    (1897	,	 'Kemerovo Oblast'	,	182	),																			
-    (1898	,	 'Republic of Mordovia'	,	182	),																			
-    (1899	,	 'Komi Republic'	,	182	),																			
-    (1900	,	 'Tuva Republic'	,	182	),																			
-    (1901	,	 'Moscow'	,	182	),																			
-    (1902	,	 'Kaliningrad'	,	182	),																			
-    (1903	,	 'Belgorod Oblast'	,	182	),																			
-    (1904	,	 'Zabaykalsky Krai'	,	182	),																			
-    (1905	,	 'Ryazan Oblast'	,	182	),																			
-    (1906	,	 'Voronezh Oblast'	,	182	),																			
-    (1907	,	 'Tyumen Oblast'	,	182	),																			
-    (1908	,	 'Oryol Oblast'	,	182	),																			
-    (1909	,	 'Penza Oblast'	,	182	),																			
-    (1910	,	 'Kostroma Oblast'	,	182	),																			
-    (1911	,	 'Altai Krai'	,	182	),																			
-    (1912	,	 'Sevastopol'	,	182	),																			
-    (1913	,	 'Udmurt Republic'	,	182	),																			
-    (1914	,	 'Chuvash Republic'	,	182	),																			
-    (1915	,	 'Kurgan Oblast'	,	182	),																			
-    (1916	,	 'Lomaiviti'	,	73	),																			
-    (1917	,	 'Ba'	,	73	),																			
-    (1918	,	 'Tailevu'	,	73	),																			
-    (1919	,	 'Nadroga-Navosa'	,	73	),																			
-    (1920	,	 'Rewa'	,	73	),																			
-    (1921	,	 'Northern Division'	,	73	),																			
-    (1922	,	 'Macuata'	,	73	),																			
-    (1923	,	 'Western Division'	,	73	),																			
-    (1924	,	 'Cakaudrove'	,	73	),																			
-    (1925	,	 'Serua'	,	73	),																			
-    (1926	,	 'Ra'	,	73	),																			
-    (1927	,	 'Naitasiri'	,	73	),																			
-    (1928	,	 'Namosi'	,	73	),																			
-    (1929	,	 'Central Division'	,	73	),																			
-    (1930	,	 'Bua'	,	73	),																			
-    (1931	,	 'Rotuma'	,	73	),																			
-    (1932	,	 'Eastern Division'	,	73	),																			
-    (1933	,	 'Lau'	,	73	),																			
-    (1934	,	 'Kadavu'	,	73	),																			
-    (1935	,	 'Labuan'	,	132	),																			
-    (1936	,	 'Sabah'	,	132	),																			
-    (1937	,	 'Sarawak'	,	132	),																			
-    (1938	,	 'Perlis'	,	132	),																			
-    (1939	,	 'Penang'	,	132	),																			
-    (1940	,	 'Pahang'	,	132	),																			
-    (1941	,	 'Malacca'	,	132	),																			
-    (1942	,	 'Terengganu'	,	132	),																			
-    (1943	,	 'Perak'	,	132	),																			
-    (1944	,	 'Selangor'	,	132	),																			
-    (1945	,	 'Putrajaya'	,	132	),																			
-    (1946	,	 'Kelantan'	,	132	),																			
-    (1947	,	 'Kedah'	,	132	),																			
-    (1948	,	 'Negeri Sembilan'	,	132	),																			
-    (1949	,	 'Kuala Lumpur'	,	132	),																			
-    (1950	,	 'Johor'	,	132	),																			
-    (1951	,	 'Mashonaland East Province'	,	247	),																			
-    (1952	,	 'Matabeleland South Province'	,	247	),																			
-    (1953	,	 'Mashonaland West Province'	,	247	),																			
-    (1954	,	 'Matabeleland North Province'	,	247	),																			
-    (1955	,	 'Mashonaland Central Province'	,	247	),																			
-    (1956	,	 'Bulawayo Province'	,	247	),																			
-    (1957	,	 'Midlands Province'	,	247	),																			
-    (1958	,	 'Harare Province'	,	247	),																			
-    (1959	,	 'Manicaland'	,	247	),																			
-    (1960	,	 'Masvingo Province'	,	247	),																			
-    (1961	,	 'Bulgan Province'	,	146	),																			
-    (1962	,	 'Darkhan-Uul Province'	,	146	),																			
-    (1963	,	 'Dornod Province'	,	146	),																			
-    (1964	,	 'Khovd Province'	,	146	),																			
-    (1965	,	 'Övörkhangai Province'	,	146	),																			
-    (1966	,	 'Orkhon Province'	,	146	),																			
-    (1967	,	 'Ömnögovi Province'	,	146	),																			
-    (1968	,	 'Töv Province'	,	146	),																			
-    (1969	,	 'Bayan-Ölgii Province'	,	146	),																			
-    (1970	,	 'Dundgovi Province'	,	146	),																			
-    (1971	,	 'Uvs Province'	,	146	),																			
-    (1972	,	 'Govi-Altai Province'	,	146	),																			
-    (1973	,	 'Arkhangai Province'	,	146	),																			
-    (1974	,	 'Khentii Province'	,	146	),																			
-    (1975	,	 'Khövsgöl Province'	,	146	),																			
-    (1976	,	 'Bayankhongor Province'	,	146	),																			
-    (1977	,	 'Sükhbaatar Province'	,	146	),																			
-    (1978	,	 'Govisümber Province'	,	146	),																			
-    (1979	,	 'Zavkhan Province'	,	146	),																			
-    (1980	,	 'Selenge Province'	,	146	),																			
-    (1981	,	 'Dornogovi Province'	,	146	),																			
-    (1982	,	 'Northern Province'	,	246	),																			
-    (1983	,	 'Western Province'	,	246	),																			
-    (1984	,	 'Copperbelt Province'	,	246	),																			
-    (1985	,	 'Northwestern Province'	,	246	),																			
-    (1986	,	 'Central Province'	,	246	),																			
-    (1987	,	 'Luapula Province'	,	246	),																			
-    (1988	,	 'Lusaka Province'	,	246	),																			
-    (1989	,	 'Muchinga Province'	,	246	),																			
-    (1990	,	 'Southern Province'	,	246	),																			
-    (1991	,	 'Eastern Province'	,	246	),																			
-    (1992	,	 'Capital Governorate'	,	18	),																			
-    (1993	,	 'Southern Governorate'	,	18	),																			
-    (1994	,	 'Northern Governorate'	,	18	),																			
-    (1995	,	 'Muharraq Governorate'	,	18	),																			
-    (1996	,	 'Central Governorate'	,	18	),																			
-    (1997	,	 'Rio de Janeiro'	,	31	),																			
-    (1998	,	 'Minas Gerais'	,	31	),																			
-    (1999	,	 'Amapá'	,	31	),																			
-    (2000	,	 'Goiás'	,	31	),																			
-    (2001	,	 'Rio Grande do Sul'	,	31	),																			
-    (2002	,	 'Bahia'	,	31	),																			
-    (2003	,	 'Sergipe'	,	31	),																			
-    (2004	,	 'Amazonas'	,	31	),																			
-    (2005	,	 'Paraíba'	,	31	),																			
-    (2006	,	 'Pernambuco'	,	31	),																			
-    (2007	,	 'Alagoas'	,	31	),																			
-    (2008	,	 'Piauí'	,	31	),																			
-    (2009	,	 'Pará'	,	31	),																			
-    (2010	,	 'Mato Grosso do Sul'	,	31	),																			
-    (2011	,	 'Mato Grosso'	,	31	),																			
-    (2012	,	 'Acre'	,	31	),																			
-    (2013	,	 'Rondônia'	,	31	),																			
-    (2014	,	 'Santa Catarina'	,	31	),																			
-    (2015	,	 'Maranhão'	,	31	),																			
-    (2016	,	 'Ceará'	,	31	),																			
-    (2017	,	 'Distrito Federal'	,	31	),																			
-    (2018	,	 'Espírito Santo'	,	31	),																			
-    (2019	,	 'Rio Grande do Norte'	,	31	),																			
-    (2020	,	 'Tocantins'	,	31	),																			
-    (2021	,	 'São Paulo'	,	31	),																			
-    (2022	,	 'Paraná'	,	31	),																			
-    (2023	,	 'Aragatsotn Region'	,	12	),																			
-    (2024	,	 'Ararat Province'	,	12	),																			
-    (2025	,	 'Vayots Dzor Region'	,	12	),																			
-    (2026	,	 'Armavir Region'	,	12	),																			
-    (2027	,	 'Syunik Province'	,	12	),																			
-    (2028	,	 'Gegharkunik Province'	,	12	),																			
-    (2029	,	 'Lori Region'	,	12	),																			
-    (2030	,	 'Yerevan'	,	12	),																			
-    (2031	,	 'Shirak Region'	,	12	),																			
-    (2032	,	 'Tavush Region'	,	12	),																			
-    (2033	,	 'Kotayk Region'	,	12	),																			
-    (2034	,	 'Cojedes'	,	239	),																			
-    (2035	,	 'Falcón'	,	239	),																			
-    (2036	,	 'Portuguesa'	,	239	),																			
-    (2037	,	 'Miranda'	,	239	),																			
-    (2038	,	 'Lara'	,	239	),																			
-    (2039	,	 'Bolívar'	,	239	),																			
-    (2040	,	 'Carabobo'	,	239	),																			
-    (2041	,	 'Yaracuy'	,	239	),																			
-    (2042	,	 'Zulia'	,	239	),																			
-    (2043	,	 'Trujillo'	,	239	),																			
-    (2044	,	 'Amazonas'	,	239	),																			
-    (2045	,	 'Guárico'	,	239	),																			
-    (2046	,	 'Federal Dependencies of Venezuela'	,	239	),																			
-    (2047	,	 'Aragua'	,	239	),																			
-    (2048	,	 'Táchira'	,	239	),																			
-    (2049	,	 'Barinas'	,	239	),																			
-    (2050	,	 'Anzoátegui'	,	239	),																			
-    (2051	,	 'Delta Amacuro'	,	239	),																			
-    (2052	,	 'Nueva Esparta'	,	239	),																			
-    (2053	,	 'Mérida'	,	239	),																			
-    (2054	,	 'Monagas'	,	239	),																			
-    (2055	,	 'Vargas'	,	239	),																			
-    (2056	,	 'Sucre'	,	239	),																			
-    (2057	,	 'Carinthia'	,	15	),																			
-    (2058	,	 'Upper Austria'	,	15	),																			
-    (2059	,	 'Styria'	,	15	),																			
-    (2060	,	 'Vienna'	,	15	),																			
-    (2061	,	 'Salzburg'	,	15	),																			
-    (2062	,	 'Burgenland'	,	15	),																			
-    (2063	,	 'Vorarlberg'	,	15	),																			
-    (2064	,	 'Tyrol'	,	15	),																			
-    (2065	,	 'Lower Austria'	,	15	),																			
-    (2066	,	 'Mid-Western Region'	,	154	),																			
-    (2067	,	 'Western Region'	,	154	),																			
-    (2068	,	 'Far-Western Development Region'	,	154	),																			
-    (2069	,	 'Eastern Development Region'	,	154	),																			
-    (2070	,	 'Mechi Zone'	,	154	),																			
-    (2071	,	 'Bheri Zone'	,	154	),																			
-    (2072	,	 'Kosi Zone'	,	154	),																			
-    (2073	,	 'Central Region'	,	154	),																			
-    (2074	,	 'Lumbini Zone'	,	154	),																			
-    (2075	,	 'Narayani Zone'	,	154	),																			
-    (2076	,	 'Janakpur Zone'	,	154	),																			
-    (2077	,	 'Rapti Zone'	,	154	),																			
-    (2078	,	 'Seti Zone'	,	154	),																			
-    (2079	,	 'Karnali Zone'	,	154	),																			
-    (2080	,	 'Dhaulagiri Zone'	,	154	),																			
-    (2081	,	 'Gandaki Zone'	,	154	),																			
-    (2082	,	 'Bagmati Zone'	,	154	),																			
-    (2083	,	 'Mahakali Zone'	,	154	),																			
-    (2084	,	 'Sagarmatha Zone'	,	154	),																			
-    (2085	,	 'Unity'	,	206	),																			
-    (2086	,	 'Upper Nile'	,	206	),																			
-    (2087	,	 'Warrap'	,	206	),																			
-    (2088	,	 'Northern Bahr el Ghazal'	,	206	),																			
-    (2089	,	 'Western Equatoria'	,	206	),																			
-    (2090	,	 'Lakes'	,	206	),																			
-    (2091	,	 'Western Bahr el Ghazal'	,	206	),																			
-    (2092	,	 'Central Equatoria'	,	206	),																			
-    (2093	,	 'Eastern Equatoria'	,	206	),																			
-    (2094	,	 'Jonglei State'	,	206	),																			
-    (2095	,	 'Karditsa Regional Unit'	,	85	),																			
-    (2096	,	 'West Greece Region'	,	85	),																			
-    (2097	,	 'Thessaloniki Regional Unit'	,	85	),																			
-    (2098	,	 'Arcadia Prefecture'	,	85	),																			
-    (2099	,	 'Imathia Regional Unit'	,	85	),																			
-    (2100	,	 'Kastoria Regional Unit'	,	85	),																			
-    (2101	,	 'Euboea'	,	85	),																			
-    (2102	,	 'Grevena Prefecture'	,	85	),																			
-    (2103	,	 'Preveza Prefecture'	,	85	),																			
-    (2104	,	 'Lefkada Regional Unit'	,	85	),																			
-    (2105	,	 'Argolis Regional Unit'	,	85	),																			
-    (2106	,	 'Laconia'	,	85	),																			
-    (2107	,	 'Pella Regional Unit'	,	85	),																			
-    (2108	,	 'West Macedonia Region'	,	85	),																			
-    (2109	,	 'Crete Region'	,	85	),																			
-    (2110	,	 'Epirus Region'	,	85	),																			
-    (2111	,	 'Kilkis Regional Unit'	,	85	),																			
-    (2112	,	 'Kozani Prefecture'	,	85	),																			
-    (2113	,	 'Ioannina Regional Unit'	,	85	),																			
-    (2114	,	 'Phthiotis Prefecture'	,	85	),																			
-    (2115	,	 'Chania Regional Unit'	,	85	),																			
-    (2116	,	 'Achaea Regional Unit'	,	85	),																			
-    (2117	,	 'East Macedonia and Thrace'	,	85	),																			
-    (2118	,	 'South Aegean'	,	85	),																			
-    (2119	,	 'Peloponnese Region'	,	85	),																			
-    (2120	,	 'East Attica Regional Unit'	,	85	),																			
-    (2121	,	 'Serres Prefecture'	,	85	),																			
-    (2122	,	 'Attica Region'	,	85	),																			
-    (2123	,	 'Aetolia-Acarnania Regional Unit'	,	85	),																			
-    (2124	,	 'Corfu Prefecture'	,	85	),																			
-    (2125	,	 'Central Macedonia'	,	85	),																			
-    (2126	,	 'Boeotia Regional Unit'	,	85	),																			
-    (2127	,	 'Kefalonia Prefecture'	,	85	),																			
-    (2128	,	 'Central Greece Region'	,	85	),																			
-    (2129	,	 'Corinthia Regional Unit'	,	85	),																			
-    (2130	,	 'Drama Regional Unit'	,	85	),																			
-    (2131	,	 'Ionian Islands Region'	,	85	),																			
-    (2132	,	 'Larissa Prefecture'	,	85	),																			
-    (2133	,	 'Kayin State'	,	151	),																			
-    (2134	,	 'Mandalay Region'	,	151	),																			
-    (2135	,	 'Yangon Region'	,	151	),																			
-    (2136	,	 'Magway Region'	,	151	),																			
-    (2137	,	 'Chin State'	,	151	),																			
-    (2138	,	 'Rakhine State'	,	151	),																			
-    (2139	,	 'Shan State'	,	151	),																			
-    (2140	,	 'Tanintharyi Region'	,	151	),																			
-    (2141	,	 'Bago'	,	151	),																			
-    (2142	,	 'Ayeyarwady Region'	,	151	),																			
-    (2143	,	 'Kachin State'	,	151	),																			
-    (2144	,	 'Kayah State'	,	151	),																			
-    (2145	,	 'Sagaing Region'	,	151	),																			
-    (2146	,	 'Naypyidaw Union Territory'	,	151	),																			
-    (2147	,	 'Mon State'	,	151	),																			
-    (2148	,	 'Bartın'	,	225	),																			
-    (2149	,	 'Kütahya'	,	225	),																			
-    (2150	,	 'Sakarya'	,	225	),																			
-    (2151	,	 'Edirne'	,	225	),																			
-    (2152	,	 'Van'	,	225	),																			
-    (2153	,	 'Bingöl'	,	225	),																			
-    (2154	,	 'Kilis'	,	225	),																			
-    (2155	,	 'Adıyaman'	,	225	),																			
-    (2156	,	 'Mersin'	,	225	),																			
-    (2157	,	 'Denizli'	,	225	),																			
-    (2158	,	 'Malatya'	,	225	),																			
-    (2159	,	 'Elazığ'	,	225	),																			
-    (2160	,	 'Erzincan'	,	225	),																			
-    (2161	,	 'Amasya'	,	225	),																			
-    (2162	,	 'Muş'	,	225	),																			
-    (2163	,	 'Bursa'	,	225	),																			
-    (2164	,	 'Eskişehir'	,	225	),																			
-    (2165	,	 'Erzurum'	,	225	),																			
-    (2166	,	 'Iğdır'	,	225	),																			
-    (2167	,	 'Tekirdağ'	,	225	),																			
-    (2168	,	 'Çankırı'	,	225	),																			
-    (2169	,	 'Antalya'	,	225	),																			
-    (2170	,	 'Istanbul'	,	225	),																			
-    (2171	,	 'Konya'	,	225	),																			
-    (2172	,	 'Bolu'	,	225	),																			
-    (2173	,	 'Çorum'	,	225	),																			
-    (2174	,	 'Ordu'	,	225	),																			
-    (2175	,	 'Balıkesir'	,	225	),																			
-    (2176	,	 'Kırklareli'	,	225	),																			
-    (2177	,	 'Bayburt'	,	225	),																			
-    (2178	,	 'Kırıkkale'	,	225	),																			
-    (2179	,	 'Afyonkarahisar'	,	225	),																			
-    (2180	,	 'Kırşehir'	,	225	),																			
-    (2181	,	 'Sivas'	,	225	),																			
-    (2182	,	 'Muğla'	,	225	),																			
-    (2183	,	 'Şanlıurfa'	,	225	),																			
-    (2184	,	 'Karaman'	,	225	),																			
-    (2185	,	 'Ardahan'	,	225	),																			
-    (2186	,	 'Giresun'	,	225	),																			
-    (2187	,	 'Aydın'	,	225	),																			
-    (2188	,	 'Yozgat'	,	225	),																			
-    (2189	,	 'Niğde'	,	225	),																			
-    (2190	,	 'Hakkâri'	,	225	),																			
-    (2191	,	 'Artvin'	,	225	),																			
-    (2192	,	 'Tunceli'	,	225	),																			
-    (2193	,	 'Ağrı'	,	225	),																			
-    (2194	,	 'Batman'	,	225	),																			
-    (2195	,	 'Kocaeli'	,	225	),																			
-    (2196	,	 'Nevşehir'	,	225	),																			
-    (2197	,	 'Kastamonu'	,	225	),																			
-    (2198	,	 'Manisa'	,	225	),																			
-    (2199	,	 'Tokat'	,	225	),																			
-    (2200	,	 'Kayseri'	,	225	),																			
-    (2201	,	 'Uşak'	,	225	),																			
-    (2202	,	 'Düzce'	,	225	),																			
-    (2203	,	 'Gaziantep'	,	225	),																			
-    (2204	,	 'Gümüşhane'	,	225	),																			
-    (2205	,	 'İzmir'	,	225	),																			
-    (2206	,	 'Trabzon'	,	225	),																			
-    (2207	,	 'Siirt'	,	225	),																			
-    (2208	,	 'Kars'	,	225	),																			
-    (2209	,	 'Burdur'	,	225	),																			
-    (2210	,	 'Aksaray'	,	225	),																			
-    (2211	,	 'Hatay'	,	225	),																			
-    (2212	,	 'Adana'	,	225	),																			
-    (2213	,	 'Zonguldak'	,	225	),																			
-    (2214	,	 'Osmaniye'	,	225	),																			
-    (2215	,	 'Bitlis'	,	225	),																			
-    (2216	,	 'Çanakkale'	,	225	),																			
-    (2217	,	 'Ankara'	,	225	),																			
-    (2218	,	 'Yalova'	,	225	),																			
-    (2219	,	 'Rize'	,	225	),																			
-    (2220	,	 'Samsun'	,	225	),																			
-    (2221	,	 'Bilecik'	,	225	),																			
-    (2222	,	 'Isparta'	,	225	),																			
-    (2223	,	 'Karabük'	,	225	),																			
-    (2224	,	 'Mardin'	,	225	),																			
-    (2225	,	 'Şırnak'	,	225	),																			
-    (2226	,	 'Diyarbakır'	,	225	),																			
-    (2227	,	 'Kahramanmaraş'	,	225	),																			
-    (2228	,	 'Lisbon'	,	177	),																			
-    (2229	,	 'Bragança'	,	177	),																			
-    (2230	,	 'Beja'	,	177	),																			
-    (2231	,	 'Madeira'	,	177	),																			
-    (2232	,	 'Portalegre'	,	177	),																			
-    (2233	,	 'Açores'	,	177	),																			
-    (2234	,	 'Vila Real'	,	177	),																			
-    (2235	,	 'Aveiro'	,	177	),																			
-    (2236	,	 'Évora'	,	177	),																			
-    (2237	,	 'Viseu'	,	177	),																			
-    (2238	,	 'Santarém'	,	177	),																			
-    (2239	,	 'Faro'	,	177	),																			
-    (2240	,	 'Leiria'	,	177	),																			
-    (2241	,	 'Castelo Branco'	,	177	),																			
-    (2242	,	 'Setúbal'	,	177	),																			
-    (2243	,	 'Porto'	,	177	),																			
-    (2244	,	 'Braga'	,	177	),																			
-    (2245	,	 'Viana do Castelo'	,	177	),																			
-    (2246	,	 'Coimbra'	,	177	),																			
-    (2247	,	 'Zhejiang'	,	45	),																			
-    (2248	,	 'Fujian'	,	45	),																			
-    (2249	,	 'Shanghai'	,	45	),																			
-    (2250	,	 'Jiangsu'	,	45	),																			
-    (2251	,	 'Anhui'	,	45	),																			
-    (2252	,	 'Shandong'	,	45	),																			
-    (2253	,	 'Jilin'	,	45	),																			
-    (2254	,	 'Shanxi'	,	45	),																			
-    (2255	,	 'Taiwan Province,People s Republic of China',45),																		
-    (2256	,	 'Jiangxi'	,	45	),																			
-    (2257	,	 'Beijing'	,	45	),																			
-    (2258	,	 'Hunan'	,	45	),																			
-    (2259	,	 'Henan'	,	45	),																			
-    (2260	,	 'Yunnan'	,	45	),																			
-    (2261	,	 'Guizhou'	,	45	),																			
-    (2262	,	 'Ningxia Hui Autonomous Region'	,	45	),																			
-    (2263	,	 'Xinjiang'	,	45	),																			
-    (2264	,	 'Tibet Autonomous Region'	,	45	),																			
-    (2265	,	 'Heilongjiang'	,	45	),																			
-    (2266	,	 'Macau'	,	45	),																			
-    (2267	,	 'Hong Kong'	,	45	),																			
-    (2268	,	 'Liaoning'	,	45	),																			
-    (2269	,	 'Inner Mongolia'	,	45	),																			
-    (2270	,	 'Qinghai'	,	45	),																			
-    (2271	,	 'Chongqing'	,	45	),																			
-    (2272	,	 'Shaanxi'	,	45	),																			
-    (2273	,	 'Hainan'	,	45	),																			
-    (2274	,	 'Hubei'	,	45	),																			
-    (2275	,	 'Gansu'	,	45	),																			
-    (2276	,	 'Keelung'	,	45	),																			
-    (2277	,	 'Sichuan'	,	45	),																			
-    (2278	,	 'Guangxi Zhuang Autonomous Region'	,	45	),																			
-    (2279	,	 'Guangdong'	,	45	),																			
-    (2280	,	 'Hebei'	,	45	),																			
-    (2281	,	 'South Governorate'	,	121	),																			
-    (2282	,	 'Mount Lebanon Governorate'	,	121	),																			
-    (2283	,	 'Baalbek-Hermel Governorate'	,	121	),																			
-    (2284	,	 'North Governorate'	,	121	),																			
-    (2285	,	 'Akkar Governorate'	,	121	),																			
-    (2286	,	 'Beirut Governorate'	,	121	),																			
-    (2287	,	 'Beqaa Governorate'	,	121	),																			
-    (2288	,	 'Nabatieh Governorate'	,	121	),																			
-    (2289	,	 'Isle of Wight'	,	232	),																			
-    (2290	,	 'St Helens'	,	232	),																			
-    (2291	,	 'London Borough of Brent'	,	232	),																			
-    (2292	,	 'Walsall'	,	232	),																			
-    (2293	,	 'Trafford'	,	232	),																			
-    (2294	,	 'City of Southampton'	,	232	),																			
-    (2295	,	 'Sheffield'	,	232	),																			
-    (2296	,	 'West Sussex'	,	232	),																			
-    (2297	,	 'City of Peterborough'	,	232	),																			
-    (2298	,	 'Caerphilly County Borough'	,	232	),																			
-    (2299	,	 'Vale of Glamorgan'	,	232	),																			
-    (2300	,	 'Shetland Islands'	,	232	),																			
-    (2301	,	 'Rhondda Cynon Taf'	,	232	),																			
-    (2302	,	 'Poole'	,	232	),																			
-    (2303	,	 'Central Bedfordshire'	,	232	),																			
-    (2304	,	 'Down District Council'	,	232	),																			
-    (2305	,	 'City of Portsmouth'	,	232	),																			
-    (2306	,	 'London Borough of Haringey'	,	232	),																			
-    (2307	,	 'London Borough of Bexley'	,	232	),																			
-    (2308	,	 'Rotherham'	,	232	),																			
-    (2309	,	 'Hartlepool'	,	232	),																			
-    (2310	,	 'Telford and Wrekin'	,	232	),																			
-    (2311	,	 'Belfast district'	,	232	),																			
-    (2312	,	 'Cornwall'	,	232	),																			
-    (2313	,	 'London Borough of Sutton'	,	232	),																			
-    (2314	,	 'Omagh District Council'	,	232	),																			
-    (2315	,	 'Banbridge'	,	232	),																			
-    (2316	,	 'Causeway Coast and Glens'	,	232	),																			
-    (2317	,	 'Newtownabbey Borough Council'	,	232	),																			
-    (2318	,	 'City of Leicester'	,	232	),																			
-    (2319	,	 'London Borough of Islington'	,	232	),																			
-    (2320	,	 'Metropolitan Borough of Wigan'	,	232	),																			
-    (2321	,	 'Oxfordshire'	,	232	),																			
-    (2322	,	 'Magherafelt District Council'	,	232	),																			
-    (2323	,	 'Southend-on-Sea'	,	232	),																			
-    (2324	,	 'Armagh	,	 Banbridge and Craigavon',232),																			
-    (2325	,	 'Perth and Kinross'	,	232	),																			
-    (2326	,	 'London Borough of Waltham Forest'	,	232	),																			
-    (2327	,	 'Rochdale'	,	232	),																			
-    (2328	,	 'Merthyr Tydfil County Borough'	,	232	),																			
-    (2329	,	 'Blackburn with Darwen'	,	232	),																			
-    (2330	,	 'Knowsley'	,	232	),																			
-    (2331	,	 'Armagh City and District Council'	,	232	),																			
-    (2332	,	 'Middlesbrough'	,	232	),																			
-    (2333	,	 'East Renfrewshire'	,	232	),																			
-    (2334	,	 'Cumbria'	,	232	),																			
-    (2335	,	 'Scotland'	,	232	),																			
-    (2336	,	 'England'	,	232	),																			
-    (2337	,	 'Northern Ireland'	,	232	),																			
-    (2338	,	 'Wales'	,	232	),																			
-    (2339	,	 'Bath and North East Somerset'	,	232	),																			
-    (2340	,	 'Liverpool'	,	232	),																			
-    (2341	,	 'Sandwell'	,	232	),																			
-    (2342	,	 'Bournemouth'	,	232	),																			
-    (2343	,	 'Isles of Scilly'	,	232	),																			
-    (2344	,	 'Falkirk'	,	232	),																			
-    (2345	,	 'Dorset'	,	232	),																			
-    (2346	,	 'Scottish Borders'	,	232	),																			
-    (2347	,	 'London Borough of Havering'	,	232	),																			
-    (2348	,	 'Moyle District Council'	,	232	),																			
-    (2349	,	 'London Borough of Camden'	,	232	),																			
-    (2350	,	 'Newry and Mourne District Council'	,	232	),																			
-    (2351	,	 'Neath Port Talbot County Borough'	,	232	),																			
-    (2352	,	 'Conwy County Borough'	,	232	),																			
-    (2353	,	 'Outer Hebrides'	,	232	),																			
-    (2354	,	 'West Lothian'	,	232	),																			
-    (2355	,	 'Lincolnshire'	,	232	),																			
-    (2356	,	 'London Borough of Barking and Dagenham'	,	232	),																			
-    (2357	,	 'City of Westminster'	,	232	),																			
-    (2358	,	 'London Borough of Lewisham'	,	232	),																			
-    (2359	,	 'City of Nottingham'	,	232	),																			
-    (2360	,	 'Moray'	,	232	),																			
-    (2361	,	 'Ballymoney'	,	232	),																			
-    (2362	,	 'South Lanarkshire'	,	232	),																			
-    (2363	,	 'Ballymena Borough'	,	232	),																			
-    (2364	,	 'Doncaster'	,	232	),																			
-    (2365	,	 'Northumberland'	,	232	),																			
-    (2366	,	 'Fermanagh and Omagh'	,	232	),																			
-    (2367	,	 'Tameside'	,	232	),																			
-    (2368	,	 'Royal Borough of Kensington and Chelsea'	,	232	),																			
-    (2369	,	 'Hertfordshire'	,	232	),																			
-    (2370	,	 'East Riding of Yorkshire'	,	232	),																			
-    (2371	,	 'Kirklees'	,	232	),																			
-    (2372	,	 'City of Sunderland'	,	232	),																			
-    (2373	,	 'Gloucestershire'	,	232	),																			
-    (2374	,	 'East Ayrshire'	,	232	),																			
-    (2375	,	 'United Kingdom'	,	232	),																			
-    (2376	,	 'London Borough of Hillingdon'	,	232	),																			
-    (2377	,	 'South Ayrshire'	,	232	),																			
-    (2378	,	 'Ascension Island'	,	232	),																			
-    (2379	,	 'Gwynedd'	,	232	),																			
-    (2380	,	 'London Borough of Hounslow'	,	232	),																			
-    (2381	,	 'Medway'	,	232	),																			
-    (2382	,	 'Limavady Borough Council'	,	232	),																			
-    (2383	,	 'Highland'	,	232	),																			
-    (2384	,	 'North East Lincolnshire'	,	232	),																			
-    (2385	,	 'London Borough of Harrow'	,	232	),																			
-    (2386	,	 'Somerset'	,	232	),																			
-    (2387	,	 'Angus'	,	232	),																			
-    (2388	,	 'Inverclyde'	,	232	),																			
-    (2389	,	 'Darlington'	,	232	),																			
-    (2390	,	 'London Borough of Tower Hamlets'	,	232	),																			
-    (2391	,	 'Wiltshire'	,	232	),																			
-    (2392	,	 'Argyll and Bute'	,	232	),																			
-    (2393	,	 'Strabane District Council'	,	232	),																			
-    (2394	,	 'Stockport'	,	232	),																			
-    (2395	,	 'Brighton and Hove'	,	232	),																			
-    (2396	,	 'London Borough of Lambeth'	,	232	),																			
-    (2397	,	 'London Borough of Redbridge'	,	232	),																			
-    (2398	,	 'Manchester'	,	232	),																			
-    (2399	,	 'Mid Ulster'	,	232	),																			
-    (2400	,	 'South Gloucestershire'	,	232	),																			
-    (2401	,	 'Aberdeenshire'	,	232	),																			
-    (2402	,	 'Monmouthshire'	,	232	),																			
-    (2403	,	 'Derbyshire'	,	232	),																			
-    (2404	,	 'Glasgow'	,	232	),																			
-    (2405	,	 'Buckinghamshire'	,	232	),																			
-    (2406	,	 'County Durham'	,	232	),																			
-    (2407	,	 'Shropshire'	,	232	),																			
-    (2408	,	 'Wirral'	,	232	),																			
-    (2409	,	 'South Tyneside'	,	232	),																			
-    (2410	,	 'Essex'	,	232	),																			
-    (2411	,	 'London Borough of Hackney'	,	232	),																			
-    (2412	,	 'Antrim and Newtownabbey'	,	232	),																			
-    (2413	,	 'City of Bristol'	,	232	),																			
-    (2414	,	 'East Sussex'	,	232	),																			
-    (2415	,	 'Dumfries and Galloway'	,	232	),																			
-    (2416	,	 'Milton Keynes'	,	232	),																			
-    (2417	,	 'Derry City Council'	,	232	),																			
-    (2418	,	 'London Borough of Newham'	,	232	),																			
-    (2419	,	 'Wokingham'	,	232	),																			
-    (2420	,	 'Warrington'	,	232	),																			
-    (2421	,	 'Stockton-on-Tees'	,	232	),																			
-    (2422	,	 'Swindon'	,	232	),																			
-    (2423	,	 'Cambridgeshire'	,	232	),																			
-    (2424	,	 'City of London'	,	232	),																			
-    (2425	,	 'Birmingham'	,	232	),																			
-    (2426	,	 'City of York'	,	232	),																			
-    (2427	,	 'Slough'	,	232	),																			
-    (2428	,	 'Edinburgh'	,	232	),																			
-    (2429	,	 'Mid and East Antrim'	,	232	),																			
-    (2430	,	 'North Somerset'	,	232	),																			
-    (2431	,	 'Gateshead'	,	232	),																			
-    (2432	,	 'London Borough of Southwark'	,	232	),																			
-    (2433	,	 'City and County of Swansea'	,	232	),																			
-    (2434	,	 'London Borough of Wandsworth'	,	232	),																			
-    (2435	,	 'Hampshire'	,	232	),																			
-    (2436	,	 'Wrexham County Borough'	,	232	),																			
-    (2437	,	 'Flintshire'	,	232	),																			
-    (2438	,	 'Coventry'	,	232	),																			
-    (2439	,	 'Carrickfergus Borough Council'	,	232	),																			
-    (2440	,	 'West Dunbartonshire'	,	232	),																			
-    (2441	,	 'Powys'	,	232	),																			
-    (2442	,	 'Cheshire West and Chester'	,	232	),																			
-    (2443	,	 'Renfrewshire'	,	232	),																			
-    (2444	,	 'Cheshire East'	,	232	),																			
-    (2445	,	 'Cookstown District Council'	,	232	),																			
-    (2446	,	 'Derry City and Strabane'	,	232	),																			
-    (2447	,	 'Staffordshire'	,	232	),																			
-    (2448	,	 'London Borough of Hammersmith and Fulham'	,	232	),																			
-    (2449	,	 'Craigavon Borough Council'	,	232	),																			
-    (2450	,	 'Clackmannanshire'	,	232	),																			
-    (2451	,	 'Blackpool'	,	232	),																			
-    (2452	,	 'Bridgend County Borough'	,	232	),																			
-    (2453	,	 'North Lincolnshire'	,	232	),																			
-    (2454	,	 'East Dunbartonshire'	,	232	),																			
-    (2455	,	 'Reading'	,	232	),																			
-    (2456	,	 'Nottinghamshire'	,	232	),																			
-    (2457	,	 'Dudley'	,	232	),																			
-    (2458	,	 'Newcastle upon Tyne'	,	232	),																			
-    (2459	,	 'Bury'	,	232	),																			
-    (2460	,	 'Lisburn and Castlereagh'	,	232	),																			
-    (2461	,	 'Coleraine Borough Council'	,	232	),																			
-    (2462	,	 'East Lothian'	,	232	),																			
-    (2463	,	 'Aberdeen'	,	232	),																			
-    (2464	,	 'Kent'	,	232	),																			
-    (2465	,	 'Wakefield'	,	232	),																			
-    (2466	,	 'Halton'	,	232	),																			
-    (2467	,	 'Suffolk'	,	232	),																			
-    (2468	,	 'Thurrock'	,	232	),																			
-    (2469	,	 'Solihull'	,	232	),																			
-    (2470	,	 'Bracknell Forest'	,	232	),																			
-    (2471	,	 'West Berkshire'	,	232	),																			
-    (2472	,	 'Rutland'	,	232	),																			
-    (2473	,	 'Norfolk'	,	232	),																			
-    (2474	,	 'Orkney Islands'	,	232	),																			
-    (2475	,	 'City of Kingston upon Hull'	,	232	),																			
-    (2476	,	 'London Borough of Enfield'	,	232	),																			
-    (2477	,	 'Oldham'	,	232	),																			
-    (2478	,	 'Torbay'	,	232	),																			
-    (2479	,	 'Fife'	,	232	),																			
-    (2480	,	 'Northamptonshire'	,	232	),																			
-    (2481	,	 'Royal Borough of Kingston upon Thames'	,	232	),																			
-    (2482	,	 'Windsor and Maidenhead'	,	232	),																			
-    (2483	,	 'London Borough of Merton'	,	232	),																			
-    (2484	,	 'Carmarthenshire'	,	232	),																			
-    (2485	,	 'City of Derby'	,	232	),																			
-    (2486	,	 'Pembrokeshire'	,	232	),																			
-    (2487	,	 'North Lanarkshire'	,	232	),																			
-    (2488	,	 'Stirling'	,	232	),																			
-    (2489	,	 'City of Wolverhampton'	,	232	),																			
-    (2490	,	 'London Borough of Bromley'	,	232	),																			
-    (2491	,	 'Devon'	,	232	),																			
-    (2492	,	 'Royal Borough of Greenwich'	,	232	),																			
-    (2493	,	 'Salford'	,	232	),																			
-    (2494	,	 'Lisburn City Council'	,	232	),																			
-    (2495	,	 'Lancashire'	,	232	),																			
-    (2496	,	 'Torfaen'	,	232	),																			
-    (2497	,	 'Denbighshire'	,	232	),																			
-    (2498	,	 'Ards'	,	232	),																			
-    (2499	,	 'Barnsley'	,	232	),																			
-    (2500	,	 'Herefordshire'	,	232	),																			
-    (2501	,	 'London Borough of Richmond upon Thames'	,	232	),																			
-    (2502	,	 'Saint Helena'	,	232	),																			
-    (2503	,	 'Leeds'	,	232	),																			
-    (2504	,	 'Bolton'	,	232	),																			
-    (2505	,	 'Warwickshire'	,	232	),																			
-    (2506	,	 'City of Stoke-on-Trent'	,	232	),																			
-    (2507	,	 'Bedford'	,	232	),																			
-    (2508	,	 'Dungannon and South Tyrone Borough Council'	,	232	),																			
-    (2509	,	 'Ceredigion'	,	232	),																			
-    (2510	,	 'Worcestershire'	,	232	),																			
-    (2511	,	 'Dundee'	,	232	),																			
-    (2512	,	 'London Borough of Croydon'	,	232	),																			
-    (2513	,	 'North Down Borough Council'	,	232	),																			
-    (2514	,	 'City of Plymouth'	,	232	),																			
-    (2515	,	 'Larne Borough Council'	,	232	),																			
-    (2516	,	 'Leicestershire'	,	232	),																			
-    (2517	,	 'Calderdale'	,	232	),																			
-    (2518	,	 'Sefton'	,	232	),																			
-    (2519	,	 'Midlothian'	,	232	),																			
-    (2520	,	 'London Borough of Barnet'	,	232	),																			
-    (2521	,	 'North Tyneside'	,	232	),																			
-    (2522	,	 'North Yorkshire'	,	232	),																			
-    (2523	,	 'Ards and North Down'	,	232	),																			
-    (2524	,	 'Newport'	,	232	),																			
-    (2525	,	 'Castlereagh'	,	232	),																			
-    (2526	,	 'Surrey'	,	232	),																			
-    (2527	,	 'Redcar and Cleveland'	,	232	),																			
-    (2528	,	 'City and County of Cardiff'	,	232	),																			
-    (2529	,	 'Bradford'	,	232	),																			
-    (2530	,	 'Blaenau Gwent County Borough'	,	232	),																			
-    (2531	,	 'Fermanagh District Council'	,	232	),																			
-    (2532	,	 'London Borough of Ealing'	,	232	),																			
-    (2533	,	 'Antrim'	,	232	),																			
-    (2534	,	 'Newry	,	 Mourne and Down',232),											
-    (2535	,	 'North Ayrshire'	,	232	),																			
-    (2536	,	 'Tashkent'	,	236	),																			
-    (2537	,	 'Namangan Region'	,	236	),																			
-    (2538	,	 'Fergana Region'	,	236	),																			
-    (2539	,	 'Xorazm Region'	,	236	),																			
-    (2540	,	 'Andijan Region'	,	236	),																			
-    (2541	,	 'Bukhara Region'	,	236	),																			
-    (2542	,	 'Navoiy Region'	,	236	),																			
-    (2543	,	 'Qashqadaryo Region'	,	236	),																			
-    (2544	,	 'Samarqand Region'	,	236	),																			
-    (2545	,	 'Jizzakh Region'	,	236	),																			
-    (2546	,	 'Surxondaryo Region'	,	236	),																			
-    (2547	,	 'Sirdaryo Region'	,	236	),																			
-    (2548	,	 'Karakalpakstan'	,	236	),																			
-    (2549	,	 'Tashkent Region'	,	236	),																			
-    (2550	,	 'Ariana Governorate'	,	224	),																			
-    (2551	,	 'Bizerte Governorate'	,	224	),																			
-    (2552	,	 'Jendouba Governorate'	,	224	),																			
-    (2553	,	 'Monastir Governorate'	,	224	),																			
-    (2554	,	 'Tunis Governorate'	,	224	),																			
-    (2555	,	 'Manouba Governorate'	,	224	),																			
-    (2556	,	 'Gafsa Governorate'	,	224	),																			
-    (2557	,	 'Sfax Governorate'	,	224	),																			
-    (2558	,	 'Gabès Governorate'	,	224	),																			
-    (2559	,	 'Tataouine Governorate'	,	224	),																			
-    (2560	,	 'Medenine Governorate'	,	224	),																			
-    (2561	,	 'Kef Governorate'	,	224	),																			
-    (2562	,	 'Kebili Governorate'	,	224	),																			
-    (2563	,	 'Siliana Governorate'	,	224	),																			
-    (2564	,	 'Kairouan Governorate'	,	224	),																			
-    (2565	,	 'Zaghouan Governorate'	,	224	),																			
-    (2566	,	 'Ben Arous Governorate'	,	224	),																			
-    (2567	,	 'Sidi Bouzid Governorate'	,	224	),																			
-    (2568	,	 'Mahdia Governorate'	,	224	),																			
-    (2569	,	 'Tozeur Governorate'	,	224	),																			
-    (2570	,	 'Kasserine Governorate'	,	224	),																			
-    (2571	,	 'Sousse Governorate'	,	224	),																			
-    (2572	,	 'Kassrine'	,	224	),																			
-    (2573	,	 'Ratak Chain'	,	137	),																			
-    (2574	,	 'Ralik Chain'	,	137	),																			
-    (2575	,	 'Centrale Region'	,	220	),																			
-    (2576	,	 'Maritime'	,	220	),																			
-    (2577	,	 'Plateaux Region'	,	220	),																			
-    (2578	,	 'Savanes Region'	,	220	),																			
-    (2579	,	 'Kara Region'	,	220	),																			
-    (2580	,	 'Chuuk State'	,	143	),																			
-    (2581	,	 'Pohnpei State'	,	143	),																			
-    (2582	,	 'Yap State'	,	143	),																			
-    (2583	,	 'Kosrae State'	,	143	),																			
-    (2584	,	 'Vaavu Atoll'	,	133	),																			
-    (2585	,	 'Shaviyani Atoll'	,	133	),																			
-    (2586	,	 'Haa Alif Atoll'	,	133	),																			
-    (2587	,	 'Alif Alif Atoll'	,	133	),																			
-    (2588	,	 'North Province'	,	133	),																			
-    (2589	,	 'North Central Province'	,	133	),																			
-    (2590	,	 'Dhaalu Atoll'	,	133	),																			
-    (2591	,	 'Thaa Atoll'	,	133	),																			
-    (2592	,	 'Noonu Atoll'	,	133	),																			
-    (2593	,	 'Upper South Province'	,	133	),																			
-    (2594	,	 'Addu Atoll'	,	133	),																			
-    (2595	,	 'Gnaviyani Atoll'	,	133	),																			
-    (2596	,	 'Kaafu Atoll'	,	133	),																			
-    (2597	,	 'Haa Dhaalu Atoll'	,	133	),																			
-    (2598	,	 'Gaafu Alif Atoll'	,	133	),																			
-    (2599	,	 'Faafu Atoll'	,	133	),																			
-    (2600	,	 'Alif Dhaal Atoll'	,	133	),																			
-    (2601	,	 'Laamu Atoll'	,	133	),																			
-    (2602	,	 'Raa Atoll'	,	133	),																			
-    (2603	,	 'Gaafu Dhaalu Atoll'	,	133	),																			
-    (2604	,	 'Central Province'	,	133	),																			
-    (2605	,	 'South Province'	,	133	),																			
-    (2606	,	 'South Central Province'	,	133	),																			
-    (2607	,	 'Lhaviyani Atoll'	,	133	),																			
-    (2608	,	 'Meemu Atoll'	,	133	),																			
-    (2609	,	 'Malé'	,	133	),																			
-    (2610	,	 'Utrecht'	,	156	),																			
-    (2611	,	 'Gelderland'	,	156	),																			
-    (2612	,	 'North Holland'	,	156	),																			
-    (2613	,	 'Drenthe'	,	156	),																			
-    (2614	,	 'South Holland'	,	156	),																			
-    (2615	,	 'Limburg'	,	156	),																			
-    (2616	,	 'Sint Eustatius'	,	156	),																			
-    (2617	,	 'Groningen'	,	156	),																			
-    (2618	,	 'Overijssel'	,	156	),																			
-    (2619	,	 'Flevoland'	,	156	),																			
-    (2620	,	 'Zeeland'	,	156	),																			
-    (2621	,	 'Saba'	,	156	),																			
-    (2622	,	 'Friesland'	,	156	),																			
-    (2623	,	 'North Brabant'	,	156	),																			
-    (2624	,	 'Bonaire'	,	156	),																			
-    (2625	,	 'Savanes Region'	,	54	),																			
-    (2626	,	 'Agnéby'	,	54	),																			
-    (2627	,	 'Lagunes District'	,	54	),																			
-    (2628	,	 'Sud-Bandama'	,	54	),																			
-    (2629	,	 'Montagnes District'	,	54	),																			
-    (2630	,	 'Moyen-Comoé'	,	54	),																			
-    (2631	,	 'Marahoué Region'	,	54	),																			
-    (2632	,	 'Lacs District'	,	54	),																			
-    (2633	,	 'Fromager'	,	54	),																			
-    (2634	,	 'Abidjan'	,	54	),																			
-    (2635	,	 'Bas-Sassandra Region'	,	54	),																			
-    (2636	,	 'Bafing Region'	,	54	),																			
-    (2637	,	 'Vallée du Bandama District'	,	54	),																			
-    (2638	,	 'Haut-Sassandra'	,	54	),																			
-    (2639	,	 'Lagunes region'	,	54	),																			
-    (2640	,	 'Lacs Region'	,	54	),																			
-    (2641	,	 'Zanzan Region'	,	54	),																			
-    (2642	,	 'Denguélé Region'	,	54	),																			
-    (2643	,	 'Bas-Sassandra District'	,	54	),																			
-    (2644	,	 'Denguélé District'	,	54	),																			
-    (2645	,	 'Dix-Huit Montagnes'	,	54	),																			
-    (2646	,	 'Moyen-Cavally'	,	54	),																			
-    (2647	,	 'Vallée du Bandama Region'	,	54	),																			
-    (2648	,	 'Sassandra-Marahoué District'	,	54	),																			
-    (2649	,	 'Worodougou'	,	54	),																			
-    (2650	,	 'Woroba District'	,	54	),																			
-    (2651	,	 'Gôh-Djiboua District'	,	54	),																			
-    (2652	,	 'Sud-Comoé'	,	54	),																			
-    (2653	,	 'Yamoussoukro'	,	54	),																			
-    (2654	,	 'Comoé District'	,	54	),																			
-    (2655	,	 'N zi-Comoé'	,	54	),																			
-    (2656	,	 'Far North'	,	38	),																			
-    (2657	,	 'Northwest'	,	38	),																			
-    (2658	,	 'Southwest'	,	38	),																			
-    (2659	,	 'South'	,	38	),																			
-    (2660	,	 'Centre'	,	38	),																			
-    (2661	,	 'East'	,	38	),																			
-    (2662	,	 'Littoral'	,	38	),																			
-    (2663	,	 'Adamawa'	,	38	),																			
-    (2664	,	 'West'	,	38	),																			
-    (2665	,	 'North'	,	38	),																			
-    (2666	,	 'Banjul'	,	80	),																			
-    (2667	,	 'West Coast Division'	,	80	),																			
-    (2668	,	 'Upper River Division'	,	80	),																			
-    (2669	,	 'Central River Division'	,	80	),																			
-    (2670	,	 'Lower River Division'	,	80	),																			
-    (2671	,	 'North Bank Division'	,	80	),																			
-    (2672	,	 'Beyla Prefecture'	,	92	),																			
-    (2673	,	 'Mandiana Prefecture'	,	92	),																			
-    (2674	,	 'Yomou Prefecture'	,	92	),																			
-    (2675	,	 'Fria Prefecture'	,	92	),																			
-    (2676	,	 'Boké Region'	,	92	),																			
-    (2677	,	 'Labé Region'	,	92	),																			
-    (2678	,	 'Nzérékoré Prefecture'	,	92	),																			
-    (2679	,	 'Dabola Prefecture'	,	92	),																			
-    (2680	,	 'Labé Prefecture'	,	92	),																			
-    (2681	,	 'Dubréka Prefecture'	,	92	),																			
-    (2682	,	 'Faranah Prefecture'	,	92	),																			
-    (2683	,	 'Forécariah Prefecture'	,	92	),																			
-    (2684	,	 'Nzérékoré Region'	,	92	),																			
-    (2685	,	 'Gaoual Prefecture'	,	92	),																			
-    (2686	,	 'Conakry'	,	92	),																			
-    (2687	,	 'Télimélé Prefecture'	,	92	),																			
-    (2688	,	 'Dinguiraye Prefecture'	,	92	),																			
-    (2689	,	 'Mamou Prefecture'	,	92	),																			
-    (2690	,	 'Lélouma Prefecture'	,	92	),																			
-    (2691	,	 'Kissidougou Prefecture'	,	92	),																			
-    (2692	,	 'Koubia Prefecture'	,	92	),																			
-    (2693	,	 'Kindia Prefecture'	,	92	),																			
-    (2694	,	 'Pita Prefecture'	,	92	),																			
-    (2695	,	 'Kouroussa Prefecture'	,	92	),																			
-    (2696	,	 'Tougué Prefecture'	,	92	),																			
-    (2697	,	 'Kankan Region'	,	92	),																			
-    (2698	,	 'Mamou Region'	,	92	),																			
-    (2699	,	 'Boffa Prefecture'	,	92	),																			
-    (2700	,	 'Mali Prefecture'	,	92	),																			
-    (2701	,	 'Kindia Region'	,	92	),																			
-    (2702	,	 'Macenta Prefecture'	,	92	),																			
-    (2703	,	 'Koundara Prefecture'	,	92	),																			
-    (2704	,	 'Kankan Prefecture'	,	92	),																			
-    (2705	,	 'Coyah Prefecture'	,	92	),																			
-    (2706	,	 'Dalaba Prefecture'	,	92	),																			
-    (2707	,	 'Siguiri Prefecture'	,	92	),																			
-    (2708	,	 'Lola Prefecture'	,	92	),																			
-    (2709	,	 'Boké Prefecture'	,	92	),																			
-    (2710	,	 'Kérouané Prefecture'	,	92	),																			
-    (2711	,	 'Guéckédou Prefecture'	,	92	),																			
-    (2712	,	 'Tombali Region'	,	93	),																			
-    (2713	,	 'Cacheu Region'	,	93	),																			
-    (2714	,	 'Biombo Region'	,	93	),																			
-    (2715	,	 'Quinara Region'	,	93	),																			
-    (2716	,	 'Sul Province'	,	93	),																			
-    (2717	,	 'Norte Province'	,	93	),																			
-    (2718	,	 'Oio Region'	,	93	),																			
-    (2719	,	 'Gabú Region'	,	93	),																			
-    (2720	,	 'Bafatá'	,	93	),																			
-    (2721	,	 'Leste Province'	,	93	),																			
-    (2722	,	 'Bolama Region'	,	93	),																			
-    (2723	,	 'Woleu-Ntem Province'	,	79	),																			
-    (2724	,	 'Ogooué-Ivindo Province'	,	79	),																			
-    (2725	,	 'Nyanga Province'	,	79	),																			
-    (2726	,	 'Haut-Ogooué Province'	,	79	),																			
-    (2727	,	 'Estuaire Province'	,	79	),																			
-    (2728	,	 'Ogooué-Maritime Province'	,	79	),																			
-    (2729	,	 'Ogooué-Lolo Province'	,	79	),																			
-    (2730	,	 'Moyen-Ogooué Province'	,	79	),																			
-    (2731	,	 'Ngounié Province'	,	79	),																			
-    (2732	,	 'Tshuapa'	,	51	),																			
-    (2733	,	 'Tanganyika'	,	51	),																			
-    (2734	,	 'Haut-Uélé'	,	51	),																			
-    (2735	,	 'Kasaï Oriental'	,	51	),																			
-    (2738	,	 'Sud-Kivu'	,	51	),																			
-    (2739	,	 'Nord-Ubangi'	,	51	),																			
-    (2740	,	 'Kwango'	,	51	),																			
-    (2741	,	 'Kinshasa'	,	51	),																			
-    (2742	,	 'Kasaï Central'	,	51	),																			
-    (2743	,	 'Sankuru'	,	51	),																			
-    (2744	,	 'Équateur'	,	51	),																			
-    (2745	,	 'Maniema'	,	51	),																			
-    (2746	,	 'Kongo Central'	,	51	),																			
-    (2747	,	 'Lomami'	,	51	),																			
-    (2748	,	 'Sud-Ubangi'	,	51	),																			
-    (2749	,	 'Nord-Kivu'	,	51	),																			
-    (2750	,	 'Haut-Katanga'	,	51	),																			
-    (2751	,	 'Ituri'	,	51	),																			
-    (2752	,	 'Mongala'	,	51	),																			
-    (2753	,	 'Bas-Uélé'	,	51	),																			
-    (2755	,	 'Mai-Ndombe'	,	51	),																			
-    (2756	,	 'Tshopo'	,	51	),																			
-    (2757	,	 'Kasaï'	,	51	),																			
-    (2758	,	 'Haut-Lomami'	,	51	),																			
-    (2759	,	 'Kwilu'	,	51	),																			
-    (2760	,	 'Cuyuni-Mazaruni'	,	94	),																			
-    (2761	,	 'Potaro-Siparuni'	,	94	),																			
-    (2762	,	 'Mahaica-Berbice'	,	94	),																			
-    (2763	,	 'Upper Demerara-Berbice'	,	94	),																			
-    (2764	,	 'Barima-Waini'	,	94	),																			
-    (2765	,	 'Pomeroon-Supenaam'	,	94	),																			
-    (2766	,	 'East Berbice-Corentyne'	,	94	),																			
-    (2767	,	 'Demerara-Mahaica'	,	94	),																			
-    (2768	,	 'Essequibo Islands-West Demerara'	,	94	),																			
-    (2769	,	 'Upper Takutu-Upper Essequibo'	,	94	),																			
-    (2770	,	 'Presidente Hayes Department'	,	172	),																			
-    (2771	,	 'Canindeyú'	,	172	),																			
-    (2772	,	 'Guairá Department'	,	172	),																			
-    (2773	,	 'Caaguazú'	,	172	),																			
-    (2774	,	 'Paraguarí Department'	,	172	),																			
-    (2775	,	 'Caazapá'	,	172	),																			
-    (2776	,	 'San Pedro Department'	,	172	),																			
-    (2777	,	 'Central Department'	,	172	),																			
-    (2778	,	 'Itapúa'	,	172	),																			
-    (2779	,	 'Concepción Department'	,	172	),																			
-    (2780	,	 'Boquerón Department'	,	172	),																			
-    (2781	,	 'Ñeembucú Department'	,	172	),																			
-    (2782	,	 'Amambay Department'	,	172	),																			
-    (2783	,	 'Cordillera Department'	,	172	),																			
-    (2784	,	 'Alto Paraná Department'	,	172	),																			
-    (2785	,	 'Alto Paraguay Department'	,	172	),																			
-    (2786	,	 'Misiones Department'	,	172	),																			
-    (2787	,	 'Jaffna District'	,	208	),																			
-    (2788	,	 'Kandy District'	,	208	),																			
-    (2789	,	 'Kalutara District'	,	208	),																			
-    (2790	,	 'Badulla District'	,	208	),																			
-    (2791	,	 'Hambantota District'	,	208	),																			
-    (2792	,	 'Galle District'	,	208	),																			
-    (2793	,	 'Kilinochchi District'	,	208	),																			
-    (2794	,	 'Nuwara Eliya District'	,	208	),																			
-    (2795	,	 'Trincomalee District'	,	208	),																			
-    (2796	,	 'Puttalam District'	,	208	),																			
-    (2797	,	 'Kegalle District'	,	208	),																			
-    (2798	,	 'Central Province'	,	208	),																			
-    (2799	,	 'Ampara District'	,	208	),																			
-    (2800	,	 'North Central Province'	,	208	),																			
-    (2801	,	 'Southern Province'	,	208	),																			
-    (2802	,	 'Western Province'	,	208	),																			
-    (2803	,	 'Sabaragamuwa Province'	,	208	),																			
-    (2804	,	 'Gampaha District'	,	208	),																			
-    (2805	,	 'Mannar District'	,	208	),																			
-    (2806	,	 'Matara District'	,	208	),																			
-    (2807	,	 'Ratnapura district'	,	208	),																			
-    (2808	,	 'Eastern Province'	,	208	),																			
-    (2809	,	 'Vavuniya District'	,	208	),																			
-    (2810	,	 'Matale District'	,	208	),																			
-    (2811	,	 'Uva Province'	,	208	),																			
-    (2812	,	 'Polonnaruwa District'	,	208	),																			
-    (2813	,	 'Northern Province'	,	208	),																			
-    (2814	,	 'Mullaitivu District'	,	208	),																			
-    (2815	,	 'Colombo District'	,	208	),																			
-    (2816	,	 'Anuradhapura District'	,	208	),																			
-    (2817	,	 'North Western Province'	,	208	),																			
-    (2818	,	 'Batticaloa District'	,	208	),																			
-    (2819	,	 'Monaragala District'	,	208	),																			
-    (2820	,	 'Mohéli'	,	49	),																			
-    (2821	,	 'Anjouan'	,	49	),																			
-    (2822	,	 'Grande Comore'	,	49	),																			
-    (2823	,	 'Atacama'	,	44	),																			
-    (2824	,	 'Región Metropolitana de Santiago'	,	44	),																			
-    (2825	,	 'Coquimbo'	,	44	),																			
-    (2826	,	 'La Araucanía'	,	44	),																			
-    (2827	,	 'Biobío'	,	44	),																			
-    (2828	,	 'Aisén del General Carlos Ibañez del Campo'	,	44	),																			
-    (2829	,	 'Arica y Parinacota'	,	44	),																			
-    (2830	,	 'Valparaíso'	,	44	),																			
-    (2831	,	 'Ñuble'	,	44	),																			
-    (2832	,	 'Antofagasta'	,	44	),																			
-    (2833	,	 'Maule'	,	44	),																			
-    (2834	,	 'Los Ríos'	,	44	),																			
-    (2835	,	 'Los Lagos'	,	44	),																			
-    (2836	,	 'Magallanes y de la Antártica Chilena'	,	44	),																			
-    (2837	,	 'Tarapacá'	,	44	),																			
-    (2838	,	 'Libertador General Bernardo O Higgins'	,	44	),																			
-    (2839	,	 'Commewijne District'	,	210	),																			
-    (2840	,	 'Nickerie District'	,	210	),																			
-    (2841	,	 'Para District'	,	210	),																			
-    (2842	,	 'Coronie District'	,	210	),																			
-    (2843	,	 'Paramaribo District'	,	210	),																			
-    (2844	,	 'Wanica District'	,	210	),																			
-    (2845	,	 'Marowijne District'	,	210	),																			
-    (2846	,	 'Brokopondo District'	,	210	),																			
-    (2847	,	 'Sipaliwini District'	,	210	),																			
-    (2848	,	 'Saramacca District'	,	210	),																			
-    (2849	,	 'Riyadh'	,	194	),																			
-    (2850	,	 'Makkah'	,	194	),																			
-    (2851	,	 'Al Madinah'	,	194	),																			
-    (2852	,	 'Tabuk'	,	194	),																			
-    (2853	,	 'Asir'	,	194	),																			
-    (2854	,	 'Northern Borders'	,	194	),																			
-    (2855	,	 'Ha il'	,	194	),																			
-    (2856	,	 'Eastern Province'	,	194	),																			
-    (2857	,	 'Al Jawf'	,	194	),																			
-    (2858	,	 'Jizan'	,	194	),																			
-    (2859	,	 'Al Bahah'	,	194	),																			
-    (2860	,	 'Najran'	,	194	),																			
-    (2861	,	 'Al-Qassim'	,	194	),																			
-    (2862	,	 'Plateaux Department'	,	50	),																			
-    (2863	,	 'Pointe-Noire'	,	50	),																			
-    (2864	,	 'Cuvette Department'	,	50	),																			
-    (2865	,	 'Likouala Department'	,	50	),																			
-    (2866	,	 'Bouenza Department'	,	50	),																			
-    (2867	,	 'Kouilou Department'	,	50	),																			
-    (2868	,	 'Lékoumou Department'	,	50	),																			
-    (2869	,	 'Cuvette-Ouest Department'	,	50	),																			
-    (2870	,	 'Brazzaville'	,	50	),																			
-    (2871	,	 'Sangha Department'	,	50	),																			
-    (2872	,	 'Niari Department'	,	50	),																			
-    (2873	,	 'Pool Department'	,	50	),																			
-    (2874	,	 'Quindío'	,	48	),																			
-    (2875	,	 'Cundinamarca'	,	48	),																			
-    (2876	,	 'Chocó'	,	48	),																			
-    (2877	,	 'Norte de Santander'	,	48	),																			
-    (2878	,	 'Meta'	,	48	),																			
-    (2879	,	 'Risaralda'	,	48	),																			
-    (2880	,	 'Atlántico'	,	48	),																			
-    (2881	,	 'Arauca'	,	48	),																			
-    (2882	,	 'Guainía'	,	48	),																			
-    (2883	,	 'Tolima'	,	48	),																			
-    (2884	,	 'Cauca'	,	48	),																			
-    (2885	,	 'Vaupés'	,	48	),																			
-    (2886	,	 'Magdalena'	,	48	),																			
-    (2887	,	 'Caldas'	,	48	),																			
-    (2888	,	 'Guaviare'	,	48	),																			
-    (2889	,	 'La Guajira'	,	48	),																			
-    (2890	,	 'Antioquia'	,	48	),																			
-    (2891	,	 'Caquetá'	,	48	),																			
-    (2892	,	 'Casanare'	,	48	),																			
-    (2893	,	 'Bolívar'	,	48	),																			
-    (2894	,	 'Vichada'	,	48	),																			
-    (2895	,	 'Amazonas'	,	48	),																			
-    (2896	,	 'Putumayo'	,	48	),																			
-    (2897	,	 'Nariño'	,	48	),																			
-    (2898	,	 'Córdoba'	,	48	),																			
-    (2899	,	 'Cesar'	,	48	),																			
-    (2900	,	 'San Andrés Providencia y Santa Catalina',48),								
-    (2901	,	 'Santander'	,	48	),																			
-    (2902	,	 'Sucre'	,	48	),																			
-    (2903	,	 'Boyacá'	,	48	),																			
-    (2904	,	 'Valle del Cauca'	,	48	),																			
-    (2905	,	 'Galápagos Province'	,	64	),																			
-    (2906	,	 'Sucumbíos Province'	,	64	),																			
-    (2907	,	 'Pastaza Province'	,	64	),																			
-    (2908	,	 'Tungurahua Province'	,	64	),																			
-    (2909	,	 'Zamora-Chinchipe Province'	,	64	),																			
-    (2910	,	 'Los Ríos Province'	,	64	),																			
-    (2911	,	 'Imbabura Province'	,	64	),																			
-    (2912	,	 'Santa Elena Province'	,	64	),																			
-    (2913	,	 'Manabí Province'	,	64	),																			
-    (2914	,	 'Guayas Province'	,	64	),																			
-    (2915	,	 'Carchi Province'	,	64	),																			
-    (2916	,	 'Napo Province'	,	64	),																			
-    (2917	,	 'Cañar Province'	,	64	),																			
-    (2918	,	 'Morona-Santiago Province'	,	64	),																			
-    (2919	,	 'Santo Domingo de los Tsáchilas Province'	,	64	),																			
-    (2920	,	 'Bolívar Province'	,	64	),																			
-    (2921	,	 'Cotopaxi Province'	,	64	),																			
-    (2922	,	 'Esmeraldas'	,	64	),																			
-    (2923	,	 'Azuay Province'	,	64	),																			
-    (2924	,	 'El Oro Province'	,	64	),																			
-    (2925	,	 'Chimborazo Province'	,	64	),																			
-    (2926	,	 'Orellana Province'	,	64	),																			
-    (2927	,	 'Pichincha Province'	,	64	),																			
-    (2928	,	 'Obock Region'	,	60	),																			
-    (2929	,	 'Djibouti'	,	60	),																			
-    (2930	,	 'Dikhil Region'	,	60	),																			
-    (2931	,	 'Tadjourah Region'	,	60	),																			
-    (2932	,	 'Arta Region'	,	60	),																			
-    (2933	,	 'Ali Sabieh Region'	,	60	),																			
-    (2934	,	 'Hama Governorate'	,	215	),																			
-    (2935	,	 'Rif Dimashq Governorate'	,	215	),																			
-    (2936	,	 'As-Suwayda Governorate'	,	215	),																			
-    (2937	,	 'Deir ez-Zor Governorate'	,	215	),																			
-    (2938	,	 'Latakia Governorate'	,	215	),																			
-    (2939	,	 'Damascus Governorate'	,	215	),																			
-    (2940	,	 'Idlib Governorate'	,	215	),																			
-    (2941	,	 'Al-Hasakah Governorate'	,	215	),																			
-    (2942	,	 'Homs Governorate'	,	215	),																			
-    (2943	,	 'Quneitra Governorate'	,	215	),																			
-    (2944	,	 'Al-Raqqah Governorate'	,	215	),																			
-    (2945	,	 'Daraa Governorate'	,	215	),																			
-    (2946	,	 'Aleppo Governorate'	,	215	),																			
-    (2947	,	 'Tartus Governorate'	,	215	),																			
-    (2948	,	 'Fianarantsoa Province'	,	130	),																			
-    (2949	,	 'Toliara Province'	,	130	),																			
-    (2950	,	 'Antsiranana Province'	,	130	),																			
-    (2951	,	 'Antananarivo Province'	,	130	),																			
-    (2952	,	 'Toamasina Province'	,	130	),																			
-    (2953	,	 'Mahajanga Province'	,	130	),																			
-    (2954	,	 'Mogilev Region'	,	21	),																			
-    (2955	,	 'Gomel Region'	,	21	),																			
-    (2956	,	 'Grodno Region'	,	21	),																			
-    (2957	,	 'Minsk Region'	,	21	),																			
-    (2958	,	 'Minsk'	,	21	),																			
-    (2959	,	 'Brest Region'	,	21	),																			
-    (2960	,	 'Vitebsk Region'	,	21	),																			
-    (2961	,	 'Murqub'	,	124	),																			
-    (2962	,	 'Nuqat al Khams'	,	124	),																			
-    (2963	,	 'Zawiya District'	,	124	),																			
-    (2964	,	 'Al Wahat District'	,	124	),																			
-    (2965	,	 'Sabha District'	,	124	),																			
-    (2966	,	 'Derna District'	,	124	),																			
-    (2967	,	 'Murzuq District'	,	124	),																			
-    (2968	,	 'Marj District'	,	124	),																			
-    (2969	,	 'Ghat District'	,	124	),																			
-    (2970	,	 'Jufra'	,	124	),																			
-    (2971	,	 'Tripoli District'	,	124	),																			
-    (2972	,	 'Kufra District'	,	124	),																			
-    (2973	,	 'Wadi al Hayaa District'	,	124	),																			
-    (2974	,	 'Jabal al Gharbi District'	,	124	),																			
-    (2975	,	 'Wadi al Shatii District'	,	124	),																			
-    (2976	,	 'Nalut District'	,	124	),																			
-    (2977	,	 'Sirte District'	,	124	),																			
-    (2978	,	 'Misrata District'	,	124	),																			
-    (2979	,	 'Jafara'	,	124	),																			
-    (2980	,	 'Jabal al Akhdar'	,	124	),																			
-    (2981	,	 'Benghazi'	,	124	),																			
-    (2982	,	 'Ribeira Brava Municipality'	,	40	),																			
-    (2983	,	 'Tarrafal'	,	40	),																			
-    (2984	,	 'Ribeira Grande de Santiago'	,	40	),																			
-    (2985	,	 'Santa Catarina'	,	40	),																			
-    (2986	,	 'São Domingos'	,	40	),																			
-    (2987	,	 'Mosteiros'	,	40	),																			
-    (2988	,	 'Praia'	,	40	),																			
-    (2989	,	 'Porto Novo'	,	40	),																			
-    (2990	,	 'São Miguel'	,	40	),																			
-    (2991	,	 'Maio Municipality'	,	40	),																			
-    (2992	,	 'Sotavento Islands'	,	40	),																			
-    (2993	,	 'São Lourenço dos Órgãos'	,	40	),																			
-    (2994	,	 'Barlavento Islands'	,	40	),																			
-    (2995	,	 'Santa Catarina do Fogo'	,	40	),																			
-    (2996	,	 'Brava'	,	40	),																			
-    (2997	,	 'Paul'	,	40	),																			
-    (2998	,	 'Sal'	,	40	),																			
-    (2999	,	 'Boa Vista'	,	40	),																			
-    (3000	,	 'São Filipe'	,	40	),																			
-    (3001	,	 'São Vicente'	,	40	),																			
-    (3002	,	 'Ribeira Grande'	,	40	),																			
-    (3003	,	 'Tarrafal de São Nicolau'	,	40	),																			
-    (3004	,	 'Santa Cruz'	,	40	),																			
-    (3005	,	 'Schleswig-Holstein'	,	82	),																			
-    (3006	,	 'Baden-Württemberg'	,	82	),																			
-    (3007	,	 'Mecklenburg-Vorpommern'	,	82	),																			
-    (3008	,	 'Lower Saxony'	,	82	),																			
-    (3009	,	 'Bavaria'	,	82	),																			
-    (3010	,	 'Berlin'	,	82	),																			
-    (3011	,	 'Saxony-Anhalt'	,	82	),																			
-    (3013	,	 'Brandenburg'	,	82	),																			
-    (3014	,	 'Bremen'	,	82	),																			
-    (3015	,	 'Thuringia'	,	82	),																			
-    (3016	,	 'Hamburg'	,	82	),																			
-    (3017	,	 'North Rhine-Westphalia'	,	82	),																			
-    (3018	,	 'Hesse'	,	82	),																			
-    (3019	,	 'Rhineland-Palatinate'	,	82	),																			
-    (3020	,	 'Saarland'	,	82	),																			
-    (3021	,	 'Saxony'	,	82	),																			
-    (3022	,	 'Mafeteng District'	,	122	),																			
-    (3023	,	 'Mohale s Hoek District'	,	122	),																			
-    (3024	,	 'Mokhotlong District'	,	122	),																			
-    (3025	,	 'Qacha s Nek District'	,	122	),																			
-    (3026	,	 'Leribe District'	,	122	),																			
-    (3027	,	 'Quthing District'	,	122	),																			
-    (3028	,	 'Maseru District'	,	122	),																			
-    (3029	,	 'Butha-Buthe District'	,	122	),																			
-    (3030	,	 'Berea District'	,	122	),																			
-    (3031	,	 'Thaba-Tseka District'	,	122	),																			
-    (3032	,	 'Montserrado County'	,	123	),																			
-    (3033	,	 'River Cess County'	,	123	),																			
-    (3034	,	 'Bong County'	,	123	),																			
-    (3035	,	 'Sinoe County'	,	123	),																			
-    (3036	,	 'Grand Cape Mount County'	,	123	),																			
-    (3037	,	 'Lofa County'	,	123	),																			
-    (3038	,	 'River Gee County'	,	123	),																			
-    (3039	,	 'Grand Gedeh County'	,	123	),																			
-    (3040	,	 'Grand Bassa County'	,	123	),																			
-    (3041	,	 'Bomi County'	,	123	),																			
-    (3042	,	 'Maryland County'	,	123	),																			
-    (3043	,	 'Margibi County'	,	123	),																			
-    (3044	,	 'Gbarpolu County'	,	123	),																			
-    (3045	,	 'Grand Kru County'	,	123	),																			
-    (3046	,	 'Nimba'	,	123	),																			
-    (3047	,	 'Ad Dhahirah Governorate'	,	166	),																			
-    (3048	,	 'Al Batinah North Governorate'	,	166	),																			
-    (3049	,	 'Al Batinah South Governorate'	,	166	),																			
-    (3050	,	 'Al Batinah Region'	,	166	),																			
-    (3051	,	 'Ash Sharqiyah Region'	,	166	),																			
-    (3052	,	 'Musandam Governorate'	,	166	),																			
-    (3053	,	 'Ash Sharqiyah North Governorate'	,	166	),																			
-    (3054	,	 'Ash Sharqiyah South Governorate'	,	166	),																			
-    (3055	,	 'Muscat Governorate'	,	166	),																			
-    (3056	,	 'Al Wusta Governorate'	,	166	),																			
-    (3057	,	 'Dhofar Governorate'	,	166	),																			
-    (3058	,	 'Ad Dakhiliyah Governorate'	,	166	),																			
-    (3059	,	 'Al Buraimi Governorate'	,	166	),																			
-    (3060	,	 'Ngamiland'	,	29	),																			
-    (3061	,	 'Ghanzi District'	,	29	),																			
-    (3062	,	 'Kgatleng District'	,	29	),																			
-    (3063	,	 'Southern District'	,	29	),																			
-    (3064	,	 'South-East District'	,	29	),																			
-    (3065	,	 'North-West District'	,	29	),																			
-    (3066	,	 'Kgalagadi District'	,	29	),																			
-    (3067	,	 'Central District'	,	29	),																			
-    (3068	,	 'North-East District'	,	29	),																			
-    (3069	,	 'Kweneng District'	,	29	),																			
-    (3070	,	 'Collines Department'	,	24	),																			
-    (3071	,	 'Kouffo Department'	,	24	),																			
-    (3072	,	 'Donga Department'	,	24	),																			
-    (3073	,	 'Zou Department'	,	24	),																			
-    (3074	,	 'Plateau Department'	,	24	),																			
-    (3075	,	 'Mono Department'	,	24	),																			
-    (3076	,	 'Atakora Department'	,	24	),																			
-    (3077	,	 'Alibori Department'	,	24	),																			
-    (3078	,	 'Borgou Department'	,	24	),																			
-    (3079	,	 'Atlantique Department'	,	24	),																			
-    (3080	,	 'Ouémé Department'	,	24	),																			
-    (3081	,	 'Littoral Department'	,	24	),																			
-    (3082	,	 'Machinga District'	,	131	),																			
-    (3083	,	 'Zomba District'	,	131	),																			
-    (3084	,	 'Mwanza District'	,	131	),																			
-    (3085	,	 'Nsanje District'	,	131	),																			
-    (3086	,	 'Salima District'	,	131	),																			
-    (3087	,	 'Chitipa district'	,	131	),																			
-    (3088	,	 'Ntcheu District'	,	131	),																			
-    (3089	,	 'Rumphi District'	,	131	),																			
-    (3090	,	 'Dowa District'	,	131	),																			
-    (3091	,	 'Karonga District'	,	131	),																			
-    (3092	,	 'Central Region'	,	131	),																			
-    (3093	,	 'Likoma District'	,	131	),																			
-    (3094	,	 'Kasungu District'	,	131	),																			
-    (3095	,	 'Nkhata Bay District'	,	131	),																			
-    (3096	,	 'Balaka District'	,	131	),																			
-    (3097	,	 'Dedza District'	,	131	),																			
-    (3098	,	 'Thyolo District'	,	131	),																			
-    (3099	,	 'Mchinji District'	,	131	),																			
-    (3100	,	 'Nkhotakota District'	,	131	),																			
-    (3101	,	 'Lilongwe District'	,	131	),																			
-    (3102	,	 'Blantyre District'	,	131	),																			
-    (3103	,	 'Mulanje District'	,	131	),																			
-    (3104	,	 'Mzimba District'	,	131	),																			
-    (3105	,	 'Northern Region'	,	131	),																			
-    (3106	,	 'Southern Region'	,	131	),																			
-    (3107	,	 'Chikwawa District'	,	131	),																			
-    (3108	,	 'Phalombe District'	,	131	),																			
-    (3109	,	 'Chiradzulu District'	,	131	),																			
-    (3110	,	 'Mangochi District'	,	131	),																			
-    (3111	,	 'Ntchisi District'	,	131	),																			
-    (3112	,	 'Kénédougou Province'	,	35	),																			
-    (3113	,	 'Namentenga Province'	,	35	),																			
-    (3114	,	 'Sahel Region'	,	35	),																			
-    (3115	,	 'Centre-Ouest Region'	,	35	),																			
-    (3116	,	 'Nahouri Province'	,	35	),																			
-    (3117	,	 'Passoré Province'	,	35	),																			
-    (3118	,	 'Zoundwéogo Province'	,	35	),																			
-    (3119	,	 'Sissili Province'	,	35	),																			
-    (3120	,	 'Banwa Province'	,	35	),																			
-    (3121	,	 'Bougouriba Province'	,	35	),																			
-    (3122	,	 'Gnagna Province'	,	35	),																			
-    (3123	,	 'Mouhoun'	,	35	),																			
-    (3124	,	 'Yagha Province'	,	35	),																			
-    (3125	,	 'Plateau-Central Region'	,	35	),																			
-    (3126	,	 'Sanmatenga Province'	,	35	),																			
-    (3127	,	 'Centre-Nord Region'	,	35	),																			
-    (3128	,	 'Tapoa Province'	,	35	),																			
-    (3129	,	 'Houet Province'	,	35	),																			
-    (3130	,	 'Zondoma Province'	,	35	),																			
-    (3131	,	 'Boulgou'	,	35	),																			
-    (3132	,	 'Komondjari Province'	,	35	),																			
-    (3133	,	 'Koulpélogo Province'	,	35	),																			
-    (3134	,	 'Tuy Province'	,	35	),																			
-    (3135	,	 'Ioba Province'	,	35	),																			
-    (3136	,	 'Centre'	,	35	),																			
-    (3137	,	 'Sourou Province'	,	35	),																			
-    (3138	,	 'Boucle du Mouhoun Region'	,	35	),																			
-    (3139	,	 'Séno Province'	,	35	),																			
-    (3140	,	 'Sud-Ouest Region'	,	35	),																			
-    (3141	,	 'Oubritenga Province'	,	35	),																			
-    (3142	,	 'Nayala Province'	,	35	),																			
-    (3143	,	 'Gourma Province'	,	35	),																			
-    (3144	,	 'Oudalan Province'	,	35	),																			
-    (3145	,	 'Ziro Province'	,	35	),																			
-    (3146	,	 'Kossi Province'	,	35	),																			
-    (3147	,	 'Kourwéogo Province'	,	35	),																			
-    (3148	,	 'Ganzourgou Province'	,	35	),																			
-    (3149	,	 'Centre-Sud Region'	,	35	),																			
-    (3150	,	 'Yatenga Province'	,	35	),																			
-    (3151	,	 'Loroum Province'	,	35	),																			
-    (3152	,	 'Bazèga Province'	,	35	),																			
-    (3153	,	 'Cascades Region'	,	35	),																			
-    (3154	,	 'Sanguié Province'	,	35	),																			
-    (3155	,	 'Bam Province'	,	35	),																			
-    (3156	,	 'Noumbiel Province'	,	35	),																			
-    (3157	,	 'Kompienga Province'	,	35	),																			
-    (3158	,	 'Est Region'	,	35	),																			
-    (3159	,	 'Léraba Province'	,	35	),																			
-    (3160	,	 'Balé Province'	,	35	),																			
-    (3161	,	 'Kouritenga Province'	,	35	),																			
-    (3162	,	 'Centre-Est Region'	,	35	),																			
-    (3163	,	 'Poni Province'	,	35	),																			
-    (3164	,	 'Nord Region Burkina Faso', 35 ),												
-    (3165	,	 'Hauts-Bassins Region'	,	35	),																			
-    (3166	,	 'Soum Province'	,	35	),																			
-    (3167	,	 'Comoé Province'	,	35	),																			
-    (3168	,	 'Kadiogo Province'	,	35	),																			
-    (3169	,	 'Islamabad Capital Territory'	,	167	),																			
-    (3170	,	 'Gilgit-Baltistan'	,	167	),																			
-    (3171	,	 'Khyber Pakhtunkhwa'	,	167	),																			
-    (3172	,	 'Azad Kashmir'	,	167	),																			
-    (3173	,	 'Federally Administered Tribal Areas'	,	167	),																			
-    (3174	,	 'Balochistan'	,	167	),																			
-    (3175	,	 'Sindh'	,	167	),																			
-    (3176	,	 'Punjab'	,	167	),																			
-    (3177	,	 'Al Rayyan Municipality'	,	179	),																			
-    (3178	,	 'Al-Shahaniya'	,	179	),																			
-    (3179	,	 'Al Wakrah'	,	179	),																			
-    (3180	,	 'Madinat ash Shamal'	,	179	),																			
-    (3181	,	 'Doha'	,	179	),																			
-    (3182	,	 'Al Daayen'	,	179	),																			
-    (3183	,	 'Al Khor'	,	179	),																			
-    (3184	,	 'Umm Salal Municipality'	,	179	),																			
-    (3185	,	 'Rumonge Province'	,	36	),																			
-    (3186	,	 'Muyinga Province'	,	36	),																			
-    (3187	,	 'Mwaro Province'	,	36	),																			
-    (3188	,	 'Makamba Province'	,	36	),																			
-    (3189	,	 'Rutana Province'	,	36	),																			
-    (3190	,	 'Cibitoke Province'	,	36	),																			
-    (3191	,	 'Ruyigi Province'	,	36	),																			
-    (3192	,	 'Kayanza Province'	,	36	),																			
-    (3193	,	 'Muramvya Province'	,	36	),																			
-    (3194	,	 'Karuzi Province'	,	36	),																			
-    (3195	,	 'Kirundo Province'	,	36	),																			
-    (3196	,	 'Bubanza Province'	,	36	),																			
-    (3197	,	 'Gitega Province'	,	36	),																			
-    (3198	,	 'Bujumbura Mairie Province'	,	36	),																			
-    (3199	,	 'Ngozi Province'	,	36	),																			
-    (3200	,	 'Bujumbura Rural Province'	,	36	),																			
-    (3201	,	 'Cankuzo Province'	,	36	),																			
-    (3202	,	 'Bururi Province'	,	36	),																			
-    (3203	,	 'Flores Department'	,	235	),																			
-    (3204	,	 'San José Department'	,	235	),																			
-    (3205	,	 'Artigas Department'	,	235	),																			
-    (3206	,	 'Maldonado Department'	,	235	),																			
-    (3207	,	 'Rivera Department'	,	235	),																			
-    (3208	,	 'Colonia Department'	,	235	),																			
-    (3209	,	 'Durazno Department'	,	235	),																			
-    (3210	,	 'Río Negro Department'	,	235	),																			
-    (3211	,	 'Cerro Largo Department'	,	235	),																			
-    (3212	,	 'Paysandú Department'	,	235	),																			
-    (3213	,	 'Canelones Department'	,	235	),																			
-    (3214	,	 'Treinta y Tres Department'	,	235	),																			
-    (3215	,	 'Lavalleja Department'	,	235	),																			
-    (3216	,	 'Rocha Department'	,	235	),																			
-    (3217	,	 'Florida Department'	,	235	),																			
-    (3218	,	 'Montevideo Department'	,	235	),																			
-    (3219	,	 'Soriano Department'	,	235	),																			
-    (3220	,	 'Salto Department'	,	235	),																			
-    (3221	,	 'Tacuarembó Department'	,	235	),																			
-    (3222	,	 'Kafr el-Sheikh Governorate'	,	65	),																			
-    (3223	,	 'Cairo Governorate'	,	65	),																			
-    (3224	,	 'Damietta Governorate'	,	65	),																			
-    (3225	,	 'Aswan Governorate'	,	65	),																			
-    (3226	,	 'Sohag Governorate'	,	65	),																			
-    (3227	,	 'North Sinai Governorate'	,	65	),																			
-    (3228	,	 'Monufia Governorate'	,	65	),																			
-    (3229	,	 'Port Said Governorate'	,	65	),																			
-    (3230	,	 'Beni Suef Governorate'	,	65	),																			
-    (3231	,	 'Matrouh Governorate'	,	65	),																			
-    (3232	,	 'Qalyubia Governorate'	,	65	),																			
-    (3233	,	 'Suez Governorate'	,	65	),																			
-    (3234	,	 'Gharbia Governorate'	,	65	),																			
-    (3235	,	 'Alexandria Governorate'	,	65	),																			
-    (3236	,	 'Asyut Governorate'	,	65	),																			
-    (3237	,	 'South Sinai Governorate'	,	65	),																			
-    (3238	,	 'Faiyum Governorate'	,	65	),																			
-    (3239	,	 'Giza Governorate'	,	65	),																			
-    (3240	,	 'Red Sea Governorate'	,	65	),																			
-    (3241	,	 'Beheira Governorate'	,	65	),																			
-    (3242	,	 'Luxor Governorate'	,	65	),																			
-    (3243	,	 'Minya Governorate'	,	65	),																			
-    (3244	,	 'Ismailia Governorate'	,	65	),																			
-    (3245	,	 'Dakahlia Governorate'	,	65	),																			
-    (3246	,	 'New Valley Governorate'	,	65	),																			
-    (3247	,	 'Qena Governorate'	,	65	),																			
-    (3248	,	 'Agaléga'	,	140	),																			
-    (3249	,	 'Rodrigues'	,	140	),																			
-    (3250	,	 'Pamplemousses District'	,	140	),																			
-    (3251	,	 'Cargados Carajos'	,	140	),																			
-    (3252	,	 'Vacoas-Phoenix'	,	140	),																			
-    (3253	,	 'Moka District'	,	140	),																			
-    (3254	,	 'Flacq District'	,	140	),																			
-    (3255	,	 'Curepipe'	,	140	),																			
-    (3256	,	 'Port Louis'	,	140	),																			
-    (3257	,	 'Savanne District'	,	140	),																			
-    (3258	,	 'Quatre Bornes'	,	140	),																			
-    (3259	,	 'Rivière Noire District'	,	140	),																			
-    (3260	,	 'Port Louis District'	,	140	),																			
-    (3261	,	 'Rivière du Rempart District'	,	140	),																			
-    (3262	,	 'Beau Bassin-Rose Hill'	,	140	),																			
-    (3263	,	 'Plaines Wilhems District'	,	140	),																			
-    (3264	,	 'Grand Port District'	,	140	),																			
-    (3265	,	 'Guelmim'	,	149	),																			
-    (3266	,	 'Aousserd (EH)'	,	149	),																			
-    (3267	,	 'Al Hoceïma'	,	149	),																			
-    (3268	,	 'Larache'	,	149	),																			
-    (3269	,	 'Ouarzazate'	,	149	),																			
-    (3270	,	 'Boulemane'	,	149	),																			
-    (3271	,	 'L Oriental'	,	149	),																			
-    (3272	,	 'Béni Mellal'	,	149	),																			
-    (3274	,	 'Chichaoua'	,	149	),																			
-    (3275	,	 'Boujdour (EH)'	,	149	),																			
-    (3276	,	 'Khémisset'	,	149	),																			
-    (3277	,	 'Tiznit'	,	149	),																			
-    (3278	,	 'Béni Mellal-Khénifra'	,	149	),																			
-    (3279	,	 'Sidi Kacem'	,	149	),																			
-    (3280	,	 'El Jadida'	,	149	),																			
-    (3281	,	 'Nador'	,	149	),																			
-    (3282	,	 'Settat'	,	149	),																			
-    (3283	,	 'Zagora'	,	149	),																			
-    (3284	,	 'Médiouna'	,	149	),																			
-    (3285	,	 'Berkane'	,	149	),																			
-    (3286	,	 'Tan-Tan (EH-partial)'	,	149	),																			
-    (3287	,	 'Nouaceur'	,	149	),																			
-    (3288	,	 'Marrakesh-Safi'	,	149	),																			
-    (3289	,	 'Sefrou'	,	149	),																			
-    (3290	,	 'Drâa-Tafilalet'	,	149	),																			
-    (3291	,	 'El Hajeb'	,	149	),																			
-    (3292	,	 'Es-Semara (EH-partial)'	,	149	),																			
-    (3293	,	 'Laâyoune (EH)'	,	149	),																			
-    (3294	,	 'Inezgane-Ait Melloul'	,	149	),																			
-    (3295	,	 'Souss-Massa'	,	149	),																			
-    (3296	,	 'Taza'	,	149	),																			
-    (3297	,	 'Assa-Zag (EH-partial)'	,	149	),																			
-    (3298	,	 'Laâyoune-Sakia El Hamra (EH-partial)'	,	149	),																			
-    (3299	,	 'Errachidia'	,	149	),																			
-    (3300	,	 'Fahs-Anjra'	,	149	),																			
-    (3301	,	 'Figuig'	,	149	),																			
-    (3302	,	 'Chtouka-Ait Baha'	,	149	),																			
-    (3303	,	 'Casablanca-Settat'	,	149	),																			
-    (3304	,	 'Benslimane'	,	149	),																			
-    (3305	,	 'Guelmim-Oued Noun (EH-partial)'	,	149	),																			
-    (3306	,	 'Dakhla-Oued Ed-Dahab (EH)'	,	149	),																			
-    (3307	,	 'Jerada'	,	149	),																			
-    (3308	,	 'Kénitra'	,	149	),																			
-    (3309	,	 'El Kelâa des Sraghna'	,	149	),																			
-    (3310	,	 'Chefchaouen'	,	149	),																			
-    (3311	,	 'Safi'	,	149	),																			
-    (3312	,	 'Tata'	,	149	),																			
-    (3313	,	 'Fès-Meknès'	,	149	),																			
-    (3314	,	 'Taroudannt'	,	149	),																			
-    (3315	,	 'Moulay Yacoub'	,	149	),																			
-    (3316	,	 'Essaouira'	,	149	),																			
-    (3317	,	 'Khénifra'	,	149	),																			
-    (3318	,	 'Tétouan'	,	149	),																			
-    (3319	,	 'Oued Ed-Dahab (EH)'	,	149	),																			
-    (3320	,	 'Al Haouz'	,	149	),																			
-    (3321	,	 'Azilal'	,	149	),																			
-    (3322	,	 'Taourirt'	,	149	),																			
-    (3323	,	 'Taounate'	,	149	),																			
-    (3324	,	 'Tanger-Tétouan-Al Hoceïma'	,	149	),																			
-    (3325	,	 'Ifrane'	,	149	),																			
-    (3326	,	 'Khouribga'	,	149	),																			
-    (3327	,	 'Cabo Delgado Province'	,	150	),																			
-    (3328	,	 'Zambezia Province'	,	150	),																			
-    (3329	,	 'Gaza Province'	,	150	),																			
-    (3330	,	 'Inhambane Province'	,	150	),																			
-    (3331	,	 'Sofala Province'	,	150	),																			
-    (3332	,	 'Maputo Province'	,	150	),																			
-    (3333	,	 'Niassa Province'	,	150	),																			
-    (3334	,	 'Tete Province'	,	150	),																			
-    (3335	,	 'Maputo'	,	150	),																			
-    (3336	,	 'Nampula Province'	,	150	),																			
-    (3337	,	 'Manica Province'	,	150	),																			
-    (3338	,	 'Hodh Ech Chargui Region'	,	139	),																			
-    (3339	,	 'Brakna Region'	,	139	),																			
-    (3340	,	 'Tiris Zemmour Region'	,	139	),																			
-    (3341	,	 'Gorgol Region'	,	139	),																			
-    (3342	,	 'Inchiri Region'	,	139	),																			
-    (3343	,	 'Nouakchott-Nord Region'	,	139	),																			
-    (3344	,	 'Adrar Region'	,	139	),																			
-    (3345	,	 'Tagant Region'	,	139	),																			
-    (3346	,	 'Dakhlet Nouadhibou'	,	139	),																			
-    (3347	,	 'Nouakchott-Sud Region'	,	139	),																			
-    (3348	,	 'Trarza Region'	,	139	),																			
-    (3349	,	 'Assaba Region'	,	139	),																			
-    (3350	,	 'Guidimaka Region'	,	139	),																			
-    (3351	,	 'Hodh El Gharbi Region'	,	139	),																			
-    (3352	,	 'Nouakchott-Ouest Region'	,	139	),																			
-    (3353	,	 'Western Tobago'	,	223	),																			
-    (3354	,	 'Couva-Tabaquite-Talparo Regional Corporation'	,	223	),																			
-    (3355	,	 'Eastern Tobago'	,	223	),																			
-    (3356	,	 'Rio Claro-Mayaro Regional Corporation'	,	223	),																			
-    (3357	,	 'San Juan-Laventille Regional Corporation'	,	223	),																			
-    (3358	,	 'Tunapuna-Piarco Regional Corporation'	,	223	),																			
-    (3359	,	 'San Fernando'	,	223	),																			
-    (3360	,	 'Point Fortin'	,	223	),																			
-    (3361	,	 'Sangre Grande Regional Corporation'	,	223	),																			
-    (3362	,	 'Arima'	,	223	),																			
-    (3363	,	 'Port of Spain'	,	223	),																			
-    (3364	,	 'Siparia Regional Corporation'	,	223	),																			
-    (3365	,	 'Penal-Debe Regional Corporation'	,	223	),																			
-    (3366	,	 'Chaguanas'	,	223	),																			
-    (3367	,	 'Diego Martin Regional Corporation'	,	223	),																			
-    (3368	,	 'Princes Town Regional Corporation'	,	223	),																			
-    (3369	,	 'Mary Region'	,	226	),																			
-    (3370	,	 'Lebap Region'	,	226	),																			
-    (3371	,	 'Ashgabat'	,	226	),																			
-    (3372	,	 'Balkan Region'	,	226	),																			
-    (3373	,	 'Daşoguz Region'	,	226	),																			
-    (3374	,	 'Ahal Region'	,	226	),																			
-    (3375	,	 'Beni Department'	,	27	),																			
-    (3376	,	 'Oruro Department'	,	27	),																			
-    (3377	,	 'Santa Cruz Department'	,	27	),																			
-    (3378	,	 'Tarija Department'	,	27	),																			
-    (3379	,	 'Pando Department'	,	27	),																			
-    (3380	,	 'La Paz Department'	,	27	),																			
-    (3381	,	 'Cochabamba Department'	,	27	),																			
-    (3382	,	 'Chuquisaca Department'	,	27	),																			
-    (3383	,	 'Potosí Department'	,	27	),																			
-    (3384	,	 'Saint George Parish'	,	188	),																			
-    (3385	,	 'Saint Patrick Parish'	,	188	),																			
-    (3386	,	 'Saint Andrew Parish'	,	188	),																			
-    (3387	,	 'Saint David Parish'	,	188	),																			
-    (3388	,	 'Grenadines Parish'	,	188	),																			
-    (3389	,	 'Charlotte Parish'	,	188	),																			
-    (3390	,	 'Sharjah Emirate'	,	231	),																			
-    (3391	,	 'Dubai'	,	231	),																			
-    (3392	,	 'Umm al-Quwain'	,	231	),																			
-    (3393	,	 'Fujairah'	,	231	),																			
-    (3394	,	 'Ras al-Khaimah'	,	231	),																			
-    (3395	,	 'Ajman Emirate'	,	231	),																			
-    (3396	,	 'Abu Dhabi Emirate'	,	231	),																			
-    (3397	,	 'districts of Republican Subordination'	,	217	),																			
-    (3398	,	 'Khatlon Province'	,	217	),																			
-    (3399	,	 'Gorno-Badakhshan Autonomous Province'	,	217	),																			
-    (3400	,	 'Sughd Province'	,	217	),																			
-    (3401	,	 'Tainan County'	,	216	),																			
-    (3402	,	 'Yilan County'	,	216	),																			
-    (3403	,	 'Penghu County'	,	216	),																			
-    (3404	,	 'Changhua County'	,	216	),																			
-    (3405	,	 'Pingtung County'	,	216	),																			
-    (3406	,	 'Taichung'	,	216	),																			
-    (3407	,	 'Nantou County'	,	216	),																			
-    (3408	,	 'Chiayi County'	,	216	),																			
-    (3409	,	 'Kaohsiung County'	,	216	),																			
-    (3410	,	 'Taitung County'	,	216	),																			
-    (3411	,	 'Hualien County'	,	216	),																			
-    (3412	,	 'Kaohsiung'	,	216	),																			
-    (3413	,	 'Miaoli County'	,	216	),																			
-    (3414	,	 'Taichung County'	,	216	),																			
-    (3415	,	 'Kinmen'	,	216	),																			
-    (3416	,	 'Yunlin County'	,	216	),																			
-    (3417	,	 'Hsinchu'	,	216	),																			
-    (3418	,	 'Chiayi City'	,	216	),																			
-    (3419	,	 'Taoyuan City'	,	216	),																			
-    (3420	,	 'Lienchiang County'	,	216	),																			
-    (3421	,	 'Tainan'	,	216	),																			
-    (3422	,	 'Taipei'	,	216	),																			
-    (3423	,	 'Hsinchu County'	,	216	),																			
-    (3424	,	 'Northern Red Sea Region'	,	68	),																			
-    (3425	,	 'Anseba Region'	,	68	),																			
-    (3426	,	 'Maekel Region'	,	68	),																			
-    (3427	,	 'Debub Region'	,	68	),																			
-    (3428	,	 'Gash-Barka Region'	,	68	),																			
-    (3429	,	 'Southern Red Sea Region'	,	68	),																			
-    (3430	,	 'Southern Peninsula Region'	,	100	),																			
-    (3431	,	 'Capital Region'	,	100	),																			
-    (3432	,	 'Westfjords'	,	100	),																			
-    (3433	,	 'Eastern Region'	,	100	),																			
-    (3434	,	 'Southern Region'	,	100	),																			
-    (3435	,	 'Northwestern Region'	,	100	),																			
-    (3436	,	 'Western Region'	,	100	),																			
-    (3437	,	 'Northeastern Region'	,	100	),																			
-    (3438	,	 'Río Muni'	,	67	),																			
-    (3439	,	 'Kié-Ntem Province'	,	67	),																			
-    (3440	,	 'Wele-Nzas Province'	,	67	),																			
-    (3441	,	 'Litoral Province'	,	67	),																			
-    (3442	,	 'Insular Region'	,	67	),																			
-    (3443	,	 'Bioko Sur Province'	,	67	),																			
-    (3444	,	 'Annobón Province'	,	67	),																			
-    (3445	,	 'Centro Sur Province'	,	67	),																			
-    (3446	,	 'Bioko Norte Province'	,	67	),																			
-    (3447	,	 'Chihuahua'	,	142	),																			
-    (3448	,	 'Oaxaca'	,	142	),																			
-    (3449	,	 'Sinaloa'	,	142	),																			
-    (3450	,	 'México'	,	142	),																			
-    (3451	,	 'Chiapas'	,	142	),																			
-    (3452	,	 'Nuevo León'	,	142	),																			
-    (3453	,	 'Durango'	,	142	),																			
-    (3454	,	 'Tabasco'	,	142	),																			
-    (3455	,	 'Querétaro'	,	142	),																			
-    (3456	,	 'Aguascalientes'	,	142	),																			
-    (3457	,	 'Baja California'	,	142	),																			
-    (3458	,	 'Tlaxcala'	,	142	),																			
-    (3459	,	 'Guerrero'	,	142	),																			
-    (3460	,	 'Baja California Sur'	,	142	),																			
-    (3461	,	 'San Luis Potosí'	,	142	),																			
-    (3462	,	 'Zacatecas'	,	142	),																			
-    (3463	,	 'Tamaulipas'	,	142	),																			
-    (3464	,	 'Veracruz'	,	142	),																			
-    (3465	,	 'Morelos'	,	142	),																			
-    (3466	,	 'Yucatán'	,	142	),																			
-    (3467	,	 'Quintana Roo'	,	142	),																			
-    (3468	,	 'Sonora'	,	142	),																			
-    (3469	,	 'Guanajuato'	,	142	),																			
-    (3470	,	 'Hidalgo'	,	142	),																			
-    (3471	,	 'Coahuila'	,	142	),																			
-    (3472	,	 'Colima'	,	142	),																			
-    (3473	,	 'Mexico City'	,	142	),																			
-    (3474	,	 'Michoacán'	,	142	),																			
-    (3475	,	 'Campeche'	,	142	),																			
-    (3476	,	 'Puebla'	,	142	),																			
-    (3477	,	 'Nayarit'	,	142	),																			
-    (3478	,	 'Krabi'	,	219	),																			
-    (3479	,	 'Ranong'	,	219	),																			
-    (3480	,	 'Nong Bua Lam Phu'	,	219	),																			
-    (3481	,	 'Samut Prakan'	,	219	),																			
-    (3482	,	 'Surat Thani'	,	219	),																			
-    (3483	,	 'Lamphun'	,	219	),																			
-    (3484	,	 'Nong Khai'	,	219	),																			
-    (3485	,	 'Khon Kaen'	,	219	),																			
-    (3486	,	 'Chanthaburi'	,	219	),																			
-    (3487	,	 'Saraburi'	,	219	),																			
-    (3488	,	 'Phatthalung'	,	219	),																			
-    (3489	,	 'Uttaradit'	,	219	),																			
-    (3490	,	 'Sing Buri'	,	219	),																			
-    (3491	,	 'Chiang Mai'	,	219	),																			
-    (3492	,	 'Nakhon Sawan'	,	219	),																			
-    (3493	,	 'Yala'	,	219	),																			
-    (3494	,	 'Phra Nakhon Si Ayutthaya'	,	219	),																			
-    (3495	,	 'Nonthaburi'	,	219	),																			
-    (3496	,	 'Trat'	,	219	),																			
-    (3497	,	 'Nakhon Ratchasima'	,	219	),																			
-    (3498	,	 'Chiang Rai'	,	219	),																			
-    (3499	,	 'Ratchaburi'	,	219	),																			
-    (3500	,	 'Pathum Thani'	,	219	),																			
-    (3501	,	 'Sakon Nakhon'	,	219	),																			
-    (3502	,	 'Samut Songkhram'	,	219	),																			
-    (3503	,	 'Nakhon Pathom'	,	219	),																			
-    (3504	,	 'Samut Sakhon'	,	219	),																			
-    (3505	,	 'Mae Hong Son'	,	219	),																			
-    (3506	,	 'Phitsanulok'	,	219	),																			
-    (3507	,	 'Pattaya'	,	219	),																			
-    (3508	,	 'Prachuap Khiri Khan'	,	219	),																			
-    (3509	,	 'Loei'	,	219	),																			
-    (3510	,	 'Roi Et'	,	219	),																			
-    (3511	,	 'Kanchanaburi'	,	219	),																			
-    (3512	,	 'Ubon Ratchathani'	,	219	),																			
-    (3513	,	 'Chon Buri'	,	219	),																			
-    (3514	,	 'Phichit'	,	219	),																			
-    (3515	,	 'Phetchabun'	,	219	),																			
-    (3516	,	 'Kamphaeng Phet'	,	219	),																			
-    (3517	,	 'Maha Sarakham'	,	219	),																			
-    (3518	,	 'Rayong'	,	219	),																			
-    (3519	,	 'Ang Thong'	,	219	),																			
-    (3520	,	 'Nakhon Si Thammarat'	,	219	),																			
-    (3521	,	 'Yasothon'	,	219	),																			
-    (3522	,	 'Chai Nat'	,	219	),																			
-    (3523	,	 'Amnat Charoen'	,	219	),																			
-    (3524	,	 'Suphan Buri'	,	219	),																			
-    (3525	,	 'Tak'	,	219	),																			
-    (3526	,	 'Chumphon'	,	219	),																			
-    (3527	,	 'Udon Thani'	,	219	),																			
-    (3528	,	 'Phrae'	,	219	),																			
-    (3529	,	 'Sa Kaeo'	,	219	),																			
-    (3530	,	 'Nan'	,	219	),																			
-    (3531	,	 'Surin'	,	219	),																			
-    (3532	,	 'Phetchaburi'	,	219	),																			
-    (3533	,	 'Bueng Kan'	,	219	),																			
-    (3534	,	 'Buri Ram'	,	219	),																			
-    (3535	,	 'Nakhon Nayok'	,	219	),																			
-    (3536	,	 'Phuket'	,	219	),																			
-    (3537	,	 'Satun'	,	219	),																			
-    (3538	,	 'Phayao'	,	219	),																			
-    (3539	,	 'Songkhla'	,	219	),																			
-    (3540	,	 'Pattani'	,	219	),																			
-    (3541	,	 'Trang'	,	219	),																			
-    (3542	,	 'Prachin Buri'	,	219	),																			
-    (3543	,	 'Lop Buri'	,	219	),																			
-    (3544	,	 'Lampang'	,	219	),																			
-    (3545	,	 'Sukhothai'	,	219	),																			
-    (3546	,	 'Mukdahan'	,	219	),																			
-    (3547	,	 'Si Sa Ket'	,	219	),																			
-    (3548	,	 'Nakhon Phanom'	,	219	),																			
-    (3549	,	 'Phangnga'	,	219	),																			
-    (3550	,	 'Kalasin'	,	219	),																			
-    (3551	,	 'Uthai Thani'	,	219	),																			
-    (3552	,	 'Chachoengsao'	,	219	),																			
-    (3553	,	 'Narathiwat'	,	219	),																			
-    (3554	,	 'Bangkok'	,	219	),																			
-    (3555	,	 'Hiiu County'	,	69	),																			
-    (3556	,	 'Viljandi County'	,	69	),																			
-    (3557	,	 'Tartu County'	,	69	),																			
-    (3558	,	 'Valga County'	,	69	),																			
-    (3559	,	 'Rapla County'	,	69	),																			
-    (3560	,	 'Võru County'	,	69	),																			
-    (3561	,	 'Saare County'	,	69	),																			
-    (3562	,	 'Pärnu County'	,	69	),																			
-    (3563	,	 'Põlva County'	,	69	),																			
-    (3564	,	 'Lääne-Viru County'	,	69	),																			
-    (3565	,	 'Jõgeva County'	,	69	),																			
-    (3566	,	 'Järva County'	,	69	),																			
-    (3567	,	 'Harju County'	,	69	),																			
-    (3568	,	 'Lääne County'	,	69	),																			
-    (3569	,	 'Ida-Viru County'	,	69	),																			
-    (3570	,	 'Moyen-Chari Region'	,	43	),																			
-    (3571	,	 'Mayo-Kebbi Ouest Region'	,	43	),																			
-    (3572	,	 'Sila Region'	,	43	),																			
-    (3573	,	 'Hadjer-Lamis'	,	43	),																			
-    (3574	,	 'Borkou'	,	43	),																			
-    (3575	,	 'Ennedi-Est'	,	43	),																			
-    (3576	,	 'Guéra Region'	,	43	),																			
-    (3577	,	 'Lac Region'	,	43	),																			
-    (3578	,	 'Ennedi Region'	,	43	),																			
-    (3579	,	 'Tandjilé Region'	,	43	),																			
-    (3580	,	 'Mayo-Kebbi Est Region'	,	43	),																			
-    (3581	,	 'Wadi Fira Region'	,	43	),																			
-    (3582	,	 'Ouaddaï Region'	,	43	),																			
-    (3583	,	 'Bahr el Gazel'	,	43	),																			
-    (3584	,	 'Ennedi-Ouest'	,	43	),																			
-    (3585	,	 'Logone Occidental Region'	,	43	),																			
-    (3586	,	 'N Djamena'	,	43	),																			
-    (3587	,	 'Tibesti Region'	,	43	),																			
-    (3588	,	 'Kanem Region'	,	43	),																			
-    (3589	,	 'Mandoul Region'	,	43	),																			
-    (3590	,	 'Batha Region'	,	43	),																			
-    (3591	,	 'Logone Oriental Region'	,	43	),																			
-    (3592	,	 'Salamat Region'	,	43	),																			
-    (3593	,	 'Berry Islands'	,	17	),																			
-    (3594	,	 'Nichollstown and Berry Islands'	,	17	),																			
-    (3595	,	 'Green Turtle Cay'	,	17	),																			
-    (3596	,	 'Central Eleuthera'	,	17	),																			
-    (3597	,	 'Governor s Harbour'	,	17	),																			
-    (3598	,	 'High Rock'	,	17	),																			
-    (3599	,	 'West Grand Bahama'	,	17	),																			
-    (3600	,	 'Rum Cay District'	,	17	),																			
-    (3601	,	 'Acklins'	,	17	),																			
-    (3602	,	 'North Eleuthera'	,	17	),																			
-    (3603	,	 'Central Abaco'	,	17	),																			
-    (3604	,	 'Marsh Harbour'	,	17	),																			
-    (3605	,	 'Black Point'	,	17	),																			
-    (3606	,	 'Sandy Point'	,	17	),																			
-    (3607	,	 'South Eleuthera'	,	17	),																			
-    (3608	,	 'South Abaco'	,	17	),																			
-    (3609	,	 'Inagua'	,	17	),																			
-    (3610	,	 'Long Island'	,	17	),																			
-    (3611	,	 'Cat Island'	,	17	),																			
-    (3612	,	 'Exuma'	,	17	),																			
-    (3613	,	 'Harbour Island'	,	17	),																			
-    (3614	,	 'East Grand Bahama'	,	17	),																			
-    (3615	,	 'Ragged Island'	,	17	),																			
-    (3616	,	 'North Abaco'	,	17	),																			
-    (3617	,	 'North Andros'	,	17	),																			
-    (3618	,	 'Kemps Bay'	,	17	),																			
-    (3619	,	 'Fresh Creek'	,	17	),																			
-    (3620	,	 'San Salvador and Rum Cay'	,	17	),																			
-    (3621	,	 'Crooked Island'	,	17	),																			
-    (3622	,	 'South Andros'	,	17	),																			
-    (3623	,	 'Rock Sound'	,	17	),																			
-    (3624	,	 'Hope Town'	,	17	),																			
-    (3625	,	 'Mangrove Cay'	,	17	),																			
-    (3626	,	 'Freeport'	,	17	),																			
-    (3627	,	 'San Salvador Island'	,	17	),																			
-    (3628	,	 'Acklins and Crooked Islands'	,	17	),																			
-    (3629	,	 'Bimini'	,	17	),																			
-    (3630	,	 'Spanish Wells'	,	17	),																			
-    (3631	,	 'Central Andros'	,	17	),																			
-    (3632	,	 'Grand Cay'	,	17	),																			
-    (3633	,	 'Mayaguana District'	,	17	),																			
-    (3634	,	 'San Juan Province'	,	11	),																			
-    (3635	,	 'Santiago del Estero Province'	,	11	),																			
-    (3636	,	 'San Luis Province'	,	11	),																			
-    (3637	,	 'Tucumán Province'	,	11	),																			
-    (3638	,	 'Corrientes'	,	11	),																			
-    (3639	,	 'Río Negro Province'	,	11	),																			
-    (3640	,	 'Chaco Province'	,	11	),																			
-    (3641	,	 'Santa Fe Province'	,	11	),																			
-    (3642	,	 'Córdoba Province'	,	11	),																			
-    (3643	,	 'Salta Province'	,	11	),																			
-    (3644	,	 'Misiones Province'	,	11	),																			
-    (3645	,	 'Jujuy Province'	,	11	),																			
-    (3646	,	 'Mendoza'	,	11	),																			
-    (3647	,	 'Catamarca Province'	,	11	),																			
-    (3648	,	 'Neuquén Province'	,	11	),																			
-    (3649	,	 'Santa Cruz Province'	,	11	),																			
-    (3650	,	 'Tierra del Fuego Province'	,	11	),																			
-    (3651	,	 'Chubut Province'	,	11	),																			
-    (3652	,	 'Formosa Province'	,	11	),																			
-    (3653	,	 'La Rioja Province'	,	11	),																			
-    (3654	,	 'Entre Ríos Province'	,	11	),																			
-    (3655	,	 'La Pampa'	,	11	),																			
-    (3656	,	 'Buenos Aires Province'	,	11	),																			
-    (3657	,	 'Quiché Department'	,	90	),																			
-    (3658	,	 'Jalapa Department'	,	90	),																			
-    (3659	,	 'Izabal Department'	,	90	),																			
-    (3660	,	 'Suchitepéquez Department'	,	90	),																			
-    (3661	,	 'Sololá Department'	,	90	),																			
-    (3662	,	 'El Progreso Department'	,	90	),																			
-    (3663	,	 'Totonicapán Department'	,	90	),																			
-    (3664	,	 'Retalhuleu Department'	,	90	),																			
-    (3665	,	 'Santa Rosa Department'	,	90	),																			
-    (3666	,	 'Chiquimula Department'	,	90	),																			
-    (3667	,	 'San Marcos Department'	,	90	),																			
-    (3668	,	 'Quetzaltenango Department'	,	90	),																			
-    (3669	,	 'Petén Department'	,	90	),																			
-    (3670	,	 'Huehuetenango Department'	,	90	),																			
-    (3671	,	 'Alta Verapaz Department'	,	90	),																			
-    (3672	,	 'Guatemala Department'	,	90	),																			
-    (3673	,	 'Jutiapa Department'	,	90	),																			
-    (3674	,	 'Baja Verapaz Department'	,	90	),																			
-    (3675	,	 'Chimaltenango Department'	,	90	),																			
-    (3676	,	 'Sacatepéquez Department'	,	90	),																			
-    (3677	,	 'Escuintla Department'	,	90	),																			
-    (3678	,	 'Madre de Dios'	,	173	),																			
-    (3679	,	 'Huancavelica'	,	173	),																			
-    (3680	,	 'Áncash'	,	173	),																			
-    (3681	,	 'Arequipa'	,	173	),																			
-    (3682	,	 'Puno'	,	173	),																			
-    (3683	,	 'La Libertad'	,	173	),																			
-    (3684	,	 'Ucayali'	,	173	),																			
-    (3685	,	 'Amazonas'	,	173	),																			
-    (3686	,	 'Pasco'	,	173	),																			
-    (3687	,	 'Huanuco'	,	173	),																			
-    (3688	,	 'Cajamarca'	,	173	),																			
-    (3689	,	 'Tumbes'	,	173	),																			
-    (3691	,	 'Cusco'	,	173	),																			
-    (3692	,	 'Ayacucho'	,	173	),																			
-    (3693	,	 'Junín'	,	173	),																			
-    (3694	,	 'San Martín'	,	173	),																			
-    (3695	,	 'Lima'	,	173	),																			
-    (3696	,	 'Tacna'	,	173	),																			
-    (3697	,	 'Piura'	,	173	),																			
-    (3698	,	 'Moquegua'	,	173	),																			
-    (3699	,	 'Apurímac'	,	173	),																			
-    (3700	,	 'Ica'	,	173	),																			
-    (3701	,	 'Callao'	,	173	),																			
-    (3702	,	 'Lambayeque'	,	173	),																			
-    (3703	,	 'Redonda'	,	10	),																			
-    (3704	,	 'Saint Peter Parish'	,	10	),																			
-    (3705	,	 'Saint Paul Parish'	,	10	),																			
-    (3706	,	 'Saint John Parish'	,	10	),																			
-    (3707	,	 'Saint Mary Parish'	,	10	),																			
-    (3708	,	 'Barbuda'	,	10	),																			
-    (3709	,	 'Saint George Parish'	,	10	),																			
-    (3710	,	 'Saint Philip Parish'	,	10	),																			
-    (3711	,	 'South Bačka District'	,	196	),																			
-    (3712	,	 'Pirot District'	,	196	),																			
-    (3713	,	 'South Banat District'	,	196	),																			
-    (3714	,	 'North Bačka District'	,	196	),																			
-    (3715	,	 'Jablanica District'	,	196	),																			
-    (3716	,	 'Central Banat District'	,	196	),																			
-    (3717	,	 'Bor District'	,	196	),																			
-    (3718	,	 'Toplica District'	,	196	),																			
-    (3719	,	 'Mačva District'	,	196	),																			
-    (3720	,	 'Rasina District'	,	196	),																			
-    (3721	,	 'Pčinja District'	,	196	),																			
-    (3722	,	 'Nišava District'	,	196	),																			
-    (3723	,	 'Prizren District'	,	248	),																			
-    (3724	,	 'Kolubara District'	,	196	),																			
-    (3725	,	 'Raška District'	,	196	),																			
-    (3726	,	 'West Bačka District'	,	196	),																			
-    (3727	,	 'Moravica District'	,	196	),																			
-    (3728	,	 'Belgrade'	,	196	),																			
-    (3729	,	 'Zlatibor District'	,	196	),																			
-    (3731	,	 'Zaječar District'	,	196	),																			
-    (3732	,	 'Braničevo District'	,	196	),																			
-    (3733	,	 'Vojvodina'	,	196	),																			
-    (3734	,	 'Šumadija District'	,	196	),																			
-    (3736	,	 'North Banat District'	,	196	),																			
-    (3737	,	 'Pomoravlje District'	,	196	),																			
-    (3738	,	 'Peć District'	,	248	),																			
-    (3740	,	 'Srem District'	,	196	),																			
-    (3741	,	 'Podunavlje District'	,	196	),																			
-    (3742	,	 'Westmoreland Parish'	,	108	),																			
-    (3743	,	 'Saint Elizabeth Parish'	,	108	),																			
-    (3744	,	 'Saint Ann Parish'	,	108	),																			
-    (3745	,	 'Saint James Parish'	,	108	),																			
-    (3746	,	 'Saint Catherine Parish'	,	108	),																			
-    (3747	,	 'Saint Mary Parish'	,	108	),																			
-    (3748	,	 'Kingston Parish'	,	108	),																			
-    (3749	,	 'Hanover Parish'	,	108	),																			
-    (3750	,	 'Saint Thomas Parish'	,	108	),																			
-    (3751	,	 'Saint Andrew'	,	108	),																			
-    (3752	,	 'Portland Parish'	,	108	),																			
-    (3753	,	 'Clarendon Parish'	,	108	),																			
-    (3754	,	 'Manchester Parish'	,	108	),																			
-    (3755	,	 'Trelawny Parish'	,	108	),																			
-    (3756	,	 'Dennery Quarter'	,	186	),																			
-    (3757	,	 'Anse la Raye Quarter'	,	186	),																			
-    (3758	,	 'Castries Quarter'	,	186	),																			
-    (3759	,	 'Laborie Quarter'	,	186	),																			
-    (3760	,	 'Choiseul Quarter'	,	186	),																			
-    (3761	,	 'Canaries'	,	186	),																			
-    (3762	,	 'Micoud Quarter'	,	186	),																			
-    (3763	,	 'Vieux Fort Quarter'	,	186	),																			
-    (3764	,	 'Soufrière Quarter'	,	186	),																			
-    (3765	,	 'Praslin Quarter'	,	186	),																			
-    (3766	,	 'Gros Islet Quarter'	,	186	),																			
-    (3767	,	 'Dauphin Quarter'	,	186	),																			
-    (3768	,	 'Hưng Yên'	,	240	),																			
-    (3769	,	 'Đồng Tháp'	,	240	),																			
-    (3770	,	 'Bà Rịa-Vũng Tàu'	,	240	),																			
-    (3771	,	 'Thanh Hóa'	,	240	),																			
-    (3772	,	 'Kon Tum'	,	240	),																			
-    (3773	,	 'Điện Biên'	,	240	),																			
-    (3774	,	 'Vĩnh Phúc'	,	240	),																			
-    (3775	,	 'Thái Bình'	,	240	),																			
-    (3776	,	 'Quảng Nam'	,	240	),																			
-    (3777	,	 'Hậu Giang'	,	240	),																			
-    (3778	,	 'Cà Mau'	,	240	),																			
-    (3779	,	 'Hà Giang'	,	240	),																			
-    (3780	,	 'Nghệ An'	,	240	),																			
-    (3781	,	 'Tiền Giang'	,	240	),																			
-    (3782	,	 'Cao Bằng'	,	240	),																			
-    (3783	,	 'Hải Phòng'	,	240	),																			
-    (3784	,	 'Yên Bái'	,	240	),																			
-    (3785	,	 'Bình Dương'	,	240	),																			
-    (3786	,	 'Ninh Bình'	,	240	),																			
-    (3787	,	 'Bình Thuận'	,	240	),																			
-    (3788	,	 'Ninh Thuận'	,	240	),																			
-    (3789	,	 'Nam Định'	,	240	),																			
-    (3790	,	 'Vĩnh Long'	,	240	),																			
-    (3791	,	 'Bắc Ninh'	,	240	),																			
-    (3792	,	 'Lạng Sơn'	,	240	),																			
-    (3793	,	 'Khánh Hòa'	,	240	),																			
-    (3794	,	 'An Giang'	,	240	),																			
-    (3795	,	 'Tuyên Quang'	,	240	),																			
-    (3796	,	 'Bến Tre'	,	240	),																			
-    (3797	,	 'Bình Phước'	,	240	),																			
-    (3798	,	 'Thừa Thiên-Huế'	,	240	),																			
-    (3799	,	 'Hòa Bình'	,	240	),																			
-    (3800	,	 'Kiên Giang'	,	240	),																			
-    (3801	,	 'Phú Thọ'	,	240	),																			
-    (3802	,	 'Hà Nam'	,	240	),																			
-    (3803	,	 'Quảng Trị'	,	240	),																			
-    (3804	,	 'Bạc Liêu'	,	240	),																			
-    (3805	,	 'Trà Vinh'	,	240	),																			
-    (3806	,	 'Đà Nẵng'	,	240	),																			
-    (3807	,	 'Thái Nguyên'	,	240	),																			
-    (3808	,	 'Long An'	,	240	),																			
-    (3809	,	 'Quảng Bình'	,	240	),																			
-    (3810	,	 'Hà Nội'	,	240	),																			
-    (3811	,	 'Hồ Chí Minh'	,	240	),																			
-    (3812	,	 'Sơn La'	,	240	),																			
-    (3813	,	 'Gia Lai'	,	240	),																			
-    (3814	,	 'Quảng Ninh'	,	240	),																			
-    (3815	,	 'Bắc Giang'	,	240	),																			
-    (3816	,	 'Hà Tĩnh'	,	240	),																			
-    (3817	,	 'Lào Cai'	,	240	),																			
-    (3818	,	 'Lâm Đồng'	,	240	),																			
-    (3819	,	 'Sóc Trăng'	,	240	),																			
-    (3821	,	 'Đồng Nai'	,	240	),																			
-    (3822	,	 'Bắc Kạn'	,	240	),																			
-    (3823	,	 'Đắk Nông'	,	240	),																			
-    (3824	,	 'Phú Yên'	,	240	),																			
-    (3825	,	 'Lai Châu'	,	240	),																			
-    (3826	,	 'Tây Ninh'	,	240	),																			
-    (3827	,	 'Hải Dương'	,	240	),																			
-    (3828	,	 'Quảng Ngãi'	,	240	),																			
-    (3829	,	 'Đắk Lắk'	,	240	),																			
-    (3830	,	 'Bình Định'	,	240	),																			
-    (3831	,	 'Saint Peter Basseterre Parish'	,	185	),																			
-    (3832	,	 'Nevis'	,	185	),																			
-    (3833	,	 'Christ Church Nichola Town Parish'	,	185	),																			
-    (3834	,	 'Saint Paul Capisterre Parish'	,	185	),																			
-    (3835	,	 'Saint James Windward Parish'	,	185	),																			
-    (3836	,	 'Saint Anne Sandy Point Parish'	,	185	),																			
-    (3837	,	 'Saint George Gingerland Parish'	,	185	),																			
-    (3838	,	 'Saint Paul Charlestown Parish'	,	185	),																			
-    (3839	,	 'Saint Thomas Lowland Parish'	,	185	),																			
-    (3840	,	 'Saint John Figtree Parish'	,	185	),																			
-    (3841	,	 'Saint Kitts'	,	185	),																			
-    (3842	,	 'Saint Thomas Middle Island Parish'	,	185	),																			
-    (3843	,	 'Trinity Palmetto Point Parish'	,	185	),																			
-    (3844	,	 'Saint Mary Cayon Parish'	,	185	),																			
-    (3845	,	 'Saint John Capisterre Parish'	,	185	),																			
-    (3846	,	 'Daegu'	,	116	),																			
-    (3847	,	 'Gyeonggi Province'	,	116	),																			
-    (3848	,	 'Incheon'	,	116	),																			
-    (3849	,	 'Seoul'	,	116	),																			
-    (3850	,	 'Daejeon'	,	116	),																			
-    (3851	,	 'North Jeolla Province'	,	116	),																			
-    (3852	,	 'Ulsan'	,	116	),																			
-    (3853	,	 'Jeju'	,	116	),																			
-    (3854	,	 'North Chungcheong Province'	,	116	),																			
-    (3855	,	 'North Gyeongsang Province'	,	116	),																			
-    (3856	,	 'South Jeolla Province'	,	116	),																			
-    (3857	,	 'South Gyeongsang Province'	,	116	),																			
-    (3858	,	 'Gwangju'	,	116	),																			
-    (3859	,	 'South Chungcheong Province'	,	116	),																			
-    (3860	,	 'Busan'	,	116	),																			
-    (3861	,	 'Sejong City'	,	116	),																			
-    (3862	,	 'Gangwon Province'	,	116	),																			
-    (3863	,	 'Saint Patrick Parish'	,	87	),																			
-    (3864	,	 'Saint George Parish'	,	87	),																			
-    (3865	,	 'Saint Andrew Parish'	,	87	),																			
-    (3866	,	 'Saint Mark Parish'	,	87	),																			
-    (3867	,	 'Carriacou and Petite Martinique'	,	87	),																			
-    (3868	,	 'Saint John Parish'	,	87	),																			
-    (3869	,	 'Saint David Parish'	,	87	),																			
-    (3870	,	 'Ghazni'	,	1	),																			
-    (3871	,	 'Badghis'	,	1	),																			
-    (3872	,	 'Bamyan'	,	1	),																			
-    (3873	,	 'Helmand'	,	1	),																			
-    (3874	,	 'Zabul'	,	1	),																			
-    (3875	,	 'Baghlan'	,	1	),																			
-    (3876	,	 'Kunar'	,	1	),																			
-    (3877	,	 'Paktika'	,	1	),																			
-    (3878	,	 'Khost'	,	1	),																			
-    (3879	,	 'Kapisa'	,	1	),																			
-    (3880	,	 'Nuristan'	,	1	),																			
-    (3881	,	 'Panjshir'	,	1	),																			
-    (3882	,	 'Nangarhar'	,	1	),																			
-    (3883	,	 'Samangan'	,	1	),																			
-    (3884	,	 'Balkh'	,	1	),																			
-    (3885	,	 'Sar-e Pol'	,	1	),																			
-    (3886	,	 'Jowzjan'	,	1	),																			
-    (3887	,	 'Herat'	,	1	),																			
-    (3888	,	 'Ghōr'	,	1	),																			
-    (3889	,	 'Faryab'	,	1	),																			
-    (3890	,	 'Kandahar'	,	1	),																			
-    (3891	,	 'Laghman'	,	1	),																			
-    (3892	,	 'Daykundi'	,	1	),																			
-    (3893	,	 'Takhar'	,	1	),																			
-    (3894	,	 'Paktia'	,	1	),																			
-    (3895	,	 'Parwan'	,	1	),																			
-    (3896	,	 'Nimruz'	,	1	),																			
-    (3897	,	 'Logar'	,	1	),																			
-    (3898	,	 'Urozgan'	,	1	),																			
-    (3899	,	 'Farah'	,	1	),																			
-    (3900	,	 'Kunduz Province'	,	1	),																			
-    (3901	,	 'Badakhshan'	,	1	),																			
-    (3902	,	 'Kabul'	,	1	),																			
-    (3903	,	 'Victoria'	,	14	),																			
-    (3904	,	 'South Australia'	,	14	),																			
-    (3905	,	 'Queensland'	,	14	),																			
-    (3906	,	 'Western Australia'	,	14	),																			
-    (3907	,	 'Australian Capital Territory'	,	14	),																			
-    (3908	,	 'Tasmania'	,	14	),																			
-    (3909	,	 'New South Wales'	,	14	),																			
-    (3910	,	 'Northern Territory'	,	14	),																			
-    (3911	,	 'Vavaʻu'	,	222	),																			
-    (3912	,	 'Tongatapu'	,	222	),																			
-    (3913	,	 'Haʻapai'	,	222	),																			
-    (3914	,	 'Niuas'	,	222	),																			
-    (3915	,	 'ʻEua'	,	222	),																			
-    (3916	,	 'Markazi Province'	,	103	),																			
-    (3917	,	 'Khuzestan Province'	,	103	),																			
-    (3918	,	 'Ilam Province'	,	103	),																			
-    (3919	,	 'Kermanshah Province'	,	103	),																			
-    (3920	,	 'Gilan Province'	,	103	),																			
-    (3921	,	 'Chaharmahal and Bakhtiari Province'	,	103	),																			
-    (3922	,	 'Qom Province'	,	103	),																			
-    (3923	,	 'Isfahan Province'	,	103	),																			
-    (3924	,	 'West Azarbaijan Province'	,	103	),																			
-    (3925	,	 'Zanjan Province'	,	103	),																			
-    (3926	,	 'Kohgiluyeh and Boyer-Ahmad Province'	,	103	),																			
-    (3927	,	 'Razavi Khorasan Province'	,	103	),																			
-    (3928	,	 'Lorestan Province'	,	103	),																			
-    (3929	,	 'Alborz Province'	,	103	),																			
-    (3930	,	 'South Khorasan Province'	,	103	),																			
-    (3931	,	 'Sistan and Baluchestan'	,	103	),																			
-    (3932	,	 'Bushehr Province'	,	103	),																			
-    (3933	,	 'Golestan Province'	,	103	),																			
-    (3934	,	 'Ardabil Province'	,	103	),																			
-    (3935	,	 'Kurdistan Province'	,	103	),																			
-    (3936	,	 'Yazd Province'	,	103	),																			
-    (3937	,	 'Hormozgan Province'	,	103	),																			
-    (3938	,	 'Mazandaran Province'	,	103	),																			
-    (3939	,	 'Fars Province'	,	103	),																			
-    (3940	,	 'Semnan Province'	,	103	),																			
-    (3941	,	 'Qazvin Province'	,	103	),																			
-    (3942	,	 'North Khorasan Province'	,	103	),																			
-    (3943	,	 'Kerman Province'	,	103	),																			
-    (3944	,	 'East Azerbaijan Province'	,	103	),																			
-    (3945	,	 'Tehran Province'	,	103	),																			
-    (3946	,	 'Niutao Island Council'	,	228	),																			
-    (3947	,	 'Nanumanga'	,	228	),																			
-    (3948	,	 'Nui'	,	228	),																			
-    (3949	,	 'Nanumea'	,	228	),																			
-    (3950	,	 'Vaitupu'	,	228	),																			
-    (3951	,	 'Funafuti'	,	228	),																			
-    (3952	,	 'Nukufetau'	,	228	),																			
-    (3953	,	 'Nukulaelae'	,	228	),																			
-    (3954	,	 'Dhi Qar Governorate'	,	104	),																			
-    (3955	,	 'Babylon Governorate'	,	104	),																			
-    (3956	,	 'Al-Qādisiyyah Governorate'	,	104	),																			
-    (3957	,	 'Karbala Governorate'	,	104	),																			
-    (3958	,	 'Al Muthanna Governorate'	,	104	),																			
-    (3959	,	 'Baghdad Governorate'	,	104	),																			
-    (3960	,	 'Basra Governorate'	,	104	),																			
-    (3961	,	 'Saladin Governorate'	,	104	),																			
-    (3962	,	 'Najaf Governorate'	,	104	),																			
-    (3963	,	 'Nineveh Governorate'	,	104	),																			
-    (3964	,	 'Al Anbar Governorate'	,	104	),																			
-    (3965	,	 'Diyala Governorate'	,	104	),																			
-    (3966	,	 'Maysan Governorate'	,	104	),																			
-    (3967	,	 'Dohuk Governorate'	,	104	),																			
-    (3968	,	 'Erbil Governorate'	,	104	),																			
-    (3969	,	 'Sulaymaniyah Governorate'	,	104	),																			
-    (3970	,	 'Wasit Governorate'	,	104	),																			
-    (3971	,	 'Kirkuk Governorate'	,	104	),																			
-    (3972	,	 'Svay Rieng Province'	,	37	),																			
-    (3973	,	 'Preah Vihear Province'	,	37	),																			
-    (3974	,	 'Prey Veng Province'	,	37	),																			
-    (3975	,	 'Takéo Province'	,	37	),																			
-    (3976	,	 'Battambang Province'	,	37	),																			
-    (3977	,	 'Pursat Province'	,	37	),																			
-    (3978	,	 'Kep Province'	,	37	),																			
-    (3979	,	 'Kampong Chhnang Province'	,	37	),																			
-    (3980	,	 'Pailin Province'	,	37	),																			
-    (3981	,	 'Kampot Province'	,	37	),																			
-    (3982	,	 'Koh Kong Province'	,	37	),																			
-    (3983	,	 'Kandal Province'	,	37	),																			
-    (3984	,	 'Banteay Meanchey Province'	,	37	),																			
-    (3985	,	 'Mondulkiri Province'	,	37	),																			
-    (3986	,	 'Kratié Province'	,	37	),																			
-    (3987	,	 'Oddar Meanchey Province'	,	37	),																			
-    (3988	,	 'Kampong Speu Province'	,	37	),																			
-    (3989	,	 'Sihanoukville Province'	,	37	),																			
-    (3990	,	 'Ratanakiri Province'	,	37	),																			
-    (3991	,	 'Kampong Cham Province'	,	37	),																			
-    (3992	,	 'Siem Reap Province'	,	37	),																			
-    (3993	,	 'Stung Treng Province'	,	37	),																			
-    (3994	,	 'Phnom Penh'	,	37	),																			
-    (3995	,	 'North Hamgyong Province'	,	115	),																			
-    (3996	,	 'Ryanggang Province'	,	115	),																			
-    (3997	,	 'South Pyongan Province'	,	115	),																			
-    (3998	,	 'Chagang Province'	,	115	),																			
-    (3999	,	 'Kangwon Province'	,	115	),																			
-    (4000	,	 'South Hamgyong Province'	,	115	),																			
-    (4001	,	 'Rason'	,	115	),																			
-    (4002	,	 'North Pyongan Province'	,	115	),																			
-    (4003	,	 'South Hwanghae Province'	,	115	),																			
-    (4004	,	 'North Hwanghae Province'	,	115	),																			
-    (4005	,	 'Pyongyang'	,	115	),																			
-    (4006	,	 'Meghalaya'	,	101	),																			
-    (4007	,	 'Haryana'	,	101	),																			
-    (4008	,	 'Maharashtra'	,	101	),																			
-    (4009	,	 'Goa'	,	101	),																			
-    (4010	,	 'Manipur'	,	101	),																			
-    (4011	,	 'Puducherry'	,	101	),																			
-    (4012	,	 'Telangana'	,	101	),																			
-    (4013	,	 'Odisha'	,	101	),																			
-    (4014	,	 'Rajasthan'	,	101	),																			
-    (4015	,	 'Punjab'	,	101	),																			
-    (4016	,	 'Uttarakhand'	,	101	),																			
-    (4017	,	 'Andhra Pradesh'	,	101	),																			
-    (4018	,	 'Nagaland'	,	101	),																			
-    (4019	,	 'Lakshadweep'	,	101	),																			
-    (4020	,	 'Himachal Pradesh'	,	101	),																			
-    (4021	,	 'Delhi'	,	101	),																			
-    (4022	,	 'Uttar Pradesh'	,	101	),																			
-    (4023	,	 'Andaman and Nicobar Islands'	,	101	),																			
-    (4024	,	 'Arunachal Pradesh'	,	101	),																			
-    (4025	,	 'Jharkhand'	,	101	),																			
-    (4026	,	 'Karnataka'	,	101	),																			
-    (4027	,	 'Assam'	,	101	),																			
-    (4028	,	 'Kerala'	,	101	),																			
-    (4029	,	 'Jammu and Kashmir'	,	101	),																			
-    (4030	,	 'Gujarat'	,	101	),																			
-    (4031	,	 'Chandigarh'	,	101	),																			
-    (4033	,	 'Dadra and Nagar Haveli and Daman and Diu'	,	101	),																			
-    (4034	,	 'Sikkim'	,	101	),																			
-    (4035	,	 'Tamil Nadu'	,	101	),																			
-    (4036	,	 'Mizoram'	,	101	),																			
-    (4037	,	 'Bihar'	,	101	),																			
-    (4038	,	 'Tripura'	,	101	),																			
-    (4039	,	 'Madhya Pradesh'	,	101	),																			
-    (4040	,	 'Chhattisgarh'	,	101	),																			
-    (4041	,	 'Choluteca Department'	,	97	),																			
-    (4042	,	 'Comayagua Department'	,	97	),																			
-    (4043	,	 'El Paraíso Department'	,	97	),																			
-    (4044	,	 'Intibucá Department'	,	97	),																			
-    (4045	,	 'Bay Islands Department'	,	97	),																			
-    (4046	,	 'Cortés Department'	,	97	),																			
-    (4047	,	 'Atlántida Department'	,	97	),																			
-    (4048	,	 'Gracias a Dios Department'	,	97	),																			
-    (4049	,	 'Copán Department'	,	97	),																			
-    (4050	,	 'Olancho Department'	,	97	),																			
-    (4051	,	 'Colón Department'	,	97	),																			
-    (4052	,	 'Francisco Morazán Department'	,	97	),																			
-    (4053	,	 'Santa Bárbara Department'	,	97	),																			
-    (4054	,	 'Lempira Department'	,	97	),																			
-    (4055	,	 'Valle Department'	,	97	),																			
-    (4056	,	 'Ocotepeque Department'	,	97	),																			
-    (4057	,	 'Yoro Department'	,	97	),																			
-    (4058	,	 'La Paz Department'	,	97	),																			
-    (4059	,	 'Northland Region'	,	158	),																			
-    (4060	,	 'Manawatu-Wanganui Region'	,	158	),																			
-    (4061	,	 'Waikato Region'	,	158	),																			
-    (4062	,	 'Otago Region'	,	158	),																			
-    (4063	,	 'Marlborough Region'	,	158	),																			
-    (4064	,	 'West Coast Region'	,	158	),																			
-    (4065	,	 'Wellington Region'	,	158	),																			
-    (4066	,	 'Canterbury Region'	,	158	),																			
-    (4067	,	 'Chatham Islands'	,	158	),																			
-    (4068	,	 'Gisborne District'	,	158	),																			
-    (4069	,	 'Taranaki Region'	,	158	),																			
-    (4070	,	 'Nelson Region'	,	158	),																			
-    (4071	,	 'Southland Region'	,	158	),																			
-    (4072	,	 'Auckland Region'	,	158	),																			
-    (4073	,	 'Tasman District'	,	158	),																			
-    (4074	,	 'Bay of Plenty Region'	,	158	),																			
-    (4075	,	 'Hawke s Bay Region'	,	158	),																			
-    (4076	,	 'Saint John Parish'	,	61	),																			
-    (4077	,	 'Saint Mark Parish'	,	61	),																			
-    (4078	,	 'Saint David Parish'	,	61	),																			
-    (4079	,	 'Saint George Parish'	,	61	),																			
-    (4080	,	 'Saint Patrick Parish'	,	61	),																			
-    (4081	,	 'Saint Peter Parish'	,	61	),																			
-    (4082	,	 'Saint Andrew Parish'	,	61	),																			
-    (4083	,	 'Saint Luke Parish'	,	61	),																			
-    (4084	,	 'Saint Paul Parish'	,	61	),																			
-    (4085	,	 'Saint Joseph Parish'	,	61	),																			
-    (4086	,	 'El Seibo Province'	,	62	),																			
-    (4087	,	 'La Romana Province'	,	62	),																			
-    (4088	,	 'Sánchez Ramírez Province'	,	62	),																			
-    (4089	,	 'Hermanas Mirabal Province'	,	62	),																			
-    (4090	,	 'Barahona Province'	,	62	),																			
-    (4091	,	 'San Cristóbal Province'	,	62	),																			
-    (4092	,	 'Puerto Plata Province'	,	62	),																			
-    (4093	,	 'Santo Domingo Province'	,	62	),																			
-    (4094	,	 'María Trinidad Sánchez Province'	,	62	),																			
-    (4095	,	 'Distrito Nacional'	,	62	),																			
-    (4096	,	 'Peravia Province'	,	62	),																			
-    (4097	,	 'Independencia'	,	62	),																			
-    (4098	,	 'San Juan Province'	,	62	),																			
-    (4099	,	 'Monseñor Nouel Province'	,	62	),																			
-    (4100	,	 'Santiago Rodríguez Province'	,	62	),																			
-    (4101	,	 'Pedernales Province'	,	62	),																			
-    (4102	,	 'Espaillat Province'	,	62	),																			
-    (4103	,	 'Samaná Province'	,	62	),																			
-    (4104	,	 'Valverde Province'	,	62	),																			
-    (4105	,	 'Baoruco Province'	,	62	),																			
-    (4106	,	 'Hato Mayor Province'	,	62	),																			
-    (4107	,	 'Dajabón Province'	,	62	),																			
-    (4108	,	 'Santiago Province'	,	62	),																			
-    (4109	,	 'La Altagracia Province'	,	62	),																			
-    (4110	,	 'San Pedro de Macorís'	,	62	),																			
-    (4111	,	 'Monte Plata Province'	,	62	),																			
-    (4112	,	 'San José de Ocoa Province'	,	62	),																			
-    (4113	,	 'Duarte Province'	,	62	),																			
-    (4114	,	 'Azua Province'	,	62	),																			
-    (4115	,	 'Monte Cristi Province'	,	62	),																			
-    (4116	,	 'La Vega Province'	,	62	),																			
-    (4117	,	 'Nord'	,	95	),																			
-    (4118	,	 'Nippes'	,	95	),																			
-    (4119	,	 'Grand Anse'	,	95	),																			
-    (4120	,	 'Ouest'	,	95	),																			
-    (4121	,	 'Nord-Est'	,	95	),																			
-    (4122	,	 'Sud'	,	95	),																			
-    (4123	,	 'Artibonite'	,	95	),																			
-    (4124	,	 'Sud-Est'	,	95	),																			
-    (4125	,	 'Centre'	,	95	),																			
-    (4126	,	 'Nord-Ouest'	,	95	),																			
-    (4127	,	 'San Vicente Department'	,	66	),																			
-    (4128	,	 'Santa Ana Department'	,	66	),																			
-    (4129	,	 'Usulután Department'	,	66	),																			
-    (4130	,	 'Morazán Department'	,	66	),																			
-    (4131	,	 'Chalatenango Department'	,	66	),																			
-    (4132	,	 'Cabañas Department'	,	66	),																			
-    (4133	,	 'San Salvador Department'	,	66	),																			
-    (4134	,	 'La Libertad Department'	,	66	),																			
-    (4135	,	 'San Miguel Department'	,	66	),																			
-    (4136	,	 'La Paz Department'	,	66	),																			
-    (4137	,	 'Cuscatlán Department'	,	66	),																			
-    (4138	,	 'La Unión Department'	,	66	),																			
-    (4139	,	 'Ahuachapán Department'	,	66	),																			
-    (4140	,	 'Sonsonate Department'	,	66	),																			
-    (4141	,	 'Braslovče Municipality'	,	201	),																			
-    (4142	,	 'Lenart Municipality'	,	201	),																			
-    (4143	,	 'Oplotnica'	,	201	),																			
-    (4144	,	 'Velike Lašče Municipality'	,	201	),																			
-    (4145	,	 'Hajdina Municipality'	,	201	),																			
-    (4146	,	 'Podčetrtek Municipality'	,	201	),																			
-    (4147	,	 'Cankova Municipality'	,	201	),																			
-    (4148	,	 'Vitanje Municipality'	,	201	),																			
-    (4149	,	 'Sežana Municipality'	,	201	),																			
-    (4150	,	 'Kidričevo Municipality'	,	201	),																			
-    (4151	,	 'Črenšovci Municipality'	,	201	),																			
-    (4152	,	 'Idrija Municipality'	,	201	),																			
-    (4153	,	 'Trnovska Vas Municipality'	,	201	),																			
-    (4154	,	 'Vodice Municipality'	,	201	),																			
-    (4155	,	 'Ravne na Koroškem Municipality'	,	201	),																			
-    (4156	,	 'Lovrenc na Pohorju Municipality'	,	201	),																			
-    (4157	,	 'Majšperk Municipality'	,	201	),																			
-    (4158	,	 'Loški Potok Municipality'	,	201	),																			
-    (4159	,	 'Domžale Municipality'	,	201	),																			
-    (4160	,	 'Rečica ob Savinji Municipality'	,	201	),																			
-    (4161	,	 'Podlehnik Municipality'	,	201	),																			
-    (4162	,	 'Cerknica Municipality'	,	201	),																			
-    (4163	,	 'Vransko Municipality'	,	201	),																			
-    (4164	,	 'Sveta Ana Municipality'	,	201	),																			
-    (4165	,	 'Brezovica Municipality'	,	201	),																			
-    (4166	,	 'Benedikt Municipality'	,	201	),																			
-    (4167	,	 'Divača Municipality'	,	201	),																			
-    (4168	,	 'Moravče Municipality'	,	201	),																			
-    (4169	,	 'Slovenj Gradec City Municipality'	,	201	),																			
-    (4170	,	 'Škocjan Municipality'	,	201	),																			
-    (4171	,	 'Šentjur Municipality'	,	201	),																			
-    (4172	,	 'Pesnica Municipality'	,	201	),																			
-    (4173	,	 'Dol pri Ljubljani Municipality'	,	201	),																			
-    (4174	,	 'Loška Dolina Municipality'	,	201	),																			
-    (4175	,	 'Hoče–Slivnica Municipality'	,	201	),																			
-    (4176	,	 'Cerkvenjak Municipality'	,	201	),																			
-    (4177	,	 'Naklo Municipality'	,	201	),																			
-    (4178	,	 'Cerkno Municipality'	,	201	),																			
-    (4179	,	 'Bistrica ob Sotli Municipality'	,	201	),																			
-    (4180	,	 'Kamnik Municipality'	,	201	),																			
-    (4181	,	 'Bovec Municipality'	,	201	),																			
-    (4182	,	 'Zavrč Municipality'	,	201	),																			
-    (4183	,	 'Ajdovščina Municipality'	,	201	),																			
-    (4184	,	 'Pivka Municipality'	,	201	),																			
-    (4185	,	 'Štore Municipality'	,	201	),																			
-    (4186	,	 'Kozje Municipality'	,	201	),																			
-    (4187	,	 'Municipality of Škofljica'	,	201	),																			
-    (4188	,	 'Prebold Municipality'	,	201	),																			
-    (4189	,	 'Dobrovnik Municipality'	,	201	),																			
-    (4190	,	 'Mozirje Municipality'	,	201	),																			
-    (4191	,	 'City Municipality of Celje'	,	201	),																			
-    (4192	,	 'Žiri Municipality'	,	201	),																			
-    (4193	,	 'Horjul Municipality'	,	201	),																			
-    (4194	,	 'Tabor Municipality'	,	201	),																			
-    (4195	,	 'Radeče Municipality'	,	201	),																			
-    (4196	,	 'Vipava Municipality'	,	201	),																			
-    (4197	,	 'Kungota'	,	201	),																			
-    (4198	,	 'Slovenske Konjice Municipality'	,	201	),																			
-    (4199	,	 'Osilnica Municipality'	,	201	),																			
-    (4200	,	 'Borovnica Municipality'	,	201	),																			
-    (4201	,	 'Piran Municipality'	,	201	),																			
-    (4202	,	 'Bled Municipality'	,	201	),																			
-    (4203	,	 'Jezersko Municipality'	,	201	),																			
-    (4204	,	 'Rače–Fram Municipality'	,	201	),																			
-    (4205	,	 'Nova Gorica City Municipality'	,	201	),																			
-    (4206	,	 'Razkrižje Municipality'	,	201	),																			
-    (4207	,	 'Ribnica na Pohorju Municipality'	,	201	),																			
-    (4208	,	 'Muta Municipality'	,	201	),																			
-    (4209	,	 'Rogatec Municipality'	,	201	),																			
-    (4210	,	 'Gorišnica Municipality'	,	201	),																			
-    (4211	,	 'Kuzma Municipality'	,	201	),																			
-    (4212	,	 'Mislinja Municipality'	,	201	),																			
-    (4213	,	 'Duplek Municipality'	,	201	),																			
-    (4214	,	 'Trebnje Municipality'	,	201	),																			
-    (4215	,	 'Brežice Municipality'	,	201	),																			
-    (4216	,	 'Dobrepolje Municipality'	,	201	),																			
-    (4217	,	 'Grad Municipality'	,	201	),																			
-    (4218	,	 'Moravske Toplice Municipality'	,	201	),																			
-    (4219	,	 'Luče Municipality'	,	201	),																			
-    (4220	,	 'Miren–Kostanjevica Municipality'	,	201	),																			
-    (4221	,	 'Ormož Municipality'	,	201	),																			
-    (4222	,	 'Šalovci Municipality'	,	201	),																			
-    (4223	,	 'Miklavž na Dravskem Polju Municipality'	,	201	),																			
-    (4224	,	 'Makole Municipality'	,	201	),																			
-    (4225	,	 'Lendava Municipality'	,	201	),																			
-    (4226	,	 'Vuzenica Municipality'	,	201	),																			
-    (4227	,	 'Kanal ob Soči Municipality'	,	201	),																			
-    (4228	,	 'Ptuj City Municipality'	,	201	),																			
-    (4229	,	 'Sveti Andraž v Slovenskih Goricah Municipality'	,	201	),																			
-    (4230	,	 'Selnica ob Dravi Municipality'	,	201	),																			
-    (4231	,	 'Radovljica Municipality'	,	201	),																			
-    (4232	,	 'Črna na Koroškem Municipality'	,	201	),																			
-    (4233	,	 'Rogaška Slatina Municipality'	,	201	),																			
-    (4234	,	 'Podvelka Municipality'	,	201	),																			
-    (4235	,	 'Ribnica Municipality'	,	201	),																			
-    (4236	,	 'City Municipality of Novo Mesto'	,	201	),																			
-    (4237	,	 'Mirna Peč Municipality'	,	201	),																			
-    (4238	,	 'Križevci Municipality'	,	201	),																			
-    (4239	,	 'Poljčane Municipality'	,	201	),																			
-    (4240	,	 'Brda Municipality'	,	201	),																			
-    (4241	,	 'Šentjernej Municipality'	,	201	),																			
-    (4242	,	 'Maribor City Municipality'	,	201	),																			
-    (4243	,	 'Kobarid Municipality'	,	201	),																			
-    (4244	,	 'Markovci Municipality'	,	201	),																			
-    (4245	,	 'Vojnik Municipality'	,	201	),																			
-    (4246	,	 'Trbovlje Municipality'	,	201	),																			
-    (4247	,	 'Tolmin Municipality'	,	201	),																			
-    (4248	,	 'Šoštanj Municipality'	,	201	),																			
-    (4249	,	 'Žetale Municipality'	,	201	),																			
-    (4250	,	 'Tržič Municipality'	,	201	),																			
-    (4251	,	 'Turnišče Municipality'	,	201	),																			
-    (4252	,	 'Dobrna Municipality'	,	201	),																			
-    (4253	,	 'Renče–Vogrsko Municipality'	,	201	),																			
-    (4254	,	 'Kostanjevica na Krki Municipality'	,	201	),																			
-    (4255	,	 'Sveti Jurij ob Ščavnici Municipality'	,	201	),																			
-    (4256	,	 'Železniki Municipality'	,	201	),																			
-    (4257	,	 'Veržej Municipality'	,	201	),																			
-    (4258	,	 'Žalec Municipality'	,	201	),																			
-    (4259	,	 'Starše Municipality'	,	201	),																			
-    (4260	,	 'Sveta Trojica v Slovenskih Goricah Municipality'	,	201	),																			
-    (4261	,	 'Solčava Municipality'	,	201	),																			
-    (4262	,	 'Vrhnika Municipality'	,	201	),																			
-    (4263	,	 'Središče ob Dravi'	,	201	),																			
-    (4264	,	 'Rogašovci Municipality'	,	201	),																			
-    (4265	,	 'Mežica Municipality'	,	201	),																			
-    (4266	,	 'Juršinci Municipality'	,	201	),																			
-    (4267	,	 'Velika Polana Municipality'	,	201	),																			
-    (4268	,	 'Sevnica Municipality'	,	201	),																			
-    (4269	,	 'Zagorje ob Savi Municipality'	,	201	),																			
-    (4270	,	 'Ljubljana City Municipality'	,	201	),																			
-    (4271	,	 'Gornji Petrovci Municipality'	,	201	),																			
-    (4272	,	 'Polzela Municipality'	,	201	),																			
-    (4273	,	 'Sveti Tomaž Municipality'	,	201	),																			
-    (4274	,	 'Prevalje Municipality'	,	201	),																			
-    (4275	,	 'Radlje ob Dravi Municipality'	,	201	),																			
-    (4276	,	 'Žirovnica Municipality'	,	201	),																			
-    (4277	,	 'Sodražica Municipality'	,	201	),																			
-    (4278	,	 'Bloke Municipality'	,	201	),																			
-    (4279	,	 'Šmartno pri Litiji Municipality'	,	201	),																			
-    (4280	,	 'Ruše Municipality'	,	201	),																			
-    (4281	,	 'Dolenjske Toplice Municipality'	,	201	),																			
-    (4282	,	 'Bohinj Municipality'	,	201	),																			
-    (4283	,	 'Komenda Municipality'	,	201	),																			
-    (4284	,	 'Gorje Municipality'	,	201	),																			
-    (4285	,	 'Šmarje pri Jelšah Municipality'	,	201	),																			
-    (4286	,	 'Ig Municipality'	,	201	),																			
-    (4287	,	 'Kranj City Municipality'	,	201	),																			
-    (4288	,	 'Puconci Municipality'	,	201	),																			
-    (4289	,	 'Šmarješke Toplice Municipality'	,	201	),																			
-    (4290	,	 'Dornava Municipality'	,	201	),																			
-    (4291	,	 'Črnomelj Municipality'	,	201	),																			
-    (4292	,	 'Radenci Municipality'	,	201	),																			
-    (4293	,	 'Gorenja Vas–Poljane Municipality'	,	201	),																			
-    (4294	,	 'Ljubno Municipality'	,	201	),																			
-    (4295	,	 'Dobje Municipality'	,	201	),																			
-    (4296	,	 'Šmartno ob Paki Municipality'	,	201	),																			
-    (4297	,	 'Mokronog–Trebelno Municipality'	,	201	),																			
-    (4298	,	 'Mirna Municipality'	,	201	),																			
-    (4299	,	 'Šenčur Municipality'	,	201	),																			
-    (4300	,	 'Videm Municipality'	,	201	),																			
-    (4301	,	 'Beltinci Municipality'	,	201	),																			
-    (4302	,	 'Lukovica Municipality'	,	201	),																			
-    (4303	,	 'Preddvor Municipality'	,	201	),																			
-    (4304	,	 'Destrnik Municipality'	,	201	),																			
-    (4305	,	 'Ivančna Gorica Municipality'	,	201	),																			
-    (4306	,	 'Log–Dragomer Municipality'	,	201	),																			
-    (4307	,	 'Žužemberk Municipality'	,	201	),																			
-    (4308	,	 'Dobrova–Polhov Gradec Municipality'	,	201	),																			
-    (4309	,	 'Municipality of Cirkulane'	,	201	),																			
-    (4310	,	 'Cerklje na Gorenjskem Municipality'	,	201	),																			
-    (4311	,	 'Šentrupert Municipality'	,	201	),																			
-    (4312	,	 'Tišina Municipality'	,	201	),																			
-    (4313	,	 'Murska Sobota City Municipality'	,	201	),																			
-    (4314	,	 'Municipality of Krško'	,	201	),																			
-    (4315	,	 'Komen Municipality'	,	201	),																			
-    (4316	,	 'Škofja Loka Municipality'	,	201	),																			
-    (4317	,	 'Šempeter–Vrtojba Municipality'	,	201	),																			
-    (4318	,	 'Municipality of Apače'	,	201	),																			
-    (4319	,	 'Koper City Municipality'	,	201	),																			
-    (4320	,	 'Odranci Municipality'	,	201	),																			
-    (4321	,	 'Hrpelje–Kozina Municipality'	,	201	),																			
-    (4322	,	 'Izola Municipality'	,	201	),																			
-    (4323	,	 'Metlika Municipality'	,	201	),																			
-    (4324	,	 'Šentilj Municipality'	,	201	),																			
-    (4325	,	 'Kobilje Municipality'	,	201	),																			
-    (4326	,	 'Ankaran Municipality'	,	201	),																			
-    (4327	,	 'Hodoš Municipality'	,	201	),																			
-    (4328	,	 'Sveti Jurij v Slovenskih Goricah Municipality'	,	201	),																			
-    (4329	,	 'Nazarje Municipality'	,	201	),																			
-    (4330	,	 'Postojna Municipality'	,	201	),																			
-    (4331	,	 'Kostel Municipality'	,	201	),																			
-    (4332	,	 'Slovenska Bistrica Municipality'	,	201	),																			
-    (4333	,	 'Straža Municipality'	,	201	),																			
-    (4334	,	 'Trzin Municipality'	,	201	),																			
-    (4335	,	 'Kočevje Municipality'	,	201	),																			
-    (4336	,	 'Grosuplje Municipality'	,	201	),																			
-    (4337	,	 'Jesenice Municipality'	,	201	),																			
-    (4338	,	 'Laško Municipality'	,	201	),																			
-    (4339	,	 'Gornji Grad Municipality'	,	201	),																			
-    (4340	,	 'Kranjska Gora Municipality'	,	201	),																			
-    (4341	,	 'Hrastnik Municipality'	,	201	),																			
-    (4342	,	 'Zreče Municipality'	,	201	),																			
-    (4343	,	 'Gornja Radgona Municipality'	,	201	),																			
-    (4344	,	 'Municipality of Ilirska Bistrica'	,	201	),																			
-    (4345	,	 'Dravograd Municipality'	,	201	),																			
-    (4346	,	 'Semič Municipality'	,	201	),																			
-    (4347	,	 'Litija Municipality'	,	201	),																			
-    (4348	,	 'Mengeš Municipality'	,	201	),																			
-    (4349	,	 'Medvode Municipality'	,	201	),																			
-    (4350	,	 'Logatec Municipality'	,	201	),																			
-    (4351	,	 'Ljutomer Municipality'	,	201	),																			
-    (4352	,	 'Banská Bystrica Region'	,	200	),																			
-    (4353	,	 'Košice Region'	,	200	),																			
-    (4354	,	 'Prešov Region'	,	200	),																			
-    (4355	,	 'Trnava Region'	,	200	),																			
-    (4356	,	 'Bratislava Region'	,	200	),																			
-    (4357	,	 'Nitra Region'	,	200	),																			
-    (4358	,	 'Trenčín Region'	,	200	),																			
-    (4359	,	 'Žilina Region'	,	200	),																			
-    (4360	,	 'Cimișlia District'	,	144	),																			
-    (4361	,	 'Orhei District'	,	144	),																			
-    (4362	,	 'Bender Municipality'	,	144	),																			
-    (4363	,	 'Nisporeni District'	,	144	),																			
-    (4364	,	 'Sîngerei District'	,	144	),																			
-    (4365	,	 'Căușeni District'	,	144	),																			
-    (4366	,	 'Călărași District'	,	144	),																			
-    (4367	,	 'Glodeni District'	,	144	),																			
-    (4368	,	 'Anenii Noi District'	,	144	),																			
-    (4369	,	 'Ialoveni District'	,	144	),																			
-    (4370	,	 'Florești District'	,	144	),																			
-    (4371	,	 'Telenești District'	,	144	),																			
-    (4372	,	 'Taraclia District'	,	144	),																			
-    (4373	,	 'Chișinău Municipality'	,	144	),																			
-    (4374	,	 'Soroca District'	,	144	),																			
-    (4375	,	 'Briceni District'	,	144	),																			
-    (4376	,	 'Rîșcani District'	,	144	),																			
-    (4377	,	 'Strășeni District'	,	144	),																			
-    (4378	,	 'Ștefan Vodă District'	,	144	),																			
-    (4379	,	 'Basarabeasca District'	,	144	),																			
-    (4380	,	 'Cantemir District'	,	144	),																			
-    (4381	,	 'Fălești District'	,	144	),																			
-    (4382	,	 'Hîncești District'	,	144	),																			
-    (4383	,	 'Dubăsari District'	,	144	),																			
-    (4384	,	 'Dondușeni District'	,	144	),																			
-    (4385	,	 'Gagauzia'	,	144	),																			
-    (4386	,	 'Ungheni District'	,	144	),																			
-    (4387	,	 'Edineț District'	,	144	),																			
-    (4388	,	 'Șoldănești District'	,	144	),																			
-    (4389	,	 'Ocnița District'	,	144	),																			
-    (4390	,	 'Criuleni District'	,	144	),																			
-    (4391	,	 'Cahul District'	,	144	),																			
-    (4392	,	 'Drochia District'	,	144	),																			
-    (4393	,	 'Bălți Municipality'	,	144	),																			
-    (4394	,	 'Rezina District'	,	144	),																			
-    (4395	,	 'Transnistria autonomous territorial unit'	,	144	),																			
-    (4396	,	 'Salacgrīva Municipality'	,	120	),																			
-    (4397	,	 'Vecumnieki Municipality'	,	120	),																			
-    (4398	,	 'Naukšēni Municipality'	,	120	),																			
-    (4399	,	 'Ilūkste Municipality'	,	120	),																			
-    (4400	,	 'Gulbene Municipality'	,	120	),																			
-    (4401	,	 'Līvāni Municipality'	,	120	),																			
-    (4402	,	 'Salaspils Municipality'	,	120	),																			
-    (4403	,	 'Ventspils Municipality'	,	120	),																			
-    (4404	,	 'Rundāle Municipality'	,	120	),																			
-    (4405	,	 'Pļaviņas Municipality'	,	120	),																			
-    (4406	,	 'Vārkava Municipality'	,	120	),																			
-    (4407	,	 'Jaunpiebalga Municipality'	,	120	),																			
-    (4408	,	 'Sēja Municipality'	,	120	),																			
-    (4409	,	 'Tukums Municipality'	,	120	),																			
-    (4410	,	 'Cibla Municipality'	,	120	),																			
-    (4411	,	 'Burtnieki Municipality'	,	120	),																			
-    (4412	,	 'Ķegums Municipality'	,	120	),																			
-    (4413	,	 'Krustpils Municipality'	,	120	),																			
-    (4414	,	 'Cesvaine Municipality'	,	120	),																			
-    (4415	,	 'Skrīveri Municipality'	,	120	),																			
-    (4416	,	 'Ogre Municipality'	,	120	),																			
-    (4417	,	 'Olaine Municipality'	,	120	),																			
-    (4418	,	 'Limbaži Municipality'	,	120	),																			
-    (4419	,	 'Lubāna Municipality'	,	120	),																			
-    (4420	,	 'Kandava Municipality'	,	120	),																			
-    (4421	,	 'Ventspils'	,	120	),																			
-    (4422	,	 'Krimulda Municipality'	,	120	),																			
-    (4423	,	 'Rugāji Municipality'	,	120	),																			
-    (4424	,	 'Jelgava Municipality'	,	120	),																			
-    (4425	,	 'Valka Municipality'	,	120	),																			
-    (4426	,	 'Rūjiena Municipality'	,	120	),																			
-    (4427	,	 'Babīte Municipality'	,	120	),																			
-    (4428	,	 'Dundaga Municipality'	,	120	),																			
-    (4429	,	 'Priekule Municipality'	,	120	),																			
-    (4430	,	 'Zilupe Municipality'	,	120	),																			
-    (4431	,	 'Varakļāni Municipality'	,	120	),																			
-    (4432	,	 'Nereta Municipality'	,	120	),																			
-    (4433	,	 'Madona Municipality'	,	120	),																			
-    (4434	,	 'Sala Municipality'	,	120	),																			
-    (4435	,	 'Ķekava Municipality'	,	120	),																			
-    (4436	,	 'Nīca Municipality'	,	120	),																			
-    (4437	,	 'Dobele Municipality'	,	120	),																			
-    (4438	,	 'Jēkabpils Municipality'	,	120	),																			
-    (4439	,	 'Saldus Municipality'	,	120	),																			
-    (4440	,	 'Roja Municipality'	,	120	),																			
-    (4441	,	 'Iecava Municipality'	,	120	),																			
-    (4442	,	 'Ozolnieki Municipality'	,	120	),																			
-    (4443	,	 'Saulkrasti Municipality'	,	120	),																			
-    (4444	,	 'Ērgļi Municipality'	,	120	),																			
-    (4445	,	 'Aglona Municipality'	,	120	),																			
-    (4446	,	 'Jūrmala'	,	120	),																			
-    (4447	,	 'Skrunda Municipality'	,	120	),																			
-    (4448	,	 'Engure Municipality'	,	120	),																			
-    (4449	,	 'Inčukalns Municipality'	,	120	),																			
-    (4450	,	 'Mārupe Municipality'	,	120	),																			
-    (4451	,	 'Mērsrags Municipality'	,	120	),																			
-    (4452	,	 'Koknese Municipality'	,	120	),																			
-    (4453	,	 'Kārsava Municipality'	,	120	),																			
-    (4454	,	 'Carnikava Municipality'	,	120	),																			
-    (4455	,	 'Rēzekne Municipality'	,	120	),																			
-    (4456	,	 'Viesīte Municipality'	,	120	),																			
-    (4457	,	 'Ape Municipality'	,	120	),																			
-    (4458	,	 'Durbe Municipality'	,	120	),																			
-    (4459	,	 'Talsi Municipality'	,	120	),																			
-    (4460	,	 'Liepāja'	,	120	),																			
-    (4461	,	 'Mālpils Municipality'	,	120	),																			
-    (4462	,	 'Smiltene Municipality'	,	120	),																			
-    (4463	,	 'Daugavpils'	,	120	),																			
-    (4464	,	 'Jēkabpils'	,	120	),																			
-    (4465	,	 'Bauska Municipality'	,	120	),																			
-    (4466	,	 'Vecpiebalga Municipality'	,	120	),																			
-    (4467	,	 'Pāvilosta Municipality'	,	120	),																			
-    (4468	,	 'Brocēni Municipality'	,	120	),																			
-    (4469	,	 'Cēsis Municipality'	,	120	),																			
-    (4470	,	 'Grobiņa Municipality'	,	120	),																			
-    (4471	,	 'Beverīna Municipality'	,	120	),																			
-    (4472	,	 'Aizkraukle Municipality'	,	120	),																			
-    (4473	,	 'Valmiera'	,	120	),																			
-    (4474	,	 'Krāslava Municipality'	,	120	),																			
-    (4475	,	 'Jaunjelgava Municipality'	,	120	),																			
-    (4476	,	 'Sigulda Municipality'	,	120	),																			
-    (4477	,	 'Viļaka Municipality'	,	120	),																			
-    (4478	,	 'Stopiņi Municipality'	,	120	),																			
-    (4479	,	 'Rauna Municipality'	,	120	),																			
-    (4480	,	 'Tērvete Municipality'	,	120	),																			
-    (4481	,	 'Auce Municipality'	,	120	),																			
-    (4482	,	 'Baldone Municipality'	,	120	),																			
-    (4483	,	 'Preiļi Municipality'	,	120	),																			
-    (4484	,	 'Aloja Municipality'	,	120	),																			
-    (4485	,	 'Alsunga Municipality'	,	120	),																			
-    (4486	,	 'Viļāni Municipality'	,	120	),																			
-    (4487	,	 'Alūksne Municipality'	,	120	),																			
-    (4488	,	 'Līgatne Municipality'	,	120	),																			
-    (4489	,	 'Jaunpils Municipality'	,	120	),																			
-    (4490	,	 'Kuldīga Municipality'	,	120	),																			
-    (4491	,	 'Riga'	,	120	),																			
-    (4492	,	 'Daugavpils Municipality'	,	120	),																			
-    (4493	,	 'Ropaži Municipality'	,	120	),																			
-    (4494	,	 'Strenči Municipality'	,	120	),																			
-    (4495	,	 'Kocēni Municipality'	,	120	),																			
-    (4496	,	 'Aizpute Municipality'	,	120	),																			
-    (4497	,	 'Amata Municipality'	,	120	),																			
-    (4498	,	 'Baltinava Municipality'	,	120	),																			
-    (4499	,	 'Aknīste Municipality'	,	120	),																			
-    (4500	,	 'Jelgava'	,	120	),																			
-    (4501	,	 'Ludza Municipality'	,	120	),																			
-    (4502	,	 'Riebiņi Municipality'	,	120	),																			
-    (4503	,	 'Rucava Municipality'	,	120	),																			
-    (4504	,	 'Dagda Municipality'	,	120	),																			
-    (4505	,	 'Balvi Municipality'	,	120	),																			
-    (4506	,	 'Priekuļi Municipality'	,	120	),																			
-    (4507	,	 'Pārgauja Municipality'	,	120	),																			
-    (4508	,	 'Vaiņode Municipality'	,	120	),																			
-    (4509	,	 'Rēzekne'	,	120	),																			
-    (4510	,	 'Garkalne Municipality'	,	120	),																			
-    (4511	,	 'Ikšķile Municipality'	,	120	),																			
-    (4512	,	 'Lielvārde Municipality'	,	120	),																			
-    (4513	,	 'Mazsalaca Municipality'	,	120	),																			
-    (4514	,	 'Viqueque Municipality'	,	63	),																			
-    (4515	,	 'Liquiçá Municipality'	,	63	),																			
-    (4516	,	 'Ermera District'	,	63	),																			
-    (4517	,	 'Manatuto District'	,	63	),																			
-    (4518	,	 'Ainaro Municipality'	,	63	),																			
-    (4519	,	 'Manufahi Municipality'	,	63	),																			
-    (4520	,	 'Aileu municipality'	,	63	),																			
-    (4521	,	 'Baucau Municipality'	,	63	),																			
-    (4522	,	 'Cova Lima Municipality'	,	63	),																			
-    (4523	,	 'Lautém Municipality'	,	63	),																			
-    (4524	,	 'Dili municipality'	,	63	),																			
-    (4525	,	 'Bobonaro Municipality'	,	63	),																			
-    (4526	,	 'Peleliu'	,	168	),																			
-    (4527	,	 'Ngardmau'	,	168	),																			
-    (4528	,	 'Airai'	,	168	),																			
-    (4529	,	 'Hatohobei'	,	168	),																			
-    (4530	,	 'Melekeok'	,	168	),																			
-    (4531	,	 'Ngatpang'	,	168	),																			
-    (4532	,	 'Koror'	,	168	),																			
-    (4533	,	 'Ngarchelong'	,	168	),																			
-    (4534	,	 'Ngiwal'	,	168	),																			
-    (4535	,	 'Sonsorol'	,	168	),																			
-    (4536	,	 'Ngchesar'	,	168	),																			
-    (4537	,	 'Ngaraard'	,	168	),																			
-    (4538	,	 'Angaur'	,	168	),																			
-    (4539	,	 'Kayangel'	,	168	),																			
-    (4540	,	 'Aimeliik'	,	168	),																			
-    (4541	,	 'Ngeremlengui'	,	168	),																			
-    (4542	,	 'Břeclav'	,	58	),																			
-    (4543	,	 'Český Krumlov'	,	58	),																			
-    (4544	,	 'Plzeň-město'	,	58	),																			
-    (4545	,	 'Brno-venkov'	,	58	),																			
-    (4546	,	 'Příbram'	,	58	),																			
-    (4547	,	 'Pardubice'	,	58	),																			
-    (4548	,	 'Nový Jičín'	,	58	),																			
-    (4550	,	 'Náchod'	,	58	),																			
-    (4551	,	 'Prostějov'	,	58	),																			
-    (4552	,	 'Zlínský kraj'	,	58	),																			
-    (4553	,	 'Chomutov'	,	58	),																			
-    (4554	,	 'Středočeský kraj'	,	58	),																			
-    (4556	,	 'České Budějovice'	,	58	),																			
-    (4558	,	 'Rakovník'	,	58	),																			
-    (4559	,	 'Frýdek-Místek'	,	58	),																			
-    (4560	,	 'Písek'	,	58	),																			
-    (4561	,	 'Hodonín'	,	58	),																			
-    (4563	,	 'Zlín'	,	58	),																			
-    (4564	,	 'Plzeň-sever'	,	58	),																			
-    (4565	,	 'Tábor'	,	58	),																			
-    (4568	,	 'Brno-město'	,	58	),																			
-    (4571	,	 'Svitavy'	,	58	),																			
-    (4572	,	 'Vsetín'	,	58	),																			
-    (4573	,	 'Cheb'	,	58	),																			
-    (4574	,	 'Olomouc'	,	58	),																			
-    (4575	,	 'Kraj Vysočina'	,	58	),																			
-    (4576	,	 'Ústecký kraj'	,	58	),																			
-    (4578	,	 'Prachatice'	,	58	),																			
-    (4579	,	 'Trutnov'	,	58	),																			
-    (4580	,	 'Hradec Králové'	,	58	),																			
-    (4581	,	 'Karlovarský kraj'	,	58	),																			
-    (4582	,	 'Nymburk'	,	58	),																			
-    (4583	,	 'Rokycany'	,	58	),																			
-    (4584	,	 'Ostrava-město'	,	58	),																			
-    (4586	,	 'Karviná'	,	58	),																			
-    (4588	,	 'Pardubický kraj'	,	58	),																			
-    (4589	,	 'Olomoucký kraj'	,	58	),																			
-    (4590	,	 'Liberec'	,	58	),																			
-    (4591	,	 'Klatovy'	,	58	),																			
-    (4592	,	 'Uherské Hradiště'	,	58	),																			
-    (4593	,	 'Kroměříž'	,58	),																			
-    (4595	,	 'Sokolov'	,58	),																			
-    (4596	,	 'Semily'	,58	),																			
-    (4597	,	 'Třebíč'	,58	),																			
-    (4598	,	 'Praha	,	 Hlavní město',58),									
-    (4599	,	 'Ústí nad Labem'	,58	),																			
-    (4600	,	 'Moravskoslezský kraj'	,	58	),																			
-    (4601	,	 'Liberecký kraj'	,	58	),																			
-    (4602	,	 'Jihomoravský kraj'	,	58	),																			
-    (4604	,	 'Karlovy Vary'	,	58	),																			
-    (4605	,	 'Litoměřice'	,	58	),																			
-    (4606	,	 'Praha-východ'	,	58	),																			
-    (4607	,	 'Plzeňský kraj'	,	58	),																			
-    (4608	,	 'Plzeň-jih'	,	58	),																			
-    (4609	,	 'Děčín'	,	58	),																			
-    (4611	,	 'Havlíčkův Brod'	,	58	),																			
-    (4612	,	 'Jablonec nad Nisou'	,	58	),																			
-    (4613	,	 'Jihlava'	,	58	),																			
-    (4614	,	 'Královéhradecký kraj'	,	58	),																			
-    (4615	,	 'Blansko'	,	58	),																			
-    (4617	,	 'Louny'	,	58	),																			
-    (4618	,	 'Kolín'	,	58	),																			
-    (4619	,	 'Praha-západ'	,	58	),																			
-    (4620	,	 'Beroun'	,	58	),																			
-    (4621	,	 'Teplice'	,	58	),																			
-    (4622	,	 'Vyškov'	,	58	),																			
-    (4623	,	 'Opava'	,	58	),																			
-    (4624	,	 'Jindřichův Hradec'	,	58	),																			
-    (4625	,	 'Jeseník'	,	58	),																			
-    (4626	,	 'Přerov'	,	58	),																			
-    (4627	,	 'Benešov'	,	58	),																			
-    (4628	,	 'Strakonice'	,	58	),																			
-    (4629	,	 'Most'	,	58	),																			
-    (4630	,	 'Znojmo'	,	58	),																			
-    (4631	,	 'Kladno'	,	58	),																			
-    (4633	,	 'Česká Lípa'	,	58	),																			
-    (4634	,	 'Chrudim'	,	58	),																			
-    (4636	,	 'Rychnov nad Kněžnou'	,	58	),																			
-    (4638	,	 'Mělník'	,	58	),																			
-    (4639	,	 'Jihočeský kraj'	,	58	),																			
-    (4640	,	 'Jičín'	,	58	),																			
-    (4641	,	 'Domažlice'	,	58	),																			
-    (4642	,	 'Šumperk'	,	58	),																			
-    (4643	,	 'Mladá Boleslav'	,	58	),																			
-    (4644	,	 'Bruntál'	,	58	),																			
-    (4645	,	 'Pelhřimov'	,	58	),																			
-    (4646	,	 'Tachov'	,	58	),																			
-    (4647	,	 'Ústí nad Orlicí'	,	58	),																			
-    (4648	,	 'Žďár nad Sázavou'	,	58	),																			
-    (4649	,	 'North East Community Development Council'	,	199	),																			
-    (4650	,	 'South East Community Development Council'	,	199	),																			
-    (4651	,	 'Central Singapore Community Development Council'	,	199	),																			
-    (4652	,	 'South West Community Development Council'	,	199	),																			
-    (4653	,	 'North West Community Development Council'	,	199	),																			
-    (4654	,	 'Ewa District'	,	153	),																			
-    (4655	,	 'Uaboe District'	,	153	),																			
-    (4656	,	 'Aiwo District'	,	153	),																			
-    (4657	,	 'Meneng District'	,	153	),																			
-    (4658	,	 'Anabar District'	,	153	),																			
-    (4659	,	 'Nibok District'	,	153	),																			
-    (4660	,	 'Baiti District'	,	153	),																			
-    (4661	,	 'Ijuw District'	,	153	),																			
-    (4662	,	 'Buada District'	,	153	),																			
-    (4663	,	 'Anibare District'	,	153	),																			
-    (4664	,	 'Yaren District'	,	153	),																			
-    (4665	,	 'Boe District'	,	153	),																			
-    (4666	,	 'Denigomodu District'	,	153	),																			
-    (4667	,	 'Anetan District'	,	153	),																			
-    (4668	,	 'Zhytomyr Oblast'	,	230	),																			
-    (4669	,	 'Vinnytsia Oblast'	,	230	),																			
-    (4670	,	 'Zakarpattia Oblast'	,	230	),																			
-    (4671	,	 'Kyiv Oblast'	,	230	),																			
-    (4672	,	 'Lviv Oblast'	,	230	),																			
-    (4673	,	 'Luhansk Oblast'	,	230	),																			
-    (4674	,	 'Ternopil Oblast'	,	230	),																			
-    (4675	,	 'Dnipropetrovsk Oblast'	,	230	),																			
-    (4676	,	 'Kiev'	,	230	),																			
-    (4677	,	 'Kirovohrad Oblast'	,	230	),																			
-    (4678	,	 'Chernivtsi Oblast'	,	230	),																			
-    (4679	,	 'Mykolaiv Oblast'	,	230	),																			
-    (4680	,	 'Cherkasy Oblast'	,	230	),																			
-    (4681	,	 'Khmelnytsky Oblast'	,	230	),																			
-    (4682	,	 'Ivano-Frankivsk Oblast'	,	230	),																			
-    (4683	,	 'Rivne Oblast'	,	230	),																			
-    (4684	,	 'Kherson Oblast'	,	230	),																			
-    (4685	,	 'Sumy Oblast'	,	230	),																			
-    (4686	,	 'Kharkiv Oblast'	,	230	),																			
-    (4687	,	 'Zaporizhzhya Oblast'	,	230	),																			
-    (4688	,	 'Odessa Oblast'	,	230	),																			
-    (4689	,	 'Autonomous Republic of Crimea'	,	230	),																			
-    (4690	,	 'Volyn Oblast'	,	230	),																			
-    (4691	,	 'Donetsk Oblast'	,	230	),																			
-    (4692	,	 'Chernihiv Oblast'	,	230	),																			
-    (4693	,	 'Gabrovo Province'	,	34	),																			
-    (4694	,	 'Smolyan Province'	,	34	),																			
-    (4695	,	 'Pernik Province'	,	34	),																			
-    (4696	,	 'Montana Province'	,	34	),																			
-    (4697	,	 'Vidin Province'	,	34	),																			
-    (4698	,	 'Razgrad Province'	,	34	),																			
-    (4699	,	 'Blagoevgrad Province'	,	34	),																			
-    (4700	,	 'Sliven Province'	,	34	),																			
-    (4701	,	 'Plovdiv Province'	,	34	),																			
-    (4702	,	 'Kardzhali Province'	,	34	),																			
-    (4703	,	 'Kyustendil Province'	,	34	),																			
-    (4704	,	 'Haskovo Province'	,	34	),																			
-    (4705	,	 'Sofia City Province'	,	34	),																			
-    (4706	,	 'Pleven Province'	,	34	),																			
-    (4707	,	 'Stara Zagora Province'	,	34	),																			
-    (4708	,	 'Silistra Province'	,	34	),																			
-    (4709	,	 'Veliko Tarnovo Province'	,	34	),																			
-    (4710	,	 'Lovech Province'	,	34	),																			
-    (4711	,	 'Vratsa Province'	,	34	),																			
-    (4712	,	 'Pazardzhik Province'	,	34	),																			
-    (4713	,	 'Ruse Province'	,	34	),																			
-    (4714	,	 'Targovishte Province'	,	34	),																			
-    (4715	,	 'Burgas Province'	,	34	),																			
-    (4716	,	 'Yambol Province'	,	34	),																			
-    (4717	,	 'Varna Province'	,	34	),																			
-    (4718	,	 'Dobrich Province'	,	34	),																			
-    (4719	,	 'Sofia Province'	,	34	),																			
-    (4720	,	 'Suceava County'	,	181	),																			
-    (4721	,	 'Hunedoara County'	,	181	),																			
-    (4722	,	 'Arges'	,	181	),																			
-    (4723	,	 'Bihor County'	,	181	),																			
-    (4724	,	 'Alba'	,	181	),																			
-    (4725	,	 'Ilfov County'	,	181	),																			
-    (4726	,	 'Giurgiu County'	,	181	),																			
-    (4727	,	 'Tulcea County'	,	181	),																			
-    (4728	,	 'Teleorman County'	,	181	),																			
-    (4729	,	 'Prahova County'	,	181	),																			
-    (4730	,	 'Bucharest'	,	181	),																			
-    (4731	,	 'Neamț County'	,	181	),																			
-    (4732	,	 'Călărași County'	,	181	),																			
-    (4733	,	 'Bistrița-Năsăud County'	,	181	),																			
-    (4734	,	 'Cluj County'	,	181	),																			
-    (4735	,	 'Iași County'	,	181	),																			
-    (4736	,	 'Braila'	,	181	),																			
-    (4737	,	 'Constanța County'	,	181	),																			
-    (4738	,	 'Olt County'	,	181	),																			
-    (4739	,	 'Arad County'	,	181	),																			
-    (4740	,	 'Botoșani County'	,	181	),																			
-    (4741	,	 'Sălaj County'	,	181	),																			
-    (4742	,	 'Dolj County'	,	181	),																			
-    (4743	,	 'Ialomița County'	,	181	),																			
-    (4744	,	 'Bacău County'	,	181	),																			
-    (4745	,	 'Dâmbovița County'	,	181	),																			
-    (4746	,	 'Satu Mare County'	,	181	),																			
-    (4747	,	 'Galați County'	,	181	),																			
-    (4748	,	 'Timiș County'	,	181	),																			
-    (4749	,	 'Harghita County'	,	181	),																			
-    (4750	,	 'Gorj County'	,	181	),																			
-    (4751	,	 'Mehedinți County'	,	181	),																			
-    (4752	,	 'Vaslui County'	,	181	),																			
-    (4753	,	 'Caraș-Severin County'	,	181	),																			
-    (4754	,	 'Covasna County'	,	181	),																			
-    (4755	,	 'Sibiu County'	,	181	),																			
-    (4756	,	 'Buzău County'	,	181	),																			
-    (4757	,	 'Vâlcea County'	,	181	),																			
-    (4758	,	 'Vrancea County'	,	181	),																			
-    (4759	,	 'Brașov County'	,	181	),																			
-    (4760	,	 'Maramureș County'	,	181	),																			
-    (4761	,	 'Aiga-i-le-Tai'	,	191	),																			
-    (4762	,	 'Satupa itea'	,	191	),																			
-    (4763	,	 'A ana'	,	191	),																			
-    (4764	,	 'Fa asaleleaga'	,	191	),																			
-    (4765	,	 'Atua'	,	191	),																			
-    (4766	,	 'Vaisigano'	,	191	),																			
-    (4767	,	 'Palauli'	,	191	),																			
-    (4768	,	 'Va a-o-Fonoti'	,	191	),																			
-    (4769	,	 'Gaga emauga'	,	191	),																			
-    (4770	,	 'Tuamasaga'	,	191	),																			
-    (4771	,	 'Gaga ifomauga'	,	191	),																			
-    (4772	,	 'Torba'	,	237	),																			
-    (4773	,	 'Penama'	,	237	),																			
-    (4774	,	 'Shefa'	,	237	),																			
-    (4775	,	 'Malampa'	,	237	),																			
-    (4776	,	 'Sanma'	,	237	),																			
-    (4777	,	 'Tafea'	,	237	),																			
-    (4778	,	 'Honiara'	,	202	),																			
-    (4779	,	 'Temotu Province'	,	202	),																			
-    (4780	,	 'Isabel Province'	,	202	),																			
-    (4781	,	 'Choiseul Province'	,	202	),																			
-    (4782	,	 'Makira-Ulawa Province'	,	202	),																			
-    (4783	,	 'Malaita Province'	,	202	),																			
-    (4784	,	 'Central Province'	,	202	),																			
-    (4785	,	 'Guadalcanal Province'	,	202	),																			
-    (4786	,	 'Western Province'	,	202	),																			
-    (4787	,	 'Rennell and Bellona Province'	,	202	),																			
-    (4788	,	 'Burgundy'	,	75	),																			
-    (4789	,	 'Auvergne'	,	75	),																			
-    (4790	,	 'Picardy'	,	75	),																			
-    (4791	,	 'Champagne-Ardenne'	,	75	),																			
-    (4792	,	 'Limousin'	,	75	),																			
-    (4793	,	 'Nord-Pas-de-Calais'	,	75	),																			
-    (4794	,	 'Saint Barthélemy'	,	75	),																			
-    (4795	,	 'Nouvelle-Aquitaine'	,	75	),																			
-    (4796	,	 'Île-de-France'	,	75	),																			
-    (4797	,	 'Mayotte'	,	75	),																			
-    (4798	,	 'Auvergne-Rhône-Alpes'	,	75	),																			
-    (4799	,	 'Occitania'	,	75	),																			
-    (4800	,	 'Alo'	,	75	),																			
-    (4801	,	 'Lorraine'	,	75	),																			
-    (4802	,	 'Pays de la Loire'	,	75	),																			
-    (4803	,	 'Languedoc-Roussillon'	,	75	),																			
-    (4804	,	 'Normandy'	,	75	),																			
-    (4805	,	 'Franche-Comté'	,	75	),																			
-    (4806	,	 'Corsica'	,	75	),																			
-    (4807	,	 'Brittany'	,	75	),																			
-    (4808	,	 'Aquitaine'	,	75	),																			
-    (4809	,	 'Saint Martin'	,	75	),																			
-    (4810	,	 'Wallis and Futuna'	,	75	),																			
-    (4811	,	 'Alsace'	,	75	),																			
-    (4812	,	 'Provence-Alpes-Côte d Azur'	,	75	),																			
-    (4813	,	 'Rhône-Alpes'	,	75	),																			
-    (4814	,	 'Lower Normandy'	,	75	),																			
-    (4815	,	 'Poitou-Charentes'	,	75	),																			
-    (4816	,	 'Paris'	,	75	),																			
-    (4817	,	 'Uvea'	,	75	),																			
-    (4818	,	 'Centre-Val de Loire'	,	75	),																			
-    (4819	,	 'Sigave'	,	75	),																			
-    (4820	,	 'Grand Est'	,	75	),																			
-    (4821	,	 'Saint Pierre and Miquelon'	,	75	),																			
-    (4822	,	 'French Guiana'	,	75	),																			
-    (4823	,	 'Réunion'	,	75	),																			
-    (4824	,	 'French Polynesia'	,	75	),																			
-    (4825	,	 'Bourgogne-Franche-Comté'	,	75	),																			
-    (4826	,	 'Upper Normandy'	,	75	),																			
-    (4827	,	 'Martinique'	,	75	),																			
-    (4828	,	 'Hauts-de-France'	,	75	),																			
-    (4829	,	 'Guadeloupe'	,	75	),																			
-    (4830	,	 'West New Britain Province'	,	171	),																			
-    (4831	,	 'Bougainville'	,	171	),																			
-    (4832	,	 'Jiwaka Province'	,	171	),																			
-    (4833	,	 'Hela'	,	171	),																			
-    (4834	,	 'East New Britain'	,	171	),																			
-    (4835	,	 'Morobe Province'	,	171	),																			
-    (4836	,	 'Sandaun Province'	,	171	),																			
-    (4837	,	 'Port Moresby'	,	171	),																			
-    (4838	,	 'Oro Province'	,	171	),																			
-    (4839	,	 'Gulf'	,	171	),																			
-    (4840	,	 'Western Highlands Province'	,	171	),																			
-    (4841	,	 'New Ireland Province'	,	171	),																			
-    (4842	,	 'Manus Province'	,	171	),																			
-    (4843	,	 'Madang Province'	,	171	),																			
-    (4844	,	 'Southern Highlands Province'	,	171	),																			
-    (4845	,	 'Eastern Highlands Province'	,	171	),																			
-    (4846	,	 'Chimbu Province'	,	171	),																			
-    (4847	,	 'Central Province'	,	171	),																			
-    (4848	,	 'Enga Province'	,	171	),																			
-    (4849	,	 'Milne Bay Province'	,	171	),																			
-    (4850	,	 'Western Province'	,	171	),																			
-    (4851	,	 'Ohio'	,	233	),																			
-    (4852	,	 'Ladakh'	,	101	),																			
-    (4853	,	 'West Bengal'	,	101	),																			
-    (4854	,	 'Sinop'	,	225	),																			
-    (4855	,	 'Capital District'	,	239	),																			
-    (4856	,	 'Apure'	,	239	),																			
-    (4857	,	 'Jalisco'	,	142	),																			
-    (4858	,	 'Roraima'	,	31	),																			
-    (4859	,	 'Guarda'	,	177	),																			
-    (4860	,	 'Devonshire Parish'	,	25	),																			
-    (4861	,	 'Hamilton Parish'	,	25	),																			
-    (4862	,	 'Hamilton Municipality'	,	25	),																			
-    (4863	,	 'Paget Parish'	,	25	),																			
-    (4864	,	 'Pembroke Parish'	,	25	),																			
-    (4865	,	 'Saint George s Municipality'	,	25	),																			
-    (4866	,	 'Saint George s Parish'	,	25	),																			
-    (4867	,	 'Sandys Parish'	,	25	),																			
-    (4868	,	 'Smith s Parish'	,	25	),																		
-    (4869	,	 'Southampton Parish'	,	25	),																			
-    (4870	,	 'Warwick Parish'	,	25	),																			
-    (4871	,	 'Huila'	,	48	),																			
-    (4874	,	 'Uroševac District (Ferizaj)'	,	248	),																			
-    (4876	,	 'Đakovica District (Gjakove)'	,	248	),																			
-    (4877	,	 'Gjilan District'	,	248	),																			
-    (4878	,	 'Kosovska Mitrovica District'	,	248	),																			
-    (4879	,	 'Pristina (Priştine)'	,	248	),																			
-    (4880	,	 'Autonomous City Of Buenos Aires'	,	11	),																			
-    (4881	,	 'New Providence'	,	17	),																			
-    (4882	,	 'Shumen'	,	34	),																			
-    (4883	,	 'Yuen Long District'	,	98	),																			
-    (4884	,	 'Tsuen Wan District'	,	98	),																			
-    (4885	,	 'Tai Po District'	,	98	),																			
-    (4887	,	 'Sai Kung District'	,	98	),																			
-    (4888	,	 'Islands District'	,	98	),																			
-    (4889	,	 'Central and Western District'	,	98	),																			
-    (4890	,	 'Wan Chai'	,	98	),																			
-    (4891	,	 'Eastern'	,	98	),																			
-    (4892	,	 'Southern'	,	98	),																			
-    (4893	,	 'Yau Tsim Mong'	,	98	),																			
-    (4894	,	 'Sham Shui Po'	,	98	),																			
-    (4895	,	 'Kowloon City'	,	98	),																			
-    (4896	,	 'Wong Tai Sin'	,	98	),																			
-    (4897	,	 'Kwun Tong'	,	98	),																			
-    (4898	,	 'Kwai Tsing'	,	98	),																			
-    (4899	,	 'Tuen Mun'	,	98	),																			
-    (4900	,	 'North'	,	98	),																			
-    (4901	,	 'Sha Tin'	,	98	),																			
-    (4902	,	 'Sidi Bel Abbès'	,	4	),																			
-    (4905	,	 'El M ghair'	,	4	),																			
-    (4906	,	 'El Menia'	,	4	),																			
-    (4907	,	 'Ouled Djellal'	,	4	),																			
-    (4908	,	 'Bordj Baji Mokhtar'	,	4	),																			
-    (4909	,	 'Béni Abbès'	,	4	),																			
-    (4910	,	 'Timimoun'	,	4	),																			
-    (4911	,	 'Touggourt'	,	4	),																			
-    (4912	,	 'Djanet'	,	4	),																			
-    (4913	,	 'In Salah'	,	4	),																			
-    (4914	,	 'In Guezzam'	,	4	),																			
-    (4915	,	 'Mureș County'	,	181	),																			
-    (4916	,	 'Volgograd Oblast'	,	182	),																			
-    (4917	,	 'La Colle'	,	145	),																			
-    (4918	,	 'La Condamine'	,	145	),																			
-    (4919	,	 'Moneghetti'	,	145	),																																					
-    (4920	,	 'Hamadan Province'	,	103	),																			
-    (4921	,	 'Bogotá'	,	48	),																			
-    (4922	,	 'Loreto'	,	173	),																			
-    (4923	,	 'Kutná Hora'	,	58	),																			
-    (4924	,	 'Kōchi Prefecture'	,	109	),																			
-    (4925	,	 'Cần Thơ'	,	240	),																			
-    (4926	,	 'Rivers'	,	161	),																			
-    (4927	,	 'Rabat-Salé-Kénitra'	,	149	),																			
-    (4928	,	 'Agadir-Ida-Ou-Tanane'	,	149	),																			
-    (4929	,	 'Berrechid'	,	149	),																			
-    (4930	,	 'Casablanca'	,	149	),																			
-    (4931	,	 'Driouch'	,	149	),																			
-    (4932	,	 'Fès'	,	149	),																			
-    (4933	,	 'Fquih Ben Salah'	,	149	),																			
-    (4934	,	 'Guercif'	,	149	),																			
-    (4935	,	 'Marrakech'	,	149	),																			
-    (4936	,	 'M’diq-Fnideq'	,	149	),																			
-    (4937	,	 'Meknès'	,	149	),																			
-    (4938	,	 'Midelt'	,	149	),																			
-    (4939	,	 'Mohammadia'	,	149	),																			
-    (4940	,	 'Oujda-Angad'	,	149	),																			
-    (4941	,	 'Ouezzane'	,	149	),																			
-    (4942	,	 'Rabat'	,	149	),																			
-    (4943	,	 'Rehamna'	,	149	),																			
-    (4944	,	 'Salé'	,	149	),																			
-    (4945	,	 'Sidi Bennour'	,	149	),																			
-    (4946	,	 'Sidi Ifni'	,	149	),																			
-    (4947	,	 'Skhirate-Témara'	,	149	),																			
-    (4948	,	 'Tarfaya (EH-partial)'	,	149	),																			
-    (4949	,	 'Tinghir'	,	149	),																			
-    (4950	,	 'Tanger-Assilah'	,	149	),																			
-    (4951	,	 'Youssoufia'	,	149	),																			
-    (4952	,	 'Sidi Slimane'	,	149	),																			
-    (4953	,	 'Lualaba'	,	51	),																			
-    (4954	,	 'Chaiyaphum'	,	219	),																			
-    (4955	,	 'Mbeya'	,	218	),																			
-    (4956	,	 'Songwe'	,	218	),																			
-    (4957	,	 'Basel-Stadt'	,	214	),																			
-    (4958	,	 'Bono East'	,	83	),																			
-    (4959	,	 'Bono'	,	83	),																			
-    (4960	,	 'North East'	,	83	),																			
-    (4961	,	 'Oti'	,	83	),																			
-    (4962	,	 'Savannah'	,	83	),																			
-    (4963	,	 'Western North'	,	83	)
-;	
-INSERT INTO CIDADE(nome,uf) VALUES
-    ('Rio Grande',2001),																	
-    ('Pelotas',2001)
-;
 
---assuntos
---insert into assunto (nome) values ('Banco de dados'), ('Homem aranha sem volta pra casa'), ('Meta'), ('cópia do facebook');
+INSERT INTO PAIS VALUES(1,'Afghanistan');
+INSERT INTO PAIS VALUES(2,'Aland Islands');
+INSERT INTO PAIS VALUES(3,'Albania');
+INSERT INTO PAIS VALUES(4,'Algeria');
+INSERT INTO PAIS VALUES(5,'American Samoa');
+INSERT INTO PAIS VALUES(6,'Andorra');
+INSERT INTO PAIS VALUES(7,'Angola');
+INSERT INTO PAIS VALUES(8,'Anguilla');
+INSERT INTO PAIS VALUES(9,'Antarctica');
+INSERT INTO PAIS VALUES(10,'Antigua And Barbuda');
+INSERT INTO PAIS VALUES(11,'Argentina');
+INSERT INTO PAIS VALUES(12,'Armenia');
+INSERT INTO PAIS VALUES(13,'Aruba');
+INSERT INTO PAIS VALUES(14,'Australia');
+INSERT INTO PAIS VALUES(15,'Austria');
+INSERT INTO PAIS VALUES(16,'Azerbaijan');
+INSERT INTO PAIS VALUES(17,'Bahamas The');
+INSERT INTO PAIS VALUES(18,'Bahrain');
+INSERT INTO PAIS VALUES(19,'Bangladesh');
+INSERT INTO PAIS VALUES(20,'Barbados');
+INSERT INTO PAIS VALUES(21,'Belarus');
+INSERT INTO PAIS VALUES(22,'Belgium');
+INSERT INTO PAIS VALUES(23,'Belize');
+INSERT INTO PAIS VALUES(24,'Benin');
+INSERT INTO PAIS VALUES(25,'Bermuda');
+INSERT INTO PAIS VALUES(26,'Bhutan');
+INSERT INTO PAIS VALUES(27,'Bolivia');
+INSERT INTO PAIS VALUES(28,'Bosnia and Herzegovina');
+INSERT INTO PAIS VALUES(29,'Botswana');
+INSERT INTO PAIS VALUES(30,'Bouvet Island');
+INSERT INTO PAIS VALUES(31,'Brazil');
+INSERT INTO PAIS VALUES(32,'British Indian Ocean Territory');
+INSERT INTO PAIS VALUES(33,'Brunei');
+INSERT INTO PAIS VALUES(34,'Bulgaria');
+INSERT INTO PAIS VALUES(35,'Burkina Faso');
+INSERT INTO PAIS VALUES(36,'Burundi');
+INSERT INTO PAIS VALUES(37,'Cambodia');
+INSERT INTO PAIS VALUES(38,'Cameroon');
+INSERT INTO PAIS VALUES(39,'Canada');
+INSERT INTO PAIS VALUES(40,'Cape Verde');
+INSERT INTO PAIS VALUES(41,'Cayman Islands');
+INSERT INTO PAIS VALUES(42,'Central African Republic');
+INSERT INTO PAIS VALUES(43,'Chad');
+INSERT INTO PAIS VALUES(44,'Chile');
+INSERT INTO PAIS VALUES(45,'China');
+INSERT INTO PAIS VALUES(46,'Christmas Island');
+INSERT INTO PAIS VALUES(47,'Cocos (Keeling) Islands');
+INSERT INTO PAIS VALUES(48,'Colombia');
+INSERT INTO PAIS VALUES(49,'Comoros');
+INSERT INTO PAIS VALUES(50,'Congo');
+INSERT INTO PAIS VALUES(51,'Democratic Republic of the Congo');
+INSERT INTO PAIS VALUES(52,'Cook Islands');
+INSERT INTO PAIS VALUES(53,'Costa Rica');
+INSERT INTO PAIS VALUES(54,'Cote D Ivoire (Ivory Coast)');
+INSERT INTO PAIS VALUES(55,'Croatia');
+INSERT INTO PAIS VALUES(56,'Cuba');
+INSERT INTO PAIS VALUES(57,'Cyprus');
+INSERT INTO PAIS VALUES(58,'Czech Republic');
+INSERT INTO PAIS VALUES(59,'Denmark');
+INSERT INTO PAIS VALUES(60,'Djibouti');
+INSERT INTO PAIS VALUES(61,'Dominica');
+INSERT INTO PAIS VALUES(62,'Dominican Republic');
+INSERT INTO PAIS VALUES(63,'East Timor');
+INSERT INTO PAIS VALUES(64,'Ecuador');
+INSERT INTO PAIS VALUES(65,'Egypt');
+INSERT INTO PAIS VALUES(66,'El Salvador');
+INSERT INTO PAIS VALUES(67,'Equatorial Guinea');
+INSERT INTO PAIS VALUES(68,'Eritrea');
+INSERT INTO PAIS VALUES(69,'Estonia');
+INSERT INTO PAIS VALUES(70,'Ethiopia');
+INSERT INTO PAIS VALUES(71,'Falkland Islands');
+INSERT INTO PAIS VALUES(72,'Faroe Islands');
+INSERT INTO PAIS VALUES(73,'Fiji Islands');
+INSERT INTO PAIS VALUES(74,'Finland');
+INSERT INTO PAIS VALUES(75,'France');
+INSERT INTO PAIS VALUES(76,'French Guiana');
+INSERT INTO PAIS VALUES(77,'French Polynesia');
+INSERT INTO PAIS VALUES(78,'French Southern Territories');
+INSERT INTO PAIS VALUES(79,'Gabon');
+INSERT INTO PAIS VALUES(80,'Gambia The');
+INSERT INTO PAIS VALUES(81,'Georgia');
+INSERT INTO PAIS VALUES(82,'Germany');
+INSERT INTO PAIS VALUES(83,'Ghana');
+INSERT INTO PAIS VALUES(84,'Gibraltar');
+INSERT INTO PAIS VALUES(85,'Greece');
+INSERT INTO PAIS VALUES(87,'Grenada');
+INSERT INTO PAIS VALUES(88,'Guadeloupe');
+INSERT INTO PAIS VALUES(89,'Guam');
+INSERT INTO PAIS VALUES(90,'Guatemala');
+INSERT INTO PAIS VALUES(91,'Guernsey and Alderney');
+INSERT INTO PAIS VALUES(92,'Guinea');
+INSERT INTO PAIS VALUES(93,'Guinea-Bissau');
+INSERT INTO PAIS VALUES(94,'Guyana');
+INSERT INTO PAIS VALUES(95,'Haiti');
+INSERT INTO PAIS VALUES(96,'Heard Island and McDonald Islands');
+INSERT INTO PAIS VALUES(97,'Honduras');
+INSERT INTO PAIS VALUES(98,'Hong Kong S.A.R.');
+INSERT INTO PAIS VALUES(99,'Hungary');
+INSERT INTO PAIS VALUES(100,'Iceland');
+INSERT INTO PAIS VALUES(101,'India');
+INSERT INTO PAIS VALUES(102,'Indonesia');
+INSERT INTO PAIS VALUES(103,'Iran');
+INSERT INTO PAIS VALUES(104,'Iraq');
+INSERT INTO PAIS VALUES(105,'Ireland');
+INSERT INTO PAIS VALUES(106,'Israel');
+INSERT INTO PAIS VALUES(107,'Italy');
+INSERT INTO PAIS VALUES(108,'Jamaica');
+INSERT INTO PAIS VALUES(109,'Japan');
+INSERT INTO PAIS VALUES(110,'Jersey');
+INSERT INTO PAIS VALUES(111,'Jordan');
+INSERT INTO PAIS VALUES(112,'Kazakhstan');
+INSERT INTO PAIS VALUES(113,'Kenya');
+INSERT INTO PAIS VALUES(114,'Kiribati');
+INSERT INTO PAIS VALUES(115,'North Korea');
+INSERT INTO PAIS VALUES(116,'South Korea');
+INSERT INTO PAIS VALUES(117,'Kuwait');
+INSERT INTO PAIS VALUES(118,'Kyrgyzstan');
+INSERT INTO PAIS VALUES(119,'Laos');
+INSERT INTO PAIS VALUES(120,'Latvia');
+INSERT INTO PAIS VALUES(121,'Lebanon');
+INSERT INTO PAIS VALUES(122,'Lesotho');
+INSERT INTO PAIS VALUES(123,'Liberia');
+INSERT INTO PAIS VALUES(124,'Libya');
+INSERT INTO PAIS VALUES(125,'Liechtenstein');
+INSERT INTO PAIS VALUES(126,'Lithuania');
+INSERT INTO PAIS VALUES(127,'Luxembourg');
+INSERT INTO PAIS VALUES(128,'Macau S.A.R.');
+INSERT INTO PAIS VALUES(129,'Macedonia');
+INSERT INTO PAIS VALUES(130,'Madagascar');
+INSERT INTO PAIS VALUES(131,'Malawi');
+INSERT INTO PAIS VALUES(132,'Malaysia');
+INSERT INTO PAIS VALUES(133,'Maldives');
+INSERT INTO PAIS VALUES(134,'Mali');
+INSERT INTO PAIS VALUES(135,'Malta');
+INSERT INTO PAIS VALUES(136,'Man (Isle of)');
+INSERT INTO PAIS VALUES(137,'Marshall Islands');
+INSERT INTO PAIS VALUES(138,'Martinique');
+INSERT INTO PAIS VALUES(139,'Mauritania');
+INSERT INTO PAIS VALUES(140,'Mauritius');
+INSERT INTO PAIS VALUES(141,'Mayotte');
+INSERT INTO PAIS VALUES(142,'Mexico');
+INSERT INTO PAIS VALUES(143,'Micronesia');
+INSERT INTO PAIS VALUES(144,'Moldova');
+INSERT INTO PAIS VALUES(145,'Monaco');
+INSERT INTO PAIS VALUES(146,'Mongolia');
+INSERT INTO PAIS VALUES(147,'Montenegro');
+INSERT INTO PAIS VALUES(148,'Montserrat');
+INSERT INTO PAIS VALUES(149,'Morocco');
+INSERT INTO PAIS VALUES(150,'Mozambique');
+INSERT INTO PAIS VALUES(151,'Myanmar');
+INSERT INTO PAIS VALUES(152,'Namibia');
+INSERT INTO PAIS VALUES(153,'Nauru');
+INSERT INTO PAIS VALUES(154,'Nepal');
+INSERT INTO PAIS VALUES(155,'Bonaire');
+INSERT INTO PAIS VALUES(156,'Netherlands');
+INSERT INTO PAIS VALUES(157,'New Caledonia');
+INSERT INTO PAIS VALUES(158,'New Zealand');
+INSERT INTO PAIS VALUES(159,'Nicaragua');
+INSERT INTO PAIS VALUES(160,'Niger');
+INSERT INTO PAIS VALUES(161,'Nigeria');
+INSERT INTO PAIS VALUES(162,'Niue');
+INSERT INTO PAIS VALUES(163,'Norfolk Island');
+INSERT INTO PAIS VALUES(164,'Northern Mariana Islands');
+INSERT INTO PAIS VALUES(165,'Norway');
+INSERT INTO PAIS VALUES(166,'Oman');
+INSERT INTO PAIS VALUES(167,'Pakistan');
+INSERT INTO PAIS VALUES(168,'Palau');
+INSERT INTO PAIS VALUES(169,'Palestinian Territory Occupied');
+INSERT INTO PAIS VALUES(170,'Panama');
+INSERT INTO PAIS VALUES(171,'Papua new Guinea');
+INSERT INTO PAIS VALUES(172,'Paraguay');
+INSERT INTO PAIS VALUES(173,'Peru');
+INSERT INTO PAIS VALUES(174,'Philippines');
+INSERT INTO PAIS VALUES(175,'Pitcairn Island');
+INSERT INTO PAIS VALUES(176,'Poland');
+INSERT INTO PAIS VALUES(177,'Portugal');
+INSERT INTO PAIS VALUES(178,'Puerto Rico');
+INSERT INTO PAIS VALUES(179,'Qatar');
+INSERT INTO PAIS VALUES(180,'Reunion');
+INSERT INTO PAIS VALUES(181,'Romania');
+INSERT INTO PAIS VALUES(182,'Russia');
+INSERT INTO PAIS VALUES(183,'Rwanda');
+INSERT INTO PAIS VALUES(184,'Saint Helena');
+INSERT INTO PAIS VALUES(185,'Saint Kitts And Nevis');
+INSERT INTO PAIS VALUES(186,'Saint Lucia');
+INSERT INTO PAIS VALUES(187,'Saint Pierre and Miquelon');
+INSERT INTO PAIS VALUES(188,'Saint Vincent And The Grenadines');
+INSERT INTO PAIS VALUES(189,'Saint-Barthelemy');
+INSERT INTO PAIS VALUES(190,'Saint-Martin (French part)');
+INSERT INTO PAIS VALUES(191,'Samoa');
+INSERT INTO PAIS VALUES(192,'San Marino');
+INSERT INTO PAIS VALUES(193,'Sao Tome and Principe');
+INSERT INTO PAIS VALUES(194,'Saudi Arabia');
+INSERT INTO PAIS VALUES(195,'Senegal');
+INSERT INTO PAIS VALUES(196,'Serbia');
+INSERT INTO PAIS VALUES(197,'Seychelles');
+INSERT INTO PAIS VALUES(198,'Sierra Leone');
+INSERT INTO PAIS VALUES(199,'Singapore');
+INSERT INTO PAIS VALUES(200,'Slovakia');
+INSERT INTO PAIS VALUES(201,'Slovenia');
+INSERT INTO PAIS VALUES(202,'Solomon Islands');
+INSERT INTO PAIS VALUES(203,'Somalia');
+INSERT INTO PAIS VALUES(204,'South Africa');
+INSERT INTO PAIS VALUES(205,'South Georgia');
+INSERT INTO PAIS VALUES(206,'South Sudan');
+INSERT INTO PAIS VALUES(207,'Spain');
+INSERT INTO PAIS VALUES(208,'Sri Lanka');
+INSERT INTO PAIS VALUES(209,'Sudan');
+INSERT INTO PAIS VALUES(210,'Suriname');
+INSERT INTO PAIS VALUES(211,'Svalbard And Jan Mayen Islands');
+INSERT INTO PAIS VALUES(212,'Swaziland');
+INSERT INTO PAIS VALUES(213,'Sweden');
+INSERT INTO PAIS VALUES(214,'Switzerland');
+INSERT INTO PAIS VALUES(215,'Syria');
+INSERT INTO PAIS VALUES(216,'Taiwan');
+INSERT INTO PAIS VALUES(217,'Tajikistan');
+INSERT INTO PAIS VALUES(218,'Tanzania');
+INSERT INTO PAIS VALUES(219,'Thailand');
+INSERT INTO PAIS VALUES(220,'Togo');
+INSERT INTO PAIS VALUES(221,'Tokelau');
+INSERT INTO PAIS VALUES(222,'Tonga');
+INSERT INTO PAIS VALUES(223,'Trinidad And Tobago');
+INSERT INTO PAIS VALUES(224,'Tunisia');
+INSERT INTO PAIS VALUES(225,'Turkey');
+INSERT INTO PAIS VALUES(226,'Turkmenistan');
+INSERT INTO PAIS VALUES(227,'Turks And Caicos Islands');
+INSERT INTO PAIS VALUES(228,'Tuvalu');
+INSERT INTO PAIS VALUES(229,'Uganda');
+INSERT INTO PAIS VALUES(230,'Ukraine');
+INSERT INTO PAIS VALUES(231,'United Arab Emirates');
+INSERT INTO PAIS VALUES(232,'United Kingdom');
+INSERT INTO PAIS VALUES(233,'United States');
+INSERT INTO PAIS VALUES(234,'United States Minor Outlying Islands');
+INSERT INTO PAIS VALUES(235,'Uruguay');
+INSERT INTO PAIS VALUES(236,'Uzbekistan');
+INSERT INTO PAIS VALUES(237,'Vanuatu');
+INSERT INTO PAIS VALUES(238,'Vatican City State (Holy See)');
+INSERT INTO PAIS VALUES(239,'Venezuela');
+INSERT INTO PAIS VALUES(240,'Vietnam');
+INSERT INTO PAIS VALUES(241,'Virgin Islands (British)');
+INSERT INTO PAIS VALUES(242,'Virgin Islands (US)');
+INSERT INTO PAIS VALUES(243,'Wallis And Futuna Islands');
+INSERT INTO PAIS VALUES(244,'Western Sahara');
+INSERT INTO PAIS VALUES(245,'Yemen');
+INSERT INTO PAIS VALUES(246,'Zambia');
+INSERT INTO PAIS VALUES(247,'Zimbabwe');
+INSERT INTO PAIS VALUES(248,'Kosovo');
+INSERT INTO PAIS VALUES(249,'Curaçao');
+INSERT INTO PAIS VALUES(250,'Sint Maarten (Dutch part)');
 
---perfis
---INSERT INTO PERFIL(codigo, cidade, email, senha, genero, username, img, datanasc, dataregis, ativo) VALUES 
---(1, 1, 'abfn0905@gmail.com','$2y$10$vL5SKzTYBXYzYCHYrxF8P.ZACVQNwWD3n4txiC4CZFgpvWuGRqQ4u', 'M', 'testoman','https://upload.wikimedia.org/wikipedia/commons/4/4a/Pirate_icon.gif', '2002-09-05',  '2021-11-12 16:55:11', 1), 
---(2, 1, 'abfn@gmail.com', '$2y$10$vL5SKzTYBXYzYCHYrxF8P.ZACVQNwWD3n4txiC4CZFgpvWuGRqQ4u', 'M', 'testoman2', 'https://upload.wikimedia.org/wikipedia/commons/4/4a/Pirate_icon.gif', '2002-09-05', '2021-11-12 16:55:11', 0), 
---(3, 1, 'bruno.nascimento@aluno.riogrande.ifrs.edu', '$2y$10$uCijiBJPgN0LTo3DgSEKgOFgaVDiydGgfsqhtZZCIUFj11nb6diiu', 'M', 'chipskein', 'https://drive.google.com/uc?id=1oQjH_htgpdohildhLoo0zU5bGXCLhE1e', '2002-09-05', '2021-11-12 16:55:42', 0), 
---(4, 1, 'biluteia@gmail.com','$2y$10$feaKLLXbSs0x/8TGxHwwdOmGqRN6OKefvO.EQil5aEhlTWX/CcK1S','M','email de teste','https://drive.google.com/uc?id=1gv9tSM4qCF2iILmsEYeWIcxGKwApgVoW','2009-09-17', '2021-11-12 22:48:26', 0),
---(5, 1, 'silvioquintana1@hotmail.com', '$2y$10$cM7wy6iszu32GTEergrkFuUPtcRMMVsx2HCDceP2QLK2UEuVJLgWS', 'M', 'SilMusk', 'https://upload.wikimedia.org/wikipedia/commons/4/4a/Pirate_icon.gif','2002-04-26','2021-11-13 01:28:42',1), 
---(6, 1, 's@hotmail.com', '$2y$10$n6Tmzm0rK7erTRI3WQkpweJ9OSbqTNpMTRqL8jmYuNHLui/7pks3W', 'M', 'SilMusk1', 'https://drive.google.com/uc?id=1BRztifvvBzsQFGMA7QqG3RqIidf0gJxx', '2002-04-26', '2021-11-13 01:29:26', 0),
---(7, 1, 'victortavamaral@gmail.com', '$2y$10$y71PdaTg0ZjjGHLTlDwcAOkw/pwqP9L4zQGYACoj6fpTqiPwrPmr6', 'M', 'vitão', 'https://drive.google.com/uc?id=1LtTnddiIaufdBo0lVCxEufGAtmIK7Igz', '2002-04-22', '2021-11-18 00:11:41', 1),
---(8, 1, 'victortavaresjedi150@gmail.com', '$2y$10$0F0ZO3hozWc0SK1BSgmAQOnF23A6G5N5m38/AJKw8zyIhzaqjeppW', 'M', 'bigSmoke2002', 'https://drive.google.com/uc?id=1ZRnJd2aTlnKrzAENQB3MmiRqVHpA9o-l', '2002-04-22', '2021-11-18 15:26:12', 1),
---(9, 1, 'victortavaresjedi2500@gmail.com', '$2y$10$x6PdBr36AJdwM8UtG5uy9eOeF0DwL58/3v6r5uwug3.Ja1FAxP9IS', 'F', 'JillValentine0928', 'https://drive.google.com/uc?id=1r-CuVOpdPCDSKQ1dqdVaHhJRqehZg0Fg', '2002-04-22', '2021-11-18 16:12:34', 1),
---(10, 1, 'emaildeteste1@gmail.com', '$2y$10$vMHIbdpBEKRk81cahDZeS.5aVhJTdY/nVJhU.u8gs3w7elKzNnfum', 'M', 'Gaunter O Dimm', 'https://drive.google.com/uc?export=download&id=1-C9XOdcdiW4W149HolzKe39-hgxfl5xj', ' 2002-04-22', '2021-11-19 12:33:04', 1);
+INSERT INTO UF VALUES(1,70,'Southern Nations Nationalities  and Peoples Region');
+INSERT INTO UF VALUES(2,70,'Somali Region');
+INSERT INTO UF VALUES(3,70,'Amhara Region');
+INSERT INTO UF VALUES(4,70,'Tigray Region');
+INSERT INTO UF VALUES(5,70,'Oromia Region');
+INSERT INTO UF VALUES(6,70,'Afar Region');
+INSERT INTO UF VALUES(7,70,'Harari Region');
+INSERT INTO UF VALUES(8,70,'Dire Dawa');
+INSERT INTO UF VALUES(9,70,'Benishangul-Gumuz Region');
+INSERT INTO UF VALUES(10,70,'Gambela Region');
+INSERT INTO UF VALUES(11,70,'Addis Ababa');
+INSERT INTO UF VALUES(12,147,'Petnjica Municipality');
+INSERT INTO UF VALUES(13,147,'Bar Municipality');
+INSERT INTO UF VALUES(14,147,'Danilovgrad Municipality');
+INSERT INTO UF VALUES(15,147,'Rožaje Municipality');
+INSERT INTO UF VALUES(16,147,'Plužine Municipality');
+INSERT INTO UF VALUES(17,147,'Nikšić Municipality');
+INSERT INTO UF VALUES(18,147,'Šavnik Municipality');
+INSERT INTO UF VALUES(19,147,'Plav Municipality');
+INSERT INTO UF VALUES(20,147,'Pljevlja Municipality');
+INSERT INTO UF VALUES(21,147,'Berane Municipality');
+INSERT INTO UF VALUES(22,147,'Mojkovac Municipality');
+INSERT INTO UF VALUES(23,147,'Andrijevica Municipality');
+INSERT INTO UF VALUES(24,147,'Gusinje Municipality');
+INSERT INTO UF VALUES(25,147,'Bijelo Polje Municipality');
+INSERT INTO UF VALUES(26,147,'Kotor Municipality');
+INSERT INTO UF VALUES(27,147,'Podgorica Municipality');
+INSERT INTO UF VALUES(28,147,'Old Royal Capital Cetinje');
+INSERT INTO UF VALUES(29,147,'Tivat Municipality');
+INSERT INTO UF VALUES(30,147,'Budva Municipality');
+INSERT INTO UF VALUES(31,147,'Kolašin Municipality');
+INSERT INTO UF VALUES(32,147,'Žabljak Municipality');
+INSERT INTO UF VALUES(33,147,'Ulcinj Municipality');
+INSERT INTO UF VALUES(34,152,'Kunene Region');
+INSERT INTO UF VALUES(35,152,'Kavango West Region');
+INSERT INTO UF VALUES(36,152,'Kavango East Region');
+INSERT INTO UF VALUES(37,152,'Oshana Region');
+INSERT INTO UF VALUES(38,152,'Hardap Region');
+INSERT INTO UF VALUES(39,152,'Omusati Region');
+INSERT INTO UF VALUES(40,152,'Ohangwena Region');
+INSERT INTO UF VALUES(41,152,'Omaheke Region');
+INSERT INTO UF VALUES(42,152,'Oshikoto Region');
+INSERT INTO UF VALUES(43,152,'Erongo Region');
+INSERT INTO UF VALUES(44,152,'Khomas Region');
+INSERT INTO UF VALUES(45,152,'Karas Region');
+INSERT INTO UF VALUES(46,152,'Otjozondjupa Region');
+INSERT INTO UF VALUES(47,152,'Zambezi Region');
+INSERT INTO UF VALUES(48,83,'Ashanti');
+INSERT INTO UF VALUES(49,83,'Western');
+INSERT INTO UF VALUES(50,83,'Eastern');
+INSERT INTO UF VALUES(51,83,'Northern');
+INSERT INTO UF VALUES(52,83,'Central');
+INSERT INTO UF VALUES(53,83,'Ahafo');
+INSERT INTO UF VALUES(54,83,'Greater Accra');
+INSERT INTO UF VALUES(55,83,'Upper East');
+INSERT INTO UF VALUES(56,83,'Volta');
+INSERT INTO UF VALUES(57,83,'Upper West');
+INSERT INTO UF VALUES(58,192,'San Marino');
+INSERT INTO UF VALUES(59,192,'Acquaviva');
+INSERT INTO UF VALUES(60,192,'Chiesanuova');
+INSERT INTO UF VALUES(61,192,'Borgo Maggiore');
+INSERT INTO UF VALUES(62,192,'Faetano');
+INSERT INTO UF VALUES(63,192,'Montegiardino');
+INSERT INTO UF VALUES(64,192,'Domagnano');
+INSERT INTO UF VALUES(65,192,'Serravalle');
+INSERT INTO UF VALUES(66,192,'Fiorentino');
+INSERT INTO UF VALUES(67,160,'Tillabéri Region');
+INSERT INTO UF VALUES(68,160,'Dosso Region');
+INSERT INTO UF VALUES(69,160,'Zinder Region');
+INSERT INTO UF VALUES(70,160,'Maradi Region');
+INSERT INTO UF VALUES(71,160,'Agadez Region');
+INSERT INTO UF VALUES(72,160,'Diffa Region');
+INSERT INTO UF VALUES(73,160,'Tahoua Region');
+INSERT INTO UF VALUES(74,135,'Mqabba');
+INSERT INTO UF VALUES(75,135,'San Ġwann');
+INSERT INTO UF VALUES(76,135,'Żurrieq');
+INSERT INTO UF VALUES(77,135,'Luqa');
+INSERT INTO UF VALUES(78,135,'Marsaxlokk');
+INSERT INTO UF VALUES(79,135,'Qala');
+INSERT INTO UF VALUES(80,135,'Żebbuġ Malta');
+INSERT INTO UF VALUES(81,135,'Xgħajra');
+INSERT INTO UF VALUES(82,135,'Kirkop');
+INSERT INTO UF VALUES(83,135,'Rabat');
+INSERT INTO UF VALUES(84,135,'Floriana');
+INSERT INTO UF VALUES(85,135,'Żebbuġ Gozo');
+INSERT INTO UF VALUES(86,135,'Swieqi');
+INSERT INTO UF VALUES(87,135,'Saint Lawrence');
+INSERT INTO UF VALUES(88,135,'Birżebbuġa');
+INSERT INTO UF VALUES(89,135,'Mdina');
+INSERT INTO UF VALUES(90,135,'Santa Venera');
+INSERT INTO UF VALUES(91,135,'Kerċem');
+INSERT INTO UF VALUES(92,135,'Għarb');
+INSERT INTO UF VALUES(93,135,'Iklin');
+INSERT INTO UF VALUES(94,135,'Santa Luċija');
+INSERT INTO UF VALUES(95,135,'Valletta');
+INSERT INTO UF VALUES(96,135,'Msida');
+INSERT INTO UF VALUES(97,135,'Birkirkara');
+INSERT INTO UF VALUES(98,135,'Siġġiewi');
+INSERT INTO UF VALUES(99,135,'Kalkara');
+INSERT INTO UF VALUES(100,135,'St. Julian s');
+INSERT INTO UF VALUES(101,135,'Victoria');
+INSERT INTO UF VALUES(102,135,'Mellieħa');
+INSERT INTO UF VALUES(103,135,'Tarxien');
+INSERT INTO UF VALUES(104,135,'Sliema');
+INSERT INTO UF VALUES(105,135,'Ħamrun');
+INSERT INTO UF VALUES(106,135,'Għasri');
+INSERT INTO UF VALUES(107,135,'Birgu');
+INSERT INTO UF VALUES(108,135,'Balzan');
+INSERT INTO UF VALUES(109,135,'Mġarr');
+INSERT INTO UF VALUES(110,135,'Attard');
+INSERT INTO UF VALUES(111,135,'Qrendi');
+INSERT INTO UF VALUES(112,135,'Naxxar');
+INSERT INTO UF VALUES(113,135,'Gżira');
+INSERT INTO UF VALUES(114,135,'Xagħra');
+INSERT INTO UF VALUES(115,135,'Paola');
+INSERT INTO UF VALUES(116,135,'Sannat');
+INSERT INTO UF VALUES(117,135,'Dingli');
+INSERT INTO UF VALUES(118,135,'Gudja');
+INSERT INTO UF VALUES(119,135,'Qormi');
+INSERT INTO UF VALUES(120,135,'Għargħur');
+INSERT INTO UF VALUES(121,135,'Xewkija');
+INSERT INTO UF VALUES(122,135,'Ta Xbiex');
+INSERT INTO UF VALUES(123,135,'Żabbar');
+INSERT INTO UF VALUES(124,135,'Għaxaq');
+INSERT INTO UF VALUES(125,135,'Pembroke');
+INSERT INTO UF VALUES(126,135,'Lija');
+INSERT INTO UF VALUES(127,135,'Pietà');
+INSERT INTO UF VALUES(128,135,'Marsa');
+INSERT INTO UF VALUES(129,135,'Fgura');
+INSERT INTO UF VALUES(130,135,'Għajnsielem');
+INSERT INTO UF VALUES(131,135,'Mtarfa');
+INSERT INTO UF VALUES(132,135,'Munxar');
+INSERT INTO UF VALUES(133,135,'Nadur');
+INSERT INTO UF VALUES(134,135,'Fontana');
+INSERT INTO UF VALUES(135,135,'Żejtun');
+INSERT INTO UF VALUES(136,135,'Senglea');
+INSERT INTO UF VALUES(137,135,'Marsaskala');
+INSERT INTO UF VALUES(138,135,'Cospicua');
+INSERT INTO UF VALUES(139,135,'St. Pauls Bay');
+INSERT INTO UF VALUES(140,135,'Mosta');
+INSERT INTO UF VALUES(141,112,'Mangystau Region');
+INSERT INTO UF VALUES(142,112,'Kyzylorda Region');
+INSERT INTO UF VALUES(143,112,'Almaty Region');
+INSERT INTO UF VALUES(144,112,'North Kazakhstan Region');
+INSERT INTO UF VALUES(145,112,'Akmola Region');
+INSERT INTO UF VALUES(146,112,'Pavlodar Region');
+INSERT INTO UF VALUES(147,112,'Jambyl Region');
+INSERT INTO UF VALUES(148,112,'West Kazakhstan Province');
+INSERT INTO UF VALUES(149,112,'Turkestan Region');
+INSERT INTO UF VALUES(150,112,'Karaganda Region');
+INSERT INTO UF VALUES(151,112,'Aktobe Region');
+INSERT INTO UF VALUES(152,112,'Almaty');
+INSERT INTO UF VALUES(153,112,'Atyrau Region');
+INSERT INTO UF VALUES(154,112,'East Kazakhstan Region');
+INSERT INTO UF VALUES(155,112,'Baikonur');
+INSERT INTO UF VALUES(156,112,'Nur-Sultan');
+INSERT INTO UF VALUES(157,112,'Kostanay Region');
+INSERT INTO UF VALUES(158,113,'Kakamega County');
+INSERT INTO UF VALUES(159,113,'Kisii County');
+INSERT INTO UF VALUES(160,113,'Central Province');
+INSERT INTO UF VALUES(161,113,'Busia County');
+INSERT INTO UF VALUES(162,113,'North Eastern Province');
+INSERT INTO UF VALUES(163,113,'Embu County');
+INSERT INTO UF VALUES(164,113,'Laikipia County');
+INSERT INTO UF VALUES(165,113,'Nandi District');
+INSERT INTO UF VALUES(166,113,'Lamu County');
+INSERT INTO UF VALUES(167,113,'Kirinyaga County');
+INSERT INTO UF VALUES(168,113,'Bungoma County');
+INSERT INTO UF VALUES(169,113,'Uasin Gishu');
+INSERT INTO UF VALUES(170,113,'Isiolo County');
+INSERT INTO UF VALUES(171,113,'Kisumu County');
+INSERT INTO UF VALUES(172,113,'Coast Province');
+INSERT INTO UF VALUES(173,113,'Kwale County');
+INSERT INTO UF VALUES(174,113,'Kilifi County');
+INSERT INTO UF VALUES(175,113,'Narok County');
+INSERT INTO UF VALUES(176,113,'Taita–Taveta County');
+INSERT INTO UF VALUES(177,113,'Western Province');
+INSERT INTO UF VALUES(178,113,'Muranga County');
+INSERT INTO UF VALUES(179,113,'Rift Valley Province');
+INSERT INTO UF VALUES(180,113,'Nyeri County');
+INSERT INTO UF VALUES(181,113,'Baringo County');
+INSERT INTO UF VALUES(182,113,'Wajir County');
+INSERT INTO UF VALUES(183,113,'Trans-Nzoia District');
+INSERT INTO UF VALUES(184,113,'Machakos County');
+INSERT INTO UF VALUES(185,113,'Tharaka Nithi County');
+INSERT INTO UF VALUES(186,113,'Siaya County');
+INSERT INTO UF VALUES(187,113,'Mandera County');
+INSERT INTO UF VALUES(188,113,'Makueni County');
+INSERT INTO UF VALUES(189,113,'Eastern Province');
+INSERT INTO UF VALUES(190,113,'Migori County');
+INSERT INTO UF VALUES(191,113,'Nairobi');
+INSERT INTO UF VALUES(192,113,'Nyandarua County');
+INSERT INTO UF VALUES(193,113,'Kericho County');
+INSERT INTO UF VALUES(194,113,'Marsabit County');
+INSERT INTO UF VALUES(195,113,'Homa Bay County');
+INSERT INTO UF VALUES(196,113,'Garissa County');
+INSERT INTO UF VALUES(197,113,'Kajiado County');
+INSERT INTO UF VALUES(198,113,'Meru County');
+INSERT INTO UF VALUES(199,113,'Kiambu County');
+INSERT INTO UF VALUES(200,113,'Mombasa County');
+INSERT INTO UF VALUES(201,113,'Elgeyo-Marakwet County');
+INSERT INTO UF VALUES(202,113,'Vihiga County');
+INSERT INTO UF VALUES(203,113,'Nakuru County');
+INSERT INTO UF VALUES(204,113,'Nyanza Province');
+INSERT INTO UF VALUES(205,113,'Tana River County');
+INSERT INTO UF VALUES(206,113,'Turkana County');
+INSERT INTO UF VALUES(207,113,'Samburu County');
+INSERT INTO UF VALUES(208,113,'West Pokot County');
+INSERT INTO UF VALUES(209,113,'Nyamira County');
+INSERT INTO UF VALUES(210,113,'Bomet County');
+INSERT INTO UF VALUES(211,113,'Kitui County');
+INSERT INTO UF VALUES(212,7,'Bié Province');
+INSERT INTO UF VALUES(213,7,'Huambo Province');
+INSERT INTO UF VALUES(214,7,'Zaire Province');
+INSERT INTO UF VALUES(215,7,'Cunene Province');
+INSERT INTO UF VALUES(216,7,'Cuanza Sul');
+INSERT INTO UF VALUES(217,7,'Cuanza Norte Province');
+INSERT INTO UF VALUES(218,7,'Benguela Province');
+INSERT INTO UF VALUES(219,7,'Moxico Province');
+INSERT INTO UF VALUES(220,7,'Lunda Sul Province');
+INSERT INTO UF VALUES(221,7,'Bengo Province');
+INSERT INTO UF VALUES(222,7,'Luanda Province');
+INSERT INTO UF VALUES(223,7,'Lunda Norte Province');
+INSERT INTO UF VALUES(224,7,'Uíge Province');
+INSERT INTO UF VALUES(225,7,'Huíla Province');
+INSERT INTO UF VALUES(226,7,'Cuando Cubango Province');
+INSERT INTO UF VALUES(227,7,'Malanje Province');
+INSERT INTO UF VALUES(228,7,'Cabinda Province');
+INSERT INTO UF VALUES(229,26,'Gasa District');
+INSERT INTO UF VALUES(230,26,'Tsirang District');
+INSERT INTO UF VALUES(231,26,'Wangdue Phodrang District');
+INSERT INTO UF VALUES(232,26,'Haa District');
+INSERT INTO UF VALUES(233,26,'Zhemgang District');
+INSERT INTO UF VALUES(234,26,'Lhuntse District');
+INSERT INTO UF VALUES(235,26,'Punakha District');
+INSERT INTO UF VALUES(236,26,'Trashigang District');
+INSERT INTO UF VALUES(237,26,'Paro District');
+INSERT INTO UF VALUES(238,26,'Dagana District');
+INSERT INTO UF VALUES(239,26,'Chukha District');
+INSERT INTO UF VALUES(240,26,'Bumthang District');
+INSERT INTO UF VALUES(241,26,'Thimphu District');
+INSERT INTO UF VALUES(242,26,'Mongar District');
+INSERT INTO UF VALUES(243,26,'Samdrup Jongkhar District');
+INSERT INTO UF VALUES(244,26,'Pemagatshel District');
+INSERT INTO UF VALUES(245,26,'Trongsa District');
+INSERT INTO UF VALUES(246,26,'Samtse District');
+INSERT INTO UF VALUES(247,26,'Sarpang District');
+INSERT INTO UF VALUES(248,134,'Tombouctou Region');
+INSERT INTO UF VALUES(249,134,'Ségou Region');
+INSERT INTO UF VALUES(250,134,'Koulikoro Region');
+INSERT INTO UF VALUES(251,134,'Ménaka Region');
+INSERT INTO UF VALUES(252,134,'Kayes Region');
+INSERT INTO UF VALUES(253,134,'Bamako');
+INSERT INTO UF VALUES(254,134,'Sikasso Region');
+INSERT INTO UF VALUES(255,134,'Mopti Region');
+INSERT INTO UF VALUES(256,134,'Taoudénit Region');
+INSERT INTO UF VALUES(257,134,'Kidal Region');
+INSERT INTO UF VALUES(258,134,'Gao Region');
+INSERT INTO UF VALUES(259,183,'Southern Province');
+INSERT INTO UF VALUES(260,183,'Western Province');
+INSERT INTO UF VALUES(261,183,'Eastern Province');
+INSERT INTO UF VALUES(262,183,'Kigali district');
+INSERT INTO UF VALUES(263,183,'Northern Province');
+INSERT INTO UF VALUES(264,23,'Belize District');
+INSERT INTO UF VALUES(265,23,'Stann Creek District');
+INSERT INTO UF VALUES(266,23,'Corozal District');
+INSERT INTO UF VALUES(267,23,'Toledo District');
+INSERT INTO UF VALUES(268,23,'Orange Walk District');
+INSERT INTO UF VALUES(269,23,'Cayo District');
+INSERT INTO UF VALUES(270,193,'Príncipe Province');
+INSERT INTO UF VALUES(271,193,'São Tomé Province');
+INSERT INTO UF VALUES(272,56,'Havana Province');
+INSERT INTO UF VALUES(273,56,'Santiago de Cuba Province');
+INSERT INTO UF VALUES(274,56,'Sancti Spíritus Province');
+INSERT INTO UF VALUES(275,56,'Granma Province');
+INSERT INTO UF VALUES(276,56,'Mayabeque Province');
+INSERT INTO UF VALUES(277,56,'Pinar del Río Province');
+INSERT INTO UF VALUES(278,56,'Isla de la Juventud');
+INSERT INTO UF VALUES(279,56,'Holguín Province');
+INSERT INTO UF VALUES(280,56,'Villa Clara Province');
+INSERT INTO UF VALUES(281,56,'Las Tunas Province');
+INSERT INTO UF VALUES(282,56,'Ciego de Ávila Province');
+INSERT INTO UF VALUES(283,56,'Artemisa Province');
+INSERT INTO UF VALUES(284,56,'Matanzas Province');
+INSERT INTO UF VALUES(285,56,'Guantánamo Province');
+INSERT INTO UF VALUES(286,56,'Camagüey Province');
+INSERT INTO UF VALUES(287,56,'Cienfuegos Province');
+INSERT INTO UF VALUES(288,161,'Jigawa');
+INSERT INTO UF VALUES(289,161,'Enugu');
+INSERT INTO UF VALUES(290,161,'Kebbi');
+INSERT INTO UF VALUES(291,161,'Benue');
+INSERT INTO UF VALUES(292,161,'Sokoto');
+INSERT INTO UF VALUES(293,161,'Abuja Federal Capital Territory');
+INSERT INTO UF VALUES(294,161,'Kaduna');
+INSERT INTO UF VALUES(295,161,'Kwara');
+INSERT INTO UF VALUES(296,161,'Oyo');
+INSERT INTO UF VALUES(297,161,'Yobe');
+INSERT INTO UF VALUES(298,161,'Kogi');
+INSERT INTO UF VALUES(299,161,'Zamfara');
+INSERT INTO UF VALUES(300,161,'Kano');
+INSERT INTO UF VALUES(301,161,'Nasarawa');
+INSERT INTO UF VALUES(302,161,'Plateau');
+INSERT INTO UF VALUES(303,161,'Abia');
+INSERT INTO UF VALUES(304,161,'Akwa Ibom');
+INSERT INTO UF VALUES(305,161,'Bayelsa');
+INSERT INTO UF VALUES(306,161,'Lagos');
+INSERT INTO UF VALUES(307,161,'Borno');
+INSERT INTO UF VALUES(308,161,'Imo');
+INSERT INTO UF VALUES(309,161,'Ekiti');
+INSERT INTO UF VALUES(310,161,'Gombe');
+INSERT INTO UF VALUES(311,161,'Ebonyi');
+INSERT INTO UF VALUES(312,161,'Bauchi');
+INSERT INTO UF VALUES(313,161,'Katsina');
+INSERT INTO UF VALUES(314,161,'Cross River');
+INSERT INTO UF VALUES(315,161,'Anambra');
+INSERT INTO UF VALUES(316,161,'Delta');
+INSERT INTO UF VALUES(317,161,'Niger');
+INSERT INTO UF VALUES(318,161,'Edo');
+INSERT INTO UF VALUES(319,161,'Taraba');
+INSERT INTO UF VALUES(320,161,'Adamawa');
+INSERT INTO UF VALUES(321,161,'Ondo');
+INSERT INTO UF VALUES(322,161,'Osun');
+INSERT INTO UF VALUES(323,161,'Ogun');
+INSERT INTO UF VALUES(324,229,'Rukungiri District');
+INSERT INTO UF VALUES(325,229,'Kyankwanzi District');
+INSERT INTO UF VALUES(326,229,'Kabarole District');
+INSERT INTO UF VALUES(327,229,'Mpigi District');
+INSERT INTO UF VALUES(328,229,'Apac District');
+INSERT INTO UF VALUES(329,229,'Abim District');
+INSERT INTO UF VALUES(330,229,'Yumbe District');
+INSERT INTO UF VALUES(331,229,'Rukiga District');
+INSERT INTO UF VALUES(332,229,'Northern Region');
+INSERT INTO UF VALUES(333,229,'Serere District');
+INSERT INTO UF VALUES(334,229,'Kamuli District');
+INSERT INTO UF VALUES(335,229,'Amuru District');
+INSERT INTO UF VALUES(336,229,'Kaberamaido District');
+INSERT INTO UF VALUES(337,229,'Namutumba District');
+INSERT INTO UF VALUES(338,229,'Kibuku District');
+INSERT INTO UF VALUES(339,229,'Ibanda District');
+INSERT INTO UF VALUES(340,229,'Iganga District');
+INSERT INTO UF VALUES(341,229,'Dokolo District');
+INSERT INTO UF VALUES(342,229,'Lira District');
+INSERT INTO UF VALUES(343,229,'Bukedea District');
+INSERT INTO UF VALUES(344,229,'Alebtong District');
+INSERT INTO UF VALUES(345,229,'Koboko District');
+INSERT INTO UF VALUES(346,229,'Kiryandongo District');
+INSERT INTO UF VALUES(347,229,'Kiboga District');
+INSERT INTO UF VALUES(348,229,'Kitgum District');
+INSERT INTO UF VALUES(349,229,'Bududa District');
+INSERT INTO UF VALUES(350,229,'Mbale District');
+INSERT INTO UF VALUES(351,229,'Namayingo District');
+INSERT INTO UF VALUES(352,229,'Amuria District');
+INSERT INTO UF VALUES(353,229,'Amudat District');
+INSERT INTO UF VALUES(354,229,'Masindi District');
+INSERT INTO UF VALUES(355,229,'Kiruhura District');
+INSERT INTO UF VALUES(356,229,'Masaka District');
+INSERT INTO UF VALUES(357,229,'Pakwach District');
+INSERT INTO UF VALUES(358,229,'Rubanda District');
+INSERT INTO UF VALUES(359,229,'Tororo District');
+INSERT INTO UF VALUES(360,229,'Kamwenge District');
+INSERT INTO UF VALUES(361,229,'Adjumani District');
+INSERT INTO UF VALUES(362,229,'Wakiso District');
+INSERT INTO UF VALUES(363,229,'Moyo District');
+INSERT INTO UF VALUES(364,229,'Mityana District');
+INSERT INTO UF VALUES(365,229,'Butaleja District');
+INSERT INTO UF VALUES(366,229,'Gomba District');
+INSERT INTO UF VALUES(367,229,'Jinja District');
+INSERT INTO UF VALUES(368,229,'Kayunga District');
+INSERT INTO UF VALUES(369,229,'Kween District');
+INSERT INTO UF VALUES(370,229,'Western Region');
+INSERT INTO UF VALUES(371,229,'Mubende District');
+INSERT INTO UF VALUES(372,229,'Eastern Region');
+INSERT INTO UF VALUES(373,229,'Kanungu District');
+INSERT INTO UF VALUES(374,229,'Omoro District');
+INSERT INTO UF VALUES(375,229,'Bukomansimbi District');
+INSERT INTO UF VALUES(376,229,'Lyantonde District');
+INSERT INTO UF VALUES(377,229,'Buikwe District');
+INSERT INTO UF VALUES(378,229,'Nwoya District');
+INSERT INTO UF VALUES(379,229,'Zombo District');
+INSERT INTO UF VALUES(380,229,'Buyende District');
+INSERT INTO UF VALUES(381,229,'Bunyangabu District');
+INSERT INTO UF VALUES(382,229,'Kampala District');
+INSERT INTO UF VALUES(383,229,'Isingiro District');
+INSERT INTO UF VALUES(384,229,'Butambala District');
+INSERT INTO UF VALUES(385,229,'Bukwo District');
+INSERT INTO UF VALUES(386,229,'Bushenyi District');
+INSERT INTO UF VALUES(387,229,'Bugiri District');
+INSERT INTO UF VALUES(388,229,'Butebo District');
+INSERT INTO UF VALUES(389,229,'Buliisa District');
+INSERT INTO UF VALUES(390,229,'Otuke District');
+INSERT INTO UF VALUES(391,229,'Buhweju District');
+INSERT INTO UF VALUES(392,229,'Agago District');
+INSERT INTO UF VALUES(393,229,'Nakapiripirit District');
+INSERT INTO UF VALUES(394,229,'Kalungu District');
+INSERT INTO UF VALUES(395,229,'Moroto District');
+INSERT INTO UF VALUES(396,229,'Central Region');
+INSERT INTO UF VALUES(397,229,'Oyam District');
+INSERT INTO UF VALUES(398,229,'Kaliro District');
+INSERT INTO UF VALUES(399,229,'Kakumiro District');
+INSERT INTO UF VALUES(400,229,'Namisindwa District');
+INSERT INTO UF VALUES(401,229,'Kole District');
+INSERT INTO UF VALUES(402,229,'Kyenjojo District');
+INSERT INTO UF VALUES(403,229,'Kagadi District');
+INSERT INTO UF VALUES(404,229,'Ntungamo District');
+INSERT INTO UF VALUES(405,229,'Kalangala District');
+INSERT INTO UF VALUES(406,229,'Nakasongola District');
+INSERT INTO UF VALUES(407,229,'Sheema District');
+INSERT INTO UF VALUES(408,229,'Pader District');
+INSERT INTO UF VALUES(409,229,'Kisoro District');
+INSERT INTO UF VALUES(410,229,'Mukono District');
+INSERT INTO UF VALUES(411,229,'Lamwo District');
+INSERT INTO UF VALUES(412,229,'Pallisa District');
+INSERT INTO UF VALUES(413,229,'Gulu District');
+INSERT INTO UF VALUES(414,229,'Buvuma District');
+INSERT INTO UF VALUES(415,229,'Mbarara District');
+INSERT INTO UF VALUES(416,229,'Amolatar District');
+INSERT INTO UF VALUES(417,229,'Lwengo District');
+INSERT INTO UF VALUES(418,229,'Mayuge District');
+INSERT INTO UF VALUES(419,229,'Bundibugyo District');
+INSERT INTO UF VALUES(420,229,'Katakwi District');
+INSERT INTO UF VALUES(421,229,'Maracha District');
+INSERT INTO UF VALUES(422,229,'Ntoroko District');
+INSERT INTO UF VALUES(423,229,'Nakaseke District');
+INSERT INTO UF VALUES(424,229,'Ngora District');
+INSERT INTO UF VALUES(425,229,'Kumi District');
+INSERT INTO UF VALUES(426,229,'Kabale District');
+INSERT INTO UF VALUES(427,229,'Sembabule District');
+INSERT INTO UF VALUES(428,229,'Bulambuli District');
+INSERT INTO UF VALUES(429,229,'Sironko District');
+INSERT INTO UF VALUES(430,229,'Napak District');
+INSERT INTO UF VALUES(431,229,'Busia District');
+INSERT INTO UF VALUES(432,229,'Kapchorwa District');
+INSERT INTO UF VALUES(433,229,'Luwero District');
+INSERT INTO UF VALUES(434,229,'Kaabong District');
+INSERT INTO UF VALUES(435,229,'Mitooma District');
+INSERT INTO UF VALUES(436,229,'Kibaale District');
+INSERT INTO UF VALUES(437,229,'Kyegegwa District');
+INSERT INTO UF VALUES(438,229,'Manafwa District');
+INSERT INTO UF VALUES(439,229,'Rakai District');
+INSERT INTO UF VALUES(440,229,'Kasese District');
+INSERT INTO UF VALUES(441,229,'Budaka District');
+INSERT INTO UF VALUES(442,229,'Rubirizi District');
+INSERT INTO UF VALUES(443,229,'Kotido District');
+INSERT INTO UF VALUES(444,229,'Soroti District');
+INSERT INTO UF VALUES(445,229,'Luuka District');
+INSERT INTO UF VALUES(446,229,'Nebbi District');
+INSERT INTO UF VALUES(447,229,'Arua District');
+INSERT INTO UF VALUES(448,229,'Kyotera District');
+INSERT INTO UF VALUES(449,125,'Schellenberg');
+INSERT INTO UF VALUES(450,125,'Schaan');
+INSERT INTO UF VALUES(451,125,'Eschen');
+INSERT INTO UF VALUES(452,125,'Vaduz');
+INSERT INTO UF VALUES(453,125,'Ruggell');
+INSERT INTO UF VALUES(454,125,'Planken');
+INSERT INTO UF VALUES(455,125,'Mauren');
+INSERT INTO UF VALUES(456,125,'Triesenberg');
+INSERT INTO UF VALUES(457,125,'Gamprin');
+INSERT INTO UF VALUES(458,125,'Balzers');
+INSERT INTO UF VALUES(459,125,'Triesen');
+INSERT INTO UF VALUES(460,28,'Brčko District');
+INSERT INTO UF VALUES(461,28,'Tuzla Canton');
+INSERT INTO UF VALUES(462,28,'Central Bosnia Canton');
+INSERT INTO UF VALUES(463,28,'Herzegovina-Neretva Canton');
+INSERT INTO UF VALUES(464,28,'Posavina Canton');
+INSERT INTO UF VALUES(465,28,'Una-Sana Canton');
+INSERT INTO UF VALUES(466,28,'Sarajevo Canton');
+INSERT INTO UF VALUES(467,28,'Federation of Bosnia and Herzegovina');
+INSERT INTO UF VALUES(468,28,'Zenica-Doboj Canton');
+INSERT INTO UF VALUES(469,28,'West Herzegovina Canton');
+INSERT INTO UF VALUES(470,28,'Republika Srpska');
+INSERT INTO UF VALUES(471,28,'Canton 10');
+INSERT INTO UF VALUES(472,28,'Bosnian Podrinje Canton');
+INSERT INTO UF VALUES(473,195,'Dakar');
+INSERT INTO UF VALUES(474,195,'Kolda');
+INSERT INTO UF VALUES(475,195,'Kaffrine');
+INSERT INTO UF VALUES(476,195,'Matam');
+INSERT INTO UF VALUES(477,195,'Saint-Louis');
+INSERT INTO UF VALUES(478,195,'Ziguinchor');
+INSERT INTO UF VALUES(479,195,'Fatick');
+INSERT INTO UF VALUES(480,195,'Diourbel Region');
+INSERT INTO UF VALUES(481,195,'Kédougou');
+INSERT INTO UF VALUES(482,195,'Sédhiou');
+INSERT INTO UF VALUES(483,195,'Kaolack');
+INSERT INTO UF VALUES(484,195,'Thiès Region');
+INSERT INTO UF VALUES(485,195,'Louga');
+INSERT INTO UF VALUES(486,195,'Tambacounda Region');
+INSERT INTO UF VALUES(487,6,'Encamp');
+INSERT INTO UF VALUES(488,6,'Andorra la Vella');
+INSERT INTO UF VALUES(489,6,'Canillo');
+INSERT INTO UF VALUES(490,6,'Sant Julià de Lòria');
+INSERT INTO UF VALUES(491,6,'Ordino');
+INSERT INTO UF VALUES(492,6,'Escaldes-Engordany');
+INSERT INTO UF VALUES(493,6,'La Massana');
+INSERT INTO UF VALUES(494,197,'Mont Buxton');
+INSERT INTO UF VALUES(495,197,'La Digue');
+INSERT INTO UF VALUES(496,197,'Saint Louis');
+INSERT INTO UF VALUES(497,197,'Baie Lazare');
+INSERT INTO UF VALUES(498,197,'Mont Fleuri');
+INSERT INTO UF VALUES(499,197,'Les Mamelles');
+INSERT INTO UF VALUES(500,197,'Grand Anse Mahé');
+INSERT INTO UF VALUES(501,197,'Roche Caiman');
+INSERT INTO UF VALUES(502,197,'Anse Royale');
+INSERT INTO UF VALUES(503,197,'Glacis');
+INSERT INTO UF VALUES(504,197,'Grand Anse Praslin');
+INSERT INTO UF VALUES(505,197,'Bel Ombre');
+INSERT INTO UF VALUES(506,197,'Anse-aux-Pins');
+INSERT INTO UF VALUES(507,197,'Port Glaud');
+INSERT INTO UF VALUES(508,197,'Au Cap');
+INSERT INTO UF VALUES(509,197,'Takamaka');
+INSERT INTO UF VALUES(510,197,'Pointe La Rue');
+INSERT INTO UF VALUES(511,197,'Plaisance');
+INSERT INTO UF VALUES(512,197,'Beau Vallon');
+INSERT INTO UF VALUES(513,197,'Anse Boileau');
+INSERT INTO UF VALUES(514,197,'Baie Sainte Anne');
+INSERT INTO UF VALUES(515,197,'Bel Air');
+INSERT INTO UF VALUES(516,197,'La Rivière Anglaise');
+INSERT INTO UF VALUES(517,197,'Cascade');
+INSERT INTO UF VALUES(518,16,'Shaki');
+INSERT INTO UF VALUES(519,16,'Tartar District');
+INSERT INTO UF VALUES(520,16,'Shirvan');
+INSERT INTO UF VALUES(521,16,'Qazakh District');
+INSERT INTO UF VALUES(522,16,'Sadarak District');
+INSERT INTO UF VALUES(523,16,'Yevlakh District');
+INSERT INTO UF VALUES(524,16,'Khojali District');
+INSERT INTO UF VALUES(525,16,'Kalbajar District');
+INSERT INTO UF VALUES(526,16,'Qakh District');
+INSERT INTO UF VALUES(527,16,'Fizuli District');
+INSERT INTO UF VALUES(528,16,'Astara District');
+INSERT INTO UF VALUES(529,16,'Shamakhi District');
+INSERT INTO UF VALUES(530,16,'Neftchala District');
+INSERT INTO UF VALUES(531,16,'Goychay');
+INSERT INTO UF VALUES(532,16,'Bilasuvar District');
+INSERT INTO UF VALUES(533,16,'Tovuz District');
+INSERT INTO UF VALUES(534,16,'Ordubad District');
+INSERT INTO UF VALUES(535,16,'Sharur District');
+INSERT INTO UF VALUES(536,16,'Samukh District');
+INSERT INTO UF VALUES(537,16,'Khizi District');
+INSERT INTO UF VALUES(538,16,'Yevlakh');
+INSERT INTO UF VALUES(539,16,'Ujar District');
+INSERT INTO UF VALUES(540,16,'Absheron District');
+INSERT INTO UF VALUES(541,16,'Lachin District');
+INSERT INTO UF VALUES(542,16,'Qabala District');
+INSERT INTO UF VALUES(543,16,'Agstafa District');
+INSERT INTO UF VALUES(544,16,'Imishli District');
+INSERT INTO UF VALUES(545,16,'Salyan District');
+INSERT INTO UF VALUES(546,16,'Lerik District');
+INSERT INTO UF VALUES(547,16,'Agsu District');
+INSERT INTO UF VALUES(548,16,'Qubadli District');
+INSERT INTO UF VALUES(549,16,'Kurdamir District');
+INSERT INTO UF VALUES(550,16,'Yardymli District');
+INSERT INTO UF VALUES(551,16,'Goranboy District');
+INSERT INTO UF VALUES(552,16,'Baku');
+INSERT INTO UF VALUES(553,16,'Agdash District');
+INSERT INTO UF VALUES(554,16,'Beylagan District');
+INSERT INTO UF VALUES(555,16,'Masally District');
+INSERT INTO UF VALUES(556,16,'Oghuz District');
+INSERT INTO UF VALUES(557,16,'Saatly District');
+INSERT INTO UF VALUES(558,16,'Lankaran District');
+INSERT INTO UF VALUES(559,16,'Agdam District');
+INSERT INTO UF VALUES(560,16,'Balakan District');
+INSERT INTO UF VALUES(561,16,'Dashkasan District');
+INSERT INTO UF VALUES(562,16,'Nakhchivan Autonomous Republic');
+INSERT INTO UF VALUES(563,16,'Quba District');
+INSERT INTO UF VALUES(564,16,'Ismailli District');
+INSERT INTO UF VALUES(565,16,'Sabirabad District');
+INSERT INTO UF VALUES(566,16,'Zaqatala District');
+INSERT INTO UF VALUES(567,16,'Kangarli District');
+INSERT INTO UF VALUES(568,16,'Martuni');
+INSERT INTO UF VALUES(569,16,'Barda District');
+INSERT INTO UF VALUES(570,16,'Jabrayil District');
+INSERT INTO UF VALUES(571,16,'Hajigabul District');
+INSERT INTO UF VALUES(572,16,'Julfa District');
+INSERT INTO UF VALUES(573,16,'Gobustan District');
+INSERT INTO UF VALUES(574,16,'Goygol District');
+INSERT INTO UF VALUES(575,16,'Babek District');
+INSERT INTO UF VALUES(576,16,'Zardab District');
+INSERT INTO UF VALUES(577,16,'Aghjabadi District');
+INSERT INTO UF VALUES(578,16,'Jalilabad District');
+INSERT INTO UF VALUES(579,16,'Shahbuz District');
+INSERT INTO UF VALUES(580,16,'Mingachevir');
+INSERT INTO UF VALUES(581,16,'Zangilan District');
+INSERT INTO UF VALUES(582,16,'Sumqayit');
+INSERT INTO UF VALUES(583,16,'Shamkir District');
+INSERT INTO UF VALUES(584,16,'Siazan District');
+INSERT INTO UF VALUES(585,16,'Ganja');
+INSERT INTO UF VALUES(586,16,'Shaki District');
+INSERT INTO UF VALUES(587,16,'Lankaran');
+INSERT INTO UF VALUES(588,16,'Qusar District');
+INSERT INTO UF VALUES(589,16,'Gədəbəy');
+INSERT INTO UF VALUES(590,16,'Khachmaz District');
+INSERT INTO UF VALUES(591,16,'Shabran District');
+INSERT INTO UF VALUES(592,16,'Shusha District');
+INSERT INTO UF VALUES(593,3,'Skrapar District');
+INSERT INTO UF VALUES(594,3,'Kavajë District');
+INSERT INTO UF VALUES(595,3,'Lezhë District');
+INSERT INTO UF VALUES(596,3,'Librazhd District');
+INSERT INTO UF VALUES(597,3,'Korçë District');
+INSERT INTO UF VALUES(598,3,'Elbasan County');
+INSERT INTO UF VALUES(599,3,'Lushnjë District');
+INSERT INTO UF VALUES(600,3,'Has District');
+INSERT INTO UF VALUES(601,3,'Kukës County');
+INSERT INTO UF VALUES(602,3,'Malësi e Madhe District');
+INSERT INTO UF VALUES(603,3,'Berat County');
+INSERT INTO UF VALUES(604,3,'Gjirokastër County');
+INSERT INTO UF VALUES(605,3,'Dibër District');
+INSERT INTO UF VALUES(606,3,'Pogradec District');
+INSERT INTO UF VALUES(607,3,'Bulqizë District');
+INSERT INTO UF VALUES(608,3,'Devoll District');
+INSERT INTO UF VALUES(609,3,'Lezhë County');
+INSERT INTO UF VALUES(610,3,'Dibër County');
+INSERT INTO UF VALUES(611,3,'Shkodër County');
+INSERT INTO UF VALUES(612,3,'Kuçovë District');
+INSERT INTO UF VALUES(613,3,'Vlorë District');
+INSERT INTO UF VALUES(614,3,'Krujë District');
+INSERT INTO UF VALUES(615,3,'Tirana County');
+INSERT INTO UF VALUES(616,3,'Tepelenë District');
+INSERT INTO UF VALUES(617,3,'Gramsh District');
+INSERT INTO UF VALUES(618,3,'Delvinë District');
+INSERT INTO UF VALUES(619,3,'Peqin District');
+INSERT INTO UF VALUES(620,3,'Pukë District');
+INSERT INTO UF VALUES(621,3,'Gjirokastër District');
+INSERT INTO UF VALUES(622,3,'Kurbin District');
+INSERT INTO UF VALUES(623,3,'Kukës District');
+INSERT INTO UF VALUES(624,3,'Sarandë District');
+INSERT INTO UF VALUES(625,3,'Përmet District');
+INSERT INTO UF VALUES(626,3,'Shkodër District');
+INSERT INTO UF VALUES(627,3,'Fier District');
+INSERT INTO UF VALUES(628,3,'Kolonjë District');
+INSERT INTO UF VALUES(629,3,'Berat District');
+INSERT INTO UF VALUES(630,3,'Korçë County');
+INSERT INTO UF VALUES(631,3,'Fier County');
+INSERT INTO UF VALUES(632,3,'Durrës County');
+INSERT INTO UF VALUES(633,3,'Tirana District');
+INSERT INTO UF VALUES(634,3,'Vlorë County');
+INSERT INTO UF VALUES(635,3,'Mat District');
+INSERT INTO UF VALUES(636,3,'Tropojë District');
+INSERT INTO UF VALUES(637,3,'Mallakastër District');
+INSERT INTO UF VALUES(638,3,'Mirditë District');
+INSERT INTO UF VALUES(639,3,'Durrës District');
+INSERT INTO UF VALUES(640,129,'Sveti Nikole Municipality');
+INSERT INTO UF VALUES(641,129,'Kratovo Municipality');
+INSERT INTO UF VALUES(642,129,'Zajas Municipality');
+INSERT INTO UF VALUES(643,129,'Staro Nagoričane Municipality');
+INSERT INTO UF VALUES(644,129,'Češinovo-Obleševo Municipality');
+INSERT INTO UF VALUES(645,129,'Debarca Municipality');
+INSERT INTO UF VALUES(646,129,'Probištip Municipality');
+INSERT INTO UF VALUES(647,129,'Krivogaštani Municipality');
+INSERT INTO UF VALUES(648,129,'Gevgelija Municipality');
+INSERT INTO UF VALUES(649,129,'Bogdanci Municipality');
+INSERT INTO UF VALUES(650,129,'Vraneštica Municipality');
+INSERT INTO UF VALUES(651,129,'Veles Municipality');
+INSERT INTO UF VALUES(652,129,'Bosilovo Municipality');
+INSERT INTO UF VALUES(653,129,'Mogila Municipality');
+INSERT INTO UF VALUES(654,129,'Tearce Municipality');
+INSERT INTO UF VALUES(655,129,'Demir Kapija Municipality');
+INSERT INTO UF VALUES(656,129,'Aračinovo Municipality');
+INSERT INTO UF VALUES(657,129,'Drugovo Municipality');
+INSERT INTO UF VALUES(658,129,'Vasilevo Municipality');
+INSERT INTO UF VALUES(659,129,'Lipkovo Municipality');
+INSERT INTO UF VALUES(660,129,'Brvenica Municipality');
+INSERT INTO UF VALUES(661,129,'Štip Municipality');
+INSERT INTO UF VALUES(662,129,'Vevčani Municipality');
+INSERT INTO UF VALUES(663,129,'Tetovo Municipality');
+INSERT INTO UF VALUES(664,129,'Negotino Municipality');
+INSERT INTO UF VALUES(665,129,'Konče Municipality');
+INSERT INTO UF VALUES(666,129,'Prilep Municipality');
+INSERT INTO UF VALUES(667,129,'Saraj Municipality');
+INSERT INTO UF VALUES(668,129,'Želino Municipality');
+INSERT INTO UF VALUES(669,129,'Mavrovo and Rostuša Municipality');
+INSERT INTO UF VALUES(670,129,'Plasnica Municipality');
+INSERT INTO UF VALUES(671,129,'Valandovo Municipality');
+INSERT INTO UF VALUES(672,129,'Vinica Municipality');
+INSERT INTO UF VALUES(673,129,'Zrnovci Municipality');
+INSERT INTO UF VALUES(674,129,'Karbinci');
+INSERT INTO UF VALUES(675,129,'Dolneni Municipality');
+INSERT INTO UF VALUES(676,129,'Čaška Municipality');
+INSERT INTO UF VALUES(677,129,'Kriva Palanka Municipality');
+INSERT INTO UF VALUES(678,129,'Jegunovce Municipality');
+INSERT INTO UF VALUES(679,129,'Bitola Municipality');
+INSERT INTO UF VALUES(680,129,'Šuto Orizari Municipality');
+INSERT INTO UF VALUES(681,129,'Karpoš Municipality');
+INSERT INTO UF VALUES(682,129,'Oslomej Municipality');
+INSERT INTO UF VALUES(683,129,'Kumanovo Municipality');
+INSERT INTO UF VALUES(684,129,'Greater Skopje');
+INSERT INTO UF VALUES(685,129,'Pehčevo Municipality');
+INSERT INTO UF VALUES(686,129,'Kisela Voda Municipality');
+INSERT INTO UF VALUES(687,129,'Demir Hisar Municipality');
+INSERT INTO UF VALUES(688,129,'Kičevo Municipality');
+INSERT INTO UF VALUES(689,129,'Vrapčište Municipality');
+INSERT INTO UF VALUES(690,129,'Ilinden Municipality');
+INSERT INTO UF VALUES(691,129,'Rosoman Municipality');
+INSERT INTO UF VALUES(692,129,'Makedonski Brod Municipality');
+INSERT INTO UF VALUES(693,129,'Gostivar Municipality');
+INSERT INTO UF VALUES(694,129,'Butel Municipality');
+INSERT INTO UF VALUES(695,129,'Delčevo Municipality');
+INSERT INTO UF VALUES(696,129,'Novaci Municipality');
+INSERT INTO UF VALUES(697,129,'Dojran Municipality');
+INSERT INTO UF VALUES(698,129,'Petrovec Municipality');
+INSERT INTO UF VALUES(699,129,'Ohrid Municipality');
+INSERT INTO UF VALUES(700,129,'Struga Municipality');
+INSERT INTO UF VALUES(701,129,'Makedonska Kamenica Municipality');
+INSERT INTO UF VALUES(702,129,'Centar Municipality');
+INSERT INTO UF VALUES(703,129,'Aerodrom Municipality');
+INSERT INTO UF VALUES(704,129,'Čair Municipality');
+INSERT INTO UF VALUES(705,129,'Lozovo Municipality');
+INSERT INTO UF VALUES(706,129,'Zelenikovo Municipality');
+INSERT INTO UF VALUES(707,129,'Gazi Baba Municipality');
+INSERT INTO UF VALUES(708,129,'Gradsko Municipality');
+INSERT INTO UF VALUES(709,129,'Radoviš Municipality');
+INSERT INTO UF VALUES(710,129,'Strumica Municipality');
+INSERT INTO UF VALUES(711,129,'Studeničani Municipality');
+INSERT INTO UF VALUES(712,129,'Resen Municipality');
+INSERT INTO UF VALUES(713,129,'Kavadarci Municipality');
+INSERT INTO UF VALUES(714,129,'Kruševo Municipality');
+INSERT INTO UF VALUES(715,129,'Čučer-Sandevo Municipality');
+INSERT INTO UF VALUES(716,129,'Berovo Municipality');
+INSERT INTO UF VALUES(717,129,'Rankovce Municipality');
+INSERT INTO UF VALUES(718,129,'Novo Selo Municipality');
+INSERT INTO UF VALUES(719,129,'Sopište Municipality');
+INSERT INTO UF VALUES(720,129,'Centar Župa Municipality');
+INSERT INTO UF VALUES(721,129,'Bogovinje Municipality');
+INSERT INTO UF VALUES(722,129,'Gjorče Petrov Municipality');
+INSERT INTO UF VALUES(723,129,'Kočani Municipality');
+INSERT INTO UF VALUES(724,55,'Požega-Slavonia County');
+INSERT INTO UF VALUES(725,55,'Split-Dalmatia County');
+INSERT INTO UF VALUES(726,55,'Međimurje County');
+INSERT INTO UF VALUES(727,55,'Zadar County');
+INSERT INTO UF VALUES(728,55,'Dubrovnik-Neretva County');
+INSERT INTO UF VALUES(729,55,'Krapina-Zagorje County');
+INSERT INTO UF VALUES(730,55,'Šibenik-Knin County');
+INSERT INTO UF VALUES(731,55,'Lika-Senj County');
+INSERT INTO UF VALUES(732,55,'Virovitica-Podravina County');
+INSERT INTO UF VALUES(733,55,'Sisak-Moslavina County');
+INSERT INTO UF VALUES(734,55,'Bjelovar-Bilogora County');
+INSERT INTO UF VALUES(735,55,'Primorje-Gorski Kotar County');
+INSERT INTO UF VALUES(736,55,'Zagreb County');
+INSERT INTO UF VALUES(737,55,'Brod-Posavina County');
+INSERT INTO UF VALUES(738,55,'Zagreb');
+INSERT INTO UF VALUES(739,55,'Varaždin County');
+INSERT INTO UF VALUES(740,55,'Osijek-Baranja County');
+INSERT INTO UF VALUES(741,55,'Vukovar-Syrmia County');
+INSERT INTO UF VALUES(742,55,'Koprivnica-Križevci County');
+INSERT INTO UF VALUES(743,55,'Istria County');
+INSERT INTO UF VALUES(744,57,'Kyrenia District (Keryneia)');
+INSERT INTO UF VALUES(745,57,'Nicosia District (Lefkoşa)');
+INSERT INTO UF VALUES(746,57,'Paphos District (Pafos)');
+INSERT INTO UF VALUES(747,57,'Larnaca District (Larnaka)');
+INSERT INTO UF VALUES(748,57,'Limassol District (Leymasun)');
+INSERT INTO UF VALUES(749,57,'Famagusta District (Mağusa)');
+INSERT INTO UF VALUES(750,19,'Rangpur Division');
+INSERT INTO UF VALUES(751,19,'Coxs Bazar District');
+INSERT INTO UF VALUES(752,19,'Bandarban District');
+INSERT INTO UF VALUES(753,19,'Rajshahi Division');
+INSERT INTO UF VALUES(754,19,'Pabna District');
+INSERT INTO UF VALUES(755,19,'Sherpur District');
+INSERT INTO UF VALUES(756,19,'Bhola District');
+INSERT INTO UF VALUES(757,19,'Jessore District');
+INSERT INTO UF VALUES(758,19,'Mymensingh Division');
+INSERT INTO UF VALUES(759,19,'Rangpur District');
+INSERT INTO UF VALUES(760,19,'Dhaka Division');
+INSERT INTO UF VALUES(761,19,'Chapai Nawabganj District');
+INSERT INTO UF VALUES(762,19,'Faridpur District');
+INSERT INTO UF VALUES(763,19,'Comilla District');
+INSERT INTO UF VALUES(764,19,'Netrokona District');
+INSERT INTO UF VALUES(765,19,'Sylhet Division');
+INSERT INTO UF VALUES(766,19,'Mymensingh District');
+INSERT INTO UF VALUES(767,19,'Sylhet District');
+INSERT INTO UF VALUES(768,19,'Chandpur District');
+INSERT INTO UF VALUES(769,19,'Narail District');
+INSERT INTO UF VALUES(770,19,'Narayanganj District');
+INSERT INTO UF VALUES(771,19,'Dhaka District');
+INSERT INTO UF VALUES(772,19,'Nilphamari District');
+INSERT INTO UF VALUES(773,19,'Rajbari District');
+INSERT INTO UF VALUES(774,19,'Kushtia District');
+INSERT INTO UF VALUES(775,19,'Khulna Division');
+INSERT INTO UF VALUES(776,19,'Meherpur District');
+INSERT INTO UF VALUES(777,19,'Patuakhali District');
+INSERT INTO UF VALUES(778,19,'Jhalokati District');
+INSERT INTO UF VALUES(779,19,'Kishoreganj District');
+INSERT INTO UF VALUES(780,19,'Lalmonirhat District');
+INSERT INTO UF VALUES(781,19,'Sirajganj District');
+INSERT INTO UF VALUES(782,19,'Tangail District');
+INSERT INTO UF VALUES(783,19,'Dinajpur District');
+INSERT INTO UF VALUES(784,19,'Barguna District');
+INSERT INTO UF VALUES(785,19,'Chittagong District');
+INSERT INTO UF VALUES(786,19,'Khagrachari District');
+INSERT INTO UF VALUES(787,19,'Natore District');
+INSERT INTO UF VALUES(788,19,'Chuadanga District');
+INSERT INTO UF VALUES(789,19,'Jhenaidah District');
+INSERT INTO UF VALUES(790,19,'Munshiganj District');
+INSERT INTO UF VALUES(791,19,'Pirojpur District');
+INSERT INTO UF VALUES(792,19,'Gopalganj District');
+INSERT INTO UF VALUES(793,19,'Kurigram District');
+INSERT INTO UF VALUES(794,19,'Moulvibazar District');
+INSERT INTO UF VALUES(795,19,'Gaibandha District');
+INSERT INTO UF VALUES(796,19,'Bagerhat District');
+INSERT INTO UF VALUES(797,19,'Bogra District');
+INSERT INTO UF VALUES(798,19,'Gazipur District');
+INSERT INTO UF VALUES(799,19,'Satkhira District');
+INSERT INTO UF VALUES(800,19,'Panchagarh District');
+INSERT INTO UF VALUES(801,19,'Shariatpur District');
+INSERT INTO UF VALUES(802,19,'Bahadia');
+INSERT INTO UF VALUES(803,19,'Chittagong Division');
+INSERT INTO UF VALUES(804,19,'Thakurgaon District');
+INSERT INTO UF VALUES(805,19,'Habiganj District');
+INSERT INTO UF VALUES(806,19,'Joypurhat District');
+INSERT INTO UF VALUES(807,19,'Barisal Division');
+INSERT INTO UF VALUES(808,19,'Jamalpur District');
+INSERT INTO UF VALUES(809,19,'Rangamati Hill District');
+INSERT INTO UF VALUES(810,19,'Brahmanbaria District');
+INSERT INTO UF VALUES(811,19,'Khulna District');
+INSERT INTO UF VALUES(812,19,'Sunamganj District');
+INSERT INTO UF VALUES(813,19,'Rajshahi District');
+INSERT INTO UF VALUES(814,19,'Naogaon District');
+INSERT INTO UF VALUES(815,19,'Noakhali District');
+INSERT INTO UF VALUES(816,19,'Feni District');
+INSERT INTO UF VALUES(817,19,'Madaripur District');
+INSERT INTO UF VALUES(818,19,'Barisal District');
+INSERT INTO UF VALUES(819,19,'Lakshmipur District');
+INSERT INTO UF VALUES(820,109,'Okayama Prefecture');
+INSERT INTO UF VALUES(821,109,'Chiba Prefecture');
+INSERT INTO UF VALUES(822,109,'Ōita Prefecture');
+INSERT INTO UF VALUES(823,109,'Tokyo');
+INSERT INTO UF VALUES(824,109,'Nara Prefecture');
+INSERT INTO UF VALUES(825,109,'Shizuoka Prefecture');
+INSERT INTO UF VALUES(826,109,'Shimane Prefecture');
+INSERT INTO UF VALUES(827,109,'Aichi Prefecture');
+INSERT INTO UF VALUES(828,109,'Hiroshima Prefecture');
+INSERT INTO UF VALUES(829,109,'Akita Prefecture');
+INSERT INTO UF VALUES(830,109,'Ishikawa Prefecture');
+INSERT INTO UF VALUES(831,109,'Hyōgo Prefecture');
+INSERT INTO UF VALUES(832,109,'Hokkaidō Prefecture');
+INSERT INTO UF VALUES(833,109,'Mie Prefecture');
+INSERT INTO UF VALUES(834,109,'Kyōto Prefecture');
+INSERT INTO UF VALUES(835,109,'Yamaguchi Prefecture');
+INSERT INTO UF VALUES(836,109,'Tokushima Prefecture');
+INSERT INTO UF VALUES(837,109,'Yamagata Prefecture');
+INSERT INTO UF VALUES(838,109,'Toyama Prefecture');
+INSERT INTO UF VALUES(839,109,'Aomori Prefecture');
+INSERT INTO UF VALUES(840,109,'Kagoshima Prefecture');
+INSERT INTO UF VALUES(841,109,'Niigata Prefecture');
+INSERT INTO UF VALUES(842,109,'Kanagawa Prefecture');
+INSERT INTO UF VALUES(843,109,'Nagano Prefecture');
+INSERT INTO UF VALUES(844,109,'Wakayama Prefecture');
+INSERT INTO UF VALUES(845,109,'Shiga Prefecture');
+INSERT INTO UF VALUES(846,109,'Kumamoto Prefecture');
+INSERT INTO UF VALUES(847,109,'Fukushima Prefecture');
+INSERT INTO UF VALUES(848,109,'Fukui Prefecture');
+INSERT INTO UF VALUES(849,109,'Nagasaki Prefecture');
+INSERT INTO UF VALUES(850,109,'Tottori Prefecture');
+INSERT INTO UF VALUES(851,109,'Ibaraki Prefecture');
+INSERT INTO UF VALUES(852,109,'Yamanashi Prefecture');
+INSERT INTO UF VALUES(853,109,'Okinawa Prefecture');
+INSERT INTO UF VALUES(854,109,'Tochigi Prefecture');
+INSERT INTO UF VALUES(855,109,'Miyazaki Prefecture');
+INSERT INTO UF VALUES(856,109,'Iwate Prefecture');
+INSERT INTO UF VALUES(857,109,'Miyagi Prefecture');
+INSERT INTO UF VALUES(858,109,'Gifu Prefecture');
+INSERT INTO UF VALUES(859,109,'Ōsaka Prefecture');
+INSERT INTO UF VALUES(860,109,'Saitama Prefecture');
+INSERT INTO UF VALUES(861,109,'Fukuoka Prefecture');
+INSERT INTO UF VALUES(862,109,'Gunma Prefecture');
+INSERT INTO UF VALUES(863,109,'Saga Prefecture');
+INSERT INTO UF VALUES(864,109,'Kagawa Prefecture');
+INSERT INTO UF VALUES(865,109,'Ehime Prefecture');
+INSERT INTO UF VALUES(866,39,'Ontario');
+INSERT INTO UF VALUES(867,39,'Manitoba');
+INSERT INTO UF VALUES(868,39,'New Brunswick');
+INSERT INTO UF VALUES(869,39,'Yukon');
+INSERT INTO UF VALUES(870,39,'Saskatchewan');
+INSERT INTO UF VALUES(871,39,'Prince Edward Island');
+INSERT INTO UF VALUES(872,39,'Alberta');
+INSERT INTO UF VALUES(873,39,'Quebec');
+INSERT INTO UF VALUES(874,39,'Nova Scotia');
+INSERT INTO UF VALUES(875,39,'British Columbia');
+INSERT INTO UF VALUES(876,39,'Nunavut');
+INSERT INTO UF VALUES(877,39,'Newfoundland and Labrador');
+INSERT INTO UF VALUES(878,39,'Northwest Territories');
+INSERT INTO UF VALUES(879,209,'White Nile');
+INSERT INTO UF VALUES(880,209,'Red Sea');
+INSERT INTO UF VALUES(881,209,'Khartoum');
+INSERT INTO UF VALUES(882,209,'Sennar');
+INSERT INTO UF VALUES(883,209,'South Kordofan');
+INSERT INTO UF VALUES(884,209,'Kassala');
+INSERT INTO UF VALUES(885,209,'Al Jazirah');
+INSERT INTO UF VALUES(886,209,'Al Qadarif');
+INSERT INTO UF VALUES(887,209,'Blue Nile');
+INSERT INTO UF VALUES(888,209,'West Darfur');
+INSERT INTO UF VALUES(889,209,'West Kordofan');
+INSERT INTO UF VALUES(890,209,'North Darfur');
+INSERT INTO UF VALUES(891,209,'River Nile');
+INSERT INTO UF VALUES(892,209,'East Darfur');
+INSERT INTO UF VALUES(893,209,'North Kordofan');
+INSERT INTO UF VALUES(894,209,'South Darfur');
+INSERT INTO UF VALUES(895,209,'Northern');
+INSERT INTO UF VALUES(896,209,'Central Darfur');
+INSERT INTO UF VALUES(897,81,'Khelvachauri Municipality');
+INSERT INTO UF VALUES(898,81,'Senaki Municipality');
+INSERT INTO UF VALUES(899,81,'Tbilisi');
+INSERT INTO UF VALUES(900,81,'Adjara');
+INSERT INTO UF VALUES(901,81,'Autonomous Republic of Abkhazia');
+INSERT INTO UF VALUES(902,81,'Mtskheta-Mtianeti');
+INSERT INTO UF VALUES(903,81,'Shida Kartli');
+INSERT INTO UF VALUES(904,81,'Kvemo Kartli');
+INSERT INTO UF VALUES(905,81,'Imereti');
+INSERT INTO UF VALUES(906,81,'Samtskhe-Javakheti');
+INSERT INTO UF VALUES(907,81,'Guria');
+INSERT INTO UF VALUES(908,81,'Samegrelo-Zemo Svaneti');
+INSERT INTO UF VALUES(909,81,'Racha-Lechkhumi and Kvemo Svaneti');
+INSERT INTO UF VALUES(910,81,'Kakheti');
+INSERT INTO UF VALUES(911,198,'Northern Province');
+INSERT INTO UF VALUES(912,198,'Southern Province');
+INSERT INTO UF VALUES(913,198,'Western Area');
+INSERT INTO UF VALUES(914,198,'Eastern Province');
+INSERT INTO UF VALUES(915,203,'Hiran');
+INSERT INTO UF VALUES(916,203,'Mudug');
+INSERT INTO UF VALUES(917,203,'Bakool');
+INSERT INTO UF VALUES(918,203,'Galguduud');
+INSERT INTO UF VALUES(919,203,'Sanaag Region');
+INSERT INTO UF VALUES(920,203,'Nugal');
+INSERT INTO UF VALUES(921,203,'Lower Shebelle');
+INSERT INTO UF VALUES(922,203,'Middle Juba');
+INSERT INTO UF VALUES(923,203,'Middle Shebelle');
+INSERT INTO UF VALUES(924,203,'Lower Juba');
+INSERT INTO UF VALUES(925,203,'Awdal Region');
+INSERT INTO UF VALUES(926,203,'Bay');
+INSERT INTO UF VALUES(927,203,'Banaadir');
+INSERT INTO UF VALUES(928,203,'Gedo');
+INSERT INTO UF VALUES(929,203,'Togdheer Region');
+INSERT INTO UF VALUES(930,203,'Bari');
+INSERT INTO UF VALUES(931,204,'Northern Cape');
+INSERT INTO UF VALUES(932,204,'Free State');
+INSERT INTO UF VALUES(933,204,'Limpopo');
+INSERT INTO UF VALUES(934,204,'North West');
+INSERT INTO UF VALUES(935,204,'KwaZulu-Natal');
+INSERT INTO UF VALUES(936,204,'Gauteng');
+INSERT INTO UF VALUES(937,204,'Mpumalanga');
+INSERT INTO UF VALUES(938,204,'Eastern Cape');
+INSERT INTO UF VALUES(939,204,'Western Cape');
+INSERT INTO UF VALUES(940,159,'Chontales');
+INSERT INTO UF VALUES(941,159,'Managua');
+INSERT INTO UF VALUES(942,159,'Rivas');
+INSERT INTO UF VALUES(943,159,'Granada');
+INSERT INTO UF VALUES(944,159,'León');
+INSERT INTO UF VALUES(945,159,'Estelí');
+INSERT INTO UF VALUES(946,159,'Boaco');
+INSERT INTO UF VALUES(947,159,'Matagalpa');
+INSERT INTO UF VALUES(948,159,'Madriz');
+INSERT INTO UF VALUES(949,159,'Río San Juan');
+INSERT INTO UF VALUES(950,159,'Carazo');
+INSERT INTO UF VALUES(951,159,'North Caribbean Coast');
+INSERT INTO UF VALUES(952,159,'South Caribbean Coast');
+INSERT INTO UF VALUES(953,159,'Masaya');
+INSERT INTO UF VALUES(954,159,'Chinandega');
+INSERT INTO UF VALUES(955,159,'Jinotega');
+INSERT INTO UF VALUES(956,111,'Karak Governorate');
+INSERT INTO UF VALUES(957,111,'Tafilah Governorate');
+INSERT INTO UF VALUES(958,111,'Madaba Governorate');
+INSERT INTO UF VALUES(959,111,'Aqaba Governorate');
+INSERT INTO UF VALUES(960,111,'Irbid Governorate');
+INSERT INTO UF VALUES(961,111,'Balqa Governorate');
+INSERT INTO UF VALUES(962,111,'Mafraq Governorate');
+INSERT INTO UF VALUES(963,111,'Ajloun Governorate');
+INSERT INTO UF VALUES(964,111,'Ma an Governorate');
+INSERT INTO UF VALUES(965,111,'Amman Governorate');
+INSERT INTO UF VALUES(966,111,'Jerash Governorate');
+INSERT INTO UF VALUES(967,111,'Zarqa Governorate');
+INSERT INTO UF VALUES(968,212,'Manzini District');
+INSERT INTO UF VALUES(969,212,'Hhohho District');
+INSERT INTO UF VALUES(970,212,'Lubombo District');
+INSERT INTO UF VALUES(971,212,'Shiselweni District');
+INSERT INTO UF VALUES(972,117,'Al Jahra Governorate');
+INSERT INTO UF VALUES(973,117,'Hawalli Governorate');
+INSERT INTO UF VALUES(974,117,'Mubarak Al-Kabeer Governorate');
+INSERT INTO UF VALUES(975,117,'Al Farwaniyah Governorate');
+INSERT INTO UF VALUES(976,117,'Capital Governorate');
+INSERT INTO UF VALUES(977,117,'Al Ahmadi Governorate');
+INSERT INTO UF VALUES(978,119,'Luang Prabang Province');
+INSERT INTO UF VALUES(979,119,'Vientiane Prefecture');
+INSERT INTO UF VALUES(980,119,'Vientiane Province');
+INSERT INTO UF VALUES(981,119,'Salavan Province');
+INSERT INTO UF VALUES(982,119,'Attapeu Province');
+INSERT INTO UF VALUES(983,119,'Xaisomboun Province');
+INSERT INTO UF VALUES(984,119,'Sekong Province');
+INSERT INTO UF VALUES(985,119,'Bolikhamsai Province');
+INSERT INTO UF VALUES(986,119,'Khammouane Province');
+INSERT INTO UF VALUES(987,119,'Phongsaly Province');
+INSERT INTO UF VALUES(988,119,'Oudomxay Province');
+INSERT INTO UF VALUES(989,119,'Houaphanh Province');
+INSERT INTO UF VALUES(990,119,'Savannakhet Province');
+INSERT INTO UF VALUES(991,119,'Bokeo Province');
+INSERT INTO UF VALUES(992,119,'Luang Namtha Province');
+INSERT INTO UF VALUES(993,119,'Sainyabuli Province');
+INSERT INTO UF VALUES(994,119,'Xaisomboun');
+INSERT INTO UF VALUES(995,119,'Xiangkhouang Province');
+INSERT INTO UF VALUES(996,119,'Champasak Province');
+INSERT INTO UF VALUES(997,118,'Talas Region');
+INSERT INTO UF VALUES(998,118,'Batken Region');
+INSERT INTO UF VALUES(999,118,'Naryn Region');
+INSERT INTO UF VALUES(1000,118,'Jalal-Abad Region');
+INSERT INTO UF VALUES(1001,118,'Bishkek');
+INSERT INTO UF VALUES(1002,118,'Issyk-Kul Region');
+INSERT INTO UF VALUES(1003,118,'Osh');
+INSERT INTO UF VALUES(1004,118,'Chuy Region');
+INSERT INTO UF VALUES(1005,118,'Osh Region');
+INSERT INTO UF VALUES(1006,165,'Trøndelag');
+INSERT INTO UF VALUES(1007,165,'Oslo');
+INSERT INTO UF VALUES(1008,165,'Vestfold');
+INSERT INTO UF VALUES(1009,165,'Oppland');
+INSERT INTO UF VALUES(1010,165,'Sør-Trøndelag');
+INSERT INTO UF VALUES(1011,165,'Buskerud');
+INSERT INTO UF VALUES(1012,165,'Nord-Trøndelag');
+INSERT INTO UF VALUES(1013,165,'Svalbard');
+INSERT INTO UF VALUES(1014,165,'Vest-Agder');
+INSERT INTO UF VALUES(1015,165,'Troms');
+INSERT INTO UF VALUES(1016,165,'Finnmark');
+INSERT INTO UF VALUES(1017,165,'Akershus');
+INSERT INTO UF VALUES(1018,165,'Sogn og Fjordane');
+INSERT INTO UF VALUES(1019,165,'Hedmark');
+INSERT INTO UF VALUES(1020,165,'Møre og Romsdal');
+INSERT INTO UF VALUES(1021,165,'Rogaland');
+INSERT INTO UF VALUES(1022,165,'Østfold');
+INSERT INTO UF VALUES(1023,165,'Hordaland');
+INSERT INTO UF VALUES(1024,165,'Telemark');
+INSERT INTO UF VALUES(1025,165,'Nordland');
+INSERT INTO UF VALUES(1026,165,'Jan Mayen');
+INSERT INTO UF VALUES(1027,99,'Hódmezővásárhely');
+INSERT INTO UF VALUES(1028,99,'Érd');
+INSERT INTO UF VALUES(1029,99,'Szeged');
+INSERT INTO UF VALUES(1030,99,'Nagykanizsa');
+INSERT INTO UF VALUES(1031,99,'Csongrád County');
+INSERT INTO UF VALUES(1032,99,'Debrecen');
+INSERT INTO UF VALUES(1033,99,'Székesfehérvár');
+INSERT INTO UF VALUES(1034,99,'Nyíregyháza');
+INSERT INTO UF VALUES(1035,99,'Somogy County');
+INSERT INTO UF VALUES(1036,99,'Békéscsaba');
+INSERT INTO UF VALUES(1037,99,'Eger');
+INSERT INTO UF VALUES(1038,99,'Tolna County');
+INSERT INTO UF VALUES(1039,99,'Vas County');
+INSERT INTO UF VALUES(1040,99,'Heves County');
+INSERT INTO UF VALUES(1041,99,'Győr');
+INSERT INTO UF VALUES(1042,99,'Győr-Moson-Sopron County');
+INSERT INTO UF VALUES(1043,99,'Jász-Nagykun-Szolnok County');
+INSERT INTO UF VALUES(1044,99,'Fejér County');
+INSERT INTO UF VALUES(1045,99,'Szabolcs-Szatmár-Bereg County');
+INSERT INTO UF VALUES(1046,99,'Zala County');
+INSERT INTO UF VALUES(1047,99,'Szolnok');
+INSERT INTO UF VALUES(1048,99,'Bács-Kiskun County');
+INSERT INTO UF VALUES(1049,99,'Dunaújváros');
+INSERT INTO UF VALUES(1050,99,'Zalaegerszeg');
+INSERT INTO UF VALUES(1051,99,'Nógrád County');
+INSERT INTO UF VALUES(1052,99,'Szombathely');
+INSERT INTO UF VALUES(1053,99,'Pécs');
+INSERT INTO UF VALUES(1054,99,'Veszprém County');
+INSERT INTO UF VALUES(1055,99,'Baranya County');
+INSERT INTO UF VALUES(1056,99,'Kecskemét');
+INSERT INTO UF VALUES(1057,99,'Sopron');
+INSERT INTO UF VALUES(1058,99,'Borsod-Abaúj-Zemplén County');
+INSERT INTO UF VALUES(1059,99,'Pest County');
+INSERT INTO UF VALUES(1060,99,'Békés County');
+INSERT INTO UF VALUES(1061,99,'Szekszárd');
+INSERT INTO UF VALUES(1062,99,'Veszprém');
+INSERT INTO UF VALUES(1063,99,'Hajdú-Bihar County');
+INSERT INTO UF VALUES(1064,99,'Budapest');
+INSERT INTO UF VALUES(1065,99,'Miskolc');
+INSERT INTO UF VALUES(1066,99,'Tatabánya');
+INSERT INTO UF VALUES(1067,99,'Kaposvár');
+INSERT INTO UF VALUES(1068,99,'Salgótarján');
+INSERT INTO UF VALUES(1069,105,'County Tipperary');
+INSERT INTO UF VALUES(1070,105,'County Sligo');
+INSERT INTO UF VALUES(1071,105,'County Donegal');
+INSERT INTO UF VALUES(1072,105,'County Dublin');
+INSERT INTO UF VALUES(1073,105,'Leinster');
+INSERT INTO UF VALUES(1074,105,'County Cork');
+INSERT INTO UF VALUES(1075,105,'County Monaghan');
+INSERT INTO UF VALUES(1076,105,'County Longford');
+INSERT INTO UF VALUES(1077,105,'County Kerry');
+INSERT INTO UF VALUES(1078,105,'County Offaly');
+INSERT INTO UF VALUES(1079,105,'County Galway');
+INSERT INTO UF VALUES(1080,105,'Munster');
+INSERT INTO UF VALUES(1081,105,'County Roscommon');
+INSERT INTO UF VALUES(1082,105,'County Kildare');
+INSERT INTO UF VALUES(1083,105,'County Louth');
+INSERT INTO UF VALUES(1084,105,'County Mayo');
+INSERT INTO UF VALUES(1085,105,'County Wicklow');
+INSERT INTO UF VALUES(1086,105,'Ulster');
+INSERT INTO UF VALUES(1087,105,'Connacht');
+INSERT INTO UF VALUES(1088,105,'County Cavan');
+INSERT INTO UF VALUES(1089,105,'County Waterford');
+INSERT INTO UF VALUES(1090,105,'County Kilkenny');
+INSERT INTO UF VALUES(1091,105,'County Clare');
+INSERT INTO UF VALUES(1092,105,'County Meath');
+INSERT INTO UF VALUES(1093,105,'County Wexford');
+INSERT INTO UF VALUES(1094,105,'County Limerick');
+INSERT INTO UF VALUES(1095,105,'County Carlow');
+INSERT INTO UF VALUES(1096,105,'County Laois');
+INSERT INTO UF VALUES(1097,105,'County Westmeath');
+INSERT INTO UF VALUES(1098,4,'Djelfa');
+INSERT INTO UF VALUES(1099,4,'El Oued');
+INSERT INTO UF VALUES(1100,4,'El Tarf');
+INSERT INTO UF VALUES(1101,4,'Oran');
+INSERT INTO UF VALUES(1102,4,'Naama');
+INSERT INTO UF VALUES(1103,4,'Annaba');
+INSERT INTO UF VALUES(1104,4,'Bouïra');
+INSERT INTO UF VALUES(1105,4,'Chlef');
+INSERT INTO UF VALUES(1106,4,'Tiaret');
+INSERT INTO UF VALUES(1107,4,'Tlemcen');
+INSERT INTO UF VALUES(1108,4,'Béchar');
+INSERT INTO UF VALUES(1109,4,'Médéa');
+INSERT INTO UF VALUES(1110,4,'Skikda');
+INSERT INTO UF VALUES(1111,4,'Blida');
+INSERT INTO UF VALUES(1112,4,'Illizi');
+INSERT INTO UF VALUES(1113,4,'Jijel');
+INSERT INTO UF VALUES(1114,4,'Biskra');
+INSERT INTO UF VALUES(1115,4,'Tipasa');
+INSERT INTO UF VALUES(1116,4,'Bordj Bou Arréridj');
+INSERT INTO UF VALUES(1117,4,'Tébessa');
+INSERT INTO UF VALUES(1118,4,'Adrar');
+INSERT INTO UF VALUES(1119,4,'Aïn Defla');
+INSERT INTO UF VALUES(1120,4,'Tindouf');
+INSERT INTO UF VALUES(1121,4,'Constantine');
+INSERT INTO UF VALUES(1122,4,'Aïn Témouchent');
+INSERT INTO UF VALUES(1123,4,'Saïda');
+INSERT INTO UF VALUES(1124,4,'Mascara');
+INSERT INTO UF VALUES(1125,4,'Boumerdès');
+INSERT INTO UF VALUES(1126,4,'Khenchela');
+INSERT INTO UF VALUES(1127,4,'Ghardaïa');
+INSERT INTO UF VALUES(1128,4,'Béjaïa');
+INSERT INTO UF VALUES(1129,4,'El Bayadh');
+INSERT INTO UF VALUES(1130,4,'Relizane');
+INSERT INTO UF VALUES(1131,4,'Tizi Ouzou');
+INSERT INTO UF VALUES(1132,4,'Mila');
+INSERT INTO UF VALUES(1133,4,'Tissemsilt');
+INSERT INTO UF VALUES(1134,4,'M Sila');
+INSERT INTO UF VALUES(1135,4,'Tamanghasset');
+INSERT INTO UF VALUES(1136,4,'Oum El Bouaghi');
+INSERT INTO UF VALUES(1137,4,'Guelma');
+INSERT INTO UF VALUES(1138,4,'Laghouat');
+INSERT INTO UF VALUES(1139,4,'Ouargla');
+INSERT INTO UF VALUES(1140,4,'Mostaganem');
+INSERT INTO UF VALUES(1141,4,'Sétif');
+INSERT INTO UF VALUES(1142,4,'Batna');
+INSERT INTO UF VALUES(1143,4,'Souk Ahras');
+INSERT INTO UF VALUES(1144,4,'Algiers');
+INSERT INTO UF VALUES(1146,207,'Burgos Province');
+INSERT INTO UF VALUES(1147,207,'Salamanca Province');
+INSERT INTO UF VALUES(1157,207,'Palencia Province');
+INSERT INTO UF VALUES(1158,207,'Madrid');
+INSERT INTO UF VALUES(1159,207,'Melilla');
+INSERT INTO UF VALUES(1160,207,'Asturias');
+INSERT INTO UF VALUES(1161,207,'Zamora Province');
+INSERT INTO UF VALUES(1167,207,'Galicia');
+INSERT INTO UF VALUES(1170,207,'Cantabria');
+INSERT INTO UF VALUES(1171,207,'La Rioja');
+INSERT INTO UF VALUES(1174,207,'Balearic Islands');
+INSERT INTO UF VALUES(1175,207,'Valencia');
+INSERT INTO UF VALUES(1176,207,'Murcia');
+INSERT INTO UF VALUES(1177,207,'Aragon');
+INSERT INTO UF VALUES(1183,207,'Valladolid Province');
+INSERT INTO UF VALUES(1184,207,'Castile and León');
+INSERT INTO UF VALUES(1185,207,'Canary Islands');
+INSERT INTO UF VALUES(1189,207,'Ávila');
+INSERT INTO UF VALUES(1190,207,'Extremadura');
+INSERT INTO UF VALUES(1191,207,'Basque Country');
+INSERT INTO UF VALUES(1192,207,'Segovia Province');
+INSERT INTO UF VALUES(1193,207,'Andalusia');
+INSERT INTO UF VALUES(1200,207,'Léon');
+INSERT INTO UF VALUES(1203,207,'Catalonia');
+INSERT INTO UF VALUES(1204,207,'Navarra');
+INSERT INTO UF VALUES(1205,207,'Castilla La Mancha');
+INSERT INTO UF VALUES(1206,207,'Ceuta');
+INSERT INTO UF VALUES(1208,207,'Soria Province');
+INSERT INTO UF VALUES(1209,53,'Guanacaste Province');
+INSERT INTO UF VALUES(1210,53,'Puntarenas Province');
+INSERT INTO UF VALUES(1211,53,'Provincia de Cartago');
+INSERT INTO UF VALUES(1212,53,'Heredia Province');
+INSERT INTO UF VALUES(1213,53,'Limón Province');
+INSERT INTO UF VALUES(1214,53,'San José Province');
+INSERT INTO UF VALUES(1215,53,'Alajuela Province');
+INSERT INTO UF VALUES(1216,33,'Brunei-Muara District');
+INSERT INTO UF VALUES(1217,33,'Belait District');
+INSERT INTO UF VALUES(1218,33,'Temburong District');
+INSERT INTO UF VALUES(1219,33,'Tutong District');
+INSERT INTO UF VALUES(1220,20,'Saint Philip');
+INSERT INTO UF VALUES(1221,20,'Saint Lucy');
+INSERT INTO UF VALUES(1222,20,'Saint Peter');
+INSERT INTO UF VALUES(1223,20,'Saint Joseph');
+INSERT INTO UF VALUES(1224,20,'Saint James');
+INSERT INTO UF VALUES(1225,20,'Saint Thomas');
+INSERT INTO UF VALUES(1226,20,'Saint George');
+INSERT INTO UF VALUES(1227,20,'Saint John');
+INSERT INTO UF VALUES(1228,20,'Christ Church');
+INSERT INTO UF VALUES(1229,20,'Saint Andrew');
+INSERT INTO UF VALUES(1230,20,'Saint Michael');
+INSERT INTO UF VALUES(1231,245,'Ta izz Governorate');
+INSERT INTO UF VALUES(1232,245,'Sana a');
+INSERT INTO UF VALUES(1233,245,'Ibb Governorate');
+INSERT INTO UF VALUES(1234,245,'Ma rib Governorate');
+INSERT INTO UF VALUES(1235,245,'Al Mahwit Governorate');
+INSERT INTO UF VALUES(1236,245,'Sana a Governorate');
+INSERT INTO UF VALUES(1237,245,'Abyan Governorate');
+INSERT INTO UF VALUES(1238,245,'Hadhramaut Governorate');
+INSERT INTO UF VALUES(1239,245,'Socotra Governorate');
+INSERT INTO UF VALUES(1240,245,'Al Bayda  Governorate');
+INSERT INTO UF VALUES(1241,245,'Al Hudaydah Governorate');
+INSERT INTO UF VALUES(1242,245,' Adan Governorate');
+INSERT INTO UF VALUES(1243,245,'Al Jawf Governorate');
+INSERT INTO UF VALUES(1244,245,'Hajjah Governorate');
+INSERT INTO UF VALUES(1245,245,'Lahij Governorate');
+INSERT INTO UF VALUES(1246,245,'Dhamar Governorate');
+INSERT INTO UF VALUES(1247,245,'Shabwah Governorate');
+INSERT INTO UF VALUES(1248,245,'Raymah Governorate');
+INSERT INTO UF VALUES(1249,245,'Saada Governorate');
+INSERT INTO UF VALUES(1250,245,' Amran Governorate');
+INSERT INTO UF VALUES(1251,245,'Al Mahrah Governorate');
+INSERT INTO UF VALUES(1252,42,'Sangha-Mbaéré');
+INSERT INTO UF VALUES(1253,42,'Nana-Grébizi Economic Prefecture');
+INSERT INTO UF VALUES(1254,42,'Ouham Prefecture');
+INSERT INTO UF VALUES(1255,42,'Ombella-M Poko Prefecture');
+INSERT INTO UF VALUES(1256,42,'Lobaye Prefecture');
+INSERT INTO UF VALUES(1257,42,'Mambéré-Kadéï');
+INSERT INTO UF VALUES(1258,42,'Haut-Mbomou Prefecture');
+INSERT INTO UF VALUES(1259,42,'Bamingui-Bangoran Prefecture');
+INSERT INTO UF VALUES(1260,42,'Nana-Mambéré Prefecture');
+INSERT INTO UF VALUES(1261,42,'Vakaga Prefecture');
+INSERT INTO UF VALUES(1262,42,'Bangui');
+INSERT INTO UF VALUES(1263,42,'Kémo Prefecture');
+INSERT INTO UF VALUES(1264,42,'Basse-Kotto Prefecture');
+INSERT INTO UF VALUES(1265,42,'Ouaka Prefecture');
+INSERT INTO UF VALUES(1266,42,'Mbomou Prefecture');
+INSERT INTO UF VALUES(1267,42,'Ouham-Pendé Prefecture');
+INSERT INTO UF VALUES(1268,42,'Haute-Kotto Prefecture');
+INSERT INTO UF VALUES(1269,174,'Romblon');
+INSERT INTO UF VALUES(1270,174,'Bukidnon');
+INSERT INTO UF VALUES(1271,174,'Rizal');
+INSERT INTO UF VALUES(1272,174,'Bohol');
+INSERT INTO UF VALUES(1273,174,'Quirino');
+INSERT INTO UF VALUES(1274,174,'Biliran');
+INSERT INTO UF VALUES(1275,174,'Quezon');
+INSERT INTO UF VALUES(1276,174,'Siquijor');
+INSERT INTO UF VALUES(1277,174,'Sarangani');
+INSERT INTO UF VALUES(1278,174,'Bulacan');
+INSERT INTO UF VALUES(1279,174,'Cagayan');
+INSERT INTO UF VALUES(1280,174,'South Cotabato');
+INSERT INTO UF VALUES(1281,174,'Sorsogon');
+INSERT INTO UF VALUES(1282,174,'Sultan Kudarat');
+INSERT INTO UF VALUES(1283,174,'Camarines Norte');
+INSERT INTO UF VALUES(1284,174,'Southern Leyte');
+INSERT INTO UF VALUES(1285,174,'Camiguin');
+INSERT INTO UF VALUES(1286,174,'Surigao del Norte');
+INSERT INTO UF VALUES(1287,174,'Camarines Sur');
+INSERT INTO UF VALUES(1288,174,'Sulu');
+INSERT INTO UF VALUES(1289,174,'Davao Oriental');
+INSERT INTO UF VALUES(1290,174,'Eastern Samar');
+INSERT INTO UF VALUES(1291,174,'Dinagat Islands');
+INSERT INTO UF VALUES(1292,174,'Capiz');
+INSERT INTO UF VALUES(1293,174,'Tawi-Tawi');
+INSERT INTO UF VALUES(1294,174,'Calabarzon');
+INSERT INTO UF VALUES(1295,174,'Tarlac');
+INSERT INTO UF VALUES(1296,174,'Surigao del Sur');
+INSERT INTO UF VALUES(1297,174,'Zambales');
+INSERT INTO UF VALUES(1298,174,'Ilocos Norte');
+INSERT INTO UF VALUES(1299,174,'Mimaropa');
+INSERT INTO UF VALUES(1300,174,'Ifugao');
+INSERT INTO UF VALUES(1301,174,'Catanduanes');
+INSERT INTO UF VALUES(1302,174,'Zamboanga del Norte');
+INSERT INTO UF VALUES(1303,174,'Guimaras');
+INSERT INTO UF VALUES(1304,174,'Bicol Region');
+INSERT INTO UF VALUES(1305,174,'Western Visayas');
+INSERT INTO UF VALUES(1306,174,'Cebu');
+INSERT INTO UF VALUES(1307,174,'Cavite');
+INSERT INTO UF VALUES(1308,174,'Central Visayas');
+INSERT INTO UF VALUES(1309,174,'Davao Occidental');
+INSERT INTO UF VALUES(1310,174,'Soccsksargen');
+INSERT INTO UF VALUES(1311,174,'Compostela Valley');
+INSERT INTO UF VALUES(1312,174,'Kalinga');
+INSERT INTO UF VALUES(1313,174,'Isabela');
+INSERT INTO UF VALUES(1314,174,'Caraga');
+INSERT INTO UF VALUES(1315,174,'Iloilo');
+INSERT INTO UF VALUES(1316,174,'Autonomous Region in Muslim Mindanao');
+INSERT INTO UF VALUES(1317,174,'La Union');
+INSERT INTO UF VALUES(1318,174,'Davao del Sur');
+INSERT INTO UF VALUES(1319,174,'Davao del Norte');
+INSERT INTO UF VALUES(1320,174,'Cotabato');
+INSERT INTO UF VALUES(1321,174,'Ilocos Sur');
+INSERT INTO UF VALUES(1322,174,'Eastern Visayas');
+INSERT INTO UF VALUES(1323,174,'Agusan del Norte');
+INSERT INTO UF VALUES(1324,174,'Abra');
+INSERT INTO UF VALUES(1325,174,'Zamboanga Peninsula');
+INSERT INTO UF VALUES(1326,174,'Agusan del Sur');
+INSERT INTO UF VALUES(1327,174,'Lanao del Norte');
+INSERT INTO UF VALUES(1328,174,'Laguna');
+INSERT INTO UF VALUES(1329,174,'Marinduque');
+INSERT INTO UF VALUES(1330,174,'Maguindanao');
+INSERT INTO UF VALUES(1331,174,'Aklan');
+INSERT INTO UF VALUES(1332,174,'Leyte');
+INSERT INTO UF VALUES(1333,174,'Lanao del Sur');
+INSERT INTO UF VALUES(1334,174,'Apayao');
+INSERT INTO UF VALUES(1335,174,'Cordillera Administrative Region');
+INSERT INTO UF VALUES(1336,174,'Antique');
+INSERT INTO UF VALUES(1337,174,'Albay');
+INSERT INTO UF VALUES(1338,174,'Masbate');
+INSERT INTO UF VALUES(1339,174,'Northern Mindanao');
+INSERT INTO UF VALUES(1340,174,'Davao Region');
+INSERT INTO UF VALUES(1341,174,'Aurora');
+INSERT INTO UF VALUES(1342,174,'Cagayan Valley');
+INSERT INTO UF VALUES(1343,174,'Misamis Occidental');
+INSERT INTO UF VALUES(1344,174,'Bataan');
+INSERT INTO UF VALUES(1345,174,'Central Luzon');
+INSERT INTO UF VALUES(1346,174,'Basilan');
+INSERT INTO UF VALUES(1347,174,'Metro Manila');
+INSERT INTO UF VALUES(1348,174,'Misamis Oriental');
+INSERT INTO UF VALUES(1349,174,'Northern Samar');
+INSERT INTO UF VALUES(1350,174,'Negros Oriental');
+INSERT INTO UF VALUES(1351,174,'Negros Occidental');
+INSERT INTO UF VALUES(1352,174,'Batanes');
+INSERT INTO UF VALUES(1353,174,'Mountain Province');
+INSERT INTO UF VALUES(1354,174,'Oriental Mindoro');
+INSERT INTO UF VALUES(1355,174,'Ilocos Region');
+INSERT INTO UF VALUES(1356,174,'Occidental Mindoro');
+INSERT INTO UF VALUES(1357,174,'Zamboanga del Sur');
+INSERT INTO UF VALUES(1358,174,'Nueva Vizcaya');
+INSERT INTO UF VALUES(1359,174,'Batangas');
+INSERT INTO UF VALUES(1360,174,'Nueva Ecija');
+INSERT INTO UF VALUES(1361,174,'Palawan');
+INSERT INTO UF VALUES(1362,174,'Zamboanga Sibugay');
+INSERT INTO UF VALUES(1363,174,'Benguet');
+INSERT INTO UF VALUES(1364,174,'Pangasinan');
+INSERT INTO UF VALUES(1365,174,'Pampanga');
+INSERT INTO UF VALUES(1366,106,'Northern District');
+INSERT INTO UF VALUES(1367,106,'Central District');
+INSERT INTO UF VALUES(1368,106,'Southern District');
+INSERT INTO UF VALUES(1369,106,'Haifa District');
+INSERT INTO UF VALUES(1370,106,'Jerusalem District');
+INSERT INTO UF VALUES(1371,106,'Tel Aviv District');
+INSERT INTO UF VALUES(1372,22,'Limburg');
+INSERT INTO UF VALUES(1373,22,'Flanders');
+INSERT INTO UF VALUES(1374,22,'Flemish Brabant');
+INSERT INTO UF VALUES(1375,22,'Hainaut');
+INSERT INTO UF VALUES(1376,22,'Brussels-Capital Region');
+INSERT INTO UF VALUES(1377,22,'East Flanders');
+INSERT INTO UF VALUES(1378,22,'Namur');
+INSERT INTO UF VALUES(1379,22,'Luxembourg');
+INSERT INTO UF VALUES(1380,22,'Wallonia');
+INSERT INTO UF VALUES(1381,22,'Antwerp');
+INSERT INTO UF VALUES(1382,22,'Walloon Brabant');
+INSERT INTO UF VALUES(1383,22,'West Flanders');
+INSERT INTO UF VALUES(1384,22,'Liège');
+INSERT INTO UF VALUES(1385,170,'Darién Province');
+INSERT INTO UF VALUES(1386,170,'Colón Province');
+INSERT INTO UF VALUES(1387,170,'Coclé Province');
+INSERT INTO UF VALUES(1388,170,'Guna Yala');
+INSERT INTO UF VALUES(1389,170,'Herrera Province');
+INSERT INTO UF VALUES(1390,170,'Los Santos Province');
+INSERT INTO UF VALUES(1391,170,'Ngöbe-Buglé Comarca');
+INSERT INTO UF VALUES(1392,170,'Veraguas Province');
+INSERT INTO UF VALUES(1393,170,'Bocas del Toro Province');
+INSERT INTO UF VALUES(1394,170,'Panamá Oeste Province');
+INSERT INTO UF VALUES(1395,170,'Panamá Province');
+INSERT INTO UF VALUES(1396,170,'Emberá-Wounaan Comarca');
+INSERT INTO UF VALUES(1397,170,'Chiriquí Province');
+INSERT INTO UF VALUES(1398,233,'Howland Island');
+INSERT INTO UF VALUES(1399,233,'Delaware');
+INSERT INTO UF VALUES(1400,233,'Alaska');
+INSERT INTO UF VALUES(1401,233,'Maryland');
+INSERT INTO UF VALUES(1402,233,'Baker Island');
+INSERT INTO UF VALUES(1403,233,'Kingman Reef');
+INSERT INTO UF VALUES(1404,233,'New Hampshire');
+INSERT INTO UF VALUES(1405,233,'Wake Island');
+INSERT INTO UF VALUES(1406,233,'Kansas');
+INSERT INTO UF VALUES(1407,233,'Texas');
+INSERT INTO UF VALUES(1408,233,'Nebraska');
+INSERT INTO UF VALUES(1409,233,'Vermont');
+INSERT INTO UF VALUES(1410,233,'Jarvis Island');
+INSERT INTO UF VALUES(1411,233,'Hawaii');
+INSERT INTO UF VALUES(1412,233,'Guam');
+INSERT INTO UF VALUES(1413,233,'United States Virgin Islands');
+INSERT INTO UF VALUES(1414,233,'Utah');
+INSERT INTO UF VALUES(1415,233,'Oregon');
+INSERT INTO UF VALUES(1416,233,'California');
+INSERT INTO UF VALUES(1417,233,'New Jersey');
+INSERT INTO UF VALUES(1418,233,'North Dakota');
+INSERT INTO UF VALUES(1419,233,'Kentucky');
+INSERT INTO UF VALUES(1420,233,'Minnesota');
+INSERT INTO UF VALUES(1421,233,'Oklahoma');
+INSERT INTO UF VALUES(1422,233,'Pennsylvania');
+INSERT INTO UF VALUES(1423,233,'New Mexico');
+INSERT INTO UF VALUES(1424,233,'American Samoa');
+INSERT INTO UF VALUES(1425,233,'Illinois');
+INSERT INTO UF VALUES(1426,233,'Michigan');
+INSERT INTO UF VALUES(1427,233,'Virginia');
+INSERT INTO UF VALUES(1428,233,'Johnston Atoll');
+INSERT INTO UF VALUES(1429,233,'West Virginia');
+INSERT INTO UF VALUES(1430,233,'Mississippi');
+INSERT INTO UF VALUES(1431,233,'Northern Mariana Islands');
+INSERT INTO UF VALUES(1432,233,'United States Minor Outlying Islands');
+INSERT INTO UF VALUES(1433,233,'Massachusetts');
+INSERT INTO UF VALUES(1434,233,'Arizona');
+INSERT INTO UF VALUES(1435,233,'Connecticut');
+INSERT INTO UF VALUES(1436,233,'Florida');
+INSERT INTO UF VALUES(1437,233,'District of Columbia');
+INSERT INTO UF VALUES(1438,233,'Midway Atoll');
+INSERT INTO UF VALUES(1439,233,'Navassa Island');
+INSERT INTO UF VALUES(1440,233,'Indiana');
+INSERT INTO UF VALUES(1441,233,'Wisconsin');
+INSERT INTO UF VALUES(1442,233,'Wyoming');
+INSERT INTO UF VALUES(1443,233,'South Carolina');
+INSERT INTO UF VALUES(1444,233,'Arkansas');
+INSERT INTO UF VALUES(1445,233,'South Dakota');
+INSERT INTO UF VALUES(1446,233,'Montana');
+INSERT INTO UF VALUES(1447,233,'North Carolina');
+INSERT INTO UF VALUES(1448,233,'Palmyra Atoll');
+INSERT INTO UF VALUES(1449,233,'Puerto Rico');
+INSERT INTO UF VALUES(1450,233,'Colorado');
+INSERT INTO UF VALUES(1451,233,'Missouri');
+INSERT INTO UF VALUES(1452,233,'New York');
+INSERT INTO UF VALUES(1453,233,'Maine');
+INSERT INTO UF VALUES(1454,233,'Tennessee');
+INSERT INTO UF VALUES(1455,233,'Georgia');
+INSERT INTO UF VALUES(1456,233,'Alabama');
+INSERT INTO UF VALUES(1457,233,'Louisiana');
+INSERT INTO UF VALUES(1458,233,'Nevada');
+INSERT INTO UF VALUES(1459,233,'Iowa');
+INSERT INTO UF VALUES(1460,233,'Idaho');
+INSERT INTO UF VALUES(1461,233,'Rhode Island');
+INSERT INTO UF VALUES(1462,233,'Washington');
+INSERT INTO UF VALUES(1463,218,'Shinyanga');
+INSERT INTO UF VALUES(1464,218,'Simiyu');
+INSERT INTO UF VALUES(1465,218,'Kagera');
+INSERT INTO UF VALUES(1466,218,'Dodoma');
+INSERT INTO UF VALUES(1467,218,'Kilimanjaro');
+INSERT INTO UF VALUES(1468,218,'Mara');
+INSERT INTO UF VALUES(1469,218,'Tabora');
+INSERT INTO UF VALUES(1470,218,'Morogoro');
+INSERT INTO UF VALUES(1471,218,'Zanzibar South');
+INSERT INTO UF VALUES(1472,218,'Pemba South');
+INSERT INTO UF VALUES(1473,218,'Zanzibar North');
+INSERT INTO UF VALUES(1474,218,'Singida');
+INSERT INTO UF VALUES(1475,218,'Zanzibar West');
+INSERT INTO UF VALUES(1476,218,'Mtwara');
+INSERT INTO UF VALUES(1477,218,'Rukwa');
+INSERT INTO UF VALUES(1478,218,'Kigoma');
+INSERT INTO UF VALUES(1479,218,'Mwanza');
+INSERT INTO UF VALUES(1480,218,'Njombe');
+INSERT INTO UF VALUES(1481,218,'Geita');
+INSERT INTO UF VALUES(1482,218,'Katavi');
+INSERT INTO UF VALUES(1483,218,'Lindi');
+INSERT INTO UF VALUES(1484,218,'Manyara');
+INSERT INTO UF VALUES(1485,218,'Pwani');
+INSERT INTO UF VALUES(1486,218,'Ruvuma');
+INSERT INTO UF VALUES(1487,218,'Tanga');
+INSERT INTO UF VALUES(1488,218,'Pemba North');
+INSERT INTO UF VALUES(1489,218,'Iringa');
+INSERT INTO UF VALUES(1490,218,'Dar es Salaam');
+INSERT INTO UF VALUES(1491,218,'Arusha');
+INSERT INTO UF VALUES(1492,74,'Eastern Finland Province');
+INSERT INTO UF VALUES(1493,74,'Tavastia Proper');
+INSERT INTO UF VALUES(1494,74,'Central Ostrobothnia');
+INSERT INTO UF VALUES(1495,74,'Southern Savonia');
+INSERT INTO UF VALUES(1496,74,'Kainuu');
+INSERT INTO UF VALUES(1497,74,'South Karelia');
+INSERT INTO UF VALUES(1498,74,'Southern Ostrobothnia');
+INSERT INTO UF VALUES(1499,74,'Oulu Province');
+INSERT INTO UF VALUES(1500,74,'Lapland');
+INSERT INTO UF VALUES(1501,74,'Satakunta');
+INSERT INTO UF VALUES(1502,74,'Päijänne Tavastia');
+INSERT INTO UF VALUES(1503,74,'Northern Savonia');
+INSERT INTO UF VALUES(1504,74,'North Karelia');
+INSERT INTO UF VALUES(1505,74,'Northern Ostrobothnia');
+INSERT INTO UF VALUES(1506,74,'Pirkanmaa');
+INSERT INTO UF VALUES(1507,74,'Finland Proper');
+INSERT INTO UF VALUES(1508,74,'Ostrobothnia');
+INSERT INTO UF VALUES(1509,74,'Åland Islands');
+INSERT INTO UF VALUES(1510,74,'Uusimaa');
+INSERT INTO UF VALUES(1511,74,'Central Finland');
+INSERT INTO UF VALUES(1512,74,'Kymenlaakso');
+INSERT INTO UF VALUES(1513,127,'Canton of Diekirch');
+INSERT INTO UF VALUES(1514,127,'Luxembourg District');
+INSERT INTO UF VALUES(1515,127,'Canton of Echternach');
+INSERT INTO UF VALUES(1516,127,'Canton of Redange');
+INSERT INTO UF VALUES(1517,127,'Canton of Esch-sur-Alzette');
+INSERT INTO UF VALUES(1518,127,'Canton of Capellen');
+INSERT INTO UF VALUES(1519,127,'Canton of Remich');
+INSERT INTO UF VALUES(1520,127,'Grevenmacher District');
+INSERT INTO UF VALUES(1521,127,'Canton of Clervaux');
+INSERT INTO UF VALUES(1522,127,'Canton of Mersch');
+INSERT INTO UF VALUES(1523,127,'Canton of Vianden');
+INSERT INTO UF VALUES(1524,127,'Diekirch District');
+INSERT INTO UF VALUES(1525,127,'Canton of Grevenmacher');
+INSERT INTO UF VALUES(1526,127,'Canton of Wiltz');
+INSERT INTO UF VALUES(1527,127,'Canton of Luxembourg');
+INSERT INTO UF VALUES(1528,59,'Region Zealand');
+INSERT INTO UF VALUES(1529,59,'Region of Southern Denmark');
+INSERT INTO UF VALUES(1530,59,'Capital Region of Denmark');
+INSERT INTO UF VALUES(1531,59,'Central Denmark Region');
+INSERT INTO UF VALUES(1532,59,'North Denmark Region');
+INSERT INTO UF VALUES(1533,213,'Gävleborg County');
+INSERT INTO UF VALUES(1534,213,'Dalarna County');
+INSERT INTO UF VALUES(1535,213,'Värmland County');
+INSERT INTO UF VALUES(1536,213,'Östergötland County');
+INSERT INTO UF VALUES(1537,213,'Blekinge');
+INSERT INTO UF VALUES(1538,213,'Norrbotten County');
+INSERT INTO UF VALUES(1539,213,'Örebro County');
+INSERT INTO UF VALUES(1540,213,'Södermanland County');
+INSERT INTO UF VALUES(1541,213,'Skåne County');
+INSERT INTO UF VALUES(1542,213,'Kronoberg County');
+INSERT INTO UF VALUES(1543,213,'Västerbotten County');
+INSERT INTO UF VALUES(1544,213,'Kalmar County');
+INSERT INTO UF VALUES(1545,213,'Uppsala County');
+INSERT INTO UF VALUES(1546,213,'Gotland County');
+INSERT INTO UF VALUES(1547,213,'Västra Götaland County');
+INSERT INTO UF VALUES(1548,213,'Halland County');
+INSERT INTO UF VALUES(1549,213,'Västmanland County');
+INSERT INTO UF VALUES(1550,213,'Jönköping County');
+INSERT INTO UF VALUES(1551,213,'Stockholm County');
+INSERT INTO UF VALUES(1552,213,'Västernorrland County');
+INSERT INTO UF VALUES(1553,126,'Plungė District Municipality');
+INSERT INTO UF VALUES(1554,126,'Šiauliai District Municipality');
+INSERT INTO UF VALUES(1555,126,'Jurbarkas District Municipality');
+INSERT INTO UF VALUES(1556,126,'Kaunas County');
+INSERT INTO UF VALUES(1557,126,'Mažeikiai District Municipality');
+INSERT INTO UF VALUES(1558,126,'Panevėžys County');
+INSERT INTO UF VALUES(1559,126,'Elektrėnai municipality');
+INSERT INTO UF VALUES(1560,126,'Švenčionys District Municipality');
+INSERT INTO UF VALUES(1561,126,'Akmenė District Municipality');
+INSERT INTO UF VALUES(1562,126,'Ignalina District Municipality');
+INSERT INTO UF VALUES(1563,126,'Neringa Municipality');
+INSERT INTO UF VALUES(1564,126,'Visaginas Municipality');
+INSERT INTO UF VALUES(1565,126,'Kaunas District Municipality');
+INSERT INTO UF VALUES(1566,126,'Biržai District Municipality');
+INSERT INTO UF VALUES(1567,126,'Jonava District Municipality');
+INSERT INTO UF VALUES(1568,126,'Radviliškis District Municipality');
+INSERT INTO UF VALUES(1569,126,'Telšiai County');
+INSERT INTO UF VALUES(1570,126,'Marijampolė County');
+INSERT INTO UF VALUES(1571,126,'Kretinga District Municipality');
+INSERT INTO UF VALUES(1572,126,'Tauragė District Municipality');
+INSERT INTO UF VALUES(1573,126,'Tauragė County');
+INSERT INTO UF VALUES(1574,126,'Alytus County');
+INSERT INTO UF VALUES(1575,126,'Kazlų Rūda municipality');
+INSERT INTO UF VALUES(1576,126,'Šakiai District Municipality');
+INSERT INTO UF VALUES(1577,126,'Šalčininkai District Municipality');
+INSERT INTO UF VALUES(1578,126,'Prienai District Municipality');
+INSERT INTO UF VALUES(1579,126,'Druskininkai municipality');
+INSERT INTO UF VALUES(1580,126,'Kaunas City Municipality');
+INSERT INTO UF VALUES(1581,126,'Joniškis District Municipality');
+INSERT INTO UF VALUES(1582,126,'Molėtai District Municipality');
+INSERT INTO UF VALUES(1583,126,'Kaišiadorys District Municipality');
+INSERT INTO UF VALUES(1584,126,'Kėdainiai District Municipality');
+INSERT INTO UF VALUES(1585,126,'Kupiškis District Municipality');
+INSERT INTO UF VALUES(1586,126,'Šiauliai County');
+INSERT INTO UF VALUES(1587,126,'Raseiniai District Municipality');
+INSERT INTO UF VALUES(1588,126,'Palanga City Municipality');
+INSERT INTO UF VALUES(1589,126,'Panevėžys City Municipality');
+INSERT INTO UF VALUES(1590,126,'Rietavas municipality');
+INSERT INTO UF VALUES(1591,126,'Kalvarija municipality');
+INSERT INTO UF VALUES(1592,126,'Vilnius District Municipality');
+INSERT INTO UF VALUES(1593,126,'Trakai District Municipality');
+INSERT INTO UF VALUES(1594,126,'Širvintos District Municipality');
+INSERT INTO UF VALUES(1595,126,'Pakruojis District Municipality');
+INSERT INTO UF VALUES(1596,126,'Ukmergė District Municipality');
+INSERT INTO UF VALUES(1597,126,'Klaipeda City Municipality');
+INSERT INTO UF VALUES(1598,126,'Utena District Municipality');
+INSERT INTO UF VALUES(1599,126,'Alytus District Municipality');
+INSERT INTO UF VALUES(1600,126,'Klaipėda County');
+INSERT INTO UF VALUES(1601,126,'Vilnius County');
+INSERT INTO UF VALUES(1602,126,'Varėna District Municipality');
+INSERT INTO UF VALUES(1603,126,'Birštonas Municipality');
+INSERT INTO UF VALUES(1604,126,'Klaipėda District Municipality');
+INSERT INTO UF VALUES(1605,126,'Alytus City Municipality');
+INSERT INTO UF VALUES(1606,126,'Vilnius City Municipality');
+INSERT INTO UF VALUES(1607,126,'Šilutė District Municipality');
+INSERT INTO UF VALUES(1608,126,'Telšiai District Municipality');
+INSERT INTO UF VALUES(1609,126,'Šiauliai City Municipality');
+INSERT INTO UF VALUES(1610,126,'Marijampolė Municipality');
+INSERT INTO UF VALUES(1611,126,'Lazdijai District Municipality');
+INSERT INTO UF VALUES(1612,126,'Pagėgiai municipality');
+INSERT INTO UF VALUES(1613,126,'Šilalė District Municipality');
+INSERT INTO UF VALUES(1614,126,'Panevėžys District Municipality');
+INSERT INTO UF VALUES(1615,126,'Rokiškis District Municipality');
+INSERT INTO UF VALUES(1616,126,'Pasvalys District Municipality');
+INSERT INTO UF VALUES(1617,126,'Skuodas District Municipality');
+INSERT INTO UF VALUES(1618,126,'Kelmė District Municipality');
+INSERT INTO UF VALUES(1619,126,'Zarasai District Municipality');
+INSERT INTO UF VALUES(1620,126,'Vilkaviškis District Municipality');
+INSERT INTO UF VALUES(1621,126,'Utena County');
+INSERT INTO UF VALUES(1622,176,'Opole Voivodeship');
+INSERT INTO UF VALUES(1623,176,'Silesian Voivodeship');
+INSERT INTO UF VALUES(1624,176,'Pomeranian Voivodeship');
+INSERT INTO UF VALUES(1625,176,'Kuyavian-Pomeranian Voivodeship');
+INSERT INTO UF VALUES(1626,176,'Podkarpackie Voivodeship');
+INSERT INTO UF VALUES(1628,176,'Warmian-Masurian Voivodeship');
+INSERT INTO UF VALUES(1629,176,'Lower Silesian Voivodeship');
+INSERT INTO UF VALUES(1630,176,'Świętokrzyskie Voivodeship');
+INSERT INTO UF VALUES(1631,176,'Lubusz Voivodeship');
+INSERT INTO UF VALUES(1632,176,'Podlaskie Voivodeship');
+INSERT INTO UF VALUES(1633,176,'West Pomeranian Voivodeship');
+INSERT INTO UF VALUES(1634,176,'Greater Poland Voivodeship');
+INSERT INTO UF VALUES(1635,176,'Lesser Poland Voivodeship');
+INSERT INTO UF VALUES(1636,176,'Łódź Voivodeship');
+INSERT INTO UF VALUES(1637,176,'Masovian Voivodeship');
+INSERT INTO UF VALUES(1638,176,'Lublin Voivodeship');
+INSERT INTO UF VALUES(1639,214,'Aargau');
+INSERT INTO UF VALUES(1640,214,'Fribourg');
+INSERT INTO UF VALUES(1641,214,'Basel-Land');
+INSERT INTO UF VALUES(1642,214,'Uri');
+INSERT INTO UF VALUES(1643,214,'Ticino');
+INSERT INTO UF VALUES(1644,214,'St. Gallen');
+INSERT INTO UF VALUES(1645,214,'Bern');
+INSERT INTO UF VALUES(1646,214,'Zug');
+INSERT INTO UF VALUES(1647,214,'Geneva');
+INSERT INTO UF VALUES(1648,214,'Valais');
+INSERT INTO UF VALUES(1649,214,'Appenzell Innerrhoden');
+INSERT INTO UF VALUES(1650,214,'Obwalden');
+INSERT INTO UF VALUES(1651,214,'Vaud');
+INSERT INTO UF VALUES(1652,214,'Nidwalden');
+INSERT INTO UF VALUES(1653,214,'Schwyz');
+INSERT INTO UF VALUES(1654,214,'Schaffhausen');
+INSERT INTO UF VALUES(1655,214,'Appenzell Ausserrhoden');
+INSERT INTO UF VALUES(1656,214,'Zürich');
+INSERT INTO UF VALUES(1657,214,'Thurgau');
+INSERT INTO UF VALUES(1658,214,'Jura');
+INSERT INTO UF VALUES(1659,214,'Neuchâtel');
+INSERT INTO UF VALUES(1660,214,'Graubünden');
+INSERT INTO UF VALUES(1661,214,'Glarus');
+INSERT INTO UF VALUES(1662,214,'Solothurn');
+INSERT INTO UF VALUES(1663,214,'Lucerne');
+INSERT INTO UF VALUES(1664,107,'Tuscany');
+INSERT INTO UF VALUES(1665,107,'Province of Padua');
+INSERT INTO UF VALUES(1666,107,'Province of Parma');
+INSERT INTO UF VALUES(1667,107,'Libero consorzio comunale di Siracusa');
+INSERT INTO UF VALUES(1668,107,'Metropolitan City of Palermo');
+INSERT INTO UF VALUES(1669,107,'Campania');
+INSERT INTO UF VALUES(1670,107,'Marche');
+INSERT INTO UF VALUES(1671,107,'Metropolitan City of Reggio Calabria');
+INSERT INTO UF VALUES(1672,107,'Province of Ancona');
+INSERT INTO UF VALUES(1673,107,'Metropolitan City of Venice');
+INSERT INTO UF VALUES(1674,107,'Province of Latina');
+INSERT INTO UF VALUES(1675,107,'Province of Lecce');
+INSERT INTO UF VALUES(1676,107,'Province of Pavia');
+INSERT INTO UF VALUES(1677,107,'Province of Lecco');
+INSERT INTO UF VALUES(1678,107,'Lazio');
+INSERT INTO UF VALUES(1679,107,'Abruzzo');
+INSERT INTO UF VALUES(1680,107,'Metropolitan City of Florence');
+INSERT INTO UF VALUES(1681,107,'Province of Ascoli Piceno');
+INSERT INTO UF VALUES(1682,107,'Metropolitan City of Cagliari');
+INSERT INTO UF VALUES(1683,107,'Umbria');
+INSERT INTO UF VALUES(1684,107,'Metropolitan City of Bologna');
+INSERT INTO UF VALUES(1685,107,'Province of Pisa');
+INSERT INTO UF VALUES(1686,107,'Province of Barletta-Andria-Trani');
+INSERT INTO UF VALUES(1687,107,'Province of Pistoia');
+INSERT INTO UF VALUES(1688,107,'Apulia');
+INSERT INTO UF VALUES(1689,107,'Province of Belluno');
+INSERT INTO UF VALUES(1690,107,'Province of Pordenone');
+INSERT INTO UF VALUES(1691,107,'Province of Perugia');
+INSERT INTO UF VALUES(1692,107,'Province of Avellino');
+INSERT INTO UF VALUES(1693,107,'Pesaro and Urbino Province');
+INSERT INTO UF VALUES(1694,107,'Province of Pescara');
+INSERT INTO UF VALUES(1695,107,'Molise');
+INSERT INTO UF VALUES(1696,107,'Province of Piacenza');
+INSERT INTO UF VALUES(1697,107,'Province of Potenza');
+INSERT INTO UF VALUES(1698,107,'Metropolitan City of Milan');
+INSERT INTO UF VALUES(1699,107,'Metropolitan City of Genoa');
+INSERT INTO UF VALUES(1700,107,'Province of Prato');
+INSERT INTO UF VALUES(1701,107,'Benevento Province');
+INSERT INTO UF VALUES(1702,107,'Piedmont');
+INSERT INTO UF VALUES(1703,107,'Calabria');
+INSERT INTO UF VALUES(1704,107,'Province of Bergamo');
+INSERT INTO UF VALUES(1705,107,'Lombardy');
+INSERT INTO UF VALUES(1706,107,'Basilicata');
+INSERT INTO UF VALUES(1707,107,'Province of Ravenna');
+INSERT INTO UF VALUES(1708,107,'Province of Reggio Emilia');
+INSERT INTO UF VALUES(1709,107,'Sicily');
+INSERT INTO UF VALUES(1710,107,'Metropolitan City of Turin');
+INSERT INTO UF VALUES(1711,107,'Metropolitan City of Rome');
+INSERT INTO UF VALUES(1712,107,'Province of Rieti');
+INSERT INTO UF VALUES(1713,107,'Province of Rimini');
+INSERT INTO UF VALUES(1714,107,'Province of Brindisi');
+INSERT INTO UF VALUES(1715,107,'Sardinia');
+INSERT INTO UF VALUES(1716,107,'Aosta Valley');
+INSERT INTO UF VALUES(1717,107,'Province of Brescia');
+INSERT INTO UF VALUES(1718,107,'Libero consorzio comunale di Caltanissetta');
+INSERT INTO UF VALUES(1719,107,'Province of Rovigo');
+INSERT INTO UF VALUES(1720,107,'Province of Salerno');
+INSERT INTO UF VALUES(1721,107,'Province of Campobasso');
+INSERT INTO UF VALUES(1722,107,'Province of Sassari');
+INSERT INTO UF VALUES(1723,107,'Libero consorzio comunale di Enna');
+INSERT INTO UF VALUES(1724,107,'Metropolitan City of Naples');
+INSERT INTO UF VALUES(1725,107,'Trentino-South Tyrol');
+INSERT INTO UF VALUES(1726,107,'Province of Verbano-Cusio-Ossola');
+INSERT INTO UF VALUES(1727,107,'Libero consorzio comunale di Agrigento');
+INSERT INTO UF VALUES(1728,107,'Province of Catanzaro');
+INSERT INTO UF VALUES(1729,107,'Libero consorzio comunale di Ragusa');
+INSERT INTO UF VALUES(1730,107,'Province of Carbonia-Iglesias');
+INSERT INTO UF VALUES(1731,107,'Province of Caserta');
+INSERT INTO UF VALUES(1732,107,'Province of Savona');
+INSERT INTO UF VALUES(1733,107,'Libero consorzio comunale di Trapani');
+INSERT INTO UF VALUES(1734,107,'Province of Siena');
+INSERT INTO UF VALUES(1735,107,'Province of Viterbo');
+INSERT INTO UF VALUES(1736,107,'Province of Verona');
+INSERT INTO UF VALUES(1737,107,'Province of Vibo Valentia');
+INSERT INTO UF VALUES(1738,107,'Province of Vicenza');
+INSERT INTO UF VALUES(1739,107,'Province of Chieti');
+INSERT INTO UF VALUES(1740,107,'Province of Como');
+INSERT INTO UF VALUES(1741,107,'Province of Sondrio');
+INSERT INTO UF VALUES(1742,107,'Province of Cosenza');
+INSERT INTO UF VALUES(1743,107,'Province of Taranto');
+INSERT INTO UF VALUES(1744,107,'Province of Fermo');
+INSERT INTO UF VALUES(1745,107,'Province of Livorno');
+INSERT INTO UF VALUES(1746,107,'Province of Ferrara');
+INSERT INTO UF VALUES(1747,107,'Province of Lodi');
+INSERT INTO UF VALUES(1748,107,'Trentino');
+INSERT INTO UF VALUES(1749,107,'Province of Lucca');
+INSERT INTO UF VALUES(1750,107,'Province of Macerata');
+INSERT INTO UF VALUES(1751,107,'Province of Cremona');
+INSERT INTO UF VALUES(1752,107,'Province of Teramo');
+INSERT INTO UF VALUES(1753,107,'Veneto');
+INSERT INTO UF VALUES(1754,107,'Province of Crotone');
+INSERT INTO UF VALUES(1755,107,'Province of Terni');
+INSERT INTO UF VALUES(1756,107,'Friuli–Venezia Giulia');
+INSERT INTO UF VALUES(1757,107,'Province of Modena');
+INSERT INTO UF VALUES(1758,107,'Province of Mantua');
+INSERT INTO UF VALUES(1759,107,'Province of Massa and Carrara');
+INSERT INTO UF VALUES(1760,107,'Province of Matera');
+INSERT INTO UF VALUES(1761,107,'Province of Medio Campidano');
+INSERT INTO UF VALUES(1762,107,'Province of Treviso');
+INSERT INTO UF VALUES(1763,107,'Province of Trieste');
+INSERT INTO UF VALUES(1764,107,'Province of Udine');
+INSERT INTO UF VALUES(1765,107,'Province of Varese');
+INSERT INTO UF VALUES(1766,107,'Metropolitan City of Catania');
+INSERT INTO UF VALUES(1767,107,'South Tyrol');
+INSERT INTO UF VALUES(1768,107,'Liguria');
+INSERT INTO UF VALUES(1769,107,'Province of Monza and Brianza');
+INSERT INTO UF VALUES(1770,107,'Metropolitan City of Messina');
+INSERT INTO UF VALUES(1771,107,'Province of Foggia');
+INSERT INTO UF VALUES(1772,107,'Metropolitan City of Bari');
+INSERT INTO UF VALUES(1773,107,'Emilia-Romagna');
+INSERT INTO UF VALUES(1774,107,'Province of Novara');
+INSERT INTO UF VALUES(1775,107,'Province of Cuneo');
+INSERT INTO UF VALUES(1776,107,'Province of Frosinone');
+INSERT INTO UF VALUES(1777,107,'Province of Gorizia');
+INSERT INTO UF VALUES(1778,107,'Province of Biella');
+INSERT INTO UF VALUES(1779,107,'Province of Forlì-Cesena');
+INSERT INTO UF VALUES(1780,107,'Province of Asti');
+INSERT INTO UF VALUES(1781,107,'Province of L Aquila');
+INSERT INTO UF VALUES(1782,107,'Province of Ogliastra');
+INSERT INTO UF VALUES(1783,107,'Province of Alessandria');
+INSERT INTO UF VALUES(1784,107,'Province of Olbia-Tempio');
+INSERT INTO UF VALUES(1785,107,'Province of Vercelli');
+INSERT INTO UF VALUES(1786,107,'Province of Oristano');
+INSERT INTO UF VALUES(1787,107,'Province of Grosseto');
+INSERT INTO UF VALUES(1788,107,'Province of Imperia');
+INSERT INTO UF VALUES(1789,107,'Province of Isernia');
+INSERT INTO UF VALUES(1790,107,'Province of Nuoro');
+INSERT INTO UF VALUES(1791,107,'Province of La Spezia');
+INSERT INTO UF VALUES(1792,102,'Sumatera Utara');
+INSERT INTO UF VALUES(1793,102,'Bengkulu');
+INSERT INTO UF VALUES(1794,102,'Kalimantan Tengah');
+INSERT INTO UF VALUES(1795,102,'Sulawesi Selatan');
+INSERT INTO UF VALUES(1796,102,'Sulawesi Tenggara');
+INSERT INTO UF VALUES(1798,102,'Papua');
+INSERT INTO UF VALUES(1799,102,'Papua Barat');
+INSERT INTO UF VALUES(1800,102,'Maluku');
+INSERT INTO UF VALUES(1801,102,'Maluku Utara');
+INSERT INTO UF VALUES(1802,102,'Jawa Tengah');
+INSERT INTO UF VALUES(1804,102,'Kalimantan Timur');
+INSERT INTO UF VALUES(1805,102,'DKI Jakarta');
+INSERT INTO UF VALUES(1806,102,'Kalimantan Barat');
+INSERT INTO UF VALUES(1807,102,'Kepulauan Riau');
+INSERT INTO UF VALUES(1808,102,'Sulawesi Utara');
+INSERT INTO UF VALUES(1809,102,'Riau');
+INSERT INTO UF VALUES(1810,102,'Banten');
+INSERT INTO UF VALUES(1811,102,'Lampung');
+INSERT INTO UF VALUES(1812,102,'Gorontalo');
+INSERT INTO UF VALUES(1813,102,'Sulawesi Tengah');
+INSERT INTO UF VALUES(1814,102,'Nusa Tenggara Barat');
+INSERT INTO UF VALUES(1815,102,'Jambi');
+INSERT INTO UF VALUES(1816,102,'Sumatera Selatan');
+INSERT INTO UF VALUES(1817,102,'Sulawesi Barat');
+INSERT INTO UF VALUES(1818,102,'Nusa Tenggara Timur');
+INSERT INTO UF VALUES(1819,102,'Kalimantan Selatan');
+INSERT INTO UF VALUES(1820,102,'Kepulauan Bangka Belitung');
+INSERT INTO UF VALUES(1822,102,'Aceh');
+INSERT INTO UF VALUES(1824,102,'Kalimantan Utara');
+INSERT INTO UF VALUES(1825,102,'Jawa Barat');
+INSERT INTO UF VALUES(1826,102,'Bali');
+INSERT INTO UF VALUES(1827,102,'Jawa Timur');
+INSERT INTO UF VALUES(1828,102,'Sumatera Barat');
+INSERT INTO UF VALUES(1829,102,'DI Yogyakarta');
+INSERT INTO UF VALUES(1830,114,'Phoenix Islands');
+INSERT INTO UF VALUES(1831,114,'Gilbert Islands');
+INSERT INTO UF VALUES(1832,114,'Line Islands');
+INSERT INTO UF VALUES(1833,182,'Primorsky Krai');
+INSERT INTO UF VALUES(1834,182,'Novgorod Oblast');
+INSERT INTO UF VALUES(1835,182,'Jewish Autonomous Oblast');
+INSERT INTO UF VALUES(1836,182,'Nenets Autonomous Okrug');
+INSERT INTO UF VALUES(1837,182,'Rostov Oblast');
+INSERT INTO UF VALUES(1838,182,'Khanty-Mansi Autonomous Okrug');
+INSERT INTO UF VALUES(1839,182,'Magadan Oblast');
+INSERT INTO UF VALUES(1840,182,'Krasnoyarsk Krai');
+INSERT INTO UF VALUES(1841,182,'Republic of Karelia');
+INSERT INTO UF VALUES(1842,182,'Republic of Buryatia');
+INSERT INTO UF VALUES(1843,182,'Murmansk Oblast');
+INSERT INTO UF VALUES(1844,182,'Kaluga Oblast');
+INSERT INTO UF VALUES(1845,182,'Chelyabinsk Oblast');
+INSERT INTO UF VALUES(1846,182,'Omsk Oblast');
+INSERT INTO UF VALUES(1847,182,'Yamalo-Nenets Autonomous Okrug');
+INSERT INTO UF VALUES(1848,182,'Sakha Republic');
+INSERT INTO UF VALUES(1849,182,'Arkhangelsk');
+INSERT INTO UF VALUES(1850,182,'Republic of Dagestan');
+INSERT INTO UF VALUES(1851,182,'Yaroslavl Oblast');
+INSERT INTO UF VALUES(1852,182,'Republic of Adygea');
+INSERT INTO UF VALUES(1853,182,'Republic of North Ossetia-Alania');
+INSERT INTO UF VALUES(1854,182,'Republic of Bashkortostan');
+INSERT INTO UF VALUES(1855,182,'Kursk Oblast');
+INSERT INTO UF VALUES(1856,182,'Ulyanovsk Oblast');
+INSERT INTO UF VALUES(1857,182,'Nizhny Novgorod Oblast');
+INSERT INTO UF VALUES(1858,182,'Amur Oblast');
+INSERT INTO UF VALUES(1859,182,'Chukotka Autonomous Okrug');
+INSERT INTO UF VALUES(1860,182,'Tver Oblast');
+INSERT INTO UF VALUES(1861,182,'Republic of Tatarstan');
+INSERT INTO UF VALUES(1862,182,'Samara Oblast');
+INSERT INTO UF VALUES(1863,182,'Pskov Oblast');
+INSERT INTO UF VALUES(1864,182,'Ivanovo Oblast');
+INSERT INTO UF VALUES(1865,182,'Kamchatka Krai');
+INSERT INTO UF VALUES(1866,182,'Astrakhan Oblast');
+INSERT INTO UF VALUES(1867,182,'Bryansk Oblast');
+INSERT INTO UF VALUES(1868,182,'Stavropol Krai');
+INSERT INTO UF VALUES(1869,182,'Karachay-Cherkess Republic');
+INSERT INTO UF VALUES(1870,182,'Mari El Republic');
+INSERT INTO UF VALUES(1871,182,'Perm Krai');
+INSERT INTO UF VALUES(1872,182,'Tomsk Oblast');
+INSERT INTO UF VALUES(1873,182,'Khabarovsk Krai');
+INSERT INTO UF VALUES(1874,182,'Vologda Oblast');
+INSERT INTO UF VALUES(1875,182,'Sakhalin');
+INSERT INTO UF VALUES(1876,182,'Altai Republic');
+INSERT INTO UF VALUES(1877,182,'Republic of Khakassia');
+INSERT INTO UF VALUES(1878,182,'Tambov Oblast');
+INSERT INTO UF VALUES(1879,182,'Saint Petersburg');
+INSERT INTO UF VALUES(1880,182,'Irkutsk');
+INSERT INTO UF VALUES(1881,182,'Vladimir Oblast');
+INSERT INTO UF VALUES(1882,182,'Moscow Oblast');
+INSERT INTO UF VALUES(1883,182,'Republic of Kalmykia');
+INSERT INTO UF VALUES(1884,182,'Republic of Ingushetia');
+INSERT INTO UF VALUES(1885,182,'Smolensk Oblast');
+INSERT INTO UF VALUES(1886,182,'Orenburg Oblast');
+INSERT INTO UF VALUES(1887,182,'Saratov Oblast');
+INSERT INTO UF VALUES(1888,182,'Novosibirsk');
+INSERT INTO UF VALUES(1889,182,'Lipetsk Oblast');
+INSERT INTO UF VALUES(1890,182,'Kirov Oblast');
+INSERT INTO UF VALUES(1891,182,'Krasnodar Krai');
+INSERT INTO UF VALUES(1892,182,'Kabardino-Balkar Republic');
+INSERT INTO UF VALUES(1893,182,'Chechen Republic');
+INSERT INTO UF VALUES(1894,182,'Sverdlovsk');
+INSERT INTO UF VALUES(1895,182,'Tula Oblast');
+INSERT INTO UF VALUES(1896,182,'Leningrad Oblast');
+INSERT INTO UF VALUES(1897,182,'Kemerovo Oblast');
+INSERT INTO UF VALUES(1898,182,'Republic of Mordovia');
+INSERT INTO UF VALUES(1899,182,'Komi Republic');
+INSERT INTO UF VALUES(1900,182,'Tuva Republic');
+INSERT INTO UF VALUES(1901,182,'Moscow');
+INSERT INTO UF VALUES(1902,182,'Kaliningrad');
+INSERT INTO UF VALUES(1903,182,'Belgorod Oblast');
+INSERT INTO UF VALUES(1904,182,'Zabaykalsky Krai');
+INSERT INTO UF VALUES(1905,182,'Ryazan Oblast');
+INSERT INTO UF VALUES(1906,182,'Voronezh Oblast');
+INSERT INTO UF VALUES(1907,182,'Tyumen Oblast');
+INSERT INTO UF VALUES(1908,182,'Oryol Oblast');
+INSERT INTO UF VALUES(1909,182,'Penza Oblast');
+INSERT INTO UF VALUES(1910,182,'Kostroma Oblast');
+INSERT INTO UF VALUES(1911,182,'Altai Krai');
+INSERT INTO UF VALUES(1912,182,'Sevastopol');
+INSERT INTO UF VALUES(1913,182,'Udmurt Republic');
+INSERT INTO UF VALUES(1914,182,'Chuvash Republic');
+INSERT INTO UF VALUES(1915,182,'Kurgan Oblast');
+INSERT INTO UF VALUES(1916,73,'Lomaiviti');
+INSERT INTO UF VALUES(1917,73,'Ba');
+INSERT INTO UF VALUES(1918,73,'Tailevu');
+INSERT INTO UF VALUES(1919,73,'Nadroga-Navosa');
+INSERT INTO UF VALUES(1920,73,'Rewa');
+INSERT INTO UF VALUES(1921,73,'Northern Division');
+INSERT INTO UF VALUES(1922,73,'Macuata');
+INSERT INTO UF VALUES(1923,73,'Western Division');
+INSERT INTO UF VALUES(1924,73,'Cakaudrove');
+INSERT INTO UF VALUES(1925,73,'Serua');
+INSERT INTO UF VALUES(1926,73,'Ra');
+INSERT INTO UF VALUES(1927,73,'Naitasiri');
+INSERT INTO UF VALUES(1928,73,'Namosi');
+INSERT INTO UF VALUES(1929,73,'Central Division');
+INSERT INTO UF VALUES(1930,73,'Bua');
+INSERT INTO UF VALUES(1931,73,'Rotuma');
+INSERT INTO UF VALUES(1932,73,'Eastern Division');
+INSERT INTO UF VALUES(1933,73,'Lau');
+INSERT INTO UF VALUES(1934,73,'Kadavu');
+INSERT INTO UF VALUES(1935,132,'Labuan');
+INSERT INTO UF VALUES(1936,132,'Sabah');
+INSERT INTO UF VALUES(1937,132,'Sarawak');
+INSERT INTO UF VALUES(1938,132,'Perlis');
+INSERT INTO UF VALUES(1939,132,'Penang');
+INSERT INTO UF VALUES(1940,132,'Pahang');
+INSERT INTO UF VALUES(1941,132,'Malacca');
+INSERT INTO UF VALUES(1942,132,'Terengganu');
+INSERT INTO UF VALUES(1943,132,'Perak');
+INSERT INTO UF VALUES(1944,132,'Selangor');
+INSERT INTO UF VALUES(1945,132,'Putrajaya');
+INSERT INTO UF VALUES(1946,132,'Kelantan');
+INSERT INTO UF VALUES(1947,132,'Kedah');
+INSERT INTO UF VALUES(1948,132,'Negeri Sembilan');
+INSERT INTO UF VALUES(1949,132,'Kuala Lumpur');
+INSERT INTO UF VALUES(1950,132,'Johor');
+INSERT INTO UF VALUES(1951,247,'Mashonaland East Province');
+INSERT INTO UF VALUES(1952,247,'Matabeleland South Province');
+INSERT INTO UF VALUES(1953,247,'Mashonaland West Province');
+INSERT INTO UF VALUES(1954,247,'Matabeleland North Province');
+INSERT INTO UF VALUES(1955,247,'Mashonaland Central Province');
+INSERT INTO UF VALUES(1956,247,'Bulawayo Province');
+INSERT INTO UF VALUES(1957,247,'Midlands Province');
+INSERT INTO UF VALUES(1958,247,'Harare Province');
+INSERT INTO UF VALUES(1959,247,'Manicaland');
+INSERT INTO UF VALUES(1960,247,'Masvingo Province');
+INSERT INTO UF VALUES(1961,146,'Bulgan Province');
+INSERT INTO UF VALUES(1962,146,'Darkhan-Uul Province');
+INSERT INTO UF VALUES(1963,146,'Dornod Province');
+INSERT INTO UF VALUES(1964,146,'Khovd Province');
+INSERT INTO UF VALUES(1965,146,'Övörkhangai Province');
+INSERT INTO UF VALUES(1966,146,'Orkhon Province');
+INSERT INTO UF VALUES(1967,146,'Ömnögovi Province');
+INSERT INTO UF VALUES(1968,146,'Töv Province');
+INSERT INTO UF VALUES(1969,146,'Bayan-Ölgii Province');
+INSERT INTO UF VALUES(1970,146,'Dundgovi Province');
+INSERT INTO UF VALUES(1971,146,'Uvs Province');
+INSERT INTO UF VALUES(1972,146,'Govi-Altai Province');
+INSERT INTO UF VALUES(1973,146,'Arkhangai Province');
+INSERT INTO UF VALUES(1974,146,'Khentii Province');
+INSERT INTO UF VALUES(1975,146,'Khövsgöl Province');
+INSERT INTO UF VALUES(1976,146,'Bayankhongor Province');
+INSERT INTO UF VALUES(1977,146,'Sükhbaatar Province');
+INSERT INTO UF VALUES(1978,146,'Govisümber Province');
+INSERT INTO UF VALUES(1979,146,'Zavkhan Province');
+INSERT INTO UF VALUES(1980,146,'Selenge Province');
+INSERT INTO UF VALUES(1981,146,'Dornogovi Province');
+INSERT INTO UF VALUES(1982,246,'Northern Province');
+INSERT INTO UF VALUES(1983,246,'Western Province');
+INSERT INTO UF VALUES(1984,246,'Copperbelt Province');
+INSERT INTO UF VALUES(1985,246,'Northwestern Province');
+INSERT INTO UF VALUES(1986,246,'Central Province');
+INSERT INTO UF VALUES(1987,246,'Luapula Province');
+INSERT INTO UF VALUES(1988,246,'Lusaka Province');
+INSERT INTO UF VALUES(1989,246,'Muchinga Province');
+INSERT INTO UF VALUES(1990,246,'Southern Province');
+INSERT INTO UF VALUES(1991,246,'Eastern Province');
+INSERT INTO UF VALUES(1992,18,'Capital Governorate');
+INSERT INTO UF VALUES(1993,18,'Southern Governorate');
+INSERT INTO UF VALUES(1994,18,'Northern Governorate');
+INSERT INTO UF VALUES(1995,18,'Muharraq Governorate');
+INSERT INTO UF VALUES(1996,18,'Central Governorate');
+INSERT INTO UF VALUES(1997,31,'Rio de Janeiro');
+INSERT INTO UF VALUES(1998,31,'Minas Gerais');
+INSERT INTO UF VALUES(1999,31,'Amapá');
+INSERT INTO UF VALUES(2000,31,'Goiás');
+INSERT INTO UF VALUES(2001,31,'Rio Grande do Sul');
+INSERT INTO UF VALUES(2002,31,'Bahia');
+INSERT INTO UF VALUES(2003,31,'Sergipe');
+INSERT INTO UF VALUES(2004,31,'Amazonas');
+INSERT INTO UF VALUES(2005,31,'Paraíba');
+INSERT INTO UF VALUES(2006,31,'Pernambuco');
+INSERT INTO UF VALUES(2007,31,'Alagoas');
+INSERT INTO UF VALUES(2008,31,'Piauí');
+INSERT INTO UF VALUES(2009,31,'Pará');
+INSERT INTO UF VALUES(2010,31,'Mato Grosso do Sul');
+INSERT INTO UF VALUES(2011,31,'Mato Grosso');
+INSERT INTO UF VALUES(2012,31,'Acre');
+INSERT INTO UF VALUES(2013,31,'Rondônia');
+INSERT INTO UF VALUES(2014,31,'Santa Catarina');
+INSERT INTO UF VALUES(2015,31,'Maranhão');
+INSERT INTO UF VALUES(2016,31,'Ceará');
+INSERT INTO UF VALUES(2017,31,'Distrito Federal');
+INSERT INTO UF VALUES(2018,31,'Espírito Santo');
+INSERT INTO UF VALUES(2019,31,'Rio Grande do Norte');
+INSERT INTO UF VALUES(2020,31,'Tocantins');
+INSERT INTO UF VALUES(2021,31,'São Paulo');
+INSERT INTO UF VALUES(2022,31,'Paraná');
+INSERT INTO UF VALUES(2023,12,'Aragatsotn Region');
+INSERT INTO UF VALUES(2024,12,'Ararat Province');
+INSERT INTO UF VALUES(2025,12,'Vayots Dzor Region');
+INSERT INTO UF VALUES(2026,12,'Armavir Region');
+INSERT INTO UF VALUES(2027,12,'Syunik Province');
+INSERT INTO UF VALUES(2028,12,'Gegharkunik Province');
+INSERT INTO UF VALUES(2029,12,'Lori Region');
+INSERT INTO UF VALUES(2030,12,'Yerevan');
+INSERT INTO UF VALUES(2031,12,'Shirak Region');
+INSERT INTO UF VALUES(2032,12,'Tavush Region');
+INSERT INTO UF VALUES(2033,12,'Kotayk Region');
+INSERT INTO UF VALUES(2034,239,'Cojedes');
+INSERT INTO UF VALUES(2035,239,'Falcón');
+INSERT INTO UF VALUES(2036,239,'Portuguesa');
+INSERT INTO UF VALUES(2037,239,'Miranda');
+INSERT INTO UF VALUES(2038,239,'Lara');
+INSERT INTO UF VALUES(2039,239,'Bolívar');
+INSERT INTO UF VALUES(2040,239,'Carabobo');
+INSERT INTO UF VALUES(2041,239,'Yaracuy');
+INSERT INTO UF VALUES(2042,239,'Zulia');
+INSERT INTO UF VALUES(2043,239,'Trujillo');
+INSERT INTO UF VALUES(2044,239,'Amazonas');
+INSERT INTO UF VALUES(2045,239,'Guárico');
+INSERT INTO UF VALUES(2046,239,'Federal Dependencies of Venezuela');
+INSERT INTO UF VALUES(2047,239,'Aragua');
+INSERT INTO UF VALUES(2048,239,'Táchira');
+INSERT INTO UF VALUES(2049,239,'Barinas');
+INSERT INTO UF VALUES(2050,239,'Anzoátegui');
+INSERT INTO UF VALUES(2051,239,'Delta Amacuro');
+INSERT INTO UF VALUES(2052,239,'Nueva Esparta');
+INSERT INTO UF VALUES(2053,239,'Mérida');
+INSERT INTO UF VALUES(2054,239,'Monagas');
+INSERT INTO UF VALUES(2055,239,'Vargas');
+INSERT INTO UF VALUES(2056,239,'Sucre');
+INSERT INTO UF VALUES(2057,15,'Carinthia');
+INSERT INTO UF VALUES(2058,15,'Upper Austria');
+INSERT INTO UF VALUES(2059,15,'Styria');
+INSERT INTO UF VALUES(2060,15,'Vienna');
+INSERT INTO UF VALUES(2061,15,'Salzburg');
+INSERT INTO UF VALUES(2062,15,'Burgenland');
+INSERT INTO UF VALUES(2063,15,'Vorarlberg');
+INSERT INTO UF VALUES(2064,15,'Tyrol');
+INSERT INTO UF VALUES(2065,15,'Lower Austria');
+INSERT INTO UF VALUES(2066,154,'Mid-Western Region');
+INSERT INTO UF VALUES(2067,154,'Western Region');
+INSERT INTO UF VALUES(2068,154,'Far-Western Development Region');
+INSERT INTO UF VALUES(2069,154,'Eastern Development Region');
+INSERT INTO UF VALUES(2070,154,'Mechi Zone');
+INSERT INTO UF VALUES(2071,154,'Bheri Zone');
+INSERT INTO UF VALUES(2072,154,'Kosi Zone');
+INSERT INTO UF VALUES(2073,154,'Central Region');
+INSERT INTO UF VALUES(2074,154,'Lumbini Zone');
+INSERT INTO UF VALUES(2075,154,'Narayani Zone');
+INSERT INTO UF VALUES(2076,154,'Janakpur Zone');
+INSERT INTO UF VALUES(2077,154,'Rapti Zone');
+INSERT INTO UF VALUES(2078,154,'Seti Zone');
+INSERT INTO UF VALUES(2079,154,'Karnali Zone');
+INSERT INTO UF VALUES(2080,154,'Dhaulagiri Zone');
+INSERT INTO UF VALUES(2081,154,'Gandaki Zone');
+INSERT INTO UF VALUES(2082,154,'Bagmati Zone');
+INSERT INTO UF VALUES(2083,154,'Mahakali Zone');
+INSERT INTO UF VALUES(2084,154,'Sagarmatha Zone');
+INSERT INTO UF VALUES(2085,206,'Unity');
+INSERT INTO UF VALUES(2086,206,'Upper Nile');
+INSERT INTO UF VALUES(2087,206,'Warrap');
+INSERT INTO UF VALUES(2088,206,'Northern Bahr el Ghazal');
+INSERT INTO UF VALUES(2089,206,'Western Equatoria');
+INSERT INTO UF VALUES(2090,206,'Lakes');
+INSERT INTO UF VALUES(2091,206,'Western Bahr el Ghazal');
+INSERT INTO UF VALUES(2092,206,'Central Equatoria');
+INSERT INTO UF VALUES(2093,206,'Eastern Equatoria');
+INSERT INTO UF VALUES(2094,206,'Jonglei State');
+INSERT INTO UF VALUES(2095,85,'Karditsa Regional Unit');
+INSERT INTO UF VALUES(2096,85,'West Greece Region');
+INSERT INTO UF VALUES(2097,85,'Thessaloniki Regional Unit');
+INSERT INTO UF VALUES(2098,85,'Arcadia Prefecture');
+INSERT INTO UF VALUES(2099,85,'Imathia Regional Unit');
+INSERT INTO UF VALUES(2100,85,'Kastoria Regional Unit');
+INSERT INTO UF VALUES(2101,85,'Euboea');
+INSERT INTO UF VALUES(2102,85,'Grevena Prefecture');
+INSERT INTO UF VALUES(2103,85,'Preveza Prefecture');
+INSERT INTO UF VALUES(2104,85,'Lefkada Regional Unit');
+INSERT INTO UF VALUES(2105,85,'Argolis Regional Unit');
+INSERT INTO UF VALUES(2106,85,'Laconia');
+INSERT INTO UF VALUES(2107,85,'Pella Regional Unit');
+INSERT INTO UF VALUES(2108,85,'West Macedonia Region');
+INSERT INTO UF VALUES(2109,85,'Crete Region');
+INSERT INTO UF VALUES(2110,85,'Epirus Region');
+INSERT INTO UF VALUES(2111,85,'Kilkis Regional Unit');
+INSERT INTO UF VALUES(2112,85,'Kozani Prefecture');
+INSERT INTO UF VALUES(2113,85,'Ioannina Regional Unit');
+INSERT INTO UF VALUES(2114,85,'Phthiotis Prefecture');
+INSERT INTO UF VALUES(2115,85,'Chania Regional Unit');
+INSERT INTO UF VALUES(2116,85,'Achaea Regional Unit');
+INSERT INTO UF VALUES(2117,85,'East Macedonia and Thrace');
+INSERT INTO UF VALUES(2118,85,'South Aegean');
+INSERT INTO UF VALUES(2119,85,'Peloponnese Region');
+INSERT INTO UF VALUES(2120,85,'East Attica Regional Unit');
+INSERT INTO UF VALUES(2121,85,'Serres Prefecture');
+INSERT INTO UF VALUES(2122,85,'Attica Region');
+INSERT INTO UF VALUES(2123,85,'Aetolia-Acarnania Regional Unit');
+INSERT INTO UF VALUES(2124,85,'Corfu Prefecture');
+INSERT INTO UF VALUES(2125,85,'Central Macedonia');
+INSERT INTO UF VALUES(2126,85,'Boeotia Regional Unit');
+INSERT INTO UF VALUES(2127,85,'Kefalonia Prefecture');
+INSERT INTO UF VALUES(2128,85,'Central Greece Region');
+INSERT INTO UF VALUES(2129,85,'Corinthia Regional Unit');
+INSERT INTO UF VALUES(2130,85,'Drama Regional Unit');
+INSERT INTO UF VALUES(2131,85,'Ionian Islands Region');
+INSERT INTO UF VALUES(2132,85,'Larissa Prefecture');
+INSERT INTO UF VALUES(2133,151,'Kayin State');
+INSERT INTO UF VALUES(2134,151,'Mandalay Region');
+INSERT INTO UF VALUES(2135,151,'Yangon Region');
+INSERT INTO UF VALUES(2136,151,'Magway Region');
+INSERT INTO UF VALUES(2137,151,'Chin State');
+INSERT INTO UF VALUES(2138,151,'Rakhine State');
+INSERT INTO UF VALUES(2139,151,'Shan State');
+INSERT INTO UF VALUES(2140,151,'Tanintharyi Region');
+INSERT INTO UF VALUES(2141,151,'Bago');
+INSERT INTO UF VALUES(2142,151,'Ayeyarwady Region');
+INSERT INTO UF VALUES(2143,151,'Kachin State');
+INSERT INTO UF VALUES(2144,151,'Kayah State');
+INSERT INTO UF VALUES(2145,151,'Sagaing Region');
+INSERT INTO UF VALUES(2146,151,'Naypyidaw Union Territory');
+INSERT INTO UF VALUES(2147,151,'Mon State');
+INSERT INTO UF VALUES(2148,225,'Bartın');
+INSERT INTO UF VALUES(2149,225,'Kütahya');
+INSERT INTO UF VALUES(2150,225,'Sakarya');
+INSERT INTO UF VALUES(2151,225,'Edirne');
+INSERT INTO UF VALUES(2152,225,'Van');
+INSERT INTO UF VALUES(2153,225,'Bingöl');
+INSERT INTO UF VALUES(2154,225,'Kilis');
+INSERT INTO UF VALUES(2155,225,'Adıyaman');
+INSERT INTO UF VALUES(2156,225,'Mersin');
+INSERT INTO UF VALUES(2157,225,'Denizli');
+INSERT INTO UF VALUES(2158,225,'Malatya');
+INSERT INTO UF VALUES(2159,225,'Elazığ');
+INSERT INTO UF VALUES(2160,225,'Erzincan');
+INSERT INTO UF VALUES(2161,225,'Amasya');
+INSERT INTO UF VALUES(2162,225,'Muş');
+INSERT INTO UF VALUES(2163,225,'Bursa');
+INSERT INTO UF VALUES(2164,225,'Eskişehir');
+INSERT INTO UF VALUES(2165,225,'Erzurum');
+INSERT INTO UF VALUES(2166,225,'Iğdır');
+INSERT INTO UF VALUES(2167,225,'Tekirdağ');
+INSERT INTO UF VALUES(2168,225,'Çankırı');
+INSERT INTO UF VALUES(2169,225,'Antalya');
+INSERT INTO UF VALUES(2170,225,'Istanbul');
+INSERT INTO UF VALUES(2171,225,'Konya');
+INSERT INTO UF VALUES(2172,225,'Bolu');
+INSERT INTO UF VALUES(2173,225,'Çorum');
+INSERT INTO UF VALUES(2174,225,'Ordu');
+INSERT INTO UF VALUES(2175,225,'Balıkesir');
+INSERT INTO UF VALUES(2176,225,'Kırklareli');
+INSERT INTO UF VALUES(2177,225,'Bayburt');
+INSERT INTO UF VALUES(2178,225,'Kırıkkale');
+INSERT INTO UF VALUES(2179,225,'Afyonkarahisar');
+INSERT INTO UF VALUES(2180,225,'Kırşehir');
+INSERT INTO UF VALUES(2181,225,'Sivas');
+INSERT INTO UF VALUES(2182,225,'Muğla');
+INSERT INTO UF VALUES(2183,225,'Şanlıurfa');
+INSERT INTO UF VALUES(2184,225,'Karaman');
+INSERT INTO UF VALUES(2185,225,'Ardahan');
+INSERT INTO UF VALUES(2186,225,'Giresun');
+INSERT INTO UF VALUES(2187,225,'Aydın');
+INSERT INTO UF VALUES(2188,225,'Yozgat');
+INSERT INTO UF VALUES(2189,225,'Niğde');
+INSERT INTO UF VALUES(2190,225,'Hakkâri');
+INSERT INTO UF VALUES(2191,225,'Artvin');
+INSERT INTO UF VALUES(2192,225,'Tunceli');
+INSERT INTO UF VALUES(2193,225,'Ağrı');
+INSERT INTO UF VALUES(2194,225,'Batman');
+INSERT INTO UF VALUES(2195,225,'Kocaeli');
+INSERT INTO UF VALUES(2196,225,'Nevşehir');
+INSERT INTO UF VALUES(2197,225,'Kastamonu');
+INSERT INTO UF VALUES(2198,225,'Manisa');
+INSERT INTO UF VALUES(2199,225,'Tokat');
+INSERT INTO UF VALUES(2200,225,'Kayseri');
+INSERT INTO UF VALUES(2201,225,'Uşak');
+INSERT INTO UF VALUES(2202,225,'Düzce');
+INSERT INTO UF VALUES(2203,225,'Gaziantep');
+INSERT INTO UF VALUES(2204,225,'Gümüşhane');
+INSERT INTO UF VALUES(2205,225,'İzmir');
+INSERT INTO UF VALUES(2206,225,'Trabzon');
+INSERT INTO UF VALUES(2207,225,'Siirt');
+INSERT INTO UF VALUES(2208,225,'Kars');
+INSERT INTO UF VALUES(2209,225,'Burdur');
+INSERT INTO UF VALUES(2210,225,'Aksaray');
+INSERT INTO UF VALUES(2211,225,'Hatay');
+INSERT INTO UF VALUES(2212,225,'Adana');
+INSERT INTO UF VALUES(2213,225,'Zonguldak');
+INSERT INTO UF VALUES(2214,225,'Osmaniye');
+INSERT INTO UF VALUES(2215,225,'Bitlis');
+INSERT INTO UF VALUES(2216,225,'Çanakkale');
+INSERT INTO UF VALUES(2217,225,'Ankara');
+INSERT INTO UF VALUES(2218,225,'Yalova');
+INSERT INTO UF VALUES(2219,225,'Rize');
+INSERT INTO UF VALUES(2220,225,'Samsun');
+INSERT INTO UF VALUES(2221,225,'Bilecik');
+INSERT INTO UF VALUES(2222,225,'Isparta');
+INSERT INTO UF VALUES(2223,225,'Karabük');
+INSERT INTO UF VALUES(2224,225,'Mardin');
+INSERT INTO UF VALUES(2225,225,'Şırnak');
+INSERT INTO UF VALUES(2226,225,'Diyarbakır');
+INSERT INTO UF VALUES(2227,225,'Kahramanmaraş');
+INSERT INTO UF VALUES(2228,177,'Lisbon');
+INSERT INTO UF VALUES(2229,177,'Bragança');
+INSERT INTO UF VALUES(2230,177,'Beja');
+INSERT INTO UF VALUES(2231,177,'Madeira');
+INSERT INTO UF VALUES(2232,177,'Portalegre');
+INSERT INTO UF VALUES(2233,177,'Açores');
+INSERT INTO UF VALUES(2234,177,'Vila Real');
+INSERT INTO UF VALUES(2235,177,'Aveiro');
+INSERT INTO UF VALUES(2236,177,'Évora');
+INSERT INTO UF VALUES(2237,177,'Viseu');
+INSERT INTO UF VALUES(2238,177,'Santarém');
+INSERT INTO UF VALUES(2239,177,'Faro');
+INSERT INTO UF VALUES(2240,177,'Leiria');
+INSERT INTO UF VALUES(2241,177,'Castelo Branco');
+INSERT INTO UF VALUES(2242,177,'Setúbal');
+INSERT INTO UF VALUES(2243,177,'Porto');
+INSERT INTO UF VALUES(2244,177,'Braga');
+INSERT INTO UF VALUES(2245,177,'Viana do Castelo');
+INSERT INTO UF VALUES(2246,177,'Coimbra');
+INSERT INTO UF VALUES(2247,45,'Zhejiang');
+INSERT INTO UF VALUES(2248,45,'Fujian');
+INSERT INTO UF VALUES(2249,45,'Shanghai');
+INSERT INTO UF VALUES(2250,45,'Jiangsu');
+INSERT INTO UF VALUES(2251,45,'Anhui');
+INSERT INTO UF VALUES(2252,45,'Shandong');
+INSERT INTO UF VALUES(2253,45,'Jilin');
+INSERT INTO UF VALUES(2254,45,'Shanxi');
+INSERT INTO UF VALUES(2255,45,'Taiwan Province,People s Republic of China');
+INSERT INTO UF VALUES(2256,45,'Jiangxi');
+INSERT INTO UF VALUES(2257,45,'Beijing');
+INSERT INTO UF VALUES(2258,45,'Hunan');
+INSERT INTO UF VALUES(2259,45,'Henan');
+INSERT INTO UF VALUES(2260,45,'Yunnan');
+INSERT INTO UF VALUES(2261,45,'Guizhou');
+INSERT INTO UF VALUES(2262,45,'Ningxia Hui Autonomous Region');
+INSERT INTO UF VALUES(2263,45,'Xinjiang');
+INSERT INTO UF VALUES(2264,45,'Tibet Autonomous Region');
+INSERT INTO UF VALUES(2265,45,'Heilongjiang');
+INSERT INTO UF VALUES(2266,45,'Macau');
+INSERT INTO UF VALUES(2267,45,'Hong Kong');
+INSERT INTO UF VALUES(2268,45,'Liaoning');
+INSERT INTO UF VALUES(2269,45,'Inner Mongolia');
+INSERT INTO UF VALUES(2270,45,'Qinghai');
+INSERT INTO UF VALUES(2271,45,'Chongqing');
+INSERT INTO UF VALUES(2272,45,'Shaanxi');
+INSERT INTO UF VALUES(2273,45,'Hainan');
+INSERT INTO UF VALUES(2274,45,'Hubei');
+INSERT INTO UF VALUES(2275,45,'Gansu');
+INSERT INTO UF VALUES(2276,45,'Keelung');
+INSERT INTO UF VALUES(2277,45,'Sichuan');
+INSERT INTO UF VALUES(2278,45,'Guangxi Zhuang Autonomous Region');
+INSERT INTO UF VALUES(2279,45,'Guangdong');
+INSERT INTO UF VALUES(2280,45,'Hebei');
+INSERT INTO UF VALUES(2281,121,'South Governorate');
+INSERT INTO UF VALUES(2282,121,'Mount Lebanon Governorate');
+INSERT INTO UF VALUES(2283,121,'Baalbek-Hermel Governorate');
+INSERT INTO UF VALUES(2284,121,'North Governorate');
+INSERT INTO UF VALUES(2285,121,'Akkar Governorate');
+INSERT INTO UF VALUES(2286,121,'Beirut Governorate');
+INSERT INTO UF VALUES(2287,121,'Beqaa Governorate');
+INSERT INTO UF VALUES(2288,121,'Nabatieh Governorate');
+INSERT INTO UF VALUES(2289,232,'Isle of Wight');
+INSERT INTO UF VALUES(2290,232,'St Helens');
+INSERT INTO UF VALUES(2291,232,'London Borough of Brent');
+INSERT INTO UF VALUES(2292,232,'Walsall');
+INSERT INTO UF VALUES(2293,232,'Trafford');
+INSERT INTO UF VALUES(2294,232,'City of Southampton');
+INSERT INTO UF VALUES(2295,232,'Sheffield');
+INSERT INTO UF VALUES(2296,232,'West Sussex');
+INSERT INTO UF VALUES(2297,232,'City of Peterborough');
+INSERT INTO UF VALUES(2298,232,'Caerphilly County Borough');
+INSERT INTO UF VALUES(2299,232,'Vale of Glamorgan');
+INSERT INTO UF VALUES(2300,232,'Shetland Islands');
+INSERT INTO UF VALUES(2301,232,'Rhondda Cynon Taf');
+INSERT INTO UF VALUES(2302,232,'Poole');
+INSERT INTO UF VALUES(2303,232,'Central Bedfordshire');
+INSERT INTO UF VALUES(2304,232,'Down District Council');
+INSERT INTO UF VALUES(2305,232,'City of Portsmouth');
+INSERT INTO UF VALUES(2306,232,'London Borough of Haringey');
+INSERT INTO UF VALUES(2307,232,'London Borough of Bexley');
+INSERT INTO UF VALUES(2308,232,'Rotherham');
+INSERT INTO UF VALUES(2309,232,'Hartlepool');
+INSERT INTO UF VALUES(2310,232,'Telford and Wrekin');
+INSERT INTO UF VALUES(2311,232,'Belfast district');
+INSERT INTO UF VALUES(2312,232,'Cornwall');
+INSERT INTO UF VALUES(2313,232,'London Borough of Sutton');
+INSERT INTO UF VALUES(2314,232,'Omagh District Council');
+INSERT INTO UF VALUES(2315,232,'Banbridge');
+INSERT INTO UF VALUES(2316,232,'Causeway Coast and Glens');
+INSERT INTO UF VALUES(2317,232,'Newtownabbey Borough Council');
+INSERT INTO UF VALUES(2318,232,'City of Leicester');
+INSERT INTO UF VALUES(2319,232,'London Borough of Islington');
+INSERT INTO UF VALUES(2320,232,'Metropolitan Borough of Wigan');
+INSERT INTO UF VALUES(2321,232,'Oxfordshire');
+INSERT INTO UF VALUES(2322,232,'Magherafelt District Council');
+INSERT INTO UF VALUES(2323,232,'Southend-on-Sea');
+INSERT INTO UF VALUES(2324,232,'Armagh	,	 Banbridge and Craigavon');
+INSERT INTO UF VALUES(2325,232,'Perth and Kinross');
+INSERT INTO UF VALUES(2326,232,'London Borough of Waltham Forest');
+INSERT INTO UF VALUES(2327,232,'Rochdale');
+INSERT INTO UF VALUES(2328,232,'Merthyr Tydfil County Borough');
+INSERT INTO UF VALUES(2329,232,'Blackburn with Darwen');
+INSERT INTO UF VALUES(2330,232,'Knowsley');
+INSERT INTO UF VALUES(2331,232,'Armagh City and District Council');
+INSERT INTO UF VALUES(2332,232,'Middlesbrough');
+INSERT INTO UF VALUES(2333,232,'East Renfrewshire');
+INSERT INTO UF VALUES(2334,232,'Cumbria');
+INSERT INTO UF VALUES(2335,232,'Scotland');
+INSERT INTO UF VALUES(2336,232,'England');
+INSERT INTO UF VALUES(2337,232,'Northern Ireland');
+INSERT INTO UF VALUES(2338,232,'Wales');
+INSERT INTO UF VALUES(2339,232,'Bath and North East Somerset');
+INSERT INTO UF VALUES(2340,232,'Liverpool');
+INSERT INTO UF VALUES(2341,232,'Sandwell');
+INSERT INTO UF VALUES(2342,232,'Bournemouth');
+INSERT INTO UF VALUES(2343,232,'Isles of Scilly');
+INSERT INTO UF VALUES(2344,232,'Falkirk');
+INSERT INTO UF VALUES(2345,232,'Dorset');
+INSERT INTO UF VALUES(2346,232,'Scottish Borders');
+INSERT INTO UF VALUES(2347,232,'London Borough of Havering');
+INSERT INTO UF VALUES(2348,232,'Moyle District Council');
+INSERT INTO UF VALUES(2349,232,'London Borough of Camden');
+INSERT INTO UF VALUES(2350,232,'Newry and Mourne District Council');
+INSERT INTO UF VALUES(2351,232,'Neath Port Talbot County Borough');
+INSERT INTO UF VALUES(2352,232,'Conwy County Borough');
+INSERT INTO UF VALUES(2353,232,'Outer Hebrides');
+INSERT INTO UF VALUES(2354,232,'West Lothian');
+INSERT INTO UF VALUES(2355,232,'Lincolnshire');
+INSERT INTO UF VALUES(2356,232,'London Borough of Barking and Dagenham');
+INSERT INTO UF VALUES(2357,232,'City of Westminster');
+INSERT INTO UF VALUES(2358,232,'London Borough of Lewisham');
+INSERT INTO UF VALUES(2359,232,'City of Nottingham');
+INSERT INTO UF VALUES(2360,232,'Moray');
+INSERT INTO UF VALUES(2361,232,'Ballymoney');
+INSERT INTO UF VALUES(2362,232,'South Lanarkshire');
+INSERT INTO UF VALUES(2363,232,'Ballymena Borough');
+INSERT INTO UF VALUES(2364,232,'Doncaster');
+INSERT INTO UF VALUES(2365,232,'Northumberland');
+INSERT INTO UF VALUES(2366,232,'Fermanagh and Omagh');
+INSERT INTO UF VALUES(2367,232,'Tameside');
+INSERT INTO UF VALUES(2368,232,'Royal Borough of Kensington and Chelsea');
+INSERT INTO UF VALUES(2369,232,'Hertfordshire');
+INSERT INTO UF VALUES(2370,232,'East Riding of Yorkshire');
+INSERT INTO UF VALUES(2371,232,'Kirklees');
+INSERT INTO UF VALUES(2372,232,'City of Sunderland');
+INSERT INTO UF VALUES(2373,232,'Gloucestershire');
+INSERT INTO UF VALUES(2374,232,'East Ayrshire');
+INSERT INTO UF VALUES(2375,232,'United Kingdom');
+INSERT INTO UF VALUES(2376,232,'London Borough of Hillingdon');
+INSERT INTO UF VALUES(2377,232,'South Ayrshire');
+INSERT INTO UF VALUES(2378,232,'Ascension Island');
+INSERT INTO UF VALUES(2379,232,'Gwynedd');
+INSERT INTO UF VALUES(2380,232,'London Borough of Hounslow');
+INSERT INTO UF VALUES(2381,232,'Medway');
+INSERT INTO UF VALUES(2382,232,'Limavady Borough Council');
+INSERT INTO UF VALUES(2383,232,'Highland');
+INSERT INTO UF VALUES(2384,232,'North East Lincolnshire');
+INSERT INTO UF VALUES(2385,232,'London Borough of Harrow');
+INSERT INTO UF VALUES(2386,232,'Somerset');
+INSERT INTO UF VALUES(2387,232,'Angus');
+INSERT INTO UF VALUES(2388,232,'Inverclyde');
+INSERT INTO UF VALUES(2389,232,'Darlington');
+INSERT INTO UF VALUES(2390,232,'London Borough of Tower Hamlets');
+INSERT INTO UF VALUES(2391,232,'Wiltshire');
+INSERT INTO UF VALUES(2392,232,'Argyll and Bute');
+INSERT INTO UF VALUES(2393,232,'Strabane District Council');
+INSERT INTO UF VALUES(2394,232,'Stockport');
+INSERT INTO UF VALUES(2395,232,'Brighton and Hove');
+INSERT INTO UF VALUES(2396,232,'London Borough of Lambeth');
+INSERT INTO UF VALUES(2397,232,'London Borough of Redbridge');
+INSERT INTO UF VALUES(2398,232,'Manchester');
+INSERT INTO UF VALUES(2399,232,'Mid Ulster');
+INSERT INTO UF VALUES(2400,232,'South Gloucestershire');
+INSERT INTO UF VALUES(2401,232,'Aberdeenshire');
+INSERT INTO UF VALUES(2402,232,'Monmouthshire');
+INSERT INTO UF VALUES(2403,232,'Derbyshire');
+INSERT INTO UF VALUES(2404,232,'Glasgow');
+INSERT INTO UF VALUES(2405,232,'Buckinghamshire');
+INSERT INTO UF VALUES(2406,232,'County Durham');
+INSERT INTO UF VALUES(2407,232,'Shropshire');
+INSERT INTO UF VALUES(2408,232,'Wirral');
+INSERT INTO UF VALUES(2409,232,'South Tyneside');
+INSERT INTO UF VALUES(2410,232,'Essex');
+INSERT INTO UF VALUES(2411,232,'London Borough of Hackney');
+INSERT INTO UF VALUES(2412,232,'Antrim and Newtownabbey');
+INSERT INTO UF VALUES(2413,232,'City of Bristol');
+INSERT INTO UF VALUES(2414,232,'East Sussex');
+INSERT INTO UF VALUES(2415,232,'Dumfries and Galloway');
+INSERT INTO UF VALUES(2416,232,'Milton Keynes');
+INSERT INTO UF VALUES(2417,232,'Derry City Council');
+INSERT INTO UF VALUES(2418,232,'London Borough of Newham');
+INSERT INTO UF VALUES(2419,232,'Wokingham');
+INSERT INTO UF VALUES(2420,232,'Warrington');
+INSERT INTO UF VALUES(2421,232,'Stockton-on-Tees');
+INSERT INTO UF VALUES(2422,232,'Swindon');
+INSERT INTO UF VALUES(2423,232,'Cambridgeshire');
+INSERT INTO UF VALUES(2424,232,'City of London');
+INSERT INTO UF VALUES(2425,232,'Birmingham');
+INSERT INTO UF VALUES(2426,232,'City of York');
+INSERT INTO UF VALUES(2427,232,'Slough');
+INSERT INTO UF VALUES(2428,232,'Edinburgh');
+INSERT INTO UF VALUES(2429,232,'Mid and East Antrim');
+INSERT INTO UF VALUES(2430,232,'North Somerset');
+INSERT INTO UF VALUES(2431,232,'Gateshead');
+INSERT INTO UF VALUES(2432,232,'London Borough of Southwark');
+INSERT INTO UF VALUES(2433,232,'City and County of Swansea');
+INSERT INTO UF VALUES(2434,232,'London Borough of Wandsworth');
+INSERT INTO UF VALUES(2435,232,'Hampshire');
+INSERT INTO UF VALUES(2436,232,'Wrexham County Borough');
+INSERT INTO UF VALUES(2437,232,'Flintshire');
+INSERT INTO UF VALUES(2438,232,'Coventry');
+INSERT INTO UF VALUES(2439,232,'Carrickfergus Borough Council');
+INSERT INTO UF VALUES(2440,232,'West Dunbartonshire');
+INSERT INTO UF VALUES(2441,232,'Powys');
+INSERT INTO UF VALUES(2442,232,'Cheshire West and Chester');
+INSERT INTO UF VALUES(2443,232,'Renfrewshire');
+INSERT INTO UF VALUES(2444,232,'Cheshire East');
+INSERT INTO UF VALUES(2445,232,'Cookstown District Council');
+INSERT INTO UF VALUES(2446,232,'Derry City and Strabane');
+INSERT INTO UF VALUES(2447,232,'Staffordshire');
+INSERT INTO UF VALUES(2448,232,'London Borough of Hammersmith and Fulham');
+INSERT INTO UF VALUES(2449,232,'Craigavon Borough Council');
+INSERT INTO UF VALUES(2450,232,'Clackmannanshire');
+INSERT INTO UF VALUES(2451,232,'Blackpool');
+INSERT INTO UF VALUES(2452,232,'Bridgend County Borough');
+INSERT INTO UF VALUES(2453,232,'North Lincolnshire');
+INSERT INTO UF VALUES(2454,232,'East Dunbartonshire');
+INSERT INTO UF VALUES(2455,232,'Reading');
+INSERT INTO UF VALUES(2456,232,'Nottinghamshire');
+INSERT INTO UF VALUES(2457,232,'Dudley');
+INSERT INTO UF VALUES(2458,232,'Newcastle upon Tyne');
+INSERT INTO UF VALUES(2459,232,'Bury');
+INSERT INTO UF VALUES(2460,232,'Lisburn and Castlereagh');
+INSERT INTO UF VALUES(2461,232,'Coleraine Borough Council');
+INSERT INTO UF VALUES(2462,232,'East Lothian');
+INSERT INTO UF VALUES(2463,232,'Aberdeen');
+INSERT INTO UF VALUES(2464,232,'Kent');
+INSERT INTO UF VALUES(2465,232,'Wakefield');
+INSERT INTO UF VALUES(2466,232,'Halton');
+INSERT INTO UF VALUES(2467,232,'Suffolk');
+INSERT INTO UF VALUES(2468,232,'Thurrock');
+INSERT INTO UF VALUES(2469,232,'Solihull');
+INSERT INTO UF VALUES(2470,232,'Bracknell Forest');
+INSERT INTO UF VALUES(2471,232,'West Berkshire');
+INSERT INTO UF VALUES(2472,232,'Rutland');
+INSERT INTO UF VALUES(2473,232,'Norfolk');
+INSERT INTO UF VALUES(2474,232,'Orkney Islands');
+INSERT INTO UF VALUES(2475,232,'City of Kingston upon Hull');
+INSERT INTO UF VALUES(2476,232,'London Borough of Enfield');
+INSERT INTO UF VALUES(2477,232,'Oldham');
+INSERT INTO UF VALUES(2478,232,'Torbay');
+INSERT INTO UF VALUES(2479,232,'Fife');
+INSERT INTO UF VALUES(2480,232,'Northamptonshire');
+INSERT INTO UF VALUES(2481,232,'Royal Borough of Kingston upon Thames');
+INSERT INTO UF VALUES(2482,232,'Windsor and Maidenhead');
+INSERT INTO UF VALUES(2483,232,'London Borough of Merton');
+INSERT INTO UF VALUES(2484,232,'Carmarthenshire');
+INSERT INTO UF VALUES(2485,232,'City of Derby');
+INSERT INTO UF VALUES(2486,232,'Pembrokeshire');
+INSERT INTO UF VALUES(2487,232,'North Lanarkshire');
+INSERT INTO UF VALUES(2488,232,'Stirling');
+INSERT INTO UF VALUES(2489,232,'City of Wolverhampton');
+INSERT INTO UF VALUES(2490,232,'London Borough of Bromley');
+INSERT INTO UF VALUES(2491,232,'Devon');
+INSERT INTO UF VALUES(2492,232,'Royal Borough of Greenwich');
+INSERT INTO UF VALUES(2493,232,'Salford');
+INSERT INTO UF VALUES(2494,232,'Lisburn City Council');
+INSERT INTO UF VALUES(2495,232,'Lancashire');
+INSERT INTO UF VALUES(2496,232,'Torfaen');
+INSERT INTO UF VALUES(2497,232,'Denbighshire');
+INSERT INTO UF VALUES(2498,232,'Ards');
+INSERT INTO UF VALUES(2499,232,'Barnsley');
+INSERT INTO UF VALUES(2500,232,'Herefordshire');
+INSERT INTO UF VALUES(2501,232,'London Borough of Richmond upon Thames');
+INSERT INTO UF VALUES(2502,232,'Saint Helena');
+INSERT INTO UF VALUES(2503,232,'Leeds');
+INSERT INTO UF VALUES(2504,232,'Bolton');
+INSERT INTO UF VALUES(2505,232,'Warwickshire');
+INSERT INTO UF VALUES(2506,232,'City of Stoke-on-Trent');
+INSERT INTO UF VALUES(2507,232,'Bedford');
+INSERT INTO UF VALUES(2508,232,'Dungannon and South Tyrone Borough Council');
+INSERT INTO UF VALUES(2509,232,'Ceredigion');
+INSERT INTO UF VALUES(2510,232,'Worcestershire');
+INSERT INTO UF VALUES(2511,232,'Dundee');
+INSERT INTO UF VALUES(2512,232,'London Borough of Croydon');
+INSERT INTO UF VALUES(2513,232,'North Down Borough Council');
+INSERT INTO UF VALUES(2514,232,'City of Plymouth');
+INSERT INTO UF VALUES(2515,232,'Larne Borough Council');
+INSERT INTO UF VALUES(2516,232,'Leicestershire');
+INSERT INTO UF VALUES(2517,232,'Calderdale');
+INSERT INTO UF VALUES(2518,232,'Sefton');
+INSERT INTO UF VALUES(2519,232,'Midlothian');
+INSERT INTO UF VALUES(2520,232,'London Borough of Barnet');
+INSERT INTO UF VALUES(2521,232,'North Tyneside');
+INSERT INTO UF VALUES(2522,232,'North Yorkshire');
+INSERT INTO UF VALUES(2523,232,'Ards and North Down');
+INSERT INTO UF VALUES(2524,232,'Newport');
+INSERT INTO UF VALUES(2525,232,'Castlereagh');
+INSERT INTO UF VALUES(2526,232,'Surrey');
+INSERT INTO UF VALUES(2527,232,'Redcar and Cleveland');
+INSERT INTO UF VALUES(2528,232,'City and County of Cardiff');
+INSERT INTO UF VALUES(2529,232,'Bradford');
+INSERT INTO UF VALUES(2530,232,'Blaenau Gwent County Borough');
+INSERT INTO UF VALUES(2531,232,'Fermanagh District Council');
+INSERT INTO UF VALUES(2532,232,'London Borough of Ealing');
+INSERT INTO UF VALUES(2533,232,'Antrim');
+INSERT INTO UF VALUES(2534,232,'Newry	,	 Mourne and Down');
+INSERT INTO UF VALUES(2535,232,'North Ayrshire');
+INSERT INTO UF VALUES(2536,236,'Tashkent');
+INSERT INTO UF VALUES(2537,236,'Namangan Region');
+INSERT INTO UF VALUES(2538,236,'Fergana Region');
+INSERT INTO UF VALUES(2539,236,'Xorazm Region');
+INSERT INTO UF VALUES(2540,236,'Andijan Region');
+INSERT INTO UF VALUES(2541,236,'Bukhara Region');
+INSERT INTO UF VALUES(2542,236,'Navoiy Region');
+INSERT INTO UF VALUES(2543,236,'Qashqadaryo Region');
+INSERT INTO UF VALUES(2544,236,'Samarqand Region');
+INSERT INTO UF VALUES(2545,236,'Jizzakh Region');
+INSERT INTO UF VALUES(2546,236,'Surxondaryo Region');
+INSERT INTO UF VALUES(2547,236,'Sirdaryo Region');
+INSERT INTO UF VALUES(2548,236,'Karakalpakstan');
+INSERT INTO UF VALUES(2549,236,'Tashkent Region');
+INSERT INTO UF VALUES(2550,224,'Ariana Governorate');
+INSERT INTO UF VALUES(2551,224,'Bizerte Governorate');
+INSERT INTO UF VALUES(2552,224,'Jendouba Governorate');
+INSERT INTO UF VALUES(2553,224,'Monastir Governorate');
+INSERT INTO UF VALUES(2554,224,'Tunis Governorate');
+INSERT INTO UF VALUES(2555,224,'Manouba Governorate');
+INSERT INTO UF VALUES(2556,224,'Gafsa Governorate');
+INSERT INTO UF VALUES(2557,224,'Sfax Governorate');
+INSERT INTO UF VALUES(2558,224,'Gabès Governorate');
+INSERT INTO UF VALUES(2559,224,'Tataouine Governorate');
+INSERT INTO UF VALUES(2560,224,'Medenine Governorate');
+INSERT INTO UF VALUES(2561,224,'Kef Governorate');
+INSERT INTO UF VALUES(2562,224,'Kebili Governorate');
+INSERT INTO UF VALUES(2563,224,'Siliana Governorate');
+INSERT INTO UF VALUES(2564,224,'Kairouan Governorate');
+INSERT INTO UF VALUES(2565,224,'Zaghouan Governorate');
+INSERT INTO UF VALUES(2566,224,'Ben Arous Governorate');
+INSERT INTO UF VALUES(2567,224,'Sidi Bouzid Governorate');
+INSERT INTO UF VALUES(2568,224,'Mahdia Governorate');
+INSERT INTO UF VALUES(2569,224,'Tozeur Governorate');
+INSERT INTO UF VALUES(2570,224,'Kasserine Governorate');
+INSERT INTO UF VALUES(2571,224,'Sousse Governorate');
+INSERT INTO UF VALUES(2572,224,'Kassrine');
+INSERT INTO UF VALUES(2573,137,'Ratak Chain');
+INSERT INTO UF VALUES(2574,137,'Ralik Chain');
+INSERT INTO UF VALUES(2575,220,'Centrale Region');
+INSERT INTO UF VALUES(2576,220,'Maritime');
+INSERT INTO UF VALUES(2577,220,'Plateaux Region');
+INSERT INTO UF VALUES(2578,220,'Savanes Region');
+INSERT INTO UF VALUES(2579,220,'Kara Region');
+INSERT INTO UF VALUES(2580,143,'Chuuk State');
+INSERT INTO UF VALUES(2581,143,'Pohnpei State');
+INSERT INTO UF VALUES(2582,143,'Yap State');
+INSERT INTO UF VALUES(2583,143,'Kosrae State');
+INSERT INTO UF VALUES(2584,133,'Vaavu Atoll');
+INSERT INTO UF VALUES(2585,133,'Shaviyani Atoll');
+INSERT INTO UF VALUES(2586,133,'Haa Alif Atoll');
+INSERT INTO UF VALUES(2587,133,'Alif Alif Atoll');
+INSERT INTO UF VALUES(2588,133,'North Province');
+INSERT INTO UF VALUES(2589,133,'North Central Province');
+INSERT INTO UF VALUES(2590,133,'Dhaalu Atoll');
+INSERT INTO UF VALUES(2591,133,'Thaa Atoll');
+INSERT INTO UF VALUES(2592,133,'Noonu Atoll');
+INSERT INTO UF VALUES(2593,133,'Upper South Province');
+INSERT INTO UF VALUES(2594,133,'Addu Atoll');
+INSERT INTO UF VALUES(2595,133,'Gnaviyani Atoll');
+INSERT INTO UF VALUES(2596,133,'Kaafu Atoll');
+INSERT INTO UF VALUES(2597,133,'Haa Dhaalu Atoll');
+INSERT INTO UF VALUES(2598,133,'Gaafu Alif Atoll');
+INSERT INTO UF VALUES(2599,133,'Faafu Atoll');
+INSERT INTO UF VALUES(2600,133,'Alif Dhaal Atoll');
+INSERT INTO UF VALUES(2601,133,'Laamu Atoll');
+INSERT INTO UF VALUES(2602,133,'Raa Atoll');
+INSERT INTO UF VALUES(2603,133,'Gaafu Dhaalu Atoll');
+INSERT INTO UF VALUES(2604,133,'Central Province');
+INSERT INTO UF VALUES(2605,133,'South Province');
+INSERT INTO UF VALUES(2606,133,'South Central Province');
+INSERT INTO UF VALUES(2607,133,'Lhaviyani Atoll');
+INSERT INTO UF VALUES(2608,133,'Meemu Atoll');
+INSERT INTO UF VALUES(2609,133,'Malé');
+INSERT INTO UF VALUES(2610,156,'Utrecht');
+INSERT INTO UF VALUES(2611,156,'Gelderland');
+INSERT INTO UF VALUES(2612,156,'North Holland');
+INSERT INTO UF VALUES(2613,156,'Drenthe');
+INSERT INTO UF VALUES(2614,156,'South Holland');
+INSERT INTO UF VALUES(2615,156,'Limburg');
+INSERT INTO UF VALUES(2616,156,'Sint Eustatius');
+INSERT INTO UF VALUES(2617,156,'Groningen');
+INSERT INTO UF VALUES(2618,156,'Overijssel');
+INSERT INTO UF VALUES(2619,156,'Flevoland');
+INSERT INTO UF VALUES(2620,156,'Zeeland');
+INSERT INTO UF VALUES(2621,156,'Saba');
+INSERT INTO UF VALUES(2622,156,'Friesland');
+INSERT INTO UF VALUES(2623,156,'North Brabant');
+INSERT INTO UF VALUES(2624,156,'Bonaire');
+INSERT INTO UF VALUES(2625,54,'Savanes Region');
+INSERT INTO UF VALUES(2626,54,'Agnéby');
+INSERT INTO UF VALUES(2627,54,'Lagunes District');
+INSERT INTO UF VALUES(2628,54,'Sud-Bandama');
+INSERT INTO UF VALUES(2629,54,'Montagnes District');
+INSERT INTO UF VALUES(2630,54,'Moyen-Comoé');
+INSERT INTO UF VALUES(2631,54,'Marahoué Region');
+INSERT INTO UF VALUES(2632,54,'Lacs District');
+INSERT INTO UF VALUES(2633,54,'Fromager');
+INSERT INTO UF VALUES(2634,54,'Abidjan');
+INSERT INTO UF VALUES(2635,54,'Bas-Sassandra Region');
+INSERT INTO UF VALUES(2636,54,'Bafing Region');
+INSERT INTO UF VALUES(2637,54,'Vallée du Bandama District');
+INSERT INTO UF VALUES(2638,54,'Haut-Sassandra');
+INSERT INTO UF VALUES(2639,54,'Lagunes region');
+INSERT INTO UF VALUES(2640,54,'Lacs Region');
+INSERT INTO UF VALUES(2641,54,'Zanzan Region');
+INSERT INTO UF VALUES(2642,54,'Denguélé Region');
+INSERT INTO UF VALUES(2643,54,'Bas-Sassandra District');
+INSERT INTO UF VALUES(2644,54,'Denguélé District');
+INSERT INTO UF VALUES(2645,54,'Dix-Huit Montagnes');
+INSERT INTO UF VALUES(2646,54,'Moyen-Cavally');
+INSERT INTO UF VALUES(2647,54,'Vallée du Bandama Region');
+INSERT INTO UF VALUES(2648,54,'Sassandra-Marahoué District');
+INSERT INTO UF VALUES(2649,54,'Worodougou');
+INSERT INTO UF VALUES(2650,54,'Woroba District');
+INSERT INTO UF VALUES(2651,54,'Gôh-Djiboua District');
+INSERT INTO UF VALUES(2652,54,'Sud-Comoé');
+INSERT INTO UF VALUES(2653,54,'Yamoussoukro');
+INSERT INTO UF VALUES(2654,54,'Comoé District');
+INSERT INTO UF VALUES(2655,54,'N zi-Comoé');
+INSERT INTO UF VALUES(2656,38,'Far North');
+INSERT INTO UF VALUES(2657,38,'Northwest');
+INSERT INTO UF VALUES(2658,38,'Southwest');
+INSERT INTO UF VALUES(2659,38,'South');
+INSERT INTO UF VALUES(2660,38,'Centre');
+INSERT INTO UF VALUES(2661,38,'East');
+INSERT INTO UF VALUES(2662,38,'Littoral');
+INSERT INTO UF VALUES(2663,38,'Adamawa');
+INSERT INTO UF VALUES(2664,38,'West');
+INSERT INTO UF VALUES(2665,38,'North');
+INSERT INTO UF VALUES(2666,80,'Banjul');
+INSERT INTO UF VALUES(2667,80,'West Coast Division');
+INSERT INTO UF VALUES(2668,80,'Upper River Division');
+INSERT INTO UF VALUES(2669,80,'Central River Division');
+INSERT INTO UF VALUES(2670,80,'Lower River Division');
+INSERT INTO UF VALUES(2671,80,'North Bank Division');
+INSERT INTO UF VALUES(2672,92,'Beyla Prefecture');
+INSERT INTO UF VALUES(2673,92,'Mandiana Prefecture');
+INSERT INTO UF VALUES(2674,92,'Yomou Prefecture');
+INSERT INTO UF VALUES(2675,92,'Fria Prefecture');
+INSERT INTO UF VALUES(2676,92,'Boké Region');
+INSERT INTO UF VALUES(2677,92,'Labé Region');
+INSERT INTO UF VALUES(2678,92,'Nzérékoré Prefecture');
+INSERT INTO UF VALUES(2679,92,'Dabola Prefecture');
+INSERT INTO UF VALUES(2680,92,'Labé Prefecture');
+INSERT INTO UF VALUES(2681,92,'Dubréka Prefecture');
+INSERT INTO UF VALUES(2682,92,'Faranah Prefecture');
+INSERT INTO UF VALUES(2683,92,'Forécariah Prefecture');
+INSERT INTO UF VALUES(2684,92,'Nzérékoré Region');
+INSERT INTO UF VALUES(2685,92,'Gaoual Prefecture');
+INSERT INTO UF VALUES(2686,92,'Conakry');
+INSERT INTO UF VALUES(2687,92,'Télimélé Prefecture');
+INSERT INTO UF VALUES(2688,92,'Dinguiraye Prefecture');
+INSERT INTO UF VALUES(2689,92,'Mamou Prefecture');
+INSERT INTO UF VALUES(2690,92,'Lélouma Prefecture');
+INSERT INTO UF VALUES(2691,92,'Kissidougou Prefecture');
+INSERT INTO UF VALUES(2692,92,'Koubia Prefecture');
+INSERT INTO UF VALUES(2693,92,'Kindia Prefecture');
+INSERT INTO UF VALUES(2694,92,'Pita Prefecture');
+INSERT INTO UF VALUES(2695,92,'Kouroussa Prefecture');
+INSERT INTO UF VALUES(2696,92,'Tougué Prefecture');
+INSERT INTO UF VALUES(2697,92,'Kankan Region');
+INSERT INTO UF VALUES(2698,92,'Mamou Region');
+INSERT INTO UF VALUES(2699,92,'Boffa Prefecture');
+INSERT INTO UF VALUES(2700,92,'Mali Prefecture');
+INSERT INTO UF VALUES(2701,92,'Kindia Region');
+INSERT INTO UF VALUES(2702,92,'Macenta Prefecture');
+INSERT INTO UF VALUES(2703,92,'Koundara Prefecture');
+INSERT INTO UF VALUES(2704,92,'Kankan Prefecture');
+INSERT INTO UF VALUES(2705,92,'Coyah Prefecture');
+INSERT INTO UF VALUES(2706,92,'Dalaba Prefecture');
+INSERT INTO UF VALUES(2707,92,'Siguiri Prefecture');
+INSERT INTO UF VALUES(2708,92,'Lola Prefecture');
+INSERT INTO UF VALUES(2709,92,'Boké Prefecture');
+INSERT INTO UF VALUES(2710,92,'Kérouané Prefecture');
+INSERT INTO UF VALUES(2711,92,'Guéckédou Prefecture');
+INSERT INTO UF VALUES(2712,93,'Tombali Region');
+INSERT INTO UF VALUES(2713,93,'Cacheu Region');
+INSERT INTO UF VALUES(2714,93,'Biombo Region');
+INSERT INTO UF VALUES(2715,93,'Quinara Region');
+INSERT INTO UF VALUES(2716,93,'Sul Province');
+INSERT INTO UF VALUES(2717,93,'Norte Province');
+INSERT INTO UF VALUES(2718,93,'Oio Region');
+INSERT INTO UF VALUES(2719,93,'Gabú Region');
+INSERT INTO UF VALUES(2720,93,'Bafatá');
+INSERT INTO UF VALUES(2721,93,'Leste Province');
+INSERT INTO UF VALUES(2722,93,'Bolama Region');
+INSERT INTO UF VALUES(2723,79,'Woleu-Ntem Province');
+INSERT INTO UF VALUES(2724,79,'Ogooué-Ivindo Province');
+INSERT INTO UF VALUES(2725,79,'Nyanga Province');
+INSERT INTO UF VALUES(2726,79,'Haut-Ogooué Province');
+INSERT INTO UF VALUES(2727,79,'Estuaire Province');
+INSERT INTO UF VALUES(2728,79,'Ogooué-Maritime Province');
+INSERT INTO UF VALUES(2729,79,'Ogooué-Lolo Province');
+INSERT INTO UF VALUES(2730,79,'Moyen-Ogooué Province');
+INSERT INTO UF VALUES(2731,79,'Ngounié Province');
+INSERT INTO UF VALUES(2732,51,'Tshuapa');
+INSERT INTO UF VALUES(2733,51,'Tanganyika');
+INSERT INTO UF VALUES(2734,51,'Haut-Uélé');
+INSERT INTO UF VALUES(2735,51,'Kasaï Oriental');
+INSERT INTO UF VALUES(2738,51,'Sud-Kivu');
+INSERT INTO UF VALUES(2739,51,'Nord-Ubangi');
+INSERT INTO UF VALUES(2740,51,'Kwango');
+INSERT INTO UF VALUES(2741,51,'Kinshasa');
+INSERT INTO UF VALUES(2742,51,'Kasaï Central');
+INSERT INTO UF VALUES(2743,51,'Sankuru');
+INSERT INTO UF VALUES(2744,51,'Équateur');
+INSERT INTO UF VALUES(2745,51,'Maniema');
+INSERT INTO UF VALUES(2746,51,'Kongo Central');
+INSERT INTO UF VALUES(2747,51,'Lomami');
+INSERT INTO UF VALUES(2748,51,'Sud-Ubangi');
+INSERT INTO UF VALUES(2749,51,'Nord-Kivu');
+INSERT INTO UF VALUES(2750,51,'Haut-Katanga');
+INSERT INTO UF VALUES(2751,51,'Ituri');
+INSERT INTO UF VALUES(2752,51,'Mongala');
+INSERT INTO UF VALUES(2753,51,'Bas-Uélé');
+INSERT INTO UF VALUES(2755,51,'Mai-Ndombe');
+INSERT INTO UF VALUES(2756,51,'Tshopo');
+INSERT INTO UF VALUES(2757,51,'Kasaï');
+INSERT INTO UF VALUES(2758,51,'Haut-Lomami');
+INSERT INTO UF VALUES(2759,51,'Kwilu');
+INSERT INTO UF VALUES(2760,94,'Cuyuni-Mazaruni');
+INSERT INTO UF VALUES(2761,94,'Potaro-Siparuni');
+INSERT INTO UF VALUES(2762,94,'Mahaica-Berbice');
+INSERT INTO UF VALUES(2763,94,'Upper Demerara-Berbice');
+INSERT INTO UF VALUES(2764,94,'Barima-Waini');
+INSERT INTO UF VALUES(2765,94,'Pomeroon-Supenaam');
+INSERT INTO UF VALUES(2766,94,'East Berbice-Corentyne');
+INSERT INTO UF VALUES(2767,94,'Demerara-Mahaica');
+INSERT INTO UF VALUES(2768,94,'Essequibo Islands-West Demerara');
+INSERT INTO UF VALUES(2769,94,'Upper Takutu-Upper Essequibo');
+INSERT INTO UF VALUES(2770,172,'Presidente Hayes Department');
+INSERT INTO UF VALUES(2771,172,'Canindeyú');
+INSERT INTO UF VALUES(2772,172,'Guairá Department');
+INSERT INTO UF VALUES(2773,172,'Caaguazú');
+INSERT INTO UF VALUES(2774,172,'Paraguarí Department');
+INSERT INTO UF VALUES(2775,172,'Caazapá');
+INSERT INTO UF VALUES(2776,172,'San Pedro Department');
+INSERT INTO UF VALUES(2777,172,'Central Department');
+INSERT INTO UF VALUES(2778,172,'Itapúa');
+INSERT INTO UF VALUES(2779,172,'Concepción Department');
+INSERT INTO UF VALUES(2780,172,'Boquerón Department');
+INSERT INTO UF VALUES(2781,172,'Ñeembucú Department');
+INSERT INTO UF VALUES(2782,172,'Amambay Department');
+INSERT INTO UF VALUES(2783,172,'Cordillera Department');
+INSERT INTO UF VALUES(2784,172,'Alto Paraná Department');
+INSERT INTO UF VALUES(2785,172,'Alto Paraguay Department');
+INSERT INTO UF VALUES(2786,172,'Misiones Department');
+INSERT INTO UF VALUES(2787,208,'Jaffna District');
+INSERT INTO UF VALUES(2788,208,'Kandy District');
+INSERT INTO UF VALUES(2789,208,'Kalutara District');
+INSERT INTO UF VALUES(2790,208,'Badulla District');
+INSERT INTO UF VALUES(2791,208,'Hambantota District');
+INSERT INTO UF VALUES(2792,208,'Galle District');
+INSERT INTO UF VALUES(2793,208,'Kilinochchi District');
+INSERT INTO UF VALUES(2794,208,'Nuwara Eliya District');
+INSERT INTO UF VALUES(2795,208,'Trincomalee District');
+INSERT INTO UF VALUES(2796,208,'Puttalam District');
+INSERT INTO UF VALUES(2797,208,'Kegalle District');
+INSERT INTO UF VALUES(2798,208,'Central Province');
+INSERT INTO UF VALUES(2799,208,'Ampara District');
+INSERT INTO UF VALUES(2800,208,'North Central Province');
+INSERT INTO UF VALUES(2801,208,'Southern Province');
+INSERT INTO UF VALUES(2802,208,'Western Province');
+INSERT INTO UF VALUES(2803,208,'Sabaragamuwa Province');
+INSERT INTO UF VALUES(2804,208,'Gampaha District');
+INSERT INTO UF VALUES(2805,208,'Mannar District');
+INSERT INTO UF VALUES(2806,208,'Matara District');
+INSERT INTO UF VALUES(2807,208,'Ratnapura district');
+INSERT INTO UF VALUES(2808,208,'Eastern Province');
+INSERT INTO UF VALUES(2809,208,'Vavuniya District');
+INSERT INTO UF VALUES(2810,208,'Matale District');
+INSERT INTO UF VALUES(2811,208,'Uva Province');
+INSERT INTO UF VALUES(2812,208,'Polonnaruwa District');
+INSERT INTO UF VALUES(2813,208,'Northern Province');
+INSERT INTO UF VALUES(2814,208,'Mullaitivu District');
+INSERT INTO UF VALUES(2815,208,'Colombo District');
+INSERT INTO UF VALUES(2816,208,'Anuradhapura District');
+INSERT INTO UF VALUES(2817,208,'North Western Province');
+INSERT INTO UF VALUES(2818,208,'Batticaloa District');
+INSERT INTO UF VALUES(2819,208,'Monaragala District');
+INSERT INTO UF VALUES(2820,49,'Mohéli');
+INSERT INTO UF VALUES(2821,49,'Anjouan');
+INSERT INTO UF VALUES(2822,49,'Grande Comore');
+INSERT INTO UF VALUES(2823,44,'Atacama');
+INSERT INTO UF VALUES(2824,44,'Región Metropolitana de Santiago');
+INSERT INTO UF VALUES(2825,44,'Coquimbo');
+INSERT INTO UF VALUES(2826,44,'La Araucanía');
+INSERT INTO UF VALUES(2827,44,'Biobío');
+INSERT INTO UF VALUES(2828,44,'Aisén del General Carlos Ibañez del Campo');
+INSERT INTO UF VALUES(2829,44,'Arica y Parinacota');
+INSERT INTO UF VALUES(2830,44,'Valparaíso');
+INSERT INTO UF VALUES(2831,44,'Ñuble');
+INSERT INTO UF VALUES(2832,44,'Antofagasta');
+INSERT INTO UF VALUES(2833,44,'Maule');
+INSERT INTO UF VALUES(2834,44,'Los Ríos');
+INSERT INTO UF VALUES(2835,44,'Los Lagos');
+INSERT INTO UF VALUES(2836,44,'Magallanes y de la Antártica Chilena');
+INSERT INTO UF VALUES(2837,44,'Tarapacá');
+INSERT INTO UF VALUES(2838,44,'Libertador General Bernardo O Higgins');
+INSERT INTO UF VALUES(2839,210,'Commewijne District');
+INSERT INTO UF VALUES(2840,210,'Nickerie District');
+INSERT INTO UF VALUES(2841,210,'Para District');
+INSERT INTO UF VALUES(2842,210,'Coronie District');
+INSERT INTO UF VALUES(2843,210,'Paramaribo District');
+INSERT INTO UF VALUES(2844,210,'Wanica District');
+INSERT INTO UF VALUES(2845,210,'Marowijne District');
+INSERT INTO UF VALUES(2846,210,'Brokopondo District');
+INSERT INTO UF VALUES(2847,210,'Sipaliwini District');
+INSERT INTO UF VALUES(2848,210,'Saramacca District');
+INSERT INTO UF VALUES(2849,194,'Riyadh');
+INSERT INTO UF VALUES(2850,194,'Makkah');
+INSERT INTO UF VALUES(2851,194,'Al Madinah');
+INSERT INTO UF VALUES(2852,194,'Tabuk');
+INSERT INTO UF VALUES(2853,194,'Asir');
+INSERT INTO UF VALUES(2854,194,'Northern Borders');
+INSERT INTO UF VALUES(2855,194,'Ha il');
+INSERT INTO UF VALUES(2856,194,'Eastern Province');
+INSERT INTO UF VALUES(2857,194,'Al Jawf');
+INSERT INTO UF VALUES(2858,194,'Jizan');
+INSERT INTO UF VALUES(2859,194,'Al Bahah');
+INSERT INTO UF VALUES(2860,194,'Najran');
+INSERT INTO UF VALUES(2861,194,'Al-Qassim');
+INSERT INTO UF VALUES(2862,50,'Plateaux Department');
+INSERT INTO UF VALUES(2863,50,'Pointe-Noire');
+INSERT INTO UF VALUES(2864,50,'Cuvette Department');
+INSERT INTO UF VALUES(2865,50,'Likouala Department');
+INSERT INTO UF VALUES(2866,50,'Bouenza Department');
+INSERT INTO UF VALUES(2867,50,'Kouilou Department');
+INSERT INTO UF VALUES(2868,50,'Lékoumou Department');
+INSERT INTO UF VALUES(2869,50,'Cuvette-Ouest Department');
+INSERT INTO UF VALUES(2870,50,'Brazzaville');
+INSERT INTO UF VALUES(2871,50,'Sangha Department');
+INSERT INTO UF VALUES(2872,50,'Niari Department');
+INSERT INTO UF VALUES(2873,50,'Pool Department');
+INSERT INTO UF VALUES(2874,48,'Quindío');
+INSERT INTO UF VALUES(2875,48,'Cundinamarca');
+INSERT INTO UF VALUES(2876,48,'Chocó');
+INSERT INTO UF VALUES(2877,48,'Norte de Santander');
+INSERT INTO UF VALUES(2878,48,'Meta');
+INSERT INTO UF VALUES(2879,48,'Risaralda');
+INSERT INTO UF VALUES(2880,48,'Atlántico');
+INSERT INTO UF VALUES(2881,48,'Arauca');
+INSERT INTO UF VALUES(2882,48,'Guainía');
+INSERT INTO UF VALUES(2883,48,'Tolima');
+INSERT INTO UF VALUES(2884,48,'Cauca');
+INSERT INTO UF VALUES(2885,48,'Vaupés');
+INSERT INTO UF VALUES(2886,48,'Magdalena');
+INSERT INTO UF VALUES(2887,48,'Caldas');
+INSERT INTO UF VALUES(2888,48,'Guaviare');
+INSERT INTO UF VALUES(2889,48,'La Guajira');
+INSERT INTO UF VALUES(2890,48,'Antioquia');
+INSERT INTO UF VALUES(2891,48,'Caquetá');
+INSERT INTO UF VALUES(2892,48,'Casanare');
+INSERT INTO UF VALUES(2893,48,'Bolívar');
+INSERT INTO UF VALUES(2894,48,'Vichada');
+INSERT INTO UF VALUES(2895,48,'Amazonas');
+INSERT INTO UF VALUES(2896,48,'Putumayo');
+INSERT INTO UF VALUES(2897,48,'Nariño');
+INSERT INTO UF VALUES(2898,48,'Córdoba');
+INSERT INTO UF VALUES(2899,48,'Cesar');
+INSERT INTO UF VALUES(2900,48,'San Andrés Providencia y Santa Catalina');
+INSERT INTO UF VALUES(2901,48,'Santander');
+INSERT INTO UF VALUES(2902,48,'Sucre');
+INSERT INTO UF VALUES(2903,48,'Boyacá');
+INSERT INTO UF VALUES(2904,48,'Valle del Cauca');
+INSERT INTO UF VALUES(2905,64,'Galápagos Province');
+INSERT INTO UF VALUES(2906,64,'Sucumbíos Province');
+INSERT INTO UF VALUES(2907,64,'Pastaza Province');
+INSERT INTO UF VALUES(2908,64,'Tungurahua Province');
+INSERT INTO UF VALUES(2909,64,'Zamora-Chinchipe Province');
+INSERT INTO UF VALUES(2910,64,'Los Ríos Province');
+INSERT INTO UF VALUES(2911,64,'Imbabura Province');
+INSERT INTO UF VALUES(2912,64,'Santa Elena Province');
+INSERT INTO UF VALUES(2913,64,'Manabí Province');
+INSERT INTO UF VALUES(2914,64,'Guayas Province');
+INSERT INTO UF VALUES(2915,64,'Carchi Province');
+INSERT INTO UF VALUES(2916,64,'Napo Province');
+INSERT INTO UF VALUES(2917,64,'Cañar Province');
+INSERT INTO UF VALUES(2918,64,'Morona-Santiago Province');
+INSERT INTO UF VALUES(2919,64,'Santo Domingo de los Tsáchilas Province');
+INSERT INTO UF VALUES(2920,64,'Bolívar Province');
+INSERT INTO UF VALUES(2921,64,'Cotopaxi Province');
+INSERT INTO UF VALUES(2922,64,'Esmeraldas');
+INSERT INTO UF VALUES(2923,64,'Azuay Province');
+INSERT INTO UF VALUES(2924,64,'El Oro Province');
+INSERT INTO UF VALUES(2925,64,'Chimborazo Province');
+INSERT INTO UF VALUES(2926,64,'Orellana Province');
+INSERT INTO UF VALUES(2927,64,'Pichincha Province');
+INSERT INTO UF VALUES(2928,60,'Obock Region');
+INSERT INTO UF VALUES(2929,60,'Djibouti');
+INSERT INTO UF VALUES(2930,60,'Dikhil Region');
+INSERT INTO UF VALUES(2931,60,'Tadjourah Region');
+INSERT INTO UF VALUES(2932,60,'Arta Region');
+INSERT INTO UF VALUES(2933,60,'Ali Sabieh Region');
+INSERT INTO UF VALUES(2934,215,'Hama Governorate');
+INSERT INTO UF VALUES(2935,215,'Rif Dimashq Governorate');
+INSERT INTO UF VALUES(2936,215,'As-Suwayda Governorate');
+INSERT INTO UF VALUES(2937,215,'Deir ez-Zor Governorate');
+INSERT INTO UF VALUES(2938,215,'Latakia Governorate');
+INSERT INTO UF VALUES(2939,215,'Damascus Governorate');
+INSERT INTO UF VALUES(2940,215,'Idlib Governorate');
+INSERT INTO UF VALUES(2941,215,'Al-Hasakah Governorate');
+INSERT INTO UF VALUES(2942,215,'Homs Governorate');
+INSERT INTO UF VALUES(2943,215,'Quneitra Governorate');
+INSERT INTO UF VALUES(2944,215,'Al-Raqqah Governorate');
+INSERT INTO UF VALUES(2945,215,'Daraa Governorate');
+INSERT INTO UF VALUES(2946,215,'Aleppo Governorate');
+INSERT INTO UF VALUES(2947,215,'Tartus Governorate');
+INSERT INTO UF VALUES(2948,130,'Fianarantsoa Province');
+INSERT INTO UF VALUES(2949,130,'Toliara Province');
+INSERT INTO UF VALUES(2950,130,'Antsiranana Province');
+INSERT INTO UF VALUES(2951,130,'Antananarivo Province');
+INSERT INTO UF VALUES(2952,130,'Toamasina Province');
+INSERT INTO UF VALUES(2953,130,'Mahajanga Province');
+INSERT INTO UF VALUES(2954,21,'Mogilev Region');
+INSERT INTO UF VALUES(2955,21,'Gomel Region');
+INSERT INTO UF VALUES(2956,21,'Grodno Region');
+INSERT INTO UF VALUES(2957,21,'Minsk Region');
+INSERT INTO UF VALUES(2958,21,'Minsk');
+INSERT INTO UF VALUES(2959,21,'Brest Region');
+INSERT INTO UF VALUES(2960,21,'Vitebsk Region');
+INSERT INTO UF VALUES(2961,124,'Murqub');
+INSERT INTO UF VALUES(2962,124,'Nuqat al Khams');
+INSERT INTO UF VALUES(2963,124,'Zawiya District');
+INSERT INTO UF VALUES(2964,124,'Al Wahat District');
+INSERT INTO UF VALUES(2965,124,'Sabha District');
+INSERT INTO UF VALUES(2966,124,'Derna District');
+INSERT INTO UF VALUES(2967,124,'Murzuq District');
+INSERT INTO UF VALUES(2968,124,'Marj District');
+INSERT INTO UF VALUES(2969,124,'Ghat District');
+INSERT INTO UF VALUES(2970,124,'Jufra');
+INSERT INTO UF VALUES(2971,124,'Tripoli District');
+INSERT INTO UF VALUES(2972,124,'Kufra District');
+INSERT INTO UF VALUES(2973,124,'Wadi al Hayaa District');
+INSERT INTO UF VALUES(2974,124,'Jabal al Gharbi District');
+INSERT INTO UF VALUES(2975,124,'Wadi al Shatii District');
+INSERT INTO UF VALUES(2976,124,'Nalut District');
+INSERT INTO UF VALUES(2977,124,'Sirte District');
+INSERT INTO UF VALUES(2978,124,'Misrata District');
+INSERT INTO UF VALUES(2979,124,'Jafara');
+INSERT INTO UF VALUES(2980,124,'Jabal al Akhdar');
+INSERT INTO UF VALUES(2981,124,'Benghazi');
+INSERT INTO UF VALUES(2982,40,'Ribeira Brava Municipality');
+INSERT INTO UF VALUES(2983,40,'Tarrafal');
+INSERT INTO UF VALUES(2984,40,'Ribeira Grande de Santiago');
+INSERT INTO UF VALUES(2985,40,'Santa Catarina');
+INSERT INTO UF VALUES(2986,40,'São Domingos');
+INSERT INTO UF VALUES(2987,40,'Mosteiros');
+INSERT INTO UF VALUES(2988,40,'Praia');
+INSERT INTO UF VALUES(2989,40,'Porto Novo');
+INSERT INTO UF VALUES(2990,40,'São Miguel');
+INSERT INTO UF VALUES(2991,40,'Maio Municipality');
+INSERT INTO UF VALUES(2992,40,'Sotavento Islands');
+INSERT INTO UF VALUES(2993,40,'São Lourenço dos Órgãos');
+INSERT INTO UF VALUES(2994,40,'Barlavento Islands');
+INSERT INTO UF VALUES(2995,40,'Santa Catarina do Fogo');
+INSERT INTO UF VALUES(2996,40,'Brava');
+INSERT INTO UF VALUES(2997,40,'Paul');
+INSERT INTO UF VALUES(2998,40,'Sal');
+INSERT INTO UF VALUES(2999,40,'Boa Vista');
+INSERT INTO UF VALUES(3000,40,'São Filipe');
+INSERT INTO UF VALUES(3001,40,'São Vicente');
+INSERT INTO UF VALUES(3002,40,'Ribeira Grande');
+INSERT INTO UF VALUES(3003,40,'Tarrafal de São Nicolau');
+INSERT INTO UF VALUES(3004,40,'Santa Cruz');
+INSERT INTO UF VALUES(3005,82,'Schleswig-Holstein');
+INSERT INTO UF VALUES(3006,82,'Baden-Württemberg');
+INSERT INTO UF VALUES(3007,82,'Mecklenburg-Vorpommern');
+INSERT INTO UF VALUES(3008,82,'Lower Saxony');
+INSERT INTO UF VALUES(3009,82,'Bavaria');
+INSERT INTO UF VALUES(3010,82,'Berlin');
+INSERT INTO UF VALUES(3011,82,'Saxony-Anhalt');
+INSERT INTO UF VALUES(3013,82,'Brandenburg');
+INSERT INTO UF VALUES(3014,82,'Bremen');
+INSERT INTO UF VALUES(3015,82,'Thuringia');
+INSERT INTO UF VALUES(3016,82,'Hamburg');
+INSERT INTO UF VALUES(3017,82,'North Rhine-Westphalia');
+INSERT INTO UF VALUES(3018,82,'Hesse');
+INSERT INTO UF VALUES(3019,82,'Rhineland-Palatinate');
+INSERT INTO UF VALUES(3020,82,'Saarland');
+INSERT INTO UF VALUES(3021,82,'Saxony');
+INSERT INTO UF VALUES(3022,122,'Mafeteng District');
+INSERT INTO UF VALUES(3023,122,'Mohale s Hoek District');
+INSERT INTO UF VALUES(3024,122,'Mokhotlong District');
+INSERT INTO UF VALUES(3025,122,'Qacha s Nek District');
+INSERT INTO UF VALUES(3026,122,'Leribe District');
+INSERT INTO UF VALUES(3027,122,'Quthing District');
+INSERT INTO UF VALUES(3028,122,'Maseru District');
+INSERT INTO UF VALUES(3029,122,'Butha-Buthe District');
+INSERT INTO UF VALUES(3030,122,'Berea District');
+INSERT INTO UF VALUES(3031,122,'Thaba-Tseka District');
+INSERT INTO UF VALUES(3032,123,'Montserrado County');
+INSERT INTO UF VALUES(3033,123,'River Cess County');
+INSERT INTO UF VALUES(3034,123,'Bong County');
+INSERT INTO UF VALUES(3035,123,'Sinoe County');
+INSERT INTO UF VALUES(3036,123,'Grand Cape Mount County');
+INSERT INTO UF VALUES(3037,123,'Lofa County');
+INSERT INTO UF VALUES(3038,123,'River Gee County');
+INSERT INTO UF VALUES(3039,123,'Grand Gedeh County');
+INSERT INTO UF VALUES(3040,123,'Grand Bassa County');
+INSERT INTO UF VALUES(3041,123,'Bomi County');
+INSERT INTO UF VALUES(3042,123,'Maryland County');
+INSERT INTO UF VALUES(3043,123,'Margibi County');
+INSERT INTO UF VALUES(3044,123,'Gbarpolu County');
+INSERT INTO UF VALUES(3045,123,'Grand Kru County');
+INSERT INTO UF VALUES(3046,123,'Nimba');
+INSERT INTO UF VALUES(3047,166,'Ad Dhahirah Governorate');
+INSERT INTO UF VALUES(3048,166,'Al Batinah North Governorate');
+INSERT INTO UF VALUES(3049,166,'Al Batinah South Governorate');
+INSERT INTO UF VALUES(3050,166,'Al Batinah Region');
+INSERT INTO UF VALUES(3051,166,'Ash Sharqiyah Region');
+INSERT INTO UF VALUES(3052,166,'Musandam Governorate');
+INSERT INTO UF VALUES(3053,166,'Ash Sharqiyah North Governorate');
+INSERT INTO UF VALUES(3054,166,'Ash Sharqiyah South Governorate');
+INSERT INTO UF VALUES(3055,166,'Muscat Governorate');
+INSERT INTO UF VALUES(3056,166,'Al Wusta Governorate');
+INSERT INTO UF VALUES(3057,166,'Dhofar Governorate');
+INSERT INTO UF VALUES(3058,166,'Ad Dakhiliyah Governorate');
+INSERT INTO UF VALUES(3059,166,'Al Buraimi Governorate');
+INSERT INTO UF VALUES(3060,29,'Ngamiland');
+INSERT INTO UF VALUES(3061,29,'Ghanzi District');
+INSERT INTO UF VALUES(3062,29,'Kgatleng District');
+INSERT INTO UF VALUES(3063,29,'Southern District');
+INSERT INTO UF VALUES(3064,29,'South-East District');
+INSERT INTO UF VALUES(3065,29,'North-West District');
+INSERT INTO UF VALUES(3066,29,'Kgalagadi District');
+INSERT INTO UF VALUES(3067,29,'Central District');
+INSERT INTO UF VALUES(3068,29,'North-East District');
+INSERT INTO UF VALUES(3069,29,'Kweneng District');
+INSERT INTO UF VALUES(3070,24,'Collines Department');
+INSERT INTO UF VALUES(3071,24,'Kouffo Department');
+INSERT INTO UF VALUES(3072,24,'Donga Department');
+INSERT INTO UF VALUES(3073,24,'Zou Department');
+INSERT INTO UF VALUES(3074,24,'Plateau Department');
+INSERT INTO UF VALUES(3075,24,'Mono Department');
+INSERT INTO UF VALUES(3076,24,'Atakora Department');
+INSERT INTO UF VALUES(3077,24,'Alibori Department');
+INSERT INTO UF VALUES(3078,24,'Borgou Department');
+INSERT INTO UF VALUES(3079,24,'Atlantique Department');
+INSERT INTO UF VALUES(3080,24,'Ouémé Department');
+INSERT INTO UF VALUES(3081,24,'Littoral Department');
+INSERT INTO UF VALUES(3082,131,'Machinga District');
+INSERT INTO UF VALUES(3083,131,'Zomba District');
+INSERT INTO UF VALUES(3084,131,'Mwanza District');
+INSERT INTO UF VALUES(3085,131,'Nsanje District');
+INSERT INTO UF VALUES(3086,131,'Salima District');
+INSERT INTO UF VALUES(3087,131,'Chitipa district');
+INSERT INTO UF VALUES(3088,131,'Ntcheu District');
+INSERT INTO UF VALUES(3089,131,'Rumphi District');
+INSERT INTO UF VALUES(3090,131,'Dowa District');
+INSERT INTO UF VALUES(3091,131,'Karonga District');
+INSERT INTO UF VALUES(3092,131,'Central Region');
+INSERT INTO UF VALUES(3093,131,'Likoma District');
+INSERT INTO UF VALUES(3094,131,'Kasungu District');
+INSERT INTO UF VALUES(3095,131,'Nkhata Bay District');
+INSERT INTO UF VALUES(3096,131,'Balaka District');
+INSERT INTO UF VALUES(3097,131,'Dedza District');
+INSERT INTO UF VALUES(3098,131,'Thyolo District');
+INSERT INTO UF VALUES(3099,131,'Mchinji District');
+INSERT INTO UF VALUES(3100,131,'Nkhotakota District');
+INSERT INTO UF VALUES(3101,131,'Lilongwe District');
+INSERT INTO UF VALUES(3102,131,'Blantyre District');
+INSERT INTO UF VALUES(3103,131,'Mulanje District');
+INSERT INTO UF VALUES(3104,131,'Mzimba District');
+INSERT INTO UF VALUES(3105,131,'Northern Region');
+INSERT INTO UF VALUES(3106,131,'Southern Region');
+INSERT INTO UF VALUES(3107,131,'Chikwawa District');
+INSERT INTO UF VALUES(3108,131,'Phalombe District');
+INSERT INTO UF VALUES(3109,131,'Chiradzulu District');
+INSERT INTO UF VALUES(3110,131,'Mangochi District');
+INSERT INTO UF VALUES(3111,131,'Ntchisi District');
+INSERT INTO UF VALUES(3112,35,'Kénédougou Province');
+INSERT INTO UF VALUES(3113,35,'Namentenga Province');
+INSERT INTO UF VALUES(3114,35,'Sahel Region');
+INSERT INTO UF VALUES(3115,35,'Centre-Ouest Region');
+INSERT INTO UF VALUES(3116,35,'Nahouri Province');
+INSERT INTO UF VALUES(3117,35,'Passoré Province');
+INSERT INTO UF VALUES(3118,35,'Zoundwéogo Province');
+INSERT INTO UF VALUES(3119,35,'Sissili Province');
+INSERT INTO UF VALUES(3120,35,'Banwa Province');
+INSERT INTO UF VALUES(3121,35,'Bougouriba Province');
+INSERT INTO UF VALUES(3122,35,'Gnagna Province');
+INSERT INTO UF VALUES(3123,35,'Mouhoun');
+INSERT INTO UF VALUES(3124,35,'Yagha Province');
+INSERT INTO UF VALUES(3125,35,'Plateau-Central Region');
+INSERT INTO UF VALUES(3126,35,'Sanmatenga Province');
+INSERT INTO UF VALUES(3127,35,'Centre-Nord Region');
+INSERT INTO UF VALUES(3128,35,'Tapoa Province');
+INSERT INTO UF VALUES(3129,35,'Houet Province');
+INSERT INTO UF VALUES(3130,35,'Zondoma Province');
+INSERT INTO UF VALUES(3131,35,'Boulgou');
+INSERT INTO UF VALUES(3132,35,'Komondjari Province');
+INSERT INTO UF VALUES(3133,35,'Koulpélogo Province');
+INSERT INTO UF VALUES(3134,35,'Tuy Province');
+INSERT INTO UF VALUES(3135,35,'Ioba Province');
+INSERT INTO UF VALUES(3136,35,'Centre');
+INSERT INTO UF VALUES(3137,35,'Sourou Province');
+INSERT INTO UF VALUES(3138,35,'Boucle du Mouhoun Region');
+INSERT INTO UF VALUES(3139,35,'Séno Province');
+INSERT INTO UF VALUES(3140,35,'Sud-Ouest Region');
+INSERT INTO UF VALUES(3141,35,'Oubritenga Province');
+INSERT INTO UF VALUES(3142,35,'Nayala Province');
+INSERT INTO UF VALUES(3143,35,'Gourma Province');
+INSERT INTO UF VALUES(3144,35,'Oudalan Province');
+INSERT INTO UF VALUES(3145,35,'Ziro Province');
+INSERT INTO UF VALUES(3146,35,'Kossi Province');
+INSERT INTO UF VALUES(3147,35,'Kourwéogo Province');
+INSERT INTO UF VALUES(3148,35,'Ganzourgou Province');
+INSERT INTO UF VALUES(3149,35,'Centre-Sud Region');
+INSERT INTO UF VALUES(3150,35,'Yatenga Province');
+INSERT INTO UF VALUES(3151,35,'Loroum Province');
+INSERT INTO UF VALUES(3152,35,'Bazèga Province');
+INSERT INTO UF VALUES(3153,35,'Cascades Region');
+INSERT INTO UF VALUES(3154,35,'Sanguié Province');
+INSERT INTO UF VALUES(3155,35,'Bam Province');
+INSERT INTO UF VALUES(3156,35,'Noumbiel Province');
+INSERT INTO UF VALUES(3157,35,'Kompienga Province');
+INSERT INTO UF VALUES(3158,35,'Est Region');
+INSERT INTO UF VALUES(3159,35,'Léraba Province');
+INSERT INTO UF VALUES(3160,35,'Balé Province');
+INSERT INTO UF VALUES(3161,35,'Kouritenga Province');
+INSERT INTO UF VALUES(3162,35,'Centre-Est Region');
+INSERT INTO UF VALUES(3163,35,'Poni Province');
+INSERT INTO UF VALUES(3164,35,'Nord Region Burkina Faso');
+INSERT INTO UF VALUES(3165,35,'Hauts-Bassins Region');
+INSERT INTO UF VALUES(3166,35,'Soum Province');
+INSERT INTO UF VALUES(3167,35,'Comoé Province');
+INSERT INTO UF VALUES(3168,35,'Kadiogo Province');
+INSERT INTO UF VALUES(3169,167,'Islamabad Capital Territory');
+INSERT INTO UF VALUES(3170,167,'Gilgit-Baltistan');
+INSERT INTO UF VALUES(3171,167,'Khyber Pakhtunkhwa');
+INSERT INTO UF VALUES(3172,167,'Azad Kashmir');
+INSERT INTO UF VALUES(3173,167,'Federally Administered Tribal Areas');
+INSERT INTO UF VALUES(3174,167,'Balochistan');
+INSERT INTO UF VALUES(3175,167,'Sindh');
+INSERT INTO UF VALUES(3176,167,'Punjab');
+INSERT INTO UF VALUES(3177,179,'Al Rayyan Municipality');
+INSERT INTO UF VALUES(3178,179,'Al-Shahaniya');
+INSERT INTO UF VALUES(3179,179,'Al Wakrah');
+INSERT INTO UF VALUES(3180,179,'Madinat ash Shamal');
+INSERT INTO UF VALUES(3181,179,'Doha');
+INSERT INTO UF VALUES(3182,179,'Al Daayen');
+INSERT INTO UF VALUES(3183,179,'Al Khor');
+INSERT INTO UF VALUES(3184,179,'Umm Salal Municipality');
+INSERT INTO UF VALUES(3185,36,'Rumonge Province');
+INSERT INTO UF VALUES(3186,36,'Muyinga Province');
+INSERT INTO UF VALUES(3187,36,'Mwaro Province');
+INSERT INTO UF VALUES(3188,36,'Makamba Province');
+INSERT INTO UF VALUES(3189,36,'Rutana Province');
+INSERT INTO UF VALUES(3190,36,'Cibitoke Province');
+INSERT INTO UF VALUES(3191,36,'Ruyigi Province');
+INSERT INTO UF VALUES(3192,36,'Kayanza Province');
+INSERT INTO UF VALUES(3193,36,'Muramvya Province');
+INSERT INTO UF VALUES(3194,36,'Karuzi Province');
+INSERT INTO UF VALUES(3195,36,'Kirundo Province');
+INSERT INTO UF VALUES(3196,36,'Bubanza Province');
+INSERT INTO UF VALUES(3197,36,'Gitega Province');
+INSERT INTO UF VALUES(3198,36,'Bujumbura Mairie Province');
+INSERT INTO UF VALUES(3199,36,'Ngozi Province');
+INSERT INTO UF VALUES(3200,36,'Bujumbura Rural Province');
+INSERT INTO UF VALUES(3201,36,'Cankuzo Province');
+INSERT INTO UF VALUES(3202,36,'Bururi Province');
+INSERT INTO UF VALUES(3203,235,'Flores Department');
+INSERT INTO UF VALUES(3204,235,'San José Department');
+INSERT INTO UF VALUES(3205,235,'Artigas Department');
+INSERT INTO UF VALUES(3206,235,'Maldonado Department');
+INSERT INTO UF VALUES(3207,235,'Rivera Department');
+INSERT INTO UF VALUES(3208,235,'Colonia Department');
+INSERT INTO UF VALUES(3209,235,'Durazno Department');
+INSERT INTO UF VALUES(3210,235,'Río Negro Department');
+INSERT INTO UF VALUES(3211,235,'Cerro Largo Department');
+INSERT INTO UF VALUES(3212,235,'Paysandú Department');
+INSERT INTO UF VALUES(3213,235,'Canelones Department');
+INSERT INTO UF VALUES(3214,235,'Treinta y Tres Department');
+INSERT INTO UF VALUES(3215,235,'Lavalleja Department');
+INSERT INTO UF VALUES(3216,235,'Rocha Department');
+INSERT INTO UF VALUES(3217,235,'Florida Department');
+INSERT INTO UF VALUES(3218,235,'Montevideo Department');
+INSERT INTO UF VALUES(3219,235,'Soriano Department');
+INSERT INTO UF VALUES(3220,235,'Salto Department');
+INSERT INTO UF VALUES(3221,235,'Tacuarembó Department');
+INSERT INTO UF VALUES(3222,65,'Kafr el-Sheikh Governorate');
+INSERT INTO UF VALUES(3223,65,'Cairo Governorate');
+INSERT INTO UF VALUES(3224,65,'Damietta Governorate');
+INSERT INTO UF VALUES(3225,65,'Aswan Governorate');
+INSERT INTO UF VALUES(3226,65,'Sohag Governorate');
+INSERT INTO UF VALUES(3227,65,'North Sinai Governorate');
+INSERT INTO UF VALUES(3228,65,'Monufia Governorate');
+INSERT INTO UF VALUES(3229,65,'Port Said Governorate');
+INSERT INTO UF VALUES(3230,65,'Beni Suef Governorate');
+INSERT INTO UF VALUES(3231,65,'Matrouh Governorate');
+INSERT INTO UF VALUES(3232,65,'Qalyubia Governorate');
+INSERT INTO UF VALUES(3233,65,'Suez Governorate');
+INSERT INTO UF VALUES(3234,65,'Gharbia Governorate');
+INSERT INTO UF VALUES(3235,65,'Alexandria Governorate');
+INSERT INTO UF VALUES(3236,65,'Asyut Governorate');
+INSERT INTO UF VALUES(3237,65,'South Sinai Governorate');
+INSERT INTO UF VALUES(3238,65,'Faiyum Governorate');
+INSERT INTO UF VALUES(3239,65,'Giza Governorate');
+INSERT INTO UF VALUES(3240,65,'Red Sea Governorate');
+INSERT INTO UF VALUES(3241,65,'Beheira Governorate');
+INSERT INTO UF VALUES(3242,65,'Luxor Governorate');
+INSERT INTO UF VALUES(3243,65,'Minya Governorate');
+INSERT INTO UF VALUES(3244,65,'Ismailia Governorate');
+INSERT INTO UF VALUES(3245,65,'Dakahlia Governorate');
+INSERT INTO UF VALUES(3246,65,'New Valley Governorate');
+INSERT INTO UF VALUES(3247,65,'Qena Governorate');
+INSERT INTO UF VALUES(3248,140,'Agaléga');
+INSERT INTO UF VALUES(3249,140,'Rodrigues');
+INSERT INTO UF VALUES(3250,140,'Pamplemousses District');
+INSERT INTO UF VALUES(3251,140,'Cargados Carajos');
+INSERT INTO UF VALUES(3252,140,'Vacoas-Phoenix');
+INSERT INTO UF VALUES(3253,140,'Moka District');
+INSERT INTO UF VALUES(3254,140,'Flacq District');
+INSERT INTO UF VALUES(3255,140,'Curepipe');
+INSERT INTO UF VALUES(3256,140,'Port Louis');
+INSERT INTO UF VALUES(3257,140,'Savanne District');
+INSERT INTO UF VALUES(3258,140,'Quatre Bornes');
+INSERT INTO UF VALUES(3259,140,'Rivière Noire District');
+INSERT INTO UF VALUES(3260,140,'Port Louis District');
+INSERT INTO UF VALUES(3261,140,'Rivière du Rempart District');
+INSERT INTO UF VALUES(3262,140,'Beau Bassin-Rose Hill');
+INSERT INTO UF VALUES(3263,140,'Plaines Wilhems District');
+INSERT INTO UF VALUES(3264,140,'Grand Port District');
+INSERT INTO UF VALUES(3265,149,'Guelmim');
+INSERT INTO UF VALUES(3266,149,'Aousserd (EH)');
+INSERT INTO UF VALUES(3267,149,'Al Hoceïma');
+INSERT INTO UF VALUES(3268,149,'Larache');
+INSERT INTO UF VALUES(3269,149,'Ouarzazate');
+INSERT INTO UF VALUES(3270,149,'Boulemane');
+INSERT INTO UF VALUES(3271,149,'L Oriental');
+INSERT INTO UF VALUES(3272,149,'Béni Mellal');
+INSERT INTO UF VALUES(3274,149,'Chichaoua');
+INSERT INTO UF VALUES(3275,149,'Boujdour (EH)');
+INSERT INTO UF VALUES(3276,149,'Khémisset');
+INSERT INTO UF VALUES(3277,149,'Tiznit');
+INSERT INTO UF VALUES(3278,149,'Béni Mellal-Khénifra');
+INSERT INTO UF VALUES(3279,149,'Sidi Kacem');
+INSERT INTO UF VALUES(3280,149,'El Jadida');
+INSERT INTO UF VALUES(3281,149,'Nador');
+INSERT INTO UF VALUES(3282,149,'Settat');
+INSERT INTO UF VALUES(3283,149,'Zagora');
+INSERT INTO UF VALUES(3284,149,'Médiouna');
+INSERT INTO UF VALUES(3285,149,'Berkane');
+INSERT INTO UF VALUES(3286,149,'Tan-Tan (EH-partial)');
+INSERT INTO UF VALUES(3287,149,'Nouaceur');
+INSERT INTO UF VALUES(3288,149,'Marrakesh-Safi');
+INSERT INTO UF VALUES(3289,149,'Sefrou');
+INSERT INTO UF VALUES(3290,149,'Drâa-Tafilalet');
+INSERT INTO UF VALUES(3291,149,'El Hajeb');
+INSERT INTO UF VALUES(3292,149,'Es-Semara (EH-partial)');
+INSERT INTO UF VALUES(3293,149,'Laâyoune (EH)');
+INSERT INTO UF VALUES(3294,149,'Inezgane-Ait Melloul');
+INSERT INTO UF VALUES(3295,149,'Souss-Massa');
+INSERT INTO UF VALUES(3296,149,'Taza');
+INSERT INTO UF VALUES(3297,149,'Assa-Zag (EH-partial)');
+INSERT INTO UF VALUES(3298,149,'Laâyoune-Sakia El Hamra (EH-partial)');
+INSERT INTO UF VALUES(3299,149,'Errachidia');
+INSERT INTO UF VALUES(3300,149,'Fahs-Anjra');
+INSERT INTO UF VALUES(3301,149,'Figuig');
+INSERT INTO UF VALUES(3302,149,'Chtouka-Ait Baha');
+INSERT INTO UF VALUES(3303,149,'Casablanca-Settat');
+INSERT INTO UF VALUES(3304,149,'Benslimane');
+INSERT INTO UF VALUES(3305,149,'Guelmim-Oued Noun (EH-partial)');
+INSERT INTO UF VALUES(3306,149,'Dakhla-Oued Ed-Dahab (EH)');
+INSERT INTO UF VALUES(3307,149,'Jerada');
+INSERT INTO UF VALUES(3308,149,'Kénitra');
+INSERT INTO UF VALUES(3309,149,'El Kelâa des Sraghna');
+INSERT INTO UF VALUES(3310,149,'Chefchaouen');
+INSERT INTO UF VALUES(3311,149,'Safi');
+INSERT INTO UF VALUES(3312,149,'Tata');
+INSERT INTO UF VALUES(3313,149,'Fès-Meknès');
+INSERT INTO UF VALUES(3314,149,'Taroudannt');
+INSERT INTO UF VALUES(3315,149,'Moulay Yacoub');
+INSERT INTO UF VALUES(3316,149,'Essaouira');
+INSERT INTO UF VALUES(3317,149,'Khénifra');
+INSERT INTO UF VALUES(3318,149,'Tétouan');
+INSERT INTO UF VALUES(3319,149,'Oued Ed-Dahab (EH)');
+INSERT INTO UF VALUES(3320,149,'Al Haouz');
+INSERT INTO UF VALUES(3321,149,'Azilal');
+INSERT INTO UF VALUES(3322,149,'Taourirt');
+INSERT INTO UF VALUES(3323,149,'Taounate');
+INSERT INTO UF VALUES(3324,149,'Tanger-Tétouan-Al Hoceïma');
+INSERT INTO UF VALUES(3325,149,'Ifrane');
+INSERT INTO UF VALUES(3326,149,'Khouribga');
+INSERT INTO UF VALUES(3327,150,'Cabo Delgado Province');
+INSERT INTO UF VALUES(3328,150,'Zambezia Province');
+INSERT INTO UF VALUES(3329,150,'Gaza Province');
+INSERT INTO UF VALUES(3330,150,'Inhambane Province');
+INSERT INTO UF VALUES(3331,150,'Sofala Province');
+INSERT INTO UF VALUES(3332,150,'Maputo Province');
+INSERT INTO UF VALUES(3333,150,'Niassa Province');
+INSERT INTO UF VALUES(3334,150,'Tete Province');
+INSERT INTO UF VALUES(3335,150,'Maputo');
+INSERT INTO UF VALUES(3336,150,'Nampula Province');
+INSERT INTO UF VALUES(3337,150,'Manica Province');
+INSERT INTO UF VALUES(3338,139,'Hodh Ech Chargui Region');
+INSERT INTO UF VALUES(3339,139,'Brakna Region');
+INSERT INTO UF VALUES(3340,139,'Tiris Zemmour Region');
+INSERT INTO UF VALUES(3341,139,'Gorgol Region');
+INSERT INTO UF VALUES(3342,139,'Inchiri Region');
+INSERT INTO UF VALUES(3343,139,'Nouakchott-Nord Region');
+INSERT INTO UF VALUES(3344,139,'Adrar Region');
+INSERT INTO UF VALUES(3345,139,'Tagant Region');
+INSERT INTO UF VALUES(3346,139,'Dakhlet Nouadhibou');
+INSERT INTO UF VALUES(3347,139,'Nouakchott-Sud Region');
+INSERT INTO UF VALUES(3348,139,'Trarza Region');
+INSERT INTO UF VALUES(3349,139,'Assaba Region');
+INSERT INTO UF VALUES(3350,139,'Guidimaka Region');
+INSERT INTO UF VALUES(3351,139,'Hodh El Gharbi Region');
+INSERT INTO UF VALUES(3352,139,'Nouakchott-Ouest Region');
+INSERT INTO UF VALUES(3353,223,'Western Tobago');
+INSERT INTO UF VALUES(3354,223,'Couva-Tabaquite-Talparo Regional Corporation');
+INSERT INTO UF VALUES(3355,223,'Eastern Tobago');
+INSERT INTO UF VALUES(3356,223,'Rio Claro-Mayaro Regional Corporation');
+INSERT INTO UF VALUES(3357,223,'San Juan-Laventille Regional Corporation');
+INSERT INTO UF VALUES(3358,223,'Tunapuna-Piarco Regional Corporation');
+INSERT INTO UF VALUES(3359,223,'San Fernando');
+INSERT INTO UF VALUES(3360,223,'Point Fortin');
+INSERT INTO UF VALUES(3361,223,'Sangre Grande Regional Corporation');
+INSERT INTO UF VALUES(3362,223,'Arima');
+INSERT INTO UF VALUES(3363,223,'Port of Spain');
+INSERT INTO UF VALUES(3364,223,'Siparia Regional Corporation');
+INSERT INTO UF VALUES(3365,223,'Penal-Debe Regional Corporation');
+INSERT INTO UF VALUES(3366,223,'Chaguanas');
+INSERT INTO UF VALUES(3367,223,'Diego Martin Regional Corporation');
+INSERT INTO UF VALUES(3368,223,'Princes Town Regional Corporation');
+INSERT INTO UF VALUES(3369,226,'Mary Region');
+INSERT INTO UF VALUES(3370,226,'Lebap Region');
+INSERT INTO UF VALUES(3371,226,'Ashgabat');
+INSERT INTO UF VALUES(3372,226,'Balkan Region');
+INSERT INTO UF VALUES(3373,226,'Daşoguz Region');
+INSERT INTO UF VALUES(3374,226,'Ahal Region');
+INSERT INTO UF VALUES(3375,27,'Beni Department');
+INSERT INTO UF VALUES(3376,27,'Oruro Department');
+INSERT INTO UF VALUES(3377,27,'Santa Cruz Department');
+INSERT INTO UF VALUES(3378,27,'Tarija Department');
+INSERT INTO UF VALUES(3379,27,'Pando Department');
+INSERT INTO UF VALUES(3380,27,'La Paz Department');
+INSERT INTO UF VALUES(3381,27,'Cochabamba Department');
+INSERT INTO UF VALUES(3382,27,'Chuquisaca Department');
+INSERT INTO UF VALUES(3383,27,'Potosí Department');
+INSERT INTO UF VALUES(3384,188,'Saint George Parish');
+INSERT INTO UF VALUES(3385,188,'Saint Patrick Parish');
+INSERT INTO UF VALUES(3386,188,'Saint Andrew Parish');
+INSERT INTO UF VALUES(3387,188,'Saint David Parish');
+INSERT INTO UF VALUES(3388,188,'Grenadines Parish');
+INSERT INTO UF VALUES(3389,188,'Charlotte Parish');
+INSERT INTO UF VALUES(3390,231,'Sharjah Emirate');
+INSERT INTO UF VALUES(3391,231,'Dubai');
+INSERT INTO UF VALUES(3392,231,'Umm al-Quwain');
+INSERT INTO UF VALUES(3393,231,'Fujairah');
+INSERT INTO UF VALUES(3394,231,'Ras al-Khaimah');
+INSERT INTO UF VALUES(3395,231,'Ajman Emirate');
+INSERT INTO UF VALUES(3396,231,'Abu Dhabi Emirate');
+INSERT INTO UF VALUES(3397,217,'districts of Republican Subordination');
+INSERT INTO UF VALUES(3398,217,'Khatlon Province');
+INSERT INTO UF VALUES(3399,217,'Gorno-Badakhshan Autonomous Province');
+INSERT INTO UF VALUES(3400,217,'Sughd Province');
+INSERT INTO UF VALUES(3401,216,'Tainan County');
+INSERT INTO UF VALUES(3402,216,'Yilan County');
+INSERT INTO UF VALUES(3403,216,'Penghu County');
+INSERT INTO UF VALUES(3404,216,'Changhua County');
+INSERT INTO UF VALUES(3405,216,'Pingtung County');
+INSERT INTO UF VALUES(3406,216,'Taichung');
+INSERT INTO UF VALUES(3407,216,'Nantou County');
+INSERT INTO UF VALUES(3408,216,'Chiayi County');
+INSERT INTO UF VALUES(3409,216,'Kaohsiung County');
+INSERT INTO UF VALUES(3410,216,'Taitung County');
+INSERT INTO UF VALUES(3411,216,'Hualien County');
+INSERT INTO UF VALUES(3412,216,'Kaohsiung');
+INSERT INTO UF VALUES(3413,216,'Miaoli County');
+INSERT INTO UF VALUES(3414,216,'Taichung County');
+INSERT INTO UF VALUES(3415,216,'Kinmen');
+INSERT INTO UF VALUES(3416,216,'Yunlin County');
+INSERT INTO UF VALUES(3417,216,'Hsinchu');
+INSERT INTO UF VALUES(3418,216,'Chiayi City');
+INSERT INTO UF VALUES(3419,216,'Taoyuan City');
+INSERT INTO UF VALUES(3420,216,'Lienchiang County');
+INSERT INTO UF VALUES(3421,216,'Tainan');
+INSERT INTO UF VALUES(3422,216,'Taipei');
+INSERT INTO UF VALUES(3423,216,'Hsinchu County');
+INSERT INTO UF VALUES(3424,68,'Northern Red Sea Region');
+INSERT INTO UF VALUES(3425,68,'Anseba Region');
+INSERT INTO UF VALUES(3426,68,'Maekel Region');
+INSERT INTO UF VALUES(3427,68,'Debub Region');
+INSERT INTO UF VALUES(3428,68,'Gash-Barka Region');
+INSERT INTO UF VALUES(3429,68,'Southern Red Sea Region');
+INSERT INTO UF VALUES(3430,100,'Southern Peninsula Region');
+INSERT INTO UF VALUES(3431,100,'Capital Region');
+INSERT INTO UF VALUES(3432,100,'Westfjords');
+INSERT INTO UF VALUES(3433,100,'Eastern Region');
+INSERT INTO UF VALUES(3434,100,'Southern Region');
+INSERT INTO UF VALUES(3435,100,'Northwestern Region');
+INSERT INTO UF VALUES(3436,100,'Western Region');
+INSERT INTO UF VALUES(3437,100,'Northeastern Region');
+INSERT INTO UF VALUES(3438,67,'Río Muni');
+INSERT INTO UF VALUES(3439,67,'Kié-Ntem Province');
+INSERT INTO UF VALUES(3440,67,'Wele-Nzas Province');
+INSERT INTO UF VALUES(3441,67,'Litoral Province');
+INSERT INTO UF VALUES(3442,67,'Insular Region');
+INSERT INTO UF VALUES(3443,67,'Bioko Sur Province');
+INSERT INTO UF VALUES(3444,67,'Annobón Province');
+INSERT INTO UF VALUES(3445,67,'Centro Sur Province');
+INSERT INTO UF VALUES(3446,67,'Bioko Norte Province');
+INSERT INTO UF VALUES(3447,142,'Chihuahua');
+INSERT INTO UF VALUES(3448,142,'Oaxaca');
+INSERT INTO UF VALUES(3449,142,'Sinaloa');
+INSERT INTO UF VALUES(3450,142,'México');
+INSERT INTO UF VALUES(3451,142,'Chiapas');
+INSERT INTO UF VALUES(3452,142,'Nuevo León');
+INSERT INTO UF VALUES(3453,142,'Durango');
+INSERT INTO UF VALUES(3454,142,'Tabasco');
+INSERT INTO UF VALUES(3455,142,'Querétaro');
+INSERT INTO UF VALUES(3456,142,'Aguascalientes');
+INSERT INTO UF VALUES(3457,142,'Baja California');
+INSERT INTO UF VALUES(3458,142,'Tlaxcala');
+INSERT INTO UF VALUES(3459,142,'Guerrero');
+INSERT INTO UF VALUES(3460,142,'Baja California Sur');
+INSERT INTO UF VALUES(3461,142,'San Luis Potosí');
+INSERT INTO UF VALUES(3462,142,'Zacatecas');
+INSERT INTO UF VALUES(3463,142,'Tamaulipas');
+INSERT INTO UF VALUES(3464,142,'Veracruz');
+INSERT INTO UF VALUES(3465,142,'Morelos');
+INSERT INTO UF VALUES(3466,142,'Yucatán');
+INSERT INTO UF VALUES(3467,142,'Quintana Roo');
+INSERT INTO UF VALUES(3468,142,'Sonora');
+INSERT INTO UF VALUES(3469,142,'Guanajuato');
+INSERT INTO UF VALUES(3470,142,'Hidalgo');
+INSERT INTO UF VALUES(3471,142,'Coahuila');
+INSERT INTO UF VALUES(3472,142,'Colima');
+INSERT INTO UF VALUES(3473,142,'Mexico City');
+INSERT INTO UF VALUES(3474,142,'Michoacán');
+INSERT INTO UF VALUES(3475,142,'Campeche');
+INSERT INTO UF VALUES(3476,142,'Puebla');
+INSERT INTO UF VALUES(3477,142,'Nayarit');
+INSERT INTO UF VALUES(3478,219,'Krabi');
+INSERT INTO UF VALUES(3479,219,'Ranong');
+INSERT INTO UF VALUES(3480,219,'Nong Bua Lam Phu');
+INSERT INTO UF VALUES(3481,219,'Samut Prakan');
+INSERT INTO UF VALUES(3482,219,'Surat Thani');
+INSERT INTO UF VALUES(3483,219,'Lamphun');
+INSERT INTO UF VALUES(3484,219,'Nong Khai');
+INSERT INTO UF VALUES(3485,219,'Khon Kaen');
+INSERT INTO UF VALUES(3486,219,'Chanthaburi');
+INSERT INTO UF VALUES(3487,219,'Saraburi');
+INSERT INTO UF VALUES(3488,219,'Phatthalung');
+INSERT INTO UF VALUES(3489,219,'Uttaradit');
+INSERT INTO UF VALUES(3490,219,'Sing Buri');
+INSERT INTO UF VALUES(3491,219,'Chiang Mai');
+INSERT INTO UF VALUES(3492,219,'Nakhon Sawan');
+INSERT INTO UF VALUES(3493,219,'Yala');
+INSERT INTO UF VALUES(3494,219,'Phra Nakhon Si Ayutthaya');
+INSERT INTO UF VALUES(3495,219,'Nonthaburi');
+INSERT INTO UF VALUES(3496,219,'Trat');
+INSERT INTO UF VALUES(3497,219,'Nakhon Ratchasima');
+INSERT INTO UF VALUES(3498,219,'Chiang Rai');
+INSERT INTO UF VALUES(3499,219,'Ratchaburi');
+INSERT INTO UF VALUES(3500,219,'Pathum Thani');
+INSERT INTO UF VALUES(3501,219,'Sakon Nakhon');
+INSERT INTO UF VALUES(3502,219,'Samut Songkhram');
+INSERT INTO UF VALUES(3503,219,'Nakhon Pathom');
+INSERT INTO UF VALUES(3504,219,'Samut Sakhon');
+INSERT INTO UF VALUES(3505,219,'Mae Hong Son');
+INSERT INTO UF VALUES(3506,219,'Phitsanulok');
+INSERT INTO UF VALUES(3507,219,'Pattaya');
+INSERT INTO UF VALUES(3508,219,'Prachuap Khiri Khan');
+INSERT INTO UF VALUES(3509,219,'Loei');
+INSERT INTO UF VALUES(3510,219,'Roi Et');
+INSERT INTO UF VALUES(3511,219,'Kanchanaburi');
+INSERT INTO UF VALUES(3512,219,'Ubon Ratchathani');
+INSERT INTO UF VALUES(3513,219,'Chon Buri');
+INSERT INTO UF VALUES(3514,219,'Phichit');
+INSERT INTO UF VALUES(3515,219,'Phetchabun');
+INSERT INTO UF VALUES(3516,219,'Kamphaeng Phet');
+INSERT INTO UF VALUES(3517,219,'Maha Sarakham');
+INSERT INTO UF VALUES(3518,219,'Rayong');
+INSERT INTO UF VALUES(3519,219,'Ang Thong');
+INSERT INTO UF VALUES(3520,219,'Nakhon Si Thammarat');
+INSERT INTO UF VALUES(3521,219,'Yasothon');
+INSERT INTO UF VALUES(3522,219,'Chai Nat');
+INSERT INTO UF VALUES(3523,219,'Amnat Charoen');
+INSERT INTO UF VALUES(3524,219,'Suphan Buri');
+INSERT INTO UF VALUES(3525,219,'Tak');
+INSERT INTO UF VALUES(3526,219,'Chumphon');
+INSERT INTO UF VALUES(3527,219,'Udon Thani');
+INSERT INTO UF VALUES(3528,219,'Phrae');
+INSERT INTO UF VALUES(3529,219,'Sa Kaeo');
+INSERT INTO UF VALUES(3530,219,'Nan');
+INSERT INTO UF VALUES(3531,219,'Surin');
+INSERT INTO UF VALUES(3532,219,'Phetchaburi');
+INSERT INTO UF VALUES(3533,219,'Bueng Kan');
+INSERT INTO UF VALUES(3534,219,'Buri Ram');
+INSERT INTO UF VALUES(3535,219,'Nakhon Nayok');
+INSERT INTO UF VALUES(3536,219,'Phuket');
+INSERT INTO UF VALUES(3537,219,'Satun');
+INSERT INTO UF VALUES(3538,219,'Phayao');
+INSERT INTO UF VALUES(3539,219,'Songkhla');
+INSERT INTO UF VALUES(3540,219,'Pattani');
+INSERT INTO UF VALUES(3541,219,'Trang');
+INSERT INTO UF VALUES(3542,219,'Prachin Buri');
+INSERT INTO UF VALUES(3543,219,'Lop Buri');
+INSERT INTO UF VALUES(3544,219,'Lampang');
+INSERT INTO UF VALUES(3545,219,'Sukhothai');
+INSERT INTO UF VALUES(3546,219,'Mukdahan');
+INSERT INTO UF VALUES(3547,219,'Si Sa Ket');
+INSERT INTO UF VALUES(3548,219,'Nakhon Phanom');
+INSERT INTO UF VALUES(3549,219,'Phangnga');
+INSERT INTO UF VALUES(3550,219,'Kalasin');
+INSERT INTO UF VALUES(3551,219,'Uthai Thani');
+INSERT INTO UF VALUES(3552,219,'Chachoengsao');
+INSERT INTO UF VALUES(3553,219,'Narathiwat');
+INSERT INTO UF VALUES(3554,219,'Bangkok');
+INSERT INTO UF VALUES(3555,69,'Hiiu County');
+INSERT INTO UF VALUES(3556,69,'Viljandi County');
+INSERT INTO UF VALUES(3557,69,'Tartu County');
+INSERT INTO UF VALUES(3558,69,'Valga County');
+INSERT INTO UF VALUES(3559,69,'Rapla County');
+INSERT INTO UF VALUES(3560,69,'Võru County');
+INSERT INTO UF VALUES(3561,69,'Saare County');
+INSERT INTO UF VALUES(3562,69,'Pärnu County');
+INSERT INTO UF VALUES(3563,69,'Põlva County');
+INSERT INTO UF VALUES(3564,69,'Lääne-Viru County');
+INSERT INTO UF VALUES(3565,69,'Jõgeva County');
+INSERT INTO UF VALUES(3566,69,'Järva County');
+INSERT INTO UF VALUES(3567,69,'Harju County');
+INSERT INTO UF VALUES(3568,69,'Lääne County');
+INSERT INTO UF VALUES(3569,69,'Ida-Viru County');
+INSERT INTO UF VALUES(3570,43,'Moyen-Chari Region');
+INSERT INTO UF VALUES(3571,43,'Mayo-Kebbi Ouest Region');
+INSERT INTO UF VALUES(3572,43,'Sila Region');
+INSERT INTO UF VALUES(3573,43,'Hadjer-Lamis');
+INSERT INTO UF VALUES(3574,43,'Borkou');
+INSERT INTO UF VALUES(3575,43,'Ennedi-Est');
+INSERT INTO UF VALUES(3576,43,'Guéra Region');
+INSERT INTO UF VALUES(3577,43,'Lac Region');
+INSERT INTO UF VALUES(3578,43,'Ennedi Region');
+INSERT INTO UF VALUES(3579,43,'Tandjilé Region');
+INSERT INTO UF VALUES(3580,43,'Mayo-Kebbi Est Region');
+INSERT INTO UF VALUES(3581,43,'Wadi Fira Region');
+INSERT INTO UF VALUES(3582,43,'Ouaddaï Region');
+INSERT INTO UF VALUES(3583,43,'Bahr el Gazel');
+INSERT INTO UF VALUES(3584,43,'Ennedi-Ouest');
+INSERT INTO UF VALUES(3585,43,'Logone Occidental Region');
+INSERT INTO UF VALUES(3586,43,'N Djamena');
+INSERT INTO UF VALUES(3587,43,'Tibesti Region');
+INSERT INTO UF VALUES(3588,43,'Kanem Region');
+INSERT INTO UF VALUES(3589,43,'Mandoul Region');
+INSERT INTO UF VALUES(3590,43,'Batha Region');
+INSERT INTO UF VALUES(3591,43,'Logone Oriental Region');
+INSERT INTO UF VALUES(3592,43,'Salamat Region');
+INSERT INTO UF VALUES(3593,17,'Berry Islands');
+INSERT INTO UF VALUES(3594,17,'Nichollstown and Berry Islands');
+INSERT INTO UF VALUES(3595,17,'Green Turtle Cay');
+INSERT INTO UF VALUES(3596,17,'Central Eleuthera');
+INSERT INTO UF VALUES(3597,17,'Governor s Harbour');
+INSERT INTO UF VALUES(3598,17,'High Rock');
+INSERT INTO UF VALUES(3599,17,'West Grand Bahama');
+INSERT INTO UF VALUES(3600,17,'Rum Cay District');
+INSERT INTO UF VALUES(3601,17,'Acklins');
+INSERT INTO UF VALUES(3602,17,'North Eleuthera');
+INSERT INTO UF VALUES(3603,17,'Central Abaco');
+INSERT INTO UF VALUES(3604,17,'Marsh Harbour');
+INSERT INTO UF VALUES(3605,17,'Black Point');
+INSERT INTO UF VALUES(3606,17,'Sandy Point');
+INSERT INTO UF VALUES(3607,17,'South Eleuthera');
+INSERT INTO UF VALUES(3608,17,'South Abaco');
+INSERT INTO UF VALUES(3609,17,'Inagua');
+INSERT INTO UF VALUES(3610,17,'Long Island');
+INSERT INTO UF VALUES(3611,17,'Cat Island');
+INSERT INTO UF VALUES(3612,17,'Exuma');
+INSERT INTO UF VALUES(3613,17,'Harbour Island');
+INSERT INTO UF VALUES(3614,17,'East Grand Bahama');
+INSERT INTO UF VALUES(3615,17,'Ragged Island');
+INSERT INTO UF VALUES(3616,17,'North Abaco');
+INSERT INTO UF VALUES(3617,17,'North Andros');
+INSERT INTO UF VALUES(3618,17,'Kemps Bay');
+INSERT INTO UF VALUES(3619,17,'Fresh Creek');
+INSERT INTO UF VALUES(3620,17,'San Salvador and Rum Cay');
+INSERT INTO UF VALUES(3621,17,'Crooked Island');
+INSERT INTO UF VALUES(3622,17,'South Andros');
+INSERT INTO UF VALUES(3623,17,'Rock Sound');
+INSERT INTO UF VALUES(3624,17,'Hope Town');
+INSERT INTO UF VALUES(3625,17,'Mangrove Cay');
+INSERT INTO UF VALUES(3626,17,'Freeport');
+INSERT INTO UF VALUES(3627,17,'San Salvador Island');
+INSERT INTO UF VALUES(3628,17,'Acklins and Crooked Islands');
+INSERT INTO UF VALUES(3629,17,'Bimini');
+INSERT INTO UF VALUES(3630,17,'Spanish Wells');
+INSERT INTO UF VALUES(3631,17,'Central Andros');
+INSERT INTO UF VALUES(3632,17,'Grand Cay');
+INSERT INTO UF VALUES(3633,17,'Mayaguana District');
+INSERT INTO UF VALUES(3634,11,'San Juan Province');
+INSERT INTO UF VALUES(3635,11,'Santiago del Estero Province');
+INSERT INTO UF VALUES(3636,11,'San Luis Province');
+INSERT INTO UF VALUES(3637,11,'Tucumán Province');
+INSERT INTO UF VALUES(3638,11,'Corrientes');
+INSERT INTO UF VALUES(3639,11,'Río Negro Province');
+INSERT INTO UF VALUES(3640,11,'Chaco Province');
+INSERT INTO UF VALUES(3641,11,'Santa Fe Province');
+INSERT INTO UF VALUES(3642,11,'Córdoba Province');
+INSERT INTO UF VALUES(3643,11,'Salta Province');
+INSERT INTO UF VALUES(3644,11,'Misiones Province');
+INSERT INTO UF VALUES(3645,11,'Jujuy Province');
+INSERT INTO UF VALUES(3646,11,'Mendoza');
+INSERT INTO UF VALUES(3647,11,'Catamarca Province');
+INSERT INTO UF VALUES(3648,11,'Neuquén Province');
+INSERT INTO UF VALUES(3649,11,'Santa Cruz Province');
+INSERT INTO UF VALUES(3650,11,'Tierra del Fuego Province');
+INSERT INTO UF VALUES(3651,11,'Chubut Province');
+INSERT INTO UF VALUES(3652,11,'Formosa Province');
+INSERT INTO UF VALUES(3653,11,'La Rioja Province');
+INSERT INTO UF VALUES(3654,11,'Entre Ríos Province');
+INSERT INTO UF VALUES(3655,11,'La Pampa');
+INSERT INTO UF VALUES(3656,11,'Buenos Aires Province');
+INSERT INTO UF VALUES(3657,90,'Quiché Department');
+INSERT INTO UF VALUES(3658,90,'Jalapa Department');
+INSERT INTO UF VALUES(3659,90,'Izabal Department');
+INSERT INTO UF VALUES(3660,90,'Suchitepéquez Department');
+INSERT INTO UF VALUES(3661,90,'Sololá Department');
+INSERT INTO UF VALUES(3662,90,'El Progreso Department');
+INSERT INTO UF VALUES(3663,90,'Totonicapán Department');
+INSERT INTO UF VALUES(3664,90,'Retalhuleu Department');
+INSERT INTO UF VALUES(3665,90,'Santa Rosa Department');
+INSERT INTO UF VALUES(3666,90,'Chiquimula Department');
+INSERT INTO UF VALUES(3667,90,'San Marcos Department');
+INSERT INTO UF VALUES(3668,90,'Quetzaltenango Department');
+INSERT INTO UF VALUES(3669,90,'Petén Department');
+INSERT INTO UF VALUES(3670,90,'Huehuetenango Department');
+INSERT INTO UF VALUES(3671,90,'Alta Verapaz Department');
+INSERT INTO UF VALUES(3672,90,'Guatemala Department');
+INSERT INTO UF VALUES(3673,90,'Jutiapa Department');
+INSERT INTO UF VALUES(3674,90,'Baja Verapaz Department');
+INSERT INTO UF VALUES(3675,90,'Chimaltenango Department');
+INSERT INTO UF VALUES(3676,90,'Sacatepéquez Department');
+INSERT INTO UF VALUES(3677,90,'Escuintla Department');
+INSERT INTO UF VALUES(3678,173,'Madre de Dios');
+INSERT INTO UF VALUES(3679,173,'Huancavelica');
+INSERT INTO UF VALUES(3680,173,'Áncash');
+INSERT INTO UF VALUES(3681,173,'Arequipa');
+INSERT INTO UF VALUES(3682,173,'Puno');
+INSERT INTO UF VALUES(3683,173,'La Libertad');
+INSERT INTO UF VALUES(3684,173,'Ucayali');
+INSERT INTO UF VALUES(3685,173,'Amazonas');
+INSERT INTO UF VALUES(3686,173,'Pasco');
+INSERT INTO UF VALUES(3687,173,'Huanuco');
+INSERT INTO UF VALUES(3688,173,'Cajamarca');
+INSERT INTO UF VALUES(3689,173,'Tumbes');
+INSERT INTO UF VALUES(3691,173,'Cusco');
+INSERT INTO UF VALUES(3692,173,'Ayacucho');
+INSERT INTO UF VALUES(3693,173,'Junín');
+INSERT INTO UF VALUES(3694,173,'San Martín');
+INSERT INTO UF VALUES(3695,173,'Lima');
+INSERT INTO UF VALUES(3696,173,'Tacna');
+INSERT INTO UF VALUES(3697,173,'Piura');
+INSERT INTO UF VALUES(3698,173,'Moquegua');
+INSERT INTO UF VALUES(3699,173,'Apurímac');
+INSERT INTO UF VALUES(3700,173,'Ica');
+INSERT INTO UF VALUES(3701,173,'Callao');
+INSERT INTO UF VALUES(3702,173,'Lambayeque');
+INSERT INTO UF VALUES(3703,10,'Redonda');
+INSERT INTO UF VALUES(3704,10,'Saint Peter Parish');
+INSERT INTO UF VALUES(3705,10,'Saint Paul Parish');
+INSERT INTO UF VALUES(3706,10,'Saint John Parish');
+INSERT INTO UF VALUES(3707,10,'Saint Mary Parish');
+INSERT INTO UF VALUES(3708,10,'Barbuda');
+INSERT INTO UF VALUES(3709,10,'Saint George Parish');
+INSERT INTO UF VALUES(3710,10,'Saint Philip Parish');
+INSERT INTO UF VALUES(3711,196,'South Bačka District');
+INSERT INTO UF VALUES(3712,196,'Pirot District');
+INSERT INTO UF VALUES(3713,196,'South Banat District');
+INSERT INTO UF VALUES(3714,196,'North Bačka District');
+INSERT INTO UF VALUES(3715,196,'Jablanica District');
+INSERT INTO UF VALUES(3716,196,'Central Banat District');
+INSERT INTO UF VALUES(3717,196,'Bor District');
+INSERT INTO UF VALUES(3718,196,'Toplica District');
+INSERT INTO UF VALUES(3719,196,'Mačva District');
+INSERT INTO UF VALUES(3720,196,'Rasina District');
+INSERT INTO UF VALUES(3721,196,'Pčinja District');
+INSERT INTO UF VALUES(3722,196,'Nišava District');
+INSERT INTO UF VALUES(3723,248,'Prizren District');
+INSERT INTO UF VALUES(3724,196,'Kolubara District');
+INSERT INTO UF VALUES(3725,196,'Raška District');
+INSERT INTO UF VALUES(3726,196,'West Bačka District');
+INSERT INTO UF VALUES(3727,196,'Moravica District');
+INSERT INTO UF VALUES(3728,196,'Belgrade');
+INSERT INTO UF VALUES(3729,196,'Zlatibor District');
+INSERT INTO UF VALUES(3731,196,'Zaječar District');
+INSERT INTO UF VALUES(3732,196,'Braničevo District');
+INSERT INTO UF VALUES(3733,196,'Vojvodina');
+INSERT INTO UF VALUES(3734,196,'Šumadija District');
+INSERT INTO UF VALUES(3736,196,'North Banat District');
+INSERT INTO UF VALUES(3737,196,'Pomoravlje District');
+INSERT INTO UF VALUES(3738,248,'Peć District');
+INSERT INTO UF VALUES(3740,196,'Srem District');
+INSERT INTO UF VALUES(3741,196,'Podunavlje District');
+INSERT INTO UF VALUES(3742,108,'Westmoreland Parish');
+INSERT INTO UF VALUES(3743,108,'Saint Elizabeth Parish');
+INSERT INTO UF VALUES(3744,108,'Saint Ann Parish');
+INSERT INTO UF VALUES(3745,108,'Saint James Parish');
+INSERT INTO UF VALUES(3746,108,'Saint Catherine Parish');
+INSERT INTO UF VALUES(3747,108,'Saint Mary Parish');
+INSERT INTO UF VALUES(3748,108,'Kingston Parish');
+INSERT INTO UF VALUES(3749,108,'Hanover Parish');
+INSERT INTO UF VALUES(3750,108,'Saint Thomas Parish');
+INSERT INTO UF VALUES(3751,108,'Saint Andrew');
+INSERT INTO UF VALUES(3752,108,'Portland Parish');
+INSERT INTO UF VALUES(3753,108,'Clarendon Parish');
+INSERT INTO UF VALUES(3754,108,'Manchester Parish');
+INSERT INTO UF VALUES(3755,108,'Trelawny Parish');
+INSERT INTO UF VALUES(3756,186,'Dennery Quarter');
+INSERT INTO UF VALUES(3757,186,'Anse la Raye Quarter');
+INSERT INTO UF VALUES(3758,186,'Castries Quarter');
+INSERT INTO UF VALUES(3759,186,'Laborie Quarter');
+INSERT INTO UF VALUES(3760,186,'Choiseul Quarter');
+INSERT INTO UF VALUES(3761,186,'Canaries');
+INSERT INTO UF VALUES(3762,186,'Micoud Quarter');
+INSERT INTO UF VALUES(3763,186,'Vieux Fort Quarter');
+INSERT INTO UF VALUES(3764,186,'Soufrière Quarter');
+INSERT INTO UF VALUES(3765,186,'Praslin Quarter');
+INSERT INTO UF VALUES(3766,186,'Gros Islet Quarter');
+INSERT INTO UF VALUES(3767,186,'Dauphin Quarter');
+INSERT INTO UF VALUES(3768,240,'Hưng Yên');
+INSERT INTO UF VALUES(3769,240,'Đồng Tháp');
+INSERT INTO UF VALUES(3770,240,'Bà Rịa-Vũng Tàu');
+INSERT INTO UF VALUES(3771,240,'Thanh Hóa');
+INSERT INTO UF VALUES(3772,240,'Kon Tum');
+INSERT INTO UF VALUES(3773,240,'Điện Biên');
+INSERT INTO UF VALUES(3774,240,'Vĩnh Phúc');
+INSERT INTO UF VALUES(3775,240,'Thái Bình');
+INSERT INTO UF VALUES(3776,240,'Quảng Nam');
+INSERT INTO UF VALUES(3777,240,'Hậu Giang');
+INSERT INTO UF VALUES(3778,240,'Cà Mau');
+INSERT INTO UF VALUES(3779,240,'Hà Giang');
+INSERT INTO UF VALUES(3780,240,'Nghệ An');
+INSERT INTO UF VALUES(3781,240,'Tiền Giang');
+INSERT INTO UF VALUES(3782,240,'Cao Bằng');
+INSERT INTO UF VALUES(3783,240,'Hải Phòng');
+INSERT INTO UF VALUES(3784,240,'Yên Bái');
+INSERT INTO UF VALUES(3785,240,'Bình Dương');
+INSERT INTO UF VALUES(3786,240,'Ninh Bình');
+INSERT INTO UF VALUES(3787,240,'Bình Thuận');
+INSERT INTO UF VALUES(3788,240,'Ninh Thuận');
+INSERT INTO UF VALUES(3789,240,'Nam Định');
+INSERT INTO UF VALUES(3790,240,'Vĩnh Long');
+INSERT INTO UF VALUES(3791,240,'Bắc Ninh');
+INSERT INTO UF VALUES(3792,240,'Lạng Sơn');
+INSERT INTO UF VALUES(3793,240,'Khánh Hòa');
+INSERT INTO UF VALUES(3794,240,'An Giang');
+INSERT INTO UF VALUES(3795,240,'Tuyên Quang');
+INSERT INTO UF VALUES(3796,240,'Bến Tre');
+INSERT INTO UF VALUES(3797,240,'Bình Phước');
+INSERT INTO UF VALUES(3798,240,'Thừa Thiên-Huế');
+INSERT INTO UF VALUES(3799,240,'Hòa Bình');
+INSERT INTO UF VALUES(3800,240,'Kiên Giang');
+INSERT INTO UF VALUES(3801,240,'Phú Thọ');
+INSERT INTO UF VALUES(3802,240,'Hà Nam');
+INSERT INTO UF VALUES(3803,240,'Quảng Trị');
+INSERT INTO UF VALUES(3804,240,'Bạc Liêu');
+INSERT INTO UF VALUES(3805,240,'Trà Vinh');
+INSERT INTO UF VALUES(3806,240,'Đà Nẵng');
+INSERT INTO UF VALUES(3807,240,'Thái Nguyên');
+INSERT INTO UF VALUES(3808,240,'Long An');
+INSERT INTO UF VALUES(3809,240,'Quảng Bình');
+INSERT INTO UF VALUES(3810,240,'Hà Nội');
+INSERT INTO UF VALUES(3811,240,'Hồ Chí Minh');
+INSERT INTO UF VALUES(3812,240,'Sơn La');
+INSERT INTO UF VALUES(3813,240,'Gia Lai');
+INSERT INTO UF VALUES(3814,240,'Quảng Ninh');
+INSERT INTO UF VALUES(3815,240,'Bắc Giang');
+INSERT INTO UF VALUES(3816,240,'Hà Tĩnh');
+INSERT INTO UF VALUES(3817,240,'Lào Cai');
+INSERT INTO UF VALUES(3818,240,'Lâm Đồng');
+INSERT INTO UF VALUES(3819,240,'Sóc Trăng');
+INSERT INTO UF VALUES(3821,240,'Đồng Nai');
+INSERT INTO UF VALUES(3822,240,'Bắc Kạn');
+INSERT INTO UF VALUES(3823,240,'Đắk Nông');
+INSERT INTO UF VALUES(3824,240,'Phú Yên');
+INSERT INTO UF VALUES(3825,240,'Lai Châu');
+INSERT INTO UF VALUES(3826,240,'Tây Ninh');
+INSERT INTO UF VALUES(3827,240,'Hải Dương');
+INSERT INTO UF VALUES(3828,240,'Quảng Ngãi');
+INSERT INTO UF VALUES(3829,240,'Đắk Lắk');
+INSERT INTO UF VALUES(3830,240,'Bình Định');
+INSERT INTO UF VALUES(3831,185,'Saint Peter Basseterre Parish');
+INSERT INTO UF VALUES(3832,185,'Nevis');
+INSERT INTO UF VALUES(3833,185,'Christ Church Nichola Town Parish');
+INSERT INTO UF VALUES(3834,185,'Saint Paul Capisterre Parish');
+INSERT INTO UF VALUES(3835,185,'Saint James Windward Parish');
+INSERT INTO UF VALUES(3836,185,'Saint Anne Sandy Point Parish');
+INSERT INTO UF VALUES(3837,185,'Saint George Gingerland Parish');
+INSERT INTO UF VALUES(3838,185,'Saint Paul Charlestown Parish');
+INSERT INTO UF VALUES(3839,185,'Saint Thomas Lowland Parish');
+INSERT INTO UF VALUES(3840,185,'Saint John Figtree Parish');
+INSERT INTO UF VALUES(3841,185,'Saint Kitts');
+INSERT INTO UF VALUES(3842,185,'Saint Thomas Middle Island Parish');
+INSERT INTO UF VALUES(3843,185,'Trinity Palmetto Point Parish');
+INSERT INTO UF VALUES(3844,185,'Saint Mary Cayon Parish');
+INSERT INTO UF VALUES(3845,185,'Saint John Capisterre Parish');
+INSERT INTO UF VALUES(3846,116,'Daegu');
+INSERT INTO UF VALUES(3847,116,'Gyeonggi Province');
+INSERT INTO UF VALUES(3848,116,'Incheon');
+INSERT INTO UF VALUES(3849,116,'Seoul');
+INSERT INTO UF VALUES(3850,116,'Daejeon');
+INSERT INTO UF VALUES(3851,116,'North Jeolla Province');
+INSERT INTO UF VALUES(3852,116,'Ulsan');
+INSERT INTO UF VALUES(3853,116,'Jeju');
+INSERT INTO UF VALUES(3854,116,'North Chungcheong Province');
+INSERT INTO UF VALUES(3855,116,'North Gyeongsang Province');
+INSERT INTO UF VALUES(3856,116,'South Jeolla Province');
+INSERT INTO UF VALUES(3857,116,'South Gyeongsang Province');
+INSERT INTO UF VALUES(3858,116,'Gwangju');
+INSERT INTO UF VALUES(3859,116,'South Chungcheong Province');
+INSERT INTO UF VALUES(3860,116,'Busan');
+INSERT INTO UF VALUES(3861,116,'Sejong City');
+INSERT INTO UF VALUES(3862,116,'Gangwon Province');
+INSERT INTO UF VALUES(3863,87,'Saint Patrick Parish');
+INSERT INTO UF VALUES(3864,87,'Saint George Parish');
+INSERT INTO UF VALUES(3865,87,'Saint Andrew Parish');
+INSERT INTO UF VALUES(3866,87,'Saint Mark Parish');
+INSERT INTO UF VALUES(3867,87,'Carriacou and Petite Martinique');
+INSERT INTO UF VALUES(3868,87,'Saint John Parish');
+INSERT INTO UF VALUES(3869,87,'Saint David Parish');
+INSERT INTO UF VALUES(3870,1,'Ghazni');
+INSERT INTO UF VALUES(3871,1,'Badghis');
+INSERT INTO UF VALUES(3872,1,'Bamyan');
+INSERT INTO UF VALUES(3873,1,'Helmand');
+INSERT INTO UF VALUES(3874,1,'Zabul');
+INSERT INTO UF VALUES(3875,1,'Baghlan');
+INSERT INTO UF VALUES(3876,1,'Kunar');
+INSERT INTO UF VALUES(3877,1,'Paktika');
+INSERT INTO UF VALUES(3878,1,'Khost');
+INSERT INTO UF VALUES(3879,1,'Kapisa');
+INSERT INTO UF VALUES(3880,1,'Nuristan');
+INSERT INTO UF VALUES(3881,1,'Panjshir');
+INSERT INTO UF VALUES(3882,1,'Nangarhar');
+INSERT INTO UF VALUES(3883,1,'Samangan');
+INSERT INTO UF VALUES(3884,1,'Balkh');
+INSERT INTO UF VALUES(3885,1,'Sar-e Pol');
+INSERT INTO UF VALUES(3886,1,'Jowzjan');
+INSERT INTO UF VALUES(3887,1,'Herat');
+INSERT INTO UF VALUES(3888,1,'Ghōr');
+INSERT INTO UF VALUES(3889,1,'Faryab');
+INSERT INTO UF VALUES(3890,1,'Kandahar');
+INSERT INTO UF VALUES(3891,1,'Laghman');
+INSERT INTO UF VALUES(3892,1,'Daykundi');
+INSERT INTO UF VALUES(3893,1,'Takhar');
+INSERT INTO UF VALUES(3894,1,'Paktia');
+INSERT INTO UF VALUES(3895,1,'Parwan');
+INSERT INTO UF VALUES(3896,1,'Nimruz');
+INSERT INTO UF VALUES(3897,1,'Logar');
+INSERT INTO UF VALUES(3898,1,'Urozgan');
+INSERT INTO UF VALUES(3899,1,'Farah');
+INSERT INTO UF VALUES(3900,1,'Kunduz Province');
+INSERT INTO UF VALUES(3901,1,'Badakhshan');
+INSERT INTO UF VALUES(3902,1,'Kabul');
+INSERT INTO UF VALUES(3903,14,'Victoria');
+INSERT INTO UF VALUES(3904,14,'South Australia');
+INSERT INTO UF VALUES(3905,14,'Queensland');
+INSERT INTO UF VALUES(3906,14,'Western Australia');
+INSERT INTO UF VALUES(3907,14,'Australian Capital Territory');
+INSERT INTO UF VALUES(3908,14,'Tasmania');
+INSERT INTO UF VALUES(3909,14,'New South Wales');
+INSERT INTO UF VALUES(3910,14,'Northern Territory');
+INSERT INTO UF VALUES(3911,222,'Vavaʻu');
+INSERT INTO UF VALUES(3912,222,'Tongatapu');
+INSERT INTO UF VALUES(3913,222,'Haʻapai');
+INSERT INTO UF VALUES(3914,222,'Niuas');
+INSERT INTO UF VALUES(3915,222,'ʻEua');
+INSERT INTO UF VALUES(3916,103,'Markazi Province');
+INSERT INTO UF VALUES(3917,103,'Khuzestan Province');
+INSERT INTO UF VALUES(3918,103,'Ilam Province');
+INSERT INTO UF VALUES(3919,103,'Kermanshah Province');
+INSERT INTO UF VALUES(3920,103,'Gilan Province');
+INSERT INTO UF VALUES(3921,103,'Chaharmahal and Bakhtiari Province');
+INSERT INTO UF VALUES(3922,103,'Qom Province');
+INSERT INTO UF VALUES(3923,103,'Isfahan Province');
+INSERT INTO UF VALUES(3924,103,'West Azarbaijan Province');
+INSERT INTO UF VALUES(3925,103,'Zanjan Province');
+INSERT INTO UF VALUES(3926,103,'Kohgiluyeh and Boyer-Ahmad Province');
+INSERT INTO UF VALUES(3927,103,'Razavi Khorasan Province');
+INSERT INTO UF VALUES(3928,103,'Lorestan Province');
+INSERT INTO UF VALUES(3929,103,'Alborz Province');
+INSERT INTO UF VALUES(3930,103,'South Khorasan Province');
+INSERT INTO UF VALUES(3931,103,'Sistan and Baluchestan');
+INSERT INTO UF VALUES(3932,103,'Bushehr Province');
+INSERT INTO UF VALUES(3933,103,'Golestan Province');
+INSERT INTO UF VALUES(3934,103,'Ardabil Province');
+INSERT INTO UF VALUES(3935,103,'Kurdistan Province');
+INSERT INTO UF VALUES(3936,103,'Yazd Province');
+INSERT INTO UF VALUES(3937,103,'Hormozgan Province');
+INSERT INTO UF VALUES(3938,103,'Mazandaran Province');
+INSERT INTO UF VALUES(3939,103,'Fars Province');
+INSERT INTO UF VALUES(3940,103,'Semnan Province');
+INSERT INTO UF VALUES(3941,103,'Qazvin Province');
+INSERT INTO UF VALUES(3942,103,'North Khorasan Province');
+INSERT INTO UF VALUES(3943,103,'Kerman Province');
+INSERT INTO UF VALUES(3944,103,'East Azerbaijan Province');
+INSERT INTO UF VALUES(3945,103,'Tehran Province');
+INSERT INTO UF VALUES(3946,228,'Niutao Island Council');
+INSERT INTO UF VALUES(3947,228,'Nanumanga');
+INSERT INTO UF VALUES(3948,228,'Nui');
+INSERT INTO UF VALUES(3949,228,'Nanumea');
+INSERT INTO UF VALUES(3950,228,'Vaitupu');
+INSERT INTO UF VALUES(3951,228,'Funafuti');
+INSERT INTO UF VALUES(3952,228,'Nukufetau');
+INSERT INTO UF VALUES(3953,228,'Nukulaelae');
+INSERT INTO UF VALUES(3954,104,'Dhi Qar Governorate');
+INSERT INTO UF VALUES(3955,104,'Babylon Governorate');
+INSERT INTO UF VALUES(3956,104,'Al-Qādisiyyah Governorate');
+INSERT INTO UF VALUES(3957,104,'Karbala Governorate');
+INSERT INTO UF VALUES(3958,104,'Al Muthanna Governorate');
+INSERT INTO UF VALUES(3959,104,'Baghdad Governorate');
+INSERT INTO UF VALUES(3960,104,'Basra Governorate');
+INSERT INTO UF VALUES(3961,104,'Saladin Governorate');
+INSERT INTO UF VALUES(3962,104,'Najaf Governorate');
+INSERT INTO UF VALUES(3963,104,'Nineveh Governorate');
+INSERT INTO UF VALUES(3964,104,'Al Anbar Governorate');
+INSERT INTO UF VALUES(3965,104,'Diyala Governorate');
+INSERT INTO UF VALUES(3966,104,'Maysan Governorate');
+INSERT INTO UF VALUES(3967,104,'Dohuk Governorate');
+INSERT INTO UF VALUES(3968,104,'Erbil Governorate');
+INSERT INTO UF VALUES(3969,104,'Sulaymaniyah Governorate');
+INSERT INTO UF VALUES(3970,104,'Wasit Governorate');
+INSERT INTO UF VALUES(3971,104,'Kirkuk Governorate');
+INSERT INTO UF VALUES(3972,37,'Svay Rieng Province');
+INSERT INTO UF VALUES(3973,37,'Preah Vihear Province');
+INSERT INTO UF VALUES(3974,37,'Prey Veng Province');
+INSERT INTO UF VALUES(3975,37,'Takéo Province');
+INSERT INTO UF VALUES(3976,37,'Battambang Province');
+INSERT INTO UF VALUES(3977,37,'Pursat Province');
+INSERT INTO UF VALUES(3978,37,'Kep Province');
+INSERT INTO UF VALUES(3979,37,'Kampong Chhnang Province');
+INSERT INTO UF VALUES(3980,37,'Pailin Province');
+INSERT INTO UF VALUES(3981,37,'Kampot Province');
+INSERT INTO UF VALUES(3982,37,'Koh Kong Province');
+INSERT INTO UF VALUES(3983,37,'Kandal Province');
+INSERT INTO UF VALUES(3984,37,'Banteay Meanchey Province');
+INSERT INTO UF VALUES(3985,37,'Mondulkiri Province');
+INSERT INTO UF VALUES(3986,37,'Kratié Province');
+INSERT INTO UF VALUES(3987,37,'Oddar Meanchey Province');
+INSERT INTO UF VALUES(3988,37,'Kampong Speu Province');
+INSERT INTO UF VALUES(3989,37,'Sihanoukville Province');
+INSERT INTO UF VALUES(3990,37,'Ratanakiri Province');
+INSERT INTO UF VALUES(3991,37,'Kampong Cham Province');
+INSERT INTO UF VALUES(3992,37,'Siem Reap Province');
+INSERT INTO UF VALUES(3993,37,'Stung Treng Province');
+INSERT INTO UF VALUES(3994,37,'Phnom Penh');
+INSERT INTO UF VALUES(3995,115,'North Hamgyong Province');
+INSERT INTO UF VALUES(3996,115,'Ryanggang Province');
+INSERT INTO UF VALUES(3997,115,'South Pyongan Province');
+INSERT INTO UF VALUES(3998,115,'Chagang Province');
+INSERT INTO UF VALUES(3999,115,'Kangwon Province');
+INSERT INTO UF VALUES(4000,115,'South Hamgyong Province');
+INSERT INTO UF VALUES(4001,115,'Rason');
+INSERT INTO UF VALUES(4002,115,'North Pyongan Province');
+INSERT INTO UF VALUES(4003,115,'South Hwanghae Province');
+INSERT INTO UF VALUES(4004,115,'North Hwanghae Province');
+INSERT INTO UF VALUES(4005,115,'Pyongyang');
+INSERT INTO UF VALUES(4006,101,'Meghalaya');
+INSERT INTO UF VALUES(4007,101,'Haryana');
+INSERT INTO UF VALUES(4008,101,'Maharashtra');
+INSERT INTO UF VALUES(4009,101,'Goa');
+INSERT INTO UF VALUES(4010,101,'Manipur');
+INSERT INTO UF VALUES(4011,101,'Puducherry');
+INSERT INTO UF VALUES(4012,101,'Telangana');
+INSERT INTO UF VALUES(4013,101,'Odisha');
+INSERT INTO UF VALUES(4014,101,'Rajasthan');
+INSERT INTO UF VALUES(4015,101,'Punjab');
+INSERT INTO UF VALUES(4016,101,'Uttarakhand');
+INSERT INTO UF VALUES(4017,101,'Andhra Pradesh');
+INSERT INTO UF VALUES(4018,101,'Nagaland');
+INSERT INTO UF VALUES(4019,101,'Lakshadweep');
+INSERT INTO UF VALUES(4020,101,'Himachal Pradesh');
+INSERT INTO UF VALUES(4021,101,'Delhi');
+INSERT INTO UF VALUES(4022,101,'Uttar Pradesh');
+INSERT INTO UF VALUES(4023,101,'Andaman and Nicobar Islands');
+INSERT INTO UF VALUES(4024,101,'Arunachal Pradesh');
+INSERT INTO UF VALUES(4025,101,'Jharkhand');
+INSERT INTO UF VALUES(4026,101,'Karnataka');
+INSERT INTO UF VALUES(4027,101,'Assam');
+INSERT INTO UF VALUES(4028,101,'Kerala');
+INSERT INTO UF VALUES(4029,101,'Jammu and Kashmir');
+INSERT INTO UF VALUES(4030,101,'Gujarat');
+INSERT INTO UF VALUES(4031,101,'Chandigarh');
+INSERT INTO UF VALUES(4033,101,'Dadra and Nagar Haveli and Daman and Diu');
+INSERT INTO UF VALUES(4034,101,'Sikkim');
+INSERT INTO UF VALUES(4035,101,'Tamil Nadu');
+INSERT INTO UF VALUES(4036,101,'Mizoram');
+INSERT INTO UF VALUES(4037,101,'Bihar');
+INSERT INTO UF VALUES(4038,101,'Tripura');
+INSERT INTO UF VALUES(4039,101,'Madhya Pradesh');
+INSERT INTO UF VALUES(4040,101,'Chhattisgarh');
+INSERT INTO UF VALUES(4041,97,'Choluteca Department');
+INSERT INTO UF VALUES(4042,97,'Comayagua Department');
+INSERT INTO UF VALUES(4043,97,'El Paraíso Department');
+INSERT INTO UF VALUES(4044,97,'Intibucá Department');
+INSERT INTO UF VALUES(4045,97,'Bay Islands Department');
+INSERT INTO UF VALUES(4046,97,'Cortés Department');
+INSERT INTO UF VALUES(4047,97,'Atlántida Department');
+INSERT INTO UF VALUES(4048,97,'Gracias a Dios Department');
+INSERT INTO UF VALUES(4049,97,'Copán Department');
+INSERT INTO UF VALUES(4050,97,'Olancho Department');
+INSERT INTO UF VALUES(4051,97,'Colón Department');
+INSERT INTO UF VALUES(4052,97,'Francisco Morazán Department');
+INSERT INTO UF VALUES(4053,97,'Santa Bárbara Department');
+INSERT INTO UF VALUES(4054,97,'Lempira Department');
+INSERT INTO UF VALUES(4055,97,'Valle Department');
+INSERT INTO UF VALUES(4056,97,'Ocotepeque Department');
+INSERT INTO UF VALUES(4057,97,'Yoro Department');
+INSERT INTO UF VALUES(4058,97,'La Paz Department');
+INSERT INTO UF VALUES(4059,158,'Northland Region');
+INSERT INTO UF VALUES(4060,158,'Manawatu-Wanganui Region');
+INSERT INTO UF VALUES(4061,158,'Waikato Region');
+INSERT INTO UF VALUES(4062,158,'Otago Region');
+INSERT INTO UF VALUES(4063,158,'Marlborough Region');
+INSERT INTO UF VALUES(4064,158,'West Coast Region');
+INSERT INTO UF VALUES(4065,158,'Wellington Region');
+INSERT INTO UF VALUES(4066,158,'Canterbury Region');
+INSERT INTO UF VALUES(4067,158,'Chatham Islands');
+INSERT INTO UF VALUES(4068,158,'Gisborne District');
+INSERT INTO UF VALUES(4069,158,'Taranaki Region');
+INSERT INTO UF VALUES(4070,158,'Nelson Region');
+INSERT INTO UF VALUES(4071,158,'Southland Region');
+INSERT INTO UF VALUES(4072,158,'Auckland Region');
+INSERT INTO UF VALUES(4073,158,'Tasman District');
+INSERT INTO UF VALUES(4074,158,'Bay of Plenty Region');
+INSERT INTO UF VALUES(4075,158,'Hawke s Bay Region');
+INSERT INTO UF VALUES(4076,61,'Saint John Parish');
+INSERT INTO UF VALUES(4077,61,'Saint Mark Parish');
+INSERT INTO UF VALUES(4078,61,'Saint David Parish');
+INSERT INTO UF VALUES(4079,61,'Saint George Parish');
+INSERT INTO UF VALUES(4080,61,'Saint Patrick Parish');
+INSERT INTO UF VALUES(4081,61,'Saint Peter Parish');
+INSERT INTO UF VALUES(4082,61,'Saint Andrew Parish');
+INSERT INTO UF VALUES(4083,61,'Saint Luke Parish');
+INSERT INTO UF VALUES(4084,61,'Saint Paul Parish');
+INSERT INTO UF VALUES(4085,61,'Saint Joseph Parish');
+INSERT INTO UF VALUES(4086,62,'El Seibo Province');
+INSERT INTO UF VALUES(4087,62,'La Romana Province');
+INSERT INTO UF VALUES(4088,62,'Sánchez Ramírez Province');
+INSERT INTO UF VALUES(4089,62,'Hermanas Mirabal Province');
+INSERT INTO UF VALUES(4090,62,'Barahona Province');
+INSERT INTO UF VALUES(4091,62,'San Cristóbal Province');
+INSERT INTO UF VALUES(4092,62,'Puerto Plata Province');
+INSERT INTO UF VALUES(4093,62,'Santo Domingo Province');
+INSERT INTO UF VALUES(4094,62,'María Trinidad Sánchez Province');
+INSERT INTO UF VALUES(4095,62,'Distrito Nacional');
+INSERT INTO UF VALUES(4096,62,'Peravia Province');
+INSERT INTO UF VALUES(4097,62,'Independencia');
+INSERT INTO UF VALUES(4098,62,'San Juan Province');
+INSERT INTO UF VALUES(4099,62,'Monseñor Nouel Province');
+INSERT INTO UF VALUES(4100,62,'Santiago Rodríguez Province');
+INSERT INTO UF VALUES(4101,62,'Pedernales Province');
+INSERT INTO UF VALUES(4102,62,'Espaillat Province');
+INSERT INTO UF VALUES(4103,62,'Samaná Province');
+INSERT INTO UF VALUES(4104,62,'Valverde Province');
+INSERT INTO UF VALUES(4105,62,'Baoruco Province');
+INSERT INTO UF VALUES(4106,62,'Hato Mayor Province');
+INSERT INTO UF VALUES(4107,62,'Dajabón Province');
+INSERT INTO UF VALUES(4108,62,'Santiago Province');
+INSERT INTO UF VALUES(4109,62,'La Altagracia Province');
+INSERT INTO UF VALUES(4110,62,'San Pedro de Macorís');
+INSERT INTO UF VALUES(4111,62,'Monte Plata Province');
+INSERT INTO UF VALUES(4112,62,'San José de Ocoa Province');
+INSERT INTO UF VALUES(4113,62,'Duarte Province');
+INSERT INTO UF VALUES(4114,62,'Azua Province');
+INSERT INTO UF VALUES(4115,62,'Monte Cristi Province');
+INSERT INTO UF VALUES(4116,62,'La Vega Province');
+INSERT INTO UF VALUES(4117,95,'Nord');
+INSERT INTO UF VALUES(4118,95,'Nippes');
+INSERT INTO UF VALUES(4119,95,'Grand Anse');
+INSERT INTO UF VALUES(4120,95,'Ouest');
+INSERT INTO UF VALUES(4121,95,'Nord-Est');
+INSERT INTO UF VALUES(4122,95,'Sud');
+INSERT INTO UF VALUES(4123,95,'Artibonite');
+INSERT INTO UF VALUES(4124,95,'Sud-Est');
+INSERT INTO UF VALUES(4125,95,'Centre');
+INSERT INTO UF VALUES(4126,95,'Nord-Ouest');
+INSERT INTO UF VALUES(4127,66,'San Vicente Department');
+INSERT INTO UF VALUES(4128,66,'Santa Ana Department');
+INSERT INTO UF VALUES(4129,66,'Usulután Department');
+INSERT INTO UF VALUES(4130,66,'Morazán Department');
+INSERT INTO UF VALUES(4131,66,'Chalatenango Department');
+INSERT INTO UF VALUES(4132,66,'Cabañas Department');
+INSERT INTO UF VALUES(4133,66,'San Salvador Department');
+INSERT INTO UF VALUES(4134,66,'La Libertad Department');
+INSERT INTO UF VALUES(4135,66,'San Miguel Department');
+INSERT INTO UF VALUES(4136,66,'La Paz Department');
+INSERT INTO UF VALUES(4137,66,'Cuscatlán Department');
+INSERT INTO UF VALUES(4138,66,'La Unión Department');
+INSERT INTO UF VALUES(4139,66,'Ahuachapán Department');
+INSERT INTO UF VALUES(4140,66,'Sonsonate Department');
+INSERT INTO UF VALUES(4141,201,'Braslovče Municipality');
+INSERT INTO UF VALUES(4142,201,'Lenart Municipality');
+INSERT INTO UF VALUES(4143,201,'Oplotnica');
+INSERT INTO UF VALUES(4144,201,'Velike Lašče Municipality');
+INSERT INTO UF VALUES(4145,201,'Hajdina Municipality');
+INSERT INTO UF VALUES(4146,201,'Podčetrtek Municipality');
+INSERT INTO UF VALUES(4147,201,'Cankova Municipality');
+INSERT INTO UF VALUES(4148,201,'Vitanje Municipality');
+INSERT INTO UF VALUES(4149,201,'Sežana Municipality');
+INSERT INTO UF VALUES(4150,201,'Kidričevo Municipality');
+INSERT INTO UF VALUES(4151,201,'Črenšovci Municipality');
+INSERT INTO UF VALUES(4152,201,'Idrija Municipality');
+INSERT INTO UF VALUES(4153,201,'Trnovska Vas Municipality');
+INSERT INTO UF VALUES(4154,201,'Vodice Municipality');
+INSERT INTO UF VALUES(4155,201,'Ravne na Koroškem Municipality');
+INSERT INTO UF VALUES(4156,201,'Lovrenc na Pohorju Municipality');
+INSERT INTO UF VALUES(4157,201,'Majšperk Municipality');
+INSERT INTO UF VALUES(4158,201,'Loški Potok Municipality');
+INSERT INTO UF VALUES(4159,201,'Domžale Municipality');
+INSERT INTO UF VALUES(4160,201,'Rečica ob Savinji Municipality');
+INSERT INTO UF VALUES(4161,201,'Podlehnik Municipality');
+INSERT INTO UF VALUES(4162,201,'Cerknica Municipality');
+INSERT INTO UF VALUES(4163,201,'Vransko Municipality');
+INSERT INTO UF VALUES(4164,201,'Sveta Ana Municipality');
+INSERT INTO UF VALUES(4165,201,'Brezovica Municipality');
+INSERT INTO UF VALUES(4166,201,'Benedikt Municipality');
+INSERT INTO UF VALUES(4167,201,'Divača Municipality');
+INSERT INTO UF VALUES(4168,201,'Moravče Municipality');
+INSERT INTO UF VALUES(4169,201,'Slovenj Gradec City Municipality');
+INSERT INTO UF VALUES(4170,201,'Škocjan Municipality');
+INSERT INTO UF VALUES(4171,201,'Šentjur Municipality');
+INSERT INTO UF VALUES(4172,201,'Pesnica Municipality');
+INSERT INTO UF VALUES(4173,201,'Dol pri Ljubljani Municipality');
+INSERT INTO UF VALUES(4174,201,'Loška Dolina Municipality');
+INSERT INTO UF VALUES(4175,201,'Hoče–Slivnica Municipality');
+INSERT INTO UF VALUES(4176,201,'Cerkvenjak Municipality');
+INSERT INTO UF VALUES(4177,201,'Naklo Municipality');
+INSERT INTO UF VALUES(4178,201,'Cerkno Municipality');
+INSERT INTO UF VALUES(4179,201,'Bistrica ob Sotli Municipality');
+INSERT INTO UF VALUES(4180,201,'Kamnik Municipality');
+INSERT INTO UF VALUES(4181,201,'Bovec Municipality');
+INSERT INTO UF VALUES(4182,201,'Zavrč Municipality');
+INSERT INTO UF VALUES(4183,201,'Ajdovščina Municipality');
+INSERT INTO UF VALUES(4184,201,'Pivka Municipality');
+INSERT INTO UF VALUES(4185,201,'Štore Municipality');
+INSERT INTO UF VALUES(4186,201,'Kozje Municipality');
+INSERT INTO UF VALUES(4187,201,'Municipality of Škofljica');
+INSERT INTO UF VALUES(4188,201,'Prebold Municipality');
+INSERT INTO UF VALUES(4189,201,'Dobrovnik Municipality');
+INSERT INTO UF VALUES(4190,201,'Mozirje Municipality');
+INSERT INTO UF VALUES(4191,201,'City Municipality of Celje');
+INSERT INTO UF VALUES(4192,201,'Žiri Municipality');
+INSERT INTO UF VALUES(4193,201,'Horjul Municipality');
+INSERT INTO UF VALUES(4194,201,'Tabor Municipality');
+INSERT INTO UF VALUES(4195,201,'Radeče Municipality');
+INSERT INTO UF VALUES(4196,201,'Vipava Municipality');
+INSERT INTO UF VALUES(4197,201,'Kungota');
+INSERT INTO UF VALUES(4198,201,'Slovenske Konjice Municipality');
+INSERT INTO UF VALUES(4199,201,'Osilnica Municipality');
+INSERT INTO UF VALUES(4200,201,'Borovnica Municipality');
+INSERT INTO UF VALUES(4201,201,'Piran Municipality');
+INSERT INTO UF VALUES(4202,201,'Bled Municipality');
+INSERT INTO UF VALUES(4203,201,'Jezersko Municipality');
+INSERT INTO UF VALUES(4204,201,'Rače–Fram Municipality');
+INSERT INTO UF VALUES(4205,201,'Nova Gorica City Municipality');
+INSERT INTO UF VALUES(4206,201,'Razkrižje Municipality');
+INSERT INTO UF VALUES(4207,201,'Ribnica na Pohorju Municipality');
+INSERT INTO UF VALUES(4208,201,'Muta Municipality');
+INSERT INTO UF VALUES(4209,201,'Rogatec Municipality');
+INSERT INTO UF VALUES(4210,201,'Gorišnica Municipality');
+INSERT INTO UF VALUES(4211,201,'Kuzma Municipality');
+INSERT INTO UF VALUES(4212,201,'Mislinja Municipality');
+INSERT INTO UF VALUES(4213,201,'Duplek Municipality');
+INSERT INTO UF VALUES(4214,201,'Trebnje Municipality');
+INSERT INTO UF VALUES(4215,201,'Brežice Municipality');
+INSERT INTO UF VALUES(4216,201,'Dobrepolje Municipality');
+INSERT INTO UF VALUES(4217,201,'Grad Municipality');
+INSERT INTO UF VALUES(4218,201,'Moravske Toplice Municipality');
+INSERT INTO UF VALUES(4219,201,'Luče Municipality');
+INSERT INTO UF VALUES(4220,201,'Miren–Kostanjevica Municipality');
+INSERT INTO UF VALUES(4221,201,'Ormož Municipality');
+INSERT INTO UF VALUES(4222,201,'Šalovci Municipality');
+INSERT INTO UF VALUES(4223,201,'Miklavž na Dravskem Polju Municipality');
+INSERT INTO UF VALUES(4224,201,'Makole Municipality');
+INSERT INTO UF VALUES(4225,201,'Lendava Municipality');
+INSERT INTO UF VALUES(4226,201,'Vuzenica Municipality');
+INSERT INTO UF VALUES(4227,201,'Kanal ob Soči Municipality');
+INSERT INTO UF VALUES(4228,201,'Ptuj City Municipality');
+INSERT INTO UF VALUES(4229,201,'Sveti Andraž v Slovenskih Goricah Municipality');
+INSERT INTO UF VALUES(4230,201,'Selnica ob Dravi Municipality');
+INSERT INTO UF VALUES(4231,201,'Radovljica Municipality');
+INSERT INTO UF VALUES(4232,201,'Črna na Koroškem Municipality');
+INSERT INTO UF VALUES(4233,201,'Rogaška Slatina Municipality');
+INSERT INTO UF VALUES(4234,201,'Podvelka Municipality');
+INSERT INTO UF VALUES(4235,201,'Ribnica Municipality');
+INSERT INTO UF VALUES(4236,201,'City Municipality of Novo Mesto');
+INSERT INTO UF VALUES(4237,201,'Mirna Peč Municipality');
+INSERT INTO UF VALUES(4238,201,'Križevci Municipality');
+INSERT INTO UF VALUES(4239,201,'Poljčane Municipality');
+INSERT INTO UF VALUES(4240,201,'Brda Municipality');
+INSERT INTO UF VALUES(4241,201,'Šentjernej Municipality');
+INSERT INTO UF VALUES(4242,201,'Maribor City Municipality');
+INSERT INTO UF VALUES(4243,201,'Kobarid Municipality');
+INSERT INTO UF VALUES(4244,201,'Markovci Municipality');
+INSERT INTO UF VALUES(4245,201,'Vojnik Municipality');
+INSERT INTO UF VALUES(4246,201,'Trbovlje Municipality');
+INSERT INTO UF VALUES(4247,201,'Tolmin Municipality');
+INSERT INTO UF VALUES(4248,201,'Šoštanj Municipality');
+INSERT INTO UF VALUES(4249,201,'Žetale Municipality');
+INSERT INTO UF VALUES(4250,201,'Tržič Municipality');
+INSERT INTO UF VALUES(4251,201,'Turnišče Municipality');
+INSERT INTO UF VALUES(4252,201,'Dobrna Municipality');
+INSERT INTO UF VALUES(4253,201,'Renče–Vogrsko Municipality');
+INSERT INTO UF VALUES(4254,201,'Kostanjevica na Krki Municipality');
+INSERT INTO UF VALUES(4255,201,'Sveti Jurij ob Ščavnici Municipality');
+INSERT INTO UF VALUES(4256,201,'Železniki Municipality');
+INSERT INTO UF VALUES(4257,201,'Veržej Municipality');
+INSERT INTO UF VALUES(4258,201,'Žalec Municipality');
+INSERT INTO UF VALUES(4259,201,'Starše Municipality');
+INSERT INTO UF VALUES(4260,201,'Sveta Trojica v Slovenskih Goricah Municipality');
+INSERT INTO UF VALUES(4261,201,'Solčava Municipality');
+INSERT INTO UF VALUES(4262,201,'Vrhnika Municipality');
+INSERT INTO UF VALUES(4263,201,'Središče ob Dravi');
+INSERT INTO UF VALUES(4264,201,'Rogašovci Municipality');
+INSERT INTO UF VALUES(4265,201,'Mežica Municipality');
+INSERT INTO UF VALUES(4266,201,'Juršinci Municipality');
+INSERT INTO UF VALUES(4267,201,'Velika Polana Municipality');
+INSERT INTO UF VALUES(4268,201,'Sevnica Municipality');
+INSERT INTO UF VALUES(4269,201,'Zagorje ob Savi Municipality');
+INSERT INTO UF VALUES(4270,201,'Ljubljana City Municipality');
+INSERT INTO UF VALUES(4271,201,'Gornji Petrovci Municipality');
+INSERT INTO UF VALUES(4272,201,'Polzela Municipality');
+INSERT INTO UF VALUES(4273,201,'Sveti Tomaž Municipality');
+INSERT INTO UF VALUES(4274,201,'Prevalje Municipality');
+INSERT INTO UF VALUES(4275,201,'Radlje ob Dravi Municipality');
+INSERT INTO UF VALUES(4276,201,'Žirovnica Municipality');
+INSERT INTO UF VALUES(4277,201,'Sodražica Municipality');
+INSERT INTO UF VALUES(4278,201,'Bloke Municipality');
+INSERT INTO UF VALUES(4279,201,'Šmartno pri Litiji Municipality');
+INSERT INTO UF VALUES(4280,201,'Ruše Municipality');
+INSERT INTO UF VALUES(4281,201,'Dolenjske Toplice Municipality');
+INSERT INTO UF VALUES(4282,201,'Bohinj Municipality');
+INSERT INTO UF VALUES(4283,201,'Komenda Municipality');
+INSERT INTO UF VALUES(4284,201,'Gorje Municipality');
+INSERT INTO UF VALUES(4285,201,'Šmarje pri Jelšah Municipality');
+INSERT INTO UF VALUES(4286,201,'Ig Municipality');
+INSERT INTO UF VALUES(4287,201,'Kranj City Municipality');
+INSERT INTO UF VALUES(4288,201,'Puconci Municipality');
+INSERT INTO UF VALUES(4289,201,'Šmarješke Toplice Municipality');
+INSERT INTO UF VALUES(4290,201,'Dornava Municipality');
+INSERT INTO UF VALUES(4291,201,'Črnomelj Municipality');
+INSERT INTO UF VALUES(4292,201,'Radenci Municipality');
+INSERT INTO UF VALUES(4293,201,'Gorenja Vas–Poljane Municipality');
+INSERT INTO UF VALUES(4294,201,'Ljubno Municipality');
+INSERT INTO UF VALUES(4295,201,'Dobje Municipality');
+INSERT INTO UF VALUES(4296,201,'Šmartno ob Paki Municipality');
+INSERT INTO UF VALUES(4297,201,'Mokronog–Trebelno Municipality');
+INSERT INTO UF VALUES(4298,201,'Mirna Municipality');
+INSERT INTO UF VALUES(4299,201,'Šenčur Municipality');
+INSERT INTO UF VALUES(4300,201,'Videm Municipality');
+INSERT INTO UF VALUES(4301,201,'Beltinci Municipality');
+INSERT INTO UF VALUES(4302,201,'Lukovica Municipality');
+INSERT INTO UF VALUES(4303,201,'Preddvor Municipality');
+INSERT INTO UF VALUES(4304,201,'Destrnik Municipality');
+INSERT INTO UF VALUES(4305,201,'Ivančna Gorica Municipality');
+INSERT INTO UF VALUES(4306,201,'Log–Dragomer Municipality');
+INSERT INTO UF VALUES(4307,201,'Žužemberk Municipality');
+INSERT INTO UF VALUES(4308,201,'Dobrova–Polhov Gradec Municipality');
+INSERT INTO UF VALUES(4309,201,'Municipality of Cirkulane');
+INSERT INTO UF VALUES(4310,201,'Cerklje na Gorenjskem Municipality');
+INSERT INTO UF VALUES(4311,201,'Šentrupert Municipality');
+INSERT INTO UF VALUES(4312,201,'Tišina Municipality');
+INSERT INTO UF VALUES(4313,201,'Murska Sobota City Municipality');
+INSERT INTO UF VALUES(4314,201,'Municipality of Krško');
+INSERT INTO UF VALUES(4315,201,'Komen Municipality');
+INSERT INTO UF VALUES(4316,201,'Škofja Loka Municipality');
+INSERT INTO UF VALUES(4317,201,'Šempeter–Vrtojba Municipality');
+INSERT INTO UF VALUES(4318,201,'Municipality of Apače');
+INSERT INTO UF VALUES(4319,201,'Koper City Municipality');
+INSERT INTO UF VALUES(4320,201,'Odranci Municipality');
+INSERT INTO UF VALUES(4321,201,'Hrpelje–Kozina Municipality');
+INSERT INTO UF VALUES(4322,201,'Izola Municipality');
+INSERT INTO UF VALUES(4323,201,'Metlika Municipality');
+INSERT INTO UF VALUES(4324,201,'Šentilj Municipality');
+INSERT INTO UF VALUES(4325,201,'Kobilje Municipality');
+INSERT INTO UF VALUES(4326,201,'Ankaran Municipality');
+INSERT INTO UF VALUES(4327,201,'Hodoš Municipality');
+INSERT INTO UF VALUES(4328,201,'Sveti Jurij v Slovenskih Goricah Municipality');
+INSERT INTO UF VALUES(4329,201,'Nazarje Municipality');
+INSERT INTO UF VALUES(4330,201,'Postojna Municipality');
+INSERT INTO UF VALUES(4331,201,'Kostel Municipality');
+INSERT INTO UF VALUES(4332,201,'Slovenska Bistrica Municipality');
+INSERT INTO UF VALUES(4333,201,'Straža Municipality');
+INSERT INTO UF VALUES(4334,201,'Trzin Municipality');
+INSERT INTO UF VALUES(4335,201,'Kočevje Municipality');
+INSERT INTO UF VALUES(4336,201,'Grosuplje Municipality');
+INSERT INTO UF VALUES(4337,201,'Jesenice Municipality');
+INSERT INTO UF VALUES(4338,201,'Laško Municipality');
+INSERT INTO UF VALUES(4339,201,'Gornji Grad Municipality');
+INSERT INTO UF VALUES(4340,201,'Kranjska Gora Municipality');
+INSERT INTO UF VALUES(4341,201,'Hrastnik Municipality');
+INSERT INTO UF VALUES(4342,201,'Zreče Municipality');
+INSERT INTO UF VALUES(4343,201,'Gornja Radgona Municipality');
+INSERT INTO UF VALUES(4344,201,'Municipality of Ilirska Bistrica');
+INSERT INTO UF VALUES(4345,201,'Dravograd Municipality');
+INSERT INTO UF VALUES(4346,201,'Semič Municipality');
+INSERT INTO UF VALUES(4347,201,'Litija Municipality');
+INSERT INTO UF VALUES(4348,201,'Mengeš Municipality');
+INSERT INTO UF VALUES(4349,201,'Medvode Municipality');
+INSERT INTO UF VALUES(4350,201,'Logatec Municipality');
+INSERT INTO UF VALUES(4351,201,'Ljutomer Municipality');
+INSERT INTO UF VALUES(4352,200,'Banská Bystrica Region');
+INSERT INTO UF VALUES(4353,200,'Košice Region');
+INSERT INTO UF VALUES(4354,200,'Prešov Region');
+INSERT INTO UF VALUES(4355,200,'Trnava Region');
+INSERT INTO UF VALUES(4356,200,'Bratislava Region');
+INSERT INTO UF VALUES(4357,200,'Nitra Region');
+INSERT INTO UF VALUES(4358,200,'Trenčín Region');
+INSERT INTO UF VALUES(4359,200,'Žilina Region');
+INSERT INTO UF VALUES(4360,144,'Cimișlia District');
+INSERT INTO UF VALUES(4361,144,'Orhei District');
+INSERT INTO UF VALUES(4362,144,'Bender Municipality');
+INSERT INTO UF VALUES(4363,144,'Nisporeni District');
+INSERT INTO UF VALUES(4364,144,'Sîngerei District');
+INSERT INTO UF VALUES(4365,144,'Căușeni District');
+INSERT INTO UF VALUES(4366,144,'Călărași District');
+INSERT INTO UF VALUES(4367,144,'Glodeni District');
+INSERT INTO UF VALUES(4368,144,'Anenii Noi District');
+INSERT INTO UF VALUES(4369,144,'Ialoveni District');
+INSERT INTO UF VALUES(4370,144,'Florești District');
+INSERT INTO UF VALUES(4371,144,'Telenești District');
+INSERT INTO UF VALUES(4372,144,'Taraclia District');
+INSERT INTO UF VALUES(4373,144,'Chișinău Municipality');
+INSERT INTO UF VALUES(4374,144,'Soroca District');
+INSERT INTO UF VALUES(4375,144,'Briceni District');
+INSERT INTO UF VALUES(4376,144,'Rîșcani District');
+INSERT INTO UF VALUES(4377,144,'Strășeni District');
+INSERT INTO UF VALUES(4378,144,'Ștefan Vodă District');
+INSERT INTO UF VALUES(4379,144,'Basarabeasca District');
+INSERT INTO UF VALUES(4380,144,'Cantemir District');
+INSERT INTO UF VALUES(4381,144,'Fălești District');
+INSERT INTO UF VALUES(4382,144,'Hîncești District');
+INSERT INTO UF VALUES(4383,144,'Dubăsari District');
+INSERT INTO UF VALUES(4384,144,'Dondușeni District');
+INSERT INTO UF VALUES(4385,144,'Gagauzia');
+INSERT INTO UF VALUES(4386,144,'Ungheni District');
+INSERT INTO UF VALUES(4387,144,'Edineț District');
+INSERT INTO UF VALUES(4388,144,'Șoldănești District');
+INSERT INTO UF VALUES(4389,144,'Ocnița District');
+INSERT INTO UF VALUES(4390,144,'Criuleni District');
+INSERT INTO UF VALUES(4391,144,'Cahul District');
+INSERT INTO UF VALUES(4392,144,'Drochia District');
+INSERT INTO UF VALUES(4393,144,'Bălți Municipality');
+INSERT INTO UF VALUES(4394,144,'Rezina District');
+INSERT INTO UF VALUES(4395,144,'Transnistria autonomous territorial unit');
+INSERT INTO UF VALUES(4396,120,'Salacgrīva Municipality');
+INSERT INTO UF VALUES(4397,120,'Vecumnieki Municipality');
+INSERT INTO UF VALUES(4398,120,'Naukšēni Municipality');
+INSERT INTO UF VALUES(4399,120,'Ilūkste Municipality');
+INSERT INTO UF VALUES(4400,120,'Gulbene Municipality');
+INSERT INTO UF VALUES(4401,120,'Līvāni Municipality');
+INSERT INTO UF VALUES(4402,120,'Salaspils Municipality');
+INSERT INTO UF VALUES(4403,120,'Ventspils Municipality');
+INSERT INTO UF VALUES(4404,120,'Rundāle Municipality');
+INSERT INTO UF VALUES(4405,120,'Pļaviņas Municipality');
+INSERT INTO UF VALUES(4406,120,'Vārkava Municipality');
+INSERT INTO UF VALUES(4407,120,'Jaunpiebalga Municipality');
+INSERT INTO UF VALUES(4408,120,'Sēja Municipality');
+INSERT INTO UF VALUES(4409,120,'Tukums Municipality');
+INSERT INTO UF VALUES(4410,120,'Cibla Municipality');
+INSERT INTO UF VALUES(4411,120,'Burtnieki Municipality');
+INSERT INTO UF VALUES(4412,120,'Ķegums Municipality');
+INSERT INTO UF VALUES(4413,120,'Krustpils Municipality');
+INSERT INTO UF VALUES(4414,120,'Cesvaine Municipality');
+INSERT INTO UF VALUES(4415,120,'Skrīveri Municipality');
+INSERT INTO UF VALUES(4416,120,'Ogre Municipality');
+INSERT INTO UF VALUES(4417,120,'Olaine Municipality');
+INSERT INTO UF VALUES(4418,120,'Limbaži Municipality');
+INSERT INTO UF VALUES(4419,120,'Lubāna Municipality');
+INSERT INTO UF VALUES(4420,120,'Kandava Municipality');
+INSERT INTO UF VALUES(4421,120,'Ventspils');
+INSERT INTO UF VALUES(4422,120,'Krimulda Municipality');
+INSERT INTO UF VALUES(4423,120,'Rugāji Municipality');
+INSERT INTO UF VALUES(4424,120,'Jelgava Municipality');
+INSERT INTO UF VALUES(4425,120,'Valka Municipality');
+INSERT INTO UF VALUES(4426,120,'Rūjiena Municipality');
+INSERT INTO UF VALUES(4427,120,'Babīte Municipality');
+INSERT INTO UF VALUES(4428,120,'Dundaga Municipality');
+INSERT INTO UF VALUES(4429,120,'Priekule Municipality');
+INSERT INTO UF VALUES(4430,120,'Zilupe Municipality');
+INSERT INTO UF VALUES(4431,120,'Varakļāni Municipality');
+INSERT INTO UF VALUES(4432,120,'Nereta Municipality');
+INSERT INTO UF VALUES(4433,120,'Madona Municipality');
+INSERT INTO UF VALUES(4434,120,'Sala Municipality');
+INSERT INTO UF VALUES(4435,120,'Ķekava Municipality');
+INSERT INTO UF VALUES(4436,120,'Nīca Municipality');
+INSERT INTO UF VALUES(4437,120,'Dobele Municipality');
+INSERT INTO UF VALUES(4438,120,'Jēkabpils Municipality');
+INSERT INTO UF VALUES(4439,120,'Saldus Municipality');
+INSERT INTO UF VALUES(4440,120,'Roja Municipality');
+INSERT INTO UF VALUES(4441,120,'Iecava Municipality');
+INSERT INTO UF VALUES(4442,120,'Ozolnieki Municipality');
+INSERT INTO UF VALUES(4443,120,'Saulkrasti Municipality');
+INSERT INTO UF VALUES(4444,120,'Ērgļi Municipality');
+INSERT INTO UF VALUES(4445,120,'Aglona Municipality');
+INSERT INTO UF VALUES(4446,120,'Jūrmala');
+INSERT INTO UF VALUES(4447,120,'Skrunda Municipality');
+INSERT INTO UF VALUES(4448,120,'Engure Municipality');
+INSERT INTO UF VALUES(4449,120,'Inčukalns Municipality');
+INSERT INTO UF VALUES(4450,120,'Mārupe Municipality');
+INSERT INTO UF VALUES(4451,120,'Mērsrags Municipality');
+INSERT INTO UF VALUES(4452,120,'Koknese Municipality');
+INSERT INTO UF VALUES(4453,120,'Kārsava Municipality');
+INSERT INTO UF VALUES(4454,120,'Carnikava Municipality');
+INSERT INTO UF VALUES(4455,120,'Rēzekne Municipality');
+INSERT INTO UF VALUES(4456,120,'Viesīte Municipality');
+INSERT INTO UF VALUES(4457,120,'Ape Municipality');
+INSERT INTO UF VALUES(4458,120,'Durbe Municipality');
+INSERT INTO UF VALUES(4459,120,'Talsi Municipality');
+INSERT INTO UF VALUES(4460,120,'Liepāja');
+INSERT INTO UF VALUES(4461,120,'Mālpils Municipality');
+INSERT INTO UF VALUES(4462,120,'Smiltene Municipality');
+INSERT INTO UF VALUES(4463,120,'Daugavpils');
+INSERT INTO UF VALUES(4464,120,'Jēkabpils');
+INSERT INTO UF VALUES(4465,120,'Bauska Municipality');
+INSERT INTO UF VALUES(4466,120,'Vecpiebalga Municipality');
+INSERT INTO UF VALUES(4467,120,'Pāvilosta Municipality');
+INSERT INTO UF VALUES(4468,120,'Brocēni Municipality');
+INSERT INTO UF VALUES(4469,120,'Cēsis Municipality');
+INSERT INTO UF VALUES(4470,120,'Grobiņa Municipality');
+INSERT INTO UF VALUES(4471,120,'Beverīna Municipality');
+INSERT INTO UF VALUES(4472,120,'Aizkraukle Municipality');
+INSERT INTO UF VALUES(4473,120,'Valmiera');
+INSERT INTO UF VALUES(4474,120,'Krāslava Municipality');
+INSERT INTO UF VALUES(4475,120,'Jaunjelgava Municipality');
+INSERT INTO UF VALUES(4476,120,'Sigulda Municipality');
+INSERT INTO UF VALUES(4477,120,'Viļaka Municipality');
+INSERT INTO UF VALUES(4478,120,'Stopiņi Municipality');
+INSERT INTO UF VALUES(4479,120,'Rauna Municipality');
+INSERT INTO UF VALUES(4480,120,'Tērvete Municipality');
+INSERT INTO UF VALUES(4481,120,'Auce Municipality');
+INSERT INTO UF VALUES(4482,120,'Baldone Municipality');
+INSERT INTO UF VALUES(4483,120,'Preiļi Municipality');
+INSERT INTO UF VALUES(4484,120,'Aloja Municipality');
+INSERT INTO UF VALUES(4485,120,'Alsunga Municipality');
+INSERT INTO UF VALUES(4486,120,'Viļāni Municipality');
+INSERT INTO UF VALUES(4487,120,'Alūksne Municipality');
+INSERT INTO UF VALUES(4488,120,'Līgatne Municipality');
+INSERT INTO UF VALUES(4489,120,'Jaunpils Municipality');
+INSERT INTO UF VALUES(4490,120,'Kuldīga Municipality');
+INSERT INTO UF VALUES(4491,120,'Riga');
+INSERT INTO UF VALUES(4492,120,'Daugavpils Municipality');
+INSERT INTO UF VALUES(4493,120,'Ropaži Municipality');
+INSERT INTO UF VALUES(4494,120,'Strenči Municipality');
+INSERT INTO UF VALUES(4495,120,'Kocēni Municipality');
+INSERT INTO UF VALUES(4496,120,'Aizpute Municipality');
+INSERT INTO UF VALUES(4497,120,'Amata Municipality');
+INSERT INTO UF VALUES(4498,120,'Baltinava Municipality');
+INSERT INTO UF VALUES(4499,120,'Aknīste Municipality');
+INSERT INTO UF VALUES(4500,120,'Jelgava');
+INSERT INTO UF VALUES(4501,120,'Ludza Municipality');
+INSERT INTO UF VALUES(4502,120,'Riebiņi Municipality');
+INSERT INTO UF VALUES(4503,120,'Rucava Municipality');
+INSERT INTO UF VALUES(4504,120,'Dagda Municipality');
+INSERT INTO UF VALUES(4505,120,'Balvi Municipality');
+INSERT INTO UF VALUES(4506,120,'Priekuļi Municipality');
+INSERT INTO UF VALUES(4507,120,'Pārgauja Municipality');
+INSERT INTO UF VALUES(4508,120,'Vaiņode Municipality');
+INSERT INTO UF VALUES(4509,120,'Rēzekne');
+INSERT INTO UF VALUES(4510,120,'Garkalne Municipality');
+INSERT INTO UF VALUES(4511,120,'Ikšķile Municipality');
+INSERT INTO UF VALUES(4512,120,'Lielvārde Municipality');
+INSERT INTO UF VALUES(4513,120,'Mazsalaca Municipality');
+INSERT INTO UF VALUES(4514,63,'Viqueque Municipality');
+INSERT INTO UF VALUES(4515,63,'Liquiçá Municipality');
+INSERT INTO UF VALUES(4516,63,'Ermera District');
+INSERT INTO UF VALUES(4517,63,'Manatuto District');
+INSERT INTO UF VALUES(4518,63,'Ainaro Municipality');
+INSERT INTO UF VALUES(4519,63,'Manufahi Municipality');
+INSERT INTO UF VALUES(4520,63,'Aileu municipality');
+INSERT INTO UF VALUES(4521,63,'Baucau Municipality');
+INSERT INTO UF VALUES(4522,63,'Cova Lima Municipality');
+INSERT INTO UF VALUES(4523,63,'Lautém Municipality');
+INSERT INTO UF VALUES(4524,63,'Dili municipality');
+INSERT INTO UF VALUES(4525,63,'Bobonaro Municipality');
+INSERT INTO UF VALUES(4526,168,'Peleliu');
+INSERT INTO UF VALUES(4527,168,'Ngardmau');
+INSERT INTO UF VALUES(4528,168,'Airai');
+INSERT INTO UF VALUES(4529,168,'Hatohobei');
+INSERT INTO UF VALUES(4530,168,'Melekeok');
+INSERT INTO UF VALUES(4531,168,'Ngatpang');
+INSERT INTO UF VALUES(4532,168,'Koror');
+INSERT INTO UF VALUES(4533,168,'Ngarchelong');
+INSERT INTO UF VALUES(4534,168,'Ngiwal');
+INSERT INTO UF VALUES(4535,168,'Sonsorol');
+INSERT INTO UF VALUES(4536,168,'Ngchesar');
+INSERT INTO UF VALUES(4537,168,'Ngaraard');
+INSERT INTO UF VALUES(4538,168,'Angaur');
+INSERT INTO UF VALUES(4539,168,'Kayangel');
+INSERT INTO UF VALUES(4540,168,'Aimeliik');
+INSERT INTO UF VALUES(4541,168,'Ngeremlengui');
+INSERT INTO UF VALUES(4542,58,'Břeclav');
+INSERT INTO UF VALUES(4543,58,'Český Krumlov');
+INSERT INTO UF VALUES(4544,58,'Plzeň-město');
+INSERT INTO UF VALUES(4545,58,'Brno-venkov');
+INSERT INTO UF VALUES(4546,58,'Příbram');
+INSERT INTO UF VALUES(4547,58,'Pardubice');
+INSERT INTO UF VALUES(4548,58,'Nový Jičín');
+INSERT INTO UF VALUES(4550,58,'Náchod');
+INSERT INTO UF VALUES(4551,58,'Prostějov');
+INSERT INTO UF VALUES(4552,58,'Zlínský kraj');
+INSERT INTO UF VALUES(4553,58,'Chomutov');
+INSERT INTO UF VALUES(4554,58,'Středočeský kraj');
+INSERT INTO UF VALUES(4556,58,'České Budějovice');
+INSERT INTO UF VALUES(4558,58,'Rakovník');
+INSERT INTO UF VALUES(4559,58,'Frýdek-Místek');
+INSERT INTO UF VALUES(4560,58,'Písek');
+INSERT INTO UF VALUES(4561,58,'Hodonín');
+INSERT INTO UF VALUES(4563,58,'Zlín');
+INSERT INTO UF VALUES(4564,58,'Plzeň-sever');
+INSERT INTO UF VALUES(4565,58,'Tábor');
+INSERT INTO UF VALUES(4568,58,'Brno-město');
+INSERT INTO UF VALUES(4571,58,'Svitavy');
+INSERT INTO UF VALUES(4572,58,'Vsetín');
+INSERT INTO UF VALUES(4573,58,'Cheb');
+INSERT INTO UF VALUES(4574,58,'Olomouc');
+INSERT INTO UF VALUES(4575,58,'Kraj Vysočina');
+INSERT INTO UF VALUES(4576,58,'Ústecký kraj');
+INSERT INTO UF VALUES(4578,58,'Prachatice');
+INSERT INTO UF VALUES(4579,58,'Trutnov');
+INSERT INTO UF VALUES(4580,58,'Hradec Králové');
+INSERT INTO UF VALUES(4581,58,'Karlovarský kraj');
+INSERT INTO UF VALUES(4582,58,'Nymburk');
+INSERT INTO UF VALUES(4583,58,'Rokycany');
+INSERT INTO UF VALUES(4584,58,'Ostrava-město');
+INSERT INTO UF VALUES(4586,58,'Karviná');
+INSERT INTO UF VALUES(4588,58,'Pardubický kraj');
+INSERT INTO UF VALUES(4589,58,'Olomoucký kraj');
+INSERT INTO UF VALUES(4590,58,'Liberec');
+INSERT INTO UF VALUES(4591,58,'Klatovy');
+INSERT INTO UF VALUES(4592,58,'Uherské Hradiště');
+INSERT INTO UF VALUES(4593,58,'Kroměříž');
+INSERT INTO UF VALUES(4595,58,'Sokolov');
+INSERT INTO UF VALUES(4596,58,'Semily');
+INSERT INTO UF VALUES(4597,58,'Třebíč');
+INSERT INTO UF VALUES(4598,58,'Praha	,	 Hlavní město');
+INSERT INTO UF VALUES(4599,58,'Ústí nad Labem');
+INSERT INTO UF VALUES(4600,58,'Moravskoslezský kraj');
+INSERT INTO UF VALUES(4601,58,'Liberecký kraj');
+INSERT INTO UF VALUES(4602,58,'Jihomoravský kraj');
+INSERT INTO UF VALUES(4604,58,'Karlovy Vary');
+INSERT INTO UF VALUES(4605,58,'Litoměřice');
+INSERT INTO UF VALUES(4606,58,'Praha-východ');
+INSERT INTO UF VALUES(4607,58,'Plzeňský kraj');
+INSERT INTO UF VALUES(4608,58,'Plzeň-jih');
+INSERT INTO UF VALUES(4609,58,'Děčín');
+INSERT INTO UF VALUES(4611,58,'Havlíčkův Brod');
+INSERT INTO UF VALUES(4612,58,'Jablonec nad Nisou');
+INSERT INTO UF VALUES(4613,58,'Jihlava');
+INSERT INTO UF VALUES(4614,58,'Královéhradecký kraj');
+INSERT INTO UF VALUES(4615,58,'Blansko');
+INSERT INTO UF VALUES(4617,58,'Louny');
+INSERT INTO UF VALUES(4618,58,'Kolín');
+INSERT INTO UF VALUES(4619,58,'Praha-západ');
+INSERT INTO UF VALUES(4620,58,'Beroun');
+INSERT INTO UF VALUES(4621,58,'Teplice');
+INSERT INTO UF VALUES(4622,58,'Vyškov');
+INSERT INTO UF VALUES(4623,58,'Opava');
+INSERT INTO UF VALUES(4624,58,'Jindřichův Hradec');
+INSERT INTO UF VALUES(4625,58,'Jeseník');
+INSERT INTO UF VALUES(4626,58,'Přerov');
+INSERT INTO UF VALUES(4627,58,'Benešov');
+INSERT INTO UF VALUES(4628,58,'Strakonice');
+INSERT INTO UF VALUES(4629,58,'Most');
+INSERT INTO UF VALUES(4630,58,'Znojmo');
+INSERT INTO UF VALUES(4631,58,'Kladno');
+INSERT INTO UF VALUES(4633,58,'Česká Lípa');
+INSERT INTO UF VALUES(4634,58,'Chrudim');
+INSERT INTO UF VALUES(4636,58,'Rychnov nad Kněžnou');
+INSERT INTO UF VALUES(4638,58,'Mělník');
+INSERT INTO UF VALUES(4639,58,'Jihočeský kraj');
+INSERT INTO UF VALUES(4640,58,'Jičín');
+INSERT INTO UF VALUES(4641,58,'Domažlice');
+INSERT INTO UF VALUES(4642,58,'Šumperk');
+INSERT INTO UF VALUES(4643,58,'Mladá Boleslav');
+INSERT INTO UF VALUES(4644,58,'Bruntál');
+INSERT INTO UF VALUES(4645,58,'Pelhřimov');
+INSERT INTO UF VALUES(4646,58,'Tachov');
+INSERT INTO UF VALUES(4647,58,'Ústí nad Orlicí');
+INSERT INTO UF VALUES(4648,58,'Žďár nad Sázavou');
+INSERT INTO UF VALUES(4649,199,'North East Community Development Council');
+INSERT INTO UF VALUES(4650,199,'South East Community Development Council');
+INSERT INTO UF VALUES(4651,199,'Central Singapore Community Development Council');
+INSERT INTO UF VALUES(4652,199,'South West Community Development Council');
+INSERT INTO UF VALUES(4653,199,'North West Community Development Council');
+INSERT INTO UF VALUES(4654,153,'Ewa District');
+INSERT INTO UF VALUES(4655,153,'Uaboe District');
+INSERT INTO UF VALUES(4656,153,'Aiwo District');
+INSERT INTO UF VALUES(4657,153,'Meneng District');
+INSERT INTO UF VALUES(4658,153,'Anabar District');
+INSERT INTO UF VALUES(4659,153,'Nibok District');
+INSERT INTO UF VALUES(4660,153,'Baiti District');
+INSERT INTO UF VALUES(4661,153,'Ijuw District');
+INSERT INTO UF VALUES(4662,153,'Buada District');
+INSERT INTO UF VALUES(4663,153,'Anibare District');
+INSERT INTO UF VALUES(4664,153,'Yaren District');
+INSERT INTO UF VALUES(4665,153,'Boe District');
+INSERT INTO UF VALUES(4666,153,'Denigomodu District');
+INSERT INTO UF VALUES(4667,153,'Anetan District');
+INSERT INTO UF VALUES(4668,230,'Zhytomyr Oblast');
+INSERT INTO UF VALUES(4669,230,'Vinnytsia Oblast');
+INSERT INTO UF VALUES(4670,230,'Zakarpattia Oblast');
+INSERT INTO UF VALUES(4671,230,'Kyiv Oblast');
+INSERT INTO UF VALUES(4672,230,'Lviv Oblast');
+INSERT INTO UF VALUES(4673,230,'Luhansk Oblast');
+INSERT INTO UF VALUES(4674,230,'Ternopil Oblast');
+INSERT INTO UF VALUES(4675,230,'Dnipropetrovsk Oblast');
+INSERT INTO UF VALUES(4676,230,'Kiev');
+INSERT INTO UF VALUES(4677,230,'Kirovohrad Oblast');
+INSERT INTO UF VALUES(4678,230,'Chernivtsi Oblast');
+INSERT INTO UF VALUES(4679,230,'Mykolaiv Oblast');
+INSERT INTO UF VALUES(4680,230,'Cherkasy Oblast');
+INSERT INTO UF VALUES(4681,230,'Khmelnytsky Oblast');
+INSERT INTO UF VALUES(4682,230,'Ivano-Frankivsk Oblast');
+INSERT INTO UF VALUES(4683,230,'Rivne Oblast');
+INSERT INTO UF VALUES(4684,230,'Kherson Oblast');
+INSERT INTO UF VALUES(4685,230,'Sumy Oblast');
+INSERT INTO UF VALUES(4686,230,'Kharkiv Oblast');
+INSERT INTO UF VALUES(4687,230,'Zaporizhzhya Oblast');
+INSERT INTO UF VALUES(4688,230,'Odessa Oblast');
+INSERT INTO UF VALUES(4689,230,'Autonomous Republic of Crimea');
+INSERT INTO UF VALUES(4690,230,'Volyn Oblast');
+INSERT INTO UF VALUES(4691,230,'Donetsk Oblast');
+INSERT INTO UF VALUES(4692,230,'Chernihiv Oblast');
+INSERT INTO UF VALUES(4693,34,'Gabrovo Province');
+INSERT INTO UF VALUES(4694,34,'Smolyan Province');
+INSERT INTO UF VALUES(4695,34,'Pernik Province');
+INSERT INTO UF VALUES(4696,34,'Montana Province');
+INSERT INTO UF VALUES(4697,34,'Vidin Province');
+INSERT INTO UF VALUES(4698,34,'Razgrad Province');
+INSERT INTO UF VALUES(4699,34,'Blagoevgrad Province');
+INSERT INTO UF VALUES(4700,34,'Sliven Province');
+INSERT INTO UF VALUES(4701,34,'Plovdiv Province');
+INSERT INTO UF VALUES(4702,34,'Kardzhali Province');
+INSERT INTO UF VALUES(4703,34,'Kyustendil Province');
+INSERT INTO UF VALUES(4704,34,'Haskovo Province');
+INSERT INTO UF VALUES(4705,34,'Sofia City Province');
+INSERT INTO UF VALUES(4706,34,'Pleven Province');
+INSERT INTO UF VALUES(4707,34,'Stara Zagora Province');
+INSERT INTO UF VALUES(4708,34,'Silistra Province');
+INSERT INTO UF VALUES(4709,34,'Veliko Tarnovo Province');
+INSERT INTO UF VALUES(4710,34,'Lovech Province');
+INSERT INTO UF VALUES(4711,34,'Vratsa Province');
+INSERT INTO UF VALUES(4712,34,'Pazardzhik Province');
+INSERT INTO UF VALUES(4713,34,'Ruse Province');
+INSERT INTO UF VALUES(4714,34,'Targovishte Province');
+INSERT INTO UF VALUES(4715,34,'Burgas Province');
+INSERT INTO UF VALUES(4716,34,'Yambol Province');
+INSERT INTO UF VALUES(4717,34,'Varna Province');
+INSERT INTO UF VALUES(4718,34,'Dobrich Province');
+INSERT INTO UF VALUES(4719,34,'Sofia Province');
+INSERT INTO UF VALUES(4720,181,'Suceava County');
+INSERT INTO UF VALUES(4721,181,'Hunedoara County');
+INSERT INTO UF VALUES(4722,181,'Arges');
+INSERT INTO UF VALUES(4723,181,'Bihor County');
+INSERT INTO UF VALUES(4724,181,'Alba');
+INSERT INTO UF VALUES(4725,181,'Ilfov County');
+INSERT INTO UF VALUES(4726,181,'Giurgiu County');
+INSERT INTO UF VALUES(4727,181,'Tulcea County');
+INSERT INTO UF VALUES(4728,181,'Teleorman County');
+INSERT INTO UF VALUES(4729,181,'Prahova County');
+INSERT INTO UF VALUES(4730,181,'Bucharest');
+INSERT INTO UF VALUES(4731,181,'Neamț County');
+INSERT INTO UF VALUES(4732,181,'Călărași County');
+INSERT INTO UF VALUES(4733,181,'Bistrița-Năsăud County');
+INSERT INTO UF VALUES(4734,181,'Cluj County');
+INSERT INTO UF VALUES(4735,181,'Iași County');
+INSERT INTO UF VALUES(4736,181,'Braila');
+INSERT INTO UF VALUES(4737,181,'Constanța County');
+INSERT INTO UF VALUES(4738,181,'Olt County');
+INSERT INTO UF VALUES(4739,181,'Arad County');
+INSERT INTO UF VALUES(4740,181,'Botoșani County');
+INSERT INTO UF VALUES(4741,181,'Sălaj County');
+INSERT INTO UF VALUES(4742,181,'Dolj County');
+INSERT INTO UF VALUES(4743,181,'Ialomița County');
+INSERT INTO UF VALUES(4744,181,'Bacău County');
+INSERT INTO UF VALUES(4745,181,'Dâmbovița County');
+INSERT INTO UF VALUES(4746,181,'Satu Mare County');
+INSERT INTO UF VALUES(4747,181,'Galați County');
+INSERT INTO UF VALUES(4748,181,'Timiș County');
+INSERT INTO UF VALUES(4749,181,'Harghita County');
+INSERT INTO UF VALUES(4750,181,'Gorj County');
+INSERT INTO UF VALUES(4751,181,'Mehedinți County');
+INSERT INTO UF VALUES(4752,181,'Vaslui County');
+INSERT INTO UF VALUES(4753,181,'Caraș-Severin County');
+INSERT INTO UF VALUES(4754,181,'Covasna County');
+INSERT INTO UF VALUES(4755,181,'Sibiu County');
+INSERT INTO UF VALUES(4756,181,'Buzău County');
+INSERT INTO UF VALUES(4757,181,'Vâlcea County');
+INSERT INTO UF VALUES(4758,181,'Vrancea County');
+INSERT INTO UF VALUES(4759,181,'Brașov County');
+INSERT INTO UF VALUES(4760,181,'Maramureș County');
+INSERT INTO UF VALUES(4761,191,'Aiga-i-le-Tai');
+INSERT INTO UF VALUES(4762,191,'Satupa itea');
+INSERT INTO UF VALUES(4763,191,'A ana');
+INSERT INTO UF VALUES(4764,191,'Fa asaleleaga');
+INSERT INTO UF VALUES(4765,191,'Atua');
+INSERT INTO UF VALUES(4766,191,'Vaisigano');
+INSERT INTO UF VALUES(4767,191,'Palauli');
+INSERT INTO UF VALUES(4768,191,'Va a-o-Fonoti');
+INSERT INTO UF VALUES(4769,191,'Gaga emauga');
+INSERT INTO UF VALUES(4770,191,'Tuamasaga');
+INSERT INTO UF VALUES(4771,191,'Gaga ifomauga');
+INSERT INTO UF VALUES(4772,237,'Torba');
+INSERT INTO UF VALUES(4773,237,'Penama');
+INSERT INTO UF VALUES(4774,237,'Shefa');
+INSERT INTO UF VALUES(4775,237,'Malampa');
+INSERT INTO UF VALUES(4776,237,'Sanma');
+INSERT INTO UF VALUES(4777,237,'Tafea');
+INSERT INTO UF VALUES(4778,202,'Honiara');
+INSERT INTO UF VALUES(4779,202,'Temotu Province');
+INSERT INTO UF VALUES(4780,202,'Isabel Province');
+INSERT INTO UF VALUES(4781,202,'Choiseul Province');
+INSERT INTO UF VALUES(4782,202,'Makira-Ulawa Province');
+INSERT INTO UF VALUES(4783,202,'Malaita Province');
+INSERT INTO UF VALUES(4784,202,'Central Province');
+INSERT INTO UF VALUES(4785,202,'Guadalcanal Province');
+INSERT INTO UF VALUES(4786,202,'Western Province');
+INSERT INTO UF VALUES(4787,202,'Rennell and Bellona Province');
+INSERT INTO UF VALUES(4788,75,'Burgundy');
+INSERT INTO UF VALUES(4789,75,'Auvergne');
+INSERT INTO UF VALUES(4790,75,'Picardy');
+INSERT INTO UF VALUES(4791,75,'Champagne-Ardenne');
+INSERT INTO UF VALUES(4792,75,'Limousin');
+INSERT INTO UF VALUES(4793,75,'Nord-Pas-de-Calais');
+INSERT INTO UF VALUES(4794,75,'Saint Barthélemy');
+INSERT INTO UF VALUES(4795,75,'Nouvelle-Aquitaine');
+INSERT INTO UF VALUES(4796,75,'Île-de-France');
+INSERT INTO UF VALUES(4797,75,'Mayotte');
+INSERT INTO UF VALUES(4798,75,'Auvergne-Rhône-Alpes');
+INSERT INTO UF VALUES(4799,75,'Occitania');
+INSERT INTO UF VALUES(4800,75,'Alo');
+INSERT INTO UF VALUES(4801,75,'Lorraine');
+INSERT INTO UF VALUES(4802,75,'Pays de la Loire');
+INSERT INTO UF VALUES(4803,75,'Languedoc-Roussillon');
+INSERT INTO UF VALUES(4804,75,'Normandy');
+INSERT INTO UF VALUES(4805,75,'Franche-Comté');
+INSERT INTO UF VALUES(4806,75,'Corsica');
+INSERT INTO UF VALUES(4807,75,'Brittany');
+INSERT INTO UF VALUES(4808,75,'Aquitaine');
+INSERT INTO UF VALUES(4809,75,'Saint Martin');
+INSERT INTO UF VALUES(4810,75,'Wallis and Futuna');
+INSERT INTO UF VALUES(4811,75,'Alsace');
+INSERT INTO UF VALUES(4812,75,'Provence-Alpes-Côte d Azur');
+INSERT INTO UF VALUES(4813,75,'Rhône-Alpes');
+INSERT INTO UF VALUES(4814,75,'Lower Normandy');
+INSERT INTO UF VALUES(4815,75,'Poitou-Charentes');
+INSERT INTO UF VALUES(4816,75,'Paris');
+INSERT INTO UF VALUES(4817,75,'Uvea');
+INSERT INTO UF VALUES(4818,75,'Centre-Val de Loire');
+INSERT INTO UF VALUES(4819,75,'Sigave');
+INSERT INTO UF VALUES(4820,75,'Grand Est');
+INSERT INTO UF VALUES(4821,75,'Saint Pierre and Miquelon');
+INSERT INTO UF VALUES(4822,75,'French Guiana');
+INSERT INTO UF VALUES(4823,75,'Réunion');
+INSERT INTO UF VALUES(4824,75,'French Polynesia');
+INSERT INTO UF VALUES(4825,75,'Bourgogne-Franche-Comté');
+INSERT INTO UF VALUES(4826,75,'Upper Normandy');
+INSERT INTO UF VALUES(4827,75,'Martinique');
+INSERT INTO UF VALUES(4828,75,'Hauts-de-France');
+INSERT INTO UF VALUES(4829,75,'Guadeloupe');
+INSERT INTO UF VALUES(4830,171,'West New Britain Province');
+INSERT INTO UF VALUES(4831,171,'Bougainville');
+INSERT INTO UF VALUES(4832,171,'Jiwaka Province');
+INSERT INTO UF VALUES(4833,171,'Hela');
+INSERT INTO UF VALUES(4834,171,'East New Britain');
+INSERT INTO UF VALUES(4835,171,'Morobe Province');
+INSERT INTO UF VALUES(4836,171,'Sandaun Province');
+INSERT INTO UF VALUES(4837,171,'Port Moresby');
+INSERT INTO UF VALUES(4838,171,'Oro Province');
+INSERT INTO UF VALUES(4839,171,'Gulf');
+INSERT INTO UF VALUES(4840,171,'Western Highlands Province');
+INSERT INTO UF VALUES(4841,171,'New Ireland Province');
+INSERT INTO UF VALUES(4842,171,'Manus Province');
+INSERT INTO UF VALUES(4843,171,'Madang Province');
+INSERT INTO UF VALUES(4844,171,'Southern Highlands Province');
+INSERT INTO UF VALUES(4845,171,'Eastern Highlands Province');
+INSERT INTO UF VALUES(4846,171,'Chimbu Province');
+INSERT INTO UF VALUES(4847,171,'Central Province');
+INSERT INTO UF VALUES(4848,171,'Enga Province');
+INSERT INTO UF VALUES(4849,171,'Milne Bay Province');
+INSERT INTO UF VALUES(4850,171,'Western Province');
+INSERT INTO UF VALUES(4851,233,'Ohio');
+INSERT INTO UF VALUES(4852,101,'Ladakh');
+INSERT INTO UF VALUES(4853,101,'West Bengal');
+INSERT INTO UF VALUES(4854,225,'Sinop');
+INSERT INTO UF VALUES(4855,239,'Capital District');
+INSERT INTO UF VALUES(4856,239,'Apure');
+INSERT INTO UF VALUES(4857,142,'Jalisco');
+INSERT INTO UF VALUES(4858,31,'Roraima');
+INSERT INTO UF VALUES(4859,177,'Guarda');
+INSERT INTO UF VALUES(4860,25,'Devonshire Parish');
+INSERT INTO UF VALUES(4861,25,'Hamilton Parish');
+INSERT INTO UF VALUES(4862,25,'Hamilton Municipality');
+INSERT INTO UF VALUES(4863,25,'Paget Parish');
+INSERT INTO UF VALUES(4864,25,'Pembroke Parish');
+INSERT INTO UF VALUES(4865,25,'Saint George s Municipality');
+INSERT INTO UF VALUES(4866,25,'Saint George s Parish');
+INSERT INTO UF VALUES(4867,25,'Sandys Parish');
+INSERT INTO UF VALUES(4868,25,'Smith s Parish');
+INSERT INTO UF VALUES(4869,25,'Southampton Parish');
+INSERT INTO UF VALUES(4870,25,'Warwick Parish');
+INSERT INTO UF VALUES(4871,48,'Huila');
+INSERT INTO UF VALUES(4874,248,'Uroševac District (Ferizaj)');
+INSERT INTO UF VALUES(4876,248,'Đakovica District (Gjakove)');
+INSERT INTO UF VALUES(4877,248,'Gjilan District');
+INSERT INTO UF VALUES(4878,248,'Kosovska Mitrovica District');
+INSERT INTO UF VALUES(4879,248,'Pristina (Priştine)');
+INSERT INTO UF VALUES(4880,11,'Autonomous City Of Buenos Aires');
+INSERT INTO UF VALUES(4881,17,'New Providence');
+INSERT INTO UF VALUES(4882,34,'Shumen');
+INSERT INTO UF VALUES(4883,98,'Yuen Long District');
+INSERT INTO UF VALUES(4884,98,'Tsuen Wan District');
+INSERT INTO UF VALUES(4885,98,'Tai Po District');
+INSERT INTO UF VALUES(4887,98,'Sai Kung District');
+INSERT INTO UF VALUES(4888,98,'Islands District');
+INSERT INTO UF VALUES(4889,98,'Central and Western District');
+INSERT INTO UF VALUES(4890,98,'Wan Chai');
+INSERT INTO UF VALUES(4891,98,'Eastern');
+INSERT INTO UF VALUES(4892,98,'Southern');
+INSERT INTO UF VALUES(4893,98,'Yau Tsim Mong');
+INSERT INTO UF VALUES(4894,98,'Sham Shui Po');
+INSERT INTO UF VALUES(4895,98,'Kowloon City');
+INSERT INTO UF VALUES(4896,98,'Wong Tai Sin');
+INSERT INTO UF VALUES(4897,98,'Kwun Tong');
+INSERT INTO UF VALUES(4898,98,'Kwai Tsing');
+INSERT INTO UF VALUES(4899,98,'Tuen Mun');
+INSERT INTO UF VALUES(4900,98,'North');
+INSERT INTO UF VALUES(4901,98,'Sha Tin');
+INSERT INTO UF VALUES(4902,4,'Sidi Bel Abbès');
+INSERT INTO UF VALUES(4905,4,'El M ghair');
+INSERT INTO UF VALUES(4906,4,'El Menia');
+INSERT INTO UF VALUES(4907,4,'Ouled Djellal');
+INSERT INTO UF VALUES(4908,4,'Bordj Baji Mokhtar');
+INSERT INTO UF VALUES(4909,4,'Béni Abbès');
+INSERT INTO UF VALUES(4910,4,'Timimoun');
+INSERT INTO UF VALUES(4911,4,'Touggourt');
+INSERT INTO UF VALUES(4912,4,'Djanet');
+INSERT INTO UF VALUES(4913,4,'In Salah');
+INSERT INTO UF VALUES(4914,4,'In Guezzam');
+INSERT INTO UF VALUES(4915,181,'Mureș County');
+INSERT INTO UF VALUES(4916,182,'Volgograd Oblast');
+INSERT INTO UF VALUES(4917,145,'La Colle');
+INSERT INTO UF VALUES(4918,145,'La Condamine');
+INSERT INTO UF VALUES(4919,145,'Moneghetti');
+INSERT INTO UF VALUES(4920,103,'Hamadan Province');
+INSERT INTO UF VALUES(4921,48,'Bogotá');
+INSERT INTO UF VALUES(4922,173,'Loreto');
+INSERT INTO UF VALUES(4923,58,'Kutná Hora');
+INSERT INTO UF VALUES(4924,109,'Kōchi Prefecture');
+INSERT INTO UF VALUES(4925,240,'Cần Thơ');
+INSERT INTO UF VALUES(4926,161,'Rivers');
+INSERT INTO UF VALUES(4927,149,'Rabat-Salé-Kénitra');
+INSERT INTO UF VALUES(4928,149,'Agadir-Ida-Ou-Tanane');
+INSERT INTO UF VALUES(4929,149,'Berrechid');
+INSERT INTO UF VALUES(4930,149,'Casablanca');
+INSERT INTO UF VALUES(4931,149,'Driouch');
+INSERT INTO UF VALUES(4932,149,'Fès');
+INSERT INTO UF VALUES(4933,149,'Fquih Ben Salah');
+INSERT INTO UF VALUES(4934,149,'Guercif');
+INSERT INTO UF VALUES(4935,149,'Marrakech');
+INSERT INTO UF VALUES(4936,149,'M’diq-Fnideq');
+INSERT INTO UF VALUES(4937,149,'Meknès');
+INSERT INTO UF VALUES(4938,149,'Midelt');
+INSERT INTO UF VALUES(4939,149,'Mohammadia');
+INSERT INTO UF VALUES(4940,149,'Oujda-Angad');
+INSERT INTO UF VALUES(4941,149,'Ouezzane');
+INSERT INTO UF VALUES(4942,149,'Rabat');
+INSERT INTO UF VALUES(4943,149,'Rehamna');
+INSERT INTO UF VALUES(4944,149,'Salé');
+INSERT INTO UF VALUES(4945,149,'Sidi Bennour');
+INSERT INTO UF VALUES(4946,149,'Sidi Ifni');
+INSERT INTO UF VALUES(4947,149,'Skhirate-Témara');
+INSERT INTO UF VALUES(4948,149,'Tarfaya (EH-partial)');
+INSERT INTO UF VALUES(4949,149,'Tinghir');
+INSERT INTO UF VALUES(4950,149,'Tanger-Assilah');
+INSERT INTO UF VALUES(4951,149,'Youssoufia');
+INSERT INTO UF VALUES(4952,149,'Sidi Slimane');
+INSERT INTO UF VALUES(4953,51,'Lualaba');
+INSERT INTO UF VALUES(4954,219,'Chaiyaphum');
+INSERT INTO UF VALUES(4955,218,'Mbeya');
+INSERT INTO UF VALUES(4956,218,'Songwe');
+INSERT INTO UF VALUES(4957,214,'Basel-Stadt');
+INSERT INTO UF VALUES(4958,83,'Bono East');
+INSERT INTO UF VALUES(4959,83,'Bono');
+INSERT INTO UF VALUES(4960,83,'North East');
+INSERT INTO UF VALUES(4961,83,'Oti');
+INSERT INTO UF VALUES(4962,83,'Savannah');
+INSERT INTO UF VALUES(4963,83,'Western North');
+
+INSERT INTO CIDADE VALUES(1,2001,'Rio Grande');
+INSERT INTO CIDADE VALUES(2,2001,'Pelotas');
+
+INSERT INTO PERFIL VALUES(1,1,'abfn0905@gmail.com','$2y$10$vaJf.MBckE0gkUdu0WE3p.c8ZxwWw6OM/sJcZNc3rzV2yt87DVAFy','M','CHPK-9','https://drive.google.com/uc?export=download&id=1JnbyE-yOjhtcE2YA2Y7tRMmcUON6kd35','2002-05-09','2021-11-25 21:34:09',1);
+INSERT INTO PERFIL VALUES(2,1,'bruno.nascimento@aluno.riogrande.ifrs.edu','$2y$10$QVuXeaCgue9b9Gfxoqpyle2ubbwpIVKlYCPb3G.ueO0jQw5bM8yom','M','CHPK-10','https://drive.google.com/uc?export=download&id=1wrkf7nkkKn-ThbxSjHJoSFb-0KGnQefq','2002-05-09','2021-11-25 22:27:26',1);
+INSERT INTO PERFIL VALUES(3,1,'silvioquintana1@hotmail.com','$2y$10$k5Z0zf/spQK8Jq8.I0LZ6OHABB/3no.2zEZlPGlryJAVdHtCkibV6','M','SilMusk3','https://upload.wikimedia.org/wikipedia/commons/4/4a/Pirate_icon.gif','2002-04-26','2021-11-26 01:19:04',1);
+INSERT INTO PERFIL VALUES(4,1,'victortavamaral@gmail.com','$2y$10$LmeaGQainGy2LCxzRPkUqORv0927DCdV6WbpHWUADIwY1Fu29pAgi','M','vitão','https://drive.google.com/uc?export=download&id=1-U60n6XzoZeEe8f0uvNNVpyfc4t5AZE_','2002-04-22','2021-11-26 13:07:48',1);
+INSERT INTO PERFIL VALUES(5,1,'victortavaresjedi150@gmail.com','$2y$10$FFXBwoh4u00MW7yk2.ME0.1pj9ZqYRfdtvJEPZlfZBotM1nSDrLpS','M','geraldao','https://drive.google.com/uc?export=download&id=1svSmr4LV-mU2G9lXWFSOwiDdcJuzyW5O','2002-04-22','2021-11-26 15:13:08',1);
+
+INSERT INTO PORTO VALUES(1,4,'Resident Evil','asdasdas','https://drive.google.com/uc?export=download&id=1iK1-bCRZd4fKHgQG0TWN98DkfmrkWxve',1);
+INSERT INTO PORTO VALUES(2,4,'Hogwarts','Sla mano','https://drive.google.com/uc?export=download&id=1pGLvGzhlf9XXFM3jGa9FhTRTihBPQHB3',1);
+INSERT INTO PORTO VALUES(3,4,'Casa de Hades','asdasdasdasd','https://drive.google.com/uc?export=download&id=1EqbendRznjPYMFfQ634jYIoHJcPYkdpS',1);
+INSERT INTO PORTO VALUES(4,4,'Medjais de Siuá','asdasddsasad','https://drive.google.com/uc?export=download&id=1AuTDe8UFD0nJrg7HXfQ3Kmg4BnIlTF2k',1);
+INSERT INTO PORTO VALUES(5,5,'Jill da massa','asdasdasdasdas','https://drive.google.com/uc?export=download&id=1PC588dOlBzvhuPSvrj03mUIA6fv-EJvZ',1);
+INSERT INTO PORTO VALUES(6,5,'Hunters o Yharnam','Bloodborne is an action role-playing game developed by FromSoftware and published by Sony Computer Entertainment, which was released for the PlayStation 4 in March 2015. Bloodborne follows the players character, a Hunter, through the decrepit...','https://drive.google.com/uc?export=download&id=1BYDQwBM91JAmJzCfd8Wsk4OZ16TywSlN',1);
+
+INSERT INTO solicitacao_amigo VALUES(1,3,'2021-11-26 01:27:05',1);
+INSERT INTO solicitacao_amigo VALUES(2,3,'2021-11-26 01:27:08',1);
+INSERT INTO solicitacao_amigo VALUES(3,4,'2021-11-26 15:07:49',1);
+INSERT INTO solicitacao_amigo VALUES(2,4,'2021-11-26 15:07:51',1);
+INSERT INTO solicitacao_amigo VALUES(4,5,'2021-11-26 15:14:22',1);
+INSERT INTO solicitacao_amigo VALUES(3,5,'2021-11-26 15:15:43',1);
+INSERT INTO solicitacao_amigo VALUES(2,5,'2021-11-26 15:15:46',1);
 
 --porto
 --INSERT INTO PORTO(perfil,nome,descr) VALUES(1, 'Devs dagama', 'è isso ai parceria');
