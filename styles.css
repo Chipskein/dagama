@@ -193,7 +193,7 @@ body {
 	}
 
 	.inputHalf {
-		width: 128px;
+		width: 120px;
 		height: 36px;
 		border-radius: 10px;
 		font-size: 15px;
@@ -300,7 +300,9 @@ body {
 	.hide{
 		visibility: hidden !important;
 	}
-
+	.hide-visibility{
+		display: none;
+	}
 /*</index.php>*/
 /*--------------------------------------------------------------------------------------------------------------*/
 /*<mar.php>*/
