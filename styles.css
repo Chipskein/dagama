@@ -317,10 +317,12 @@ body {
 		width: 80%;
 		text-align: left;
 	}
-	img.mar_porto{
-		width: 225px;
-		height: 100%;
-		float: left;
+	.porto-icon{
+		width: 265px;
+		height: 265px;
+		background-position: center;
+		background-size: cover;
+		float: left;		
 	}
 	h2.mar_porto{
 		padding-top: 30px;

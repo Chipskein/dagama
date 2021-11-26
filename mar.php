@@ -58,7 +58,7 @@
       <?php
         foreach($portos as $porto){
           echo "<div class=mar_porto>";
-            echo "<img class=mar_porto src=$porto[img]>";
+            echo "<div class=\"porto-icon\" style=\"background-image: url($porto[img])\"></div>";
             echo "<h2 class=mar_porto><a href=porto.php?porto=$porto[codigo]>$porto[nome]</a></h2>";
             echo "<div class=text-porto> <p class=mar_porto>$porto[descr] </p> </div>";
             echo "<div class=\"insert-interacao-entrar\"> <p class=\"insert-interacao-entrar-text\">Entrar</p></div>";

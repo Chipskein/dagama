@@ -15,20 +15,21 @@
   }
   if(isset($_SESSION['userid'])){
     // var_dump($_POST);
-    var_dump($_FILES);
+    // var_dump($_FILES);
     if(isset($_POST['confirmar'])){
       $erros = [];
       if(!isset($_POST['nome']) || !isset($_POST['descricao'])){
         $erros[] = "Campos faltando";
       } else {
-        if(!preg_match('#^([a-z0-9áạàảãăắặằẳẵâấậầẩẫéẹèẻẽêếệềểễíịìỉĩóọòỏõôốộồổỗơớợờởỡúụùủũưứựừửữýỵỳỷỹđ]+)?(( [a-z0-9áạàảãăắặằẳẵâấậầẩẫéẹèẻẽêếệềểễíịìỉĩóọòỏõôốộồổỗơớợờởỡúụùủũưứựừửữýỵỳỷỹđ,.-_:]+)?)$#', $_POST['descricao'])){
-          $erros[] = "Descricão inválida";
+        $regex = "/^([a-z0-9áạàảãăắặằẳẵâấậầẩẫéẹèẻẽêếệềểễíịìỉĩóọòỏõôốộồổỗơớợờởỡúụùủũưứựừửữýỵỳỷỹđA-ZÁẠÀẢÃĂẮẶẰẲẴÂẤẬẦẨẪÉẸÈẺẼÊẾỆỀỂỄÍỊÌỈĨÓỌÒỎÕÔỐỘỒỔỖƠỚỢỜỞỠÚỤÙỦŨƯỨỰỪỬỮÝỴỲỶỸĐ]+)?(( [a-z0-9áạàảãăắặằẳẵâấậầẩẫéẹèẻẽêếệềểễíịìỉĩóọòỏõôốộồổỗơớợờởỡúụùủũưứựừửữýỵỳỷỹđA-ZÁẠÀẢÃĂẮẶẰẲẴÂẤẬẦẨẪÉẸÈẺẼÊẾỆỀỂỄÍỊÌỈĨÓỌÒỎÕÔỐỘỒỔỖƠỚỢỜỞỠÚỤÙỦŨƯỨỰỪỬỮÝỴỲỶỸĐ,.-_:]+)?)+$/";
+        if(!preg_match($regex, $_POST['descricao'])){
+          $erros[] = "Descricão inválida = ".preg_match($regex, $_POST['descricao']);
         }
         if(strlen($_POST['descricao']) > 250){
           $erros[] = "Descrição grande demais";
         }
-        if(!preg_match('#^([a-z0-9áạàảãăắặằẳẵâấậầẩẫéẹèẻẽêếệềểễíịìỉĩóọòỏõôốộồổỗơớợờởỡúụùủũưứựừửữýỵỳỷỹđ]+)?(( [a-z0-9áạàảãăắặằẳẵâấậầẩẫéẹèẻẽêếệềểễíịìỉĩóọòỏõôốộồổỗơớợờởỡúụùủũưứựừửữýỵỳỷỹđ,.-_:]+)?)$#', $_POST['descricao'])){
-          $erros[] = "Nome inválido";
+        if(!preg_match($regex, $_POST['nome'])){
+          $erros[] = "Nome inválido = ".preg_match($regex, $_POST['nome']);
         }
         if(strlen($_POST['nome']) > 250){
           $erros[] = "Nome grande demais";
