@@ -156,6 +156,11 @@
         })
       }
       else{
+        if(select_estado.selectedIndex==0){
+          newpais.classList.add("hide-visibility");
+          newestado.classList.add("hide-visibility");
+          newcidade.classList.add("hide-visibility");
+        }
         if(select_pais.selectedIndex==1){
           newpais.classList.remove("hide-visibility");
           newestado.classList.remove("hide-visibility");
@@ -176,6 +181,16 @@
         }
       }
     }
+
+
+
+
+
+
+
+
+
+
     select_estado.onchange=()=>{
       if(select_estado.selectedIndex!=0&&select_estado.selectedIndex!=1){
         newpais.classList.add("hide-visibility");
