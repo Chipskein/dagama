@@ -51,6 +51,10 @@
   <main>
     <br>
     <div align=center>
+      <div class="mar-top-row">
+        <div class="order-btn"><img src="./imgs/icons/hamburger.png" class="order-btn-icon" alt="" srcset=""><p class="order-btn-txt">Ordenar</p></div>
+        <button class="btn-create-porto"><a href="createPorto.php">Criar um porto</a></button>
+      </div>
       <?php
         foreach($portos as $porto){
           echo "<div class=mar_porto>";
