@@ -360,10 +360,11 @@ body {
 		margin-top: 15px;
 		margin-left: 20px;
 	}
-	a.header{
+	a.amigos{
 		font-size: 20px;
 		text-decoration: none;
 		color: var(--white-color);
+		font-weight: bold;
 	}
 	a.header:visited{
 		font-size: 20px;
@@ -579,6 +580,10 @@ main {
 		margin-right: 40px;
 		background-color: var(--cinza-color);
 		border-radius: 10px;
+	}
+	.amigos{
+		font-size: 32px;
+		padding-top: 20px;
 	}
 	.SeusAmigos{
 		font-size: 32px;

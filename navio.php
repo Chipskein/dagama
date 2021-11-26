@@ -68,6 +68,7 @@
     <!--Add onlick change-->
       <br>
       <div id="img_perfil" class=perfil></div>
+      <input id="imgInp" type="file" name="photo">
       <?php 
         if($isOwner)echo "<div class=camera-icon></div>";
       ?>
@@ -76,7 +77,7 @@
     <br>
     <div align=center>
         <div class=perfil-amigos>
-          <a href=amigos.php class=header>Amigos:0</a>
+          <a  href=amigos.php class=amigos>Amigos:0</a>
           <?php
             if($isOwner) echo "<h3>Seus Portos:0</h3>";
           ?>
@@ -115,6 +116,7 @@
       </div>
       <div>
         <img src=imgs/icons/user-icon.png class=div-amigo-image>
+
         <p class=nomeAmigo>Nome</p>
       </div>
     </div>
@@ -123,5 +125,17 @@
   echo "<script>img_perfil.style.backgroundImage=\"url($user[img])\"</script>";
 ?>
 </div>
+<script>
+      imgInp.onchange = evt => {
+      const [file] = imgInp.files
+      const img_perfil=document.getElementById("img_perfil");
+      if (file) {
+          img_perfil.style.backgroundImage=`url(${URL.createObjectURL(file)})`;
+      }
+      else{
+          img_perfil.style.backgroundImage="url(imgs/icons/user-icon.png)"
+      }
+    }
+  </script>
 </body>
 </html>
