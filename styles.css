@@ -360,10 +360,11 @@ body {
 		margin-top: 15px;
 		margin-left: 20px;
 	}
-	a.header{
+	a.amigos{
 		font-size: 20px;
 		text-decoration: none;
 		color: var(--white-color);
+		font-weight: bold;
 	}
 	a.header:visited{
 		font-size: 20px;
@@ -406,6 +407,84 @@ body {
 	.page-link:visited{
 		color:var(--white-color);
 		text-decoration: none;
+	}
+	.mar-top-row {
+		display: flex;
+		margin-left: 67%;
+	}
+	.order-btn {
+		display: flex;
+		margin-right: 40px;
+		margin-top: 10px;
+		align-items: center;
+	}
+	.order-btn-icon {
+		width: 24px;
+		height: 24px;
+	}
+	.order-btn-txt {
+		margin-left: 10px;
+		font-size: 18px;
+	}
+	.btn-create-porto {
+		width: 218px;
+		height: 50px;
+		background-color: var(--azulClaro-color);
+		border-radius: 10px;
+	}
+	.btn-create-porto a {
+		text-decoration: none;
+		color: #fff;
+	}
+	.addporto-form-container {
+		width: 400px;
+		height: 520px;
+		background-color: var(--cinza-color);
+		align-content: center;
+		padding: 30px;
+		border-radius: 10px;
+	}
+	#formAddPorto {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+	#porto_img_banner {
+		width: 170px;
+		height: 170px;
+		background-color: #ECE4E4;
+		background-position: center;
+		background-size: cover;
+		margin-bottom: 10px;
+	}
+	.addporto-main-txt {
+		color: var(--azulClaro-color);
+		font-size: 30px;
+		font-weight: bold;
+	}
+	.addporto-input-container {
+		justify-content: left;
+	}
+	.addporto-input-container {
+		display: flex;
+		position: relative;
+	}
+	.addporto-input-label {
+		margin-right: 10px;
+	}
+	.addporto-input-txtarea {
+		width: 235px;
+		height: 100px;
+		border-radius: 10px;
+	}
+	.addporto-confirm {
+		width: 139px;
+		height: 38px;
+		background-color: var(--azulEscuro2-color);
+		color: #fff;
+		border-radius: 10px;
+		border-width: 0px;
+		margin-top: 20px;
 	}
 /*</mar.php>*/
 /*--------------------------------------------------------------------------------------------------------------------------------------*/
@@ -579,6 +658,10 @@ main {
 		margin-right: 40px;
 		background-color: var(--cinza-color);
 		border-radius: 10px;
+	}
+	.amigos{
+		font-size: 32px;
+		padding-top: 20px;
 	}
 	.SeusAmigos{
 		font-size: 32px;

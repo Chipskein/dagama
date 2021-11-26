@@ -25,9 +25,9 @@
     </div>
     <div class="header-links">
     <?php 
-      echo "<a class=\"header-links-a\" href=feed.php>Feed</a> ";
-      echo "<a class=\"header-links-a\">Mar</a> ";
-      echo "<a class=\"header-links-a a-selected\">Navio</a> ";
+      echo "<a class=\"header-links-a\" href=feed.php?user=$_SESSION[userid]>Feed</a> ";
+      echo "<a class=\"header-links-a a-selected\" href=mar.php?user=$_SESSION[userid]>Mar</a> ";
+      echo "<a class=\"header-links-a\" href=navio.php?user=$_SESSION[userid]>Navio</a> ";
       echo "<a class=\"header-links-a\" href=backend/logoff.php>Sair </a><img class=\"header-links-icon\" src=\"imgs/icons/sair.png\" alt=\"\">";
     ?>
     </div>
