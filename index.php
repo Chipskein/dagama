@@ -82,33 +82,34 @@
             </div>
             <input class="inputs" name="username" type="text" placeholder='Username'>
             <input class="inputs" name="email" type="email" placeholder="Email">
-            <input class="inputs" name="password" type="password" placeholder='Senha'>
-            <input class="inputs" name="cpassword" type="password" placeholder='Confirmar senha'>
-            <input class="inputs" name="bdate" type="date" placeholder='Nascimento'>
-            <!-- <p>Genero</p> -->
-            <select class="inputs" name="genero">
+            <input class="inputHalf" name="password" type="password" placeholder='Senha'>
+            <input class="inputHalf" name="cpassword" type="password" placeholder='Confirmar senha'>
+            <input class="inputHalf" name="bdate" type="date" placeholder='Nascimento'>
+            <select class="inputHalf" name="genero">
                 <option value="M">Masculino</option>
                 <option value="F">Feminino</option>
                 <option value="O">Outro</option>
             </select>
             <select class="inputs" name="pais" id='pais'>
               <option value="null" selected>Selecione o seu pais:</option>
+              <option value="outro">Adicionar Pais:</option>
               <?php
                 foreach($paises as $pais){
                     echo "<option value=$pais[codigo]>$pais[nome]</option>";
                 }
               ?>
             </select>
-            <select class="inputHalf hide" name="estado" id=estado>
+            <input type='text' class="inputs hide-visibility" name='newpais' id='newpais' placeholder='Digite um novo pais'>
+            <select class="inputs hide-visibility" name="estado" id=estado>
             <option value="null" selected>Selecione o seu estado:</option>
-              <!--
-                <option value="1" selected>Brasil</option>
-              -->
+            <option value="outro">Adicionar Estado:</option>
             </select>
-            <select class="inputHalf hide" name="cidade" id=cidade>
+            <input type='text' class="inputs hide-visibility" name='newestado' id='newestado' placeholder='Digite um novo estado'>
+            <select class="inputs hide-visibility" name="cidade" id=cidade>
                 <option value="null" selected>Selecione o sua cidade:</option>
+                <option value="outro">Adicionar Cidade:</option>
             </select>
-           
+            <input type='text' class="inputs hide-visibility" name='newcidade' id='newcidade' placeholder='Digite uma nova cidade'>           
             <div id="divTermos">
               <input value='pass' name="termos" type="checkbox"> <p>Concordo com os <a href="LICENSE" target="_blank" style="color: #7ED8FF;">termos de uso</a></p>
             </div>
@@ -132,13 +133,18 @@
     let select_pais=document.getElementById("pais")
     let select_estado=document.getElementById("estado")
     let select_cidade=document.getElementById("cidade")
+    let newpais=document.getElementById("newpais");
+    let newestado=document.getElementById("newestado");
+    let newcity=document.getElementById("newcidade");
     select_pais.onchange=()=>{
-      if(select_pais.selectedIndex!=0){
-        
+      if(select_pais.selectedIndex!=0&&select_pais.selectedIndex!=1){
         pais=select_pais.value;
-        select_estado.classList.remove("hide");
+        newpais.classList.add("hide-visibility");
+        newestado.classList.add("hide-visibility");
+        newcidade.classList.add("hide-visibility");
+        select_estado.classList.remove("hide-visibility");
         Array.from(select_estado.options).forEach(function(e) {
-          if (e.value!="null") e.remove();
+          if (e.value!="null"&&e.value!="outro") e.remove();
         });
         states.forEach(e=>{
           if(e.pais==pais){
@@ -150,21 +156,34 @@
         })
       }
       else{
-        select_estado.classList.add("hide");
-        Array.from(select_estado.options).forEach(function(e) {
-          if (e.value!="null") e.remove();
-        });
-        select_cidade.classList.add("hide");
-        Array.from(select_cidade.options).forEach(function(e) {
-          if (e.value!="null") e.remove();
-        });
+        if(select_pais.selectedIndex==1){
+          newpais.classList.remove("hide-visibility");
+          newestado.classList.remove("hide-visibility");
+          newcidade.classList.remove("hide-visibility");
+        }
+        else{
+          newpais.classList.add("hide-visibility");
+          newestado.classList.add("hide-visibility");
+          newcidade.classList.add("hide-visibility");
+          select_estado.classList.add("hide-visibility");
+          Array.from(select_estado.options).forEach(function(e) {
+            if (e.value!="null"&&e.value!="outro") e.remove();
+          });
+          select_cidade.classList.add("hide-visibility");
+          Array.from(select_cidade.options).forEach(function(e) {
+            if (e.value!="null"&&e.value!="outro") e.remove();
+          });
+        }
       }
     }
     select_estado.onchange=()=>{
-      if(select_estado.selectedIndex!=0){
-        select_cidade.classList.remove("hide");
+      if(select_estado.selectedIndex!=0&&select_estado.selectedIndex!=1){
+        newpais.classList.add("hide-visibility");
+        newestado.classList.add("hide-visibility");
+        newcidade.classList.add("hide-visibility");
+        select_cidade.classList.remove("hide-visibility");
         Array.from(select_cidade.options).forEach(function(e) {
-          if (e.value!="null") e.remove();
+          if (e.value!="null"&&e.value!="outro") e.remove();
         });
         cities.forEach(e=>{
           estado=select_estado.value;
@@ -177,11 +196,28 @@
         })
       }
       else{
-        select_cidade.classList.add("hide");
-        Array.from(select_cidade.options).forEach(function(e) {
-          if (e.value!="null") e.remove();
-        });
+        if(select_estado.selectedIndex==1){
+          newestado.classList.remove("hide-visibility");
+          newcidade.classList.remove("hide-visibility");
+        }
+        else{
+          newestado.classList.add("hide-visibility");
+          newcidade.classList.add("hide-visibility");
+          select_cidade.classList.add("hide-visibility");
+          Array.from(select_cidade.options).forEach(function(e) {
+            if (e.value!="null"&&e.value!="outro") e.remove();
+          });
+        }
       }
+    }
+    select_cidade.onchange=()=>{
+      if(select_cidade.selectedIndex==0){
+        newcidade.classList.add("hide-visibility");
+      }
+      if(select_cidade.selectedIndex==1){ 
+        newcidade.classList.remove("hide-visibility");
+      }
+      
     }
 
   </script>
