@@ -151,7 +151,15 @@ where
         select codigo from perfil where ativo = 0
     )
 
--- Get dos posts
+-- Get dos PORTOS
+
+select * from perfil
+    join porto_participa on perfil.codigo = porto.perfil
+    join porto on porto.codigo = porto_participa.porto
+where perfil.codigo = 3
+
+
+-- Get dos POSTS
 select 
     interacao.codigo as codInteracao, 
     interacao.post as codPost, 

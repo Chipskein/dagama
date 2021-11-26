@@ -648,13 +648,6 @@
         }
         else exit;
     };
-
-
-
-
-
-
-
     function getLocais(){
         $db_connection = db_connection();
         $db = $db_connection['db'];
@@ -872,7 +865,8 @@
         if($db){
             if($db_type == 'sqlite'){
                 $verify = $db->exec("insert into porto (perfil,nome,descr,img) values ('".$perfil."', '".$nome."', '".$descr."', '".$link."'".")");
-                if($verify) return $verify;
+                $portoId = $db->lastInsertRowID();
+                if($portoId) return $portoId;
                 else return false;
             }
             if($db_type == 'postgresql'){
