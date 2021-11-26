@@ -30,6 +30,7 @@
           die();
         }
         $isOwner= "$_GET[user]"=="$_SESSION[userid]" ? true:false;
+        $portosArray = getAllPorto($_GET['user'], true, 0, 3);
       }
       else{
         echo "Usuario inválido";
@@ -47,22 +48,31 @@
     </div>
     <div class="header-links">
     <?php 
-      echo "<a class=\"header-links-a\" href=feed.php?user=$_SESSION[userid]>Feed</a> ";
-      echo "<a class=\"header-links-a\" href=mar.php?user=$_SESSION[userid]>Mar</a> ";
+      echo "<a class=\"header-links-a\" href=feed.php>Feed</a> ";
+      echo "<a class=\"header-links-a\" href=mar.php>Mar</a> ";
       echo "<a class=\"header-links-a a-selected\" href=navio.php?user=$_SESSION[userid]>Navio</a> ";
       echo "<a class=\"header-links-a\" href=backend/logoff.php>Sair </a><img class=\"header-links-icon\" src=\"imgs/icons/sair.png\" alt=\"\">";
     ?>
     </div>
   </header>
   <aside id=direita>
-  <div align=center class=background>
-        <p class=portosAtracados>Portos atracados</p>
-      <div class=row>
-        <img src=imgs/icon.png class=portos-img>
-        <p class=nomePort>Nome</p>
-      </div>
+    <div align=center class=background>
+      <p class=portosAtracados>Portos atracados:</p>
+      <?php
+      if($portosArray){
+        foreach ($portosArray as $value) {
+          echo "<div class=\"row porto-feed-container\">
+            <div class=\"portos-img\" style=\"background-image: url($value[img])\"></div>
+            <a class=nomePort href=porto.php?porto=$value[codigo]>$value[nome]</a>
+          </div>";
+        }
+        echo "<br><a class=portosAtracadosMais href=portosUser.php>Ver todos</a>";
+      } else {
+        echo "<p>Sem portos ainda</p>";
+      }
+      ?>
     </div>
-    </aside>
+  </aside>
   <main>
     <div align=center>
     <!--Add onlick change-->

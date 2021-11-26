@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="../imgs/icon.png" type="image/jpg">
   <link rel="stylesheet" href="styles.css">
-  <title>Dagama | Mar</title>
+  <title>Dagama | Portos Atracados</title>
 </head>
 <body class="mar_porto">
 <?php
@@ -24,7 +24,7 @@
     $limit=10;//mudar pra 10 dps
     $offset= isset($_GET['offset']) ? $_GET['offset']:0;
     //falta o pesquisar e ordenar
-    $portos=getAllPorto($_SESSION['userid'], false, $offset, $limit);
+    $portos=getAllPorto($_SESSION['userid'], true, $offset, $limit);
     $total=getTotalPorto();
   }
   else {
@@ -42,8 +42,8 @@
     <div class="header-links">
     <?php 
       echo "<a class=\"header-links-a\" href=feed.php>Feed</a> ";
-      echo "<a class=\"header-links-a a-selected\" href=mar.php>Mar</a> ";
-      echo "<a class=\"header-links-a\" href=navio.php?user=$_SESSION[userid]>Navio</a> ";
+      echo "<a class=\"header-links-a\" href=mar.php>Mar</a> ";
+      echo "<a class=\"header-links-a a-selected\" href=navio.php?user=$_SESSION[userid]>Navio</a> ";
       echo "<a class=\"header-links-a\" href=backend/logoff.php>Sair </a><img class=\"header-links-icon\" src=\"imgs/icons/sair.png\" alt=\"\">";
     ?>
     </div>

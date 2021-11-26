@@ -21,7 +21,7 @@
       if(!isset($_POST['nome']) || !isset($_POST['descricao'])){
         $erros[] = "Campos faltando";
       } else {
-        $regex = "/^([a-z0-9áạàảãăắặằẳẵâấậầẩẫéẹèẻẽêếệềểễíịìỉĩóọòỏõôốộồổỗơớợờởỡúụùủũưứựừửữýỵỳỷỹđA-ZÁẠÀẢÃĂẮẶẰẲẴÂẤẬẦẨẪÉẸÈẺẼÊẾỆỀỂỄÍỊÌỈĨÓỌÒỎÕÔỐỘỒỔỖƠỚỢỜỞỠÚỤÙỦŨƯỨỰỪỬỮÝỴỲỶỸĐ]+)?(( [a-z0-9áạàảãăắặằẳẵâấậầẩẫéẹèẻẽêếệềểễíịìỉĩóọòỏõôốộồổỗơớợờởỡúụùủũưứựừửữýỵỳỷỹđA-ZÁẠÀẢÃĂẮẶẰẲẴÂẤẬẦẨẪÉẸÈẺẼÊẾỆỀỂỄÍỊÌỈĨÓỌÒỎÕÔỐỘỒỔỖƠỚỢỜỞỠÚỤÙỦŨƯỨỰỪỬỮÝỴỲỶỸĐ,.-_:]+)?)+$/";
+        $regex = "/^([a-z0-9áạàảãăắặằẳẵâấậầẩẫéẹèẻẽêếệềểễíịìỉĩóọòỏõôốộồổỗơớợờởỡúụùủũưứựừửữýỵỳỷỹđA-ZÁẠÀẢÃĂẮẶẰẲẴÂẤẬẦẨẪÉẸÈẺẼÊẾỆỀỂỄÍỊÌỈĨÓỌÒỎÕÔỐỘỒỔỖƠỚỢỜỞỠÚỤÙỦŨƯỨỰỪỬỮÝỴỲỶỸĐ]+)?(( [a-z0-9áạàảãăắặằẳẵâấậầẩẫéẹèẻẽêếệềểễíịìỉĩóọòỏõôốộồổỗơớợờởỡúụùủũưứựừửữýỵỳỷỹđA-ZÁẠÀẢÃĂẮẶẰẲẴÂẤẬẦẨẪÉẸÈẺẼÊẾỆỀỂỄÍỊÌỈĨÓỌÒỎÕÔỐỘỒỔỖƠỚỢỜỞỠÚỤÙỦŨƯỨỰỪỬỮÝỴỲỶỸĐ,.\-_:]+)?)+$/";
         if(!preg_match($regex, $_POST['descricao'])){
           $erros[] = "Descricão inválida = ".preg_match($regex, $_POST['descricao']);
         }
@@ -37,11 +37,25 @@
         if(trim($_POST['nome']) == ""){
           $erros[] = "Nome não pode ser em branco";
         }
+        if(isset($_FILES['photo'])){
+          if($_FILES['photo']['name'] != ""){
+            if($_FILES['photo']['type'] == ""){
+              $erros[] = "Tipo da imagem inválido";
+            }
+            if($_FILES['photo']['size'] == ""){
+              $erros[] = "Tamanho da imagem inválido";
+            }
+            if($_FILES['photo']['error'] !== 0 ){
+              $erros[] = "Ocorreu um erro ao fazer upload dessa imagem";
+            }
+          }
+        }
       }
 
       if($erros == []){
         $perfil = $_SESSION['userid'];
         $nome = $_POST['nome'];
+
         $descr = $_POST['descricao'];
         $img = is_uploaded_file($_FILES['photo']['tmp_name']) ? $_FILES['photo'] : null;
         $id = addPorto($perfil, $nome, $descr, $img);

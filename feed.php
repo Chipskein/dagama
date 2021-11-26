@@ -23,6 +23,7 @@
     $pessoasArray = getPessoas();
     $suggestFriends = suggestFriends($_SESSION['userid'], 4, 0);
     $postsArray = getPosts(0, 10);
+    $portosArray = getAllPorto($_SESSION['userid'], true, 0, 3);
     $errorMessage = [];
 
     // var_dump($_POST);
@@ -34,6 +35,8 @@
     // print_r($pessoasArray);
     // echo "<br>";
     // print_r($postsArray);
+    // echo "<br>";
+    // print_r($portosArray);
     // echo "<br>";
 
     // sendFriendRequest para enviar solicitacao
@@ -69,20 +72,29 @@
     </div>
     <div class="header-links">
     <?php 
-      echo "<a class=\"header-links-a a-selected\" href=feed.php?user=$_SESSION[userid]>Feed</a> ";
-      echo "<a class=\"header-links-a\" href=mar.php?user=$_SESSION[userid]>Mar</a> ";
+      echo "<a class=\"header-links-a a-selected\" href=feed.php>Feed</a> ";
+      echo "<a class=\"header-links-a\" href=mar.php>Mar</a> ";
       echo "<a class=\"header-links-a\" href=navio.php?user=$_SESSION[userid]>Navio</a> ";
       echo "<a class=\"header-links-a\" href=backend/logoff.php>Sair </a><img class=\"header-links-icon\" src=\"imgs/icons/sair.png\" alt=\"\">";
     ?>
     </div>
   </header>
   <aside id=direita>
-  <div align=center class=background2>
-        <p class=portosAtracados>Portos atracados:</p>
-      <div class=row>
-        <img src=imgs/icon.png class=portos-img>
-        <p class=nomePort>Nome</p>
-      </div>
+    <div align=center class=background2>
+      <p class=portosAtracados>Portos atracados:</p>
+      <?php
+      if($portosArray){
+        foreach ($portosArray as $value) {
+          echo "<div class=\"row porto-feed-container\">
+            <div class=\"portos-img\" style=\"background-image: url($value[img])\"></div>
+            <a class=nomePort href=porto.php?porto=$value[codigo]>$value[nome]</a>
+          </div>";
+        }
+        echo "<br><a class=portosAtracadosMais href=portosUser.php>Ver todos</a>";
+      } else {
+        echo "<p>Você não está em nenhum porto ainda</p>";
+      }
+      ?>
     </div>
   </aside>
   <aside id=esquerda>

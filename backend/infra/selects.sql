@@ -153,10 +153,28 @@ where
 
 -- Get dos PORTOS
 
-select * from perfil
-    join porto_participa on perfil.codigo = porto.perfil
-    join porto on porto.codigo = porto_participa.porto
-where perfil.codigo = 3
+select porto.codigo as codigo, porto.nome as nome, porto.descr as descr, porto.img as img, 
+    case 
+        when porto.perfil = 4 or porto_participa.perfil = 4 then true
+        else false
+    end as participa
+from porto
+    left join porto_participa on porto.codigo = porto_participa.porto
+where 
+    porto.ativo = 1 
+limit 10 offset 0;
+
+select porto.codigo as codigo, porto.nome as nome, porto.descr as descr, porto.img as img, 
+    case 
+        when porto.perfil = 4 or porto_participa.perfil = 4 then true
+        else false
+    end as participa
+from porto
+    left join porto_participa on porto.codigo = porto_participa.porto
+where 
+    porto.ativo = 1 and
+    porto.codigo = 1;
+
 
 
 -- Get dos POSTS

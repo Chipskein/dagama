@@ -653,6 +653,7 @@ main {
 		margin-right: 40px;
 		background-color: var(--cinza-color);
 		border-radius: 10px;
+		padding-bottom: 20px;
 	}
 	.background2{
 		margin-top: 40px;
@@ -660,6 +661,7 @@ main {
 		margin-right: 40px;
 		background-color: var(--cinza-color);
 		border-radius: 10px;
+		padding-bottom: 20px;
 	}
 	.amigos{
 		font-size: 32px;
@@ -689,16 +691,28 @@ main {
 		font-weight: bold;
 		padding-top: 20px;
 	}
+	.porto-feed-container {
+		margin-top: 15px;
+	}
 	.nomePort {
 		font-size: 24px;
 		position: relative;
-		top: 15px;
-		left: 15px;
+		margin-top: 13px;
+		margin-left: 7px;
+		text-decoration: none;
+		color: #fff;
 	}
 	.portos-img {
 		width: 90px;
 		height: 90px;
 		margin-left: 15px;
+		background-position: center;
+		background-size: cover;
+	}
+	.portosAtracadosMais {
+		margin-top: 30px;
+		color: var(--azulEscuro2-color);
+		text-decoration: none;
 	}
 /*</navio.php>*/
 /*--------------------------------------------------------------------------------------------------------------------------------------*/
@@ -957,6 +971,70 @@ main {
 /*</feed.php>*/
 /*--------------------------------------------------------------------------------------------------------------------------------------*/
 /*</porto.php>*/
+.container-main-porto {
+	margin-top: 10px;
+}
+.container-aside-porto {
+	margin-top: 50px;
+	margin-right: 15px;
+	margin-left: 15px;
+	max-height: 500px !important;
+	background-color: var(--cinza-color);
+	border-radius: 10px;
+	padding: 15px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	height: 400px;
+}
+.porto-img {
+	width: 280px;
+	height: 200px;
+	margin-left: -15px;
+	margin-right: -15px;
+	margin-top: -15px;
+	border-radius: 10px 10px 0px 0px;
+	background-position: center;
+	background-size: cover;
+}
+.portoTitle {
+	font-weight: bold;
+	font-size: 20px;
+	padding-left: 15px;
+	padding-right: 15px;
+}
+.portoDesc p {
+	font-size: 14px;
+	text-align: center;	
+	text-justify: auto;
+}
+.porto-entrar-btn,
+.porto-sair-btn {
+	position: relative;
+	width: 139px;
+	height: 38px;
+	color: #fff;
+	border-radius: 10px;
+	border-width: 0px;
+	align-items: center;
+}
+
+.porto-entrar-btn {
+	background-color: var(--azulEscuro2-color);
+}
+.porto-sair-btn {
+	background-color: transparent;
+	border-color: var(--azulEscuro2-color);
+	border-width: 1px;
+	border-style: solid;
+	color: var(--azulEscuro2-color) !important;
+}
+
+.porto-entrar-btn-txt {
+	text-align: center;
+	margin-top: 10px;
+}
+
 .commentPorto {
 	position: relative;
 	width: 30px;
@@ -1000,19 +1078,29 @@ main {
 	margin-right: 10px;
 	margin-top: 5px;
 }
-.insert-interacao-entrar {
+
+.insert-interacao-entrar,
+.insert-interacao-participa {
 	position: relative;
 	width: 139px;
 	height: 38px;
-	background-color: var(--azulEscuro2-color);
 	color: #fff;
 	border-radius: 10px;
 	border-width: 0px;
 	float: right;
 	margin-right: 40px;
-	margin-top: 40px;
+	bottom: -10px;
 	align-self: center;
-
+}
+.insert-interacao-entrar {
+	background-color: var(--azulEscuro2-color);
+}
+.insert-interacao-participa {
+	background-color: transparent;
+	border-color: var(--azulEscuro2-color);
+	border-width: 1px;
+	border-style: solid;
+	color: var(--azulEscuro2-color) !important;
 }
 .insert-interacao-entrar-text {
 	text-align: center;
