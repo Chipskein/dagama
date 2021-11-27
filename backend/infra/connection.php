@@ -877,6 +877,39 @@
         }
         else exit;
     }
+    function getUserPorto($user){
+        $db_connection=db_connection();
+        $db=$db_connection['db'];
+        $db_type=$db_connection['db_type'];
+        if($db){
+            if($db_type=='sqlite'){
+                $results=[];
+                $result=$db->query("
+                select count(*) as total
+                from porto
+                    left join porto_participa on porto.codigo = porto_participa.porto
+                where 
+                    porto.ativo = 1 and
+                    porto.perfil = $user;
+                    ");
+                while ($row = $result->fetchArray()) {
+                    array_push($results,$row);
+                }
+                return $results;
+            }
+            if($db_type=='postgresql'){
+                $result=pg_fetch_all(pg_query($db, "
+                select count(*) as total
+                from porto
+                    left join porto_participa on porto.codigo = porto_participa.porto
+                where 
+                    porto.ativo = 1 and
+                    porto.perfil = $user;"));
+                return $result;
+            }
+        }
+        else exit;
+    }
     function getTotalPorto(){
         $db_connection=db_connection();
         $db=$db_connection['db'];

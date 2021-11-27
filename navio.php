@@ -31,6 +31,7 @@
         }
         $isOwner= "$_GET[user]"=="$_SESSION[userid]" ? true:false;
         $portosArray = getAllPorto($_GET['user'], true, 0, 3);
+        $portosUser = getUserPorto($_GET['user']);
       }
       else{
         echo "Usuario inválido";
@@ -78,9 +79,9 @@
     <!--Add onlick change-->
       <br>
       <div id="img_perfil" class=perfil></div>
-      <input id="imgInp" type="file" name="photo">
+      <input id="imgInp" class="hidden" type="file" name="photo">
       <?php 
-        if($isOwner)echo "<div class=camera-icon></div>";
+        if($isOwner)echo "<div id=camera-icon></div>";
       ?>
       <?php echo "<h3 class=perfil>$user[username]</h3>";?>
     </div>
@@ -89,7 +90,7 @@
         <div class=perfil-amigos>
           <a  href=amigos.php class=amigos>Amigos:0</a>
           <?php
-            if($isOwner) echo "<h3>Seus Portos:0</h3>";
+            if($isOwner) echo "<h3>Seus Portos:$portosUser</h3>";
           ?>
         </div>
     </div>
@@ -111,7 +112,7 @@
       echo "</div>";
       echo "<input class=\"insert-interacao-submit\" type=\"submit\" name=\"insert-interacao-submit\" />";
       echo "</form>";
-      echo "<p align=center><< 1 2 3 >></p>";
+
       echo "</div>";
       echo "</div>";
     ?>
@@ -121,31 +122,34 @@
     <div align=center class=background>
       <div>
         <p class=SeusAmigos>Seus amigos </p>
-        <br>
-        <a class=verMaisAmigos href=amigos.php>Ver mais</a>
       </div>
       <div>
         <img src=imgs/icons/user-icon.png class=div-amigo-image>
-
         <p class=nomeAmigo>Nome</p>
       </div>
+      <a class=portosAtracadosMais href=amigos.php>Ver mais</a>
     </div>
 </aside>
 <?php 
   echo "<script>img_perfil.style.backgroundImage=\"url($user[img])\"</script>";
 ?>
 </div>
+<footer align=center><< 1 2 3 >></footer>;
 <script>
-      imgInp.onchange = evt => {
-      const [file] = imgInp.files
+      const camera=document.getElementById("camera-icon");
       const img_perfil=document.getElementById("img_perfil");
-      if (file) {
-          img_perfil.style.backgroundImage=`url(${URL.createObjectURL(file)})`;
-      }
-      else{
-          img_perfil.style.backgroundImage="url(imgs/icons/user-icon.png)"
-      }
-    }
+      const file=document.getElementById("imgInp");
+      camera.addEventListener('click', () =>{
+        file.click()
+      });
+      file.addEventListener('change', (event) =>{
+        let reader = new FileReader();
+
+        reader.onload = () => {
+          img_perfil.style.backgroundImage=`url(${reader.result})`;
+        }
+        reader.readAsDataURL(file.files[0])
+      })
   </script>
 </body>
 </html>
