@@ -11,23 +11,15 @@
 <body class=perfil>
 <?php
   include './backend/infra/connection.php';
-  // $amigos=getAllAmigosfromUser("$_SESSION[userid]");
+  if(!isset($_SESSION)) { 
+    session_start(); 
+  }
+  $amigos=getRequestAndFriends($_SESSION["userid"],true);
   // if(!$amigos){
   //     echo "<h2 align=center>Usuario Inválido</h2>";
   //     header('refresh:1;url=mar.php');
   // }
-  if(!isset($_SESSION)) { 
-    session_start(); 
-  }
-  $user=[];
-  if(!isset($_SESSION['userid'])){
-    echo "<h2 align=center>Para ver este conteudo faça um cadastro no dagama!!!</h2>";
-    header("refresh:1;url=index.php");
-    die();
-  }
-  else{
-      var_dump($_SESSION);
-  }
+
 ?>
  <header class="header-main">
     <img class="header-icon" src="imgs/icon.png" alt="">
@@ -55,7 +47,9 @@
       echo "</div>";
       echo "<div class=\"div-amigo\">";
       // if(count($amigos)>0){
-        //foreach(amigos as amigo){};
+        foreach($amigos as $amigo){
+          echo "<p>$amigo[amigo] ";
+        };
         echo "<div class=\"div-amigo-row\">";
         echo "<div class=\"row\">";
           echo "<img src=\"imgs/icons/user-icon.png\" alt=\"\" class=\"div-amigo-image\">";

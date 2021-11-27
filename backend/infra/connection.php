@@ -807,9 +807,8 @@
                         (solicitacao_amigo.perfil = amigo.perfil and solicitacao_amigo.amigo = amigo.amigo) or 
                         (solicitacao_amigo.amigo = amigo.perfil and solicitacao_amigo.perfil = amigo.amigo)
                 where 
-                    ".($isOwner ? "solicitacao_amigo.perfil = $user and
-                    solicitacao_amigo.amigo" : "solicitacao_amigo.amigo = $user and
-                    solicitacao_amigo.perfil")." not in (
+                    solicitacao_amigo.perfil = 5 and
+                    solicitacao_amigo.amigo not in (
                         select codigo from perfil where ativo = 0
                     )");
                 while ($row = $result->fetchArray()) {
