@@ -134,31 +134,34 @@
         echo "<input class=\"insert-interacao-submit\" type=\"submit\" name=\"novoPost\" />";
         echo "<hr id=\"post-hr\" class=\"post-hr\" >";
         echo "<div class=\"post-divLocal\">";
-        echo "<select name=\"local\">";
+        echo "<input list=\"local\">";
+        echo "<datalist id=\"local\" name=\"local\">";
           foreach ($locaisArray as $value) {
-            echo "<option value=\"".$value['codCidade']."\">".$value['nomeCidade'].", ".$value['nomeUf']." - ".$value['nomePais']."</option>";
+            echo "<option value=\"".$value['nomeCidade']."\"></option>";
           }
-          echo "<option value=\"0\">Outro</option>";
-        echo "</select>";
+          echo "<option value=\"Outro\">";
+        echo "</datalist>";
         echo "</div>";
           
         echo "<div class=\"post-divPessoas\">";
-        echo "<select name=\"pessoas\">";
+        echo "<input list=\"pessoas\">";
+        echo "<datalist id=\"pessoas\" name=\"pessoas\">";
           foreach ($pessoasArray as $value) {
-            echo "<option value=\"".$value['codigo']."\">";
+            echo "<option value=\"".$value['username']."\">";
             echo "<img class=\"post-selectUser-icon\" src=\"".$value["img"]."\" alt=\"\" srcset=\"\">";
             echo $value['username']."</option>";
           }
-        echo "</select>";
+        echo "</datalist>";
         echo "</div>";
 
         echo "<div class=\"post-divAssuntos\">";
-        echo "<select name=\"assuntos\">";
+        echo "<input list=\"assuntos\">";
+        echo "<datalist id=\"assuntos\" name=\"assuntos\">";
         foreach ($assuntosArray as $value) {
-          echo "<option value=\"".$value['codigo']."\">".$value['nome']."</option>";
+          echo "<option value=\"".$value['nome']."\">";
         }
-        echo "<option value=\"0\">Outro</option>";
-        echo "</select>";
+        echo "<option value=\"Outro\">";
+        echo "</datalist>";
         echo "</div>";
 
       echo "</form>";

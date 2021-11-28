@@ -807,9 +807,8 @@
                         (solicitacao_amigo.perfil = amigo.perfil and solicitacao_amigo.amigo = amigo.amigo) or 
                         (solicitacao_amigo.amigo = amigo.perfil and solicitacao_amigo.perfil = amigo.amigo)
                 where 
-                    ".($isOwner ? "solicitacao_amigo.perfil = $user and
-                    solicitacao_amigo.amigo" : "solicitacao_amigo.amigo = $user and
-                    solicitacao_amigo.perfil")." not in (
+                    solicitacao_amigo.perfil = 5 and
+                    solicitacao_amigo.amigo not in (
                         select codigo from perfil where ativo = 0
                     )");
                 while ($row = $result->fetchArray()) {
@@ -876,6 +875,39 @@
                 group by porto.codigo
                 order by porto_participa.dataregis desc
                 limit $limit offset $offset"));
+                return $result;
+            }
+        }
+        else exit;
+    }
+    function getUserPorto($user){
+        $db_connection=db_connection();
+        $db=$db_connection['db'];
+        $db_type=$db_connection['db_type'];
+        if($db){
+            if($db_type=='sqlite'){
+                $results=[];
+                $result=$db->query("
+                select count(*) as total
+                from porto
+                    left join porto_participa on porto.codigo = porto_participa.porto
+                where 
+                    porto.ativo = 1 and
+                    porto.perfil = $user;
+                    ");
+                while ($row = $result->fetchArray()) {
+                    array_push($results,$row);
+                }
+                return $results;
+            }
+            if($db_type=='postgresql'){
+                $result=pg_fetch_all(pg_query($db, "
+                select count(*) as total
+                from porto
+                    left join porto_participa on porto.codigo = porto_participa.porto
+                where 
+                    porto.ativo = 1 and
+                    porto.perfil = $user;"));
                 return $result;
             }
         }

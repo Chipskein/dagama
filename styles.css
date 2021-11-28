@@ -592,7 +592,7 @@ main {
 	h3.perfil{
 		font-size: 24px;
 	}
-	div.camera-icon{
+	div#camera-icon{
 		background-color: var(--white-color);
 		position: absolute;
 		align-self: center;
@@ -605,6 +605,9 @@ main {
 		background-size: 25px 25px;
 		background-repeat: no-repeat;
 		background-position: center;
+	}
+	div#camera-icon:hover{
+		background-color: var(--cinza2-color);
 	}
 	div.perfil-amigos{
 		width: 909px;
@@ -968,6 +971,9 @@ main {
 	margin-left: 50px;
 }
 
+.hidden {
+	display: none;
+}
 /*</feed.php>*/
 /*--------------------------------------------------------------------------------------------------------------------------------------*/
 /*</porto.php>*/
@@ -988,7 +994,7 @@ main {
 	height: 400px;
 }
 .porto-img {
-	width: 280px;
+	width: 350px;
 	height: 200px;
 	margin-left: -15px;
 	margin-right: -15px;
