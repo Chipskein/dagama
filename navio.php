@@ -31,7 +31,7 @@
         }
         $isOwner= "$_GET[user]"=="$_SESSION[userid]" ? true:false;
         $portosArray = getAllPorto($_GET['user'], true, 0, 3);
-        $portosUser = getUserPorto($_GET['user']);
+        $portosUser = count(getUserPorto($_GET['user']));
       }
       else{
         echo "Usuario inválido";
