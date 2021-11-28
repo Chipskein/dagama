@@ -24,7 +24,7 @@
         }
         return ['db'=>$db,'db_type'=>$db_type];
     }
-    
+
     /* BASICS */
     function getPaises(){
         $db_connection = db_connection();
@@ -846,14 +846,16 @@
                 $result=$db->query("
                 select porto.codigo as codigo, porto.nome as nome, porto.descr as descr, porto.img as img, 
                     case 
-                        when porto.perfil = $user or porto_participa.perfil = $user then true
+                        when porto.perfil = $user or (porto_participa.perfil = $user and porto_participa.ativo = 1) then true
                         else false
                     end as participa
                 from porto
                     left join porto_participa on porto.codigo = porto_participa.porto
                 where 
                     porto.ativo = 1
-                    ".($isOwner ? " and participa = true" : "")." 
+                    ".($isOwner ? " and participa = true" : "")."
+                group by porto.codigo
+                order by porto_participa.dataregis
                 limit $limit offset $offset");
                 while ($row = $result->fetchArray()) {
                     array_push($results,$row);
@@ -864,13 +866,15 @@
                 $result=pg_fetch_all(pg_query($db, "
                 select porto.codigo as codigo, porto.nome as nome, porto.descr as descr, porto.img as img, 
                     case 
-                        when porto.perfil = $user or porto_participa.perfil = $user then true
+                        when porto.perfil = $user or (porto_participa.perfil = $user and porto_participa.ativo = true) then true
                         else false
                     end as participa
                 from porto
                     left join porto_participa on porto.codigo = porto_participa.porto
                 where 
                     porto.ativo = 1".($isOwner ? " and participa = true" : "")."
+                group by porto.codigo
+                order by porto_participa.dataregis desc
                 limit $limit offset $offset"));
                 return $result;
             }
@@ -905,14 +909,20 @@
                 $response = $db->query("
                 select porto.codigo as codigo, porto.nome as nome, porto.descr as descr, porto.img as img, 
                     case 
-                        when porto.perfil = $user or porto_participa.perfil = $user then true
+                        when porto.perfil = $user or (porto_participa.perfil = $user and porto_participa.ativo = 1) then true
                         else false
-                    end as participa
+                    end as participa,
+                    case 
+                        when porto.perfil = $user then true
+                        else false
+                    end as owner
                 from porto
                     left join porto_participa on porto.codigo = porto_participa.porto
                 where 
                     porto.ativo = 1 and
-                    porto.codigo = $porto");
+                    porto.codigo = $porto
+                group by porto.codigo
+                order by porto_participa.dataregis desc");
                 if($response) return $response->fetchArray();
                 else return false;
             }
@@ -921,13 +931,17 @@
                     $response = pg_query($db,"
                 select porto.codigo as codigo, porto.nome as nome, porto.descr as descr, porto.img as img, 
                     case 
-                        when porto.perfil = $user or porto_participa.perfil = $user then true
+                        when porto.perfil = $user or (porto_participa.perfil = $user and porto_participa.ativo = true) then true
                         else false
-                    end as participa
+                    end as participa,
+                    case 
+                        when porto.perfil = $user then true
+                        else false
+                    end as owner
                 from porto
                     left join porto_participa on porto.codigo = porto_participa.porto
                 where 
-                    porto.ativo = 1 and
+                    porto.ativo = true and
                     porto.codigo = $porto");
                     if($response) return pg_fetch_array($response);
                     else return false;
@@ -966,6 +980,28 @@
         }
         else exit; 
     }
+    function entrarPorto($user, $porto){
+        $db_connection=db_connection();
+        $db=$db_connection['db'];
+        $db_type=$db_connection['db_type'];
+        if($db_type == 'sqlite'){
+            $response = $db->exec("insert into porto_participa (perfil, porto) values ($user, $porto)");
+            if($response) return $response;
+            else return false;
+        }
+        if($db_type == 'postgresql'){
+            $response = pg_prepare($db, "entrarPorto", "insert into porto_participa (perfil, porto) values ($1, $2)");
+            if($response){
+                $response = pg_execute($db, "entrarPorto", array("$user","$porto"));
+                if($response) return $response;
+                else return false;
+            }
+            else return false;
+        }
+        else exit;
+    }
+    function sairPorto($perfil, $porto){}
+    // function editarPorto($porto){}
     /*-----------------------------------*/
     
 ?>

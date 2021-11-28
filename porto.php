@@ -17,6 +17,15 @@
   if(isset($_SESSION['userid'])){
     //validar porto
     if(isset($_GET['porto'])){
+      if(isset($_POST['entrarPorto'])){
+        $response = entrarPorto($_SESSION['userid'], $_GET['porto']);
+        if(!$response){
+          echo "Erro ao entrar no porto";
+        } else {
+          header("refresh:0;url=porto.php?porto=$_GET[porto]"); 
+        }
+      }
+
       $portoInfo=getPortInfo($_GET['porto'], $_SESSION['userid']);
       if($portoInfo){
         // var_dump($portoInfo);
@@ -60,11 +69,20 @@
       echo "<div class=\"porto-img\" style=\"background-image: url($portoInfo[img])\"></div>";
       echo "<p class=portoTitle>$portoInfo[nome]</p>";
       echo "<div class=\"portoDesc\"><p>$portoInfo[descr]</p></div>";
-      if($portoInfo['participa']){
-        echo "<div class=\"porto-sair-btn\"> <p class=\"porto-entrar-btn-txt\">Sair</p></div>";
-      } else {
-        echo "<div class=\"porto-entrar-btn\"> <p class=\"porto-entrar-btn-txt\">Entrar</p></div>";
+      echo "<form action=\"porto.php?porto=$portoInfo[codigo]\" name=\"porto-form\" method=\"post\" >";
+      if($portoInfo['participa']  && !$portoInfo['owner']){
+        echo "<button class=\"porto-sair-btn\"><p class=\"porto-entrar-btn-txt\">Sair</p></button>";
+        echo "<input type=\"hidden\" name=\"sairPorto\" value=\"sair\"/>";
       }
+      if(!$portoInfo['participa'] && !$portoInfo['owner']){
+        echo "<button class=\"porto-entrar-btn\"> <p class=\"porto-entrar-btn-txt\">Entrar</p></button>";
+        echo "<input type=\"hidden\" name=\"entrarPorto\" value=\"entrar\"/>";
+      }
+      if($portoInfo['owner']){
+        echo "<div class=\"porto-sair-btn\"> <p class=\"porto-entrar-btn-txt\">Editar porto</p></div>";
+        echo "<input type=\"hidden\" name=\"editarPorto\" value=\"editar\"/>";
+      }
+      echo "</form>";
     ?>
   </aside>
   <main class="container-main-porto">

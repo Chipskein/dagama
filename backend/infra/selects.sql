@@ -153,20 +153,29 @@ where
 
 -- Get dos PORTOS
 
-select porto.codigo as codigo, porto.nome as nome, porto.descr as descr, porto.img as img, 
-    case 
-        when porto.perfil = 4 or porto_participa.perfil = 4 then true
+select porto.codigo as codigo, porto.nome as nome, tmp1.participa as participa from porto
+    join (select porto.codigo as porto, porto_participa.perfil as perfil, case 
+        when porto.perfil = 4 or (porto_participa.perfil = 4 and porto_participa.ativo = 1)  then true
         else false
-    end as participa
-from porto
-    left join porto_participa on porto.codigo = porto_participa.porto
+    end as participa from porto
+        left join porto_participa on porto.codigo = porto_participa.porto
+    group by porto.codigo
+    order by porto_participa.dataregis) as tmp1 on porto.codigo = tmp1.porto
 where 
     porto.ativo = 1 
 limit 10 offset 0;
 
+select porto.codigo as porto, porto_participa.perfil as perfil, case 
+    when porto.perfil = 4 or (porto_participa.perfil = 4 and porto_participa.ativo = 1)  then true
+    else false
+end as participa from porto
+    left join porto_participa on porto.codigo = porto_participa.porto
+group by porto.codigo
+order by porto_participa.dataregis;
+
 select porto.codigo as codigo, porto.nome as nome, porto.descr as descr, porto.img as img, 
     case 
-        when porto.perfil = 4 or porto_participa.perfil = 4 then true
+        when porto.perfil = 4 or (porto_participa.perfil = 4 and porto_participa.ativo = 1) then true
         else false
     end as participa
 from porto
