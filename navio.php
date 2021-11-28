@@ -31,7 +31,7 @@
         }
         $isOwner= "$_GET[user]"=="$_SESSION[userid]" ? true:false;
         $portosArray = getAllPorto($_GET['user'], true, 0, 3);
-        $portosUser = count(getUserPorto($_GET['user']));
+        $portosUser = getUserPortoQtd($_GET['user']);
       }
       else{
         echo "Usuario inválido";
@@ -90,7 +90,7 @@
         <div class=perfil-amigos>
           <a  href=amigos.php class=amigos>Amigos:0</a>
           <?php
-            if($isOwner) echo "<h3>Seus Portos:$portosUser</h3>";
+            if($isOwner) echo "<h3><a href=portosUser.php?owner >Seus Portos: $portosUser</a></h3>";
           ?>
         </div>
     </div>

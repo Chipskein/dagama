@@ -24,7 +24,13 @@
     $limit=10;//mudar pra 10 dps
     $offset= isset($_GET['offset']) ? $_GET['offset']:0;
     //falta o pesquisar e ordenar
-    $portos=getAllPorto($_SESSION['userid'], true, $offset, $limit);
+    $portos = 0;
+    if(isset($_GET['owner'])){
+      $portos = getUserPorto($_SESSION['userid'], $offset, $limit);
+      // var_dump($portos);
+    } else {
+      $portos = getAllPorto($_SESSION['userid'], true, $offset, $limit);
+    }
     $total=getTotalPorto();
   }
   else {
@@ -61,10 +67,12 @@
             echo "<div class=\"porto-icon\" style=\"background-image: url($porto[img])\"></div>";
             echo "<h2 class=mar_porto><a href=porto.php?porto=$porto[codigo]>$porto[nome]</a></h2>";
             echo "<div class=text-porto> <p class=mar_porto>$porto[descr] </p> </div>";
-            if($porto['participa']){
-              echo "<div class=\"insert-interacao-participa\"> <p class=\"insert-interacao-entrar-text\">Participando</p></div>";
-            } else {
-              echo "<div class=\"insert-interacao-entrar\"> <p class=\"insert-interacao-entrar-text\">Entrar</p></div>";
+            if(!isset($_GET['owner'])){
+              if($porto['participa']){
+                echo "<div class=\"insert-interacao-participa\"> <p class=\"insert-interacao-entrar-text\">Participando</p></div>";
+              } else {
+                echo "<div class=\"insert-interacao-entrar\"> <p class=\"insert-interacao-entrar-text\">Entrar</p></div>";
+              }
             }
           echo "</div>";
         }

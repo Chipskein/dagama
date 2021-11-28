@@ -25,6 +25,14 @@
           header("refresh:0;url=porto.php?porto=$_GET[porto]"); 
         }
       }
+      if(isset($_POST['sairPorto'])){
+        $response = sairPorto($_SESSION['userid'], $_GET['porto']);
+        if(!$response){
+          echo "Erro ao sair do porto";
+        } else {
+          header("refresh:0;url=porto.php?porto=$_GET[porto]");
+        }
+      }
 
       $portoInfo=getPortInfo($_GET['porto'], $_SESSION['userid']);
       if($portoInfo){

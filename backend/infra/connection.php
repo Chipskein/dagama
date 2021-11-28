@@ -835,7 +835,7 @@
     /* ---------------------------------------*/
 
     /* PORTO */
-    function getAllPorto($user, $isOwner, $offset, $limit=10){
+    function getAllPorto($user, $isOwner, $offset, $limit=10){ // FIXME:
         $db_connection=db_connection();
         $db=$db_connection['db'];
         $db_type=$db_connection['db_type'];
@@ -843,19 +843,18 @@
             if($db_type=='sqlite'){
                 $results=[];
                 $result=$db->query("
-                select porto.codigo as codigo, porto.nome as nome, porto.descr as descr, porto.img as img, 
-                    case 
-                        when porto.perfil = $user or (porto_participa.perfil = $user and porto_participa.ativo = 1) then true
+                select porto.codigo as codigo, porto.nome as nome, porto.descr as descr, porto.img as img, tmp1.participa as participa from porto
+                    join (select porto.codigo as porto, porto_participa.perfil as perfil, case 
+                        when porto.perfil = $user or (porto_participa.perfil = $user and porto_participa.ativo = 1)  then true
                         else false
-                    end as participa
-                from porto
-                    left join porto_participa on porto.codigo = porto_participa.porto
+                    end as participa from porto
+                        left join porto_participa on porto.codigo = porto_participa.porto
+                    group by porto.codigo
+                    order by porto_participa.dataregis desc) as tmp1 on porto.codigo = tmp1.porto
                 where 
                     porto.ativo = 1
                     ".($isOwner ? " and participa = true" : "")."
-                group by porto.codigo
-                order by porto_participa.dataregis
-                limit $limit offset $offset");
+                 limit $limit offset $offset");
                 while ($row = $result->fetchArray()) {
                     array_push($results,$row);
                 }
@@ -863,52 +862,85 @@
             }
             if($db_type=='postgresql'){
                 $result=pg_fetch_all(pg_query($db, "
-                select porto.codigo as codigo, porto.nome as nome, porto.descr as descr, porto.img as img, 
-                    case 
-                        when porto.perfil = $user or (porto_participa.perfil = $user and porto_participa.ativo = true) then true
+                select porto.codigo as codigo, porto.nome as nome, porto.descr as descr, porto.img as img, tmp1.participa as participa from porto
+                    join (select porto.codigo as porto, porto_participa.perfil as perfil, case 
+                        when porto.perfil = $user or (porto_participa.perfil = $user and porto_participa.ativo = 1)  then true
                         else false
-                    end as participa
-                from porto
-                    left join porto_participa on porto.codigo = porto_participa.porto
+                    end as participa from porto
+                        left join porto_participa on porto.codigo = porto_participa.porto
+                    group by porto.codigo
+                    order by porto_participa.dataregis desc) as tmp1 on porto.codigo = tmp1.porto
                 where 
-                    porto.ativo = 1".($isOwner ? " and participa = true" : "")."
-                group by porto.codigo
-                order by porto_participa.dataregis desc
-                limit $limit offset $offset"));
+                    porto.ativo = 1
+                    ".($isOwner ? " and participa = true" : "")."
+                 limit $limit offset $offset"));
                 return $result;
             }
         }
         else exit;
     }
-    function getUserPorto($user){
+    function getUserPorto($user, $offset, $limit=10){
         $db_connection=db_connection();
         $db=$db_connection['db'];
         $db_type=$db_connection['db_type'];
         if($db){
             if($db_type=='sqlite'){
-                $results=[];
                 $result=$db->query("
-                select count(*) as total
-                from porto
-                    left join porto_participa on porto.codigo = porto_participa.porto
+                select * from porto
                 where 
                     porto.ativo = 1 and
-                    porto.perfil = $user;
-                    ");
-                while ($row = $result->fetchArray()) {
-                    array_push($results,$row);
+                    porto.perfil = $user
+                limit $limit offset $offset");
+                if($result) {
+                    $results = [];
+                    while ($row = $result->fetchArray()) {
+                        array_push($results, $row);
+                    }
+                    return $results;
                 }
-                return $results;
+                else return false;
             }
             if($db_type=='postgresql'){
-                $result=pg_fetch_all(pg_query($db, "
-                select count(*) as total
-                from porto
-                    left join porto_participa on porto.codigo = porto_participa.porto
+                $result = pg_query($db, "
+                select * from porto
                 where 
                     porto.ativo = 1 and
-                    porto.perfil = $user;"));
-                return $result;
+                    porto.perfil = $user
+                limit $limit offset $offset");
+                if($result) {
+                    $results = [];
+                    while ($row = $result->fetchArray()) {
+                        array_push($results, $row);
+                    }
+                    return $results;
+                }
+                else return false;
+            }
+        }
+        else exit;
+    }
+    function getUserPortoQtd($user){
+        $db_connection=db_connection();
+        $db=$db_connection['db'];
+        $db_type=$db_connection['db_type'];
+        if($db){
+            if($db_type=='sqlite'){
+                $result=$db->query("
+                select count(*) as total from porto
+                where 
+                    porto.ativo = 1 and
+                    porto.perfil = $user");
+                if($result) return $result->fetchArray()['total'];
+                else return false;
+            }
+            if($db_type=='postgresql'){
+                $result = pg_fetch_all(pg_query($db, "
+                select count(*) as total from porto
+                where 
+                    porto.ativo = 1 and
+                    porto.perfil = $user"));
+                if($result) return $result['total'];
+                else return false;
             }
         }
         else exit;
@@ -932,7 +964,7 @@
         }
         else exit;
     }
-    function getPortInfo($porto, $user){
+    function getPortInfo($porto, $user){ // FIXME:
         $db_connection = db_connection();
         $db = $db_connection['db'];
         $db_type = $db_connection['db_type'];
@@ -1017,14 +1049,58 @@
         $db=$db_connection['db'];
         $db_type=$db_connection['db_type'];
         if($db_type == 'sqlite'){
-            $response = $db->exec("insert into porto_participa (perfil, porto) values ($user, $porto)");
+            $response = $db->query("select case 
+                when porto_participa.ativo = 0 then 'off' 
+                when porto_participa.ativo = 1 then 'on' 
+            end as participa from porto_participa 
+            where perfil = $user and porto = $porto");
+            $response = $response->fetchArray();
+            if($response['participa'] == 'off') {
+                $response2 = $db->exec("update porto_participa set ativo = 1, dataregis = CURRENT_TIMESTAMP where perfil = $user and porto = $porto");
+                if($response2) return $response;
+                else return false;
+            } else {
+                $response2 = $db->exec("insert into porto_participa (perfil, porto) values ($user, $porto)");
+                if($response2) return $response;
+                else return false;
+            }
+
+        }
+        if($db_type == 'postgresql'){
+            $response = pg_query($db, "select case 
+                when porto_participa.ativo = false then 'off' 
+                when porto_participa.ativo = true then 'on' 
+            end as participa from porto_participa 
+            where perfil = $user and porto = $porto");
+            $response = pg_fetch_array($response);
+            if($response['participa'] == 'off') {
+                $response2 = pg_prepare($db, "entrarPorto", "update porto_participa set ativo = true, dataregis = CURRENT_TIMESTAMP where perfil = $1 and porto = $2)");                
+                $response2 = pg_execute($db, "entrarPorto", array("$user","$porto"));
+                if($response2) return $response2;
+                else return false;
+            } else {
+                $response2 = pg_prepare($db, "entrarPorto", "insert into porto_participa (perfil, porto) values ($1, $2)");
+                $response2 = pg_execute($db, "entrarPorto", array("$user","$porto"));
+                if($response2) return $response2;
+                else return false;
+            }
+            
+        }
+        else exit;
+    }
+    function sairPorto($user, $porto){
+        $db_connection=db_connection();
+        $db=$db_connection['db'];
+        $db_type=$db_connection['db_type'];
+        if($db_type == 'sqlite'){
+            $response = $db->exec("update porto_participa set ativo = 0 where perfil = $user and porto = $porto");
             if($response) return $response;
             else return false;
         }
         if($db_type == 'postgresql'){
-            $response = pg_prepare($db, "entrarPorto", "insert into porto_participa (perfil, porto) values ($1, $2)");
+            $response = pg_prepare($db, "sairPorto", "update porto_participa set ativo = false where perfil = $1 and porto = $2");
             if($response){
-                $response = pg_execute($db, "entrarPorto", array("$user","$porto"));
+                $response = pg_execute($db, "sairPorto", array("$user","$porto"));
                 if($response) return $response;
                 else return false;
             }
@@ -1032,7 +1108,6 @@
         }
         else exit;
     }
-    function sairPorto($perfil, $porto){}
     // function editarPorto($porto){}
     /*-----------------------------------*/
     
