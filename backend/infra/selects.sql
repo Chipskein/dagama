@@ -234,3 +234,7 @@ where
     interacao.isReaction is null and
     interacao.post is not null and 
     interacao.isSharing is null;
+
+-- Insert interacao
+insert into interacao (perfil, texto, perfil_posting, porto, isSharing, post, isReaction, emote) values 
+    (4, 'Salve salve parceria', null, null, null, null, null, null);
