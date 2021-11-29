@@ -32,7 +32,7 @@ if(isset($_GET["id"])){
                 <p>Por favor, acesse o link no email para confirmar seu cadastro e navegar conosco! </p>
                 <p>Após a confirmação, você será logado automaticamente.</p>
                 <div class=main-button>
-                    <p class=main-button><a href=./backend/sendmail.php?id=$_GET[id] class=main-button>Renviar<a></p>
+                    <p class=main-button><a href=./backend/sendmail.php?id=$_GET[id] class=main-button>Clique aqui para receber o email<a></p>
                 </div>
             </main>  
         </div>
