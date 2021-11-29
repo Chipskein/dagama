@@ -563,7 +563,7 @@
         }
         else exit;
     }
-    function getPosts($offset,$limit=10){ // TODO: filtrar por grupo da pessoa, e os outros parâmetros que o betito pediu
+    function getPosts($user, $offset,$limit=10){ // TODO: filtrar por grupo da pessoa, e os outros parâmetros que o betito pediu
         $db_connection=db_connection();
         $db=$db_connection['db'];
         $db_type=$db_connection['db_type'];
@@ -571,24 +571,122 @@
             if($db_type=='sqlite'){
                 $results=[];
                 $result = $db->query("
-                select 
+                select
                     interacao.codigo as codInteracao, 
                     interacao.post as codPost, 
                     interacao.isReaction as isReaction, 
                     interacao.texto as textoPost, 
-                    interacao.data as dataPost, 
+                    interacao.data as dataPost,
                     interacao.isSharing as isSharing, 
                     interacao.emote as emote,
                     interacao.ativo as ativo,
-                    porto.codigo as codPorto, porto.nome as nomePorto, 
-                    perfil.codigo as codPerfil, perfil.username as nomePerfil, perfil.img as iconPerfil
-                from interacao
+                    porto.codigo as codPorto,
+                    porto.nome as nomePorto,
+                    perfil.codigo as codPerfil, 
+                    perfil.username as nomePerfil,
+                    perfil.img as iconPerfil
+                from (
+                        select
+                            case
+                                when interacao.post is null then interacao.codigo
+                                when interacao.isSharing is not null then interacao.codigo
+                                else interacao.post
+                            end as codPost,
+                            interacao.data
+                        from interacao
+                            join perfil on interacao.perfil = perfil.codigo
+                            left join porto on porto.codigo = interacao.porto
+                        where
+                            interacao.ativo = 1 and
+                            interacao.perfil = $user
+                        union
+                        select 
+                            case
+                                when interacao.post is null then interacao.codigo
+                                when interacao.isSharing is not null then interacao.codigo
+                                else interacao.post
+                            end as codPost,
+                            interacao.data
+                        from interacao 
+                        where
+                            post in (select codigo from interacao where perfil = $user)
+                        union
+                        select 
+                            case
+                                when interacao.post is null then interacao.codigo
+                                when interacao.isSharing is not null then interacao.codigo
+                                else interacao.post
+                            end as codPost,
+                            interacao.data 
+                        from interacao
+                            join citacao on interacao.codigo = citacao.interacao
+                        where citacao.perfil = $user
+                        union
+                        --amigos
+                        select
+                            case
+                                when interacao.post is null then interacao.codigo
+                                when interacao.isSharing is not null then interacao.codigo
+                                else interacao.post
+                            end as codPost,
+                            interacao.data
+                        from interacao
+                            join perfil on interacao.perfil = perfil.codigo
+                            left join porto on porto.codigo = interacao.porto
+                        where
+                            interacao.ativo = 1 and
+                            interacao.perfil in (
+                            select
+                                case
+                                    when perfil = $user then amigo
+                                    when amigo = $user then perfil
+                                end as amigo
+                            from amigo)
+                        union
+                        select 
+                            case
+                                when interacao.post is null then interacao.codigo
+                                when interacao.isSharing is not null then interacao.codigo
+                                else interacao.post
+                            end as codPost,
+                            interacao.data
+                        from interacao 
+                        where
+                            post in (select codigo from interacao where perfil = $user)
+                        union
+                        select 
+                            case
+                                when interacao.post is null then interacao.codigo
+                                when interacao.isSharing is not null then interacao.codigo
+                                else interacao.post
+                            end as codPost,
+                            interacao.data 
+                        from interacao
+                            join citacao on interacao.codigo = citacao.interacao
+                        where citacao.perfil in (
+                            select
+                                case
+                                    when perfil = $user then amigo
+                                    when amigo = $user then perfil
+                                end as amigo
+                            from amigo)
+                        union
+                        -- grupo
+                        select
+                            case
+                                when interacao.post is null then interacao.codigo
+                                when interacao.isSharing is not null then interacao.codigo
+                                else interacao.post
+                            end as codPost,
+                            interacao.data 
+                        from porto_participa
+                            join interacao on porto_participa.porto = interacao.porto
+                        where porto_participa.perfil = $user) as tmp1
+                    join interacao on tmp1.codPost = interacao.codigo
                     join perfil on interacao.perfil = perfil.codigo
-                    left join porto on porto.codigo = interacao.porto
-                where
-                    interacao.ativo = 1 and
-                    interacao.isReaction is null and
-                    (interacao.post is null or interacao.isSharing is not null)
+                    left join porto on interacao.porto = porto.codigo
+                group by codPost
+                order by tmp1.data desc
                 limit $limit offset $offset");
                 
                 $results2 = $db->query("
@@ -619,8 +717,7 @@
                     left join porto on porto.codigo = interacao.porto
                 where
                     interacao.ativo = 1 and
-                    interacao.isReaction is null and
-                    interacao.post is not null and 
+                    interacao.post is not null and
                     interacao.isSharing is null");
                 $interacoes = [];
                 while ($row = $results3->fetchArray()) {
@@ -634,17 +731,11 @@
                     } else {
                         $row['comentarios'] = [];
                     }
-                    // echo $row['codInteracao']."<br>";
-                    // echo "<br>";
-                    // print_r($row['comentarios']);
                     array_push($results, $row);
                 }
-                // array[0] = post 1, vitão, asdasdasdsa
-                // array[0]['assuntos'] = 'assuntos'
-                // array[0]['interacoes'][] = 'interacao'
                 return $results;
             }
-            if($db_type=='postgresql'){
+            if($db_type=='postgresql'){ // FIXME: tem que deixar igual ao de cima
                 $result=pg_fetch_all(pg_query($db, "
                 select 
                     interacao.codigo as codInteracao, 
@@ -666,6 +757,76 @@
                     (interacao.post is null or interacao.isSharing is not null)
                 limit $limit offset $offset"));
                 return $result;
+            }
+        }
+        else exit;
+    }
+    function getOriginalPost($post){
+        $db_connection=db_connection();
+        $db=$db_connection['db'];
+        $db_type=$db_connection['db_type'];
+        if($db){
+            if($db_type=='sqlite'){
+                $response = $db->query("
+                select
+                    interacao.codigo as codInteracao, 
+                    interacao.post as codPost, 
+                    interacao.isReaction as isReaction, 
+                    interacao.texto as textoPost, 
+                    interacao.data as dataPost,
+                    interacao.isSharing as isSharing, 
+                    interacao.emote as emote,
+                    interacao.ativo as ativo,
+                    porto.codigo as codPorto,
+                    porto.nome as nomePorto,
+                    perfil.codigo as codPerfil, 
+                    perfil.username as nomePerfil,
+                    perfil.img as iconPerfil
+                from interacao
+                    join perfil on interacao.perfil = perfil.codigo
+                    left join porto on interacao.porto = porto.codigo
+                where interacao.codigo = $post");
+                if($response) {
+                    $response = $response->fetchArray();
+                    $results2 = $db->query("
+                    select interacao.codigo as interacao, assunto.codigo as codAssunto, assunto.nome as nomeAssunto from interacao
+                        left join interacao_assunto on interacao.codigo = interacao_assunto.interacao
+                        left join assunto on interacao_assunto.assunto = assunto.codigo
+                    where
+                        interacao.ativo = 1 and
+                        interacao.codigo = $post");
+                    $assuntos = [];
+                    while ($row = $results2->fetchArray()) {
+                        $assuntos[] = $row;
+                    }
+                    $response['assuntos'] = $assuntos;
+                    return $response;
+                } else {
+                    return false;
+                }               
+            }
+            if($db_type=='postgresql'){ // FIXME: tem que deixar igual ao de cima
+                $result=pg_fetch_all(pg_query($db, "
+                select
+                    interacao.codigo as codInteracao, 
+                    interacao.post as codPost, 
+                    interacao.isReaction as isReaction, 
+                    interacao.texto as textoPost, 
+                    interacao.data as dataPost,
+                    interacao.isSharing as isSharing, 
+                    interacao.emote as emote,
+                    interacao.ativo as ativo,
+                    porto.codigo as codPorto,
+                    porto.nome as nomePorto,
+                    perfil.codigo as codPerfil, 
+                    perfil.username as nomePerfil,
+                    perfil.img as iconPerfil
+                from interacao
+                    join perfil on interacao.perfil = perfil.codigo
+                    left join porto on interacao.porto = porto.codigo
+                where interacao.codigo = $post"));
+                if($result) return $result;
+                else return false;
             }
         }
         else exit;
@@ -774,18 +935,18 @@
                     group by perfil.codigo
                     order by camadas asc) as tmp1
                     left join solicitacao_amigo on solicitacao_amigo.perfil = tmp1.codigo and solicitacao_amigo.amigo = $U
-                    where 
-                        solicitacao_amigo.perfil is null and
-                        tmp1.enviado = 'false' and
-                        tmp1.codigo not in (
-                            select case
-                                    when amigo.perfil = perfil.codigo then amigo.amigo
-                                    when amigo.amigo = perfil.codigo then amigo.perfil
-                                end as amigo
-                            from perfil
-                                join amigo on perfil.codigo = amigo.perfil or perfil.codigo = amigo.amigo
-                            where perfil.codigo = $U
-                        ) and tmp1.codigo not in (select codigo from perfil where ativo = 0)
+                where 
+                    solicitacao_amigo.perfil is null and
+                    tmp1.enviado != 'true' and
+                    tmp1.codigo not in (
+                        select case
+                                when amigo.perfil = perfil.codigo then amigo.amigo
+                                when amigo.amigo = perfil.codigo then amigo.perfil
+                            end as amigo
+                        from perfil
+                            join amigo on perfil.codigo = amigo.perfil or perfil.codigo = amigo.amigo
+                        where perfil.codigo = $U
+                    ) and tmp1.codigo not in (select codigo from perfil where ativo = 0)
                 limit $limit offset $offset");
                 while ($row = $result->fetchArray()) {
                     array_push($results, $row);
@@ -796,14 +957,14 @@
                 $result=pg_fetch_all(pg_query($db, "
                 select tmp1.codigo, tmp1.username, tmp1.img, tmp1.enviado, 
                     case
-                        when solicitacao_amigo.amigo is null or solicitacao_amigo.ativo == false then 'false'
-                        when solicitacao_amigo.amigo is not null or solicitacao_amigo.ativo == true then 'true'
-                    end as enviado, 
+                        when solicitacao_amigo.perfil is null then 'false'
+                        when solicitacao_amigo.perfil is not null then 'true'
+                    end as recebido
                 from (
                     select perfil.codigo, perfil.username, perfil.img,
                         case
-                            when solicitacao_amigo.amigo is null then 'false'
-                            when solicitacao_amigo.amigo is not null then 'true'
+                            when solicitacao_amigo.amigo is null or solicitacao_amigo.ativo == false then 'false'
+                            when solicitacao_amigo.amigo is not null or solicitacao_amigo.ativo == true then 'true'
                         end as enviado, 
                         1 as camadas from perfil
                         join (select perfil.codigo as user, tmp1.assuntoCodigo, tmp1.assuntoNome, tmp1.qtd, count(*) as qtd2 from perfil
@@ -885,18 +1046,18 @@
                     group by perfil.codigo
                     order by camadas asc) as tmp1
                     left join solicitacao_amigo on solicitacao_amigo.perfil = tmp1.codigo and solicitacao_amigo.amigo = $U
-                    where
-                        solicitacao_amigo.perfil is null and
-                        tmp1.enviado = 'false' and
-                        tmp1.codigo not in (
-                            select case
-                                    when amigo.perfil = perfil.codigo then amigo.amigo
-                                    when amigo.amigo = perfil.codigo then amigo.perfil
-                                end as amigo
-                            from perfil
-                                join amigo on perfil.codigo = amigo.perfil or perfil.codigo = amigo.amigo
-                            where perfil.codigo = $U
-                        ) and tmp1.codigo not in (select codigo from perfil where ativo = false)
+                where 
+                    solicitacao_amigo.perfil is null and
+                    tmp1.enviado != 'true' and
+                    tmp1.codigo not in (
+                        select case
+                                when amigo.perfil = perfil.codigo then amigo.amigo
+                                when amigo.amigo = perfil.codigo then amigo.perfil
+                            end as amigo
+                        from perfil
+                            join amigo on perfil.codigo = amigo.perfil or perfil.codigo = amigo.amigo
+                        where perfil.codigo = $U
+                    ) and tmp1.codigo not in (select codigo from perfil where ativo = false)
                 limit $limit offset $offset"));
                 return $result;
             }
@@ -1238,6 +1399,35 @@
         }
         else exit; 
     }
+    function delPorto($porto){
+        $db_connection=db_connection();
+        $db=$db_connection['db'];
+        $db_type=$db_connection['db_type'];
+        // $FOLDERS=array("root"=>"14oQWzTorITdqsK7IiFwfTYs91Gh_NcjS","avatares"=>"1Z3A4iqIe1eMerkdTEkXnjApRPupaPq-M","portos"=>"1e5T21RxDQ-4Kqw8EDVUBICGPeGIRSNHx","users"=>"1j2ivb8gBxV_AINaQ7FHjbd1OI0otCpEO");
+        // $link='https://upload.wikimedia.org/wikipedia/commons/4/4a/Pirate_icon.gif';
+        // if($img){
+        //     $type=$img['type'];
+        //     $server_path=$img['tmp_name'];
+        //     $link="https://drive.google.com/uc?export=download&id=".insertFile("$type","$server_path","$FOLDERS[portos]","porto-avatar");
+        // }
+        if($db){
+            if($db_type == 'sqlite'){
+                $response = $db->exec("update porto set ativo = 0 where codigo = $porto");
+                if($response) return $response;
+                else return false;
+            }
+            if($db_type == 'postgresql'){
+                $preparing = pg_prepare($db, "delPorto", "update porto set ativo = 0 where codigo = $1");
+                if($preparing){
+                    $response = pg_execute($db, "delPorto", array("$porto"));
+                    if($response) return $response;
+                    else return false;
+                }
+                else return false;
+            }
+        }
+        else exit; 
+    }
     function entrarPorto($user, $porto){
         $db_connection=db_connection();
         $db=$db_connection['db'];
@@ -1251,12 +1441,12 @@
             $response = $response->fetchArray();
             if($response['participa'] == 'off') {
                 $response2 = $db->exec("update porto_participa set ativo = 1, dataregis = CURRENT_TIMESTAMP where perfil = $user and porto = $porto");
-                if($response2) return $response;
-                else return false;
+                if($response2) return $response2;
+                else return $response2;
             } else {
                 $response2 = $db->exec("insert into porto_participa (perfil, porto) values ($user, $porto)");
-                if($response2) return $response;
-                else return false;
+                if($response2) return $response2;
+                else return $response2;
             }
 
         }

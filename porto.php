@@ -20,7 +20,7 @@
       if(isset($_POST['entrarPorto'])){
         $response = entrarPorto($_SESSION['userid'], $_GET['porto']);
         if(!$response){
-          echo "Erro ao entrar no porto";
+          echo "Erro ao entrar no porto ".$response;
         } else {
           header("refresh:0;url=porto.php?porto=$_GET[porto]"); 
         }
@@ -33,13 +33,25 @@
           header("refresh:0;url=porto.php?porto=$_GET[porto]");
         }
       }
+      if(isset($_POST['excluirPorto'])){
+        $response =  delPorto($_GET['porto']);
+        if(!$response){
+          echo "Erro ao sair do porto";
+        } else {
+          header("refresh:0;url=mar.php");
+        }
+      }
 
       $portoInfo=getPortInfo($_GET['porto'], $_SESSION['userid']);
       if($portoInfo){
         // var_dump($portoInfo);
       }
       else{
-        echo "<h2 align=center>Porto Inválido</h2>";
+        if(isset($_POST['excluirPorto'])){
+          echo "<h2 align=center>Porto Excluído com Sucesso</h2>";
+        } else {
+          echo "<h2 align=center>Porto Inválido</h2>";
+        }
         header("refresh:1;url=mar.php");
         die();
       }

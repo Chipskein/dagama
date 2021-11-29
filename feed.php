@@ -22,7 +22,7 @@
     $assuntosArray = getAssuntos();
     $pessoasArray = getPessoas();
     $suggestFriends = suggestFriends($_SESSION['userid'], 4, 0);
-    $postsArray = getPosts(0, 10);
+    $postsArray = getPosts($_SESSION['userid'], 0, 30);
     $portosArray = getAllPorto($_SESSION['userid'], true, 0, 3);
     $errorMessage = [];
     // if(isset($_POST['novoPost'])){
@@ -205,6 +205,32 @@
     if($postsArray){
       foreach ($postsArray as $post) {
         echo "<div class=\"div-post\">";
+          //Share
+          if($post['isSharing']){
+            $sharedPost = getOriginalPost($post['codPost']);
+            echo "<div class=\"div-sharing-post\">";
+              // Sharing-top
+              echo "<div class=\"div-sharing-post-top\">";
+                echo "<img src=\"".$sharedPost['iconPerfil']."\" alt=\"\" class=\"div-sharing-post-top-icon\">";
+                echo "<div class=\"div-sharing-post-top-infos\">";
+                  echo "<p class=\"div-sharing-post-top-username\"><i>@".$sharedPost['nomePerfil']."</i> ".$sharedPost['dataPost']."</p>";
+                  echo "<p class=\"div-sharing-post-top-subjects\"><b>";
+                  $tmpArray = [];
+                  foreach($sharedPost['assuntos'] as $elements){
+                    foreach ($elements as $key => $value) {
+                      if($key === 'nomeAssunto') $tmpArray[] = $value;
+                    }
+                  }
+                  echo implode($tmpArray, ', ');
+                  echo "</b></p>";
+                echo "</div>";
+              echo "</div>";
+              // Sharing-texto
+              echo "<div class=\"div-sharing-post-txt\">";
+                echo "<p>$sharedPost[textoPost]</p>";
+              echo "</div>";
+            echo "</div>";
+          }
           //Top
           echo "<div class=\"div-post-top\">";
             echo "<img src=\"".$post['iconPerfil']."\" alt=\"\" class=\"div-post-top-icon\">";
