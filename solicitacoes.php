@@ -14,7 +14,7 @@
   if(!isset($_SESSION)) { 
     session_start(); 
   }
-  $amigos=getRequestAndFriends($_SESSION["userid"],true);
+  $amigos=getRequestAndFriends($_SESSION["userid"],false);
   // if(!$amigos){
   //     echo "<h2 align=center>Usuario Inválido</h2>";
   //     header('refresh:1;url=mar.php');
