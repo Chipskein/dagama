@@ -974,6 +974,42 @@ main {
 .hidden {
 	display: none;
 }
+
+.div-sharing-post {
+	border-bottom: 1px solid #fff;
+	border-left: 1px solid #fff;
+	width: 730px;
+	margin-bottom: 15px;
+	padding: 20px;
+	padding-bottom: 10px !important;
+	background-color: var(--cinza-color);
+}
+.div-sharing-post-top {
+	display: flex;
+	flex-direction: row;
+}
+.div-sharing-post-top-infos {
+	display: flex;
+	flex-direction: column;
+	margin-left: 13px;
+	float: right;
+}
+.div-sharing-post-top-icon {
+	width: 34px;
+	height: 34px;
+	border-radius: 20px;
+}
+.div-sharing-post-top-username {
+	margin-top: 2px;
+}
+.div-sharing-post-top-subjects {
+	margin-top: -12px;
+}
+.div-sharing-post-txt {
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
 /*</feed.php>*/
 /*--------------------------------------------------------------------------------------------------------------------------------------*/
 /*</porto.php>*/

@@ -113,7 +113,7 @@ CREATE TABLE solicitacao_amigo(
 CREATE TABLE INTERACAO(
     codigo INTEGER NOT NULL,
     perfil INTEGER NOT NULL,
-    perfil_posting INTEGER CHECK((post IS NULL AND porto IS NULL) OR perfil_posting IS NULL),
+    perfil_posting INTEGER CHECK((post IS NOT NULL OR perfil_posting IS NOT NULL) AND porto IS NULL),
     porto INTEGER CHECK((post IS NULL AND perfil_posting IS NULL) OR porto IS NULL),
     post INTEGER CHECK((porto IS NULL AND perfil_posting IS NULL) OR post IS NULL),
     data DATETIME DEFAULT CURRENT_TIMESTAMP,

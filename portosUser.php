@@ -57,7 +57,13 @@
   <main>
     <br>
     <div align=center>
-      <h1>Seus portos e Portos atracados</h1>
+      <?php 
+        if(isset($_GET['owner'])){
+          echo "<h1>Seus portos</h1>";
+        } else {
+          echo "<h1>Seus portos e portos atracados</h1>";
+        }
+      ?>
       <div class="mar-top-row">
         <div class="order-btn"><img src="./imgs/icons/hamburger.png" class="order-btn-icon" alt="" srcset=""><p class="order-btn-txt">Ordenar</p></div>
         <button class="btn-create-porto"><a href="createPorto.php">Criar um porto</a></button>
@@ -68,16 +74,20 @@
             echo "<div class=\"porto-icon\" style=\"background-image: url($porto[img])\"></div>";
             echo "<h2 class=mar_porto><a href=porto.php?porto=$porto[codigo]>$porto[nome]</a></h2>";
             echo "<div class=text-porto> <p class=mar_porto>$porto[descr] </p> </div>";
+            echo "<form action=\"porto.php?porto=$porto[codigo]\" name=\"porto-form\" method=\"post\" >";
             if(!isset($_GET['owner'])){
               if($porto['participa']){
-                echo "<div class=\"insert-interacao-participa\"> <p class=\"insert-interacao-entrar-text\">Participando</p></div>";
+                echo "<button class=\"insert-interacao-participa\"> <p class=\"insert-interacao-entrar-text\">Participando</p></button>";
+                echo "<input type=\"hidden\" name=\"sairPorto\" value=\"sair\"/>";
               } else {
-                echo "<div class=\"insert-interacao-entrar\"> <p class=\"insert-interacao-entrar-text\">Entrar</p></div>";
+                echo "<button class=\"insert-interacao-entrar\">Entrar</button>";
+                echo "<input type=\"hidden\" name=\"entrarPorto\" value=\"entrar\"/>";
               }
             } else {
               echo "<button class=\"insert-interacao-del\">Deletar</button>";
-              echo "<input type=\"hidden\" name=\"entrarPorto\" value=\"deletar\"/>";
+              echo "<input type=\"hidden\" name=\"excluirPorto\" value=\"deletar\"/>";
             }
+            echo "</form>";
           echo "</div>";
         }
       ?>
