@@ -93,15 +93,15 @@
         $db_type = $db_connection['db_type'];
         if($db){
             if($db_type == 'sqlite'){
-                $results=[];
-                $result = $db->query("select * from pais ativo = 1");
+                $results = [];
+                $result = $db->query("select * from pais where ativo = 1");
                 while ($row = $result->fetchArray()) {
                     array_push($results,$row);
                 }
                 return $results;
             }
             if($db_type == 'postgresql'){
-                $response = pg_query($db, "select * from pais ativo = true");
+                $response = pg_query($db, "select * from pais where ativo = true");
                 if($response){
                     while ($row = pg_fetch_array($response)) {
                         array_push($results, $row);
