@@ -70,6 +70,7 @@ include './infra/connection.php';
     if(!isset($_SESSION['userid'])){
         $erros = [];
         echo "<br>";
+        var_dump($_POST);
         if(isset($_POST['email']) && isset($_POST['username']) && isset($_POST['password']) && isset($_POST['cpassword']) && isset($_POST['bdate']) &&isset($_POST['pais']) && isset($_POST['termos']) && isset($_POST['genero']))
         {
             if($_POST['termos']!='pass') $erros[] = "Você não concordou com os termos de uso";
@@ -83,10 +84,72 @@ include './infra/connection.php';
             else {
                 if(!validar_data($_POST['bdate'])) $erros[] = "data inválida";
             }
-            if(!preg_match("/^[1-9][0-9]*$/", $_POST['pais'])) $erros[] = "país inválido";
-            else {
-                //if(!in_array($_POST['pais'], getPaises())) $erros[] = "pais não cadastrado";
+
+            if($_POST['pais'] == "null"){
+                $erros[] = "informe um país";
             }
+            if($_POST['pais'] == "outro"){
+                if(!preg_match("/^([a-z0-9áạàảãăắặằẳẵâấậầẩẫéẹèẻẽêếệềểễíịìỉĩóọòỏõôốộồổỗơớợờởỡúụùủũưứựừửữýỵỳỷỹđA-ZÁẠÀẢÃĂẮẶẰẲẴÂẤẬẦẨẪÉẸÈẺẼÊẾỆỀỂỄÍỊÌỈĨÓỌÒỎÕÔỐỘỒỔỖƠỚỢỜỞỠÚỤÙỦŨƯỨỰỪỬỮÝỴỲỶỸĐ]+)?(( [a-z0-9áạàảãăắặằẳẵâấậầẩẫéẹèẻẽêếệềểễíịìỉĩóọòỏõôốộồổỗơớợờởỡúụùủũưứựừửữýỵỳỷỹđA-ZÁẠÀẢÃĂẮẶẰẲẴÂẤẬẦẨẪÉẸÈẺẼÊẾỆỀỂỄÍỊÌỈĨÓỌÒỎÕÔỐỘỒỔỖƠỚỢỜỞỠÚỤÙỦŨƯỨỰỪỬỮÝỴỲỶỸĐ]+)?)+$/", $_POST['newpais']) || trim($_POST['newpais']) == "") $erros[] = "Nome do pais inválido";
+
+                if(!preg_match("/^([a-z0-9áạàảãăắặằẳẵâấậầẩẫéẹèẻẽêếệềểễíịìỉĩóọòỏõôốộồổỗơớợờởỡúụùủũưứựừửữýỵỳỷỹđA-ZÁẠÀẢÃĂẮẶẰẲẴÂẤẬẦẨẪÉẸÈẺẼÊẾỆỀỂỄÍỊÌỈĨÓỌÒỎÕÔỐỘỒỔỖƠỚỢỜỞỠÚỤÙỦŨƯỨỰỪỬỮÝỴỲỶỸĐ]+)?(( [a-z0-9áạàảãăắặằẳẵâấậầẩẫéẹèẻẽêếệềểễíịìỉĩóọòỏõôốộồổỗơớợờởỡúụùủũưứựừửữýỵỳỷỹđA-ZÁẠÀẢÃĂẮẶẰẲẴÂẤẬẦẨẪÉẸÈẺẼÊẾỆỀỂỄÍỊÌỈĨÓỌÒỎÕÔỐỘỒỔỖƠỚỢỜỞỠÚỤÙỦŨƯỨỰỪỬỮÝỴỲỶỸĐ]+)?)+$/", $_POST['newestado']) || trim($_POST['newestado']) == "") $erros[] = "Nome do estado inválido";
+
+                if(!preg_match("/^([a-z0-9áạàảãăắặằẳẵâấậầẩẫéẹèẻẽêếệềểễíịìỉĩóọòỏõôốộồổỗơớợờởỡúụùủũưứựừửữýỵỳỷỹđA-ZÁẠÀẢÃĂẮẶẰẲẴÂẤẬẦẨẪÉẸÈẺẼÊẾỆỀỂỄÍỊÌỈĨÓỌÒỎÕÔỐỘỒỔỖƠỚỢỜỞỠÚỤÙỦŨƯỨỰỪỬỮÝỴỲỶỸĐ]+)?(( [a-z0-9áạàảãăắặằẳẵâấậầẩẫéẹèẻẽêếệềểễíịìỉĩóọòỏõôốộồổỗơớợờởỡúụùủũưứựừửữýỵỳỷỹđA-ZÁẠÀẢÃĂẮẶẰẲẴÂẤẬẦẨẪÉẸÈẺẼÊẾỆỀỂỄÍỊÌỈĨÓỌÒỎÕÔỐỘỒỔỖƠỚỢỜỞỠÚỤÙỦŨƯỨỰỪỬỮÝỴỲỶỸĐ]+)?)+$/", $_POST['newcidade']) || trim($_POST['newcidade']) == "") $erros[] = "Nome de cidade inválido";
+            }
+            if($_POST['pais'] != "outro" && $_POST['pais'] != "null") {
+                $paisesArray = getPaises();
+                $c = 1;
+                $found = 0;
+                foreach ($paisesArray as $pais) {
+                    if($pais['codigo'] == $_POST['pais']){
+                        $found = 1;
+                    }
+                    if($c == count($paisesArray) && $found = 0){
+                        $erros[] = "Pais não cadastrado";
+                    }
+                }
+
+                if($_POST['estado'] == "null"){
+                    $erros[] = "informe um estado";
+                }
+                if($_POST['estado'] == "outro"){
+                    if(!preg_match("/^([a-z0-9áạàảãăắặằẳẵâấậầẩẫéẹèẻẽêếệềểễíịìỉĩóọòỏõôốộồổỗơớợờởỡúụùủũưứựừửữýỵỳỷỹđA-ZÁẠÀẢÃĂẮẶẰẲẴÂẤẬẦẨẪÉẸÈẺẼÊẾỆỀỂỄÍỊÌỈĨÓỌÒỎÕÔỐỘỒỔỖƠỚỢỜỞỠÚỤÙỦŨƯỨỰỪỬỮÝỴỲỶỸĐ]+)?(( [a-z0-9áạàảãăắặằẳẵâấậầẩẫéẹèẻẽêếệềểễíịìỉĩóọòỏõôốộồổỗơớợờởỡúụùủũưứựừửữýỵỳỷỹđA-ZÁẠÀẢÃĂẮẶẰẲẴÂẤẬẦẨẪÉẸÈẺẼÊẾỆỀỂỄÍỊÌỈĨÓỌÒỎÕÔỐỘỒỔỖƠỚỢỜỞỠÚỤÙỦŨƯỨỰỪỬỮÝỴỲỶỸĐ]+)?)+$/", $_POST['newestado']) || trim($_POST['newestado']) == "") $erros[] = "Nome do estado inválido";
+
+                    if(!preg_match("/^([a-z0-9áạàảãăắặằẳẵâấậầẩẫéẹèẻẽêếệềểễíịìỉĩóọòỏõôốộồổỗơớợờởỡúụùủũưứựừửữýỵỳỷỹđA-ZÁẠÀẢÃĂẮẶẰẲẴÂẤẬẦẨẪÉẸÈẺẼÊẾỆỀỂỄÍỊÌỈĨÓỌÒỎÕÔỐỘỒỔỖƠỚỢỜỞỠÚỤÙỦŨƯỨỰỪỬỮÝỴỲỶỸĐ]+)?(( [a-z0-9áạàảãăắặằẳẵâấậầẩẫéẹèẻẽêếệềểễíịìỉĩóọòỏõôốộồổỗơớợờởỡúụùủũưứựừửữýỵỳỷỹđA-ZÁẠÀẢÃĂẮẶẰẲẴÂẤẬẦẨẪÉẸÈẺẼÊẾỆỀỂỄÍỊÌỈĨÓỌÒỎÕÔỐỘỒỔỖƠỚỢỜỞỠÚỤÙỦŨƯỨỰỪỬỮÝỴỲỶỸĐ]+)?)+$/", $_POST['newcidade']) || trim($_POST['newcidade']) == "") $erros[] = "Nome de cidade inválido";
+                }
+                if($_POST['estado'] != "outro" && $_POST['estado'] != "null") {
+                    $estadosArray = getStates();
+                    $c2 = 1;
+                    $found2 = 0;
+                    foreach ($estadosArray as $estado) {
+                        if($estado['codigo'] == $_POST['estado']){
+                            $found2 = 1;
+                        }
+                        if($c2 == count($estadosArray) && $found2 = 0){
+                            $erros[] = "Estado não cadastrado";
+                        }
+                    }
+                    if($_POST['cidade'] == "null"){
+                        $erros[] = "informe uma cidade";
+                    }
+                    if($_POST['cidade'] == "outro"){
+                        if(!preg_match("/^([a-z0-9áạàảãăắặằẳẵâấậầẩẫéẹèẻẽêếệềểễíịìỉĩóọòỏõôốộồổỗơớợờởỡúụùủũưứựừửữýỵỳỷỹđA-ZÁẠÀẢÃĂẮẶẰẲẴÂẤẬẦẨẪÉẸÈẺẼÊẾỆỀỂỄÍỊÌỈĨÓỌÒỎÕÔỐỘỒỔỖƠỚỢỜỞỠÚỤÙỦŨƯỨỰỪỬỮÝỴỲỶỸĐ]+)?(( [a-z0-9áạàảãăắặằẳẵâấậầẩẫéẹèẻẽêếệềểễíịìỉĩóọòỏõôốộồổỗơớợờởỡúụùủũưứựừửữýỵỳỷỹđA-ZÁẠÀẢÃĂẮẶẰẲẴÂẤẬẦẨẪÉẸÈẺẼÊẾỆỀỂỄÍỊÌỈĨÓỌÒỎÕÔỐỘỒỔỖƠỚỢỜỞỠÚỤÙỦŨƯỨỰỪỬỮÝỴỲỶỸĐ]+)?)+$/", $_POST['newcidade']) || trim($_POST['newcidade']) == "") $erros[] = "Nome de cidade inválido";
+                    }
+                    if($_POST['cidade'] != "outro" && $_POST['cidade'] != "null") {
+                        $cidadesArray = getCities();
+                        $c3 = 1;
+                        $found3 = 0;
+                        foreach ($cidadesArray as $cidade) {
+                            if($cidade['codigo'] == $_POST['cidade']){
+                                $found3 = 1;
+                            }
+                            if($c3 == count($cidadesArray) && $found3 = 0){
+                                $erros[] = "Cidade não cadastrada";
+                            }
+                        }
+                    }
+                }
+            }
+
             //ta travando o heroku ver o porque
             //if(trim("$_POST[password]")!=''&&strlen("$_POST[password]")>=6) $erros[] = "senha inválido: ela precisa ter no mínimo 6 caracteres ou números";
             if($_POST['cpassword'] != $_POST['password']) $erros[] = "as senhas precisam ser iguais";
@@ -104,9 +167,25 @@ include './infra/connection.php';
             $username = "$_POST[username]";
             $password = password_hash("$_POST[password]", PASSWORD_DEFAULT);
             $bdate = "$_POST[bdate]";//converter bdate to yyyy/mm/dd
-            $cidade = "$_POST[cidade]";
+            if($_POST['pais'] == "outro"){
+                $pais = addPais($_POST['newpais']);
+                $estado = addEstado($_POST['newestado'], $pais);
+                $cidade = addCidade($_POST['newcidade'], $estado);
+            }
+            if($_POST['estado'] == "outro"){
+                $estado = addEstado($_POST['newestado'], $_POST['pais']);
+                $cidade = addCidade($_POST['newcidade'], $estado);
+            }
+            if($_POST['cidade'] == "outro"){
+                $cidade = addCidade($_POST['newcidade'], $_POST['estado']);
+            }
+            if($_POST['cidade'] != "outro" && $_POST['cidade'] != "null"){
+                $cidade = $_POST['cidade'];
+            }
+            
             $genero = "$_POST[genero]";
-            $photo= is_uploaded_file($_FILES['photo']['tmp_name']) ? $_FILES['photo']:null;
+            $photo = is_uploaded_file($_FILES['photo']['tmp_name']) ? $_FILES['photo']:null;
+
             $registered = Register($email, $password, $bdate, $username, $genero, $cidade, $photo);
             if($registered){
                 $id=getIdbyEmail($email);

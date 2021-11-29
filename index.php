@@ -137,7 +137,7 @@
     let newestado=document.getElementById("newestado");
     let newcity=document.getElementById("newcidade");
     select_pais.onchange=()=>{
-      if(select_pais.selectedIndex!=0&&select_pais.selectedIndex!=1){
+      if(select_pais.selectedIndex !=0 && select_pais.selectedIndex !=1 ){
         pais=select_pais.value;
         newpais.classList.add("hide-visibility");
         newestado.classList.add("hide-visibility");
@@ -156,15 +156,17 @@
         })
       }
       else{
-        if(select_estado.selectedIndex==0){
+        if(select_estado.selectedIndex == 0){
           newpais.classList.add("hide-visibility");
           newestado.classList.add("hide-visibility");
           newcidade.classList.add("hide-visibility");
         }
-        if(select_pais.selectedIndex==1){
+        if(select_pais.selectedIndex == 1){
           newpais.classList.remove("hide-visibility");
           newestado.classList.remove("hide-visibility");
           newcidade.classList.remove("hide-visibility");
+          select_estado.classList.add("hide-visibility");
+          select_cidade.classList.add("hide-visibility");
         }
         else{
           newpais.classList.add("hide-visibility");
@@ -181,15 +183,6 @@
         }
       }
     }
-
-
-
-
-
-
-
-
-
 
     select_estado.onchange=()=>{
       if(select_estado.selectedIndex!=0&&select_estado.selectedIndex!=1){
@@ -214,6 +207,7 @@
         if(select_estado.selectedIndex==1){
           newestado.classList.remove("hide-visibility");
           newcidade.classList.remove("hide-visibility");
+          select_cidade.classList.add("hide-visibility");
         }
         else{
           newestado.classList.add("hide-visibility");

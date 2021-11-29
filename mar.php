@@ -26,6 +26,16 @@
     //falta o pesquisar e ordenar
     $portos=getAllPorto($_SESSION['userid'], false, $offset, $limit);
     $total=getTotalPorto();
+    if(isset($_GET['porto'])){
+      if(isset($_POST['entrarPorto'])){
+        $response = entrarPorto($_SESSION['userid'], $_GET['porto']);
+        if(!$response){
+          echo "Erro ao entrar no porto";
+        } else {
+          header("refresh:0;url=porto.php?porto=$_GET[porto]"); 
+        }
+      }
+    }
   }
   else {
     echo "<h2 align=center>Para ver este conteudo faça um cadastro no dagama!!!</h2>";
@@ -51,6 +61,7 @@
   <main>
     <br>
     <div align=center>
+    <h1>Mar de portos</h1>
       <div class="mar-top-row">
         <div class="order-btn"><img src="./imgs/icons/hamburger.png" class="order-btn-icon" alt="" srcset=""><p class="order-btn-txt">Ordenar</p></div>
         <button class="btn-create-porto"><a href="createPorto.php">Criar um porto</a></button>
@@ -64,7 +75,8 @@
             if($porto['participa']){
               echo "<div class=\"insert-interacao-participa\"> <p class=\"insert-interacao-entrar-text\">Participando</p></div>";
             } else {
-              echo "<div class=\"insert-interacao-entrar\"> <p class=\"insert-interacao-entrar-text\">Entrar</p></div>";
+              echo "<button class=\"insert-interacao-entrar\">Entrar</button>";
+              echo "<input type=\"hidden\" name=\"entrarPorto\" value=\"entrar\"/>";
             }
           echo "</div>";
         }

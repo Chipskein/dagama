@@ -57,6 +57,7 @@
   <main>
     <br>
     <div align=center>
+      <h1>Seus portos e Portos atracados</h1>
       <div class="mar-top-row">
         <div class="order-btn"><img src="./imgs/icons/hamburger.png" class="order-btn-icon" alt="" srcset=""><p class="order-btn-txt">Ordenar</p></div>
         <button class="btn-create-porto"><a href="createPorto.php">Criar um porto</a></button>
@@ -73,6 +74,9 @@
               } else {
                 echo "<div class=\"insert-interacao-entrar\"> <p class=\"insert-interacao-entrar-text\">Entrar</p></div>";
               }
+            } else {
+              echo "<button class=\"insert-interacao-del\">Deletar</button>";
+              echo "<input type=\"hidden\" name=\"entrarPorto\" value=\"deletar\"/>";
             }
           echo "</div>";
         }

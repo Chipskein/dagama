@@ -25,6 +25,9 @@
     $postsArray = getPosts(0, 10);
     $portosArray = getAllPorto($_SESSION['userid'], true, 0, 3);
     $errorMessage = [];
+    // if(isset($_POST['novoPost'])){
+    //   $response = addInteracao($perfil, $texto, $perfil_posting, $porto, $isSharing, $post, $isReact)
+    // }
 
     // var_dump($_POST);
     // echo "<br>";
@@ -167,7 +170,7 @@
       echo "</form>";
     echo "</div>";
 
-    // add friends
+    // add friends FIXME:
     if(count($suggestFriends) > 0){
       echo "<div class=\"add-amigo\">";
       echo "<div class=\"add-amigo-top\">";

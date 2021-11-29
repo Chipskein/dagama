@@ -90,7 +90,7 @@
         <div class=perfil-amigos>
           <a  href=amigos.php class=amigos>Amigos:0</a>
           <?php
-            if($isOwner) echo "<h3><a href=portosUser.php?owner >Seus Portos: $portosUser</a></h3>";
+            if($isOwner) echo "<h3><a href=portosUser.php?owner class=amigos >Seus Portos: $portosUser</a></h3>";
           ?>
         </div>
     </div>

@@ -1029,6 +1029,9 @@ main {
 .porto-entrar-btn {
 	background-color: var(--azulEscuro2-color);
 }
+.porto-entrar-btn:hover {
+	background-color: var(--azulEscuro-color)
+}
 .porto-sair-btn {
 	background-color: transparent;
 	border-color: var(--azulEscuro2-color);
@@ -1036,7 +1039,11 @@ main {
 	border-style: solid;
 	color: var(--azulEscuro2-color) !important;
 }
-
+.porto-sair-btn:hover {
+	background-color: transparent;
+	opacity: 0.7;
+	color: var(--azulEscuro2-color) !important;
+}
 .porto-entrar-btn-txt {
 	text-align: center;
 	margin-top: 10px;
@@ -1087,6 +1094,7 @@ main {
 }
 
 .insert-interacao-entrar,
+.insert-interacao-del,
 .insert-interacao-participa {
 	position: relative;
 	width: 139px;
@@ -1101,6 +1109,12 @@ main {
 }
 .insert-interacao-entrar {
 	background-color: var(--azulEscuro2-color);
+}
+.insert-interacao-del {
+	background-color: var(--rosa-color);
+}
+.insert-interacao-entrar:hover {
+	background-color: var(--azulEscuro-color)
 }
 .insert-interacao-participa {
 	background-color: transparent;

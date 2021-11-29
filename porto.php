@@ -83,7 +83,7 @@
         echo "<input type=\"hidden\" name=\"sairPorto\" value=\"sair\"/>";
       }
       if(!$portoInfo['participa'] && !$portoInfo['owner']){
-        echo "<button class=\"porto-entrar-btn\"> <p class=\"porto-entrar-btn-txt\">Entrar</p></button>";
+        echo "<button class=\"porto-entrar-btn\">Entrar</button>";
         echo "<input type=\"hidden\" name=\"entrarPorto\" value=\"entrar\"/>";
       }
       if($portoInfo['owner']){
