@@ -167,7 +167,7 @@
       echo "</form>";
     echo "</div>";
 
-    // add friends
+    // add friends FIXME:
     if(count($suggestFriends) > 0){
       echo "<div class=\"add-amigo\">";
       echo "<div class=\"add-amigo-top\">";

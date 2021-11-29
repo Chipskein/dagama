@@ -26,89 +26,6 @@
     }
 
     /* BASICS */
-    function getPaises(){
-        $db_connection = db_connection();
-        $db = $db_connection['db'];
-        $db_type = $db_connection['db_type'];
-        if($db){
-            if($db_type == 'sqlite'){
-                $results=[];
-                $result = $db->query("select codigo,nome from pais");
-                while ($row = $result->fetchArray()) {
-                    array_push($results,$row);
-                }
-                return $results;
-            }
-        }
-        else exit;
-    };
-    function getStates(){
-        $db_connection = db_connection();
-        $db = $db_connection['db'];
-        $db_type = $db_connection['db_type'];
-        if($db){
-            if($db_type == 'sqlite'){
-                $results=[];
-                $result = $db->query("select * from uf");
-                while ($row = $result->fetchArray()) {
-                    array_push($results,$row);
-                }
-                return $results;
-            }
-        }
-        else exit;
-    };
-    function getCities(){
-        $db_connection = db_connection();
-        $db = $db_connection['db'];
-        $db_type = $db_connection['db_type'];
-        if($db){
-            if($db_type == 'sqlite'){
-                $results=[];
-                $result = $db->query("select * from cidade");
-                while ($row = $result->fetchArray()) {
-                    array_push($results,$row);
-                }
-                return $results;
-            }
-        }
-        else exit;
-    };
-    function getLocais(){
-        $db_connection = db_connection();
-        $db = $db_connection['db'];
-        $db_type = $db_connection['db_type'];
-        if($db){
-            $results=[];
-            if($db_type == 'sqlite'){
-                $response = $db->query("select cidade.codigo as codCidade, cidade.nome as nomeCidade, uf.codigo as codUf, uf.nome as nomeUf, pais.codigo as codPais, pais.nome as nomePais from cidade
-                    join uf on cidade.uf = uf.codigo
-                    join pais on uf.pais = pais.codigo
-                group by cidade.codigo");
-                if($response){
-                    while ($row = $response->fetchArray()) {
-                        array_push($results, $row);
-                    }
-                    return $results; 
-                }
-                else return false;
-            }
-            if($db_type == 'postgresql'){
-                $response = pg_query($db, "select cidade.codigo as codCidade, cidade.nome as nomeCidade, uf.codigo as codUf, uf.nome as nomeUf, pais.codigo as codPais, pais.nome as nomePais from cidade
-                    join uf on cidade.uf = uf.codigo
-                    join pais on uf.pais = pais.codigo
-                group by cidade.codigo");
-                if($response){
-                    while ($row = pg_fetch_array($response)) {
-                        array_push($results, $row);
-                    }
-                    return $results; 
-                }
-                else return false;
-            }
-        }
-        else exit;
-    };
     function getAssuntos(){
         $db_connection = db_connection();
         $db = $db_connection['db'];
@@ -167,6 +84,242 @@
         }
         else exit;
     }
+    /*---------------------------------------------------------*/
+
+    /* LOCAIS */
+    function getPaises(){
+        $db_connection = db_connection();
+        $db = $db_connection['db'];
+        $db_type = $db_connection['db_type'];
+        if($db){
+            if($db_type == 'sqlite'){
+                $results=[];
+                $result = $db->query("select * from pais ativo = 1");
+                while ($row = $result->fetchArray()) {
+                    array_push($results,$row);
+                }
+                return $results;
+            }
+            if($db_type == 'postgresql'){
+                $response = pg_query($db, "select * from pais ativo = true");
+                if($response){
+                    while ($row = pg_fetch_array($response)) {
+                        array_push($results, $row);
+                    }
+                    return $results; 
+                }
+                else return false;
+            }
+        }
+        else exit;
+    };
+    function addPais($nome){
+        $db_connection=db_connection();
+        $db=$db_connection['db'];
+        $db_type=$db_connection['db_type'];
+        if($db_type == 'sqlite'){
+            $response = $db->exec("insert into pais (nome) values ('$nome')");
+            if($response) return $db->lastInsertRowID();
+            else return false;
+        }
+        if($db_type == 'postgresql'){
+            $preparing = pg_prepare($db, "pais", "insert into pais (nome) values ($1) returning codigo");
+            if($preparing){
+                $response = pg_execute($db, "pais", array("$nome"));
+                if($response) return $response;
+                else return false;
+            }
+            else return false;
+        }
+        else exit;
+    }
+    function delPais($pais){
+        $db_connection=db_connection();
+        $db=$db_connection['db'];
+        $db_type=$db_connection['db_type'];
+        if($db_type == 'sqlite'){
+            $response = $db->exec("update pais set ativo = 0 where codigo = $pais");
+            if($response) return $response;
+            else return false;
+        }
+        if($db_type == 'postgresql'){
+            $response = pg_prepare($db, "delPais", "update pais set ativo = false where codigo = $1");
+            if($response){
+                $response = pg_execute($db, "delPais", array("$pais"));
+                if($response) return $response;
+                else return false;
+            }
+            else return false;
+        }
+        else exit;
+    }
+    function getStates(){
+        $db_connection = db_connection();
+        $db = $db_connection['db'];
+        $db_type = $db_connection['db_type'];
+        if($db){
+            if($db_type == 'sqlite'){
+                $results=[];
+                $result = $db->query("select * from uf where ativo = 1");
+                while ($row = $result->fetchArray()) {
+                    array_push($results,$row);
+                }
+                return $results;
+            }
+            if($db_type == 'postgresql'){
+                $response = pg_query($db, "select * from uf where ativo = true");
+                if($response){
+                    while ($row = pg_fetch_array($response)) {
+                        array_push($results, $row);
+                    }
+                    return $results; 
+                }
+                else return false;
+            }
+        }
+        else exit;
+    };
+    function addEstado($nome, $pais){
+        $db_connection=db_connection();
+        $db=$db_connection['db'];
+        $db_type=$db_connection['db_type'];
+        if($db_type == 'sqlite'){
+            $response = $db->exec("insert into uf (nome, pais) values ('$nome', $pais)");
+            if($response) return $db->lastInsertRowID();
+            else return false;
+        }
+        if($db_type == 'postgresql'){
+            $preparing = pg_prepare($db, "estado", "insert into uf (nome, pais) values ($1, $2) returning codigo");
+            if($preparing){
+                $response = pg_execute($db, "estado", array("$nome", "$pais"));
+                if($response) return $response;
+                else return false;
+            }
+            else return false;
+        }
+        else exit;
+    }
+    function delEstado($estado){
+        $db_connection=db_connection();
+        $db=$db_connection['db'];
+        $db_type=$db_connection['db_type'];
+        if($db_type == 'sqlite'){
+            $response = $db->exec("update uf set ativo = 0 where codigo = $estado");
+            if($response) return $response;
+            else return false;
+        }
+        if($db_type == 'postgresql'){
+            $response = pg_prepare($db, "delEstado", "update uf set ativo = false where codigo = $1");
+            if($response){
+                $response = pg_execute($db, "delEstado", array("$estado"));
+                if($response) return $response;
+                else return false;
+            }
+            else return false;
+        }
+        else exit;
+    }
+    function getCities(){
+        $db_connection = db_connection();
+        $db = $db_connection['db'];
+        $db_type = $db_connection['db_type'];
+        if($db){
+            if($db_type == 'sqlite'){
+                $results=[];
+                $result = $db->query("select * from cidade where ativo = 1");
+                while ($row = $result->fetchArray()) {
+                    array_push($results,$row);
+                }
+                return $results;
+            }
+            if($db_type == 'postgresql'){
+                $response = pg_query($db, "select * from cidade where ativo = true");
+                if($response){
+                    while ($row = pg_fetch_array($response)) {
+                        array_push($results, $row);
+                    }
+                    return $results; 
+                }
+                else return false;
+            }
+        }
+        else exit;
+    };
+    function addCidade($nome, $estado){
+        $db_connection=db_connection();
+        $db=$db_connection['db'];
+        $db_type=$db_connection['db_type'];
+        if($db_type == 'sqlite'){
+            $response = $db->exec("insert into cidade (nome, uf) values ('$nome', $estado)");
+            if($response) return $db->lastInsertRowID();
+            else return false;
+        }
+        if($db_type == 'postgresql'){
+            $preparing = pg_prepare($db, "cidade", "insert into cidade (nome, uf) values ($1, $2) returning codigo");
+            if($preparing){
+                $response = pg_execute($db, "cidade", array("$nome", "$estado"));
+                if($response) return $response;
+                else return false;
+            }
+            else return false;
+        }
+        else exit;
+    }
+    function delCidade($cidade){
+        $db_connection=db_connection();
+        $db=$db_connection['db'];
+        $db_type=$db_connection['db_type'];
+        if($db_type == 'sqlite'){
+            $response = $db->exec("update cidade set ativo = 0 where codigo = $cidade");
+            if($response) return $response;
+            else return false;
+        }
+        if($db_type == 'postgresql'){
+            $response = pg_prepare($db, "delCidade", "update cidade set ativo = false where codigo = $1");
+            if($response){
+                $response = pg_execute($db, "delCidade", array("$cidade"));
+                if($response) return $response;
+                else return false;
+            }
+            else return false;
+        }
+        else exit;
+    }
+    function getLocais(){
+        $db_connection = db_connection();
+        $db = $db_connection['db'];
+        $db_type = $db_connection['db_type'];
+        if($db){
+            $results=[];
+            if($db_type == 'sqlite'){
+                $response = $db->query("select cidade.codigo as codCidade, cidade.nome as nomeCidade, uf.codigo as codUf, uf.nome as nomeUf, pais.codigo as codPais, pais.nome as nomePais from cidade
+                    join uf on cidade.uf = uf.codigo
+                    join pais on uf.pais = pais.codigo
+                group by cidade.codigo");
+                if($response){
+                    while ($row = $response->fetchArray()) {
+                        array_push($results, $row);
+                    }
+                    return $results; 
+                }
+                else return false;
+            }
+            if($db_type == 'postgresql'){
+                $response = pg_query($db, "select cidade.codigo as codCidade, cidade.nome as nomeCidade, uf.codigo as codUf, uf.nome as nomeUf, pais.codigo as codPais, pais.nome as nomePais from cidade
+                    join uf on cidade.uf = uf.codigo
+                    join pais on uf.pais = pais.codigo
+                group by cidade.codigo");
+                if($response){
+                    while ($row = pg_fetch_array($response)) {
+                        array_push($results, $row);
+                    }
+                    return $results; 
+                }
+                else return false;
+            }
+        }
+        else exit;
+    };
     /*---------------------------------------------------------*/
 
     /* LOGIN/REGISTER */
@@ -835,7 +988,7 @@
     /* ---------------------------------------*/
 
     /* PORTO */
-    function getAllPorto($user, $isOwner, $offset, $limit=10){ // FIXME:
+    function getAllPorto($user, $isOwner, $offset, $limit=10){
         $db_connection=db_connection();
         $db=$db_connection['db'];
         $db_type=$db_connection['db_type'];
@@ -964,7 +1117,7 @@
         }
         else exit;
     }
-    function getPortInfo($porto, $user){ // FIXME:
+    function getPortInfo($porto, $user){
         $db_connection = db_connection();
         $db = $db_connection['db'];
         $db_type = $db_connection['db_type'];
@@ -1111,4 +1264,7 @@
     // function editarPorto($porto){}
     /*-----------------------------------*/
     
+    /* INTERAÇÕES */
+    /*-----------------------------------*/
+
 ?>
