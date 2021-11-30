@@ -870,6 +870,15 @@ main {
 	border-width: 0px;
 	margin-top: -15px;
 }
+.remove-amigo-card-button {
+	width: 139px;
+	height: 38px;
+	background-color: var(--rosa-color);
+	color: #fff;
+	border-radius: 10px;
+	border-width: 0px;
+	margin-top: -15px;
+}
 .add-amigo-card-button-selected {
 	width: 139px;
 	height: 38px;

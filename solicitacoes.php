@@ -57,8 +57,8 @@
             echo "<p class=\"\">Joaquino corno</p>";
           echo "</div>";
           echo "</div>";
-          echo "<input class=\"insert-interacao-submit\" type=\"submit\" name=\"insert-interacao-submit\" value=\"Aceitar\" />";
-          echo "<input class=\"insert-interacao-submit red\" type=\"submit\" name=\"insert-interacao-submit\" value=\"Recusa\" />";
+          echo "<input class=\"add-amigo-card-button\" type=\"submit\" name=\"insert-interacao-submit\" value=\"Aceitar\" />";
+          echo "<input class=\"remove-amigo-card-button\" type=\"submit\" name=\"insert-interacao-submit\" value=\"Recusar\" />";
         echo "</div>";
       // }
       // else echo "<p>Você Não tem amigos</p>";

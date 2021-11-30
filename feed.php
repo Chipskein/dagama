@@ -25,9 +25,10 @@
     $postsArray = getPosts($_SESSION['userid'], 0, 30);
     $portosArray = getAllPorto($_SESSION['userid'], true, 0, 3);
     $errorMessage = [];
-    // if(isset($_POST['novoPost'])){
-    //   $response = addInteracao($perfil, $texto, $perfil_posting, $porto, $isSharing, $post, $isReact)
-    // }
+    if(isset($_POST['novoPost'])){
+      $texto = "$_POST[texto]";
+      addInteracao($_SESSION['userid'], $texto);
+    }
 
     // var_dump($_POST);
     // echo "<br>";
