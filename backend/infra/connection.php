@@ -1157,13 +1157,13 @@
         if($db){
             if($db_type=='sqlite'){
                 $results=[];
-                $result = $db->query("select perfil.username, solicitacao_amigo.perfil, solicitacao_amigo.amigo, solicitacao_amigo.dateEnvio, solicitacao_amigo.ativo, amigo.perfil as otherPerfil, amigo.amigo as otherAmigo, amigo.ativo as otherAtivo from solicitacao_amigo, perfil
+                $result = $db->query("select perfil.username as nome, perfil.img as img, solicitacao_amigo.dateEnvio as data, solicitacao_amigo.perfil, solicitacao_amigo.amigo as amigocod, amigo.perfil as otherPerfil, amigo.amigo as otherAmigo from solicitacao_amigo, perfil
                     left join amigo on 
                         (solicitacao_amigo.perfil = amigo.perfil and solicitacao_amigo.amigo = amigo.amigo) or 
                         (solicitacao_amigo.amigo = amigo.perfil and solicitacao_amigo.perfil = amigo.amigo)
                 where 
                     perfil.codigo = solicitacao_amigo.amigo and
-                    solicitacao_amigo.perfil = 5 and
+                    solicitacao_amigo.perfil = $user and
                     solicitacao_amigo.amigo not in (
                         select codigo from perfil where ativo = 0
                     )");

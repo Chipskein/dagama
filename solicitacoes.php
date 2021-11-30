@@ -15,6 +15,10 @@
     session_start(); 
   }
   $amigos=getRequestAndFriends($_SESSION["userid"],false);
+  if(isset($_POST['insert-interacao-accept'])){
+    echo 'texte';
+    confirmFriendRequest($_SESSION["userid"],$amigo["amigocod"]);
+  }
   // if(!$amigos){
   //     echo "<h2 align=center>Usuario Inválido</h2>";
   //     header('refresh:1;url=mar.php');
@@ -45,21 +49,23 @@
       echo "<img class=\"header-searchBar-icon\" src=\"imgs/icons/search.png\">";
       echo "<input class=\"header-searchBar-input\" type=text placeholder=\"digite o nome do seu amigo\" />";
       echo "</div>";
-      echo "<div class=\"div-amigo\">";
       // if(count($amigos)>0){
         foreach($amigos as $amigo){
-          echo "<p>$amigo[amigo] ";
+          echo "<div class=\"margin-top\">";
+          echo "<div class=\"div-amigo\">";
+          echo "<div class=\"div-amigo-row\">";
+          echo "<div class=\"row\">";
+            echo "<img src=\"$amigo[img]\" alt=\"\" class=\"div-amigo-image\">";
+            echo "<div>";
+              echo "<p class=\"nome-amigo-solicitacao\">$amigo[nome]</p>";
+              echo "<p class=\"data-amigo-solicitacao\">Data de envio: $amigo[data]</p>";
+              echo "</div>";
+              echo "</div>";
+            echo "<input class=\"add-amigo-card-button-solicitacao\" type=\"submit\" name=\"insert-interacao-accept\" value=\"Aceitar\" />";
+            echo "<input class=\"remove-amigo-card-button-solicitacao\" type=\"submit\" name=\"insert-interacao-decline\" value=\"Recusar\" />";
+            echo "</div>";
+            echo "</div>";
         };
-        echo "<div class=\"div-amigo-row\">";
-        echo "<div class=\"row\">";
-          echo "<img src=\"imgs/icons/user-icon.png\" alt=\"\" class=\"div-amigo-image\">";
-          echo "<div class=\"div-amigo-textos\">";
-            echo "<p class=\"\">Joaquino corno</p>";
-          echo "</div>";
-          echo "</div>";
-          echo "<input class=\"add-amigo-card-button\" type=\"submit\" name=\"insert-interacao-submit\" value=\"Aceitar\" />";
-          echo "<input class=\"remove-amigo-card-button\" type=\"submit\" name=\"insert-interacao-submit\" value=\"Recusar\" />";
-        echo "</div>";
       // }
       // else echo "<p>Você Não tem amigos</p>";
     ?>

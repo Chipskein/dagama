@@ -1180,12 +1180,10 @@ main {
 
 .div-amigo {
 	width: 909px;
-	margin-top: 30px;
 	padding: 5px;
 	padding-bottom: 10px !important;
 	background-color: var(--cinza-color);
 	border-radius: 10px;
-
 }
 .div-amigo-row {
 	display: flex;
@@ -1203,4 +1201,35 @@ main {
 }
 .red {
 	color: var(--rosa-color);
+}
+
+
+/* solicitacao.php */
+.nome-amigo-solicitacao {
+	margin-top: 45px;
+	margin-left: 15px;
+}
+.data-amigo-solicitacao {
+	margin-top: 20px;
+	margin-left: 15px;
+	font-size: 12px;
+}
+.add-amigo-card-button-solicitacao {
+	width: 139px;
+	height: 38px;
+	background-color: var(--azulEscuro2-color);
+	color: #fff;
+	border-radius: 10px;
+	border-width: 0px;
+}
+.remove-amigo-card-button-solicitacao {
+	width: 139px;
+	height: 38px;
+	background-color: var(--rosa-color);
+	color: #fff;
+	border-radius: 10px;
+	border-width: 0px;
+}
+.margin-top {
+	margin-top: 35px;
 }
