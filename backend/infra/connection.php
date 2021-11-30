@@ -1162,6 +1162,44 @@
                         (solicitacao_amigo.perfil = amigo.perfil and solicitacao_amigo.amigo = amigo.amigo) or 
                         (solicitacao_amigo.amigo = amigo.perfil and solicitacao_amigo.perfil = amigo.amigo)
                 where 
+                    perfil.codigo = solicitacao_amigo.perfil and
+                    solicitacao_amigo.perfil not in (
+                        select codigo from perfil where ativo = 0
+                    ) and
+                    solicitacao_amigo.amigo = $user ");
+                while ($row = $result->fetchArray()) {
+                    array_push($results, $row);
+                }
+                return $results;
+            }
+            if($db_type=='postgresql'){
+                $result=pg_fetch_all(pg_query($db, "select perfil.username as nome, perfil.img as img, solicitacao_amigo.dateEnvio as data, solicitacao_amigo.perfil, solicitacao_amigo.amigo as amigocod, amigo.perfil as otherPerfil, amigo.amigo as otherAmigo from solicitacao_amigo, perfil
+                left join amigo on 
+                    (solicitacao_amigo.perfil = amigo.perfil and solicitacao_amigo.amigo = amigo.amigo) or 
+                    (solicitacao_amigo.amigo = amigo.perfil and solicitacao_amigo.perfil = amigo.amigo)
+            where 
+                perfil.codigo = solicitacao_amigo.perfil and
+                solicitacao_amigo.perfil not in (
+                    select codigo from perfil where ativo = false
+                ) and
+                solicitacao_amigo.amigo = $user"));
+                return $result;
+            }
+        }
+        else exit;
+    }
+    function getFriends($user){
+        $db_connection=db_connection();
+        $db=$db_connection['db'];
+        $db_type=$db_connection['db_type'];
+        if($db){
+            if($db_type=='sqlite'){
+                $results=[];
+                $result = $db->query("select perfil.username as nome, perfil.img as img, solicitacao_amigo.dateEnvio as data, solicitacao_amigo.perfil, solicitacao_amigo.amigo as amigocod, amigo.perfil as otherPerfil, amigo.amigo as otherAmigo from solicitacao_amigo, perfil
+                    left join amigo on 
+                        (solicitacao_amigo.perfil = amigo.perfil and solicitacao_amigo.amigo = amigo.amigo) or 
+                        (solicitacao_amigo.amigo = amigo.perfil and solicitacao_amigo.perfil = amigo.amigo)
+                where 
                     perfil.codigo = solicitacao_amigo.amigo and
                     solicitacao_amigo.perfil = $user and
                     solicitacao_amigo.amigo not in (

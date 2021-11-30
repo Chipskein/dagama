@@ -16,8 +16,11 @@
   }
   $amigos=getRequestAndFriends($_SESSION["userid"],false);
   if(isset($_POST['insert-interacao-accept'])){
+    confirmFriendRequest($_SESSION["userid"],$_POST["insert-interacao-accept"]);
+  }
+  if(isset($_POST['insert-interacao-decline'])){
     echo 'texte';
-    confirmFriendRequest($_SESSION["userid"],$amigo["amigocod"]);
+    declineFriendRequest($_SESSION["userid"],$amigos["amigocod"]);
   }
   // if(!$amigos){
   //     echo "<h2 align=center>Usuario Inválido</h2>";
@@ -61,8 +64,12 @@
               echo "<p class=\"data-amigo-solicitacao\">Data de envio: $amigo[data]</p>";
               echo "</div>";
               echo "</div>";
-            echo "<input class=\"add-amigo-card-button-solicitacao\" type=\"submit\" name=\"insert-interacao-accept\" value=\"Aceitar\" />";
-            echo "<input class=\"remove-amigo-card-button-solicitacao\" type=\"submit\" name=\"insert-interacao-decline\" value=\"Recusar\" />";
+              echo "<form name=\"newPost\" action=\"solicitacoes.php\" method=\"post\" >";
+            echo "<button class=\"add-amigo-card-button-solicitacao\" type=\"submit\" name=\"insert-interacao-accept\">Aceitar</button>";
+            echo "<input class=\"hidden\" type=\"submit\" name=\"insert-interacao-accept\" value=$amigo[amigocod]/>";
+            echo "</form>";
+            echo "<button class=\"remove-amigo-card-button-solicitacao\" type=\"submit\" name=\"insert-interacao-decline\">Rejeitar</button>";
+            echo "<input class=\"hidden\" type=\"submit\" name=\"insert-interacao-decline\"/>";
             echo "</div>";
             echo "</div>";
         };
