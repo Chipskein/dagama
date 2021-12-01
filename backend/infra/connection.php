@@ -542,36 +542,32 @@
         }
         else exit;
     }
-    // function updateImg($id,$img){
-    //     $db_connection = db_connection();
-    //     $db = $db_connection['db'];
-    //     $db_type = $db_connection['db_type'];
-    //     if($db){
-    //         if($db_type == 'sqlite'){
-    //             $response = $db->exec("update perfil set img=$img where codigo=$id");
-    //             if($response) {
-    //                 $res=$db->query("select email,senha as password from perfil where codigo='$id'");
-    //                 if($res) return $res->fetchArray();
-    //                 else return false;
-    //             }
-    //             else return false;
-    //         }
-    //         if($db_type == 'postgresql'){
-    //             $preparing = pg_prepare($db, "update perfil set img=$img where codigo=$id");
-    //             if($preparing){
-    //                 $verify = pg_execute($db, "ActivateUser", array("$id"));
-    //                 if($verify){
-    //                     $response = pg_query($db,"select email,senha as password from perfil where codigo=$id");
-    //                     if($response) return pg_fetch_array($response);
-    //                     else return false;
-    //                 } 
-    //                 else return false;
-    //             }
-    //             else return false;
-    //         }
-    //     }
-    //     else exit;
-    // }
+    function updateImg($id,$img,$oldimgid){
+        $db_connection = db_connection();
+        $db = $db_connection['db'];
+        $db_type = $db_connection['db_type'];
+        $FOLDERS=array("root"=>"14oQWzTorITdqsK7IiFwfTYs91Gh_NcjS","avatares"=>"1Z3A4iqIe1eMerkdTEkXnjApRPupaPq-M","portos"=>"1e5T21RxDQ-4Kqw8EDVUBICGPeGIRSNHx","users"=>"1j2ivb8gBxV_AINaQ7FHjbd1OI0otCpEO");
+        if($db){
+            if($db_type == 'sqlite'){
+                if($img){
+                    $type=$img['type'];
+                    $server_path=$img['tmp_name'];
+                    $link="https://drive.google.com/uc?export=download&id=".insertFile("$type","$server_path","$FOLDERS[avatares]","avatar");
+                    rmFile($oldimgid);
+                    $response = $db->exec("update perfil set img='$link' where codigo=$id");
+                    if($response){
+                        $response2=$db->query("select img from perfil where codigo=$id")->fetchArray()['img'];
+                        if($response2) return $response2;
+                        else return false;
+                    }
+                    else return false;
+                }
+                else return false;
+                
+            }
+        }
+        else exit;
+    }
     function getPostsOnUser($user, $offset, $limit=10){
         $db_connection=db_connection();
         $db=$db_connection['db'];

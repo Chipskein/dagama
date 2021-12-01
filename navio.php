@@ -41,6 +41,15 @@
         die();
       }
   }
+  if(isset($_FILES["photo"])){
+    $photo=$_FILES["photo"];
+    $oldphoto=$_SESSION['userimg'];//link
+    $oldphotoid=substr($oldphoto,47);
+    $newimg=updateImg($_SESSION['userid'],$photo,$oldphotoid);
+    if($newimg){
+      $_SESSION['userimg']="$newimg";
+    }
+  }
 ?>
 <div id=principal> 
  <header class="header-main">
@@ -81,7 +90,9 @@
     <!--Add onlick change-->
       <br>
       <div id="img_perfil" class=perfil></div>
-      <input id="imgInp" class="hidden" type="file" name="photo">
+      <form id=formPhoto action=<?php echo "navio.php?user=$_SESSION[userid]"?> enctype=multipart/form-data method="POST">
+          <input id="imgInp" class="hidden" type="file" name="photo">
+      </form>
       <?php 
         if($isOwner)echo "<div id=camera-icon></div>";
       ?>
@@ -245,7 +256,8 @@
         let reader = new FileReader();
 
         reader.onload = () => {
-          img_perfil.style.backgroundImage=`url(${reader.result})`;
+          //img_perfil.style.backgroundImage=`url(${reader.result})`;
+          if(window.confirm("Você deseja alterar sua foto?")) formPhoto.submit();
         }
         reader.readAsDataURL(file.files[0])
       })
