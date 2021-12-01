@@ -1760,6 +1760,7 @@
                 $result = $db->query("                
                 select 
                 porto.codigo as codPorto,
+                porto_participa.dataregis as dataRegis,
                 perfil.codigo as codPart,
                 perfil.username as nomePart,
                 perfil.img as imgPart
@@ -1779,6 +1780,7 @@
                 $result=pg_fetch_all(pg_query($db, "                
                 select 
                 porto.codigo as codPorto,
+                porto_participa.dataregis as dataRegis,
                 perfil.codigo as codPart,
                 perfil.username as nomePart,
                 perfil.img as imgPart

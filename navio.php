@@ -79,7 +79,7 @@
             <a class=nomePort href=porto.php?porto=$value[codigo]>$value[nome]</a>
           </div>";
         }
-        echo "<br><a class=portosAtracadosMais href=portosUser.php>Ver todos</a>";
+        echo "<br><a class=portosAtracadosMais href=portosUser.php?user=$_GET[user]>Ver todos</a>";
       } else {
         echo "<p>Sem portos ainda</p>";
       }
@@ -144,7 +144,7 @@
             echo "<div class=\"div-sharing-post\">";
               // Sharing-top
               echo "<div class=\"div-sharing-post-top\">";
-                echo "<img src=\"".$sharedPost['iconPerfil']."\" alt=\"\" class=\"div-sharing-post-top-icon\">";
+                echo "<a href=navio.php?user=$sharedPost[codPerfil]><img src=\"".$sharedPost['iconPerfil']."\" alt=\"\" class=\"div-sharing-post-top-icon\"></a>";
                 echo "<div class=\"div-post-top-infos\">";
                   echo "<p class=\"div-post-top-username\"><i>@".$sharedPost['nomePerfil']."</i>";
                   if($sharedPost['nomeCidade']){
@@ -222,7 +222,7 @@
           }
           //Top
           echo "<div class=\"div-post-top\">";
-            echo "<img src=\"".$post['iconPerfil']."\" alt=\"\" class=\"div-post-top-icon\">";
+            echo "<a href=navio.php?user=$post[codPerfil]><img src=\"".$post['iconPerfil']."\" alt=\"\" class=\"div-post-top-icon\"></a>";
             echo "<div class=\"div-post-top-infos\">";
               echo "<p class=\"div-post-top-username\"><i>@".$post['nomePerfil']."</i>";
               if($post['nomeCidade']){
@@ -308,7 +308,7 @@
             //   echo "<p>2</p><img src=\"imgs/icons/send.png\" class=\"div-post-icons-bar-icons\" alt=\"\">";
             // echo "</div>";
             echo "<div class=\"div-post-icons-bar-interagir\">";
-              echo "<img src=\"$user[img]\" class=\"div-post-icons-bar-interagir-icon\" alt=\"\"><p>Interagir...</p>";
+              echo "<a href=navio.php?user=$user[codigo]><img src=\"$user[img]\" class=\"div-post-icons-bar-interagir-icon\" alt=\"\"></a><p>Interagir...</p>";
             echo "</div>";
           echo "</div>";
           echo "<br><br>";
@@ -318,7 +318,7 @@
             foreach ($post['comentarios'] as $elem) {
               echo "<div class=\"comment-container\">";
                 echo "<div class=\"comment-container-top\">";
-                  echo "<img src=\"".$elem['iconPerfil']."\" alt=\"\" class=\"comment-icon\">";
+                  echo "<a href=navio.php?user=$elem[codPerfil]><img src=\"".$elem['iconPerfil']."\" alt=\"\" class=\"comment-icon\"></a>";
                   echo "<p class=\"comment-txt\"><i>@".$elem['nomePerfil']."</i> ";
                   echo ($elem['textoPost'] ? $elem['textoPost'] : '');
                   echo ", em ".$elem['dataPost'];
