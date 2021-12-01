@@ -80,19 +80,18 @@ CREATE TABLE PORTO_PARTICIPA(
 );
 CREATE TABLE SELO(
     codigo INTEGER NOT NULL,
-    porto INTEGER NOT NULL,
     texto VARCHAR(250) NOT NULL,
-    img VARCHAR(250),
     ativo BOOLEAN NOT NULL DEFAULT 1 CHECK(ativo=1 OR ativo=0),
-    PRIMARY KEY(codigo),
-    FOREIGN KEY (porto) REFERENCES PORTO(codigo)
+    PRIMARY KEY(codigo)
 );
 CREATE TABLE SELOUSER(
     selo INTEGER NOT NULL,
     perfil INTEGER NOT NULL,
+    porto INTEGER NOT NULL,
     dateVal DATETIME NOT NULL,
     FOREIGN KEY (selo) REFERENCES SELO(codigo),
-    FOREIGN KEY (perfil) REFERENCES PERFIL(codigo)
+    FOREIGN KEY (perfil) REFERENCES PERFIL(codigo),
+    FOREIGN KEY (porto) REFERENCES PORTO(codigo)
 );
 CREATE TABLE AMIGO(
     amigo INTEGER NOT NULL CHECK(amigo!=perfil),
@@ -152,6 +151,11 @@ CREATE TABLE INTERACAO_ASSUNTO(
     FOREIGN KEY (assunto) REFERENCES ASSUNTO(codigo),
     FOREIGN KEY (interacao) REFERENCES INTERACAO(codigo)
 );
+
+INSERT INTO SELO(texto) values ('super-fa');
+INSERT INTO SELO(texto) values ('ultra-fa');
+INSERT INTO SELO(texto) values ('fa');
+
 
 INSERT INTO PAIS (codigo, nome) VALUES(1,'Afghanistan');
 INSERT INTO PAIS (codigo, nome) VALUES(2,'Aland Islands');
@@ -5294,7 +5298,7 @@ INSERT INTO UF (codigo, pais, nome) VALUES(4963,83,'Western North');
 INSERT INTO CIDADE (codigo, uf, nome) VALUES(1,2001,'Rio Grande');
 INSERT INTO CIDADE (codigo, uf, nome) VALUES(2,2001,'Pelotas');
 
-INSERT INTO PERFIL VALUES(1,1,'abfn0905@gmail.com','$2y$10$vaJf.MBckE0gkUdu0WE3p.c8ZxwWw6OM/sJcZNc3rzV2yt87DVAFy','M','CHPK-9','https://drive.google.com/uc?export=download&id=1JnbyE-yOjhtcE2YA2Y7tRMmcUON6kd35','2002-05-09','2021-11-25 21:34:09',1);
+INSERT INTO PERFIL VALUES(1,1,'abfn0905@gmail.com','$2y$10$vaJf.MBckE0gkUdu0WE3p.c8ZxwWw6OM/sJcZNc3rzV2yt87DVAFy','M','CHPK-9','https://drive.google.com/uc?export=download&id=18Q0QWF1iRWc7wq0nezRxgdLYEQUc2Thz','2002-05-09','2021-11-25 21:34:09',1);
 INSERT INTO PERFIL VALUES(2,1,'bruno.nascimento@aluno.riogrande.ifrs.edu','$2y$10$QVuXeaCgue9b9Gfxoqpyle2ubbwpIVKlYCPb3G.ueO0jQw5bM8yom','M','CHPK-10','https://drive.google.com/uc?export=download&id=1wrkf7nkkKn-ThbxSjHJoSFb-0KGnQefq','2002-05-09','2021-11-25 22:27:26',1);
 INSERT INTO PERFIL VALUES(3,1,'silvioquintana1@hotmail.com','$2y$10$k5Z0zf/spQK8Jq8.I0LZ6OHABB/3no.2zEZlPGlryJAVdHtCkibV6','M','SilMusk3','https://upload.wikimedia.org/wikipedia/commons/4/4a/Pirate_icon.gif','2002-04-26','2021-11-26 01:19:04',1);
 INSERT INTO PERFIL VALUES(4,1,'victortavamaral@gmail.com','$2y$10$LmeaGQainGy2LCxzRPkUqORv0927DCdV6WbpHWUADIwY1Fu29pAgi','M','vitão','https://drive.google.com/uc?export=download&id=1-U60n6XzoZeEe8f0uvNNVpyfc4t5AZE_','2002-04-22','2021-11-26 13:07:48',1);
