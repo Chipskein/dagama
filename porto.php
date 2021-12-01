@@ -108,7 +108,7 @@
       echo "</form>";
     ?>
   </aside>
-  <aside id=esquerda2>
+  <aside id=esquerda>
       <div align=center class="aside-porto">
         <div id="ademirTxt">
           <p class=portoAsidePartText>Ademir: </p>
