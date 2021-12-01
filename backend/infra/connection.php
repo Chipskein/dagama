@@ -687,6 +687,9 @@
                     interacao.isSharing as isSharing, 
                     interacao.emote as emote,
                     interacao.ativo as ativo,
+                    cidade.nome as nomeCidade,
+                    uf.nome as nomeUF,
+                    pais.nome as nomePais,
                     porto.codigo as codPorto,
                     porto.nome as nomePorto,
                     perfil.codigo as codPerfil, 
@@ -792,23 +795,34 @@
                         where porto_participa.perfil = $user or porto.perfil = $user) as tmp1
                     join interacao on tmp1.codPost = interacao.codigo
                     join perfil on interacao.perfil = perfil.codigo
+                    left join cidade on interacao.local = cidade.codigo
+                    left join uf on cidade.uf = uf.codigo
+                    left join pais on uf.pais = pais.codigo
                     left join porto on interacao.porto = porto.codigo
                 group by codPost
                 order by tmp1.data desc
                 limit $limit offset $offset");
                 
                 $results2 = $db->query("
+                    select citacao.interacao as interacao, perfil.codigo as codPerfil, perfil.username as nomePerfil from citacao join perfil on perfil.codigo = citacao.perfil where citacao.ativo = 1
+                ");
+                $citacoes = [];
+                while ($row = $results2->fetchArray()) {
+                    $citacoes[$row['interacao']][$row['codPerfil']] = $row;
+                }
+                
+                $results3 = $db->query("
                 select interacao.codigo as interacao, assunto.codigo as codAssunto, assunto.nome as nomeAssunto from interacao
                     left join interacao_assunto on interacao.codigo = interacao_assunto.interacao
                     left join assunto on interacao_assunto.assunto = assunto.codigo
                 where
                     interacao.ativo = 1");
                 $assuntos = [];
-                while ($row = $results2->fetchArray()) {
+                while ($row = $results3->fetchArray()) {
                     $assuntos[$row['interacao']][$row['codAssunto']] = $row;
                 }
 
-                $results3 = $db->query("
+                $results4 = $db->query("
                 select 
                     interacao.codigo as codInteracao, 
                     interacao.post as codPost, 
@@ -828,12 +842,17 @@
                     interacao.post is not null and
                     interacao.isSharing is null");
                 $interacoes = [];
-                while ($row = $results3->fetchArray()) {
+                while ($row = $results4->fetchArray()) {
                     $interacoes[$row['codPost']][$row['codInteracao']] = $row;
                 }
 
                 while ($row = $result->fetchArray()) {
                     $row['assuntos'] = $assuntos[$row['codInteracao']];
+                    if(in_array($row['codInteracao'], array_keys($citacoes))){
+                        $row['citacoes'] = $citacoes[$row['codInteracao']];
+                    } else {
+                        $row['citacoes'] = [];
+                    }
                     if(in_array($row['codInteracao'], array_keys($interacoes))){
                         $row['comentarios'] = $interacoes[$row['codInteracao']];
                     } else {
@@ -1849,22 +1868,36 @@
     function numerosGraficoMasc($faixamin, $faixamax, $pais, $mes){
         $db_connection=db_connection();
         $db=$db_connection['db'];
+        $db_type=$db_connection['db_type'];
         if($db_type == 'sqlite'){
-            $interacaoMasc = $db->query("select count(interacao.perfil), pais.nome from interacao join perfil on interacao.perfil= perfil.codigo join cidade on perfil.cidade = cidade.codigo join uf on cidade.uf= uf.codigo join pais on uf.pais = pais.codigo where perfil.genero = \"M\" and pais.nome=\"$pais\" and date(interacao.data) between date('now','-$mes months') and date('now') and date(perfil.datanasc) between date('now','-$faixamax years') and date('now', '-$faixamin years')");
-            if($interacaoMasc){
-                return $interacaoMasc;
-            }  else return false;
+            $interacaoMasc = $db->query("select count(interacao.perfil) as total, pais.nome as pais from interacao join perfil on interacao.perfil= perfil.codigo join cidade on perfil.cidade = cidade.codigo join uf on cidade.uf= uf.codigo join pais on uf.pais = pais.codigo where perfil.genero = \"M\" and pais.nome=\"$pais\" and date(interacao.data) between date('now','-$mes months') and date('now') and date(perfil.datanasc) between date('now','-$faixamax years') and date('now', '-$faixamin years')");
+            $results=[];    
+                if($interacaoMasc){
+                    while ($row = $interacaoMasc->fetchArray()) {
+                        array_push($results, $row);
+                    }
+                    return $results; 
+                }
+        
         }   
     }
+
 
     function numerosGraficoFem($faixamin, $faixamax, $pais, $mes){
         $db_connection=db_connection();
         $db=$db_connection['db'];
+        $db_type=$db_connection['db_type'];
         if($db_type == 'sqlite'){
-            $interacaoFem = $db->query("select count(interacao.perfil), pais.nome from interacao join perfil on interacao.perfil= perfil.codigo join cidade on perfil.cidade = cidade.codigo join uf on cidade.uf= uf.codigo join pais on uf.pais = pais.codigo where perfil.genero = \"F\" and pais.nome=\"$pais\" and date(interacao.data) between date('now','-$mes months') and date('now') and date(perfil.datanasc) between date('now','-$faixamax years') and date('now', '-$faixamin years')");
-            if($interacaoFem){
-                return $interacaoFem;
-            }  else return false;
+            $interacaoFem = $db->query("select count(interacao.perfil) as total, pais.nome as pais from interacao join perfil on interacao.perfil= perfil.codigo join cidade on perfil.cidade = cidade.codigo join uf on cidade.uf= uf.codigo join pais on uf.pais = pais.codigo where perfil.genero = \"F\" and pais.nome=\"$pais\" and date(interacao.data) between date('now','-$mes months') and date('now') and date(perfil.datanasc) between date('now','-$faixamax years') and date('now', '-$faixamin years')");
+          //  $response = $interacaoFem->fetchArray();
+            $results=[];
+            
+                if($interacaoFem){
+                    while ($row = $interacaoFem->fetchArray()) {
+                        array_push($results, $row);
+                    }
+                    return $results; 
+                }
         }   
     }
 

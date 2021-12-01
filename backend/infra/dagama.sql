@@ -119,9 +119,11 @@ CREATE TABLE INTERACAO(
     post INTEGER,
     data DATETIME DEFAULT CURRENT_TIMESTAMP,
     texto VARCHAR(250) NOT NULL,
-    isReaction BOOLEAN CHECK((post IS NOT NULL AND isSharing IS NULL) OR isReaction IS NULL),
-    isSharing BOOLEAN  CHECK((post IS NOT NULL AND isReaction IS NULL) OR isSharing IS NULL),
+    isReaction BOOLEAN,
+    isSharing BOOLEAN,
+    local integer,
     emote VARCHAR(250) CHECK(isReaction IS NOT NULL OR emote IS NULL),
+    -- Opções: curtir, kkk, amei, grr, wow, sad
     ativo BOOLEAN NOT NULL DEFAULT 1 CHECK(ativo=1 OR ativo=0),
     PRIMARY KEY(codigo),
     CHECK (
@@ -133,7 +135,8 @@ CREATE TABLE INTERACAO(
     FOREIGN KEY (perfil) REFERENCES PERFIL(codigo),
     FOREIGN KEY (perfil_posting) REFERENCES PERFIL(codigo),
     FOREIGN KEY (porto) REFERENCES PORTO(codigo),
-    FOREIGN KEY (post) REFERENCES INTERACAO(codigo)
+    FOREIGN KEY (post) REFERENCES INTERACAO(codigo),
+    FOREIGN KEY (local) REFERENCES CIDADE(codigo)
 );
 CREATE TABLE CITACAO(
     interacao INTEGER NOT NULL,
@@ -157,255 +160,255 @@ INSERT INTO SELO(texto) values ('ultra-fa');
 INSERT INTO SELO(texto) values ('fa');
 
 
-INSERT INTO PAIS (codigo, nome) VALUES(1,'Afghanistan');
-INSERT INTO PAIS (codigo, nome) VALUES(2,'Aland Islands');
-INSERT INTO PAIS (codigo, nome) VALUES(3,'Albania');
-INSERT INTO PAIS (codigo, nome) VALUES(4,'Algeria');
-INSERT INTO PAIS (codigo, nome) VALUES(5,'American Samoa');
-INSERT INTO PAIS (codigo, nome) VALUES(6,'Andorra');
-INSERT INTO PAIS (codigo, nome) VALUES(7,'Angola');
-INSERT INTO PAIS (codigo, nome) VALUES(8,'Anguilla');
-INSERT INTO PAIS (codigo, nome) VALUES(9,'Antarctica');
-INSERT INTO PAIS (codigo, nome) VALUES(10,'Antigua And Barbuda');
-INSERT INTO PAIS (codigo, nome) VALUES(11,'Argentina');
-INSERT INTO PAIS (codigo, nome) VALUES(12,'Armenia');
-INSERT INTO PAIS (codigo, nome) VALUES(13,'Aruba');
-INSERT INTO PAIS (codigo, nome) VALUES(14,'Australia');
-INSERT INTO PAIS (codigo, nome) VALUES(15,'Austria');
-INSERT INTO PAIS (codigo, nome) VALUES(16,'Azerbaijan');
-INSERT INTO PAIS (codigo, nome) VALUES(17,'Bahamas The');
-INSERT INTO PAIS (codigo, nome) VALUES(18,'Bahrain');
-INSERT INTO PAIS (codigo, nome) VALUES(19,'Bangladesh');
-INSERT INTO PAIS (codigo, nome) VALUES(20,'Barbados');
-INSERT INTO PAIS (codigo, nome) VALUES(21,'Belarus');
-INSERT INTO PAIS (codigo, nome) VALUES(22,'Belgium');
-INSERT INTO PAIS (codigo, nome) VALUES(23,'Belize');
-INSERT INTO PAIS (codigo, nome) VALUES(24,'Benin');
-INSERT INTO PAIS (codigo, nome) VALUES(25,'Bermuda');
-INSERT INTO PAIS (codigo, nome) VALUES(26,'Bhutan');
-INSERT INTO PAIS (codigo, nome) VALUES(27,'Bolivia');
-INSERT INTO PAIS (codigo, nome) VALUES(28,'Bosnia and Herzegovina');
-INSERT INTO PAIS (codigo, nome) VALUES(29,'Botswana');
-INSERT INTO PAIS (codigo, nome) VALUES(30,'Bouvet Island');
-INSERT INTO PAIS (codigo, nome) VALUES(31,'Brazil');
-INSERT INTO PAIS (codigo, nome) VALUES(32,'British Indian Ocean Territory');
-INSERT INTO PAIS (codigo, nome) VALUES(33,'Brunei');
-INSERT INTO PAIS (codigo, nome) VALUES(34,'Bulgaria');
-INSERT INTO PAIS (codigo, nome) VALUES(35,'Burkina Faso');
-INSERT INTO PAIS (codigo, nome) VALUES(36,'Burundi');
-INSERT INTO PAIS (codigo, nome) VALUES(37,'Cambodia');
-INSERT INTO PAIS (codigo, nome) VALUES(38,'Cameroon');
-INSERT INTO PAIS (codigo, nome) VALUES(39,'Canada');
-INSERT INTO PAIS (codigo, nome) VALUES(40,'Cape Verde');
-INSERT INTO PAIS (codigo, nome) VALUES(41,'Cayman Islands');
-INSERT INTO PAIS (codigo, nome) VALUES(42,'Central African Republic');
-INSERT INTO PAIS (codigo, nome) VALUES(43,'Chad');
-INSERT INTO PAIS (codigo, nome) VALUES(44,'Chile');
-INSERT INTO PAIS (codigo, nome) VALUES(45,'China');
-INSERT INTO PAIS (codigo, nome) VALUES(46,'Christmas Island');
-INSERT INTO PAIS (codigo, nome) VALUES(47,'Cocos (Keeling) Islands');
-INSERT INTO PAIS (codigo, nome) VALUES(48,'Colombia');
-INSERT INTO PAIS (codigo, nome) VALUES(49,'Comoros');
-INSERT INTO PAIS (codigo, nome) VALUES(50,'Congo');
-INSERT INTO PAIS (codigo, nome) VALUES(51,'Democratic Republic of the Congo');
-INSERT INTO PAIS (codigo, nome) VALUES(52,'Cook Islands');
-INSERT INTO PAIS (codigo, nome) VALUES(53,'Costa Rica');
-INSERT INTO PAIS (codigo, nome) VALUES(54,'Cote D Ivoire (Ivory Coast)');
-INSERT INTO PAIS (codigo, nome) VALUES(55,'Croatia');
-INSERT INTO PAIS (codigo, nome) VALUES(56,'Cuba');
-INSERT INTO PAIS (codigo, nome) VALUES(57,'Cyprus');
-INSERT INTO PAIS (codigo, nome) VALUES(58,'Czech Republic');
-INSERT INTO PAIS (codigo, nome) VALUES(59,'Denmark');
-INSERT INTO PAIS (codigo, nome) VALUES(60,'Djibouti');
-INSERT INTO PAIS (codigo, nome) VALUES(61,'Dominica');
-INSERT INTO PAIS (codigo, nome) VALUES(62,'Dominican Republic');
-INSERT INTO PAIS (codigo, nome) VALUES(63,'East Timor');
-INSERT INTO PAIS (codigo, nome) VALUES(64,'Ecuador');
-INSERT INTO PAIS (codigo, nome) VALUES(65,'Egypt');
-INSERT INTO PAIS (codigo, nome) VALUES(66,'El Salvador');
-INSERT INTO PAIS (codigo, nome) VALUES(67,'Equatorial Guinea');
-INSERT INTO PAIS (codigo, nome) VALUES(68,'Eritrea');
-INSERT INTO PAIS (codigo, nome) VALUES(69,'Estonia');
-INSERT INTO PAIS (codigo, nome) VALUES(70,'Ethiopia');
-INSERT INTO PAIS (codigo, nome) VALUES(71,'Falkland Islands');
-INSERT INTO PAIS (codigo, nome) VALUES(72,'Faroe Islands');
-INSERT INTO PAIS (codigo, nome) VALUES(73,'Fiji Islands');
-INSERT INTO PAIS (codigo, nome) VALUES(74,'Finland');
-INSERT INTO PAIS (codigo, nome) VALUES(75,'France');
-INSERT INTO PAIS (codigo, nome) VALUES(76,'French Guiana');
-INSERT INTO PAIS (codigo, nome) VALUES(77,'French Polynesia');
-INSERT INTO PAIS (codigo, nome) VALUES(78,'French Southern Territories');
-INSERT INTO PAIS (codigo, nome) VALUES(79,'Gabon');
-INSERT INTO PAIS (codigo, nome) VALUES(80,'Gambia The');
-INSERT INTO PAIS (codigo, nome) VALUES(81,'Georgia');
-INSERT INTO PAIS (codigo, nome) VALUES(82,'Germany');
-INSERT INTO PAIS (codigo, nome) VALUES(83,'Ghana');
-INSERT INTO PAIS (codigo, nome) VALUES(84,'Gibraltar');
-INSERT INTO PAIS (codigo, nome) VALUES(85,'Greece');
-INSERT INTO PAIS (codigo, nome) VALUES(87,'Grenada');
-INSERT INTO PAIS (codigo, nome) VALUES(88,'Guadeloupe');
-INSERT INTO PAIS (codigo, nome) VALUES(89,'Guam');
-INSERT INTO PAIS (codigo, nome) VALUES(90,'Guatemala');
-INSERT INTO PAIS (codigo, nome) VALUES(91,'Guernsey and Alderney');
-INSERT INTO PAIS (codigo, nome) VALUES(92,'Guinea');
-INSERT INTO PAIS (codigo, nome) VALUES(93,'Guinea-Bissau');
-INSERT INTO PAIS (codigo, nome) VALUES(94,'Guyana');
-INSERT INTO PAIS (codigo, nome) VALUES(95,'Haiti');
-INSERT INTO PAIS (codigo, nome) VALUES(96,'Heard Island and McDonald Islands');
-INSERT INTO PAIS (codigo, nome) VALUES(97,'Honduras');
-INSERT INTO PAIS (codigo, nome) VALUES(98,'Hong Kong S.A.R.');
-INSERT INTO PAIS (codigo, nome) VALUES(99,'Hungary');
-INSERT INTO PAIS (codigo, nome) VALUES(100,'Iceland');
-INSERT INTO PAIS (codigo, nome) VALUES(101,'India');
-INSERT INTO PAIS (codigo, nome) VALUES(102,'Indonesia');
-INSERT INTO PAIS (codigo, nome) VALUES(103,'Iran');
-INSERT INTO PAIS (codigo, nome) VALUES(104,'Iraq');
-INSERT INTO PAIS (codigo, nome) VALUES(105,'Ireland');
-INSERT INTO PAIS (codigo, nome) VALUES(106,'Israel');
-INSERT INTO PAIS (codigo, nome) VALUES(107,'Italy');
-INSERT INTO PAIS (codigo, nome) VALUES(108,'Jamaica');
-INSERT INTO PAIS (codigo, nome) VALUES(109,'Japan');
-INSERT INTO PAIS (codigo, nome) VALUES(110,'Jersey');
-INSERT INTO PAIS (codigo, nome) VALUES(111,'Jordan');
-INSERT INTO PAIS (codigo, nome) VALUES(112,'Kazakhstan');
-INSERT INTO PAIS (codigo, nome) VALUES(113,'Kenya');
-INSERT INTO PAIS (codigo, nome) VALUES(114,'Kiribati');
-INSERT INTO PAIS (codigo, nome) VALUES(115,'North Korea');
-INSERT INTO PAIS (codigo, nome) VALUES(116,'South Korea');
-INSERT INTO PAIS (codigo, nome) VALUES(117,'Kuwait');
-INSERT INTO PAIS (codigo, nome) VALUES(118,'Kyrgyzstan');
-INSERT INTO PAIS (codigo, nome) VALUES(119,'Laos');
-INSERT INTO PAIS (codigo, nome) VALUES(120,'Latvia');
-INSERT INTO PAIS (codigo, nome) VALUES(121,'Lebanon');
-INSERT INTO PAIS (codigo, nome) VALUES(122,'Lesotho');
-INSERT INTO PAIS (codigo, nome) VALUES(123,'Liberia');
-INSERT INTO PAIS (codigo, nome) VALUES(124,'Libya');
-INSERT INTO PAIS (codigo, nome) VALUES(125,'Liechtenstein');
-INSERT INTO PAIS (codigo, nome) VALUES(126,'Lithuania');
-INSERT INTO PAIS (codigo, nome) VALUES(127,'Luxembourg');
-INSERT INTO PAIS (codigo, nome) VALUES(128,'Macau S.A.R.');
-INSERT INTO PAIS (codigo, nome) VALUES(129,'Macedonia');
-INSERT INTO PAIS (codigo, nome) VALUES(130,'Madagascar');
-INSERT INTO PAIS (codigo, nome) VALUES(131,'Malawi');
-INSERT INTO PAIS (codigo, nome) VALUES(132,'Malaysia');
-INSERT INTO PAIS (codigo, nome) VALUES(133,'Maldives');
-INSERT INTO PAIS (codigo, nome) VALUES(134,'Mali');
-INSERT INTO PAIS (codigo, nome) VALUES(135,'Malta');
-INSERT INTO PAIS (codigo, nome) VALUES(136,'Man (Isle of)');
-INSERT INTO PAIS (codigo, nome) VALUES(137,'Marshall Islands');
-INSERT INTO PAIS (codigo, nome) VALUES(138,'Martinique');
-INSERT INTO PAIS (codigo, nome) VALUES(139,'Mauritania');
-INSERT INTO PAIS (codigo, nome) VALUES(140,'Mauritius');
-INSERT INTO PAIS (codigo, nome) VALUES(141,'Mayotte');
-INSERT INTO PAIS (codigo, nome) VALUES(142,'Mexico');
-INSERT INTO PAIS (codigo, nome) VALUES(143,'Micronesia');
-INSERT INTO PAIS (codigo, nome) VALUES(144,'Moldova');
-INSERT INTO PAIS (codigo, nome) VALUES(145,'Monaco');
-INSERT INTO PAIS (codigo, nome) VALUES(146,'Mongolia');
-INSERT INTO PAIS (codigo, nome) VALUES(147,'Montenegro');
-INSERT INTO PAIS (codigo, nome) VALUES(148,'Montserrat');
-INSERT INTO PAIS (codigo, nome) VALUES(149,'Morocco');
-INSERT INTO PAIS (codigo, nome) VALUES(150,'Mozambique');
-INSERT INTO PAIS (codigo, nome) VALUES(151,'Myanmar');
-INSERT INTO PAIS (codigo, nome) VALUES(152,'Namibia');
-INSERT INTO PAIS (codigo, nome) VALUES(153,'Nauru');
-INSERT INTO PAIS (codigo, nome) VALUES(154,'Nepal');
-INSERT INTO PAIS (codigo, nome) VALUES(155,'Bonaire');
-INSERT INTO PAIS (codigo, nome) VALUES(156,'Netherlands');
-INSERT INTO PAIS (codigo, nome) VALUES(157,'New Caledonia');
-INSERT INTO PAIS (codigo, nome) VALUES(158,'New Zealand');
-INSERT INTO PAIS (codigo, nome) VALUES(159,'Nicaragua');
-INSERT INTO PAIS (codigo, nome) VALUES(160,'Niger');
-INSERT INTO PAIS (codigo, nome) VALUES(161,'Nigeria');
-INSERT INTO PAIS (codigo, nome) VALUES(162,'Niue');
-INSERT INTO PAIS (codigo, nome) VALUES(163,'Norfolk Island');
-INSERT INTO PAIS (codigo, nome) VALUES(164,'Northern Mariana Islands');
-INSERT INTO PAIS (codigo, nome) VALUES(165,'Norway');
-INSERT INTO PAIS (codigo, nome) VALUES(166,'Oman');
-INSERT INTO PAIS (codigo, nome) VALUES(167,'Pakistan');
-INSERT INTO PAIS (codigo, nome) VALUES(168,'Palau');
-INSERT INTO PAIS (codigo, nome) VALUES(169,'Palestinian Territory Occupied');
-INSERT INTO PAIS (codigo, nome) VALUES(170,'Panama');
-INSERT INTO PAIS (codigo, nome) VALUES(171,'Papua new Guinea');
-INSERT INTO PAIS (codigo, nome) VALUES(172,'Paraguay');
-INSERT INTO PAIS (codigo, nome) VALUES(173,'Peru');
-INSERT INTO PAIS (codigo, nome) VALUES(174,'Philippines');
-INSERT INTO PAIS (codigo, nome) VALUES(175,'Pitcairn Island');
-INSERT INTO PAIS (codigo, nome) VALUES(176,'Poland');
-INSERT INTO PAIS (codigo, nome) VALUES(177,'Portugal');
-INSERT INTO PAIS (codigo, nome) VALUES(178,'Puerto Rico');
-INSERT INTO PAIS (codigo, nome) VALUES(179,'Qatar');
-INSERT INTO PAIS (codigo, nome) VALUES(180,'Reunion');
-INSERT INTO PAIS (codigo, nome) VALUES(181,'Romania');
-INSERT INTO PAIS (codigo, nome) VALUES(182,'Russia');
-INSERT INTO PAIS (codigo, nome) VALUES(183,'Rwanda');
-INSERT INTO PAIS (codigo, nome) VALUES(184,'Saint Helena');
-INSERT INTO PAIS (codigo, nome) VALUES(185,'Saint Kitts And Nevis');
-INSERT INTO PAIS (codigo, nome) VALUES(186,'Saint Lucia');
-INSERT INTO PAIS (codigo, nome) VALUES(187,'Saint Pierre and Miquelon');
-INSERT INTO PAIS (codigo, nome) VALUES(188,'Saint Vincent And The Grenadines');
-INSERT INTO PAIS (codigo, nome) VALUES(189,'Saint-Barthelemy');
-INSERT INTO PAIS (codigo, nome) VALUES(190,'Saint-Martin (French part)');
-INSERT INTO PAIS (codigo, nome) VALUES(191,'Samoa');
-INSERT INTO PAIS (codigo, nome) VALUES(192,'San Marino');
-INSERT INTO PAIS (codigo, nome) VALUES(193,'Sao Tome and Principe');
-INSERT INTO PAIS (codigo, nome) VALUES(194,'Saudi Arabia');
-INSERT INTO PAIS (codigo, nome) VALUES(195,'Senegal');
-INSERT INTO PAIS (codigo, nome) VALUES(196,'Serbia');
-INSERT INTO PAIS (codigo, nome) VALUES(197,'Seychelles');
-INSERT INTO PAIS (codigo, nome) VALUES(198,'Sierra Leone');
-INSERT INTO PAIS (codigo, nome) VALUES(199,'Singapore');
-INSERT INTO PAIS (codigo, nome) VALUES(200,'Slovakia');
-INSERT INTO PAIS (codigo, nome) VALUES(201,'Slovenia');
-INSERT INTO PAIS (codigo, nome) VALUES(202,'Solomon Islands');
-INSERT INTO PAIS (codigo, nome) VALUES(203,'Somalia');
-INSERT INTO PAIS (codigo, nome) VALUES(204,'South Africa');
-INSERT INTO PAIS (codigo, nome) VALUES(205,'South Georgia');
-INSERT INTO PAIS (codigo, nome) VALUES(206,'South Sudan');
-INSERT INTO PAIS (codigo, nome) VALUES(207,'Spain');
-INSERT INTO PAIS (codigo, nome) VALUES(208,'Sri Lanka');
-INSERT INTO PAIS (codigo, nome) VALUES(209,'Sudan');
-INSERT INTO PAIS (codigo, nome) VALUES(210,'Suriname');
-INSERT INTO PAIS (codigo, nome) VALUES(211,'Svalbard And Jan Mayen Islands');
-INSERT INTO PAIS (codigo, nome) VALUES(212,'Swaziland');
-INSERT INTO PAIS (codigo, nome) VALUES(213,'Sweden');
-INSERT INTO PAIS (codigo, nome) VALUES(214,'Switzerland');
-INSERT INTO PAIS (codigo, nome) VALUES(215,'Syria');
-INSERT INTO PAIS (codigo, nome) VALUES(216,'Taiwan');
-INSERT INTO PAIS (codigo, nome) VALUES(217,'Tajikistan');
-INSERT INTO PAIS (codigo, nome) VALUES(218,'Tanzania');
-INSERT INTO PAIS (codigo, nome) VALUES(219,'Thailand');
-INSERT INTO PAIS (codigo, nome) VALUES(220,'Togo');
-INSERT INTO PAIS (codigo, nome) VALUES(221,'Tokelau');
-INSERT INTO PAIS (codigo, nome) VALUES(222,'Tonga');
-INSERT INTO PAIS (codigo, nome) VALUES(223,'Trinidad And Tobago');
-INSERT INTO PAIS (codigo, nome) VALUES(224,'Tunisia');
-INSERT INTO PAIS (codigo, nome) VALUES(225,'Turkey');
-INSERT INTO PAIS (codigo, nome) VALUES(226,'Turkmenistan');
-INSERT INTO PAIS (codigo, nome) VALUES(227,'Turks And Caicos Islands');
-INSERT INTO PAIS (codigo, nome) VALUES(228,'Tuvalu');
-INSERT INTO PAIS (codigo, nome) VALUES(229,'Uganda');
-INSERT INTO PAIS (codigo, nome) VALUES(230,'Ukraine');
-INSERT INTO PAIS (codigo, nome) VALUES(231,'United Arab Emirates');
-INSERT INTO PAIS (codigo, nome) VALUES(232,'United Kingdom');
-INSERT INTO PAIS (codigo, nome) VALUES(233,'United States');
-INSERT INTO PAIS (codigo, nome) VALUES(234,'United States Minor Outlying Islands');
-INSERT INTO PAIS (codigo, nome) VALUES(235,'Uruguay');
-INSERT INTO PAIS (codigo, nome) VALUES(236,'Uzbekistan');
-INSERT INTO PAIS (codigo, nome) VALUES(237,'Vanuatu');
-INSERT INTO PAIS (codigo, nome) VALUES(238,'Vatican City State (Holy See)');
-INSERT INTO PAIS (codigo, nome) VALUES(239,'Venezuela');
-INSERT INTO PAIS (codigo, nome) VALUES(240,'Vietnam');
-INSERT INTO PAIS (codigo, nome) VALUES(241,'Virgin Islands (British)');
-INSERT INTO PAIS (codigo, nome) VALUES(242,'Virgin Islands (US)');
-INSERT INTO PAIS (codigo, nome) VALUES(243,'Wallis And Futuna Islands');
-INSERT INTO PAIS (codigo, nome) VALUES(244,'Western Sahara');
-INSERT INTO PAIS (codigo, nome) VALUES(245,'Yemen');
-INSERT INTO PAIS (codigo, nome) VALUES(246,'Zambia');
-INSERT INTO PAIS (codigo, nome) VALUES(247,'Zimbabwe');
-INSERT INTO PAIS (codigo, nome) VALUES(248,'Kosovo');
-INSERT INTO PAIS (codigo, nome) VALUES(249,'Curaçao');
-INSERT INTO PAIS (codigo, nome) VALUES(250,'Sint Maarten (Dutch part)');
+INSERT INTO PAIS (codigo, nome) VALUES (1, 'Afeganistão'),
+    (2, 'Ilhas Åland'),
+    (3, 'Albânia'),
+    (4, 'Argélia'),
+    (5, 'Samoa Americana'),
+    (6, 'Andorra'),
+    (7, 'Angola'),
+    (8, 'Anguila'),
+    (9, 'Antártica'),
+    (10, 'Antígua e Barbuda'),
+    (11, 'Argentina'),
+    (12, 'Armênia'),
+    (13, 'Aruba'),
+    (14, 'Austrália'),
+    (15, 'Áustria'),
+    (16, 'Azerbaijão'),
+    (17, 'Bahamas The'),
+    (18, 'Bahrain'),
+    (19, 'Bangladesh'),
+    (20, 'Barbados'),
+    (21, 'Bielo-Rússia'),
+    (22, 'Bélgica'),
+    (23, 'Belize'),
+    (24, 'Benin'),
+    (25, 'Bermuda'),
+    (26, 'Butão'),
+    (27, 'Bolívia'),
+    (28, 'Bósnia e Herzegovina'),
+    (29, 'Botswana'),
+    (30, 'Ilha Bouvet'),
+    (31, 'Brasil'),
+    (32, 'Território Britânico do Oceano Índico'),
+    (33, 'Brunei'),
+    (34, 'Bulgária'),
+    (35, 'Burkina Faso'),
+    (36, 'Burundi'),
+    (37, 'Camboja'),
+    (38, 'Camarões'),
+    (39, 'Canadá'),
+    (40, 'Cabo Verde'),
+    (41, 'Ilhas Cayman'),
+    (42, 'República Centro-Africana'),
+    (43, 'Chad'),
+    (44, 'Chile'),
+    (45, 'China'),
+    (46, 'Ilha do Natal'),
+    (47, 'Ilhas Cocos (Keeling)'),
+    (48, 'Colômbia'),
+    (49, 'Comores'),
+    (50, 'Congo'),
+    (51, 'República Democrática do Congo'),
+    (52, 'Ilhas Cook'),
+    (53, 'Costa Rica'),
+    (54, 'Cote D Ivoire (Costa do Marfim)'),
+    (55, 'Croácia'),
+    (56, 'Cuba'),
+    (57, 'Chipre'),
+    (58, 'República Tcheca'),
+    (59, 'Dinamarca'),
+    (60, 'Djibouti'),
+    (61, 'Dominica'),
+    (62, 'República Dominicana'),
+    (63, 'Timor Leste'),
+    (64, 'Equador'),
+    (65, 'Egito'),
+    (66, 'El Salvador'),
+    (67, 'Guiné Equatorial'),
+    (68, 'Eritreia'),
+    (69, 'Estônia'),
+    (70, 'Etiópia'),
+    (71, 'Ilhas Falkland'),
+    (72, 'Ilhas Faroé'),
+    (73, 'Ilhas Fiji'),
+    (74, 'Finlândia'),
+    (75, 'França'),
+    (76, 'Guiana Francesa'),
+    (77, 'Polinésia Francesa'),
+    (78, 'Territórios Franceses do Sul'),
+    (79, 'Gabão'),
+    (80, 'Gâmbia The'),
+    (81, 'Geórgia'),
+    (82, 'Alemanha'),
+    (83, 'Gana'),
+    (84, 'Gibraltar'),
+    (85, 'Grécia'),
+    (87, 'Granada'),
+    (88, 'Guadalupe'),
+    (89, 'Guam'),
+    (90, 'Guatemala'),
+    (91, 'Guernsey e Alderney'),
+    (92, 'Guiné'),
+    (93, 'Guiné-Bissau'),
+    (94, 'Guiana'),
+    (95, 'Haiti'),
+    (96, 'Ilha Heard e Ilhas McDonald'),
+    (97, 'Honduras'),
+    (98, 'Hong Kong S.A.R.'),
+    (99, 'Hungria'),
+    (100, 'Islândia'),
+    (101, 'Índia'),
+    (102, 'Indonésia'),
+    (103, 'Irã'),
+    (104, 'Iraque'),
+    (105, 'Irlanda'),
+    (106, 'Israel'),
+    (107, 'Itália'),
+    (108, 'Jamaica'),
+    (109, 'Japão'),
+    (110, 'Jersey'),
+    (111, 'Jordan'),
+    (112, 'Cazaquistão'),
+    (113, 'Quênia'),
+    (114, 'Kiribati'),
+    (115, 'Coreia do Norte'),
+    (116, 'Coreia do Sul'),
+    (117, 'Kuwait'),
+    (118, 'Quirguistão'),
+    (119, 'Laos'),
+    (120, 'Letônia'),
+    (121, 'Líbano'),
+    (122, 'Lesoto'),
+    (123, 'Libéria'),
+    (124, 'Líbia'),
+    (125, 'Liechtenstein'),
+    (126, 'Lituânia'),
+    (127, 'Luxemburgo'),
+    (128, 'Macau S.A.R.'),
+    (129, 'Macedônia'),
+    (130, 'Madagascar'),
+    (131, 'Malawi'),
+    (132, 'Malásia'),
+    (133, 'Maldivas'),
+    (134, 'Mali'),
+    (135, 'Malta'),
+    (136, 'Man (Ilha de)'),
+    (137, 'Ilhas Marshall'),
+    (138, 'Martinica'),
+    (139, 'Mauritânia'),
+    (140, 'Maurício'),
+    (141, 'Mayotte'),
+    (142, 'México'),
+    (143, 'Micronésia'),
+    (144, 'Moldávia'),
+    (145, 'Mônaco'),
+    (146, 'Mongólia'),
+    (147, 'Montenegro'),
+    (148, 'Montserrat'),
+    (149, 'Marrocos'),
+    (150, 'Moçambique'),
+    (151, 'Mianmar'),
+    (152, 'Namíbia'),
+    (153, 'Nauru'),
+    (154, 'Nepal'),
+    (155, 'Bonaire'),
+    (156, 'Holanda'),
+    (157, 'Nova Caledônia'),
+    (158, 'Nova Zelândia'),
+    (159, 'Nicarágua'),
+    (160, 'Níger'),
+    (161, 'Nigéria'),
+    (162, 'Niue'),
+    (163, 'Ilha Norfolk'),
+    (164, 'Ilhas Marianas do Norte'),
+    (165, 'Noruega'),
+    (166, 'Omã'),
+    (167, 'Paquistão'),
+    (168, 'Palau'),
+    (169, 'Território Palestino Ocupado'),
+    (170, 'Panamá'),
+    (171, 'Papua Nova Guiné'),
+    (172, 'Paraguai'),
+    (173, 'Peru'),
+    (174, 'Filipinas'),
+    (175, 'Ilha Pitcairn'),
+    (176, 'Polônia'),
+    (177, 'Portugal'),
+    (178, 'Porto Rico'),
+    (179, 'Qatar'),
+    (180, 'Reunião'),
+    (181, 'Romênia'),
+    (182, 'Rússia'),
+    (183, 'Ruanda'),
+    (184, 'Santa Helena'),
+    (185, 'São Cristóvão e Neves'),
+    (186, 'Santa Lúcia'),
+    (187, 'São Pedro e Miquelon'),
+    (188, 'São Vicente e Granadinas'),
+    (189, 'Saint-Barthelemy'),
+    (190, 'Saint-Martin (parte francesa)'),
+    (191, 'Samoa'),
+    (192, 'San Marino'),
+    (193, 'São Tomé e Príncipe'),
+    (194, 'Arábia Saudita'),
+    (195, 'Senegal'),
+    (196, 'Sérvia'),
+    (197, 'Seychelles'),
+    (198, 'Serra Leoa'),
+    (199, 'Singapura'),
+    (200, 'Eslováquia'),
+    (201, 'Eslovênia'),
+    (202, 'Ilhas Salomão'),
+    (203, 'Somália'),
+    (204, 'África do Sul'),
+    (205, 'South Georgia'),
+    (206, 'Sudão do Sul'),
+    (207, 'Espanha'),
+    (208, 'Sri Lanka'),
+    (209, 'Sudão'),
+    (210, 'Suriname'),
+    (211, 'Ilhas Svalbard e Jan Mayen'),
+    (212, 'Suazilândia'),
+    (213, 'Suécia'),
+    (214, 'Suíça'),
+    (215, 'Síria'),
+    (216, 'Taiwan'),
+    (217, 'Tajiquistão'),
+    (218, 'Tanzânia'),
+    (219, 'Tailândia'),
+    (220, 'Togo'),
+    (221, 'Tokelau'),
+    (222, 'Tonga'),
+    (223, 'Trinidad e Tobago'),
+    (224, 'Tunísia'),
+    (225, 'Turquia'),
+    (226, 'Turcomenistão'),
+    (227, 'Ilhas Turks e Caicos'),
+    (228, 'Tuvalu'),
+    (229, 'Uganda'),
+    (230, 'Ucrânia'),
+    (231, 'Emirados Árabes Unidos'),
+    (232, 'Reino Unido'),
+    (233, 'Estados Unidos'),
+    (234, 'Ilhas Menores Distantes dos Estados Unidos'),
+    (235, 'Uruguai'),
+    (236, 'Uzbequistão'),
+    (237, 'Vanuatu'),
+    (238, 'Estado da Cidade do Vaticano (Santa Sé)'),
+    (239, 'Venezuela'),
+    (240, 'Vietnã'),
+    (241, 'Ilhas Virgens (britânicas)'),
+    (242, 'Ilhas Virgens (EUA)'),
+    (243, 'Ilhas Wallis e Futuna'),
+    (244, 'Saara Ocidental'),
+    (245, 'Iêmen'),
+    (246, 'Zâmbia'),
+    (247, 'Zimbábue'),
+    (248, 'Kosovo'),
+    (249, 'Curaçao'),
+    (250, 'Sint Maarten (parte holandesa)');
 
 INSERT INTO UF (codigo, pais, nome) VALUES(1,70,'Southern Nations Nationalities  and Peoples Region');
 INSERT INTO UF (codigo, pais, nome) VALUES(2,70,'Somali Region');
@@ -5301,7 +5304,7 @@ INSERT INTO CIDADE (codigo, uf, nome) VALUES(2,2001,'Pelotas');
 INSERT INTO PERFIL VALUES(1,1,'abfn0905@gmail.com','$2y$10$vaJf.MBckE0gkUdu0WE3p.c8ZxwWw6OM/sJcZNc3rzV2yt87DVAFy','M','CHPK-9','https://drive.google.com/uc?export=download&id=18Q0QWF1iRWc7wq0nezRxgdLYEQUc2Thz','2002-05-09','2021-11-25 21:34:09',1);
 INSERT INTO PERFIL VALUES(2,1,'bruno.nascimento@aluno.riogrande.ifrs.edu','$2y$10$QVuXeaCgue9b9Gfxoqpyle2ubbwpIVKlYCPb3G.ueO0jQw5bM8yom','M','CHPK-10','https://drive.google.com/uc?export=download&id=1wrkf7nkkKn-ThbxSjHJoSFb-0KGnQefq','2002-05-09','2021-11-25 22:27:26',1);
 INSERT INTO PERFIL VALUES(3,1,'silvioquintana1@hotmail.com','$2y$10$k5Z0zf/spQK8Jq8.I0LZ6OHABB/3no.2zEZlPGlryJAVdHtCkibV6','M','SilMusk3','https://upload.wikimedia.org/wikipedia/commons/4/4a/Pirate_icon.gif','2002-04-26','2021-11-26 01:19:04',1);
-INSERT INTO PERFIL VALUES(4,1,'victortavamaral@gmail.com','$2y$10$LmeaGQainGy2LCxzRPkUqORv0927DCdV6WbpHWUADIwY1Fu29pAgi','M','vitão','https://drive.google.com/uc?export=download&id=1-U60n6XzoZeEe8f0uvNNVpyfc4t5AZE_','2002-04-22','2021-11-26 13:07:48',1);
+INSERT INTO PERFIL VALUES(4,1,'victortavamaral@gmail.com','$2y$10$LmeaGQainGy2LCxzRPkUqORv0927DCdV6WbpHWUADIwY1Fu29pAgi','M','vitão','https://drive.google.com/uc?export=download&id=1oNvSVJiFJiWzlu7H5o4lVgK_9aZ4EBQd','2002-04-22','2021-11-26 13:07:48',1);
 INSERT INTO PERFIL VALUES(5,1,'victortavaresjedi150@gmail.com','$2y$10$FFXBwoh4u00MW7yk2.ME0.1pj9ZqYRfdtvJEPZlfZBotM1nSDrLpS','M','geraldao','https://drive.google.com/uc?export=download&id=1svSmr4LV-mU2G9lXWFSOwiDdcJuzyW5O','2002-04-22','2021-11-26 15:13:08',1);
 
 INSERT INTO PORTO VALUES(1,4,'Resident Evil','asdasdas','https://drive.google.com/uc?export=download&id=1iK1-bCRZd4fKHgQG0TWN98DkfmrkWxve',1);
@@ -5319,6 +5322,29 @@ INSERT INTO solicitacao_amigo VALUES(4,5,'2021-11-26 15:14:22',1);
 INSERT INTO solicitacao_amigo VALUES(3,5,'2021-11-26 15:15:43',1);
 INSERT INTO solicitacao_amigo VALUES(2,5,'2021-11-26 15:15:46',1);
 
+-- Assuntos
+insert into assunto (nome) values 
+('Banco de Dados'), 
+('Silvão, pescador de ilusões'), 
+('Miranha'),
+('Três Tom Holland é sacanagem');
+
+-- Interações
+insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, isSharing, emote) values (5, null, null, null, 'Conta 5 fazendo post normal', null, null, null); 
+insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, isSharing, emote) values (4, null, null, 1, 'Conta 4 comentando no post 1', null, null, null); 
+insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, isSharing, emote) values (1, null, null, 1, 'Conta 1 compartilhando post 1', null, 1, null); 
+insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, isSharing, emote) values (4, null, null, null, 'Conta 4 fazendo post normal', null, null, null);
+insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, isSharing, emote) values (3, null, null, 4, 'Conta 3 compartilhando post 4', null, 1, null); 
+insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, isSharing, emote) values (4, null, null, 5, 'Conta 5 compartilhando post 5', null, 1, null); 
+insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, isSharing, emote) values (4, null, null, null, 'Conta 4 fazendo post normal: Batman is a superhero who appears in American comic books published by DC Comics. The character was created by artist Bob Kane and writer Bill Finger...', null, null, null); 
+insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, isSharing, emote) values (5, null, null, 7, 'Conta 5 compartilhando post 7: Spider-Man is a superhero created by writer-editor Stan Lee and writer-artist Steve Ditko. He first appeared in the anthology comic book Amazing Fantasy #15 in the Silver Age of Comic Books...', null, 1, null); 
+insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, isSharing, emote) values (5, 4, null, null, 'Conta 5 postando no perfil 4: Spider-Man is a superhero created by writer-editor Stan Lee and writer-artist Steve Ditko. He first appeared in the anthology comic book Amazing Fantasy #15 in the Silver Age of Comic Books...', null, null, null); 
+insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, isSharing, emote) values (5, null, 3, null, 'Conta 5 postando no porto 3: Spider-Man is a superhero created by writer-editor Stan Lee and writer-artist Steve Ditko. He first appeared in the anthology comic book Amazing Fantasy #15 in the Silver Age of Comic Books...', null, null, null); 
+insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, isSharing, emote) values (4, null, 3, null, 'Conta 5 postando no porto 3: Spider-Man is a superhero created by writer-editor Stan Lee and writer-artist Steve Ditko. He first appeared in the anthology comic book Amazing Fantasy #15 in the Silver Age of Comic Books...', null, null, null); 
+insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, isSharing, emote) values (1, null, 3, null, 'Conta 5 postando no porto 3: Spider-Man is a superhero created by writer-editor Stan Lee and writer-artist Steve Ditko. He first appeared in the anthology comic book Amazing Fantasy #15 in the Silver Age of Comic Books...', null, null, null); 
+insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, isSharing, emote) values (4, null, 2, null, 'Quero ver terminar esse bangu até domingo...', 1, null, 'sad'); 
+
+insert into interacao_assunto (assunto, interacao) values (1, 13), (2, 13), (3,13);
 --porto
 --INSERT INTO PORTO(perfil,nome,descr) VALUES(1, 'Devs dagama', 'è isso ai parceria');
 --INSERT INTO PORTO(perfil,nome,descr) VALUES(1,'PORTO DE TESTE2','è isso ai parceria2');

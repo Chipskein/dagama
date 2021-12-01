@@ -288,7 +288,7 @@ INSERT INTO PAIS (codigo, nome) VALUES
 
 
     (1, 'Afeganistão'),
-    (2, 'Ilhas Aland'),
+    (2, 'Ilhas Åland'),
     (3, 'Albânia'),
     (4, 'Argélia'),
     (5, 'Samoa Americana'),

@@ -240,8 +240,11 @@
           echo "<div class=\"div-post-top\">";
             echo "<img src=\"".$post['iconPerfil']."\" alt=\"\" class=\"div-post-top-icon\">";
             echo "<div class=\"div-post-top-infos\">";
-              echo "<p class=\"div-post-top-username\"><i>@".$post['nomePerfil']."</i> ".$post['dataPost']."</p>";
-              echo "<p class=\"div-post-top-subjects\"><b>";
+              echo "<p class=\"div-post-top-username\"><i>@".$post['nomePerfil']."</i>";
+              if($post['nomeCidade']){
+                echo " em ".$post['nomeCidade'].", ".$post['nomePais']." - ";
+              }
+              echo " ".$post['dataPost']."</p>";
               $tmpArray = [];
               // print_r($post['assuntos']);
               foreach($post['assuntos'] as $elements){
@@ -249,13 +252,62 @@
                   if($key === 'nomeAssunto') $tmpArray[] = $value;
                 }
               }
-              echo implode($tmpArray, ', ');
+              echo "<p class=\"div-post-top-subjects\" title=\"".implode($tmpArray, ', ')."\"><b>";
+              $tmpArray = implode($tmpArray, ', ');
+              if(strlen($tmpArray) > 30){
+                $tmpArray = substr($tmpArray, 0, 27);
+                echo $tmpArray."...";
+              } else {
+                echo $tmpArray;
+              }
               echo "</b></p>";
             echo "</div>";
           echo "</div>";
           //Texto
           echo "<div class=\"div-post-txt\">";
-            echo "<p>$post[textoPost]</p>";
+            echo "<p><i style=\"color: #7A9EFB\">@$post[nomePerfil]</i> ";
+            if($post['isReaction']) {
+              echo "<b><i>reagiu</i></b> com ";
+              switch ($post['emote']){
+                case 'curtir':
+                  echo "👌";
+                  break;
+                case 'kkk':
+                  echo "🤣";
+                  break;
+                case 'amei':
+                  echo "❤️";
+                  break;
+                case 'grr':
+                  echo "🤬";
+                  break;
+                case 'wow':
+                  echo "🤯";
+                  break;
+                case 'sad':
+                  echo "😭";
+                  break;                  
+              }
+              echo ", ";
+            }
+            if(count($post['citacoes']) > 0) {
+              $tmpCitacoes = [];
+              foreach ($post['citacoes'] as $pessoa) {
+                $tmpCitacoes[] = "@".$pessoa['nomePerfil'];
+              }
+              $tmpCitacoes = implode($tmpCitacoes, ', ');
+              echo "<b><i>marcando</i></b> <i title=\"".$tmpCitacoes."\">";
+              if(strlen($tmpCitacoes) > 10){
+                $tmpCitacoes = substr($tmpCitacoes, 0, 7);
+                echo $tmpCitacoes."...";
+              } else {
+                echo $tmpCitacoes;
+              }
+              echo ", </i>";
+              
+
+            }
+            echo "$post[textoPost]</p>";
           echo "</div>";
           //Ícones
           echo "<div class=\"div-post-icons-bar\">";

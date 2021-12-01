@@ -13,14 +13,16 @@
 
 
 <?php
-include './backend/infra/connection.php';
+  include './backend/infra/connection.php';
+  echo "<h1> -18 </h1>";
+  //$masc = numerosGraficoMasc(0, 18, 'Brasil', $mes);
+  $mascres = numerosGraficoMasc(0, 18, 'Brasil', 12);
+  $masc = $mascres[0]["total"];
+  
+  $femres = numerosGraficoFem(0, 18, 'Brasil', 12);
+  $fem = $femres[0]["total"];
 
-  $db_connection = db_connection();
-  $db = $db_connection['db'];
 
-
-  echo "<h1>-18 </h1>";
-  $masc = numerosGraficoMasc(0, 18, 'Brasil', $mes);
 ?>
 
 </main>

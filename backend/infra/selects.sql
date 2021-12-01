@@ -418,3 +418,10 @@ where
     porto.codigo = $porto
 group by porto.codigo
 order by porto_participa.dataregis desc
+
+insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, isSharing, emote) values (4, null, 2, null, 'Quero ver terminar esse bangu até domingo...', 1, null, 'sad'); 
+
+select interacao, perfil.codigo, perfil.username from citacao join perfil on perfil.codigo = citacao.perfil;
+
+insert into assunto (nome) values ('Orra banco'), ('Ajuda ai parceria'), ('Foda');
+insert into interacao_assunto (assunto, interacao) values (1, 13), (2, 13), (3,13);
