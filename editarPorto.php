@@ -16,62 +16,72 @@
     session_start(); 
   }
   if(isset($_SESSION['userid'])){
-    if(isset($_POST["porto"])&&isset($_POST["oldimg"])&&isset($_POST["oldnome"])&&isset($_POST["olddescr"])&&isset($_POST['owner'])){
-        if($_POST['owner']!=$_SESSION['userid']) header("refresh=1;url=mar.php");
-        echo "<script>let oldlink='$_POST[oldimg]';let oldname='$_POST[oldnome]';let olddescr='$_POST[olddescr]';</script>";
-    }
-    var_dump($_POST);
-    if(isset($_POST['confirmar'])){
-      $erros = [];
-      if(!isset($_POST['nome']) || !isset($_POST['descricao'])){
-        $erros[] = "Campos faltando";
-      } else {
-        $regex = "/^([a-z0-9áạàảãăắặằẳẵâấậầẩẫéẹèẻẽêếệềểễíịìỉĩóọòỏõôốộồổỗơớợờởỡúụùủũưứựừửữýỵỳỷỹđA-ZÁẠÀẢÃĂẮẶẰẲẴÂẤẬẦẨẪÉẸÈẺẼÊẾỆỀỂỄÍỊÌỈĨÓỌÒỎÕÔỐỘỒỔỖƠỚỢỜỞỠÚỤÙỦŨƯỨỰỪỬỮÝỴỲỶỸĐ]+)?(( [a-z0-9áạàảãăắặằẳẵâấậầẩẫéẹèẻẽêếệềểễíịìỉĩóọòỏõôốộồổỗơớợờởỡúụùủũưứựừửữýỵỳỷỹđA-ZÁẠÀẢÃĂẮẶẰẲẴÂẤẬẦẨẪÉẸÈẺẼÊẾỆỀỂỄÍỊÌỈĨÓỌÒỎÕÔỐỘỒỔỖƠỚỢỜỞỠÚỤÙỦŨƯỨỰỪỬỮÝỴỲỶỸĐ,.\-_:]+)?)+$/";
-        if(!preg_match($regex, $_POST['descricao'])){
-          $erros[] = "Descricão inválida = ".preg_match($regex, $_POST['descricao']);
+    if((isset($_POST["porto"])&&isset($_POST["oldimg"])&&isset($_POST["oldnome"])&&isset($_POST["olddescr"])&&isset($_POST['owner']))||isset($_POST['confirmar'])){
+        if(isset($_POST["porto"])&&isset($_POST["oldimg"])&&isset($_POST["oldnome"])&&isset($_POST["olddescr"])&&isset($_POST['owner'])){
+            if($_POST['owner']!=$_SESSION['userid']) header("refresh=1;url=mar.php");
+            echo "<script>let oldlink='$_POST[oldimg]';let oldname='$_POST[oldnome]';let olddescr='$_POST[olddescr]';</script>";
         }
-        if(strlen($_POST['descricao']) > 250){
-          $erros[] = "Descrição grande demais";
-        }
-        if(!preg_match($regex, $_POST['nome'])){
-          $erros[] = "Nome inválido = ".preg_match($regex, $_POST['nome']);
-        }
-        if(strlen($_POST['nome']) > 250){
-          $erros[] = "Nome grande demais";
-        }
-        if(trim($_POST['nome']) == ""){
-          $erros[] = "Nome não pode ser em branco";
-        }
-        if(isset($_FILES['photo'])){
-          if($_FILES['photo']['name'] != ""){
-            if($_FILES['photo']['type'] == ""){
-              $erros[] = "Tipo da imagem inválido";
+        var_dump($_POST);
+        var_dump($_FILES);
+        if(isset($_POST['confirmar'])){
+            $erros = [];
+            if(!isset($_POST['nome']) || !isset($_POST['descricao'])){
+                $erros[] = "Campos faltando";
+            } else {
+                $regex = "/^([a-z0-9áạàảãăắặằẳẵâấậầẩẫéẹèẻẽêếệềểễíịìỉĩóọòỏõôốộồổỗơớợờởỡúụùủũưứựừửữýỵỳỷỹđA-ZÁẠÀẢÃĂẮẶẰẲẴÂẤẬẦẨẪÉẸÈẺẼÊẾỆỀỂỄÍỊÌỈĨÓỌÒỎÕÔỐỘỒỔỖƠỚỢỜỞỠÚỤÙỦŨƯỨỰỪỬỮÝỴỲỶỸĐ]+)?(( [a-z0-9áạàảãăắặằẳẵâấậầẩẫéẹèẻẽêếệềểễíịìỉĩóọòỏõôốộồổỗơớợờởỡúụùủũưứựừửữýỵỳỷỹđA-ZÁẠÀẢÃĂẮẶẰẲẴÂẤẬẦẨẪÉẸÈẺẼÊẾỆỀỂỄÍỊÌỈĨÓỌÒỎÕÔỐỘỒỔỖƠỚỢỜỞỠÚỤÙỦŨƯỨỰỪỬỮÝỴỲỶỸĐ,.\-_:]+)?)+$/";
+                if(!preg_match($regex, $_POST['descricao'])){
+                $erros[] = "Descricão inválida = ".preg_match($regex, $_POST['descricao']);
+                }
+                if(strlen($_POST['descricao']) > 250){
+                $erros[] = "Descrição grande demais";
+                }
+                if(!preg_match($regex, $_POST['nome'])){
+                $erros[] = "Nome inválido = ".preg_match($regex, $_POST['nome']);
+                }
+                if(strlen($_POST['nome']) > 250){
+                $erros[] = "Nome grande demais";
+                }
+                if(trim($_POST['nome']) == ""){
+                $erros[] = "Nome não pode ser em branco";
+                }
+                if(isset($_FILES['photo'])){
+                if($_FILES['photo']['name'] != ""){
+                    if($_FILES['photo']['type'] == ""){
+                    $erros[] = "Tipo da imagem inválido";
+                    }
+                    if($_FILES['photo']['size'] == ""){
+                    $erros[] = "Tamanho da imagem inválido";
+                    }
+                    if($_FILES['photo']['error'] !== 0 ){
+                    $erros[] = "Ocorreu um erro ao fazer upload dessa imagem";
+                    }
+                }
+                }
             }
-            if($_FILES['photo']['size'] == ""){
-              $erros[] = "Tamanho da imagem inválido";
-            }
-            if($_FILES['photo']['error'] !== 0 ){
-              $erros[] = "Ocorreu um erro ao fazer upload dessa imagem";
-            }
-          }
-        }
-      }
 
-      if($erros == []){
-        $perfil = $_SESSION['userid'];
-        $nome = $_POST['nome'];
-        $descr = $_POST['descricao'];
-        $img = is_uploaded_file($_FILES['photo']['tmp_name']) ? $_FILES['photo'] : null;
-        //$id = addPorto($perfil, $nome, $descr, $img);
-        if($id) {
-          header("refresh:1;url=porto.php?porto=$id");
-          die();
-        } else {
-          echo "Erro!";
+            if($erros == []){
+                $porto = $_POST['porto'];
+                $nome = $_POST['nome'];
+                $descr = $_POST['descricao'];
+                $img = is_uploaded_file($_FILES['photo']['tmp_name']) ? $_FILES['photo'] : null;
+                $oldphotoid= isset($_POST['oldimglink']) ? substr("$_POST[oldimglink]",47):null;;
+                $id=false;
+                $id = editarPorto($porto, $nome, $descr, $img,$oldphotoid);
+                if($id) {
+                  header("refresh:1;url=porto.php?porto=$porto");
+                  die();
+                } 
+                else {
+                  echo "Erro no update!";
+                }
+            } else {
+                echo "Erro: ".implode($erros, ', ');
+            }
         }
-      } else {
-        echo "Erro: ".implode($erros, ', ');
-      }
+    }
+    else{
+        echo "ERRO";
+        header("refresh:1;url=mar.php");
     }
   }
   else {
@@ -97,7 +107,13 @@
   </header>
   <main class="container-center">
     <div class="addporto-form-container">
-      <form action="createPorto.php" method="post" id="formAddPorto" name="formAddPorto" enctype="multipart/form-data">
+      <form action="editarPorto.php" method="post" id="formAddPorto" name="formAddPorto" enctype="multipart/form-data">
+        <?php
+          if(isset($_POST['oldimg'])){
+            if(preg_match("/drive.google.com/","$_POST[oldimg]")) echo "<input type=\"hidden\" name=\"oldimglink\" value=\"$_POST[oldimg]\"/>";
+          }
+          echo "<input type=\"hidden\" name=\"porto\" value=\"$_POST[porto]\"/>";
+        ?>
         <div id="porto_img_banner" class="addporto-img"></div>
         <input id="imgInp" type="file"  name="photo">
         <p class="addporto-main-txt">Editar de Porto</p>
