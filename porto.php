@@ -101,11 +101,13 @@
         echo "<button class=\"porto-entrar-btn\">Entrar</button>";
         echo "<input type=\"hidden\" name=\"entrarPorto\" value=\"entrar\"/>";
       }
-      if($portoInfo['owner']){
-        echo "<div class=\"porto-sair-btn\"> <p class=\"porto-entrar-btn-txt\">Editar porto</p></div>";
-        echo "<input type=\"hidden\" name=\"editarPorto\" value=\"editar\"/>";
-      }
       echo "</form>";
+      if($portoInfo['owner']){
+        echo "<form id=formEditar action=editarPorto.php method=POST >";
+        echo "<button class=\"porto-sair-btn\"> <p class=\"porto-entrar-btn-txt\">Editar porto</p></button>";
+        echo "<input type=\"hidden\" name=\"portoorto\" value=\"$portoInfo[codigo]\"/>";
+        echo "</form>";
+      }
     ?>
   </aside>
   <aside id=esquerda>
