@@ -73,10 +73,10 @@
       echo "<img class=\"header-searchBar-icon\" src=\"imgs/icons/search.png\">";
       echo "<input class=\"header-searchBar-input\" type=text placeholder=\"digite o nome do seu amigo\" />";
       echo "</div><br>";
-      if(!isset($_GET['user'])){
+      if(!isset($_GET['user']) && count($amigos) > 0){
         echo "<a href=solicitacoes.php class=header>Você tem ".count($amigos)." solicitações</a>";
       } else {
-        if($_SESSION['userid'] == $_GET['user']){
+        if($_SESSION['userid'] == $_GET['user'] && count($amigos) > 0){
           echo "<a href=solicitacoes.php class=header>Você tem ".count($amigos)." solicitações</a>";
         }
       }

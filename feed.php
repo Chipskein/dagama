@@ -181,7 +181,7 @@
       echo "<div class=\"add-amigo-cards\">";
       foreach ($suggestFriends as $person) {
         echo "<div id=\"card".$person['codigo']."\" class=\"add-amigo-card\">";
-        echo "<img class=\"add-amigo-card-icon\" src=\"".$person['img']."\" alt=\"\" srcset=\"\">";
+        echo "<a href=navio.php?user=$person[codigo]><img class=\"add-amigo-card-icon\" src=\"".$person['img']."\" alt=\"\" srcset=\"\"></a>";
         echo "<p class=\"add-amigo-card-name\">".$person['username']."</p>";
         echo "<form action=\"feed.php?user=$_SESSION[userid]\" method=\"post\" >";
         if($person['enviado'] == 'true' || (isset($_POST['sendFriendRequest']) && $_POST['sendFriendRequest'] == $person['codigo'])){
@@ -216,7 +216,7 @@
             echo "<div class=\"div-sharing-post\">";
               // Sharing-top
               echo "<div class=\"div-sharing-post-top\">";
-                echo "<img src=\"".$sharedPost['iconPerfil']."\" alt=\"\" class=\"div-sharing-post-top-icon\">";
+                echo "<a href=navio.php?user=$sharedPost[codPerfil]><img src=\"".$sharedPost['iconPerfil']."\" alt=\"\" class=\"div-sharing-post-top-icon\"></a>";
                 echo "<div class=\"div-post-top-infos\">";
                   echo "<p class=\"div-post-top-username\"><i>@".$sharedPost['nomePerfil']."</i>";
                   if($sharedPost['nomeCidade']){
@@ -294,7 +294,7 @@
           }
           //Top
           echo "<div class=\"div-post-top\">";
-            echo "<img src=\"".$post['iconPerfil']."\" alt=\"\" class=\"div-post-top-icon\">";
+            echo "<a href=navio.php?user=$post[codPerfil]><img src=\"".$post['iconPerfil']."\" alt=\"\" class=\"div-post-top-icon\"></a>";
             echo "<div class=\"div-post-top-infos\">";
               echo "<p class=\"div-post-top-username\"><i>@".$post['nomePerfil']."</i>";
               if($post['nomeCidade']){
@@ -380,7 +380,7 @@
             //   echo "<p>2</p><img src=\"imgs/icons/send.png\" class=\"div-post-icons-bar-icons\" alt=\"\">";
             // echo "</div>";
             echo "<div class=\"div-post-icons-bar-interagir\">";
-              echo "<img src=\"$user[img]\" class=\"div-post-icons-bar-interagir-icon\" alt=\"\"><p>Interagir...</p>";
+              echo "<a href=navio.php?user=$user[codigo]><img src=\"$user[img]\" class=\"div-post-icons-bar-interagir-icon\" alt=\"\"></a><p>Interagir...</p>";
             echo "</div>";
           echo "</div>";
           echo "<br><br>";
@@ -390,7 +390,7 @@
             foreach ($post['comentarios'] as $elem) {
               echo "<div class=\"comment-container\">";
                 echo "<div class=\"comment-container-top\">";
-                  echo "<img src=\"".$elem['iconPerfil']."\" alt=\"\" class=\"comment-icon\">";
+                  echo "<a href=navio.php?user=$elem[codPerfil]><img src=\"".$elem['iconPerfil']."\" alt=\"\" class=\"comment-icon\"></a>";
                   echo "<p class=\"comment-txt\"><i>@".$elem['nomePerfil']."</i> ";
                   echo ($elem['textoPost'] ? $elem['textoPost'] : '');
                   echo ", em ".$elem['dataPost'];
