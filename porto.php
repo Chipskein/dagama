@@ -126,7 +126,7 @@
             }
             echo "<a class=portosAtracadosMais href=participantesPorto.php?porto=".$_GET['porto'].">Ver mais</a>";
           } else {
-            echo "<p>Este porto não têm participantes</p>";
+            echo "<p style=\"font-size: 14px\" >Este porto não têm participantes</p>";
           }
         ?>
       </div>
