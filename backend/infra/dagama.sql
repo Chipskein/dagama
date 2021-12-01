@@ -110,12 +110,14 @@ CREATE TABLE solicitacao_amigo(
     FOREIGN KEY (amigo) REFERENCES PERFIL(codigo),
     FOREIGN KEY (perfil) REFERENCES PERFIL(codigo)
 );
+-- POST -> porto ou no post ou perfil
+
 CREATE TABLE INTERACAO(
     codigo INTEGER NOT NULL,
     perfil INTEGER NOT NULL,
-    perfil_posting INTEGER CHECK((post IS NOT NULL OR perfil_posting IS NOT NULL) AND porto IS NULL),
-    porto INTEGER CHECK((post IS NULL AND perfil_posting IS NULL) OR porto IS NULL),
-    post INTEGER CHECK((porto IS NULL AND perfil_posting IS NULL) OR post IS NULL),
+    perfil_posting INTEGER,
+    porto INTEGER,
+    post INTEGER,
     data DATETIME DEFAULT CURRENT_TIMESTAMP,
     texto VARCHAR(250) NOT NULL,
     isReaction BOOLEAN CHECK((post IS NOT NULL AND isSharing IS NULL) OR isReaction IS NULL),
@@ -123,6 +125,12 @@ CREATE TABLE INTERACAO(
     emote VARCHAR(250) CHECK(isReaction IS NOT NULL OR emote IS NULL),
     ativo BOOLEAN NOT NULL DEFAULT 1 CHECK(ativo=1 OR ativo=0),
     PRIMARY KEY(codigo),
+    CHECK (
+        (post IS NOT NULL AND perfil_posting IS NULL AND porto IS NULL) OR
+        (post IS NULL AND perfil_posting IS NOT NULL AND porto IS NULL) OR
+        (post IS NULL AND perfil_posting IS NULL AND porto IS NOT NULL) OR
+        (post IS NULL AND perfil_posting IS NULL AND porto IS NULL)
+    ),
     FOREIGN KEY (perfil) REFERENCES PERFIL(codigo),
     FOREIGN KEY (perfil_posting) REFERENCES PERFIL(codigo),
     FOREIGN KEY (porto) REFERENCES PORTO(codigo),

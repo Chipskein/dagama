@@ -136,11 +136,11 @@ where
 -- Get dos PORTOS
 select porto.codigo as codigo, porto.nome as nome, porto.descr as descr, porto.img as img, 
     case 
-        when porto.perfil = $user or (porto_participa.perfil = $user and porto_participa.ativo = 1) then true
+        when porto.perfil = 4 or (porto_participa.perfil = 4 and porto_participa.ativo = 1) then true
         else false
     end as participa,
     case 
-        when porto.perfil = $user then true
+        when porto.perfil = 4 then true
         else false
     end as owner
 from porto
@@ -155,18 +155,18 @@ order by porto_participa.dataregis desc
 select count(*) as total from porto
 where 
     porto.ativo = 1 and
-    porto.perfil = $user;
+    porto.perfil = 4;
 
 -- Comandos para entrar e sair do porto
 select case
     when porto_participa.ativo = 0 then 'off'
     when porto_participa.ativo = 1 then 'on'
     end as participa
-from porto_participa where perfil = $user and porto = 1;
+from porto_participa where perfil = 4 and porto = 1;
 
-insert into porto_participa (perfil, porto) values ($user, 1);
+insert into porto_participa (perfil, porto) values (4, 1);
 
-update porto_participa set ativo = 1, dataregis = CURRENT_TIMESTAMP where perfil = $user and porto = 1;
+update porto_participa set ativo = 1, dataregis = CURRENT_TIMESTAMP where perfil = 4 and porto = 1;
 
 
 -- Get dos POSTS
@@ -285,9 +285,10 @@ from (
                 else interacao.post
             end as codPost,
             interacao.data 
-        from porto_participa
-            join interacao on porto_participa.porto = interacao.porto
-        where porto_participa.perfil = $user) as tmp1
+        from interacao
+            join porto on interacao.porto = porto.codigo
+            left join porto_participa on porto_participa.porto = porto.codigo
+        where porto_participa.perfil = $user or porto.perfil = $user) as tmp1
     join interacao on tmp1.codPost = interacao.codigo
     join perfil on interacao.perfil = perfil.codigo
     left join porto on interacao.porto = porto.codigo
@@ -306,7 +307,9 @@ where
     interacao.ativo = 1
 
 -- Insert interacao
--- insert into amigo (perfil, amigo, dateAceito) values (4, 1, CURRENT_TIMESTAMP);
+insert into amigo (perfil, amigo, dateAceito) values (4, 1, CURRENT_TIMESTAMP);
+insert into amigo (perfil, amigo, dateAceito) values (4, 3, CURRENT_TIMESTAMP);
+insert into amigo (perfil, amigo, dateAceito) values (4, 5, CURRENT_TIMESTAMP);
 
 insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, isSharing, emote) values (5, null, null, null, 'Conta 5 fazendo post normal', null, null, null); 
 insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, isSharing, emote) values (4, null, null, 1, 'Conta 4 comentando no post 1', null, null, null); 
@@ -316,3 +319,102 @@ insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, i
 insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, isSharing, emote) values (4, null, null, 5, 'Conta 5 compartilhando post 5', null, 1, null); 
 insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, isSharing, emote) values (4, null, null, null, 'Conta 4 fazendo post normal: Batman is a superhero who appears in American comic books published by DC Comics. The character was created by artist Bob Kane and writer Bill Finger...', null, null, null); 
 insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, isSharing, emote) values (5, null, null, 7, 'Conta 5 compartilhando post 7: Spider-Man is a superhero created by writer-editor Stan Lee and writer-artist Steve Ditko. He first appeared in the anthology comic book Amazing Fantasy #15 in the Silver Age of Comic Books...', null, 1, null); 
+
+
+-- Get dos amigos
+select perfil.codigo, case 
+        when amigo.perfil = perfil.codigo then amigo.amigo
+        when amigo.amigo = perfil.codigo then amigo.perfil
+    end as amigoCod,
+    amigo.dateAceito,
+    tmp1.codigo as codAmigo,
+    tmp1.username as nameAmigo,
+    tmp1.img as imgAmigo,
+    (select count(*) from amigo where amigo = 4 or perfil = 4) as qtdAmigos
+from perfil 
+    join amigo on perfil.codigo = amigo.perfil or amigo.amigo
+    join (select * from perfil) as tmp1 on tmp1.codigo = amigoCod
+where perfil.codigo = 4 and amigo.ativo = 1
+order by amigo.dateAceito desc;
+
+
+select 
+    interacao.codigo as codInteracao, 
+    interacao.post as codPost, 
+    interacao.isReaction as isReaction, 
+    interacao.texto as textoPost, 
+    interacao.data as dataPost, 
+    interacao.isSharing as isSharing, 
+    interacao.emote as emote,
+    interacao.ativo as ativo,
+    perfil.codigo as codPerfil, perfil.username as nomePerfil, perfil.img as iconPerfil
+from interacao
+    join perfil on interacao.perfil = perfil.codigo
+where 
+    interacao.ativo = 1 and
+    (interacao.perfil_posting = 4 or interacao.perfil = 4)
+order by interacao.data desc
+limit 10 offset 0;
+
+insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, isSharing, emote) values (5, 4, null, null, 'Conta 5 postando no perfil 4: Spider-Man is a superhero created by writer-editor Stan Lee and writer-artist Steve Ditko. He first appeared in the anthology comic book Amazing Fantasy #15 in the Silver Age of Comic Books...', null, null, null); 
+
+select 
+    interacao.codigo as codInteracao, 
+    interacao.post as codPost, 
+    interacao.isReaction as isReaction, 
+    interacao.texto as textoPost, 
+    interacao.data as dataPost, 
+    interacao.isSharing as isSharing, 
+    interacao.emote as emote,
+    interacao.ativo as ativo,
+    perfil.codigo as codPerfil, perfil.username as nomePerfil, perfil.img as iconPerfil
+from interacao
+    join porto on interacao.porto = porto.codigo
+    join perfil on interacao.perfil = perfil.codigo
+where 
+    interacao.ativo = 1 and
+    porto.codigo = 3
+order by interacao.data desc
+limit 10 offset 0;
+
+insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, isSharing, emote) values (5, null, 3, null, 'Conta 5 postando no porto 3: Spider-Man is a superhero created by writer-editor Stan Lee and writer-artist Steve Ditko. He first appeared in the anthology comic book Amazing Fantasy #15 in the Silver Age of Comic Books...', null, null, null); 
+insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, isSharing, emote) values (4, null, 3, null, 'Conta 5 postando no porto 3: Spider-Man is a superhero created by writer-editor Stan Lee and writer-artist Steve Ditko. He first appeared in the anthology comic book Amazing Fantasy #15 in the Silver Age of Comic Books...', null, null, null); 
+insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, isSharing, emote) values (1, null, 3, null, 'Conta 5 postando no porto 3: Spider-Man is a superhero created by writer-editor Stan Lee and writer-artist Steve Ditko. He first appeared in the anthology comic book Amazing Fantasy #15 in the Silver Age of Comic Books...', null, null, null); 
+
+select count(interacao.perfil), pais.nome from interacao join perfil on interacao.perfil= perfil.codigo join cidade on perfil.cidade = cidade.codigo join uf on cidade.uf= uf.codigo join pais on uf.pais = pais.codigo where perfil.genero = "M" and pais.nome="Brazil" and date(interacao.data) between date('now','-2 years') and date('now') and date(perfil.datanasc) between date('now','-20 years') and date('now', '-0 years');
+
+select 
+porto.codigo as codPorto,
+perfil.username as nomePart,
+perfil.img as imgPart
+from porto
+    left join porto_participa on porto.codigo = porto_participa.porto
+    left join perfil on porto_participa.perfil = perfil.codigo
+where 
+    porto_participa.ativo = 1 and
+    porto.codigo = 3
+
+select 
+    porto.codigo as codigo, 
+    porto.nome as nome, 
+    porto.descr as descr, 
+    porto.img as img, 
+    perfil.codigo as codigoAdm, 
+    perfil.username as nomeAdm, 
+    perfil.img as imgAdm, 
+    case 
+        when porto.perfil = $user or (porto_participa.perfil = $user and porto_participa.ativo = 1) then true
+        else false
+    end as participa,
+    case 
+        when porto.perfil = $user then true
+        else false
+    end as owner
+from porto
+    join perfil on porto.perfil = perfil.codigo
+    left join porto_participa on porto.codigo = porto_participa.porto
+where 
+    porto.ativo = 1 and
+    porto.codigo = $porto
+group by porto.codigo
+order by porto_participa.dataregis desc

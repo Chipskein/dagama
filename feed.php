@@ -206,9 +206,13 @@
     if($postsArray){
       foreach ($postsArray as $post) {
         echo "<div class=\"div-post\">";
+          if($post['codPorto']){
+            echo "<p class=\"compartilhado-txt\"><i>Postado no porto <a href=porto.php?porto=$post[codPorto] class=\"txt-linktoporto\">$post[nomePorto]</a></i></p>";
+          }
           //Share
           if($post['isSharing']){
             $sharedPost = getOriginalPost($post['codPost']);
+            echo "<p class=\"compartilhado-txt\"><i>Compartilhado</i></p>";
             echo "<div class=\"div-sharing-post\">";
               // Sharing-top
               echo "<div class=\"div-sharing-post-top\">";
@@ -255,14 +259,17 @@
           echo "</div>";
           //Ícones
           echo "<div class=\"div-post-icons-bar\">";
-            echo "<div class=\"div-post-icons-bar-divs\">";
-              echo "<p>12</p><img src=\"imgs/icons/Like.png\" class=\"div-post-icons-bar-icons\" alt=\"\">";
-            echo "</div>";
+            // echo "<div class=\"div-post-icons-bar-divs\">";
+            //   echo "<p>12</p><img src=\"imgs/icons/Like.png\" class=\"div-post-icons-bar-icons\" alt=\"\">";
+            // echo "</div>";
             echo "<div class=\"div-post-icons-bar-divs\">";
               echo "<p>5</p><img src=\"imgs/icons/chat.png\" class=\"div-post-icons-bar-icons\" alt=\"\">";
             echo "</div>";
-            echo "<div class=\"div-post-icons-bar-divs\">";
-              echo "<p>2</p><img src=\"imgs/icons/send.png\" class=\"div-post-icons-bar-icons\" alt=\"\">";
+            // echo "<div class=\"div-post-icons-bar-divs\">";
+            //   echo "<p>2</p><img src=\"imgs/icons/send.png\" class=\"div-post-icons-bar-icons\" alt=\"\">";
+            // echo "</div>";
+            echo "<div class=\"div-post-icons-bar-interagir\">";
+              echo "<img src=\"$user[img]\" class=\"div-post-icons-bar-interagir-icon\" alt=\"\"><p>Interagir...</p>";
             echo "</div>";
           echo "</div>";
           echo "<br><br>";
@@ -282,34 +289,10 @@
               echo "</div>";
             }
           }
-          // echo "<div class=\"comment-container\">";
-          //   echo "<div class=\"comment-container-top\">";
-          //     echo "<img src=\"imgs/icons/user-icon.png\" alt=\"\" class=\"comment-icon\">";
-          //     echo "<p class=\"comment-txt\">@asdasddsa reagiu com <img src=\"imgs/icons/reactions/laughing.png\" alt=\"\" class=\"comment-emoji\">, marcando @bigSmoke2002 - “Olha isso aquLorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sit amet lectus sodales, varius dui ac, alLorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sit amet lectus sodales, varius dui ac, alLorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sit amet lectus sodales, varius dui ac, ali man”, em  Rio Grande, RS - 10/09/2021 00:00</p>";
-          //   echo "</div>";
-          //   echo "<div class=\"comment-reagir\"><p>Reagir</p></div>";
-
-          //     echo "<div class=\"inner-comment-container\">";
-          //       echo "<div class=\"comment-container-top\">";
-          //         echo "<img src=\"imgs/icons/user-icon.png\" alt=\"\" class=\"comment-icon\">";
-          //         echo "<p class=\"comment-txt\">@asdasddsa reagiu com <img src=\"imgs/icons/reactions/laughing.png\" alt=\"\" class=\"comment-emoji\">, marcando @bigSmoke2002 - “Olha isso aquLorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sit amet lectus sodales, varius dui ac, alLorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sit amet lectus sodales, varius dui ac, alLorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sit amet lectus sodales, varius dui ac, ali man”, em  Rio Grande, RS - 10/09/2021 00:00</p>";
-          //       echo "</div>";
-          //       echo "<div class=\"comment-reagir\"><p>Reagir</p></div>";
-          //     echo "</div>";
-
-                  
-          //   echo "<div class=\"comment-container-top\">";
-          //     echo "<img src=\"imgs/icons/user-icon.png\" alt=\"\" class=\"comment-icon\">";
-          //     echo "<p class=\"comment-txt\">@asdasddsa reagiu com <img src=\"imgs/icons/reactions/laughing.png\" alt=\"\" class=\"comment-emoji\">, marcando @bigSmoke2002 - “Olha isso aquLorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sit amet lectus sodales, varius dui ac, alLorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sit amet lectus sodales, varius dui ac, alLorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sit amet lectus sodales, varius dui ac, ali man”, em  Rio Grande, RS - 10/09/2021 00:00</p>";
-          //   echo "</div>";
-          //   echo "<div class=\"comment-reagir\"><p>Reagir</p></div>";
-
-          // echo "</div>";
         echo "</div>";
       }
     }
-
-    echo "</main>";
+    echo "</main>";    
   }
   else {
     echo "<h2 align=center>Para ver este conteudo faça um cadastro no dagama!!!</h2>";
@@ -318,6 +301,16 @@
   }
   ?>
   </div>
+  <footer>
+          <<  
+          <?php
+            //provisório
+            for ($page = 0; $page < ceil((count($portosArray))/$limit); $page++) {
+              echo (($offset == $page*$limit) ? ($page+1) : "<a class=page-link href=\"".url("offset", $page*$limit)."\">".($page+1)."</a>")." \n";
+            }
+          ?>
+          >>
+</footer>  
 <!-- <div onclick="openModal('abrirModal')" ><p>Open Modal</p></div> -->
 <script src="functions.js"></script>
 </body>

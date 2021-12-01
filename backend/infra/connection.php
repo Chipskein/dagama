@@ -7,6 +7,8 @@
         if(preg_match("/localhost/","$_SERVER[HTTP_HOST]")){
             //echo "Connect with sqlite<br>";
             $db=new SQLite3("$_SERVER[DOCUMENT_ROOT]/backend/infra/dagama.db");
+            // $sql = file_get_contents("$_SERVER[DOCUMENT_ROOT]/backend/infra/dagama.sql");
+            // $qr = $db->exec($sql);
             $test=$db->exec("PRAGMA FOREIGN_KEYS=ON");
             if(!$test){
                 echo "<br>Um erro de conexão com banco ocorreu<br>"; 
@@ -540,6 +542,115 @@
         }
         else exit;
     }
+    // function updateImg($id,$img){
+    //     $db_connection = db_connection();
+    //     $db = $db_connection['db'];
+    //     $db_type = $db_connection['db_type'];
+    //     if($db){
+    //         if($db_type == 'sqlite'){
+    //             $response = $db->exec("update perfil set img=$img where codigo=$id");
+    //             if($response) {
+    //                 $res=$db->query("select email,senha as password from perfil where codigo='$id'");
+    //                 if($res) return $res->fetchArray();
+    //                 else return false;
+    //             }
+    //             else return false;
+    //         }
+    //         if($db_type == 'postgresql'){
+    //             $preparing = pg_prepare($db, "update perfil set img=$img where codigo=$id");
+    //             if($preparing){
+    //                 $verify = pg_execute($db, "ActivateUser", array("$id"));
+    //                 if($verify){
+    //                     $response = pg_query($db,"select email,senha as password from perfil where codigo=$id");
+    //                     if($response) return pg_fetch_array($response);
+    //                     else return false;
+    //                 } 
+    //                 else return false;
+    //             }
+    //             else return false;
+    //         }
+    //     }
+    //     else exit;
+    // }
+    function getPostsOnUser($user, $offset, $limit=10){
+        $db_connection=db_connection();
+        $db=$db_connection['db'];
+        $db_type=$db_connection['db_type'];
+        if($db){
+            if($db_type=='sqlite'){
+                $results=[];
+                $result = $db->query("
+                select 
+                    interacao.codigo as codInteracao, 
+                    interacao.post as codPost, 
+                    interacao.isReaction as isReaction, 
+                    interacao.texto as textoPost, 
+                    interacao.data as dataPost, 
+                    interacao.isSharing as isSharing, 
+                    interacao.emote as emote,
+                    interacao.ativo as ativo,
+                    perfil.codigo as codPerfil, perfil.username as nomePerfil, perfil.img as iconPerfil
+                from interacao
+                    join perfil on interacao.perfil = perfil.codigo
+                where 
+                    interacao.ativo = 1 and
+                    (interacao.perfil_posting = $user or interacao.perfil = $user)
+                order by interacao.data desc
+                limit $limit offset $offset");
+                
+                $results2 = $db->query("
+                select interacao.codigo as interacao, assunto.codigo as codAssunto, assunto.nome as nomeAssunto from interacao
+                    left join interacao_assunto on interacao.codigo = interacao_assunto.interacao
+                    left join assunto on interacao_assunto.assunto = assunto.codigo
+                where
+                    interacao.ativo = 1");
+                $assuntos = [];
+                while ($row = $results2->fetchArray()) {
+                    $assuntos[$row['interacao']][$row['codAssunto']] = $row;
+                }
+
+                $results3 = $db->query("
+                select 
+                    interacao.codigo as codInteracao, 
+                    interacao.post as codPost, 
+                    interacao.isReaction as isReaction, 
+                    interacao.texto as textoPost, 
+                    interacao.data as dataPost, 
+                    interacao.isSharing as isSharing, 
+                    interacao.emote as emote,
+                    interacao.ativo as ativo,
+                    porto.codigo as codPorto, porto.nome as nomePorto, 
+                    perfil.codigo as codPerfil, perfil.username as nomePerfil, perfil.img as iconPerfil
+                from interacao
+                    join perfil on interacao.perfil = perfil.codigo
+                    left join porto on porto.codigo = interacao.porto
+                where
+                    interacao.ativo = 1 and
+                    interacao.post is not null and
+                    interacao.isSharing is null");
+                $interacoes = [];
+                while ($row = $results3->fetchArray()) {
+                    $interacoes[$row['codPost']][$row['codInteracao']] = $row;
+                }
+
+                while ($row = $result->fetchArray()) {
+                    $row['assuntos'] = $assuntos[$row['codInteracao']];
+                    if(in_array($row['codInteracao'], array_keys($interacoes))){
+                        $row['comentarios'] = $interacoes[$row['codInteracao']];
+                    } else {
+                        $row['comentarios'] = [];
+                    }
+                    array_push($results, $row);
+                }
+                return $results;
+            }
+            if($db_type=='postgresql'){ // FIXME: tem que deixar igual ao de cima
+                $result=pg_fetch_all(pg_query($db, ""));
+                return $result;
+            }
+        }
+        else exit;
+    }
     /*----------------------------------------*/
 
     /* FEED */
@@ -563,7 +674,7 @@
         }
         else exit;
     }
-    function getPosts($user, $offset,$limit=10){ // TODO: filtrar por grupo da pessoa, e os outros parâmetros que o betito pediu
+    function getPosts($user, $offset,$limit=10){
         $db_connection=db_connection();
         $db=$db_connection['db'];
         $db_type=$db_connection['db_type'];
@@ -679,9 +790,10 @@
                                 else interacao.post
                             end as codPost,
                             interacao.data 
-                        from porto_participa
-                            join interacao on porto_participa.porto = interacao.porto
-                        where porto_participa.perfil = $user) as tmp1
+                        from interacao
+                            join porto on interacao.porto = porto.codigo
+                            left join porto_participa on porto_participa.porto = porto.codigo
+                        where porto_participa.perfil = $user or porto.perfil = $user) as tmp1
                     join interacao on tmp1.codPost = interacao.codigo
                     join perfil on interacao.perfil = perfil.codigo
                     left join porto on interacao.porto = porto.codigo
@@ -945,8 +1057,9 @@
                             end as amigo
                         from perfil
                             join amigo on perfil.codigo = amigo.perfil or perfil.codigo = amigo.amigo
-                        where perfil.codigo = $U
-                    ) and tmp1.codigo not in (select codigo from perfil where ativo = 0)
+                        where perfil.codigo = $U and amigo.ativo = 1
+                    ) and
+                    tmp1.codigo not in (select codigo from perfil where ativo = 0)
                 limit $limit offset $offset");
                 while ($row = $result->fetchArray()) {
                     array_push($results, $row);
@@ -954,111 +1067,7 @@
                 return $results;
             }
             if($db_type=='postgresql'){
-                $result=pg_fetch_all(pg_query($db, "
-                select tmp1.codigo, tmp1.username, tmp1.img, tmp1.enviado, 
-                    case
-                        when solicitacao_amigo.perfil is null then 'false'
-                        when solicitacao_amigo.perfil is not null then 'true'
-                    end as recebido
-                from (
-                    select perfil.codigo, perfil.username, perfil.img,
-                        case
-                            when solicitacao_amigo.amigo is null or solicitacao_amigo.ativo == false then 'false'
-                            when solicitacao_amigo.amigo is not null or solicitacao_amigo.ativo == true then 'true'
-                        end as enviado, 
-                        1 as camadas from perfil
-                        join (select perfil.codigo as user, tmp1.assuntoCodigo, tmp1.assuntoNome, tmp1.qtd, count(*) as qtd2 from perfil
-                                join (select interacao.perfil as perfil, assunto.codigo as assuntoCodigo, assunto.nome as assuntoNome, count(*) as qtd from interacao
-                                    join INTERACAO_ASSUNTO on interacao.codigo = INTERACAO_ASSUNTO.interacao
-                                    join assunto on interacao_assunto.assunto = assunto.codigo
-                                where
-                                    datetime(interacao.data) between datetime('now','start of month', '-$M months') and datetime('now')
-                                group by interacao.perfil, assunto.codigo
-                                having 
-                                    qtd > $A
-                                order by qtd desc) as tmp1 on tmp1.perfil = perfil.codigo
-                            where 
-                                tmp1.qtd <= $B
-                            group by perfil.codigo) 
-                            as tmp2 on perfil.codigo = tmp2.user
-                        left join solicitacao_amigo on solicitacao_amigo.amigo = perfil.codigo and solicitacao_amigo.perfil = $U
-                    where
-                        perfil.codigo != $U
-                    group by perfil.codigo
-                    having
-                        tmp2.assuntoCodigo in (select tmp1.assuntoCodigo from perfil
-                            join (select interacao.perfil as perfil, assunto.codigo as assuntoCodigo, assunto.nome as assuntoNome, count(*) as qtd from interacao
-                                join INTERACAO_ASSUNTO on interacao.codigo = INTERACAO_ASSUNTO.interacao
-                                join assunto on interacao_assunto.assunto = assunto.codigo
-                            where
-                                datetime(interacao.data) between datetime('now','start of month', '-$M months') and datetime('now')
-                            group by interacao.perfil, assunto.codigo
-                            having 
-                                qtd > $A
-                            order by qtd desc) as tmp1 on tmp1.perfil = perfil.codigo
-                        where
-                            perfil.codigo = $U
-                        limit $B)
-                    union
-                    select perfil.codigo, perfil.username, perfil.img,
-                        case
-                            when solicitacao_amigo.amigo is null or solicitacao_amigo.ativo == false then 'false'
-                            when solicitacao_amigo.amigo is not null or solicitacao_amigo.ativo == true then 'true'
-                        end as enviado, 
-                        2 as camadas from perfil
-                        left join solicitacao_amigo on solicitacao_amigo.amigo = perfil.codigo and solicitacao_amigo.perfil = $U
-                    where 
-                        perfil.codigo != $U and
-                        perfil.codigo not in (
-                        select perfil.codigo from perfil
-                            join (select perfil.codigo as user, tmp1.assuntoCodigo, tmp1.assuntoNome, tmp1.qtd, count(*) as qtd2 from perfil
-                                    join (select interacao.perfil as perfil, assunto.codigo as assuntoCodigo, assunto.nome as assuntoNome, count(*) as qtd from interacao
-                                        join INTERACAO_ASSUNTO on interacao.codigo = INTERACAO_ASSUNTO.interacao
-                                        join assunto on interacao_assunto.assunto = assunto.codigo
-                                    where
-                                        datetime(interacao.data) between datetime('now','start of month', '-$M months') and datetime('now')
-                                    group by interacao.perfil, assunto.codigo
-                                    having 
-                                        qtd > $A
-                                    order by qtd desc) as tmp1 on tmp1.perfil = perfil.codigo
-                                where 
-                                    tmp1.qtd <= $B
-                                group by perfil.codigo) 
-                                as tmp2 on perfil.codigo = tmp2.user
-                        where
-                            perfil.codigo != $U
-                        group by perfil.codigo
-                        having
-                            tmp2.assuntoCodigo in (select tmp1.assuntoCodigo from perfil
-                                join (select interacao.perfil as perfil, assunto.codigo as assuntoCodigo, assunto.nome as assuntoNome, count(*) as qtd from interacao
-                                    join INTERACAO_ASSUNTO on interacao.codigo = INTERACAO_ASSUNTO.interacao
-                                    join assunto on interacao_assunto.assunto = assunto.codigo
-                                where
-                                    datetime(interacao.data) between datetime('now','start of month', '-$M months') and datetime('now')
-                                group by interacao.perfil, assunto.codigo
-                                having 
-                                    qtd > $A
-                                order by qtd desc) as tmp1 on tmp1.perfil = perfil.codigo
-                            where
-                                perfil.codigo = $U           
-                            limit $B)   
-                    ) 
-                    group by perfil.codigo
-                    order by camadas asc) as tmp1
-                    left join solicitacao_amigo on solicitacao_amigo.perfil = tmp1.codigo and solicitacao_amigo.amigo = $U
-                where 
-                    solicitacao_amigo.perfil is null and
-                    tmp1.enviado != 'true' and
-                    tmp1.codigo not in (
-                        select case
-                                when amigo.perfil = perfil.codigo then amigo.amigo
-                                when amigo.amigo = perfil.codigo then amigo.perfil
-                            end as amigo
-                        from perfil
-                            join amigo on perfil.codigo = amigo.perfil or perfil.codigo = amigo.amigo
-                        where perfil.codigo = $U
-                    ) and tmp1.codigo not in (select codigo from perfil where ativo = false)
-                limit $limit offset $offset"));
+                $result=pg_fetch_all(pg_query($db, ""));
                 return $result;
             }
         }
@@ -1109,17 +1118,17 @@
         $db=$db_connection['db'];
         $db_type=$db_connection['db_type'];
         if($db_type == 'sqlite'){
-            $friendRequest = $db->exec("update SOLICITACAO_AMIGO set ativo = 0 where perfil = $user and amigo = $friend");
-            $friendAdd = $db->exec("insert into amigo (amigo, perfil) ($user, $friend)");
+            $friendRequest = $db->exec("update SOLICITACAO_AMIGO set ativo = 0 where amigo = $user and perfil = $friend");
+            $friendAdd = $db->exec("insert into amigo (amigo, perfil, dateAceito) values ($user, $friend, CURRENT_TIMESTAMP)");
             if($friendAdd) return $friendAdd;
             else return false;
         }
         if($db_type == 'postgresql'){
-            $preparing = pg_prepare($db, "unsendFriendRequest", "update SOLICITACAO_AMIGO set ativo = false where perfil = $user and amigo = $friend");
+            $preparing = pg_prepare($db, "unsendFriendRequest", "update SOLICITACAO_AMIGO set ativo = false where amigo = $user and perfil = $friend");
             if($preparing){
                 $friendRequest = pg_execute($db, "unsendFriendRequest", array("$user","$friend"));
                 if(!$friendRequest) return false;
-                $preparing2 = pg_prepare($db, "addFriend", "insert into amigo (amigo, perfil) values ($1, $2)");
+                $preparing2 = pg_prepare($db, "addFriend", "insert into amigo (amigo, perfil, dateAceito) values ($1, $2, CURRENT_TIMESTAMP)");
                 if($preparing2){
                     $friendAdd = pg_execute($db, "addFriend", array("$user","$friend"));
                     if($friendAdd) return $friendAdd;
@@ -1157,7 +1166,8 @@
         if($db){
             if($db_type=='sqlite'){
                 $results=[];
-                $result = $db->query("select perfil.username as nome, perfil.img as img, solicitacao_amigo.dateEnvio as data, solicitacao_amigo.perfil, solicitacao_amigo.amigo as amigocod, amigo.perfil as otherPerfil, amigo.amigo as otherAmigo from solicitacao_amigo, perfil
+                $result = $db->query("
+                select perfil.username as nome, perfil.img as img, solicitacao_amigo.dateEnvio as data, solicitacao_amigo.perfil as amigocod, solicitacao_amigo.amigo, amigo.perfil as otherPerfil, amigo.amigo as otherAmigo from solicitacao_amigo, perfil
                     left join amigo on 
                         (solicitacao_amigo.perfil = amigo.perfil and solicitacao_amigo.amigo = amigo.amigo) or 
                         (solicitacao_amigo.amigo = amigo.perfil and solicitacao_amigo.perfil = amigo.amigo)
@@ -1166,7 +1176,9 @@
                     solicitacao_amigo.perfil not in (
                         select codigo from perfil where ativo = 0
                     ) and
-                    solicitacao_amigo.amigo = $user ");
+                    perfil.ativo = true and
+                    solicitacao_amigo.amigo = $user and
+                    solicitacao_amigo.ativo = 1");
                 while ($row = $result->fetchArray()) {
                     array_push($results, $row);
                 }
@@ -1182,45 +1194,83 @@
                 solicitacao_amigo.perfil not in (
                     select codigo from perfil where ativo = false
                 ) and
-                solicitacao_amigo.amigo = $user"));
+                perfil.ativo = true and
+                solicitacao_amigo.amigo = $user and
+                solicitacao_amigo.ativo = true"));
                 return $result;
             }
         }
         else exit;
     }
-    function getFriends($user){
+    function delFriend($user, $friend){
+        $db_connection=db_connection();
+        $db=$db_connection['db'];
+        $db_type=$db_connection['db_type'];
+        if($db_type == 'sqlite'){
+            $delFriend = $db->exec("update amigo set ativo = 0 where (perfil = $user and amigo = $friend) or (amigo = $user and perfil = $friend)");
+            if($delFriend) return $delFriend;
+            else return false;
+        }
+        if($db_type == 'postgresql'){
+            $preparing = pg_prepare($db, "delAmigo", "update amigo set ativo = 0 where (perfil = $1 and amigo = $2) or (amigo = $1 and perfil = $2)");
+            if($preparing){
+                $delFriend = pg_execute($db, "delAmigo", array("$user","$friend"));
+                if($delFriend) return $delFriend;
+                else return false;
+            }
+            else return false;
+        }
+        else exit;
+    }
+    function getFriends($user, $offset, $limit=10){
         $db_connection=db_connection();
         $db=$db_connection['db'];
         $db_type=$db_connection['db_type'];
         if($db){
             if($db_type=='sqlite'){
                 $results=[];
-                $result = $db->query("select perfil.username as nome, perfil.img as img, solicitacao_amigo.dateEnvio as data, solicitacao_amigo.perfil, solicitacao_amigo.amigo as amigocod, amigo.perfil as otherPerfil, amigo.amigo as otherAmigo from solicitacao_amigo, perfil
-                    left join amigo on 
-                        (solicitacao_amigo.perfil = amigo.perfil and solicitacao_amigo.amigo = amigo.amigo) or 
-                        (solicitacao_amigo.amigo = amigo.perfil and solicitacao_amigo.perfil = amigo.amigo)
+                $result = $db->query("
+                select perfil.codigo, case 
+                        when amigo.perfil = perfil.codigo then amigo.amigo
+                        when amigo.amigo = perfil.codigo then amigo.perfil
+                    end as amigoCod,
+                    amigo.dateAceito,
+                    tmp1.codigo as codAmigo,
+                    tmp1.username as nameAmigo,
+                    tmp1.img as imgAmigo,
+                    (select count(*) from amigo where amigo = $user or perfil = $user and amigo.ativo = 1) as qtdAmigos
+                from perfil 
+                    join amigo on perfil.codigo = amigo.perfil or amigo.amigo
+                    join (select * from perfil) as tmp1 on tmp1.codigo = amigoCod
                 where 
-                    perfil.codigo = solicitacao_amigo.amigo and
-                    solicitacao_amigo.perfil = $user and
-                    solicitacao_amigo.amigo not in (
-                        select codigo from perfil where ativo = 0
-                    )");
+                    perfil.codigo = $user and 
+                    amigo.ativo = 1
+                order by amigo.dateAceito desc
+                limit $limit offset $offset");
                 while ($row = $result->fetchArray()) {
                     array_push($results, $row);
                 }
                 return $results;
             }
             if($db_type=='postgresql'){
-                $result=pg_fetch_all(pg_query($db, "select solicitacao_amigo.perfil, solicitacao_amigo.amigo, solicitacao_amigo.dateEnvio, solicitacao_amigo.ativo, amigo.perfil as otherPerfil, amigo.amigo as otherAmigo, amigo.ativo as otherAtivo from solicitacao_amigo
-                    left join amigo on 
-                        (solicitacao_amigo.perfil = amigo.perfil and solicitacao_amigo.amigo = amigo.amigo) or 
-                        (solicitacao_amigo.amigo = amigo.perfil and solicitacao_amigo.perfil = amigo.amigo)
+                $result=pg_fetch_all(pg_query($db, "
+                select perfil.codigo, case 
+                        when amigo.perfil = perfil.codigo then amigo.amigo
+                        when amigo.amigo = perfil.codigo then amigo.perfil
+                    end as amigoCod,
+                    amigo.dateAceito,
+                    tmp1.codigo as codAmigo,
+                    tmp1.username as nameAmigo,
+                    tmp1.img as imgAmigo,
+                    (select count(*) from amigo where amigo = $user or perfil = $user and amigo.ativo = true) as qtdAmigos
+                from perfil 
+                    join amigo on perfil.codigo = amigo.perfil or amigo.amigo
+                    join (select * from perfil) as tmp1 on tmp1.codigo = amigoCod
                 where 
-                    ".($isOwner ? "solicitacao_amigo.perfil = $user and
-                    solicitacao_amigo.amigo" : "solicitacao_amigo.amigo = $user and
-                    solicitacao_amigo.perfil")." not in (
-                        select codigo from perfil where ativo = 0
-                    )"));
+                    perfil.codigo = $user and 
+                    amigo.ativo = true
+                order by amigo.dateAceito desc
+                limit $limit offset $offset"));
                 return $result;
             }
         }
@@ -1365,7 +1415,14 @@
         if($db){
             if($db_type == 'sqlite'){
                 $response = $db->query("
-                select porto.codigo as codigo, porto.nome as nome, porto.descr as descr, porto.img as img, 
+                select 
+                    porto.codigo as codigo, 
+                    porto.nome as nome, 
+                    porto.descr as descr, 
+                    porto.img as img, 
+                    perfil.codigo as codAdm, 
+                    perfil.username as nomeAdm, 
+                    perfil.img as imgAdm, 
                     case 
                         when porto.perfil = $user or (porto_participa.perfil = $user and porto_participa.ativo = 1) then true
                         else false
@@ -1375,6 +1432,7 @@
                         else false
                     end as owner
                 from porto
+                    join perfil on porto.perfil = perfil.codigo
                     left join porto_participa on porto.codigo = porto_participa.porto
                 where 
                     porto.ativo = 1 and
@@ -1387,20 +1445,30 @@
             if($db_type == 'postgresql'){
                 if($db_type == 'postgresql'){
                     $response = pg_query($db,"
-                select porto.codigo as codigo, porto.nome as nome, porto.descr as descr, porto.img as img, 
-                    case 
-                        when porto.perfil = $user or (porto_participa.perfil = $user and porto_participa.ativo = true) then true
-                        else false
-                    end as participa,
-                    case 
-                        when porto.perfil = $user then true
-                        else false
-                    end as owner
-                from porto
-                    left join porto_participa on porto.codigo = porto_participa.porto
-                where 
-                    porto.ativo = true and
-                    porto.codigo = $porto");
+                    select 
+                        porto.codigo as codigo, 
+                        porto.nome as nome, 
+                        porto.descr as descr, 
+                        porto.img as img, 
+                        perfil.codigo as codAdm, 
+                        perfil.username as nomeAdm, 
+                        perfil.img as imgAdm, 
+                        case 
+                            when porto.perfil = $user or (porto_participa.perfil = $user and porto_participa.ativo = 1) then true
+                            else false
+                        end as participa,
+                        case 
+                            when porto.perfil = $user then true
+                            else false
+                        end as owner
+                    from porto
+                        join perfil on porto.perfil = perfil.codigo
+                        left join porto_participa on porto.codigo = porto_participa.porto
+                    where 
+                        porto.ativo = 1 and
+                        porto.codigo = $porto
+                    group by porto.codigo
+                    order by porto_participa.dataregis desc");
                     if($response) return pg_fetch_array($response);
                     else return false;
                 }
@@ -1532,6 +1600,130 @@
         else exit;
     }
     // function editarPorto($porto){}
+    function getPostsOnPorto($porto, $offset, $limit=10){
+        $db_connection=db_connection();
+        $db=$db_connection['db'];
+        $db_type=$db_connection['db_type'];
+        if($db){
+            if($db_type=='sqlite'){
+                $results=[];
+                $result = $db->query("
+                select 
+                    interacao.codigo as codInteracao, 
+                    interacao.post as codPost, 
+                    interacao.isReaction as isReaction, 
+                    interacao.texto as textoPost, 
+                    interacao.data as dataPost, 
+                    interacao.isSharing as isSharing, 
+                    interacao.emote as emote,
+                    interacao.ativo as ativo,
+                    perfil.codigo as codPerfil, perfil.username as nomePerfil, perfil.img as iconPerfil
+                from interacao
+                    join porto on interacao.porto = porto.codigo
+                    join perfil on interacao.perfil = perfil.codigo
+                where 
+                    interacao.ativo = 1 and
+                    porto.codigo = $porto
+                order by interacao.data desc
+                limit $limit offset $offset");
+                
+                $results2 = $db->query("
+                select interacao.codigo as interacao, assunto.codigo as codAssunto, assunto.nome as nomeAssunto from interacao
+                    left join interacao_assunto on interacao.codigo = interacao_assunto.interacao
+                    left join assunto on interacao_assunto.assunto = assunto.codigo
+                where
+                    interacao.ativo = 1");
+                $assuntos = [];
+                while ($row = $results2->fetchArray()) {
+                    $assuntos[$row['interacao']][$row['codAssunto']] = $row;
+                }
+
+                $results3 = $db->query("
+                select 
+                    interacao.codigo as codInteracao, 
+                    interacao.post as codPost, 
+                    interacao.isReaction as isReaction, 
+                    interacao.texto as textoPost, 
+                    interacao.data as dataPost, 
+                    interacao.isSharing as isSharing, 
+                    interacao.emote as emote,
+                    interacao.ativo as ativo,
+                    porto.codigo as codPorto, porto.nome as nomePorto, 
+                    perfil.codigo as codPerfil, perfil.username as nomePerfil, perfil.img as iconPerfil
+                from interacao
+                    join perfil on interacao.perfil = perfil.codigo
+                    left join porto on porto.codigo = interacao.porto
+                where
+                    interacao.ativo = 1 and
+                    interacao.post is not null and
+                    interacao.isSharing is null");
+                $interacoes = [];
+                while ($row = $results3->fetchArray()) {
+                    $interacoes[$row['codPost']][$row['codInteracao']] = $row;
+                }
+
+                while ($row = $result->fetchArray()) {
+                    $row['assuntos'] = $assuntos[$row['codInteracao']];
+                    if(in_array($row['codInteracao'], array_keys($interacoes))){
+                        $row['comentarios'] = $interacoes[$row['codInteracao']];
+                    } else {
+                        $row['comentarios'] = [];
+                    }
+                    array_push($results, $row);
+                }
+                return $results;
+            }
+            if($db_type=='postgresql'){ // FIXME: tem que deixar igual ao de cima
+                $result=pg_fetch_all(pg_query($db, ""));
+                return $result;
+            }
+        }
+        else exit;
+    }
+    function getPortoParticipants($porto, $offset, $limit=10){
+        $db_connection=db_connection();
+        $db=$db_connection['db'];
+        $db_type=$db_connection['db_type'];
+        if($db){
+            if($db_type=='sqlite'){
+                $results=[];
+                $result = $db->query("                
+                select 
+                porto.codigo as codPorto,
+                perfil.codigo as codPart,
+                perfil.username as nomePart,
+                perfil.img as imgPart
+                from porto
+                    left join porto_participa on porto.codigo = porto_participa.porto
+                    left join perfil on porto_participa.perfil = perfil.codigo
+                where 
+                    porto_participa.ativo = 1 and
+                    porto.codigo = $porto
+                limit $limit offset $offset");
+                while ($row = $result->fetchArray()) {
+                    array_push($results, $row);
+                }
+                return $results;
+            }
+            if($db_type=='postgresql'){
+                $result=pg_fetch_all(pg_query($db, "                
+                select 
+                porto.codigo as codPorto,
+                perfil.codigo as codPart,
+                perfil.username as nomePart,
+                perfil.img as imgPart
+                from porto
+                    left join porto_participa on porto.codigo = porto_participa.porto
+                    left join perfil on porto_participa.perfil = perfil.codigo
+                where 
+                    porto_participa.ativo = true and
+                    porto.codigo = $porto
+                limit $limit offset $offset"));
+                return $result;
+            }
+        }
+        else exit;
+    }
     /*-----------------------------------*/
     
     /* INTERAÇÕES */
@@ -1656,4 +1848,28 @@
         else exit;
     }
     /*-----------------------------------*/
-?>
+
+
+    function numerosGraficoMasc($faixamin, $faixamax, $pais, $mes){
+        $db_connection=db_connection();
+        $db=$db_connection['db'];
+        if($db_type == 'sqlite'){
+            $interacaoMasc = $db->query("select count(interacao.perfil), pais.nome from interacao join perfil on interacao.perfil= perfil.codigo join cidade on perfil.cidade = cidade.codigo join uf on cidade.uf= uf.codigo join pais on uf.pais = pais.codigo where perfil.genero = \"M\" and pais.nome=\"$pais\" and date(interacao.data) between date('now','-$mes months') and date('now') and date(perfil.datanasc) between date('now','-$faixamax years') and date('now', '-$faixamin years')");
+            if($interacaoMasc){
+                return $interacaoMasc;
+            }  else return false;
+        }   
+    }
+
+    function numerosGraficoFem($faixamin, $faixamax, $pais, $mes){
+        $db_connection=db_connection();
+        $db=$db_connection['db'];
+        if($db_type == 'sqlite'){
+            $interacaoFem = $db->query("select count(interacao.perfil), pais.nome from interacao join perfil on interacao.perfil= perfil.codigo join cidade on perfil.cidade = cidade.codigo join uf on cidade.uf= uf.codigo join pais on uf.pais = pais.codigo where perfil.genero = \"F\" and pais.nome=\"$pais\" and date(interacao.data) between date('now','-$mes months') and date('now') and date(perfil.datanasc) between date('now','-$faixamax years') and date('now', '-$faixamin years')");
+            if($interacaoFem){
+                return $interacaoFem;
+            }  else return false;
+        }   
+    }
+
+  ?>

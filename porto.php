@@ -15,8 +15,11 @@
     session_start(); 
   }
   if(isset($_SESSION['userid'])){
+    $user = getUserInfo("$_SESSION[userid]");
     //validar porto
     if(isset($_GET['porto'])){
+      $postsPorto = getPostsOnPorto($_GET['porto'], 0, 10);
+      $participantesPorto = getPortoParticipants($_GET['porto'], 0, 5);
       if(isset($_POST['entrarPorto'])){
         $response = entrarPorto($_SESSION['userid'], $_GET['porto']);
         if(!$response){
@@ -105,6 +108,29 @@
       echo "</form>";
     ?>
   </aside>
+  <aside id=esquerda>
+      <div align=center class="aside-porto">
+        <div id="ademirTxt">
+          <p class=portoAsidePartText>Ademir: </p>
+        </div>
+        <?php
+          echo "<a href=navio.php?user=".$portoInfo['codAdm']."><div><img src=\"".$portoInfo['imgAdm']."\" class=div-amigo-image><p class=nomeAmigo>👑 ".$portoInfo['nomeAdm']."</p></div></a>";
+        ?>
+        <div>
+          <p class=portoAsidePartText>Participantes: </p>
+        </div>
+        <?php
+          if(count($participantesPorto) > 0){
+            foreach ($participantesPorto as $part) {
+              echo "<a href=navio.php?user=$part[codPart]><div><img src=$part[imgPart] class=div-amigo-image><p class=nomeAmigo>$part[nomePart]</p></div></a>";
+            }
+            echo "<a class=portosAtracadosMais href=participantesPorto.php?porto=".$_GET['porto'].">Ver mais</a>";
+          } else {
+            echo "<p>Este porto não têm participantes</p>";
+          }
+        ?>
+      </div>
+  </aside>
   <main class="container-main-porto">
     <div class="container-center">
     <?php
@@ -153,29 +179,98 @@
         echo "</form>";
       echo "</div>";
 
-      // echo "<div class=\"center\">";
-      // echo "<div class=\"darkbluebg\">";
-      // echo "<div class=\"headerPost\">";
-      // echo "<img class=\"interaction-mainuser-user-icon\" src=\"imgs/icons/user-icon.png\" alt=\"\" srcset=\"\">";
-      // echo "<div class=\"\">";
-      // echo "<p class=\"insert-interacao-user-name\">Nome Junior</p>";
-      // echo "<p class=\"insert-interacao-user-assunto\">elon musk, criptos e sexo</p>";
-      // echo "</div>";
-      // echo "</div>";
-      // echo "<a class=\"share\" href=\"\"><img class=\"share\" src=\"imgs/icons/send.png\" alt=\"\" srcset=\"\"></a>";
-      // echo "<p class=\"insert-interacao-user-name\">askldjfkasdhfjksahfkjsdhfkjahsd j asdjklfhajklsdhfjklas jksdahfkjsahfkjasd kjsda hsdjkafhsdkajfhsakdjf s kjsahfkjsadhfkjsahdjk sadkj asdjkfhsakjfsakjfasdjk fsadkj sdajkfsjkadfhjkasdhfjkasdhkjsadfksadjkasdf</p>";
-      // echo "<div class=\"row2\">";
-      // echo "<p class=\"nLikes\">12</p>";
-      // echo "<a class=\"\" href=\"\"><img class=\"commentPorto\" src=\"imgs/icons/Like.png\" alt=\"\" srcset=\"\"></a>";
-      // echo "</div>";
-      // echo "<a class=\"commentPorto\" href=\"\"><img class=\"commentPorto\" src=\"imgs/icons/chat.png\" alt=\"\" srcset=\"\"></a>";
-      // echo "</div>";
-      // echo "</div>";
+      // posts
+    if($postsPorto){
+      foreach ($postsPorto as $post) {
+        echo "<div class=\"div-post\">";
+          //Share
+          if($post['isSharing']){
+            $sharedPost = getOriginalPost($post['codPost']);
+            echo "<p class=\"compartilhado-txt\"><i>Compartilhado</i></p>";
+            echo "<div class=\"div-sharing-post\">";
+              // Sharing-top
+              echo "<div class=\"div-sharing-post-top\">";
+                echo "<img src=\"".$sharedPost['iconPerfil']."\" alt=\"\" class=\"div-sharing-post-top-icon\">";
+                echo "<div class=\"div-sharing-post-top-infos\">";
+                  echo "<p class=\"div-sharing-post-top-username\"><i>@".$sharedPost['nomePerfil']."</i> ".$sharedPost['dataPost']."</p>";
+                  echo "<p class=\"div-sharing-post-top-subjects\"><b>";
+                  $tmpArray = [];
+                  foreach($sharedPost['assuntos'] as $elements){
+                    foreach ($elements as $key => $value) {
+                      if($key === 'nomeAssunto') $tmpArray[] = $value;
+                    }
+                  }
+                  echo implode($tmpArray, ', ');
+                  echo "</b></p>";
+                echo "</div>";
+              echo "</div>";
+              // Sharing-texto
+              echo "<div class=\"div-sharing-post-txt\">";
+                echo "<p>$sharedPost[textoPost]</p>";
+              echo "</div>";
+            echo "</div>";
+          }
+          //Top
+          echo "<div class=\"div-post-top\">";
+            echo "<img src=\"".$post['iconPerfil']."\" alt=\"\" class=\"div-post-top-icon\">";
+            echo "<div class=\"div-post-top-infos\">";
+              echo "<p class=\"div-post-top-username\"><i>@".$post['nomePerfil']."</i> ".$post['dataPost']."</p>";
+              echo "<p class=\"div-post-top-subjects\"><b>";
+              $tmpArray = [];
+              // print_r($post['assuntos']);
+              foreach($post['assuntos'] as $elements){
+                foreach ($elements as $key => $value) {
+                  if($key === 'nomeAssunto') $tmpArray[] = $value;
+                }
+              }
+              echo implode($tmpArray, ', ');
+              echo "</b></p>";
+            echo "</div>";
+          echo "</div>";
+          //Texto
+          echo "<div class=\"div-post-txt\">";
+            echo "<p>$post[textoPost]</p>";
+          echo "</div>";
+          //Ícones
+          echo "<div class=\"div-post-icons-bar\">";
+            // echo "<div class=\"div-post-icons-bar-divs\">";
+            //   echo "<p>12</p><img src=\"imgs/icons/Like.png\" class=\"div-post-icons-bar-icons\" alt=\"\">";
+            // echo "</div>";
+            echo "<div class=\"div-post-icons-bar-divs\">";
+              echo "<p>5</p><img src=\"imgs/icons/chat.png\" class=\"div-post-icons-bar-icons\" alt=\"\">";
+            echo "</div>";
+            // echo "<div class=\"div-post-icons-bar-divs\">";
+            //   echo "<p>2</p><img src=\"imgs/icons/send.png\" class=\"div-post-icons-bar-icons\" alt=\"\">";
+            // echo "</div>";
+            echo "<div class=\"div-post-icons-bar-interagir\">";
+              echo "<img src=\"$user[img]\" class=\"div-post-icons-bar-interagir-icon\" alt=\"\"><p>Interagir...</p>";
+            echo "</div>";
+          echo "</div>";
+          echo "<br><br>";
+          //Comentários
+          if($post['comentarios'] && $post['comentarios'] != []){
+            echo "<hr class=\"post-hr\">";
+            foreach ($post['comentarios'] as $elem) {
+              echo "<div class=\"comment-container\">";
+                echo "<div class=\"comment-container-top\">";
+                  echo "<img src=\"".$elem['iconPerfil']."\" alt=\"\" class=\"comment-icon\">";
+                  echo "<p class=\"comment-txt\"><i>@".$elem['nomePerfil']."</i> ";
+                  echo ($elem['textoPost'] ? $elem['textoPost'] : '');
+                  echo ", em ".$elem['dataPost'];
+                  echo "</p>";
+                echo "</div>";
+                echo "<div class=\"comment-reagir\"><p>Reagir</p></div>";
+              echo "</div>";
+            }
+          }
+        echo "</div>";
+      }
+    }
     ?>
     </div>
   </main>
 </div>
-<footer class="container-bottom" ><p align="center"><< 1 2 3 >></p></footer>
+<!-- <footer class="container-bottom" ><p align="center"><< 1 2 3 >></p></footer> -->
 <?php 
   // echo "<script>img_perfil.style.backgroundImage=\"url($user[img])\"</script>";
 ?>

@@ -15,19 +15,39 @@
     session_start(); 
   }
   $user=[];
+  
   if(!isset($_SESSION['userid'])){
     echo "<h2 align=center>Para ver este conteudo faça um cadastro no dagama!!!</h2>";
     header("refresh:1;url=index.php");
     die();
+  } else {
+      if(isset($_GET['user'])){
+        $amigosUser = getFriends($_GET['user'], 0, 10);
+        if($_SESSION['userid'] == $_GET['user']){
+          $amigos=getRequestAndFriends($_SESSION["userid"],false);
+          if(isset($_POST['desfazerAmizade'])){
+            $response = delFriend($_SESSION['userid'], $_POST['amigo']);
+            if($response) header("refresh:1;url=amigos.php");
+            else echo "Erro ao desfazer amizade...";
+          }
+        }
+      } else {
+        if($_SESSION['userid']){
+          $amigos=getRequestAndFriends($_SESSION["userid"],false);
+          $amigosUser = getFriends($_SESSION['userid'], 0, 10);
+          if(isset($_POST['desfazerAmizade'])){
+            $response = delFriend($_SESSION['userid'], $_POST['amigo']);
+            if($response) header("refresh:1;url=amigos.php");
+            else echo "Erro ao desfazer amizade...";
+          }
+        }
+        else{
+          echo "Usuario inválido";
+          header("refresh:1;url=mar.php");
+          die();
+        }
+      }
   }
-  else{
-      var_dump($_SESSION);
-  }
-  // $amigos=getAllAmigosfromUser("$_SESSION[userid]");
-  // if(!$amigos){
-  //     echo "<h2 align=center>Usuario Inválido</h2>";
-  //     header('refresh:1;url=mar.php');
-  // }
 ?>
  <header class="header-main">
     <img class="header-icon" src="imgs/icon.png" alt="">
@@ -52,23 +72,42 @@
       echo "<div class=\"header-searchBar\">";
       echo "<img class=\"header-searchBar-icon\" src=\"imgs/icons/search.png\">";
       echo "<input class=\"header-searchBar-input\" type=text placeholder=\"digite o nome do seu amigo\" />";
-      echo "</div>";
-      echo "<a href=solicitacoes.php class=header>Você tem X solicitações</a>";
+      echo "</div><br>";
+      if(!isset($_GET['user'])){
+        echo "<a href=solicitacoes.php class=header>Você tem ".count($amigos)." solicitações</a>";
+      } else {
+        if($_SESSION['userid'] == $_GET['user']){
+          echo "<a href=solicitacoes.php class=header>Você tem ".count($amigos)." solicitações</a>";
+        }
+      }
       echo "<div class=\"div-amigo\">";
-      // if(count($amigos)>0){
-        //foreach(amigos as amigo){};
-        echo "<div class=\"div-amigo-row\">";
-        echo "<div class=\"row\">";
-          echo "<img src=\"imgs/icons/user-icon.png\" alt=\"\" class=\"div-amigo-image\">";
-          echo "<div class=\"div-amigo-textos\">";
-            echo "<p class=\"\">Joaquino corno</p>";
-            echo "<p class=\"\">Amigos desde 20/02/2002</p>";
-          echo "</div>";
-          echo "</div>";
-          echo "<input class=\"insert-interacao-submit\" type=\"submit\" name=\"insert-interacao-submit\" value=\"desfazer Amizade\" />";
-        echo "</div>";
-      // }
-      // else echo "<p>Você Não tem amigos</p>";
+      if(count($amigosUser)>0){
+        foreach ($amigosUser as $amigo) {
+          echo "<div class=\"div-amigo-row\">";
+          echo "<div class=\"row\">";
+            echo "<a href=navio.php?user=$amigo[amigoCod]><img src=\"$amigo[imgAmigo]\" alt=\"\" class=\"div-amigo-image\"></a>";
+            echo "<div class=\"div-amigo-textos\">";
+              echo "<a href=navio.php?user=$amigo[amigoCod]><p style=\"color: #fff\">$amigo[nameAmigo]</p></a>";
+              echo "<p class=\"\">Amigos desde $amigo[dateAceito]</p>";
+            echo "</div>";
+            echo "</div>";
+            if(isset($_GET['user'])){
+              if($_SESSION['userid'] == $_GET['user']){
+                echo "<form action=\"amigos.php\" method=\"post\">";
+                echo "<button class=\"insert-interacao-submit\" name=\"desfazerAmizade\">Desfazer Amizade<button/>";
+                echo "<input type=\"hidden\" name=\"amigo\" value=\"$amigo[amigoCod]\" />";
+                echo "</form>";
+              }
+            } else {
+              echo "<form action=\"amigos.php\" method=\"post\">";
+              echo "<button class=\"insert-interacao-submit\" name=\"desfazerAmizade\">Desfazer Amizade<button>";
+              echo "<input type=\"hidden\" name=\"amigo\" value=\"$amigo[amigoCod]\" />";
+              echo "</form>";
+            }
+          echo "</div>";          
+        }
+      }
+      else echo "<p>Você Não tem amigos ainda</p>";
     ?>
     </div>
 </main>

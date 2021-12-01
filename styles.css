@@ -16,6 +16,9 @@
 body {
 	margin: 0px;
 }
+a {
+	text-decoration: none;
+}
 #principal {
 	display: grid;
 	grid-template: 6vh 82vh 10vh/1fr 2fr 1fr;
@@ -683,6 +686,7 @@ main {
 		font-size: 24px;
 		position: relative;
 		top: -15px;
+		color: #fff;
 	}
 	.trending {
 		font-size: 24px;
@@ -925,6 +929,7 @@ main {
 	display: flex;
 	flex-direction: row;
 	float: right;
+	margin-top: -10px;
 }
 .div-post-icons-bar-divs {
 	display: flex;
@@ -937,9 +942,29 @@ main {
 	width: 25px;
 	height: 25px;
 	margin-left: 10px;
-	margin-right: 40px;
+	margin-right: 20px;
+	margin-top: 12px;
+}
+.div-post-icons-bar-interagir {
+	display: flex;
+	flex-direction: row;
+	border-radius: 25px;
+	background-color: #fff;
+	padding-left: 3px;
+	padding-right: 10px;
+}
+.div-post-icons-bar-interagir p {
+	color: #000;
+}
+.div-post-icons-bar-interagir-icon {
+	width: 34px;
+	height: 34px;
+	border-radius: 20px;
+	margin-right: 4px;
+	margin-left: 7px;
 	margin-top: 7px;
 }
+
 .post-hr {
 	margin-top: 15px;
 	border-color: var(--azulEscuro2-color);
@@ -984,6 +1009,12 @@ main {
 	display: none;
 }
 
+.txt-linktoporto {
+	color: var(--azulClaro-color);
+}
+.compartilhado-txt {
+	margin-top: -10px;
+}
 .div-sharing-post {
 	border-bottom: 1px solid #fff;
 	border-left: 1px solid #fff;
@@ -1039,7 +1070,7 @@ main {
 	height: 400px;
 }
 .porto-img {
-	width: 350px;
+	width: 300px;
 	height: 200px;
 	margin-left: -15px;
 	margin-right: -15px;
@@ -1092,6 +1123,22 @@ main {
 .porto-entrar-btn-txt {
 	text-align: center;
 	margin-top: 10px;
+}
+.aside-porto {
+	background-color: var(--cinza-color);
+	border-radius: 10px;
+	width: 210px;
+	margin-left: 15px;
+	margin-top: 50px;
+	padding-bottom: 20px;
+}
+#ademirTxt {
+	padding-top: 1px;
+}
+.portoAsidePartText{
+	font-size: 24px;
+	color: var(--azulEscuro2-color);
+	text-align: center;
 }
 
 .commentPorto {
@@ -1190,6 +1237,7 @@ main {
 	justify-content: space-between;
 	margin: 3%;
 	align-items: center;
+	color: #fff;
 }
 .div-amigo-image {
 	width: 115px;
