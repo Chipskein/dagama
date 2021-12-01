@@ -1661,7 +1661,7 @@
         $db=$db_connection['db'];
         $db_type=$db_connection['db_type'];
         $FOLDERS=array("root"=>"14oQWzTorITdqsK7IiFwfTYs91Gh_NcjS","avatares"=>"1Z3A4iqIe1eMerkdTEkXnjApRPupaPq-M","portos"=>"1e5T21RxDQ-4Kqw8EDVUBICGPeGIRSNHx","users"=>"1j2ivb8gBxV_AINaQ7FHjbd1OI0otCpEO");
-        $link='https://upload.wikimedia.org/wikipedia/commons/4/4a/Pirate_icon.gif';
+        $link = null;
         if($newimg){
             $type=$newimg['type'];
             $server_path=$newimg['tmp_name'];
@@ -1672,7 +1672,7 @@
         }
         if($db){
             if($db_type == 'sqlite'){
-                $verify = $db->exec("update porto set nome='$newname',descr='$newdescr',img='$link' where codigo=$porto and ativo=1");
+                $verify = $db->exec("update porto set nome='$newname',descr='$newdescr' ".($link ? ",img='$link'" : " ")." where codigo=$porto and ativo=1");
                 if($verify) return $verify;
                 else return false;
             }

@@ -21,8 +21,8 @@
             if($_POST['owner']!=$_SESSION['userid']) header("refresh=1;url=mar.php");
             echo "<script>let oldlink='$_POST[oldimg]';let oldname='$_POST[oldnome]';let olddescr='$_POST[olddescr]';</script>";
         }
-        var_dump($_POST);
-        var_dump($_FILES);
+        // var_dump($_POST);
+        // var_dump($_FILES);
         if(isset($_POST['confirmar'])){
             $erros = [];
             if(!isset($_POST['nome']) || !isset($_POST['descricao'])){
