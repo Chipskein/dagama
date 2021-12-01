@@ -48,6 +48,7 @@
     $newimg=updateImg($_SESSION['userid'],$photo,$oldphotoid);
     if($newimg){
       $_SESSION['userimg']="$newimg";
+      header("Refresh:0");
     }
   }
 ?>
