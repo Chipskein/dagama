@@ -223,7 +223,7 @@
 <aside id=esquerda>
     <div align=center class=background>
       <div>
-        <p class=SeusAmigos>Seus amigos </p>
+        <p class=SeusAmigos> <?php echo $isOwner ? "Seus amigos":"Amigos de $user[username]" ?> </p>
       </div>
       <?php
         if(count($amigosUser) > 0){
@@ -231,7 +231,7 @@
             echo "<a href=navio.php?user=$amigo[amigoCod]><div><img src=$amigo[imgAmigo] class=div-amigo-image><p class=nomeAmigo>$amigo[nameAmigo]</p></div></a>";
           }
         } else {
-          echo "<p>Você ainda não tem nenhum amigo</p>";
+          echo $isOwner ? "<p>Você ainda não tem nenhum amigo</p>":"<p>Sem amigos</p>";
         }
         
         echo "<a class=portosAtracadosMais href=amigos.php?user=$_GET[user]>Ver mais</a>"
