@@ -217,22 +217,78 @@
               // Sharing-top
               echo "<div class=\"div-sharing-post-top\">";
                 echo "<img src=\"".$sharedPost['iconPerfil']."\" alt=\"\" class=\"div-sharing-post-top-icon\">";
-                echo "<div class=\"div-sharing-post-top-infos\">";
-                  echo "<p class=\"div-sharing-post-top-username\"><i>@".$sharedPost['nomePerfil']."</i> ".$sharedPost['dataPost']."</p>";
-                  echo "<p class=\"div-sharing-post-top-subjects\"><b>";
+                echo "<div class=\"div-post-top-infos\">";
+                  echo "<p class=\"div-post-top-username\"><i>@".$sharedPost['nomePerfil']."</i>";
+                  if($sharedPost['nomeCidade']){
+                    echo " em ".$sharedPost['nomeCidade'].", ".$sharedPost['nomePais']." - ";
+                  }
+                  $tmpHora = explode(' ', $sharedPost['dataPost'])[1];
+                  $tmpData = explode(' ', $sharedPost['dataPost'])[0];
+                  $tmpData = explode('-', $tmpData);
+                  echo " ".$tmpData[2]."/".$tmpData[1]."/".$tmpData[0]." ".$tmpHora."</p>";
                   $tmpArray = [];
+                  // print_r($post['assuntos']);
                   foreach($sharedPost['assuntos'] as $elements){
                     foreach ($elements as $key => $value) {
                       if($key === 'nomeAssunto') $tmpArray[] = $value;
                     }
                   }
-                  echo implode($tmpArray, ', ');
+                  echo "<p class=\"div-post-top-subjects\" title=\"".implode($tmpArray, ', ')."\"><b>";
+                  $tmpArray = implode($tmpArray, ', ');
+                  if(strlen($tmpArray) > 30){
+                    $tmpArray = substr($tmpArray, 0, 27);
+                    echo $tmpArray."...";
+                  } else {
+                    echo $tmpArray;
+                  }
                   echo "</b></p>";
                 echo "</div>";
               echo "</div>";
               // Sharing-texto
-              echo "<div class=\"div-sharing-post-txt\">";
-                echo "<p>$sharedPost[textoPost]</p>";
+              echo "<div class=\"div-post-txt\">";
+                echo "<p><i style=\"color: #7A9EFB\">@$sharedPost[nomePerfil]</i> ";
+                if($sharedPost['isReaction']) {
+                  echo "<b><i>reagiu</i></b> com ";
+                  switch ($sharedPost['emote']){
+                    case 'curtir':
+                      echo "👌";
+                      break;
+                    case 'kkk':
+                      echo "🤣";
+                      break;
+                    case 'amei':
+                      echo "❤️";
+                      break;
+                    case 'grr':
+                      echo "🤬";
+                      break;
+                    case 'wow':
+                      echo "🤯";
+                      break;
+                    case 'sad':
+                      echo "😭";
+                      break;                  
+                  }
+                  echo ", ";
+                }
+                if(count($sharedPost['citacoes']) > 0) {
+                  $tmpCitacoes = [];
+                  foreach ($sharedPost['citacoes'] as $pessoa) {
+                    $tmpCitacoes[] = "@".$pessoa['nomePerfil'];
+                  }
+                  $tmpCitacoes = implode($tmpCitacoes, ', ');
+                  echo "<b><i>marcando</i></b> <i title=\"".$tmpCitacoes."\">";
+                  if(strlen($tmpCitacoes) > 10){
+                    $tmpCitacoes = substr($tmpCitacoes, 0, 7);
+                    echo $tmpCitacoes."...";
+                  } else {
+                    echo $tmpCitacoes;
+                  }
+                  echo ", </i>";
+                  
+
+                }
+                echo "$sharedPost[textoPost]</p>";
               echo "</div>";
             echo "</div>";
           }
@@ -244,7 +300,10 @@
               if($post['nomeCidade']){
                 echo " em ".$post['nomeCidade'].", ".$post['nomePais']." - ";
               }
-              echo " ".$post['dataPost']."</p>";
+              $tmpHora = explode(' ', $post['dataPost'])[1];
+              $tmpData = explode(' ', $post['dataPost'])[0];
+              $tmpData = explode('-', $tmpData);
+              echo " ".$tmpData[2]."/".$tmpData[1]."/".$tmpData[0]." ".$tmpHora."</p>";
               $tmpArray = [];
               // print_r($post['assuntos']);
               foreach($post['assuntos'] as $elements){
