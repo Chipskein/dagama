@@ -1129,11 +1129,21 @@
         $db=$db_connection['db'];
         $db_type=$db_connection['db_type'];
         if($db_type == 'sqlite'){
-            $friendRequest = $db->exec("insert into SOLICITACAO_AMIGO (perfil, amigo, dateEnvio) values ($user, $friend, CURRENT_TIMESTAMP)");
-            if($friendRequest) return $friendRequest;
-            else return false;
+            $hasRequest = $db->query("select * from SOLICITACAO_AMIGO where (perfil = $user and amigo = $friend) or (amigo = $user and perfil = $friend)");
+            $hasRequest = $hasRequest->fetchArray();
+            if($hasRequest){
+                if($hasRequest['ativo'] == 0) {
+                    $friendRequest = $db->exec("update SOLICITACAO_AMIGO set ativo = 1 where (amigo = $user and perfil = $friend) or (perfil = $user and amigo = $friend)");    
+                    if($friendRequest) return $friendRequest;
+                    else return false;
+                }
+            } else {
+                $friendRequest = $db->exec("insert into SOLICITACAO_AMIGO (perfil, amigo, dateEnvio) values ($user, $friend, CURRENT_TIMESTAMP)");
+                if($friendRequest) return $friendRequest;
+                else return false;
+            }
         }
-        if($db_type == 'postgresql'){
+        if($db_type == 'postgresql'){ // FIXME: deixar igual ao de cima
             $preparing = pg_prepare($db, "sendFriendRequest", "insert into SOLICITACAO_AMIGO (perfil, amigo, dateEnvio) values ($1, $2, CURRENT_TIMESTAMP)");
             if($preparing){
                 $friendRequest = pg_execute($db, "sendFriendRequest", array("$user","$friend"));
@@ -1827,13 +1837,22 @@
     /*-----------------------------------*/
     
     /* INTERAÇÕES */
-    function addInteracao($perfil, $texto, $perfil_posting = null, $porto = null, $isSharing = null, $post = null, $isReaction = null, $emote = null){
+    function addInteracao($perfil, $texto, $perfil_posting, $porto, $isSharing, $post, $isReaction, $emote, $local){
         $db_connection=db_connection();
         $db=$db_connection['db'];
         $db_type=$db_connection['db_type'];
         if($db_type == 'sqlite'){
-            $response = $db->exec("insert into interacao (perfil, texto, perfil_posting, porto, isSharing, post, isReaction, emote) values ($perfil, '$texto', $perfil_posting, $porto, $isSharing, $post, $isReaction, '$emote')");
-            if($response) return $response;
+            $response = $db->exec("insert into interacao (perfil, texto, perfil_posting, porto, isSharing, post, isReaction, emote, local) values 
+            ($perfil, 
+            '".($texto ? $texto : '')."', 
+            ".($perfil_posting ? $perfil_posting : 'null').", 
+            ".($porto ? $porto : 'null').", 
+            ".($isSharing ? $isSharing : 'null').", 
+            ".($post ? $post : 'null').", 
+            ".($isReaction ? $isReaction : 'null').", 
+            ".($emote ? "'".$emote."'" : 'null').", 
+            ".($local ? $local : 'null').")");
+            if($response) return $db->lastInsertRowID();
             else return false;
         }
         if($db_type == 'postgresql'){

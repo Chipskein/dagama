@@ -26,9 +26,38 @@
     $portosArray = getAllPorto($_SESSION['userid'], true, 0, 3);
     $errorMessage = [];
     if(isset($_POST['novoPost'])){
-      print_r($_GET['local3']);
-      $texto = "$_POST[texto]";
-      addInteracao($_SESSION['userid'], $texto, ['vitao', "silMusk"], ["outro", "fanboy"], "Rio grande" );
+      // var_dump($_POST);
+      $texto = ''.$_POST['texto'];
+      $local = isset($_POST['local']) ? $_POST['local'] : 0;
+      $assuntos = [];
+      $citacoes = [];
+      $qtdAssuntos = count(getAssuntos());
+      for($c = 1; $c <= $qtdAssuntos; $c++){
+          if(isset($_POST["assunto$c"])){
+              $assuntos[] = $_POST["assunto$c"];
+          }
+      }
+      $qtdPessoas = count(getPessoas());
+      for($c = 1; $c <= $qtdPessoas; $c++){
+          if(isset($_POST["pessoa$c"])){
+              $citacoes[] = $_POST["pessoa$c"];
+          }
+      }
+      $response = addInteracao($_SESSION['userid'], $texto, 0, 0, 0, 0, 0, 0, $local);
+      if($response) {
+        if(count($assuntos) > 0){
+          foreach ($assuntos as $value) {
+            addAssuntoInteracao($response, $value);
+          }
+        }
+        if(count($citacoes) > 0){
+          foreach ($citacoes as $value) {
+            addCitacaoInteracao($value, $response);
+          }
+        }
+        header("refresh:0;url=feed.php?user=$_SESSION[userid]"); 
+      }
+      else return false;
     }
 
     // var_dump($_POST);
@@ -142,39 +171,35 @@
         echo "<input class=\"insert-interacao-submit\" type=\"submit\" name=\"novoPost\" />";
         echo "<hr id=\"post-hr\" class=\"post-hr\" >";
         echo "<div class=\"post-divLocal\">";
-        echo "<input list=\"local\" id=\"local3\"> ";
-        echo "<datalist id=\"local\">";
-          foreach ($locaisArray as $value) {
-            echo "<option value=\"".$value['nomeCidade']."\"></option>";
-          }
-          echo "<option value=\"Outro\">";
-        echo "</datalist>";
-        echo "<input id=\"value-localId\" name=\"value-localName\" class=hidden>";
-        echo "<button class=\"confirm-type\" type=\"button\" onclick=\"addLocal()\">Confirmar</button>";
+          echo "<select id=\"select-local\" onclick=\"unsetError(this)\">";
+            foreach ($locaisArray as $value) {
+              echo "<option id='optionLocal".$value['codCidade']."' value='{ \"id\": \"".$value['codCidade']."\", \"name\": \"".$value['nomeCidade']."\" }'\">".$value['nomeCidade']."</option>\n";
+            }
+            echo "<option value=\"0\">Outro</option>";
+          echo "</select>";
+          echo "<input id=\"value-localId\" name=\"select-local-value\" class=hidden>";
+          echo "<button id=\"select-local-button\"  class=\"confirm-type\" type=\"button\" onclick=\"addLocal()\">Confirmar</button>";
+          echo "<table id=\"tableLocal\" border=\"1\" name=\"tableLocal\"></table>";
         echo "</div>";
         echo "<div class=\"post-divPessoas\">";
-        echo "<input list=\"pessoas\" id=\"pessoasId\">";
-        echo "<datalist id=\"pessoas\" name=\"pessoas\">";
-          foreach ($pessoasArray as $value) {
-            echo "<option value=\"".$value['username']."\">";
-            echo "<img class=\"post-selectUser-icon\" src=\"".$value["img"]."\" alt=\"\" srcset=\"\">";
-            echo $value['username']."</option>";
-          }
-        echo "</datalist>";
-        echo "<button class=\"confirm-type\" type=button onclick=\"addPessoas()\">Confirmar</button>";
-        echo "<input id=\"value-PessoasId\" name=\"value-AssuntosName\" class=hidden>";
+          echo "<select id=\"select-pessoas\" onclick=\"unsetError(this)\">";
+            foreach ($pessoasArray as $value) {
+              echo "<option id='optionPessoa".$value['codigo']."' value='{ \"id\": \"".$value['codigo']."\", \"name\": \"".$value['username']."\" }'\">".$value['username']."</option>\n";
+            }
+          echo "</select>";
+          echo "<button id=\"select-pessoa-button\"  class=\"confirm-type\" type=\"button\" onclick=\"addPessoas()\">Confirmar</button>";
+          echo "<table id=\"tablePessoas\" border=\"1\" name=\"tablePessoas\"></table>";
         echo "</div>";
 
         echo "<div class=\"post-divAssuntos\">";
-        echo "<input list=\"assuntos\" id=\"assuntosId\">";
-        echo "<datalist id=\"assuntos\" name=\"assuntos\">";
-        foreach ($assuntosArray as $value) {
-          echo "<option value=\"".$value['nome']."\">";
-        }
-        echo "<option value=\"Outro\">";
-        echo "</datalist>";
-        echo "<button class=\"confirm-type\" type=button onclick=\"addAssuntos()\">Confirmar</button>";
-        echo "<input id=\"value-AssuntosId\" name=\"value-AssuntosName\" class=hidden>";
+          echo "<select id=\"select-assuntos\" onclick=\"unsetError(this)\">";
+            foreach ($assuntosArray as $value) {
+              echo "<option id='optionAssunto".$value['codigo']."' value='{ \"id\": \"".$value['codigo']."\", \"name\": \"".$value['nome']."\" }'\">".$value['nome']."</option>\n";
+            }
+            echo "<option value=\"0\">Outro</option>";
+          echo "</select>";
+          echo "<button id=\"select-assunto-button\"  class=\"confirm-type\" type=\"button\" onclick=\"addAssuntos()\">Confirmar</button>";
+          echo "<table id=\"tableAssuntos\" border=\"1\" name=\"tableAssuntos\"></table>";
         echo "</div>";
       echo "</form>";
     echo "</div>";
@@ -434,48 +459,75 @@
 <script src="functions.js">
 </script>
 <script>
-    let local = ''
-  function addLocal() {
-    if(local === ''){
-    local = document.getElementById('local3').value;
-    let inputHidden = document.getElementById('value-localId').value;
-    inputHidden = local
-    let bgl = document.getElementsByClassName('insert-interacao-user-name');
-    bgl[0].innerHTML = bgl[0].innerHTML + ' ' + local
+var tmpLocal = 0;
+function addLocal(){
+    var local = document.getElementById('select-local').value;
+    local = JSON.parse(local);
+    var table = document.getElementById('tableLocal');
+    var option = document.getElementById('optionLocal'+local.id);
+    option.remove();
+    tmpLocal = local.id;
+    table.innerHTML += `<tr id="row${local.id}"><td>${local.name}<input type="hidden" value="${local.id}" name="local" /></td><td><button onclick="removeLocal('${local.id}', '${local.name}')">❌</button></td></tr>`;
+    document.getElementById('select-local').disabled = true;
+    document.getElementById('select-local-button').disabled = true;
+}
+function removeLocal(id, name){
+    var table = document.getElementById('tableLocal');
+    var row = document.getElementById('row'+id);
+    var select = document.getElementById('select-local');
+    select.innerHTML += `<option id='optionLocal${id}' value='{ "id": "${id}", "name": "${name}" }'>${name}</option>\n`;
+    row.remove();
+    tmpLocal = 0;
+    document.getElementById('select-local').disabled = false;
+    document.getElementById('select-local-button').disabled = false;
+}
+
+var pessoas = [];
+function addPessoas(){
+    var pessoa = document.getElementById('select-pessoas').value;
+    pessoa = JSON.parse(pessoa);
+    var table = document.getElementById('tablePessoas');
+    var option = document.getElementById('optionPessoa'+pessoa.id);
+    option.remove();
+    pessoas.push(pessoa.id);
+    table.innerHTML += `<tr id="row${pessoa.id}"><td>${pessoa.name}<input type="hidden" value="${pessoa.id}" name="pessoa${pessoa.id}" /></td><td><button onclick="removePessoas('${pessoa.id}', '${pessoa.name}')">❌</button></td></tr>`;
+}
+function removePessoas(id, name){
+    var table = document.getElementById('tablePessoas');
+    var row = document.getElementById('row'+id);
+    var select = document.getElementById('select-pessoas');
+    select.innerHTML += `<option id='optionPessoa${id}' value='{ "id": "${id}", "name": "${name}" }'>${name}</option>\n`;
+    row.remove();
+    for(var i = 0; i < pessoas.length; i++){ 
+        if ( pessoas[i] == id) {
+            pessoas.splice(i, 1); 
+        }    
     }
 }
-let assuntos = ''
-function addAssuntos() {
-    if(assuntos === ''){
-    assuntos = document.getElementById('assuntosId').value;
-    let inputHidden = document.getElementById('value-AssuntosId').value;
-    inputHidden = assuntos
-    let bgl = document.getElementsByClassName('insert-interacao-user-assuntos');
-    bgl[0].innerHTML =  assuntos
-    } else { 
-      assuntos = document.getElementById('assuntosId').value;
-      let inputHidden = document.getElementById('value-AssuntosId').value;
-      inputHidden = assuntos
-      let bgl = document.getElementsByClassName('insert-interacao-user-assuntos');
-      bgl[0].innerHTML = bgl[0].innerHTML + ', ' + assuntos}
+
+var assuntos = [];
+function addAssuntos(){
+    var assunto = document.getElementById('select-assuntos').value;
+    assunto = JSON.parse(assunto);
+    var table = document.getElementById('tableAssuntos');
+    var option = document.getElementById('optionAssunto'+assunto.id);
+    option.remove();
+    assuntos.push(assunto.id);
+    table.innerHTML += `<tr id="row${assunto.id}"><td>${assunto.name}<input type="hidden" value="${assunto.id}" name="assunto${assunto.id}" /></td><td><button onclick="removeAssuntos('${assunto.id}', '${assunto.name}')">❌</button></td></tr>`;
 }
-// let pessoas = ''
-function addPessoas() {
-    // if(pessoas === ''){
-    pessoas = document.getElementById('pessoasId').value;
-    // let inputHidden = document.getElementById('value-PessoasId').value;
-    // inputHidden = pessoas
-    let bgl = document.getElementById('insert-interacao-input');
-    console.log(bgl.value)
-    bgl.value = " @" + pessoas + bgl.value + " "
-    // } 
-    // else { 
-      // pessoas = document.getElementById('pessoasId').value;
-      // let inputHidden = document.getElementById('value-AssuntosId').value;
-      // inputHidden = pessoas
-      // let bgl = document.getElementsByClassName('insert-interacao-input');
-      // bgl[0].innerHTML = bgl[0].innerHTML + ', ' + pessoas}
+function removeAssuntos(id, name){
+    var table = document.getElementById('tableAssuntos');
+    var row = document.getElementById('row'+id);
+    var select = document.getElementById('select-assuntos');
+    select.innerHTML += `<option id='optionAssunto${id}' value='{ "id": "${id}", "name": "${name}" }'>${name}</option>\n`;
+    row.remove();
+    for(var i = 0; i < assuntos.length; i++){ 
+        if ( assuntos[i] == id) {
+            assuntos.splice(i, 1); 
+        }    
+    }
 }
+
 </script>
 </body>
 </html>
