@@ -21,6 +21,39 @@
     $locaisArray = getLocais();
     $assuntosArray = getAssuntos();
     $pessoasArray = getPessoas();
+    $paises=getPaises();
+    $estados=getStates();
+    $cidades=getCities();
+    echo "<script>";
+    echo "let states=[];";
+    echo "let cities=[];";
+    echo "let paises=[];";
+    foreach($paises as $pais){
+      echo "pais={";
+      echo "codigo:$pais[codigo],";
+      echo "nome:\"$pais[nome]\"";
+      echo "};";
+      echo "paises.push(pais);";
+    }
+    foreach($estados as $estado){
+      echo "estado={";
+      echo "pais:$estado[pais],";
+      echo "codigo:$estado[codigo],";
+      echo "nome:\"$estado[nome]\"";
+      echo "};";
+      echo "states.push(estado);";
+    }
+    foreach($cidades as $cidade){
+      echo "cidade={";
+      echo "uf:$cidade[uf],";
+      echo "codigo:$cidade[codigo],";
+      echo "nome:\"$cidade[nome]\"";
+      echo "};";
+      echo "cities.push(cidade);";
+    }
+    echo "estado=null;";
+    echo "cidade=null;";
+  echo "</script>";
     $suggestFriends = suggestFriends($_SESSION['userid'], 4, 0);
     $postsArray = getPosts($_SESSION['userid'], 0, 30);
     $portosArray = getAllPorto($_SESSION['userid'], true, 0, 3);
@@ -179,7 +212,7 @@
           echo "</select>";
           echo "<input id=\"value-localId\" name=\"select-local-value\" class=hidden>";
           echo "<button id=\"select-local-button\"  class=\"confirm-type\" type=\"button\" onclick=\"addLocal()\">Confirmar</button>";
-          echo "<table id=\"tableLocal\" border=\"1\" name=\"tableLocal\"></table>";
+          echo "<div class=\"comment-container-top\" id=\"divCidade\"></div>";
         echo "</div>";
         echo "<div class=\"post-divPessoas\">";
           echo "<select id=\"select-pessoas\" onclick=\"unsetError(this)\">";
@@ -188,7 +221,7 @@
             }
           echo "</select>";
           echo "<button id=\"select-pessoa-button\"  class=\"confirm-type\" type=\"button\" onclick=\"addPessoas()\">Confirmar</button>";
-          echo "<table id=\"tablePessoas\" border=\"1\" name=\"tablePessoas\"></table>";
+          echo "<div class=\"comment-container-top\" id=\"divPessoas\"></div>";
         echo "</div>";
         echo "<div class=\"post-divAssuntos\">";
           echo "<select id=\"select-assuntos\" onclick=\"unsetError(this)\">";
@@ -198,8 +231,8 @@
             echo "<option value=\"0\">Outro</option>";
           echo "</select>";
           echo "<button id=\"select-assunto-button\"  class=\"confirm-type\" type=\"button\" onclick=\"addAssuntos()\">Confirmar</button>";
-          echo "<table id=\"tableAssuntos\" border=\"1\" name=\"tableAssuntos\"></table>";
-        echo "</div>";
+          echo "<div class=\"comment-container-top\" id=\"divAssuntos\"></div>";
+          echo "</div>";
       echo "</form>";
     echo "</div>";
 
@@ -462,20 +495,52 @@ var tmpLocal = 0;
 function addLocal(){
     var local = document.getElementById('select-local').value;
     local = JSON.parse(local);
-    var table = document.getElementById('tableLocal');
+    var div = document.getElementById('divCidade');
+    if(local !== 0){
     var option = document.getElementById('optionLocal'+local.id);
     option.remove();
     tmpLocal = local.id;
-    table.innerHTML += `<tr id="row${local.id}"><td>${local.name}<input type="hidden" value="${local.id}" name="local" /></td><td><button onclick="removeLocal('${local.id}', '${local.name}')">❌</button></td></tr>`;
+    const p = document.createElement('p')
+    p.id='local'+local.id
+    p.innerHTML += `${local.name} <button type="button" onclick="removeLocal('${local.id}', '${local.name}')">❌</button>`;
+    div.append(p)
+    }else{
+      const buttonAddCidade = document.createElement('button')
+      buttonAddCidade.textContent='adicioar cidade';
+      buttonAddCidade.id = 'buttonCidade';
+      buttonAddCidade.type = 'button';
+      // button.onclick = () => {  }
+      const inputCidade = document.createElement('input')
+    inputCidade.id='InputCidade'
+    inputCidade.className='StylesInputs'
+    inputCidade.placeholder='cidade'
+    const inputEstado = document.createElement('input')
+    inputEstado.id='InputEstado'
+    inputEstado.className='StylesInputs'
+    inputEstado.placeholder='estado'
+    const selectPais = document.createElement('select')
+    selectPais.id='Inputpais'
+    selectPais.className='StylesInputs'
+    for(c=0;c<paises.length;c++){
+      const options = document.createElement('option')
+      options.value = paises[c].codigo
+      options.innerHTML = paises[c].nome
+      selectPais.append(options)
+    }
+    div.append(inputCidade)
+    div.append(inputEstado)
+    div.append(selectPais)
+    div.append(buttonAddCidade)
+    }
     document.getElementById('select-local').disabled = true;
     document.getElementById('select-local-button').disabled = true;
 }
 function removeLocal(id, name){
-    var table = document.getElementById('tableLocal');
-    var row = document.getElementById('row'+id);
+    var div = document.getElementById('divCidade');
+    var p = document.getElementById('local'+id);
     var select = document.getElementById('select-local');
     select.innerHTML += `<option id='optionLocal${id}' value='{ "id": "${id}", "name": "${name}" }'>${name}</option>\n`;
-    row.remove();
+    p.remove();
     tmpLocal = 0;
     document.getElementById('select-local').disabled = false;
     document.getElementById('select-local-button').disabled = false;
@@ -485,18 +550,21 @@ var pessoas = [];
 function addPessoas(){
     var pessoa = document.getElementById('select-pessoas').value;
     pessoa = JSON.parse(pessoa);
-    var table = document.getElementById('tablePessoas');
+    var div = document.getElementById('divPessoas');
     var option = document.getElementById('optionPessoa'+pessoa.id);
     option.remove();
     pessoas.push(pessoa.id);
-    table.innerHTML += `<tr id="row${pessoa.id}"><td>${pessoa.name}<input type="hidden" value="${pessoa.id}" name="pessoa${pessoa.id}" /></td><td><button onclick="removePessoas('${pessoa.id}', '${pessoa.name}')">❌</button></td></tr>`;
+    const p = document.createElement('p')
+    p.id='pessoas'+pessoa.id
+    p.innerHTML += `${pessoa.name} <button type="button" onclick="removePessoas('${pessoa.id}', '${pessoa.name}')">❌</button>`;
+    div.append(p)
 }
 function removePessoas(id, name){
-    var table = document.getElementById('tablePessoas');
-    var row = document.getElementById('row'+id);
+    var div = document.getElementById('divPessoas');
+    var p = document.getElementById('pessoas'+id);
     var select = document.getElementById('select-pessoas');
     select.innerHTML += `<option id='optionPessoa${id}' value='{ "id": "${id}", "name": "${name}" }'>${name}</option>\n`;
-    row.remove();
+    p.remove();
     for(var i = 0; i < pessoas.length; i++){ 
         if ( pessoas[i] == id) {
             pessoas.splice(i, 1); 
@@ -508,23 +576,45 @@ var assuntos = [];
 function addAssuntos(){
     var assunto = document.getElementById('select-assuntos').value;
     assunto = JSON.parse(assunto);
-    var table = document.getElementById('tableAssuntos');
+    var div = document.getElementById('divAssuntos');
+    if(assunto !== 0){
     var option = document.getElementById('optionAssunto'+assunto.id);
     option.remove();
     assuntos.push(assunto.id);
-    table.innerHTML += `<tr id="row${assunto.id}"><td>${assunto.name}<input type="hidden" value="${assunto.id}" name="assunto${assunto.id}" /></td><td><button onclick="removeAssuntos('${assunto.id}', '${assunto.name}')">❌</button></td></tr>`;
-}
+    const p = document.createElement('p')
+    p.id='assunto'+assunto.id
+    p.innerHTML += `${assunto.name} <button type="button" onclick="removeAssuntos('${assunto.id}', '${assunto.name}')">❌</button>`;
+    div.append(p)
+    } else{
+      const buttonAddAssuntos = document.createElement('button')
+      buttonAddAssuntos.textContent='adicioar assunto';
+      buttonAddAssuntos.id = 'buttonAssunto';
+      buttonAddAssuntos.type = 'button';
+      // button.onclick = () => {  }
+      const inputAssunto = document.createElement('input')
+    inputAssunto.id='InputCidade'
+    inputAssunto.className='StylesInputs'
+    inputAssunto.placeholder='adicione o assunto'
+    div.append(inputAssunto)
+    div.append(buttonAddAssuntos)
+    document.getElementById('select-assunto').disabled = true;
+    document.getElementById('select-assunto-button').disabled = true;
+    }
+  }
 function removeAssuntos(id, name){
-    var table = document.getElementById('tableAssuntos');
-    var row = document.getElementById('row'+id);
+    var div = document.getElementById('divAssuntos');
+    var p = document.getElementById('assunto'+id);
     var select = document.getElementById('select-assuntos');
     select.innerHTML += `<option id='optionAssunto${id}' value='{ "id": "${id}", "name": "${name}" }'>${name}</option>\n`;
-    row.remove();
+    p.remove();
     for(var i = 0; i < assuntos.length; i++){ 
         if ( assuntos[i] == id) {
             assuntos.splice(i, 1); 
         }    
     }
+}
+function unsetError(){
+  console.log('rosca direta')
 }
 
 </script>

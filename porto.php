@@ -133,7 +133,7 @@
       echo "<p class=portoTitle>$portoInfo[nome]</p>";
       echo "<div class=\"portoDesc\"><p>$portoInfo[descr]</p></div>";
       echo "<form action=\"porto.php?porto=$portoInfo[codigo]\" name=\"porto-form\" method=\"post\" >";
-      if($portoInfo['participa']  && !$portoInfo['owner']){
+      if($portoInfo['participa'] && !$portoInfo['owner']){
         echo "<button class=\"porto-sair-btn\"><p class=\"porto-entrar-btn-txt\">Sair</p></button>";
         echo "<input type=\"hidden\" name=\"sairPorto\" value=\"sair\"/>";
       }
@@ -183,6 +183,7 @@
     <div class="container-center">
     <?php
       // initial insert post
+      // if usuário ta no grupo.
     echo "<div class=\"insert-interacao\">";
       echo "<div class=\"insert-interacao-user\">";
         echo "<img class=\"interaction-mainuser-user-icon\" src=\"".$user["img"]."\" alt=\"\" srcset=\"\">";
