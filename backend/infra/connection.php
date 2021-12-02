@@ -1378,18 +1378,30 @@
             if($db_type=='sqlite'){
                 $results=[];
                 $result=$db->query("
-                select porto.codigo as codigo, porto.nome as nome, porto.descr as descr, porto.img as img, tmp1.participa as participa from porto
-                    join (select porto.codigo as porto, porto_participa.perfil as perfil, case 
-                        when porto.perfil = $user or (porto_participa.perfil = $user and porto_participa.ativo = 1)  then true
-                        else false
-                    end as participa from porto
-                        left join porto_participa on porto.codigo = porto_participa.porto
-                    group by porto.codigo
-                    order by porto_participa.dataregis desc) as tmp1 on porto.codigo = tmp1.porto
+                select 
+                    porto.codigo as codigo, 
+                    porto.nome as nome, 
+                    porto.descr as descr, 
+                    porto.img as img, 
+                    tmp1.participa as participa 
+                from porto
+                    left join (
+                        select case 
+                                when porto.perfil = perfil.codigo or (porto_participa.perfil = perfil.codigo and porto_participa.ativo = 1) then true
+                                else false
+                            end as participa,
+                            porto.codigo as porto
+                        from porto 
+                            left join porto_participa on porto.codigo = porto_participa.porto
+                            left join perfil on porto_participa.perfil = perfil.codigo
+                        where 
+                            porto_participa.ativo = 1 and
+                            perfil.codigo = $user
+                    ) as tmp1 on porto.codigo = tmp1.porto
                 where 
                     porto.ativo = 1
                     ".($isOwner ? " and participa = true" : "")."
-                 limit $limit offset $offset");
+                limit $limit offset $offset");
                 while ($row = $result->fetchArray()) {
                     array_push($results,$row);
                 }
@@ -1397,18 +1409,30 @@
             }
             if($db_type=='postgresql'){
                 $result=pg_fetch_all(pg_query($db, "
-                select porto.codigo as codigo, porto.nome as nome, porto.descr as descr, porto.img as img, tmp1.participa as participa from porto
-                    join (select porto.codigo as porto, porto_participa.perfil as perfil, case 
-                        when porto.perfil = $user or (porto_participa.perfil = $user and porto_participa.ativo = 1)  then true
-                        else false
-                    end as participa from porto
-                        left join porto_participa on porto.codigo = porto_participa.porto
-                    group by porto.codigo
-                    order by porto_participa.dataregis desc) as tmp1 on porto.codigo = tmp1.porto
+                select 
+                    porto.codigo as codigo, 
+                    porto.nome as nome, 
+                    porto.descr as descr, 
+                    porto.img as img, 
+                    tmp1.participa as participa 
+                from porto
+                    left join (
+                        select case 
+                                when porto.perfil = perfil.codigo or (porto_participa.perfil = perfil.codigo and porto_participa.ativo = 1) then true
+                                else false
+                            end as participa,
+                            porto.codigo as porto
+                        from porto 
+                            left join porto_participa on porto.codigo = porto_participa.porto
+                            left join perfil on porto_participa.perfil = perfil.codigo
+                        where 
+                            porto_participa.ativo = 1 and
+                            perfil.codigo = $user
+                    ) as tmp1 on porto.codigo = tmp1.porto
                 where 
                     porto.ativo = 1
                     ".($isOwner ? " and participa = true" : "")."
-                 limit $limit offset $offset"));
+                limit $limit offset $offset"));
                 return $result;
             }
         }
@@ -1514,10 +1538,17 @@
                     perfil.codigo as codAdm, 
                     perfil.username as nomeAdm, 
                     perfil.img as imgAdm, 
-                    case 
-                        when porto.perfil = $user or (porto_participa.perfil = $user and porto_participa.ativo = 1) then true
+                    (select case 
+                        when porto.perfil = perfil.codigo or (porto_participa.perfil = perfil.codigo and porto_participa.ativo = 1) then true
                         else false
-                    end as participa,
+                    end as participa
+                    from perfil 
+                        join porto_participa on perfil.codigo = porto_participa.perfil
+                        join porto on porto_participa.porto = porto.codigo
+                    where 
+                        porto_participa.ativo = 1 and
+                        perfil.codigo = $user and
+                        porto.codigo = $porto) as participa,
                     case 
                         when porto.perfil = $user then true
                         else false
@@ -1537,21 +1568,27 @@
                 if($db_type == 'postgresql'){
                     $response = pg_query($db,"
                     select 
-                        porto.codigo as codigo, 
-                        porto.nome as nome, 
-                        porto.descr as descr, 
-                        porto.img as img, 
-                        perfil.codigo as codAdm, 
-                        perfil.username as nomeAdm, 
-                        perfil.img as imgAdm, 
-                        case 
-                            when porto.perfil = $user or (porto_participa.perfil = $user and porto_participa.ativo = 1) then true
-                            else false
-                        end as participa,
-                        case 
-                            when porto.perfil = $user then true
-                            else false
-                        end as owner
+                    porto.codigo as codigo, 
+                    porto.nome as nome, 
+                    porto.descr as descr, 
+                    porto.img as img, 
+                    perfil.codigo as codAdm, 
+                    perfil.username as nomeAdm, 
+                    perfil.img as imgAdm, 
+                    (select case 
+                        when porto.perfil = perfil.codigo or (porto_participa.perfil = perfil.codigo and porto_participa.ativo = 1) then true
+                        else false
+                    end as participa
+                    from perfil 
+                        join porto_participa on perfil.codigo = porto_participa.perfil
+                        join porto on porto_participa.porto = porto.codigo
+                    where 
+                        porto_participa.ativo = 1 and
+                        perfil.codigo = $user) as participa,
+                    case 
+                        when porto.perfil = $user then true
+                        else false
+                    end as owner
                     from porto
                         join perfil on porto.perfil = perfil.codigo
                         left join porto_participa on porto.codigo = porto_participa.porto

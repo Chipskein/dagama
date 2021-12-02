@@ -52,8 +52,12 @@
  <header class="header-main">
     <img class="header-icon" src="imgs/icon.png" alt="">
     <div class="header-searchBar">
-      <img class="header-searchBar-icon" src="imgs/icons/search.png" alt="" srcset="">
+      <select id="select-filtro" name="select-filtro">
+        <option value="nome">Nome</option>
+        <option value="data">Data</option>
+      </select>
       <input class="header-searchBar-input" type="text" placeholder="Faça sua pesquisa ..." />
+      <img class="header-searchBar-icon" src="imgs/icons/search.png" alt="" srcset="">
     </div>
     <div class="header-links">
     <?php 
@@ -69,10 +73,21 @@
     <!--Add onlick change-->
     <div class="container-center">
     <?php
-      echo "<div class=\"header-searchBar\">";
-      echo "<img class=\"header-searchBar-icon\" src=\"imgs/icons/search.png\">";
-      echo "<input class=\"header-searchBar-input\" type=text placeholder=\"digite o nome do seu amigo\" />";
-      echo "</div><br>";
+      echo "<div class=\"mar-top-row\">";
+        echo "<div class=\"order-btn\">";
+        echo "<select id=\"select-ordenar\" name=\"select-ordenar\">";
+          echo "<option value=\"nome\">Nome</option>";
+          echo "<option value=\"data\">Data de criação</option>";
+          echo "<option value=\"qtd\">Qtd interacoes</option>";
+        echo "</select>";
+        echo "<select id=\"select-ordenar-2\" name=\"select-ordenar-2\">";
+          echo "<option value=\"cres\">Cres</option>";
+          echo "<option value=\"decre\">Decre</option>";
+        echo "</select>";
+        echo "<button class=\"insert-interacao-submit\" name=\"ordenarBtn\">Ordenar<button/>";
+        echo "<button class=\"btn-create-porto\"><a href=\"createPorto.php\">Criar um porto</a></button>";
+        echo "</div>";
+      echo "</div>";
       if(!isset($_GET['user']) && count($amigos) > 0){
         echo "<a href=solicitacoes.php class=header>Você tem ".count($amigos)." solicitações</a>";
       } else {
