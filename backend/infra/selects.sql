@@ -455,7 +455,6 @@ from perfil
 join interacao on perfil.codigo=interacao.perfil
 where 
 interacao.isReaction is not null and 
-interacao.emote='sad' and 
 interacao.post is not null
 ;
 
