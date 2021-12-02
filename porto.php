@@ -114,8 +114,16 @@
   <header class="header-main">
     <img class="header-icon" src="imgs/icon.png" alt="">
     <div class="header-searchBar">
-      <img class="header-searchBar-icon" src="imgs/icons/search.png" alt="" srcset="">
+      <select id="select-filtro" name="select-filtro">
+        <option value="perfil">Perfil</option>
+        <option value="porto">Porto</option>
+        <option value="reacao">Reação</option>
+        <option value="assunto">Assunto</option>
+        <option value="local">Local</option>
+        <option value="data">Data</option>
+      </select>
       <input class="header-searchBar-input" type="text" placeholder="Faça sua pesquisa ..." />
+      <img class="header-searchBar-icon" src="imgs/icons/search.png" alt="" srcset="">
     </div>
     <div class="header-links">
       <?php 
@@ -233,8 +241,20 @@
       echo "</form>";
     echo "</div>";
 
+    
     // posts
     if($postsArray){
+      echo "<div class=\"order-btn\">";
+      echo "<select id=\"select-ordenar\" name=\"select-ordenar\">";
+        echo "<option value=\"data\">Data</option>";
+        echo "<option value=\"qtd\">Qtd interacoes</option>";
+      echo "</select>";
+      echo "<select id=\"select-ordenar-2\" name=\"select-ordenar-2\">";
+        echo "<option value=\"cres\">Cres</option>";
+        echo "<option value=\"decre\">Decre</option>";
+      echo "</select>";
+      echo "<button class=\"insert-interacao-submit\" name=\"ordenarBtn\">Ordenar<button/>";
+      echo "</div>";
       foreach ($postsArray as $post) {
         echo "<div class=\"div-post\">";
           // if($post['codPorto']){
@@ -411,7 +431,7 @@
             //   echo "<p>2</p><img src=\"imgs/icons/send.png\" class=\"div-post-icons-bar-icons\" alt=\"\">";
             // echo "</div>";
             echo "<div class=\"div-post-icons-bar-interagir\">";
-              echo "<a href=navio.php?user=$user[codigo]><img src=\"$user[img]\" class=\"div-post-icons-bar-interagir-icon\" alt=\"\"></a><p>Interagir...</p>";
+              echo "<a href=\"interagirInteracao.php?interacao=$post[codInteracao]\"><img src=\"$user[img]\" class=\"div-post-icons-bar-interagir-icon\" alt=\"\"><p>Interagir...</p></a>";
             echo "</div>";
           echo "</div>";
           echo "<br><br>";
@@ -427,7 +447,7 @@
                   echo ", em ".$elem['dataPost'];
                   echo "</p>";
                 echo "</div>";
-                echo "<div class=\"comment-reagir\"><p>Reagir</p></div>";
+                echo "<div class=\"comment-reagir\"><a href=\"interagirInteracao.php?interacao=$elem[codInteracao]\">Reagir</a></div>";
               echo "</div>";
             }
           }

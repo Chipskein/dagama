@@ -963,6 +963,10 @@ main {
 	padding-left: 3px;
 	padding-right: 10px;
 }
+.div-post-icons-bar-interagir a {
+	display: flex;
+	flex-direction: row;
+}
 .div-post-icons-bar-interagir p {
 	color: #000;
 }
@@ -1007,6 +1011,9 @@ main {
 .comment-reagir{
 	margin-top: -20px;
 	margin-left: 50px;
+	color: var(--azulClaro-color);
+}
+.comment-reagir a {
 	color: var(--azulClaro-color);
 }
 

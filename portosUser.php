@@ -30,7 +30,13 @@
       $portos = getUserPorto($_SESSION['userid'], $offset, $limit);
       // var_dump($portos);
     } else {
-      $portos = getAllPorto($_SESSION['userid'], true, $offset, $limit);
+      if(isset($_GET['user'])){
+        if($_SESSION['userid'] == $_GET['user']){
+          $portos = getAllPorto($_SESSION['userid'], true, $offset, $limit);
+        } else {
+          $portos = getAllPorto($_GET['user'], true, $offset, $limit);          
+        }
+      }
     }
     $total=getTotalPorto();
   }
@@ -42,9 +48,14 @@
 ?>
    <header class="header-main">
     <img class="header-icon" src="imgs/icon.png" alt="">
-    <div class="header-searchBar">
-      <img class="header-searchBar-icon" src="imgs/icons/search.png" alt="" srcset="">
+     <div class="header-searchBar">
+      <select id="select-filtro" name="select-filtro">
+        <option value="nome">Nome</option>
+        <option value="qtdPart">Qtd participantes</option>
+        <option value="participando">Participando</option>
+      </select>
       <input class="header-searchBar-input" type="text" placeholder="Faça sua pesquisa ..." />
+      <img class="header-searchBar-icon" src="imgs/icons/search.png" alt="" srcset="">
     </div>
     <div class="header-links">
     <?php 
@@ -65,11 +76,22 @@
           echo "<h1>Seus portos e portos atracados</h1>";
         }
       ?>
-      <div class="mar-top-row">
-        <div class="order-btn"><img src="./imgs/icons/hamburger.png" class="order-btn-icon" alt="" srcset=""><p class="order-btn-txt">Ordenar</p></div>
-        <button class="btn-create-porto"><a href="createPorto.php">Criar um porto</a></button>
-      </div>
       <?php
+      echo "<div class=\"mar-top-row\">";
+        echo "<div class=\"order-btn\">";
+        echo "<select id=\"select-ordenar\" name=\"select-ordenar\">";
+          echo "<option value=\"nome\">Nome</option>";
+          echo "<option value=\"data\">Data de criação</option>";
+          echo "<option value=\"qtd\">Qtd interacoes</option>";
+        echo "</select>";
+        echo "<select id=\"select-ordenar-2\" name=\"select-ordenar-2\">";
+          echo "<option value=\"cres\">Cres</option>";
+          echo "<option value=\"decre\">Decre</option>";
+        echo "</select>";
+        echo "<button class=\"insert-interacao-submit\" name=\"ordenarBtn\">Ordenar<button/>";
+        echo "<button class=\"btn-create-porto\"><a href=\"createPorto.php\">Criar um porto</a></button>";
+        echo "</div>";
+      echo "</div>";
         foreach($portos as $porto){
           echo "<div class=mar_porto>";
             echo "<div class=\"porto-icon\" style=\"background-image: url($porto[img])\"></div>";
@@ -77,13 +99,13 @@
             echo "<div class=text-porto> <p class=mar_porto>$porto[descr] </p> </div>";
             echo "<form action=\"porto.php?porto=$porto[codigo]\" name=\"porto-form\" method=\"post\" >";
             if(!isset($_GET['owner'])){
-              if($porto['participa']){
-                echo "<button class=\"insert-interacao-participa\"> <p class=\"insert-interacao-entrar-text\">Participando</p></button>";
-                echo "<input type=\"hidden\" name=\"sairPorto\" value=\"sair\"/>";
-              } else {
-                echo "<button class=\"insert-interacao-entrar\">Entrar</button>";
-                echo "<input type=\"hidden\" name=\"entrarPorto\" value=\"entrar\"/>";
-              }
+              // if($porto['participa']){
+              //   echo "<button class=\"insert-interacao-participa\"> <p class=\"insert-interacao-entrar-text\">Participando</p></button>";
+              //   echo "<input type=\"hidden\" name=\"sairPorto\" value=\"sair\"/>";
+              // } else {
+              //   echo "<button class=\"insert-interacao-entrar\">Entrar</button>";
+              //   echo "<input type=\"hidden\" name=\"entrarPorto\" value=\"entrar\"/>";
+              // }
             } else {
               echo "<button class=\"insert-interacao-del\">Deletar</button>";
               echo "<input type=\"hidden\" name=\"excluirPorto\" value=\"deletar\"/>";

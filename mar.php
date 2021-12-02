@@ -54,8 +54,13 @@
    <header class="header-main">
     <img class="header-icon" src="imgs/icon.png" alt="">
     <div class="header-searchBar">
-      <img class="header-searchBar-icon" src="imgs/icons/search.png" alt="" srcset="">
+      <select id="select-filtro" name="select-filtro">
+        <option value="nome">Nome</option>
+        <option value="qtdPart">Qtd participantes</option>
+        <option value="participando">Participando</option>
+      </select>
       <input class="header-searchBar-input" type="text" placeholder="Faça sua pesquisa ..." />
+      <img class="header-searchBar-icon" src="imgs/icons/search.png" alt="" srcset="">
     </div>
     <div class="header-links">
     <?php 
@@ -70,11 +75,22 @@
     <br>
     <div align=center>
     <h1>Mar de portos</h1>
-      <div class="mar-top-row">
-        <div class="order-btn"><img src="./imgs/icons/hamburger.png" class="order-btn-icon" alt="" srcset=""><p class="order-btn-txt">Ordenar</p></div>
-        <button class="btn-create-porto"><a href="createPorto.php">Criar um porto</a></button>
-      </div>
-      <?php
+    <?php
+      echo "<div class=\"mar-top-row\">";
+        echo "<div class=\"order-btn\">";
+        echo "<select id=\"select-ordenar\" name=\"select-ordenar\">";
+          echo "<option value=\"nome\">Nome</option>";
+          echo "<option value=\"data\">Data de criação</option>";
+          echo "<option value=\"qtd\">Qtd interacoes</option>";
+        echo "</select>";
+        echo "<select id=\"select-ordenar-2\" name=\"select-ordenar-2\">";
+          echo "<option value=\"cres\">Cres</option>";
+          echo "<option value=\"decre\">Decre</option>";
+        echo "</select>";
+        echo "<button class=\"insert-interacao-submit\" name=\"ordenarBtn\">Ordenar<button/>";
+        echo "<button class=\"btn-create-porto\"><a href=\"createPorto.php\">Criar um porto</a></button>";
+        echo "</div>";
+      echo "</div>";
         foreach($portos as $porto){
           echo "<div class=mar_porto>";
             echo "<div class=\"porto-icon\" style=\"background-image: url($porto[img])\"></div>";
