@@ -26,8 +26,9 @@
     $portosArray = getAllPorto($_SESSION['userid'], true, 0, 3);
     $errorMessage = [];
     if(isset($_POST['novoPost'])){
+      print_r($_GET['local3']);
       $texto = "$_POST[texto]";
-      addInteracao($_SESSION['userid'], $texto);
+      addInteracao($_SESSION['userid'], $texto, ['vitao', "silMusk"], ["outro", "fanboy"], "Rio grande" );
     }
 
     // var_dump($_POST);
@@ -126,10 +127,13 @@
     echo "<div class=\"insert-interacao\">";
       echo "<div class=\"insert-interacao-user\">";
         echo "<img class=\"interaction-mainuser-user-icon\" src=\"".$user["img"]."\" alt=\"\" srcset=\"\">";
+        echo "<div>";
         echo "<p class=\"insert-interacao-user-name\">".$user["username"].":</p>";
-      echo "</div>";
+        echo "<p class=\"insert-interacao-user-assuntos\"></p>";
+        echo "</div>";
+        echo "</div>";
       echo "<form name=\"newPost\" action=\"feed.php?user=$_SESSION[userid]\" method=\"post\" >";
-        echo "<textarea name=\"texto\" class=\"insert-interacao-input\" type=\"text\" placeholder=\"Escreva um post ...\" ></textarea>";
+        echo "<textarea name=\"texto\" class=\"insert-interacao-input\" id=\"insert-interacao-input\" type=\"text\" placeholder=\"Escreva um post ...\" ></textarea>";
         echo "<div class=\"insert-interacao-smallBtns\">";
           echo "<div class=\"insert-interacao-smallBtns-a\" onclick=\"newPostSelect('local')\"><img class=\"insert-interacao-smallBtns-icon\" src=\"imgs/icons/maps-and-flags.png\" alt=\"\" srcset=\"\">Adicionar um Local</div>";
           echo "<div class=\"insert-interacao-smallBtns-a\" onclick=\"newPostSelect('pessoas')\"><img class=\"insert-interacao-smallBtns-icon\" src=\"imgs/icons/multiple-users-silhouette.png\" alt=\"\" srcset=\"\">Citar Pessoas</div>";
@@ -138,17 +142,18 @@
         echo "<input class=\"insert-interacao-submit\" type=\"submit\" name=\"novoPost\" />";
         echo "<hr id=\"post-hr\" class=\"post-hr\" >";
         echo "<div class=\"post-divLocal\">";
-        echo "<input list=\"local\">";
-        echo "<datalist id=\"local\" name=\"local\">";
+        echo "<input list=\"local\" id=\"local3\"> ";
+        echo "<datalist id=\"local\">";
           foreach ($locaisArray as $value) {
             echo "<option value=\"".$value['nomeCidade']."\"></option>";
           }
           echo "<option value=\"Outro\">";
         echo "</datalist>";
+        echo "<input id=\"value-localId\" name=\"value-localName\" class=hidden>";
+        echo "<button class=\"confirm-type\" type=\"button\" onclick=\"addLocal()\">Confirmar</button>";
         echo "</div>";
-          
         echo "<div class=\"post-divPessoas\">";
-        echo "<input list=\"pessoas\">";
+        echo "<input list=\"pessoas\" id=\"pessoasId\">";
         echo "<datalist id=\"pessoas\" name=\"pessoas\">";
           foreach ($pessoasArray as $value) {
             echo "<option value=\"".$value['username']."\">";
@@ -156,18 +161,21 @@
             echo $value['username']."</option>";
           }
         echo "</datalist>";
+        echo "<button class=\"confirm-type\" type=button onclick=\"addPessoas()\">Confirmar</button>";
+        echo "<input id=\"value-PessoasId\" name=\"value-AssuntosName\" class=hidden>";
         echo "</div>";
 
         echo "<div class=\"post-divAssuntos\">";
-        echo "<input list=\"assuntos\">";
+        echo "<input list=\"assuntos\" id=\"assuntosId\">";
         echo "<datalist id=\"assuntos\" name=\"assuntos\">";
         foreach ($assuntosArray as $value) {
           echo "<option value=\"".$value['nome']."\">";
         }
         echo "<option value=\"Outro\">";
         echo "</datalist>";
+        echo "<button class=\"confirm-type\" type=button onclick=\"addAssuntos()\">Confirmar</button>";
+        echo "<input id=\"value-AssuntosId\" name=\"value-AssuntosName\" class=hidden>";
         echo "</div>";
-
       echo "</form>";
     echo "</div>";
 
@@ -364,6 +372,51 @@
           >>
 </footer>  
 <!-- <div onclick="openModal('abrirModal')" ><p>Open Modal</p></div> -->
-<script src="functions.js"></script>
+<script src="functions.js">
+</script>
+<script>
+    let local = ''
+  function addLocal() {
+    if(local === ''){
+    local = document.getElementById('local3').value;
+    let inputHidden = document.getElementById('value-localId').value;
+    inputHidden = local
+    let bgl = document.getElementsByClassName('insert-interacao-user-name');
+    bgl[0].innerHTML = bgl[0].innerHTML + ' ' + local
+    }
+}
+let assuntos = ''
+function addAssuntos() {
+    if(assuntos === ''){
+    assuntos = document.getElementById('assuntosId').value;
+    let inputHidden = document.getElementById('value-AssuntosId').value;
+    inputHidden = assuntos
+    let bgl = document.getElementsByClassName('insert-interacao-user-assuntos');
+    bgl[0].innerHTML =  assuntos
+    } else { 
+      assuntos = document.getElementById('assuntosId').value;
+      let inputHidden = document.getElementById('value-AssuntosId').value;
+      inputHidden = assuntos
+      let bgl = document.getElementsByClassName('insert-interacao-user-assuntos');
+      bgl[0].innerHTML = bgl[0].innerHTML + ', ' + assuntos}
+}
+// let pessoas = ''
+function addPessoas() {
+    // if(pessoas === ''){
+    pessoas = document.getElementById('pessoasId').value;
+    // let inputHidden = document.getElementById('value-PessoasId').value;
+    // inputHidden = pessoas
+    let bgl = document.getElementById('insert-interacao-input');
+    console.log(bgl.value)
+    bgl.value = " @" + pessoas + bgl.value + " "
+    // } 
+    // else { 
+      // pessoas = document.getElementById('pessoasId').value;
+      // let inputHidden = document.getElementById('value-AssuntosId').value;
+      // inputHidden = pessoas
+      // let bgl = document.getElementsByClassName('insert-interacao-input');
+      // bgl[0].innerHTML = bgl[0].innerHTML + ', ' + pessoas}
+}
+</script>
 </body>
 </html>

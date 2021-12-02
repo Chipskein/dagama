@@ -307,6 +307,14 @@ a {
 	.hide-visibility{
 		display: none;
 	}
+	.confirm-type {
+		background-color: var(--azulClaro-color);
+		color: white;
+		padding: 5px;
+		border-radius: 100px;
+		width: 10%;
+		margin-left: 10px;
+	}
 /*</index.php>*/
 /*--------------------------------------------------------------------------------------------------------------*/
 /*<mar.php>*/
@@ -650,7 +658,7 @@ main {
 		position: absolute;
 		margin-left:7% ;
 	}
-	#direta {
+	#direita {
 		height: 100%;
 		grid-area: a1;
 	}
@@ -731,7 +739,7 @@ main {
 }
 .insert-interacao {
 	background-color: var(--cinza-color);
-	width: 800px;
+	width: 909px;
 	height: 262px;
 	padding: 10px;
 	padding-left: 20px;
@@ -1050,7 +1058,11 @@ main {
 	margin-left: 10px;
 	margin-right: 10px;
 }
-
+.insert-interacao-user-assuntos {
+	font-weight: bold;
+	margin-top: -10px;
+	margin-left: 10px;
+}
 /*</feed.php>*/
 /*--------------------------------------------------------------------------------------------------------------------------------------*/
 /*</porto.php>*/
@@ -1059,16 +1071,15 @@ main {
 }
 .container-aside-porto {
 	margin-top: 50px;
-	margin-right: 15px;
-	margin-left: 15px;
-	max-height: 500px !important;
+	margin-left:40px;
+	margin-right: 40px;
 	background-color: var(--cinza-color);
 	border-radius: 10px;
 	padding: 15px;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	height: 400px;
+	justify-content: center;
 }
 .porto-img {
 	width: 300px;
@@ -1128,9 +1139,9 @@ main {
 .aside-porto {
 	background-color: var(--cinza-color);
 	border-radius: 10px;
-	width: 210px;
-	margin-left: 15px;
 	margin-top: 50px;
+	margin-left: 100px;
+	margin-right: 100px;
 	padding-bottom: 20px;
 }
 #ademirTxt {

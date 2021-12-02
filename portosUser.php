@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="../imgs/icon.png" type="image/jpg">
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="../responsive.css" media="screen and (max-width: 1680px)"/>
   <title>Dagama | Portos Atracados</title>
 </head>
 <body class="mar_porto">
