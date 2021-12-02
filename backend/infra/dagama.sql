@@ -5343,6 +5343,8 @@ insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, i
 insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, isSharing, emote) values (4, null, 3, null, 'Conta 5 postando no porto 3: Spider-Man is a superhero created by writer-editor Stan Lee and writer-artist Steve Ditko. He first appeared in the anthology comic book Amazing Fantasy #15 in the Silver Age of Comic Books...', null, null, null); 
 insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, isSharing, emote) values (1, null, 3, null, 'Conta 5 postando no porto 3: Spider-Man is a superhero created by writer-editor Stan Lee and writer-artist Steve Ditko. He first appeared in the anthology comic book Amazing Fantasy #15 in the Silver Age of Comic Books...', null, null, null); 
 insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, isSharing, emote) values (4, null, 2, null, 'Quero ver terminar esse bangu até domingo...', 1, null, 'sad'); 
+insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, isSharing, emote) values 
+    (5, null, null, 13, 'dbwlkjawlkdlakndxlklxkqnlkxqnwkjnxw', null, 1, null); 
 
 insert into interacao_assunto (assunto, interacao) values (1, 13), (2, 13), (3,13);
 --porto

@@ -585,9 +585,15 @@
                     interacao.isSharing as isSharing, 
                     interacao.emote as emote,
                     interacao.ativo as ativo,
+                    cidade.nome as nomeCidade,
+                    uf.nome as nomeUF,
+                    pais.nome as nomePais,
                     perfil.codigo as codPerfil, perfil.username as nomePerfil, perfil.img as iconPerfil
                 from interacao
                     join perfil on interacao.perfil = perfil.codigo
+                    left join cidade on interacao.local = cidade.codigo
+                    left join uf on cidade.uf = uf.codigo
+                    left join pais on uf.pais = pais.codigo
                 where 
                     interacao.ativo = 1 and
                     (interacao.perfil_posting = $user or interacao.perfil = $user)
@@ -629,12 +635,25 @@
                     $interacoes[$row['codPost']][$row['codInteracao']] = $row;
                 }
 
+                $results4 = $db->query("
+                    select citacao.interacao as interacao, perfil.codigo as codPerfil, perfil.username as nomePerfil from citacao join perfil on perfil.codigo = citacao.perfil where citacao.ativo = 1
+                ");
+                $citacoes = [];
+                while ($row = $results4->fetchArray()) {
+                    $citacoes[$row['interacao']][$row['codPerfil']] = $row;
+                }
+
                 while ($row = $result->fetchArray()) {
                     $row['assuntos'] = $assuntos[$row['codInteracao']];
                     if(in_array($row['codInteracao'], array_keys($interacoes))){
                         $row['comentarios'] = $interacoes[$row['codInteracao']];
                     } else {
                         $row['comentarios'] = [];
+                    }
+                    if(in_array($row['codInteracao'], array_keys($citacoes))){
+                        $row['citacoes'] = $citacoes[$row['codInteracao']];
+                    } else {
+                        $row['citacoes'] = [];
                     }
                     array_push($results, $row);
                 }
@@ -894,43 +913,60 @@
         $db_type=$db_connection['db_type'];
         if($db){
             if($db_type=='sqlite'){
-                $response = $db->query("
-                select
-                    interacao.codigo as codInteracao, 
-                    interacao.post as codPost, 
-                    interacao.isReaction as isReaction, 
-                    interacao.texto as textoPost, 
-                    interacao.data as dataPost,
-                    interacao.isSharing as isSharing, 
-                    interacao.emote as emote,
-                    interacao.ativo as ativo,
-                    porto.codigo as codPorto,
-                    porto.nome as nomePorto,
-                    perfil.codigo as codPerfil, 
-                    perfil.username as nomePerfil,
-                    perfil.img as iconPerfil
-                from interacao
-                    join perfil on interacao.perfil = perfil.codigo
-                    left join porto on interacao.porto = porto.codigo
-                where interacao.codigo = $post");
-                if($response) {
-                    $response = $response->fetchArray();
-                    $results2 = $db->query("
-                    select interacao.codigo as interacao, assunto.codigo as codAssunto, assunto.nome as nomeAssunto from interacao
-                        left join interacao_assunto on interacao.codigo = interacao_assunto.interacao
-                        left join assunto on interacao_assunto.assunto = assunto.codigo
-                    where
-                        interacao.ativo = 1 and
-                        interacao.codigo = $post");
-                    $assuntos = [];
-                    while ($row = $results2->fetchArray()) {
-                        $assuntos[] = $row;
-                    }
-                    $response['assuntos'] = $assuntos;
-                    return $response;
+                $result = $db->query("
+                    select
+                        interacao.codigo as codInteracao, 
+                        interacao.post as codPost, 
+                        interacao.isReaction as isReaction, 
+                        interacao.texto as textoPost, 
+                        interacao.data as dataPost,
+                        interacao.isSharing as isSharing, 
+                        interacao.emote as emote,
+                        interacao.ativo as ativo,
+                        cidade.nome as nomeCidade,
+                        uf.nome as nomeUF,
+                        pais.nome as nomePais,
+                        porto.codigo as codPorto,
+                        porto.nome as nomePorto,
+                        perfil.codigo as codPerfil, 
+                        perfil.username as nomePerfil,
+                        perfil.img as iconPerfil
+                    from interacao
+                        join perfil on interacao.perfil = perfil.codigo
+                        left join porto on interacao.porto = porto.codigo
+                        left join cidade on interacao.local = cidade.codigo
+                        left join uf on cidade.uf = uf.codigo
+                        left join pais on uf.pais = pais.codigo
+                    where interacao.codigo = $post");
+                
+                $results2 = $db->query("
+                    select citacao.interacao as interacao, perfil.codigo as codPerfil, perfil.username as nomePerfil from citacao join perfil on perfil.codigo = citacao.perfil where citacao.ativo = 1
+                ");
+                $citacoes = [];
+                while ($row = $results2->fetchArray()) {
+                    $citacoes[$row['interacao']][$row['codPerfil']] = $row;
+                }
+                
+                $results3 = $db->query("
+                select interacao.codigo as interacao, assunto.codigo as codAssunto, assunto.nome as nomeAssunto from interacao
+                    left join interacao_assunto on interacao.codigo = interacao_assunto.interacao
+                    left join assunto on interacao_assunto.assunto = assunto.codigo
+                where
+                    interacao.ativo = 1");
+                $assuntos = [];
+                while ($row = $results3->fetchArray()) {
+                    $assuntos[$row['interacao']][$row['codAssunto']] = $row;
+                }
+
+
+                $response = $result->fetchArray();
+                $response['assuntos'] = $assuntos[$response['codInteracao']];
+                if(in_array($response['codInteracao'], array_keys($citacoes))){
+                    $response['citacoes'] = $citacoes[$response['codInteracao']];
                 } else {
-                    return false;
-                }               
+                    $response['citacoes'] = [];
+                }
+                return $response;
             }
             if($db_type=='postgresql'){ // FIXME: tem que deixar igual ao de cima
                 $result=pg_fetch_all(pg_query($db, "
@@ -1614,7 +1650,35 @@
         }
         else exit;
     }
-    // function editarPorto($porto){}
+    function editarPorto($porto,$newname,$newdescr,$newimg,$oldimgid){
+        echo "<pre>";
+        var_dump($porto);
+        var_dump($newname);
+        var_dump($newdescr);
+        var_dump($newimg);
+        echo "</pre>";
+        $db_connection=db_connection();
+        $db=$db_connection['db'];
+        $db_type=$db_connection['db_type'];
+        $FOLDERS=array("root"=>"14oQWzTorITdqsK7IiFwfTYs91Gh_NcjS","avatares"=>"1Z3A4iqIe1eMerkdTEkXnjApRPupaPq-M","portos"=>"1e5T21RxDQ-4Kqw8EDVUBICGPeGIRSNHx","users"=>"1j2ivb8gBxV_AINaQ7FHjbd1OI0otCpEO");
+        $link = null;
+        if($newimg){
+            $type=$newimg['type'];
+            $server_path=$newimg['tmp_name'];
+            $link="https://drive.google.com/uc?export=download&id=".insertFile("$type","$server_path","$FOLDERS[portos]","porto-avatar");
+            if($oldimgid){
+                rmFile($oldimgid);
+            }
+        }
+        if($db){
+            if($db_type == 'sqlite'){
+                $verify = $db->exec("update porto set nome='$newname',descr='$newdescr' ".($link ? ",img='$link'" : " ")." where codigo=$porto and ativo=1");
+                if($verify) return $verify;
+                else return false;
+            }
+        }
+        else exit; 
+    }
     function getPostsOnPorto($porto, $offset, $limit=10){
         $db_connection=db_connection();
         $db=$db_connection['db'];
@@ -1632,10 +1696,16 @@
                     interacao.isSharing as isSharing, 
                     interacao.emote as emote,
                     interacao.ativo as ativo,
+                    cidade.nome as nomeCidade,
+                    uf.nome as nomeUF,
+                    pais.nome as nomePais,
                     perfil.codigo as codPerfil, perfil.username as nomePerfil, perfil.img as iconPerfil
                 from interacao
                     join porto on interacao.porto = porto.codigo
                     join perfil on interacao.perfil = perfil.codigo
+                    left join cidade on interacao.local = cidade.codigo
+                    left join uf on cidade.uf = uf.codigo
+                    left join pais on uf.pais = pais.codigo
                 where 
                     interacao.ativo = 1 and
                     porto.codigo = $porto
@@ -1677,12 +1747,25 @@
                     $interacoes[$row['codPost']][$row['codInteracao']] = $row;
                 }
 
+                $results4 = $db->query("
+                    select citacao.interacao as interacao, perfil.codigo as codPerfil, perfil.username as nomePerfil from citacao join perfil on perfil.codigo = citacao.perfil where citacao.ativo = 1
+                ");
+                $citacoes = [];
+                while ($row = $results4->fetchArray()) {
+                    $citacoes[$row['interacao']][$row['codPerfil']] = $row;
+                }
+
                 while ($row = $result->fetchArray()) {
                     $row['assuntos'] = $assuntos[$row['codInteracao']];
                     if(in_array($row['codInteracao'], array_keys($interacoes))){
                         $row['comentarios'] = $interacoes[$row['codInteracao']];
                     } else {
                         $row['comentarios'] = [];
+                    }
+                    if(in_array($row['codInteracao'], array_keys($citacoes))){
+                        $row['citacoes'] = $citacoes[$row['codInteracao']];
+                    } else {
+                        $row['citacoes'] = [];
                     }
                     array_push($results, $row);
                 }
@@ -1705,6 +1788,7 @@
                 $result = $db->query("                
                 select 
                 porto.codigo as codPorto,
+                porto_participa.dataregis as dataRegis,
                 perfil.codigo as codPart,
                 perfil.username as nomePart,
                 perfil.img as imgPart
@@ -1724,6 +1808,7 @@
                 $result=pg_fetch_all(pg_query($db, "                
                 select 
                 porto.codigo as codPorto,
+                porto_participa.dataregis as dataRegis,
                 perfil.codigo as codPart,
                 perfil.username as nomePart,
                 perfil.img as imgPart
@@ -1881,8 +1966,6 @@
         
         }   
     }
-
-
     function numerosGraficoFem($faixamin, $faixamax, $pais, $mes){
         $db_connection=db_connection();
         $db=$db_connection['db'];

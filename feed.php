@@ -189,7 +189,7 @@
       echo "<div class=\"add-amigo-cards\">";
       foreach ($suggestFriends as $person) {
         echo "<div id=\"card".$person['codigo']."\" class=\"add-amigo-card\">";
-        echo "<img class=\"add-amigo-card-icon\" src=\"".$person['img']."\" alt=\"\" srcset=\"\">";
+        echo "<a href=navio.php?user=$person[codigo]><img class=\"add-amigo-card-icon\" src=\"".$person['img']."\" alt=\"\" srcset=\"\"></a>";
         echo "<p class=\"add-amigo-card-name\">".$person['username']."</p>";
         echo "<form action=\"feed.php?user=$_SESSION[userid]\" method=\"post\" >";
         if($person['enviado'] == 'true' || (isset($_POST['sendFriendRequest']) && $_POST['sendFriendRequest'] == $person['codigo'])){
@@ -224,35 +224,94 @@
             echo "<div class=\"div-sharing-post\">";
               // Sharing-top
               echo "<div class=\"div-sharing-post-top\">";
-                echo "<img src=\"".$sharedPost['iconPerfil']."\" alt=\"\" class=\"div-sharing-post-top-icon\">";
-                echo "<div class=\"div-sharing-post-top-infos\">";
-                  echo "<p class=\"div-sharing-post-top-username\"><i>@".$sharedPost['nomePerfil']."</i> ".$sharedPost['dataPost']."</p>";
-                  echo "<p class=\"div-sharing-post-top-subjects\"><b>";
+                echo "<a href=navio.php?user=$sharedPost[codPerfil]><img src=\"".$sharedPost['iconPerfil']."\" alt=\"\" class=\"div-sharing-post-top-icon\"></a>";
+                echo "<div class=\"div-post-top-infos\">";
+                  echo "<p class=\"div-post-top-username\"><i>@".$sharedPost['nomePerfil']."</i>";
+                  if($sharedPost['nomeCidade']){
+                    echo " em ".$sharedPost['nomeCidade'].", ".$sharedPost['nomePais']." - ";
+                  }
+                  $tmpHora = explode(' ', $sharedPost['dataPost'])[1];
+                  $tmpData = explode(' ', $sharedPost['dataPost'])[0];
+                  $tmpData = explode('-', $tmpData);
+                  echo " ".$tmpData[2]."/".$tmpData[1]."/".$tmpData[0]." ".$tmpHora."</p>";
                   $tmpArray = [];
+                  // print_r($post['assuntos']);
                   foreach($sharedPost['assuntos'] as $elements){
                     foreach ($elements as $key => $value) {
                       if($key === 'nomeAssunto') $tmpArray[] = $value;
                     }
                   }
-                  echo implode($tmpArray, ', ');
+                  echo "<p class=\"div-post-top-subjects\" title=\"".implode($tmpArray, ', ')."\"><b>";
+                  $tmpArray = implode($tmpArray, ', ');
+                  if(strlen($tmpArray) > 30){
+                    $tmpArray = substr($tmpArray, 0, 27);
+                    echo $tmpArray."...";
+                  } else {
+                    echo $tmpArray;
+                  }
                   echo "</b></p>";
                 echo "</div>";
               echo "</div>";
               // Sharing-texto
-              echo "<div class=\"div-sharing-post-txt\">";
-                echo "<p>$sharedPost[textoPost]</p>";
+              echo "<div class=\"div-post-txt\">";
+                echo "<p><i style=\"color: #7A9EFB\">@$sharedPost[nomePerfil]</i> ";
+                if($sharedPost['isReaction']) {
+                  echo "<b><i>reagiu</i></b> com ";
+                  switch ($sharedPost['emote']){
+                    case 'curtir':
+                      echo "👌";
+                      break;
+                    case 'kkk':
+                      echo "🤣";
+                      break;
+                    case 'amei':
+                      echo "❤️";
+                      break;
+                    case 'grr':
+                      echo "🤬";
+                      break;
+                    case 'wow':
+                      echo "🤯";
+                      break;
+                    case 'sad':
+                      echo "😭";
+                      break;                  
+                  }
+                  echo ", ";
+                }
+                if(count($sharedPost['citacoes']) > 0) {
+                  $tmpCitacoes = [];
+                  foreach ($sharedPost['citacoes'] as $pessoa) {
+                    $tmpCitacoes[] = "@".$pessoa['nomePerfil'];
+                  }
+                  $tmpCitacoes = implode($tmpCitacoes, ', ');
+                  echo "<b><i>marcando</i></b> <i title=\"".$tmpCitacoes."\">";
+                  if(strlen($tmpCitacoes) > 10){
+                    $tmpCitacoes = substr($tmpCitacoes, 0, 7);
+                    echo $tmpCitacoes."...";
+                  } else {
+                    echo $tmpCitacoes;
+                  }
+                  echo ", </i>";
+                  
+
+                }
+                echo "$sharedPost[textoPost]</p>";
               echo "</div>";
             echo "</div>";
           }
           //Top
           echo "<div class=\"div-post-top\">";
-            echo "<img src=\"".$post['iconPerfil']."\" alt=\"\" class=\"div-post-top-icon\">";
+            echo "<a href=navio.php?user=$post[codPerfil]><img src=\"".$post['iconPerfil']."\" alt=\"\" class=\"div-post-top-icon\"></a>";
             echo "<div class=\"div-post-top-infos\">";
               echo "<p class=\"div-post-top-username\"><i>@".$post['nomePerfil']."</i>";
               if($post['nomeCidade']){
                 echo " em ".$post['nomeCidade'].", ".$post['nomePais']." - ";
               }
-              echo " ".$post['dataPost']."</p>";
+              $tmpHora = explode(' ', $post['dataPost'])[1];
+              $tmpData = explode(' ', $post['dataPost'])[0];
+              $tmpData = explode('-', $tmpData);
+              echo " ".$tmpData[2]."/".$tmpData[1]."/".$tmpData[0]." ".$tmpHora."</p>";
               $tmpArray = [];
               // print_r($post['assuntos']);
               foreach($post['assuntos'] as $elements){
@@ -329,7 +388,7 @@
             //   echo "<p>2</p><img src=\"imgs/icons/send.png\" class=\"div-post-icons-bar-icons\" alt=\"\">";
             // echo "</div>";
             echo "<div class=\"div-post-icons-bar-interagir\">";
-              echo "<img src=\"$user[img]\" class=\"div-post-icons-bar-interagir-icon\" alt=\"\"><p>Interagir...</p>";
+              echo "<a href=navio.php?user=$user[codigo]><img src=\"$user[img]\" class=\"div-post-icons-bar-interagir-icon\" alt=\"\"></a><p>Interagir...</p>";
             echo "</div>";
           echo "</div>";
           echo "<br><br>";
@@ -339,7 +398,7 @@
             foreach ($post['comentarios'] as $elem) {
               echo "<div class=\"comment-container\">";
                 echo "<div class=\"comment-container-top\">";
-                  echo "<img src=\"".$elem['iconPerfil']."\" alt=\"\" class=\"comment-icon\">";
+                  echo "<a href=navio.php?user=$elem[codPerfil]><img src=\"".$elem['iconPerfil']."\" alt=\"\" class=\"comment-icon\"></a>";
                   echo "<p class=\"comment-txt\"><i>@".$elem['nomePerfil']."</i> ";
                   echo ($elem['textoPost'] ? $elem['textoPost'] : '');
                   echo ", em ".$elem['dataPost'];

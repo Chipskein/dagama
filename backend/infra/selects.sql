@@ -425,3 +425,6 @@ select interacao, perfil.codigo, perfil.username from citacao join perfil on per
 
 insert into assunto (nome) values ('Orra banco'), ('Ajuda ai parceria'), ('Foda');
 insert into interacao_assunto (assunto, interacao) values (1, 13), (2, 13), (3,13);
+
+insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, isSharing, emote, local) values (5, null, null, 13, 'Mammaaaa, just killed a mannnn', 1, null, 'sad', 2);
+insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, isSharing, emote, local) values (5, null, null, 14, 'Whaaat?', null, null, null, null);
