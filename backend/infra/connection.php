@@ -1872,6 +1872,7 @@
         $db=$db_connection['db'];
         $db_type=$db_connection['db_type'];
         if($db_type == 'sqlite'){
+            // echo $perfil_posting;
             $response = $db->exec("insert into interacao (perfil, texto, perfil_posting, porto, isSharing, post, isReaction, emote, local) values 
             ($perfil, 
             '".($texto ? $texto : '')."', 

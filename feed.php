@@ -157,10 +157,10 @@
       echo "<div class=\"insert-interacao-user\">";
         echo "<img class=\"interaction-mainuser-user-icon\" src=\"".$user["img"]."\" alt=\"\" srcset=\"\">";
         echo "<div>";
-        echo "<p class=\"insert-interacao-user-name\">".$user["username"].":</p>";
-        echo "<p class=\"insert-interacao-user-assuntos\"></p>";
+          echo "<p class=\"insert-interacao-user-name\">".$user["username"].":</p>";
+          echo "<p class=\"insert-interacao-user-assuntos\"></p>";
         echo "</div>";
-        echo "</div>";
+      echo "</div>";
       echo "<form name=\"newPost\" action=\"feed.php?user=$_SESSION[userid]\" method=\"post\" >";
         echo "<textarea name=\"texto\" class=\"insert-interacao-input\" id=\"insert-interacao-input\" type=\"text\" placeholder=\"Escreva um post ...\" ></textarea>";
         echo "<div class=\"insert-interacao-smallBtns\">";
@@ -190,7 +190,6 @@
           echo "<button id=\"select-pessoa-button\"  class=\"confirm-type\" type=\"button\" onclick=\"addPessoas()\">Confirmar</button>";
           echo "<table id=\"tablePessoas\" border=\"1\" name=\"tablePessoas\"></table>";
         echo "</div>";
-
         echo "<div class=\"post-divAssuntos\">";
           echo "<select id=\"select-assuntos\" onclick=\"unsetError(this)\">";
             foreach ($assuntosArray as $value) {
