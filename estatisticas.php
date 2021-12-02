@@ -92,7 +92,7 @@
         echo "<select name=select-top-assuntos2>";
           echo "<option selected >Selecione o pais</option>";
           foreach($paises as $pais){
-            echo "<option value=$grupo[codigo]>$grupo[nome]</option>";
+            echo "<option value=$pais[codigo]>$pais[nome]</option>";
           }
         echo "</select><br>";
         echo "Meses:<input name=meses2 type=number min=1><br>";
