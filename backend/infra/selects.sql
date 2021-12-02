@@ -459,18 +459,68 @@ interacao.emote='sad' and
 interacao.post is not null
 ;
 
+select 
+    porto.codigo as codigo, 
+    porto.nome as nome, 
+    porto.descr as descr, 
+    porto.img as img, 
+    perfil.codigo as codAdm, 
+    perfil.username as nomeAdm, 
+    perfil.img as imgAdm, 
+    (select case 
+        when porto.perfil = perfil.codigo or (porto_participa.perfil = perfil.codigo and porto_participa.ativo = 1) then true
+        else false
+    end as participa
+    from perfil 
+        join porto_participa on perfil.codigo = porto_participa.perfil
+        join porto on porto_participa.porto = porto.codigo
+    where 
+        porto_participa.ativo = 1 and
+        perfil.codigo = 4),
+    case 
+        when porto.perfil = 4 then true
+        else false
+    end as owner
+from porto
+    join perfil on porto.perfil = perfil.codigo
+    left join porto_participa on porto.codigo = porto_participa.porto
+where 
+    porto.ativo = 1 and
+    porto.codigo = 9
+group by porto.codigo
+order by porto_participa.dataregis desc
 
+select case 
+        when porto.perfil = perfil.codigo or (porto_participa.perfil = perfil.codigo and porto_participa.ativo = 1) then true
+        else false
+    end as participa,
+    porto.codigo
+from porto 
+    left join porto_participa on porto.codigo = porto_participa.porto
+    left join perfil on porto_participa.perfil = perfil.codigo
+where 
+    porto_participa.ativo = 1 and
+    perfil.codigo = 4
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+select 
+    porto.codigo as codigo, 
+    porto.nome as nome, 
+    porto.descr as descr, 
+    porto.img as img, 
+    tmp1.participa as participa 
+from porto
+    left join (
+        select case 
+                when porto.perfil = perfil.codigo or (porto_participa.perfil = perfil.codigo and porto_participa.ativo = 1) then true
+                else false
+            end as participa,
+            porto.codigo as porto
+        from porto 
+            left join porto_participa on porto.codigo = porto_participa.porto
+            left join perfil on porto_participa.perfil = perfil.codigo
+        where 
+            porto_participa.ativo = 1 and
+            perfil.codigo = 4
+    ) as tmp1 on porto.codigo = tmp1.porto
+where 
+    porto.ativo = 1

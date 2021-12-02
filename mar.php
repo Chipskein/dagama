@@ -83,7 +83,7 @@
             echo "<form action=\"porto.php?porto=$porto[codigo]\" name=\"porto-form\" method=\"post\" >";
             if($porto['participa']){
               echo "<button class=\"insert-interacao-participa\"> <p class=\"insert-interacao-entrar-text\">Participando</p></button>";
-              echo "<input type=\"hidden\" name=\"sairPorto\" value=\"sair\"/>";
+              // echo "<input type=\"hidden\" name=\"sairPorto\" value=\"sair\"/>";
             } else {
               echo "<button class=\"insert-interacao-entrar\">Entrar</button>";
               echo "<input type=\"hidden\" name=\"entrarPorto\" value=\"entrar\"/>";

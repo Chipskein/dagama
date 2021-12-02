@@ -49,7 +49,7 @@
         }
       }
 
-      $portoInfo=getPortInfo($_GET['porto'], $_SESSION['userid']);
+      $portoInfo = getPortInfo($_GET['porto'], $_SESSION['userid']);
       if($portoInfo){
         // var_dump($portoInfo);
       }
