@@ -86,6 +86,36 @@
         }
         else exit;
     }
+    function getGrupos(){
+        $db_connection = db_connection();
+        $db = $db_connection['db'];
+        $db_type = $db_connection['db_type'];
+        if($db){
+            $results=[];
+            if($db_type == 'sqlite'){
+                $response = $db->query("select codigo, nome from porto where ativo = 1");
+                if($response){
+                    $results=[];
+                    while ($row = $response->fetchArray()) {
+                        array_push($results, $row);
+                    }
+                    return $results;
+                }                
+                else return false;
+            }
+            if($db_type == 'postgresql'){
+                $response = pg_query($db, "select codigo, nome from porto where ativo = true");
+                if($response){
+                    while ($row = pg_fetch_array($response)) {
+                        array_push($results, $row);
+                    }
+                    return $results; 
+                }
+                else return false;
+            }
+        }
+        else exit;
+    }
     /*---------------------------------------------------------*/
 
     /* LOCAIS */
@@ -1949,7 +1979,7 @@
     }
     /*-----------------------------------*/
 
-
+    /*----ESTATISTICAS-------------*/
     function numerosGraficoMasc($faixamin, $faixamax, $pais, $mes){
         $db_connection=db_connection();
         $db=$db_connection['db'];
@@ -1983,5 +2013,25 @@
                 }
         }   
     }
-
+    function countLikesbyCountry($pais,$dias,$hora,$likes){
+        $db_connection=db_connection();
+        $db=$db_connection['db'];
+        $db_type=$db_connection['db_type'];
+        if($db_type == 'sqlite'){
+            $response = $db->exec("");
+            if($response) return $response;
+            else return false;
+        }
+        if($db_type == 'postgresql'){
+            $response = pg_prepare($db, "", "");
+            if($response){
+                $response = pg_execute($db, "", array(""));
+                if($response) return $response;
+                else return false;
+            }
+            else return false;
+        }
+        else exit;
+    };
+    /*-----------------------------------*/
   ?>

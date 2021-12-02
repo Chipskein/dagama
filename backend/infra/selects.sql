@@ -428,3 +428,49 @@ insert into interacao_assunto (assunto, interacao) values (1, 13), (2, 13), (3,1
 
 insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, isSharing, emote, local) values (5, null, null, 13, 'Mammaaaa, just killed a mannnn', 1, null, 'sad', 2);
 insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, isSharing, emote, local) values (5, null, null, 14, 'Whaaat?', null, null, null, null);
+
+insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, isSharing, emote, local) values 
+                    (5, null, null, 1, '', 1, null, 'curtir', null),
+                    (3, null, null, 1, '', 1, null, 'curtir', null),
+                    (4, null, null, 2, '', 1, null, 'curtir', null),
+                    (4, null, null, 2, '', 1, null, 'curtir', null),
+                    (4, null, null, 5, '', 1, null, 'curtir', null),
+                    (3, null, null, 4, '', 1, null, 'curtir', null),
+                    (4, null, null, 6, '', 1, null, 'curtir', null),
+                    (3, null, null, 7, '', 1, null, 'curtir', null),
+                    (2, null, null, 2, '', 1, null, 'curtir', null),
+                    (4, null, null, 1, '', 1, null, 'curtir', null),
+                    (1, null, null, 2, '', 1, null, 'curtir', null),
+                    (1, null, null, 3, '', 1, null, 'curtir', null),
+                    (1, null, null, 4, '', 1, null, 'curtir', null),
+                    (1, null, null, 5, '', 1, null, 'curtir', null),
+                    (4, null, null, 2, '', 1, null, 'curtir', null),
+                    (4, null, null, 2, '', 1, null, 'curtir', null),
+                    (5, null, null, 1, '', 1, null, 'curtir', null);
+//10) Mostrar quantos usuários receberam mais de C curtidas em uma postagem, em menos de H horas após a postagem, no país P nos últimos D dias
+select 
+perfil.username,
+interacao.* 
+from perfil 
+join interacao on perfil.codigo=interacao.perfil
+where 
+interacao.isReaction is not null and 
+interacao.emote='sad' and 
+interacao.post is not null
+;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
