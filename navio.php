@@ -141,7 +141,11 @@
       <?php 
         if($isOwner)echo "<div id=camera-icon></div>";
       ?>
-      <?php echo "<h3 class=perfil>$user[username]</h3>";?>
+      <?php echo "<div align=center class=divUsername>";
+            echo "<h3 class=perfil>$user[username]</h3>";
+            echo "<a href=editNavio.php?user=$_SESSION[userid]><img class=img-pencil src=\"imgs/icons/clarity_pencil-line.png\"</img></a>";
+            echo "</div>";
+      ?>
     </div>
     <br>
     <div align=center>

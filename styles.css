@@ -458,6 +458,14 @@ a {
 		padding: 30px;
 		border-radius: 10px;
 	}
+	.UpdateUser-form-container {
+		width: 400px;
+		background-color: var(--cinza-color);
+		align-items: center;
+		padding: 30px;
+		border-radius: 10px;
+		justify-content: center;
+	}
 	#formAddPorto {
 		display: flex;
 		flex-direction: column;
@@ -495,6 +503,15 @@ a {
 		width: 139px;
 		height: 38px;
 		background-color: var(--azulEscuro2-color);
+		color: #fff;
+		border-radius: 10px;
+		border-width: 0px;
+		margin-top: 20px;
+	}
+	.DeleteUser {
+		width: 139px;
+		height: 38px;
+		background-color: var(--rosa-color);
 		color: #fff;
 		border-radius: 10px;
 		border-width: 0px;
@@ -597,6 +614,17 @@ main {
 		height: 100%;
 		grid-area: m;
 }
+.img-pencil{
+	height: 25px;
+	width: 25px;
+	margin-top: 3px;
+	margin-left: 7px;
+}
+.divUsername{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
 	div.perfil{
 		width: 150px !important;
 		height: 150px !important;
@@ -618,7 +646,24 @@ main {
 		background-repeat: no-repeat;
 		background-position: center;
 	}
+	div#camera-edit{
+		background-color: var(--white-color);
+		position: absolute;
+		align-self: center;
+		left: 45%;
+		top:315px;
+		border-radius: 50%;
+		width: 40px;
+		height: 40px;
+		background-image: url('imgs/icons/camera.png');
+		background-size: 25px 25px;
+		background-repeat: no-repeat;
+		background-position: center;
+	}
 	div#camera-icon:hover{
+		background-color: var(--cinza2-color);
+	}
+	div#camera-edit:hover{
 		background-color: var(--cinza2-color);
 	}
 	div.perfil-amigos{

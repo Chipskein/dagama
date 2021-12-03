@@ -611,23 +611,64 @@
         $db_type = $db_connection['db_type'];
         if($db){
             if($db_type == 'sqlite'){
-                $response = $db->exec("update perfil set ativo='0' where codigo=$user");
-                if($response) return $response;
-                else return false;
+                $response = $db->exec("update perfil set username='$name' where codigo=$id");
+                return true;
             }
             if($db_type == 'postgresql'){
-                $preparing = pg_prepare($db, "deactivateUser","update perfil set ativo=false where codigo=$1");
-                if($preparing){
-                    $verify = pg_execute($db, "deactivateUser", array("$user"));
-                    if($verify) return $verify;
-                    else return false;
-                }
-                else return false;
-            }
+                        $response = pg_query($db,"update perfil set nome=$name where codigo=$id");
+                        return pg_fetch_array($response);
+                    } 
         }
         else exit;
     }
-    // function deactivateUserOnTime($user, $tempo){}
+    function changeUserName($id,$name){
+        $db_connection = db_connection();
+        $db = $db_connection['db'];
+        $db_type = $db_connection['db_type'];
+        if($db){
+            if($db_type == 'sqlite'){
+                $response = $db->exec("update perfil set username='$name' where codigo=$id");
+                return true;
+            }
+            if($db_type == 'postgresql'){
+                        $response = pg_query($db,"update perfil set nome=$name where codigo=$id");
+                        return pg_fetch_array($response);
+                    } 
+        }
+        else exit;
+    }
+    function changeUserEmail($id,$email){
+        $db_connection = db_connection();
+        $db = $db_connection['db'];
+        $db_type = $db_connection['db_type'];
+        if($db){
+            if($db_type == 'sqlite'){
+                $response = $db->exec("update perfil set email='$email' where codigo=$id");
+                return true;
+            }
+            if($db_type == 'postgresql'){
+                        $response = pg_query($db,"update perfil set email='$email' where codigo=$id");
+                        return pg_fetch_array($response);
+                    } 
+        }
+        else exit;
+    }
+    function changeUserSenha($id,$senha){
+        $db_connection = db_connection();
+        $db = $db_connection['db'];
+        $db_type = $db_connection['db_type'];
+        if($db){
+            if($db_type == 'sqlite'){
+                $response = $db->exec("update perfil set senha='$senha' where codigo=$id");
+                return true;
+            }
+            if($db_type == 'postgresql'){
+                        $response = pg_query($db,"update perfil set senha='$senha' where codigo=$id");
+                        return pg_fetch_array($response);
+                    } 
+        }
+        else exit;
+    }
     function updateImg($id,$img,$oldimgid){
         $db_connection = db_connection();
         $db = $db_connection['db'];
