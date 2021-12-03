@@ -517,3 +517,57 @@ where perfil.codigo in (
 );
     
 --11) Mostrar qual faixa etária mais interagiu às postagens do grupo G nos últimos D dias
+
+select case
+    when cast((julianday('now', 'localtime')-julianday(usuario.datanasc, 'localtime'))/365.2422 as integer) < 18 then '- 18'    
+    when cast((julianday('now', 'localtime')-julianday(usuario.datanasc, 'localtime'))/365.2422 as integer) between 18 and 21 then '18-21'
+    when cast((julianday('now', 'localtime')-julianday(usuario.datanasc, 'localtime'))/365.2422 as integer) between 21 and 25 then '21-25'
+    when cast((julianday('now', 'localtime')-julianday(usuario.datanasc, 'localtime'))/365.2422 as integer) between 25 and 30 then '25-30'
+    when cast((julianday('now', 'localtime')-julianday(usuario.datanasc, 'localtime'))/365.2422 as integer) between 30 and 36 then '30-36'
+    when cast((julianday('now', 'localtime')-julianday(usuario.datanasc, 'localtime'))/365.2422 as integer) between 36 and 43 then '36-43'
+    when cast((julianday('now', 'localtime')-julianday(usuario.datanasc, 'localtime'))/365.2422 as integer) between 43 and 51 then '43-51'
+    when cast((julianday('now', 'localtime')-julianday(usuario.datanasc, 'localtime'))/365.2422 as integer) between 51 and 60 then '51-60'
+    when cast((julianday('now', 'localtime')-julianday(usuario.datanasc, 'localtime'))/365.2422 as integer) > 60 then '60-'
+end as faixaEtaria, count(*) as qtdReacoes
+from post
+    join postreacao on post.codigo = postreacao.post
+    join reacao on postreacao.reacao = reacao.codigo
+    join usuario on postreacao.usuario = usuario.email
+where 
+    date(postreacao.datapostreacao, 'localtime') between date('now', '-60 days', 'localtime') and date('now', 'localtime') and
+    post.codigo in (
+        select post.codigo from post
+            join grupo on post.grupo = grupo.codigo
+        where grupo.nome = 'SQLite'
+    )
+group by faixaEtaria
+having qtdReacoes = (
+        select qtdReacoes from (
+            select case
+                when cast((julianday('now', 'localtime')-julianday(usuario.datanasc, 'localtime'))/365.2422 as integer) < 18 then  '- 18'
+                when cast((julianday('now', 'localtime')-julianday(usuario.datanasc, 'localtime'))/365.2422 as integer) between 18 and 21 then '18-21'
+                when cast((julianday('now', 'localtime')-julianday(usuario.datanasc, 'localtime'))/365.2422 as integer) between 21 and 25 then '21-25'
+                when cast((julianday('now', 'localtime')-julianday(usuario.datanasc, 'localtime'))/365.2422 as integer) between 25 and 30 then '25-30'
+                when cast((julianday('now', 'localtime')-julianday(usuario.datanasc, 'localtime'))/365.2422 as integer) between 30 and 36 then '30-36'
+                when cast((julianday('now', 'localtime')-julianday(usuario.datanasc, 'localtime'))/365.2422 as integer) between 36 and 43 then '36-43'
+                when cast((julianday('now', 'localtime')-julianday(usuario.datanasc, 'localtime'))/365.2422 as integer) between 43 and 51 then '43-51'
+                when cast((julianday('now', 'localtime')-julianday(usuario.datanasc, 'localtime'))/365.2422 as integer) between 51 and 60 then '51-60'
+                when cast((julianday('now', 'localtime')-julianday(usuario.datanasc, 'localtime'))/365.2422 as integer) > 60 then '60-'
+            end as faixaEtaria, count(*) as qtdReacoes
+            from post
+                join postreacao on post.codigo = postreacao.post
+                join reacao on postreacao.reacao = reacao.codigo
+                join usuario on postreacao.usuario = usuario.email
+            where 
+                post.codigo in (
+                    select post.codigo from post
+                        join grupo on post.grupo = grupo.codigo
+                    where grupo.nome = 'SQLite'
+                ) and
+                date(postreacao.datapostreacao, 'localtime') between date('now', '-60 days', 'localtime') and date('now', 'localtime')
+            group by faixaEtaria
+            order by qtdReacoes desc
+        )
+        limit 1
+    )
+order by qtdReacoes desc;
