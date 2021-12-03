@@ -26,21 +26,21 @@
         if(isset($_POST['editName'])){
             $name = "$_POST[editName]";
             $changeName = changeUserName($_SESSION['userid'],$name);
-            header("refresh:1;url=editNavio.php");
+            header("refresh:0;url=editNavio.php");
         }
         if(isset($_POST['editEmail'])){
             $email = "$_POST[editEmail]";
             $changeEmail = changeUserEmail($_SESSION['userid'],$email);
-            header("refresh:1;url=editNavio.php");
+            header("refresh:0;url=editNavio.php");
         }
         if(isset($_POST['editSenha'])){
             $senha = password_hash("$_POST[editSenha]", PASSWORD_DEFAULT);
             $changeSenha = changeUserSenha($_SESSION['userid'],$senha);
-            header("refresh:1;url=editNavio.php");
+            header("refresh:0;url=editNavio.php");
         }
         if(isset($_POST['ApagarPerfil'])){
-            $changeSenha = changeUserSenha($_SESSION['userid']);
-            header("refresh:1;url=editNavio.php");
+            $changeSenha = deactivateUser($_SESSION['userid']);
+            header("refresh:0;url=backend/logoff.php");
         }
         if(isset($_FILES["photo"])){
           $photo=$_FILES["photo"];

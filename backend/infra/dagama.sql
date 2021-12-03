@@ -84,6 +84,7 @@ CREATE TABLE SELO(
     ativo BOOLEAN NOT NULL DEFAULT 1 CHECK(ativo=1 OR ativo=0),
     PRIMARY KEY(codigo)
 );
+
 CREATE TABLE SELOUSER(
     selo INTEGER NOT NULL,
     perfil INTEGER NOT NULL,
@@ -91,8 +92,10 @@ CREATE TABLE SELOUSER(
     dateVal DATETIME NOT NULL,
     FOREIGN KEY (selo) REFERENCES SELO(codigo),
     FOREIGN KEY (perfil) REFERENCES PERFIL(codigo),
-    FOREIGN KEY (porto) REFERENCES PORTO(codigo)
+    FOREIGN KEY (porto) REFERENCES PORTO(codigo),
+    PRIMARY KEY(perfil,porto)
 );
+
 CREATE TABLE AMIGO(
     amigo INTEGER NOT NULL CHECK(amigo!=perfil),
     perfil INTEGER NOT NULL CHECK(amigo!=perfil),

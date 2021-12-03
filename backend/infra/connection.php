@@ -659,139 +659,14 @@
         $db_type = $db_connection['db_type'];
         if($db){
             if($db_type == 'sqlite'){
-                $response = $db->exec("update perfil set senha='$senha' where codigo=$id");
+                $response = $db->exec("update perfil set\\ senha='$senha' where codigo=$id");
                 return true;
-            }
-            if($db_type == 'postgresql'){
-                        $response = pg_query($db,"update perfil set senha='$senha' where codigo=$id");
-                        return pg_fetch_array($response);
-                    } 
-        }
-        else exit;
-    }
-    function updateImg($id,$img,$oldimgid){
-        $db_connection = db_connection();
-        $db = $db_connection['db'];
-        $db_type = $db_connection['db_type'];
-        $FOLDERS=array("root"=>"14oQWzTorITdqsK7IiFwfTYs91Gh_NcjS","avatares"=>"1Z3A4iqIe1eMerkdTEkXnjApRPupaPq-M","portos"=>"1e5T21RxDQ-4Kqw8EDVUBICGPeGIRSNHx","users"=>"1j2ivb8gBxV_AINaQ7FHjbd1OI0otCpEO");
-        if($db){
-            if($db_type == 'sqlite'){
-                if($img){
-                    $type=$img['type'];
-                    $server_path=$img['tmp_name'];
-                    $link="https://drive.google.com/uc?export=download&id=".insertFile("$type","$server_path","$FOLDERS[avatares]","avatar");
-                    rmFile($oldimgid);
-                    $response = $db->exec("update perfil set img='$link' where codigo=$id");
-                    if($response){
-                        $response2=$db->query("select img from perfil where codigo=$id")->fetchArray()['img'];
-                        if($response2) return $response2;
-                        else return false;
-                    }
-                    else return false;
-                }
-                else return false;
-                
-            }
-        }
-        else exit;
-    }
-    function getPostsOnUser($user, $offset, $limit=10){
-        $db_connection=db_connection();
-        $db=$db_connection['db'];
-        $db_type=$db_connection['db_type'];
-        if($db){
-            if($db_type=='sqlite'){
-                $results=[];
-                $result = $db->query("
-                select 
-                    interacao.codigo as codInteracao, 
-                    interacao.post as codPost, 
-                    interacao.isReaction as isReaction, 
-                    interacao.texto as textoPost, 
-                    interacao.data as dataPost, 
-                    interacao.isSharing as isSharing, 
-                    interacao.emote as emote,
-                    interacao.ativo as ativo,
-                    cidade.nome as nomeCidade,
-                    uf.nome as nomeUF,
-                    pais.nome as nomePais,
-                    perfil.codigo as codPerfil, perfil.username as nomePerfil, perfil.img as iconPerfil
-                from interacao
-                    join perfil on interacao.perfil = perfil.codigo
-                    left join cidade on interacao.local = cidade.codigo
-                    left join uf on cidade.uf = uf.codigo
-                    left join pais on uf.pais = pais.codigo
-                where 
-                    interacao.ativo = 1 and
-                    (interacao.perfil_posting = $user or interacao.perfil = $user)
-                order by interacao.data desc
-                limit $limit offset $offset");
-                
-                $results2 = $db->query("
-                select interacao.codigo as interacao, assunto.codigo as codAssunto, assunto.nome as nomeAssunto from interacao
-                    left join interacao_assunto on interacao.codigo = interacao_assunto.interacao
-                    left join assunto on interacao_assunto.assunto = assunto.codigo
-                where
-                    interacao.ativo = 1");
-                $assuntos = [];
-                while ($row = $results2->fetchArray()) {
-                    $assuntos[$row['interacao']][$row['codAssunto']] = $row;
-                }
-
-                $results3 = $db->query("
-                select 
-                    interacao.codigo as codInteracao, 
-                    interacao.post as codPost, 
-                    interacao.isReaction as isReaction, 
-                    interacao.texto as textoPost, 
-                    interacao.data as dataPost, 
-                    interacao.isSharing as isSharing, 
-                    interacao.emote as emote,
-                    interacao.ativo as ativo,
-                    porto.codigo as codPorto, porto.nome as nomePorto, 
-                    perfil.codigo as codPerfil, perfil.username as nomePerfil, perfil.img as iconPerfil
-                from interacao
-                    join perfil on interacao.perfil = perfil.codigo
-                    left join porto on porto.codigo = interacao.porto
-                where
-                    interacao.ativo = 1 and
-                    interacao.post is not null and
-                    interacao.isSharing is null");
-                $interacoes = [];
-                while ($row = $results3->fetchArray()) {
-                    $interacoes[$row['codPost']][$row['codInteracao']] = $row;
-                }
-
-                $results4 = $db->query("
-                    select citacao.interacao as interacao, perfil.codigo as codPerfil, perfil.username as nomePerfil from citacao join perfil on perfil.codigo = citacao.perfil where citacao.ativo = 1
-                ");
-                $citacoes = [];
-                while ($row = $results4->fetchArray()) {
-                    $citacoes[$row['interacao']][$row['codPerfil']] = $row;
-                }
-
-                while ($row = $result->fetchArray()) {
-                    $row['assuntos'] = $assuntos[$row['codInteracao']];
-                    if(in_array($row['codInteracao'], array_keys($interacoes))){
-                        $row['comentarios'] = $interacoes[$row['codInteracao']];
-                    } else {
-                        $row['comentarios'] = [];
-                    }
-                    if(in_array($row['codInteracao'], array_keys($citacoes))){
-                        $row['citacoes'] = $citacoes[$row['codInteracao']];
-                    } else {
-                        $row['citacoes'] = [];
-                    }
-                    array_push($results, $row);
-                }
-                return $results;
             }
             if($db_type=='postgresql'){ // FIXME: tem que deixar igual ao de cima
                 $result=pg_fetch_all(pg_query($db, ""));
                 return $result;
             }
         }
-        else exit;
     }
     /*----------------------------------------*/
 
@@ -822,8 +697,8 @@
         $db_type=$db_connection['db_type'];
         if($db){
             if($db_type=='sqlite'){
-                $results=[];
-                $result = $db->query("
+                $postsArray=[];
+                $postsOriginais = $db->query("
                 select
                     interacao.codigo as codInteracao, 
                     interacao.post as codPost, 
@@ -949,65 +824,78 @@
                 group by codPost
                 order by tmp1.data desc
                 limit $limit offset $offset");
-                
-                $results2 = $db->query("
-                    select citacao.interacao as interacao, perfil.codigo as codPerfil, perfil.username as nomePerfil from citacao join perfil on perfil.codigo = citacao.perfil where citacao.ativo = 1
-                ");
-                $citacoes = [];
-                while ($row = $results2->fetchArray()) {
-                    $citacoes[$row['interacao']][$row['codPerfil']] = $row;
-                }
-                
-                $results3 = $db->query("
-                select interacao.codigo as interacao, assunto.codigo as codAssunto, assunto.nome as nomeAssunto from interacao
-                    left join interacao_assunto on interacao.codigo = interacao_assunto.interacao
-                    left join assunto on interacao_assunto.assunto = assunto.codigo
-                where
-                    interacao.ativo = 1");
-                $assuntos = [];
-                while ($row = $results3->fetchArray()) {
-                    $assuntos[$row['interacao']][$row['codAssunto']] = $row;
-                }
 
-                $results4 = $db->query("
-                select 
-                    interacao.codigo as codInteracao, 
-                    interacao.post as codPost, 
-                    interacao.isReaction as isReaction, 
-                    interacao.texto as textoPost, 
-                    interacao.data as dataPost, 
-                    interacao.isSharing as isSharing, 
-                    interacao.emote as emote,
-                    interacao.ativo as ativo,
-                    porto.codigo as codPorto, porto.nome as nomePorto, 
-                    perfil.codigo as codPerfil, perfil.username as nomePerfil, perfil.img as iconPerfil
-                from interacao
-                    join perfil on interacao.perfil = perfil.codigo
-                    left join porto on porto.codigo = interacao.porto
-                where
-                    interacao.ativo = 1 and
-                    interacao.post is not null and
-                    interacao.isSharing is null");
-                $interacoes = [];
-                while ($row = $results4->fetchArray()) {
-                    $interacoes[$row['codPost']][$row['codInteracao']] = $row;
-                }
+                while($row = $postsOriginais->fetchArray()){
+                    $postsArray[$row['codInteracao']] = $row;
 
-                while ($row = $result->fetchArray()) {
-                    $row['assuntos'] = $assuntos[$row['codInteracao']];
-                    if(in_array($row['codInteracao'], array_keys($citacoes))){
-                        $row['citacoes'] = $citacoes[$row['codInteracao']];
-                    } else {
-                        $row['citacoes'] = [];
+                    $resCitacoesParent = $db->query("select citacao.interacao as interacao, perfil.codigo as codPerfil, perfil.username as nomePerfil from citacao join perfil on perfil.codigo = citacao.perfil where citacao.ativo = 1 and citacao.interacao = $row[codInteracao]");
+                    $citacoes = [];
+                    while ($row2 = $resCitacoesParent->fetchArray()) {
+                        $citacoes[] = $row2;
                     }
-                    if(in_array($row['codInteracao'], array_keys($interacoes))){
-                        $row['comentarios'] = $interacoes[$row['codInteracao']];
-                    } else {
-                        $row['comentarios'] = [];
+                    $postsArray[$row['codInteracao']]['citacoes'] = $citacoes;
+                    
+                    $resAssuntosParent = $db->query("
+                    select interacao.codigo as interacao, assunto.codigo as codAssunto, assunto.nome as nomeAssunto from interacao
+                        left join interacao_assunto on interacao.codigo = interacao_assunto.interacao
+                        left join assunto on interacao_assunto.assunto = assunto.codigo
+                    where
+                        interacao.ativo = 1");
+                    $assuntos = [];
+                    while ($row2 = $resAssuntosParent->fetchArray()) {
+                        $assuntos[] = $row2;
                     }
-                    array_push($results, $row);
+                    $postsArray[$row['codInteracao']]['assuntos'] = $assuntos;
+                    $temInteracoes = $db->query("
+                    select
+                        interacao.codigo as codInteracao, 
+                        interacao.post as codPost, 
+                        interacao.isReaction as isReaction, 
+                        interacao.texto as textoPost, 
+                        interacao.data as dataPost,
+                        interacao.isSharing as isSharing, 
+                        interacao.emote as emote,
+                        interacao.ativo as ativo,
+                        cidade.nome as nomeCidade,
+                        uf.nome as nomeUF,
+                        pais.nome as nomePais,
+                        perfil.codigo as codPerfil, 
+                        perfil.username as nomePerfil,
+                        perfil.img as iconPerfil
+                    from interacao
+                        join perfil on interacao.perfil = perfil.codigo
+                        left join cidade on cidade.codigo = interacao.local
+                        left join uf on cidade.uf = uf.codigo
+                        left join pais on uf.pais = pais.codigo
+                    where interacao.isSharing is null and interacao.post = ".$row['codInteracao']);
+                    $childInteracoes = [];
+                    if($temInteracoes){
+                        while($row3 = $temInteracoes->fetchArray()){
+                            $childInteracoes[$row3['codInteracao']] = $row3;
+                            $resCitacoesChild = $db->query("select citacao.interacao as interacao, perfil.codigo as codPerfil, perfil.username as nomePerfil from citacao join perfil on perfil.codigo = citacao.perfil where citacao.ativo = 1 and citacao.interacao = $row3[codInteracao]");
+                            $citacoes = [];
+                            while ($row4 = $resCitacoesChild->fetchArray()) {
+                                $citacoes[] = $row4;
+                            }
+                            $childInteracoes[$row3['codInteracao']]['citacoes'] = $citacoes;
+                            
+                            $resAssuntosChild = $db->query("
+                            select interacao.codigo as interacao, assunto.codigo as codAssunto, assunto.nome as nomeAssunto from interacao
+                                left join interacao_assunto on interacao.codigo = interacao_assunto.interacao
+                                left join assunto on interacao_assunto.assunto = assunto.codigo
+                            where
+                                interacao.ativo = 1");
+                            $assuntos = [];
+                            while ($row5 = $resAssuntosChild->fetchArray()) {
+                                $assuntos[] = $row5;
+                            }
+                            $childInteracoes[$row3['codInteracao']]['assuntos'] = $assuntos;
+                        }
+                    }
+                    $postsArray[$row['codInteracao']]['comentarios'] = $childInteracoes;
                 }
-                return $results;
+                return $postsArray;
+
             }
             if($db_type=='postgresql'){ // FIXME: tem que deixar igual ao de cima
                 $result=pg_fetch_all(pg_query($db, "
@@ -2001,6 +1889,155 @@
         }
         else exit;
     }
+    function upsertSelo($perfil,$porto){
+        $db_connection = db_connection();
+        $db = $db_connection['db'];
+        $db_type = $db_connection['db_type'];
+        if($db){
+            if($db_type == 'sqlite'){
+                $response=$db->query("select * from selouser where perfil=$perfil and porto=$porto");
+                $response2=$db->query("
+                select 
+                tmp1.perfil,reaction_porcent,comments_porce
+                from 
+                (
+                    select 
+                        tmp.perfil as perfil,cast(tmp.reaction_qt*100/tmp.total as real) as reaction_porcent
+                    from
+                    (
+                        select 
+                        reactions.perfil as perfil,reactions.qt as reaction_qt,(
+                                select 
+                                count(*) as total
+                                from 
+                                interacao 
+                                    join porto on porto.codigo=interacao.porto
+                                where 
+                                porto.codigo=$porto and 
+                                interacao.post is null and interacao.ativo=1 and datetime(interacao.data) between  datetime(date('now','weekday 0','-14 days')) and datetime(date('now','weekday 0','-7 days'))
+                            ) as total
+                        from(
+                        select 
+                            interacao.perfil as perfil,count(*) as qt
+                            from 
+                            interacao 
+                            where
+                            interacao.isReaction is not null and interacao.ativo=1
+                            and datetime(interacao.data) between  datetime(date('now','weekday 0','-14 days')) and datetime(date('now','weekday 0','-7 days'))
+                            and interacao.post in(
+                                select 
+                                interacao.codigo
+                                from 
+                                interacao 
+                                    join porto on porto.codigo=interacao.porto
+                                where 
+                                porto.codigo=$porto and 
+                                interacao.post is null and interacao.ativo=1
+                            and datetime(interacao.data) between  datetime(date('now','weekday 0','-14 days')) and datetime(date('now','weekday 0','-7 days'))
+                            )
+                            group by interacao.perfil
+                        ) as reactions
+                    )as tmp
+                ) as tmp1
+                ,(
+                    select 
+                    tmp2.perfil as perfil,cast (tmp2.qt*100/tmp2.total as real) as comments_porce
+                    from
+                    (
+                        select 
+                        comments.perfil as perfil,comments.qt as qt
+                        ,(
+                            select 
+                            interacao.codigo
+                            from 
+                            interacao 
+                                join porto on porto.codigo=interacao.porto
+                            where 
+                            porto.codigo=$porto and 
+                            interacao.post is null and interacao.ativo=1
+                            and datetime(interacao.data) between  datetime(date('now','weekday 0','-14 days')) and datetime(date('now','weekday 0','-7 days'))
+                        ) as total
+                        from(
+                            select 
+                            interacao.perfil as perfil,count(*) as qt
+                            from 
+                            interacao 
+                            where
+                            interacao.isReaction is null and
+                            interacao.isSharing is null and interacao.ativo=1
+                            and datetime(interacao.data) between  datetime(date('now','weekday 0','-14 days')) and datetime(date('now','weekday 0','-7 days'))
+                            and interacao.post in(
+                                select 
+                                interacao.codigo
+                                from 
+                                interacao 
+                                    join porto on porto.codigo=interacao.porto
+                                where 
+                                porto.codigo=$porto and 
+                                interacao.post is null and interacao.ativo=1
+                            and datetime(interacao.data) between  datetime(date('now','weekday 0','-14 days')) and datetime(date('now','weekday 0','-7 days'))
+                            )
+                            group by interacao.perfil
+                        ) as comments
+                    ) as tmp2
+                ) as tmp2
+                where 
+                    tmp1.perfil=tmp2.perfil and 
+                    tmp1.perfil=$perfil
+                ");
+                if($response2){
+                    $response2=$response2->fetchArray();
+                    $selo='nenhum';
+                    $reaction_p=$response2["reaction_porcent"];
+                    $comment_p=$response2["comments_porce"];
+                    if(($reaction_p>=25)&&($comment_p>=10)){
+                        $selo='fa';
+                    }
+                    if(($reaction_p>=50)&&($comment_p>=20)){
+                        $selo='super-fa';
+                    }
+                    if($reaction_p>=75&&$comment_p>=30){
+                        $selo='ultra-fa';
+                    }
+                        
+                    echo "reaÃ§ao:$reaction_p<br>";
+                    echo "comment:$comment_p<br>";
+                    echo "selo:$selo<br>";
+                    if($response->fetchArray()){
+                        switch($selo){
+                            case "fa":
+                                $response=$db->exec("update SELOUSER set selo=3,dateVal=datetime(date('now'),'weekday 0','+7 days') where porto=$porto and perfil=$perfil");
+                                break;
+                            case "super-fa":
+                                $response=$db->exec("update SELOUSER set selo=2,dateVal=datetime(date('now'),'weekday 0','+7 days') where porto=$porto and perfil=$perfil");
+                                break;
+                            case "ultra-fa":
+                                $response=$db->exec("update SELOUSER set selo=1,dateVal=datetime(date('now'),'weekday 0','+7 days') where porto=$porto and perfil=$perfil");
+                                break;
+                        }
+                    }
+                    else{
+                        switch($selo){
+                            case "nenhum":
+                                $response=$db->exec("delete from selouser where perfil=$perfil and porto=$porto");
+                                break;
+                            case "fa":
+                                $response=$db->exec("insert into SELOUSER(perfil,selo,porto,dateVal) VALUES($perfil,3,$porto,datetime(date('now'),'weekday 0','+7 days'))");
+                                break;
+                            case "super-fa":
+                                $response=$db->exec("insert into SELOUSER(perfil,selo,porto,dateVal) VALUES($perfil,2,$porto,datetime(date('now'),'weekday 0','+7 days'))");
+                                break;
+                            case "ultra-fa":
+                                $response=$db->exec("insert into SELOUSER(perfil,selo,porto,dateVal) VALUES($perfil,1,$porto,datetime(date('now'),'weekday 0','+7 days'))");
+                                break;
+                        }
+                    }
+                }
+                else return false;
+            }
+        }
+        else exit;
+    }
     /*-----------------------------------*/
     
     /* INTERAÇÕES */
@@ -2222,8 +2259,77 @@
         $db=$db_connection['db'];
         $db_type=$db_connection['db_type'];
         if($db_type == 'sqlite'){
-        
-        }    
-    }
+        $response= $db ->query("select case
+        when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) < 18 then '- 18'    
+        when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) between 18 and 21 then '18-21'
+        when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) between 21 and 25 then '21-25'
+        when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) between 25 and 30 then '25-30'
+        when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) between 30 and 36 then '30-36'
+        when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) between 36 and 43 then '36-43'
+        when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) between 43 and 51 then '43-51'
+        when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) between 51 and 60 then '51-60'
+        when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) > 60 then '60-'
+    end as faixaEtaria, count(*) as qtdReacoes
+    from interacao
+        join perfil on interacao.perfil = perfil.codigo
+    where 
+        date(interacao.data, 'localtime') between date('now', '-$dia days', 'localtime') and date('now', 'localtime') and
+        interacao.codigo in (
+            select interacao.codigo from interacao
+                join porto on interacao.porto = porto.codigo
+            where porto.codigo = $grupo
+        )
+    group by faixaEtaria
+    having qtdReacoes = (
+            select qtdReacoes from (
+                select case
+                    when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) < 18 then  '- 18'
+                    when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) between 18 and 21 then '18-21'
+                    when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) between 21 and 25 then '21-25'
+                    when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) between 25 and 30 then '25-30'
+                    when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) between 30 and 36 then '30-36'
+                    when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) between 36 and 43 then '36-43'
+                    when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) between 43 and 51 then '43-51'
+                    when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) between 51 and 60 then '51-60'
+                    when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) > 60 then '60-'
+                end as faixaEtaria, count(*) as qtdReacoes
+                from interacao
+                    join perfil on interacao.perfil = perfil.codigo
+                where 
+                    interacao.codigo in (
+                         select interacao.codigo from interacao
+                join porto on interacao.porto = porto.codigo
+            where porto.codigo = $grupo
+                    ) and
+                    date(interacao.data, 'localtime') between date('now', '-$dia days', 'localtime') and date('now', 'localtime')
+                group by faixaEtaria
+                order by qtdReacoes desc
+            )
+            limit 1
+        ) order by qtdReacoes desc;");
+         
+    };
+};
+
+//12)
+
+function getTop(){
+     $db_connection=db_connection();
+    $db=$db_connection['db'];
+    $db_type=$db_connection['db_type'];
+    if($db_type == 'sqlite'){
+$response= $db ->query("select assunto.nome, strftime('%m', interacao.data) as mes from interacao 
+join interacao_assunto on interacao.codigo = interacao_assunto.interacao 
+join assunto on interacao_assunto.assunto = assunto.codigo
+left join cidade on interacao.local = cidade.codigo --left join pois pode nao ter local
+    left join uf on cidade.uf = uf.codigo
+    left join pais on uf.pais = pais.codigo
+where pais.codigo =$pais and  date(interacao.data, 'localtime') between date('now', '-$mes months', 'localtime') and date('now', 'localtime')
+group by assunto.nome, mes
+    order by count(assunto.nome) desc
+    limit $top");
+    
+}
+}
     /*-----------------------------------*/
   ?>

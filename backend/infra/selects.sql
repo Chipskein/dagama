@@ -519,55 +519,148 @@ where perfil.codigo in (
 --11) Mostrar qual faixa etária mais interagiu às postagens do grupo G nos últimos D dias
 
 select case
-    when cast((julianday('now', 'localtime')-julianday(usuario.datanasc, 'localtime'))/365.2422 as integer) < 18 then '- 18'    
-    when cast((julianday('now', 'localtime')-julianday(usuario.datanasc, 'localtime'))/365.2422 as integer) between 18 and 21 then '18-21'
-    when cast((julianday('now', 'localtime')-julianday(usuario.datanasc, 'localtime'))/365.2422 as integer) between 21 and 25 then '21-25'
-    when cast((julianday('now', 'localtime')-julianday(usuario.datanasc, 'localtime'))/365.2422 as integer) between 25 and 30 then '25-30'
-    when cast((julianday('now', 'localtime')-julianday(usuario.datanasc, 'localtime'))/365.2422 as integer) between 30 and 36 then '30-36'
-    when cast((julianday('now', 'localtime')-julianday(usuario.datanasc, 'localtime'))/365.2422 as integer) between 36 and 43 then '36-43'
-    when cast((julianday('now', 'localtime')-julianday(usuario.datanasc, 'localtime'))/365.2422 as integer) between 43 and 51 then '43-51'
-    when cast((julianday('now', 'localtime')-julianday(usuario.datanasc, 'localtime'))/365.2422 as integer) between 51 and 60 then '51-60'
-    when cast((julianday('now', 'localtime')-julianday(usuario.datanasc, 'localtime'))/365.2422 as integer) > 60 then '60-'
+    when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) < 18 then '- 18'    
+    when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) between 18 and 21 then '18-21'
+    when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) between 21 and 25 then '21-25'
+    when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) between 25 and 30 then '25-30'
+    when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) between 30 and 36 then '30-36'
+    when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) between 36 and 43 then '36-43'
+    when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) between 43 and 51 then '43-51'
+    when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) between 51 and 60 then '51-60'
+    when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) > 60 then '60-'
 end as faixaEtaria, count(*) as qtdReacoes
-from post
-    join postreacao on post.codigo = postreacao.post
-    join reacao on postreacao.reacao = reacao.codigo
-    join usuario on postreacao.usuario = usuario.email
+from interacao
+    join perfil on interacao.perfil = perfil.codigo
 where 
-    date(postreacao.datapostreacao, 'localtime') between date('now', '-60 days', 'localtime') and date('now', 'localtime') and
-    post.codigo in (
-        select post.codigo from post
-            join grupo on post.grupo = grupo.codigo
-        where grupo.nome = 'SQLite'
+    date(interacao.data, 'localtime') between date('now', '-60 days', 'localtime') and date('now', 'localtime') and
+    interacao.codigo in (
+        select interacao.codigo from interacao
+            join porto on interacao.porto = porto.codigo
+        where porto.codigo = 1
     )
 group by faixaEtaria
 having qtdReacoes = (
         select qtdReacoes from (
             select case
-                when cast((julianday('now', 'localtime')-julianday(usuario.datanasc, 'localtime'))/365.2422 as integer) < 18 then  '- 18'
-                when cast((julianday('now', 'localtime')-julianday(usuario.datanasc, 'localtime'))/365.2422 as integer) between 18 and 21 then '18-21'
-                when cast((julianday('now', 'localtime')-julianday(usuario.datanasc, 'localtime'))/365.2422 as integer) between 21 and 25 then '21-25'
-                when cast((julianday('now', 'localtime')-julianday(usuario.datanasc, 'localtime'))/365.2422 as integer) between 25 and 30 then '25-30'
-                when cast((julianday('now', 'localtime')-julianday(usuario.datanasc, 'localtime'))/365.2422 as integer) between 30 and 36 then '30-36'
-                when cast((julianday('now', 'localtime')-julianday(usuario.datanasc, 'localtime'))/365.2422 as integer) between 36 and 43 then '36-43'
-                when cast((julianday('now', 'localtime')-julianday(usuario.datanasc, 'localtime'))/365.2422 as integer) between 43 and 51 then '43-51'
-                when cast((julianday('now', 'localtime')-julianday(usuario.datanasc, 'localtime'))/365.2422 as integer) between 51 and 60 then '51-60'
-                when cast((julianday('now', 'localtime')-julianday(usuario.datanasc, 'localtime'))/365.2422 as integer) > 60 then '60-'
+                when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) < 18 then  '- 18'
+                when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) between 18 and 21 then '18-21'
+                when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) between 21 and 25 then '21-25'
+                when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) between 25 and 30 then '25-30'
+                when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) between 30 and 36 then '30-36'
+                when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) between 36 and 43 then '36-43'
+                when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) between 43 and 51 then '43-51'
+                when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) between 51 and 60 then '51-60'
+                when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) > 60 then '60-'
             end as faixaEtaria, count(*) as qtdReacoes
-            from post
-                join postreacao on post.codigo = postreacao.post
-                join reacao on postreacao.reacao = reacao.codigo
-                join usuario on postreacao.usuario = usuario.email
+            from interacao
+                join perfil on interacao.perfil = perfil.codigo
             where 
-                post.codigo in (
-                    select post.codigo from post
-                        join grupo on post.grupo = grupo.codigo
-                    where grupo.nome = 'SQLite'
+                interacao.codigo in (
+                     select interacao.codigo from interacao
+            join porto on interacao.porto = porto.codigo
+        where porto.codigo = 1
                 ) and
-                date(postreacao.datapostreacao, 'localtime') between date('now', '-60 days', 'localtime') and date('now', 'localtime')
+                date(interacao.data, 'localtime') between date('now', '-60 days', 'localtime') and date('now', 'localtime')
             group by faixaEtaria
             order by qtdReacoes desc
         )
         limit 1
     )
 order by qtdReacoes desc;
+
+--12) Mostrar quais os top T assuntos mais interagidos por mês no país P nos últimos M meses
+
+select assunto.nome, strftime('%m', interacao.data) as mes, count(assunto.nome) from interacao 
+    join interacao_assunto on interacao.codigo = interacao_assunto.interacao 
+    join assunto on interacao_assunto.assunto = assunto.codigo
+    left join cidade on interacao.local = cidade.codigo --left join pois pode nao ter local
+        left join uf on cidade.uf = uf.codigo
+        left join pais on uf.pais = pais.codigo
+    where pais.codigo = 31 and  date(interacao.data, 'localtime') between date('now', '-60 days', 'localtime') and date('now', 'localtime')
+group by assunto.nome, mes
+        order by count(assunto.nome) desc
+        limit 3;
+
+        
+-- strftime('%m', datax) as mes
+
+
+
+--where pais.codigo = 31
+--group by mes
+--order by desc
+--limit 3
+
+--13) Mostrar qual assunto permaneceu por mais meses consecutivos entre os top T mais interagidos por mês no país P nos últimos M meses
+-- T = 5
+-- P = Brasil 31
+-- M = 5 meses
+
+select assunto from (
+    select assunto, 
+        case
+            when qtd2 is null then qtd1
+            when qtd2 is not null then qtd1+qtd2
+        end as total 
+    from (
+        select assunto.nome as assunto, qtdnoPost.qtd as qtd1, qtdnoComentario.qtd as qtd2 from assunto
+            join (
+                select assunto.nome as n, count(*) as qtd from interacao
+                    join interacao_assunto on interacao.codigo = interacao_assunto.interacao
+                    join assunto on interacao_assunto.assunto = assunto.codigo
+                where 
+                    strftime('%m', interacao.data, 'localtime') = strftime('%m', 'now', 'localtime') and
+                    interacao.local in (
+                        select cidade.codigo from cidade join uf on cidade.uf = uf.codigo join pais on uf.pais = pais.codigo 
+                        where pais.codigo = 31)
+                group by assunto.nome
+                order by qtd desc
+            ) as qtdnoPost on assunto.nome = qtdnoPost.nome
+    ) as tmp1
+    where total in (
+        select distinct* from (
+            select  
+                case
+                    when qtd2 is null then qtd1
+                    when qtd2 is not null then qtd1+qtd2
+                end as total from (
+                select assunto.nome as assunto, qtdnoPost.qtd as qtd1, qtdnoComentario.qtd as qtd2 from assunto
+                    join (
+                        select assunto.nome, count(*) as qtd from post
+                            join assuntopost on post.codigo = assuntopost.post
+                            join assunto on assuntopost.assunto = assunto.codigo
+                        where 
+                            strftime('%m', post.datadopost, 'localtime') = strftime('%m', 'now', '-1 month', 'localtime') and
+                            post.usuario in (
+                                select usuario.email from usuario
+                                    join cidade on usuario.cidade = cidade.codigo
+                                    join estado on cidade.estado = estado.codigodaUF
+                                    join pais on estado.pais = pais.codigoISO
+                                where pais.nome = 'Brasil'
+                            )
+                        group by assunto.nome
+                        order by qtd desc
+                    ) as qtdnoPost on assunto.nome = qtdnoPost.nome
+                    left join (
+                        select assunto.nome, count(*) as qtd from comentario
+                            join assuntocomentario on comentario.codigo = assuntocomentario.comentario
+                            join assunto on assuntocomentario.assunto = assunto.codigo
+                        where 
+                            strftime('%m', comentario.datacomentario, 'localtime') = strftime('%m', 'now', '-1 month', 'localtime') and
+                            comentario.usuario in (
+                                select usuario.email from usuario
+                                    join cidade on usuario.cidade = cidade.codigo
+                                    join estado on cidade.estado = estado.codigodaUF
+                                    join pais on estado.pais = pais.codigoISO
+                                where pais.nome = 'Brasil'
+                            )
+                        group by assunto.nome
+                        order by qtd desc
+                    ) as qtdnoComentario on assunto.nome = qtdnoComentario.nome
+            )
+            order by total desc
+        )
+        limit 5
+    )
+    order by total desc
+)

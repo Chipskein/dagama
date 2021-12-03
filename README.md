@@ -34,7 +34,7 @@ Telas
         como no exemplo
     * Feed
         - 3) CRUD de interações
-            Falta excluir interação sua e relacionada as suas; interagir com outras interações; editar as suas interações; validações e paginação
+            interagir com outras interações; editar as suas interações; validações e paginação
         - 9) Mostrar um feed com as interações do usuário U, com interações de outros usuários relacionadas a estas interações; 
         as interações de outros usuários que citam o usuário U; as interações dos amigos do usuário U; as postagens dos 
         grupos que o usuário U participa, da interação mais recente para a mais antiga, com paginação e no máximo E 
@@ -55,14 +55,14 @@ Telas
         G conforme a tabela
     * Perfil
         - 2) CRUD de usuários
-            Editar nome, trocar email e senha, validações, ordernar, filtrar;
+            Falta validações, ordernar, filtrar;
         - 3) CRUD de interações
             Falta validações, paginações, excluir interação sua e relacionada as suas; interagir com outras interações; editar as suas interações;
         - 6) CRUD de amizades de um usuário 
             Falta validação, paginação, ordernar e filtrar
     * Interações
         - 3) CRUD de interações
-            Falta validações, paginações, excluir interação sua e relacionada as suas; interagir com outras interações; editar as suas interações;
+            Falta validações, paginações, interagir com outras interações; editar as suas interações;
         - 4) CRUD de assuntos de uma interação
             Falta remover assuntos e validação
         - 5) CRUD de usuários citados em uma interação
