@@ -23,7 +23,7 @@
   }
   else{
     if(isset($_GET['user'])){
-        $postsArray = getPostsOnUser($_GET['user'], 0, 10);
+        $postsArray = getPosts($_GET['user'], 0, 10);
         $user=getUserInfo("$_GET[user]");
         if(!$user){
           echo "Usuario inválido";
