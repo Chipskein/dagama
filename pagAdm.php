@@ -45,10 +45,12 @@
       $dia=$_POST["dia"];
       $hora=$_POST["hora"];
       $likes=$_POST["curtidas"];
-      $count=countLikesbyCountry($pais,$dia,$hora,$likes);
-      if($count){
-        echo " $count";
-      }  
+      $results=[];
+          
+      $count = countLikesbyCountry($pais,$dia,$hora,$likes);
+      echo '<p>Resposta:</p><br>';
+      print_r($count);
+      
   }
   //11) Mostrar qual faixa etária mais interagiu às postagens do grupo G nos últimos D dias
   echo "<h1> Faixa Etária por grupo </h1>";
@@ -66,6 +68,13 @@
     }
     else{
         //echo resultado
+        $grupo=$_POST["select-grupo"];
+        $dias=$_POST["dias"];
+
+            
+        $faixa = getFaixaEtaria($grupo,$dia);
+        echo '<p>Resposta:</p><br>';
+        echo $faixa;
     }
   //12) Mostrar quais os top T assuntos mais interagidos por mês no país P nos últimos M meses
   echo "<h1> Top assuntos por mês no pais </h1>";
@@ -103,6 +112,10 @@
     else{
         //echo resultado
     }
+//15 Desativar temporariamente as contas dos usuários do país P que não possuem qualquer interação há mais de A anos
+
+//16 Atribuir automaticamente um selo de fã, com validade determinada para a semana atual, para os usuários do grupo G conforme a tabela
+    //17 Mostrar o gráfico de colunas da quantidade de interaçõe
 ?>
 </main>
 </body>

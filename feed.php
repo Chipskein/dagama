@@ -24,42 +24,12 @@
     $paises=getPaises();
     $estados=getStates();
     $cidades=getCities();
-    echo "<script>";
-    echo "let states=[];";
-    echo "let cities=[];";
-    echo "let paises=[];";
-    foreach($paises as $pais){
-      echo "pais={";
-      echo "codigo:$pais[codigo],";
-      echo "nome:\"$pais[nome]\"";
-      echo "};";
-      echo "paises.push(pais);";
-    }
-    foreach($estados as $estado){
-      echo "estado={";
-      echo "pais:$estado[pais],";
-      echo "codigo:$estado[codigo],";
-      echo "nome:\"$estado[nome]\"";
-      echo "};";
-      echo "states.push(estado);";
-    }
-    foreach($cidades as $cidade){
-      echo "cidade={";
-      echo "uf:$cidade[uf],";
-      echo "codigo:$cidade[codigo],";
-      echo "nome:\"$cidade[nome]\"";
-      echo "};";
-      echo "cities.push(cidade);";
-    }
-    echo "estado=null;";
-    echo "cidade=null;";
-  echo "</script>";
     $suggestFriends = suggestFriends($_SESSION['userid'], 4, 0);
     $postsArray = getPosts($_SESSION['userid'], 0, 30);
     $portosArray = getAllPorto($_SESSION['userid'], true, 0, 3);
     $errorMessage = [];
+    var_dump($_POST);
     if(isset($_POST['novoPost'])){
-      // var_dump($_POST);
       $texto = ''.$_POST['texto'];
       $local = isset($_POST['local']) ? $_POST['local'] : 0;
       $assuntos = [];
@@ -92,19 +62,28 @@
       }
       else return false;
     }
-
-    // var_dump($_POST);
-    // echo "<br>";
-    // print_r($locaisArray);
-    // echo "<br>";
-    // print_r($assuntosArray);
-    // echo "<br>";
-    // print_r($pessoasArray);
-    // echo "<br>";
-    // print_r($postsArray);
-    // echo "<br>";
-    // print_r($portosArray);
-    // echo "<br>";
+    if(isset($_POST['deletePost'])){
+      $post = $_POST['deletePost'];
+      $user = $_SESSION['userid'];
+      $erros = [];
+      // Validação
+      // ...
+      if($erros == []){
+        delInteracao($post);
+        header("refresh:0;url=feed.php?user=$_SESSION[userid]"); 
+      }
+    }
+    if(isset($_POST['removeCitacao'])){
+      $post = $_POST['removeCitacao'];
+      $user = $_SESSION['userid'];
+      $erros = [];
+      // Validação
+      // ...
+      if($erros == []){
+        delCitacao($post, $user);
+        header("refresh:0;url=feed.php?user=$_SESSION[userid]"); 
+      }
+    }
 
     // sendFriendRequest para enviar solicitacao
     if(isset($_POST['sendFriendRequest'])){
@@ -129,6 +108,36 @@
         $errorMessage['friendRequest'] = ['sendFriendRequest', $_POST['sendFriendRequest'], implode(', ', $erros)];
       }
     } 
+    echo "<script>";
+    echo "let states=[];";
+    echo "let cities=[];";
+    echo "let paises=[];";
+    foreach($paises as $pais){
+      echo "pais={";
+      echo "codigo:$pais[codigo],";
+      echo "nome:\"$pais[nome]\"";
+      echo "};";
+      echo "paises.push(pais);";
+    }
+    foreach($estados as $estado){
+      echo "estado={";
+      echo "pais:$estado[pais],";
+      echo "codigo:$estado[codigo],";
+      echo "nome:\"$estado[nome]\"";
+      echo "};";
+      echo "states.push(estado);";
+    }
+    foreach($cidades as $cidade){
+      echo "cidade={";
+      echo "uf:$cidade[uf],";
+      echo "codigo:$cidade[codigo],";
+      echo "nome:\"$cidade[nome]\"";
+      echo "};";
+      echo "cities.push(cidade);";
+    }
+    echo "estado=null;";
+    echo "cidade=null;";
+    echo "</script>";
 ?>
 <div id=principal>
   <header class="header-main">
@@ -294,6 +303,7 @@
             echo "<p class=\"compartilhado-txt\"><i>Postado no porto <a href=porto.php?porto=$post[codPorto] class=\"txt-linktoporto\">$post[nomePorto]</a></i></p>";
           }
           //Share
+          $sharedPost = 0;
           if($post['isSharing']){
             $sharedPost = getOriginalPost($post['codPost']);
             echo "<p class=\"compartilhado-txt\"><i>Compartilhado</i></p>";
@@ -405,6 +415,21 @@
               }
               echo "</b></p>";
             echo "</div>";
+            if($post['isSharing'] && ($sharedPost['codPerfil'] == $_SESSION['userid'])){
+              echo "<div class=\"div-post-top-editicons\">";
+              echo "<form action=\"feed.php?user=$_SESSION[userid]\" method=\"post\">";
+              echo "<button type=\"submit\" name=\"deletePost\" value=\"$post[codInteracao]\"><img src=\"./imgs/icons/trash.png\" class=\"div-post-top-editicons-trash\" alt=\"\" /></button>";
+              echo "</form>";
+              echo "</div>";
+            } 
+            if($post['codPerfil'] == $_SESSION['userid']) {
+              echo "<div class=\"div-post-top-editicons\">";
+              echo "<a href=\"interagirInteracao.php?edit=$_SESSION[userid]\"><img src=\"./imgs/icons/pencil.png\" class=\"div-post-top-editicons-pencil\" alt=\"\" /></a>";
+              echo "<form action=\"feed.php?user=$_SESSION[userid]\" method=\"post\">";
+              echo "<button type=\"submit\" name=\"deletePost\" value=\"$post[codInteracao]\"><img src=\"./imgs/icons/trash.png\" class=\"div-post-top-editicons-trash\" alt=\"\" /></button>";
+              echo "</form>";
+              echo "</div>";
+            }
           echo "</div>";
           //Texto
           echo "<div class=\"div-post-txt\">";
@@ -433,10 +458,12 @@
               }
               echo ", ";
             }
+            $isMentioned = 0;
             if(count($post['citacoes']) > 0) {
               $tmpCitacoes = [];
               foreach ($post['citacoes'] as $pessoa) {
                 $tmpCitacoes[] = "@".$pessoa['nomePerfil'];
+                if($pessoa['codPerfil'] == $_SESSION['userid']) $isMentioned = 1;
               }
               $tmpCitacoes = implode($tmpCitacoes, ', ');
               echo "<b><i>marcando</i></b> <i title=\"".$tmpCitacoes."\">";
@@ -447,13 +474,16 @@
                 echo $tmpCitacoes;
               }
               echo ", </i>";
-              
-
             }
             echo "$post[textoPost]</p>";
           echo "</div>";
           //Ícones
           echo "<div class=\"div-post-icons-bar\">";
+            if($isMentioned) {
+              echo "<form action=\"feed.php?user=$_SESSION[userid]\" method=\"post\">";
+              echo "<button type=\"submit\" name=\"removeCitacao\" value=\"$post[codInteracao]\"><p class=\"interacao-remover-txt\">Remover citacao sua</p></button>";
+              echo "</form>";
+            }
             // echo "<div class=\"div-post-icons-bar-divs\">";
             //   echo "<p>12</p><img src=\"imgs/icons/Like.png\" class=\"div-post-icons-bar-icons\" alt=\"\">";
             // echo "</div>";
@@ -480,7 +510,20 @@
                   echo ", em ".$elem['dataPost'];
                   echo "</p>";
                 echo "</div>";
-                echo "<div class=\"comment-reagir\"><a href=\"interagirInteracao.php?interacao=$elem[codInteracao]\">Reagir</a></div>";
+                echo "<div class=\"comment-reagir\">";
+                echo "<a href=\"interagirInteracao.php?interacao=$elem[codInteracao]\">Reagir</a>";
+                  if($elem['codPerfil'] == $_SESSION['userid']) {
+                    echo "<a href=\"interagirInteracao.php?edit=$_SESSION[userid]\"><p class=\"interacao-editar-txt\">- Editar -</p></a>";
+                    echo "<form action=\"feed.php?user=$_SESSION[userid]\" method=\"post\">";
+                    echo "<button type=\"submit\" name=\"deletePost\" value=\"$post[codInteracao]\"><p class=\"interacao-remover-txt\">Remover</p></button>";
+                    echo "</form>";
+                  }
+                  if($elem['codPerfil'] != $_SESSION['userid'] && $post['codPerfil'] == $_SESSION['userid']) {
+                    echo "<form action=\"feed.php?user=$_SESSION[userid]\" method=\"post\">";
+                    echo "<button type=\"submit\" name=\"deletePost\" value=\"$post[codInteracao]\"><p class=\"interacao-remover-txt\">- Remover</p></button>";
+                    echo "</form>";
+                  }
+                echo "</div>";
               echo "</div>";
             }
           }

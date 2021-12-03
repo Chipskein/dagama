@@ -89,5 +89,3 @@ Observações:
     l) O procedimento de atribuir selo de fã será executado automaticamente às 00:00:00 de cada domingo
 
 Bugs
-    * Mar
-        - Não aparece participando quando é dono do porto

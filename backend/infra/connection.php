@@ -605,6 +605,29 @@
         }
         else exit;
     }
+    function deactivateUser($user){
+        $db_connection = db_connection();
+        $db = $db_connection['db'];
+        $db_type = $db_connection['db_type'];
+        if($db){
+            if($db_type == 'sqlite'){
+                $response = $db->exec("update perfil set ativo='0' where codigo=$user");
+                if($response) return $response;
+                else return false;
+            }
+            if($db_type == 'postgresql'){
+                $preparing = pg_prepare($db, "deactivateUser","update perfil set ativo=false where codigo=$1");
+                if($preparing){
+                    $verify = pg_execute($db, "deactivateUser", array("$user"));
+                    if($verify) return $verify;
+                    else return false;
+                }
+                else return false;
+            }
+        }
+        else exit;
+    }
+    // function deactivateUserOnTime($user, $tempo){}
     function updateImg($id,$img,$oldimgid){
         $db_connection = db_connection();
         $db = $db_connection['db'];
@@ -881,6 +904,7 @@
                     left join uf on cidade.uf = uf.codigo
                     left join pais on uf.pais = pais.codigo
                     left join porto on interacao.porto = porto.codigo
+                where interacao.ativo = 1
                 group by codPost
                 order by tmp1.data desc
                 limit $limit offset $offset");
@@ -1023,7 +1047,11 @@
 
 
                 $response = $result->fetchArray();
-                $response['assuntos'] = $assuntos[$response['codInteracao']];
+                if(in_array($response['codInteracao'], array_keys($assuntos))){
+                    $response['assuntos'] = $assuntos[$response['codInteracao']];
+                } else {
+                    $response['assuntos'] = [];
+                }
                 if(in_array($response['codInteracao'], array_keys($citacoes))){
                     $response['citacoes'] = $citacoes[$response['codInteracao']];
                 } else {
@@ -1420,15 +1448,14 @@
                 from porto
                     left join (
                         select case 
-                                when porto.perfil = perfil.codigo or (porto_participa.perfil = perfil.codigo and porto_participa.ativo = 1) then true
+                                when (porto.perfil = perfil.codigo) or (porto_participa.perfil = perfil.codigo and porto_participa.ativo = 1) then true
                                 else false
                             end as participa,
                             porto.codigo as porto
                         from porto 
                             left join porto_participa on porto.codigo = porto_participa.porto
-                            left join perfil on porto_participa.perfil = perfil.codigo
+                            left join perfil on (porto.perfil = perfil.codigo) or (porto_participa.perfil = perfil.codigo and porto_participa.ativo = 1)
                         where 
-                            porto_participa.ativo = 1 and
                             perfil.codigo = $user
                     ) as tmp1 on porto.codigo = tmp1.porto
                 where 
@@ -1451,15 +1478,14 @@
                 from porto
                     left join (
                         select case 
-                                when porto.perfil = perfil.codigo or (porto_participa.perfil = perfil.codigo and porto_participa.ativo = 1) then true
+                                when (porto.perfil = perfil.codigo) or (porto_participa.perfil = perfil.codigo and porto_participa.ativo = 1) then true
                                 else false
                             end as participa,
                             porto.codigo as porto
                         from porto 
                             left join porto_participa on porto.codigo = porto_participa.porto
-                            left join perfil on porto_participa.perfil = perfil.codigo
+                            left join perfil on (porto.perfil = perfil.codigo) or (porto_participa.perfil = perfil.codigo and porto_participa.ativo = 1)
                         where 
-                            porto_participa.ativo = 1 and
                             perfil.codigo = $user
                     ) as tmp1 on porto.codigo = tmp1.porto
                 where 
@@ -1973,17 +1999,20 @@
         $db_type=$db_connection['db_type'];
         if($db_type == 'sqlite'){
             $response = $db->exec("update interacao set ativo = 0 where codigo = $post");
-            if($response) return $response;
+            if($response) {
+                // $response2 = $db->exec("update interacao set ativo = 0 where post in (select codigo from interacao where ativo = 0)");                
+                return $response;
+            }
             else return false;
         }
         if($db_type == 'postgresql'){
-            $response = pg_prepare($db, "delInteracao", "update interacao set ativo = false where codigo = $1");
-            if($response){
-                $response = pg_execute($db, "delInteracao", array("$post"));
-                if($response) return $response;
-                else return false;
-            }
-            else return false;
+            // $response = pg_prepare($db, "delInteracao", "update interacao set ativo = false where codigo = $1");
+            // if($response){
+            //     $response = pg_execute($db, "delInteracao", array("$post"));
+            //     if($response) return $response;
+            //     else return false;
+            // }
+            // else return false;
         }
         else exit;
     }
@@ -2103,13 +2132,35 @@
                 }
         }   
     }
+
+    //10)
     function countLikesbyCountry($pais,$dias,$hora,$likes){
         $db_connection=db_connection();
         $db=$db_connection['db'];
         $db_type=$db_connection['db_type'];
         if($db_type == 'sqlite'){
-            $response = $db->exec("");
-            if($response) return $response;
+            $response = $db->query("select count(perfil.codigo) from perfil
+            where perfil.codigo in (
+                select perfil.codigo from interacao 
+                    join perfil on interacao.perfil = perfil.codigo
+                    left join (select post, isReaction, emote, data, local from interacao) as reacoes on interacao.codigo = reacoes.post
+                    left join cidade on reacoes.local = cidade.codigo --left join pois pode nao ter local
+                    left join uf on cidade.uf = uf.codigo
+                    left join pais on uf.pais = pais.codigo
+                where 
+                    reacoes.isReaction = 1 and 
+                    reacoes.emote = 'curtir' and
+                    pais.codigo = $pais and
+                    date(reacoes.data) between date('now', '- $dias', 'localtime') and date('now', 'localtime') and
+                    date(reacoes.data) between date(interacao.data, 'localtime') and date(interacao.data, '+$hora hours', 'localtime')
+                group by perfil.codigo
+                having count(*) > $likes
+                order by count(*) desc  
+            );");
+            if($response) {
+                $response = $response->fetchArray();
+                return $response;
+            }
             else return false;
         }
         if($db_type == 'postgresql'){
@@ -2123,5 +2174,15 @@
         }
         else exit;
     };
+
+    //11)
+    function getFaixaEtaria($grupo,$dia){
+        $db_connection=db_connection();
+        $db=$db_connection['db'];
+        $db_type=$db_connection['db_type'];
+        if($db_type == 'sqlite'){
+        
+        }    
+    }
     /*-----------------------------------*/
   ?>

@@ -297,6 +297,13 @@ order by tmp1.data desc
 limit $limit offset $offset
 
 
+-- Pegando todos os posts relacionados a um post
+select codigo from interacao
+where 
+    post = 1 or codigo in 
+        (select codigo from interacao
+        where post = 1 or codigo)
+
 
 --tem que pegar por fora os assuntos, as citações e intercações
 
@@ -463,63 +470,50 @@ select
     porto.nome as nome, 
     porto.descr as descr, 
     porto.img as img, 
-    perfil.codigo as codAdm, 
-    perfil.username as nomeAdm, 
-    perfil.img as imgAdm, 
-    (select case 
-        when porto.perfil = perfil.codigo or (porto_participa.perfil = perfil.codigo and porto_participa.ativo = 1) then true
-        else false
-    end as participa
-    from perfil 
-        join porto_participa on perfil.codigo = porto_participa.perfil
-        join porto on porto_participa.porto = porto.codigo
-    where 
-        porto_participa.ativo = 1 and
-        perfil.codigo = 4),
-    case 
-        when porto.perfil = 4 then true
-        else false
-    end as owner
-from porto
-    join perfil on porto.perfil = perfil.codigo
-    left join porto_participa on porto.codigo = porto_participa.porto
-where 
-    porto.ativo = 1 and
-    porto.codigo = 9
-group by porto.codigo
-order by porto_participa.dataregis desc
-
-select case 
-        when porto.perfil = perfil.codigo or (porto_participa.perfil = perfil.codigo and porto_participa.ativo = 1) then true
-        else false
-    end as participa,
-    porto.codigo
-from porto 
-    left join porto_participa on porto.codigo = porto_participa.porto
-    left join perfil on porto_participa.perfil = perfil.codigo
-where 
-    porto_participa.ativo = 1 and
-    perfil.codigo = 4
-
-select 
-    porto.codigo as codigo, 
-    porto.nome as nome, 
-    porto.descr as descr, 
-    porto.img as img, 
     tmp1.participa as participa 
 from porto
     left join (
         select case 
-                when porto.perfil = perfil.codigo or (porto_participa.perfil = perfil.codigo and porto_participa.ativo = 1) then true
+                when (porto.perfil = perfil.codigo) or (porto_participa.perfil = perfil.codigo and porto_participa.ativo = 1) then true
                 else false
             end as participa,
             porto.codigo as porto
         from porto 
             left join porto_participa on porto.codigo = porto_participa.porto
-            left join perfil on porto_participa.perfil = perfil.codigo
+            left join perfil on (porto.perfil = perfil.codigo) or (porto_participa.perfil = perfil.codigo and porto_participa.ativo = 1)
         where 
-            porto_participa.ativo = 1 and
-            perfil.codigo = 4
+            perfil.codigo = 5
     ) as tmp1 on porto.codigo = tmp1.porto
 where 
     porto.ativo = 1
+
+--Mostrar quantos usuários receberam mais de C curtidas em uma postagem, em menos de H horas após a postagem, no país P nos últimos D dias
+ --ex 2 curtidas
+
+--  f) Qual o nome do usuário que postou a postagem que teve mais curtidas no Brasil nos últimos 60 dias?
+
+-- C = 3 curtidas
+-- H = 2 hrs
+-- P = Brasil - 31
+-- D = 30 dias
+
+select perfil.codigo, perfil.username, perfil.img from perfil
+where perfil.codigo in (
+    select perfil.codigo from interacao 
+        join perfil on interacao.perfil = perfil.codigo
+        left join (select post, isReaction, emote, data, local from interacao) as reacoes on interacao.codigo = reacoes.post
+        left join cidade on reacoes.local = cidade.codigo --left join pois pode nao ter local
+        left join uf on cidade.uf = uf.codigo
+        left join pais on uf.pais = pais.codigo
+    where 
+        reacoes.isReaction = 1 and 
+        reacoes.emote = 'curtir' and
+        pais.codigo = 31 and
+        date(reacoes.data) between date('now', '-60 days', 'localtime') and date('now', 'localtime') and
+        date(reacoes.data) between date(interacao.data, 'localtime') and date(interacao.data, '+2 hours', 'localtime')
+    group by perfil.codigo
+    having count(*) > 3
+    order by count(*) desc  
+);
+    
+--11) Mostrar qual faixa etária mais interagiu às postagens do grupo G nos últimos D dias
