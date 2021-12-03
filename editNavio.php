@@ -39,8 +39,8 @@
             header("refresh:1;url=editNavio.php");
         }
         if(isset($_POST['ApagarPerfil'])){
-            $changeSenha = changeUserSenha($_SESSION['userid']);
-            header("refresh:1;url=editNavio.php");
+            $changeSenha = deactivateUser($_SESSION['userid']);
+            header("refresh:1;url=index.php");
         }
         if(isset($_FILES["photo"])){
           $photo=$_FILES["photo"];
