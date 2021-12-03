@@ -40,7 +40,11 @@
         }
         if(isset($_POST['ApagarPerfil'])){
             $changeSenha = deactivateUser($_SESSION['userid']);
+<<<<<<< HEAD
             header("refresh:0;url=backend/logoff.php");
+=======
+            header("refresh:1;url=index.php");
+>>>>>>> 0ac6d897ca384e2abb371dfba614b073c1f51a4a
         }
         if(isset($_FILES["photo"])){
           $photo=$_FILES["photo"];
