@@ -611,13 +611,13 @@
         $db_type = $db_connection['db_type'];
         if($db){
             if($db_type == 'sqlite'){
-                $response = $db->exec("update perfil set username='$name' where codigo=$id");
+                $response = $db->exec("update perfil set ativo='0' where codigo=$user");
                 return true;
             }
             if($db_type == 'postgresql'){
-                        $response = pg_query($db,"update perfil set nome=$name where codigo=$id");
-                        return pg_fetch_array($response);
-                    } 
+                $response = pg_query($db,"update perfil set ativo=false where codigo=$user");
+                return pg_fetch_array($response);
+            } 
         }
         else exit;
     }
