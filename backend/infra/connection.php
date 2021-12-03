@@ -116,6 +116,39 @@
         }
         else exit;
     }
+    function getAllUserInfo($offset,$limit=10){
+        $db_connection = db_connection();
+        $db = $db_connection['db'];
+        $db_type = $db_connection['db_type'];
+        if($db){
+            $results=[];
+            if($db_type == 'sqlite'){
+                $response = $db->query("select * from perfil limit $limit offset $offset");
+                if($response){
+                    while ($row = $response->fetchArray()) {
+                        array_push($results, $row);
+                    }
+                    return $results; 
+                }
+                else return false;
+            }
+        }
+        else exit;
+    }
+    function countAllUsers(){
+        $db_connection = db_connection();
+        $db = $db_connection['db'];
+        $db_type = $db_connection['db_type'];
+        if($db){
+            $results=[];
+            if($db_type == 'sqlite'){
+                $response = $db->query("select count(*)as total from perfil");
+                if($response) return $response->fetchArray()['total'];
+                else return false;
+            }
+        }
+        else exit;
+    }
     /*---------------------------------------------------------*/
 
     /* LOCAIS */
