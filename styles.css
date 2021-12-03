@@ -733,6 +733,35 @@ main {
 /*</navio.php>*/
 /*--------------------------------------------------------------------------------------------------------------------------------------*/
 /*<feed.php>*/
+
+#buttonCidade {
+	width: 200px;
+	border-radius: 100px;
+	background-color: var(--azulClaro-color);
+	color: white;
+	margin-bottom: 60px;
+	margin-left: 20px;
+}
+#buttonAssunto {
+	width: 150px;
+	border-radius: 100px;
+	background-color: var(--azulClaro-color);
+	color: white;
+	margin-bottom: 30px;
+	margin-left: 20px;
+}
+.StylesInputs {
+	width: 250px;
+	height: 30px;
+}
+#tableLocal {
+	background-color: white;
+	display: flex;
+	flex: 1;
+}
+#DivPessoas {
+	display: flex;
+}
 .center {
 	display: flex;
 	justify-content: center;
@@ -992,7 +1021,6 @@ main {
 }
 .comment-container-top {
 	display: flex;
-	flex-direction: row;
 }
 .comment-icon{
 	width: 40px;
