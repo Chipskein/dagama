@@ -39,6 +39,8 @@
     };
     if(isset($_POST['novoPost'])){
       $texto = ''.$_POST['texto'];
+      $reacao = isset($_POST['reacao']) ? $_POST['reacao'] : 0;
+      $isReaction = isset($_POST['reacao']) ? 1 : 0;
       $local = isset($_POST['local']) ? $_POST['local'] : 0;
       $assuntos = [];
       $citacoes = [];
@@ -64,7 +66,7 @@
               $citacoes[] = $_POST["pessoa$c"];
           }
       }
-      $response = addInteracao($_SESSION['userid'], $texto, 0, 0, 0, 0, 0, 0, 0, $local);
+      $response = addInteracao($_SESSION['userid'], $texto, 0, 0, 0, 0, 0, $isReaction, $reacao, $local);
       if($response) {
         if(count($assuntos) > 0){
           foreach ($assuntos as $value) {
@@ -76,7 +78,7 @@
             addCitacaoInteracao($value, $response);
           }
         }
-        header("refresh:0;url=feed.php?user=$_SESSION[userid]"); 
+        // header("refresh:0;url=feed.php?user=$_SESSION[userid]"); 
       }
       else return false;
     }
@@ -126,36 +128,6 @@
         $errorMessage['friendRequest'] = ['sendFriendRequest', $_POST['sendFriendRequest'], implode(', ', $erros)];
       }
     }
-    echo "<script>";
-    echo "let states=[];";
-    echo "let cities=[];";
-    echo "let paises=[];";
-    foreach($paises as $pais){
-      echo "pais={";
-      echo "codigo:$pais[codigo],";
-      echo "nome:\"$pais[nome]\"";
-      echo "};";
-      echo "paises.push(pais);";
-    }
-    foreach($estados as $estado){
-      echo "estado={";
-      echo "pais:$estado[pais],";
-      echo "codigo:$estado[codigo],";
-      echo "nome:\"$estado[nome]\"";
-      echo "};";
-      echo "states.push(estado);";
-    }
-    foreach($cidades as $cidade){
-      echo "cidade={";
-      echo "uf:$cidade[uf],";
-      echo "codigo:$cidade[codigo],";
-      echo "nome:\"$cidade[nome]\"";
-      echo "};";
-      echo "cities.push(cidade);";
-    }
-    echo "estado=null;";
-    echo "cidade=null;";
-    echo "</script>";
 ?>
 <div id=principal>
   <header class="header-main">
@@ -235,6 +207,7 @@
           echo "<div class=\"insert-interacao-smallBtns-a\" onclick=\"newPostSelect('local')\"><img class=\"insert-interacao-smallBtns-icon\" src=\"imgs/icons/maps-and-flags.png\" alt=\"\" srcset=\"\">Adicionar um Local</div>";
           echo "<div class=\"insert-interacao-smallBtns-a\" onclick=\"newPostSelect('pessoas')\"><img class=\"insert-interacao-smallBtns-icon\" src=\"imgs/icons/multiple-users-silhouette.png\" alt=\"\" srcset=\"\">Citar Pessoas</div>";
           echo "<div class=\"insert-interacao-smallBtns-a\" onclick=\"newPostSelect('assuntos')\"><img class=\"insert-interacao-smallBtns-icon\" src=\"imgs/icons/price-tag.png\" alt=\"\" srcset=\"\">Assunto</div>";
+          echo "<div class=\"insert-interacao-smallBtns-a\" onclick=\"newPostSelect('reacoes')\"><img class=\"insert-interacao-smallBtns-icon\" src=\"imgs/icons/Like.png\" alt=\"\" srcset=\"\">Reação</div>";
         echo "</div>";
         echo "<input class=\"insert-interacao-submit\" type=\"submit\" name=\"novoPost\" />";
         echo "<hr id=\"post-hr\" class=\"post-hr\" >";
@@ -258,7 +231,7 @@
             echo "</select>";
           }
           foreach ($estados as $value) {
-            echo "<select id=\"select-cidade-estado$value[codigo]\" name=\"select-cidade$value[codigo]\" class=\"select-cidade-estado\" style=\"display: none\" onchange=\"selectCidade(this)\">";
+            echo "<select id=\"select-cidade-estado$value[codigo]\" class=\"select-cidade-estado\" style=\"display: none\" onchange=\"selectCidade(this)\">";
               echo "<option value=\"selecionar-cidade\">Selecionar Cidade</option>";
               foreach ($cidades as $value2) {
                 if($value2['uf'] == $value['codigo']){
@@ -292,6 +265,16 @@
           echo "</select>";
           echo "<button id=\"select-assunto-button\"  class=\"confirm-type\" type=\"button\" onclick=\"addAssuntos()\">Confirmar</button>";
           echo "<div class=\"comment-container-top\" id=\"divAssuntos\"></div>";
+        echo "</div>";
+        echo "<div class=\"post-divReacoes\">";
+          echo "<select id=\"select-reacoes\" onclick=\"unsetError(this)\">";
+            $reacoesArray = [['codigo'=>'curtir', 'emoji'=>'👌'],['codigo'=>'kkk', 'emoji'=> '🤣'],['codigo'=>'amei', 'emoji'=> '❤️'],['codigo'=>'grr', 'emoji'=> '🤬'],['codigo'=>'wow', 'emoji'=> '🤯'],['codigo'=>'sad', 'emoji'=> '😭']];
+            foreach ($reacoesArray as $value) {
+              echo "<option id='optionReacao".$value['codigo']."' value='{ \"id\": \"".$value['codigo']."\", \"name\": \"".$value['emoji']."\" }'\">$value[emoji] $value[codigo]</option>\n";
+            }
+          echo "</select>";
+          echo "<button id=\"select-reacao-button\"  class=\"confirm-type\" type=\"button\" onclick=\"addReacoes()\">Confirmar</button>";
+          echo "<div class=\"comment-container-top\" id=\"divReacoes\"></div>";
         echo "</div>";
         
       echo "</form>";

@@ -882,15 +882,14 @@ main {
 	border-width: 2px;
 	display: none;
 }
-.post-divLocal {
+.post-divLocal,
+.post-divPessoas,
+.post-divAssuntos,
+.post-divReacoes {
 	display: none;
 }
-.post-divPessoas {
-	display: none;
-}
-.post-divAssuntos {
-	display: none;
-}
+
+
 .post-selectUser-icon {
 	width: 12px;
 	height: 12px;

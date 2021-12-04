@@ -39,6 +39,7 @@ function newPostSelect(value) {
     var divLocal = document.getElementsByClassName('post-divLocal')[0];
     var divPessoas = document.getElementsByClassName('post-divPessoas')[0];
     var divAssuntos = document.getElementsByClassName('post-divAssuntos')[0];
+    var divReacoes = document.getElementsByClassName('post-divReacoes')[0];
     var hr = document.getElementById('post-hr');
     if(postSelectArr == value){
         postSelectArr = '';
@@ -46,6 +47,7 @@ function newPostSelect(value) {
         divLocal.style.display = 'none';
         divPessoas.style.display = 'none';
         divAssuntos.style.display = 'none';
+        divReacoes.style.display = 'none';
         insert.style.height = '262px';
     } else {
         insert.style.height = '400px';
@@ -55,6 +57,7 @@ function newPostSelect(value) {
             divLocal.style.display = 'block';
             divPessoas.style.display = 'none';
             divAssuntos.style.display = 'none';
+            divReacoes.style.display = 'none';
         }
         if(value == 'pessoas'){
             postSelectArr = value;
@@ -62,6 +65,7 @@ function newPostSelect(value) {
             divLocal.style.display = 'none';
             divPessoas.style.display = 'block';
             divAssuntos.style.display = 'none';
+            divReacoes.style.display = 'none';
         }
         if(value == 'assuntos'){
             postSelectArr = value;
@@ -69,6 +73,15 @@ function newPostSelect(value) {
             divLocal.style.display = 'none';
             divPessoas.style.display = 'none';
             divAssuntos.style.display = 'block';
+            divReacoes.style.display = 'none';
+        }
+        if(value == 'reacoes'){
+            postSelectArr = value;
+            hr.style.display = 'flex';
+            divLocal.style.display = 'none';
+            divPessoas.style.display = 'none';
+            divAssuntos.style.display = 'none';
+            divReacoes.style.display = 'block';
         }
     }
 }
@@ -161,7 +174,7 @@ function selectPais(id){
         selectCidades[c].style.display = 'none';
     }
     if(selectPais == 0){
-        
+
     } else {
         var selectEstado = document.getElementById('select-estado-pais'+selectPais);
         selectEstado.style.display = 'flex';        
@@ -185,17 +198,25 @@ function addPessoas(){
     var option = document.getElementById('optionPessoa'+pessoa.id);
     option.remove();
     pessoas.push(pessoa.id);
-    const p = document.createElement('p')
-    p.id='pessoas'+pessoa.id
+    const p = document.createElement('p');
+    const input = document.createElement('input');
+    p.id='pessoas'+pessoa.id;
     p.innerHTML += `${pessoa.name} <button type="button" onclick="removePessoas('${pessoa.id}', '${pessoa.name}')">❌</button>`;
-    div.append(p)
+    input.type = 'hidden';
+    input.id = 'pessoaInput'+pessoa.id;
+    input.name = 'pessoa'+pessoa.id;
+    input.value = pessoa.id;
+    div.append(p);
+    div.append(input)
 }
 function removePessoas(id, name){
     var div = document.getElementById('divPessoas');
     var p = document.getElementById('pessoas'+id);
+    var input = document.getElementById('pessoaInput'+id);
     var select = document.getElementById('select-pessoas');
     select.innerHTML += `<option id='optionPessoa${id}' value='{ "id": "${id}", "name": "${name}" }'>${name}</option>\n`;
     p.remove();
+    input.remove();
     for(var i = 0; i < pessoas.length; i++){ 
         if ( pessoas[i] == id) {
             pessoas.splice(i, 1); 
@@ -252,6 +273,43 @@ function removeAssuntos(id, name){
         }    
     }
 }
+
+var reacoes = '';
+function addReacoes(){
+    var reacao = document.getElementById('select-reacoes').value;
+    reacao = JSON.parse(reacao);
+    var div = document.getElementById('divReacoes');
+    console.log(reacao);
+    var option = document.getElementById('optionReacao'+reacao.id);
+    var btn = document.getElementById('select-reacao-button');
+    option.remove();
+    reacoes = reacao.id;
+    const p = document.createElement('p');
+    const input = document.createElement('input');
+    p.id = 'reacao'+reacao.id;
+    p.innerHTML += `${reacao.name} ${reacao.id} <button type="button" onclick="removeReacoes('${reacao.id}', '${reacao.name}')">❌</button>`;
+    input.type = 'hidden';
+    input.name= 'reacao';
+    input.id= 'reacaoInput'+reacao.id;
+    input.value = reacao.id;
+    btn.disabled = true;
+    div.append(p);
+    div.append(input);
+}
+function removeReacoes(id, name){
+    var div = document.getElementById('divReacoes');
+    var p = document.getElementById('reacao'+id);
+    var input = document.getElementById('reacaoInput'+id);
+    var select = document.getElementById('select-reacoes');
+    select.innerHTML += `<option id='optionReacao${id}' value='{ "id": "${id}", "name": "${name}" }'>${name} ${id}</option>\n`;
+    p.remove();
+    input.remove();
+    reacoes = '';
+    var btn = document.getElementById('select-reacao-button');
+    btn.disabled = false;
+}
+
+
 function unsetError(){
-  console.log('rosca direta')
+  console.log('Eae');
 }
