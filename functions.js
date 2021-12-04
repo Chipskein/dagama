@@ -86,85 +86,90 @@ function newPostSelect(value) {
     }
 }
 
-// bgl la das postagens
-var tmpLocal = 0;
-function addLocal(){
-    var local = document.getElementById('select-local').value;
-    local = JSON.parse(local);
-    var div = document.getElementById('divCidade');
-    if(local !== 0){
-    var option = document.getElementById('optionLocal'+local.id);
-    option.remove();
-    tmpLocal = local.id;
-    const p = document.createElement('p')
-    p.id='local'+local.id
-    p.innerHTML += `${local.name} <button type="button" onclick="removeLocal('${local.id}', '${local.name}')">❌</button>`;
-    div.append(p)
-} else{
-    const inputCidade = document.createElement('input')
-    inputCidade.id='InputCidade'
-    inputCidade.className='StylesInputs'
-    inputCidade.placeholder='cidade'
-    inputCidade.name='addCidade'
-    const inputEstado = document.createElement('input')
-    inputEstado.id='InputEstado'
-    inputEstado.className='StylesInputs'
-    inputEstado.placeholder='estado'
-    inputCidade.name='addEstado'
-    const selectPais = document.createElement('select')
-    selectPais.id='Inputpais'
-    selectPais.className='StylesInputs'
-    selectPais.name='SelectedPais'
-    const select_estado = document.createElement('select')
-    select_estado.className='StylesInputs'
-    select_estado.name='SelectedEstado'
-    const buttonAddCidade = document.createElement('button')
-    buttonAddCidade.textContent='adicioar cidade';
-    buttonAddCidade.id = 'buttonCidade';
-    buttonAddCidade.type = 'button';
-    buttonAddCidade.onclick = () => {const p = document.createElement('p');  p.innerHTML = inputCidade.value; div.append(p)}
-    for(c=0;c<paises.length;c++){
-        const options = document.createElement('option')
-      options.value = paises[c].codigo
-      options.innerHTML = paises[c].nome
-      selectPais.append(options)
-    }
-    div.append(selectPais)
-    div.append(select_estado)
-    Inputpais.onchange=()=> {
-        Array.from(select_estado.options).forEach(function(e) {
-            if (e.value!="null"&&e.value!="outro") e.remove();
-          });
-    states.forEach(e=>{
-        if(e.pais==selectPais.value){
-        console.log(e.nome)
-            const option=document.createElement("option");
-          option.value=e.codigo;
-          option.innerHTML=e.nome;
-          select_estado.append(option);
-        };
-      })
-    }
-    // div.append(inputEstado)
-    // div.append(inputCidade)
-    div.append(buttonAddCidade)
-    }
-    document.getElementById('select-local').disabled = true;
-    document.getElementById('select-local-button').disabled = true;
-}
-function removeLocal(id, name){
-    var div = document.getElementById('divCidade');
-    var p = document.getElementById('local'+id);
-    var select = document.getElementById('select-local');
-    select.innerHTML += `<option id='optionLocal${id}' value='{ "id": "${id}", "name": "${name}" }'>${name}</option>\n`;
-    p.remove();
-    tmpLocal = 0;
-    document.getElementById('select-local').disabled = false;
-    document.getElementById('select-local-button').disabled = false;
-}
-
 function selectPais(id){
     var selectPais = id.value;
+    var selectEstados = document.getElementsByClassName('select-estado-pais');
+    
+    var inputCodPais = document.getElementById('insert-codigo-pais');
+    var inputCodEstado = document.getElementById('insert-codigo-estado');
+    var inputCodCidade = document.getElementById('insert-codigo-cidade');
+
+    for(let c = 0; c < selectEstados.length; c++){
+        selectEstados[c].style.display = 'none';
+    }
+    var selectCidades = document.getElementsByClassName('select-cidade-estado');
+    for(let c = 0; c < selectCidades.length; c++){
+        selectCidades[c].style.display = 'none';
+    }
+    var inputPais = document.getElementById('insert-nome-pais');
+    var inputEstado = document.getElementById('insert-nome-estado');
+    var inputCidade = document.getElementById('insert-nome-cidade');
+    inputPais.style.display = 'none';
+    inputEstado.style.display = 'none';
+    inputCidade.style.display = 'none';
+    if(selectPais == 0){
+        inputPais.style.display = 'flex';
+        inputEstado.style.display = 'flex';
+        inputCidade.style.display = 'flex';
+
+        inputCodPais.value = 0;
+        inputCodEstado.value = 0;
+        inputCodCidade.value = 0;
+    } else {
+        inputCodPais.value = selectPais;
+        inputCodEstado.value = '';
+        inputCodCidade.value = '';
+        var selectEstado = document.getElementById('select-estado-pais'+selectPais);
+        selectEstado.style.display = 'flex';        
+    }
+}
+function selectEstado(id){
+    var selectEstado = id.value;
+    var selectCidades = document.getElementsByClassName('select-cidade-estado');
+
+    var inputCodEstado = document.getElementById('insert-codigo-estado');
+    var inputCodCidade = document.getElementById('insert-codigo-cidade');
+
+    for(let c = 0; c < selectCidades.length; c++){
+        selectCidades[c].style.display = 'none';
+    }
+    var inputEstado = document.getElementById('insert-nome-estado');
+    var inputCidade = document.getElementById('insert-nome-cidade');
+    inputEstado.style.display = 'none';
+    inputCidade.style.display = 'none';
+    if(selectEstado == 0){
+        inputEstado.style.display = 'flex';
+        inputCidade.style.display = 'flex';
+        inputCodEstado.value = 0;
+        inputCodCidade.value = 0;
+    } else {
+        var selectCidade = document.getElementById('select-cidade-estado'+selectEstado);
+        selectCidade.style.display = 'flex';
+        inputCodEstado.value = selectEstado;
+        inputCodCidade.value = '';
+    }    
+}
+function selectCidade(id){
+    var selectCidade = JSON.parse(id.value);
+    var inputCidade = document.getElementById('insert-nome-cidade');
+    inputCidade.style.display = 'none';
+    var estado = id.id.split('select-cidade-estado')[1];
+
+    var inputCodCidade = document.getElementById('insert-codigo-cidade');
+
+    if(selectCidade.id == 0){
+        inputCidade.style.display = 'flex';
+        inputCodCidade.value = 0;
+    } else {
+        var selectCidade = document.getElementById('select-cidade-estado'+estado);
+        selectCidade.style.display = 'flex';
+        inputCodCidade.value = selectCidade.id;
+    }  
+}
+
+function addLocal(){
+    var selectPais = document.getElementById('select-pais');
+    selectPais.style.display = 'none';
     var selectEstados = document.getElementsByClassName('select-estado-pais');
     for(let c = 0; c < selectEstados.length; c++){
         selectEstados[c].style.display = 'none';
@@ -173,21 +178,82 @@ function selectPais(id){
     for(let c = 0; c < selectCidades.length; c++){
         selectCidades[c].style.display = 'none';
     }
-    if(selectPais == 0){
-
+    var inputPais = document.getElementById('insert-nome-pais');
+    var inputEstado = document.getElementById('insert-nome-estado');
+    var inputCidade = document.getElementById('insert-nome-cidade');
+    inputPais.style.display = 'none';
+    inputEstado.style.display = 'none';
+    inputCidade.style.display = 'none';
+    var btn = document.getElementById('select-local-button');
+    var div = document.getElementById('divCidade');
+    if(selectPais.value == 0){
+        var p = document.createElement('p');
+        p.id = 'localNovo';
+        p.innerHTML += `${inputCidade.value} <button type="button" onclick="removeLocal('${0}', '${inputCidade.value}')">❌</button>`;
+        div.append(p);
+        btn.style.display = 'none';
     } else {
-        var selectEstado = document.getElementById('select-estado-pais'+selectPais);
-        selectEstado.style.display = 'flex';        
+        var pais = selectPais.value;
+        var estado = document.getElementById('select-estado-pais'+pais).value;
+        if(estado == 0){
+            var p = document.createElement('p');
+            p.id = 'localNovo';
+            p.innerHTML += `${inputCidade.value} <button type="button" onclick="removeLocal('${0}', '${inputCidade.value}')">❌</button>`;
+            div.append(p);
+            btn.style.display = 'none';
+        } else {
+            var cidade = JSON.parse(document.getElementById('select-cidade-estado'+estado).value);
+            if(cidade.id == 0){
+                var p = document.createElement('p');
+                p.id = 'localNovo';
+                p.innerHTML += `${inputCidade.value} <button type="button" onclick="removeLocal('${0}', '${inputCidade.value}')">❌</button>`;
+                div.append(p);
+                btn.style.display = 'none';
+            } else {
+                var div = document.getElementById('divCidade');
+                var option = document.getElementById('optionCidade'+cidade.id);
+                option.remove();
+                const p = document.createElement('p');
+                const input = document.createElement('input');
+                p.id = 'cidade'+cidade.id;
+                p.innerHTML += `${cidade.name} <button type="button" onclick="removeLocal('${cidade.id}', '${cidade.name}')">❌</button>`;
+                input.type = 'hidden';
+                input.id = 'cidadeInput'+cidade.id;
+                input.name = 'cidade';
+                input.value = cidade.id;
+                div.append(p);
+                div.append(input);
+                btn.style.display = 'none';
+            }
+        }
     }
 }
-function selectEstado(id){
-    var selectEstado = id.value;
-    var selectCidades = document.getElementsByClassName('select-cidade-estado');
-    for(let c = 0; c < selectCidades.length; c++){
-        selectCidades[c].style.display = 'none';
+function removeLocal(id, name){
+    var div = document.getElementById('divCidade');
+    if(id == 0 ){
+        var p = document.getElementById('localNovo');
+        p.remove();
+        var inputCodPais = document.getElementById('insert-codigo-pais');
+        var inputCodEstado = document.getElementById('insert-codigo-estado');
+        var inputCodCidade = document.getElementById('insert-codigo-cidade');
+        inputCodPais = '';
+        inputCodEstado = '';
+        inputCodCidade = '';
+
+        var inputPais = document.getElementById('insert-nome-pais');
+        var inputEstado = document.getElementById('insert-nome-estado');
+        var inputCidade = document.getElementById('insert-nome-cidade');
+        inputPais = '';
+        inputCidade = '';
+        inputEstado = '';
+    } else {
+        var p = document.getElementById('local'+id);
+        var select = document.getElementById('select-local');
+        select.innerHTML += `<option id='optionLocal${id}' value='{ "id": "${id}", "name": "${name}" }'>${name}</option>\n`;
+        p.remove();
     }
-    var selectCidade = document.getElementById('select-cidade-estado'+selectEstado);
-    selectCidade.style.display = 'flex';
+    document.getElementById('select-local').disabled = false;
+    document.getElementById('select-local-button').disabled = false;
 }
 
 var pessoas = [];

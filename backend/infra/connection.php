@@ -541,13 +541,13 @@
         $db_type = $db_connection['db_type'];
         if($db){
             if($db_type == 'sqlite'){
-                $response = $db->query("select codigo, email, ativo, img, username from perfil where codigo='$id'");
+                $response = $db->query("select codigo, email, ativo, img, username, cidade from perfil where codigo='$id'");
                 if($response) return $response->fetchArray();
                 else return false;
             }
             if($db_type == 'postgresql'){
                 if($db_type == 'postgresql'){
-                    $response = pg_query($db,"select codigo, email, ativo, img, username from perfil where codigo='$id'");
+                    $response = pg_query($db,"select codigo, email, ativo, img, username, cidade from perfil where codigo='$id'");
                     if($response) return pg_fetch_array($response);
                     else return false;
                 }
