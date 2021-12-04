@@ -18,12 +18,16 @@
     $limit = 10;
     $offset = isset($_GET['offset']) ? $_GET['offset'] : 0;
     $feedArray = getFeed($offset,$limit);
+    
     $locaisArray = getLocais();
+    
     $assuntosArray = getAssuntos();
     $pessoasArray = getPessoas();
+
     $paises=getPaises();
     $estados=getStates();
     $cidades=getCities();
+
     $suggestFriends = suggestFriends($_SESSION['userid'], 4, 0);
     $postsArray = getPosts($_SESSION['userid'], 0, 30);
     $portosArray = getAllPorto($_SESSION['userid'], true, 0, 3);
@@ -235,13 +239,38 @@
         echo "<input class=\"insert-interacao-submit\" type=\"submit\" name=\"novoPost\" />";
         echo "<hr id=\"post-hr\" class=\"post-hr\" >";
         echo "<div class=\"post-divLocal\">";
-          echo "<select id=\"select-local\" onclick=\"unsetError(this)\">";
-            foreach ($locaisArray as $value) {
-              echo "<option id='optionLocal".$value['codCidade']."' value='{ \"id\": \"".$value['codCidade']."\", \"name\": \"".$value['nomeCidade']."\" }'\">".$value['nomeCidade']."</option>\n";
+          echo "<select id=\"select-pais\" onchange=\"selectPais(this)\">";
+            echo "<option value=\"selecionar-pais\">Selecionar Pais</option>";
+            foreach ($paises as $value) {
+              echo "<option id='optionPais".$value['codigo']."' value='$value[codigo]'>".$value['nome']."</option>\n";
             }
             echo "<option value=\"0\">Outro</option>";
           echo "</select>";
-          echo "<input id=\"value-localId\" name=\"select-local-value\" class=hidden>";
+          foreach ($paises as $value) {
+            echo "<select id=\"select-estado-pais$value[codigo]\" class=\"select-estado-pais\" style=\"display: none\" onchange=\"selectEstado(this)\">";
+              echo "<option value=\"selecionar-estado\">Selecionar Estado</option>";
+              foreach ($estados as $value2) {
+                if($value2['pais'] == $value['codigo']){
+                  echo "<option id='optionEstado$value2[codigo]' value='$value2[codigo]'>$value2[nome]</option>\n";
+                }
+              }
+              echo "<option value=\"0\">Outro</option>";
+            echo "</select>";
+          }
+          foreach ($estados as $value) {
+            echo "<select id=\"select-cidade-estado$value[codigo]\" name=\"select-cidade$value[codigo]\" class=\"select-cidade-estado\" style=\"display: none\" onchange=\"selectCidade(this)\">";
+              echo "<option value=\"selecionar-cidade\">Selecionar Cidade</option>";
+              foreach ($cidades as $value2) {
+                if($value2['uf'] == $value['codigo']){
+                  echo "<option id='optionCidade$value2[codigo]' value='{ \"id\": \"".$value2['codigo']."\", \"name\": \"".$value2['nome']."\" }'>$value2[nome]</option>\n";
+                }
+              }
+              echo "<option value=\"0\">Outro</option>";
+            echo "</select>";
+          }
+          echo "<input id=\"insert-nome-pais\" name=\"insert-nome-pais\" class=hidden>";
+          echo "<input id=\"insert-nome-estado\" name=\"insert-nome-estado\" class=hidden>";
+          echo "<input id=\"insert-nome-cidade\" name=\"insert-nome-cidade\" class=hidden>";
           echo "<button id=\"select-local-button\"  class=\"confirm-type\" type=\"button\" onclick=\"addLocal()\">Confirmar</button>";
           echo "<div class=\"comment-container-top\" id=\"divCidade\"></div>";
         echo "</div>";
@@ -263,7 +292,8 @@
           echo "</select>";
           echo "<button id=\"select-assunto-button\"  class=\"confirm-type\" type=\"button\" onclick=\"addAssuntos()\">Confirmar</button>";
           echo "<div class=\"comment-container-top\" id=\"divAssuntos\"></div>";
-          echo "</div>";
+        echo "</div>";
+        
       echo "</form>";
     echo "</div>";
 
@@ -438,7 +468,7 @@
             } 
             if($post['codPerfil'] == $_SESSION['userid']) {
               echo "<div class=\"div-post-top-editicons\">";
-              echo "<a href=\"editarInteracao.php?user=$_SESSION[userid]&&edit=$post[codInteracao]\"><img src=\"./imgs/icons/pencil.png\" class=\"div-post-top-editicons-pencil\" alt=\"\" /></a>";
+              echo "<a href=\"editarInteracao.php?interacao=$post[codInteracao]\"><img src=\"./imgs/icons/pencil.png\" class=\"div-post-top-editicons-pencil\" alt=\"\" /></a>";
               echo "<form action=\"feed.php?user=$_SESSION[userid]\" method=\"post\">";
               echo "<button type=\"submit\" name=\"deletePost\" value=\"$post[codInteracao]\"><img src=\"./imgs/icons/trash.png\" class=\"div-post-top-editicons-trash\" alt=\"\" /></button>";
               echo "</form>";
@@ -498,15 +528,9 @@
               echo "<button type=\"submit\" name=\"removeCitacao\" class=\"interacao-remover-txt\" value=\"$post[codInteracao]\"><p>Remover sua citação</p></button>";
               echo "</form>";
             }
-            // echo "<div class=\"div-post-icons-bar-divs\">";
-            //   echo "<p>12</p><img src=\"imgs/icons/Like.png\" class=\"div-post-icons-bar-icons\" alt=\"\">";
-            // echo "</div>";
             echo "<div class=\"div-post-icons-bar-divs\">";
-              echo "<p>5</p><img src=\"imgs/icons/chat.png\" class=\"div-post-icons-bar-icons\" alt=\"\">";
+              echo "<p>$post[qtdInteracao]</p><img src=\"imgs/icons/chat.png\" class=\"div-post-icons-bar-icons\" alt=\"\">";
             echo "</div>";
-            // echo "<div class=\"div-post-icons-bar-divs\">";
-            //   echo "<p>2</p><img src=\"imgs/icons/send.png\" class=\"div-post-icons-bar-icons\" alt=\"\">";
-            // echo "</div>";
             echo "<div class=\"div-post-icons-bar-interagir\">";
               echo "<a href=\"interagirInteracao.php?interacao=$post[codInteracao]\"><img src=\"$user[img]\" class=\"div-post-icons-bar-interagir-icon\" alt=\"\"><p>Interagir...</p></a>";
             echo "</div>";
@@ -527,22 +551,21 @@
                 echo "<div class=\"comment-reagir\">";
                 echo "<a href=\"interagirInteracao.php?interacao=$comentario[codInteracao]\">Reagir</a>";
                   if($comentario['codPerfil'] == $_SESSION['userid']) {
-                    echo "<a href=\"interagirInteracao.php?edit=$_SESSION[userid]\"><p class=\"interacao-editar-txt\">- Editar -</p></a>";
+                    echo "<a href=\"editarInteracao.php?interacao=$comentario[codInteracao]\"><p class=\"interacao-editar-txt\">- Editar -</p></a>";
                     echo "<form action=\"feed.php?user=$_SESSION[userid]\" method=\"post\">";
-                    echo "<button type=\"submit\" name=\"deletePost\" value=\"$post[codInteracao]\"><p class=\"interacao-remover-txt\">Remover</p></button>";
+                    echo "<button type=\"submit\" name=\"deletePost\" value=\"$comentario[codInteracao]\"><p class=\"interacao-remover-txt\">Remover</p></button>";
                     echo "</form>";
                   }
                   if($comentario['codPerfil'] != $_SESSION['userid'] && $post['codPerfil'] == $_SESSION['userid']) {
                     echo "<form action=\"feed.php?user=$_SESSION[userid]\" method=\"post\">";
-                    echo "<button type=\"submit\" name=\"deletePost\" value=\"$post[codInteracao]\"><p class=\"interacao-remover-txt\">- Remover</p></button>";
+                    echo "<button type=\"submit\" name=\"deletePost\" value=\"$comentario[codInteracao]\"><p class=\"interacao-remover-txt\">- Remover</p></button>";
                     echo "</form>";
                   }
                 echo "</div>";
                 // Respostas
                 if($comentario['respostas'] && $comentario['respostas'] != []){
-                  echo "<hr class=\"post-hr\">";
                   foreach ($comentario['respostas'] as $resposta) {
-                    echo "<div class=\"comment-container\">";
+                    echo "<div class=\"comment-resp-container\">";
                       echo "<div class=\"comment-container-top\">";
                         echo "<a href=navio.php?user=$resposta[codPerfil]><img src=\"".$resposta['iconPerfil']."\" alt=\"\" class=\"comment-icon\"></a>";
                         echo "<p class=\"comment-txt\"><i>@".$resposta['nomePerfil']."</i> ";
@@ -553,24 +576,26 @@
                       echo "<div class=\"comment-reagir\">";
                       echo "<a href=\"interagirInteracao.php?interacao=$resposta[codInteracao]\">Reagir</a>";
                         if($resposta['codPerfil'] == $_SESSION['userid']) {
-                          echo "<a href=\"interagirInteracao.php?edit=$_SESSION[userid]\"><p class=\"interacao-editar-txt\">- Editar -</p></a>";
+                          echo "<a href=\"editarInteracao.php?interacao=$resposta[codInteracao]\"><p class=\"interacao-editar-txt\">- Editar -</p></a>";
                           echo "<form action=\"feed.php?user=$_SESSION[userid]\" method=\"post\">";
-                          echo "<button type=\"submit\" name=\"deletePost\" value=\"$comentario[codInteracao]\"><p class=\"interacao-remover-txt\">Remover</p></button>";
+                          echo "<button type=\"submit\" name=\"deletePost\" value=\"$resposta[codInteracao]\"><p class=\"interacao-remover-txt\">Remover</p></button>";
                           echo "</form>";
                         }
                         if($resposta['codPerfil'] != $_SESSION['userid'] && $comentario['codPerfil'] == $_SESSION['userid']) {
                           echo "<form action=\"feed.php?user=$_SESSION[userid]\" method=\"post\">";
-                          echo "<button type=\"submit\" name=\"deletePost\" value=\"$post[codInteracao]\"><p class=\"interacao-remover-txt\">- Remover</p></button>";
+                          echo "<button type=\"submit\" name=\"deletePost\" value=\"$resposta[codInteracao]\"><p class=\"interacao-remover-txt\">- Remover</p></button>";
                           echo "</form>";
                         }
                       echo "</div>";
-                      
                     echo "</div>";
                   }
-          }
+                }
+                echo "<p align=center><a href=completeInteracao.php?interacao=$comentario[codInteracao]>Ver mais respostas</a></p>";
               echo "</div>";
             }
           }
+          echo "<hr class=\"post-hr-gray\">";
+          echo "<p align=center ><a href=completeInteracao.php?interacao=$post[codInteracao] style=\"txt-verMaisComentarios\">Ver mais</a></p>";
         echo "</div>";
       }
     }

@@ -315,6 +315,7 @@ a {
 		width: 10%;
 		margin-left: 10px;
 	}
+	
 /*</index.php>*/
 /*--------------------------------------------------------------------------------------------------------------*/
 /*<mar.php>*/
@@ -1076,6 +1077,12 @@ main {
 	background-color: var(--azulEscuro2-color);
 	border-width: 2px;
 }
+.post-hr-gray {
+	margin-top: 15px;
+	border-color: #fff;
+	background-color: #fff;
+	border-width: 0.5px;
+}
 .comment-container {
 	margin-top: 20px;
 	padding-right: 10px;
@@ -1101,6 +1108,7 @@ main {
 .comment-reagir{
 	margin-top: -20px;
 	margin-left: 50px;
+	height: 40px;
 	color: var(--azulClaro-color);
 	display: flex;
 	flex-direction: row;
@@ -1108,6 +1116,10 @@ main {
 }
 .comment-reagir a {
 	color: var(--azulClaro-color);
+}
+.comment-resp-container {
+	margin-left: 50px;
+	margin-top: 2px;
 }
 .interacao-remover-txt {
 	margin-top: 3px;
