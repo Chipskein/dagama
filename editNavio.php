@@ -88,7 +88,7 @@
   <main class="container-center">
       <div class="UpdateUser-form-container">
           <h2 class="addporto-main-txt">Editar Navio</h2>
-          <?php echo "<div id=\"img_perfil\" class=perfil  style=\"background-image:url('$user[img]')\";  ></div>" ?>
+          <?php echo "<div id=\"img_perfil\" class=perfil  style=\"background-image:url('$user[img]')\";></div>" ?>
       <form id=formPhoto action=<?php echo "navio.php?user=$_SESSION[userid]"?> enctype=multipart/form-data method="POST">
         <input id="imgInp" class="hidden" type="file" name="photo">
     </form>

@@ -27,7 +27,6 @@
     $paises=getPaises();
     $estados=getStates();
     $cidades=getCities();
-
     $suggestFriends = suggestFriends($_SESSION['userid'], 4, 0);
     $postsArray = getPosts($_SESSION['userid'], 0, 30);
     $portosArray = getAllPorto($_SESSION['userid'], true, 0, 3);
@@ -339,7 +338,12 @@
               echo "<div class=\"div-sharing-post-top\">";
                 echo "<a href=navio.php?user=$sharedPost[codPerfil]><img src=\"".$sharedPost['iconPerfil']."\" alt=\"\" class=\"div-sharing-post-top-icon\"></a>";
                 echo "<div class=\"div-post-top-infos\">";
-                  echo "<p class=\"div-post-top-username\"><i>@".$sharedPost['nomePerfil']."</i>";
+                echo "<div class=\"row\">";
+                if($selo==3)echo "<img class=\"coment-mainuser-user-selo\" src=\"./imgs/icons/bronze-medal.png\"/>";
+                if($selo==2)echo "<img class=\"coment-mainuser-user-selo\" src=\"./imgs/icons/silver-medal.png\"/>";
+                if($selo==1)echo "<img class=\"coment-mainuser-user-selo\" src=\"./imgs/icons/gold-medal.png\"/>";
+                echo "<p class=\"div-post-top-username\"><i>@".$sharedPost['nomePerfil']."</i>";
+                echo "</div>";
                   if($sharedPost['nomeCidade']){
                     echo " em ".$sharedPost['nomeCidade'].", ".$sharedPost['nomePais']." - ";
                   }
@@ -417,7 +421,12 @@
           echo "<div class=\"div-post-top\">";
             echo "<a href=navio.php?user=$post[codPerfil]><img src=\"".$post['iconPerfil']."\" alt=\"\" class=\"div-post-top-icon\"></a>";
             echo "<div class=\"div-post-top-infos\">";
-              echo "<p class=\"div-post-top-username\"><i>@".$post['nomePerfil']."</i>";
+            echo "<div class=\"row\">";
+            // if($selo==3)echo "<img class=\"coment-mainuser-user-selo\" src=\"./imgs/icons/bronze-medal.png\"/>";
+            // if($selo==2)echo "<img class=\"coment-mainuser-user-selo\" src=\"./imgs/icons/silver-medal.png\"/>";
+            // if($selo==1)echo "<img class=\"coment-mainuser-user-selo\" src=\"./imgs/icons/gold-medal.png\"/>";
+            echo "<p class=\"div-post-top-username\"><i>@".$post['nomePerfil']."</i>";
+            echo "</div>";
               if($post['nomeCidade']){
                 echo " em ".$post['nomeCidade'].", ".$post['nomePais']." - ";
               }
@@ -526,7 +535,10 @@
               echo "<div class=\"comment-container\">";
                 echo "<div class=\"comment-container-top\">";
                   echo "<a href=navio.php?user=$comentario[codPerfil]><img src=\"".$comentario['iconPerfil']."\" alt=\"\" class=\"comment-icon\"></a>";
+                  echo "<div class=\"row\">";
+                  echo "<img class=\"coment-mainuser-user-selo\" src=\"./imgs/icons/bronze-medal.png\"/>";
                   echo "<p class=\"comment-txt\"><i>@".$comentario['nomePerfil']."</i> ";
+                    echo "</div>";
                   echo ($comentario['textoPost'] ? $comentario['textoPost'] : '');
                   echo ", em ".$comentario['dataPost'];
                   echo "</p>";
@@ -551,7 +563,10 @@
                     echo "<div class=\"comment-resp-container\">";
                       echo "<div class=\"comment-container-top\">";
                         echo "<a href=navio.php?user=$resposta[codPerfil]><img src=\"".$resposta['iconPerfil']."\" alt=\"\" class=\"comment-icon\"></a>";
+                        echo "<div class=\"row\">";
+                        echo "<img class=\"coment-mainuser-user-selo\" src=\"./imgs/icons/bronze-medal.png\"/>";   
                         echo "<p class=\"comment-txt\"><i>@".$resposta['nomePerfil']."</i> ";
+                        echo "</div>";
                         echo ($resposta['textoPost'] ? $resposta['textoPost'] : '');
                         echo ", em ".$resposta['dataPost'];
                         echo "</p>";
