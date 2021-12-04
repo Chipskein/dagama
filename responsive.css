@@ -95,3 +95,10 @@
 	font-size: 18px;
 	margin-top: 10px;
 }
+.div-post-top-editicons {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	position: absolute;
+	right: 380px;
+}
