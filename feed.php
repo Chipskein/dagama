@@ -30,6 +30,7 @@
     $suggestFriends = suggestFriends($_SESSION['userid'], 4, 0);
     $postsArray = getPosts($_SESSION['userid'], 0, 30);
     $portosArray = getAllPorto($_SESSION['userid'], true, 0, 3);
+    $portosArrayForShare = getAllPorto($_SESSION['userid'], true, 0, 0);
     $errorMessage = [];
     // var_dump($_POST);
     if(isset($_POST['buttonAssunto'])){
@@ -52,29 +53,31 @@
       $codCidade = $_POST['insert-codigo-cidade'];
       $novoCidadeNome = $_POST['insert-nome-cidade'];
 
-      if(isset($codPais) && isset($codEstado) && isset($_POST['insert-codigo-cidade'])){
-        if($codPais == 0){
-          // cria novo pais, estado e cidade
-          $pais = addPais($novoPaisNome);
-          $estado = addEstado($novoEstadoNome, $pais);
-          $local = addCidade($novoCidadeNome, $estado);
-        }
-        if($codPais != 0 && preg_match('#^[0-9]{1,}$#', $codPais)){  
-          if($codEstado == 0){
-            // cria novo estado e cidade
-            $estado = addPais($novoEstadoNome, $codPais);
+      if(isset($codPais) && isset($codEstado) && isset($codCidade)){
+        if($codPais != "" && $codEstado != "" && $codCidade != ""){
+          if($codPais == 0){
+            // cria novo pais, estado e cidade
+            $pais = addPais($novoPaisNome);
+            $estado = addEstado($novoEstadoNome, $pais);
             $local = addCidade($novoCidadeNome, $estado);
           }
-        if($codEstado != 0 && preg_match('#^[0-9]{1,}$#', $codEstado)){
-          if($codCidade == 0){
-              // cria nova cidade
-              $local = addCidade($novoCidadeNome, $codEstado);
+          if($codPais != 0 && preg_match('#^[0-9]{1,}$#', $codPais)){  
+            if($codEstado == 0){
+              // cria novo estado e cidade
+              $estado = addEstado($novoEstadoNome, $codPais);
+              $local = addCidade($novoCidadeNome, $estado);
             }
-            if($codCidade != 0 && preg_match('#^[0-9]{1,}$#', $codCidade)){
-              $local = $codCidade;
+          if($codEstado != 0 && preg_match('#^[0-9]{1,}$#', $codEstado)){
+            if($codCidade == 0){
+                // cria nova cidade
+                $local = addCidade($novoCidadeNome, $codEstado);
+              }
+              if($codCidade != 0 && preg_match('#^[0-9]{1,}$#', $codCidade)){
+                $local = $codCidade;
+              }
             }
           }
-        }    
+        }
       }
 
       $qtdAssuntos = count(getAssuntos());
@@ -195,16 +198,22 @@
     </div>
   </aside>
   <aside id=esquerda>
-  <div align=center class=background2>
-        <p class=portosAtracados>Ondas do momento:</p>
-      <div align=start>
-        <?php  
-          foreach ($topAssuntos as $topassunto){
-            echo "<p class=trending>$topassunto[nome]</p>";
+    <div align=center class=background2>
+    <?php  
+        echo "<p class=portosAtracados>Ondas do momento:</p>";
+        echo "<div align=start>";
+          $c = 1;
+          if(count($topAssuntos) > 0){
+            foreach ($topAssuntos as $topassunto){
+              echo "<p class=trending>$c º - $topassunto[nome]</p>";
+              $c++;
+            }
+          } else {
+            echo "Sem assuntos na cidade...";
           }
-        ?>
-      </div>
-    </div>
+        echo "</div>";
+      echo "</div>";
+    ?>
   </aside>
   <main class="container-center">
 
@@ -227,6 +236,7 @@
           echo "<div class=\"insert-interacao-smallBtns-a\" onclick=\"newPostSelect('pessoas')\"><img class=\"insert-interacao-smallBtns-icon\" src=\"imgs/icons/multiple-users-silhouette.png\" alt=\"\" srcset=\"\">Citar Pessoas</div>";
           echo "<div class=\"insert-interacao-smallBtns-a\" onclick=\"newPostSelect('assuntos')\"><img class=\"insert-interacao-smallBtns-icon\" src=\"imgs/icons/price-tag.png\" alt=\"\" srcset=\"\">Assunto</div>";
           echo "<div class=\"insert-interacao-smallBtns-a\" onclick=\"newPostSelect('reacoes')\"><img class=\"insert-interacao-smallBtns-icon\" src=\"imgs/icons/Like.png\" alt=\"\" srcset=\"\">Reação</div>";
+          echo "<div class=\"insert-interacao-smallBtns-a\" onclick=\"newPostSelect('compartilhar')\"><img class=\"insert-interacao-smallBtns-icon\" src=\"imgs/icons/send.png\" alt=\"\" srcset=\"\">Compartilhar</div>";
         echo "</div>";
         echo "<input class=\"insert-interacao-submit\" type=\"submit\" name=\"novoPost\" />";
         echo "<hr id=\"post-hr\" class=\"post-hr\" >";
@@ -301,7 +311,16 @@
           echo "<button id=\"select-reacao-button\"  class=\"confirm-type\" type=\"button\" onclick=\"addReacoes()\">Confirmar</button>";
           echo "<div class=\"comment-container-top\" id=\"divReacoes\"></div>";
         echo "</div>";
-        
+        echo "<div class=\"post-divCompart\">";
+          echo "<select id=\"select-compartilhar\" onclick=\"unsetError(this)\">";
+            echo "<option id='optionCompartilhar' value=''>Selecione onde vai compartilhar</option>\n";
+            echo "<option id='optionCompartilhar' value='feed'>No feed</option>\n";
+            echo "<option id='optionCompartilhar' value='grupo'>Em um grupo</option>\n";
+            echo "<option id='optionCompartilhar' value='perfil'>Em um perfil</option>\n";
+          echo "</select>";
+          echo "<button id=\"select-reacao-button\"  class=\"confirm-type\" type=\"button\" onclick=\"addReacoes()\">Confirmar</button>";
+          echo "<div class=\"comment-container-top\" id=\"divReacoes\"></div>";
+        echo "</div>";
       echo "</form>";
     echo "</div>";
 
@@ -350,7 +369,7 @@
       echo "<button class=\"insert-interacao-submit\" name=\"ordenarBtn\">Ordenar<button/>";
       echo "</div>";
       foreach ($postsArray as $post) {
-        // print_r($post['comentarios'][2]['respostas']);
+        // print_r($post);
         echo "<div class=\"div-post\">";
           if($post['codPorto']){
             echo "<p class=\"compartilhado-txt\"><i>Postado no porto <a href=porto.php?porto=$post[codPorto] class=\"txt-linktoporto\">$post[nomePorto]</a></i></p>";
@@ -433,7 +452,6 @@
                   }
                   echo ", </i>";
                   
-
                 }
                 echo "$sharedPost[textoPost]</p>";
               echo "</div>";

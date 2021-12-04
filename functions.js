@@ -40,6 +40,7 @@ function newPostSelect(value) {
     var divPessoas = document.getElementsByClassName('post-divPessoas')[0];
     var divAssuntos = document.getElementsByClassName('post-divAssuntos')[0];
     var divReacoes = document.getElementsByClassName('post-divReacoes')[0];
+    var divCompart = document.getElementsByClassName('post-divCompart')[0];
     var hr = document.getElementById('post-hr');
     if(postSelectArr == value){
         postSelectArr = '';
@@ -48,6 +49,7 @@ function newPostSelect(value) {
         divPessoas.style.display = 'none';
         divAssuntos.style.display = 'none';
         divReacoes.style.display = 'none';
+        divCompart.style.display = 'none';
         insert.style.height = '262px';
     } else {
         insert.style.height = '400px';
@@ -58,6 +60,7 @@ function newPostSelect(value) {
             divPessoas.style.display = 'none';
             divAssuntos.style.display = 'none';
             divReacoes.style.display = 'none';
+            divCompart.style.display = 'none';
         }
         if(value == 'pessoas'){
             postSelectArr = value;
@@ -66,6 +69,7 @@ function newPostSelect(value) {
             divPessoas.style.display = 'block';
             divAssuntos.style.display = 'none';
             divReacoes.style.display = 'none';
+            divCompart.style.display = 'none';
         }
         if(value == 'assuntos'){
             postSelectArr = value;
@@ -74,6 +78,7 @@ function newPostSelect(value) {
             divPessoas.style.display = 'none';
             divAssuntos.style.display = 'block';
             divReacoes.style.display = 'none';
+            divCompart.style.display = 'none';
         }
         if(value == 'reacoes'){
             postSelectArr = value;
@@ -82,6 +87,16 @@ function newPostSelect(value) {
             divPessoas.style.display = 'none';
             divAssuntos.style.display = 'none';
             divReacoes.style.display = 'block';
+            divCompart.style.display = 'none';
+        }
+        if(value == 'compartilhar'){
+            postSelectArr = value;
+            hr.style.display = 'flex';
+            divLocal.style.display = 'none';
+            divPessoas.style.display = 'none';
+            divAssuntos.style.display = 'none';
+            divReacoes.style.display = 'none';
+            divCompart.style.display = 'block';
         }
     }
 }

@@ -403,7 +403,35 @@ where
     interacao.post in (select codigo from interacao where perfil = $user and ativo = 1) or
     interacao.codigo in (select postPai from interacao where perfil = $user and ativo = 1 group by postPai)
 ---
+select 
+    assunto.nome as nome, count(*) as total, cidade.nome as nomeCidade
+    from interacao 
+    join cidade on interacao.local=cidade.codigo
+    join uf on cidade.uf=uf.codigo
+    join pais on pais.codigo=uf.pais
+    join INTERACAO_ASSUNTO on interacao.codigo=INTERACAO_ASSUNTO.interacao
+    join assunto on INTERACAO_ASSUNTO.assunto=assunto.codigo
+    where 
+        interacao.local= $cidade
+    group by assunto.codigo
+    having count(*) in (
+        select 
+        distinct
+        count(*) as total_per_assunto
+        from interacao 
+        join cidade on interacao.local=cidade.codigo
+        join uf on cidade.uf=uf.codigo
+        join pais on pais.codigo=uf.pais
+        join INTERACAO_ASSUNTO on interacao.codigo=INTERACAO_ASSUNTO.interacao
+        join assunto on INTERACAO_ASSUNTO.assunto=assunto.codigo
+        where 
+            interacao.local= $cidade
+        group by assunto.codigo
+        order by total_per_assunto desc
+        limit $top)
+    order by total desc;
 
+--
 
 
 select 
