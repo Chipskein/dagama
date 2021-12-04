@@ -45,7 +45,7 @@
       
       // Local
       $local = $user['cidade'];
- +     $codPais = $_POST['insert-codigo-pais'];
+      $codPais = $_POST['insert-codigo-pais'];
       $novoPaisNome = $_POST['insert-nome-pais'];
       $codEstado = $_POST['insert-codigo-estado'];
       $novoEstadoNome = $_POST['insert-nome-estado'];
