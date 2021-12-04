@@ -1000,7 +1000,7 @@ main {
 	flex-direction: row;
 	align-items: center;
 	position: absolute;
-	right: 380px;
+	right: 480px;
 }
 .div-post-top-editicons-pencil {
 	width: 20px;
@@ -1112,6 +1112,8 @@ main {
 .interacao-remover-txt {
 	margin-top: 3px;
 	color: var(--azulClaro-color);
+	width: 150px;
+	font-size: 14px;
 }
 
 .inner-comment-container {

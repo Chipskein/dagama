@@ -25,22 +25,35 @@
         $user=getUserInfo("$_SESSION[userid]");
         if(isset($_POST['editName'])){
             $name = "$_POST[editName]";
-            $changeName = changeUserName($_SESSION['userid'],$name);
-            header("refresh:1;url=editNavio.php");
+            if($name === ''||$name === ' ') {
+                return header("refresh:1;url=editNavio.php");
+            }else{
+                $changeName = changeUserName($_SESSION['userid'],$name);
+                header("refresh:1;url=editNavio.php");
+            }
         }
         if(isset($_POST['editEmail'])){
             $email = "$_POST[editEmail]";
+            $regex_email="/^[a-zA-Z0-9\.]*@[a-z0-9\.]*\.[a-z]*$/";
+            if(preg_match($regex_email,$email)){
             $changeEmail = changeUserEmail($_SESSION['userid'],$email);
             header("refresh:1;url=editNavio.php");
+            }else {
+               return header("refresh:1;url=editNavio.php");
+            }
         }
         if(isset($_POST['editSenha'])){
-            $senha = password_hash("$_POST[editSenha]", PASSWORD_DEFAULT);
-            $changeSenha = changeUserSenha($_SESSION['userid'],$senha);
-            header("refresh:1;url=editNavio.php");
+            if($_POST['editSenha'] === ''||$_POST['editSenha'] === ' '){
+                return header("refresh:1;url=editNavio.php");
+            }else{
+                $senha = password_hash("$_POST[editSenha]", PASSWORD_DEFAULT);
+                $changeSenha = changeUserSenha($_SESSION['userid'],$senha);
+                header("refresh:1;url=editNavio.php");
+            }
         }
         if(isset($_POST['ApagarPerfil'])){
-            $changeSenha = deactivateUser($_SESSION['userid']);
-            header("refresh:1;url=index.php");
+            $ApagarUser = deactivateUser($_SESSION['userid']);
+            header("refresh:1;url=backend/logoff.php");
         }
         if(isset($_FILES["photo"])){
           $photo=$_FILES["photo"];
@@ -74,7 +87,7 @@
   </header>
   <main class="container-center">
       <div class="UpdateUser-form-container">
-          <h2 class="addporto-main-txt">Editar Perfil</h2>
+          <h2 class="addporto-main-txt">Editar Navio</h2>
           <?php echo "<div id=\"img_perfil\" class=perfil  style=\"background-image:url('$user[img]')\";  ></div>" ?>
       <form id=formPhoto action=<?php echo "navio.php?user=$_SESSION[userid]"?> enctype=multipart/form-data method="POST">
         <input id="imgInp" class="hidden" type="file" name="photo">

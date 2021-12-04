@@ -393,7 +393,7 @@
         $db=$db_connection['db'];
         $db_type=$db_connection['db_type'];
         if($db_type == 'sqlite'){
-            $response = $db->exec("insert into assunto (nome) values ($nome)");
+            $response = $db->exec("insert into assunto (nome) values ('$nome')");
             if($response) return $response;
             else return false;
         }

@@ -87,32 +87,53 @@ function addLocal(){
     p.id='local'+local.id
     p.innerHTML += `${local.name} <button type="button" onclick="removeLocal('${local.id}', '${local.name}')">❌</button>`;
     div.append(p)
-    }else{
-      const buttonAddCidade = document.createElement('button')
-      buttonAddCidade.textContent='adicioar cidade';
-      buttonAddCidade.id = 'buttonCidade';
-      buttonAddCidade.type = 'button';
-      // button.onclick = () => {  }
-      const inputCidade = document.createElement('input')
+}else{
+    const inputCidade = document.createElement('input')
     inputCidade.id='InputCidade'
     inputCidade.className='StylesInputs'
     inputCidade.placeholder='cidade'
+    inputCidade.name='addCidade'
     const inputEstado = document.createElement('input')
     inputEstado.id='InputEstado'
     inputEstado.className='StylesInputs'
     inputEstado.placeholder='estado'
+    inputCidade.name='addEstado'
     const selectPais = document.createElement('select')
     selectPais.id='Inputpais'
     selectPais.className='StylesInputs'
+    selectPais.name='SelectedPais'
+    const select_estado = document.createElement('select')
+    select_estado.className='StylesInputs'
+    select_estado.name='SelectedEstado'
+    const buttonAddCidade = document.createElement('button')
+    buttonAddCidade.textContent='adicioar cidade';
+    buttonAddCidade.id = 'buttonCidade';
+    buttonAddCidade.type = 'button';
+    buttonAddCidade.onclick = () => {const p = document.createElement('p');  p.innerHTML = inputCidade.value; div.append(p)}
     for(c=0;c<paises.length;c++){
-      const options = document.createElement('option')
+        const options = document.createElement('option')
       options.value = paises[c].codigo
       options.innerHTML = paises[c].nome
       selectPais.append(options)
     }
-    div.append(inputCidade)
-    div.append(inputEstado)
     div.append(selectPais)
+    div.append(select_estado)
+    Inputpais.onchange=()=> {
+        Array.from(select_estado.options).forEach(function(e) {
+            if (e.value!="null"&&e.value!="outro") e.remove();
+          });
+    states.forEach(e=>{
+        if(e.pais==selectPais.value){
+        console.log(e.nome)
+            const option=document.createElement("option");
+          option.value=e.codigo;
+          option.innerHTML=e.nome;
+          select_estado.append(option);
+        };
+      })
+    }
+    // div.append(inputEstado)
+    // div.append(inputCidade)
     div.append(buttonAddCidade)
     }
     document.getElementById('select-local').disabled = true;
@@ -169,19 +190,20 @@ function addAssuntos(){
     p.innerHTML += `${assunto.name} <button type="button" onclick="removeAssuntos('${assunto.id}', '${assunto.name}')">❌</button>`;
     div.append(p)
     } else{
-      const buttonAddAssuntos = document.createElement('button')
-      buttonAddAssuntos.textContent='adicioar assunto';
-      buttonAddAssuntos.id = 'buttonAssunto';
-      buttonAddAssuntos.type = 'button';
-      // button.onclick = () => {  }
-      const inputAssunto = document.createElement('input')
-    inputAssunto.id='InputCidade'
+        let form = document.createElement('form')
+        form.method='post'
+        const inputAssunto = document.createElement('input')
+        inputAssunto.id='InputCidade'
     inputAssunto.className='StylesInputs'
+    inputAssunto.name='buttonAssunto'
     inputAssunto.placeholder='adicione o assunto'
-    div.append(inputAssunto)
-    div.append(buttonAddAssuntos)
-    document.getElementById('select-assunto').disabled = true;
-    document.getElementById('select-assunto-button').disabled = true;
+    const buttonAddAssuntos = document.createElement('button')
+    buttonAddAssuntos.textContent='adicioar assunto';
+    buttonAddAssuntos.id = 'buttonAssunto';
+    buttonAddAssuntos.type = 'submit';
+     div.append(form)
+     form.append(inputAssunto)
+     form.append(buttonAddAssuntos)
     }
   }
 function removeAssuntos(id, name){

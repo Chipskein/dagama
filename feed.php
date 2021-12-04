@@ -29,11 +29,25 @@
     $portosArray = getAllPorto($_SESSION['userid'], true, 0, 3);
     $errorMessage = [];
     var_dump($_POST);
+    if(isset($_POST['buttonAssunto'])){
+      $addAssunto = addAssunto("$_POST[buttonAssunto]");
+      header("refresh:0;url=feed.php?user=$_SESSION[userid]"); 
+    };
     if(isset($_POST['novoPost'])){
       $texto = ''.$_POST['texto'];
       $local = isset($_POST['local']) ? $_POST['local'] : 0;
       $assuntos = [];
       $citacoes = [];
+      // if(isset($_POST['addEstado'])){
+      //   $pais = $_POST['SelectedPais'];
+      //   $estado = "$_POST[addEstado]";
+      //  $addEstado = addEstado($estado, $pais);
+      // };
+      // if(isset($_POST['addCidade'])){
+      //   // $estado = lastInsertRowID();
+      //   $cidade = "$_POST[addCidade]";
+      //   $addCidade = addCidade($cidade, $estado);
+      // };
       $qtdAssuntos = count(getAssuntos());
       for($c = 1; $c <= $qtdAssuntos; $c++){
           if(isset($_POST["assunto$c"])){
@@ -107,7 +121,7 @@
       } else {
         $errorMessage['friendRequest'] = ['sendFriendRequest', $_POST['sendFriendRequest'], implode(', ', $erros)];
       }
-    } 
+    }
     echo "<script>";
     echo "let states=[];";
     echo "let cities=[];";
@@ -424,7 +438,7 @@
             } 
             if($post['codPerfil'] == $_SESSION['userid']) {
               echo "<div class=\"div-post-top-editicons\">";
-              echo "<a href=\"interagirInteracao.php?edit=$_SESSION[userid]\"><img src=\"./imgs/icons/pencil.png\" class=\"div-post-top-editicons-pencil\" alt=\"\" /></a>";
+              echo "<a href=\"editarInteracao.php?user=$_SESSION[userid]&&edit=$post[codInteracao]\"><img src=\"./imgs/icons/pencil.png\" class=\"div-post-top-editicons-pencil\" alt=\"\" /></a>";
               echo "<form action=\"feed.php?user=$_SESSION[userid]\" method=\"post\">";
               echo "<button type=\"submit\" name=\"deletePost\" value=\"$post[codInteracao]\"><img src=\"./imgs/icons/trash.png\" class=\"div-post-top-editicons-trash\" alt=\"\" /></button>";
               echo "</form>";
@@ -481,7 +495,7 @@
           echo "<div class=\"div-post-icons-bar\">";
             if($isMentioned) {
               echo "<form action=\"feed.php?user=$_SESSION[userid]\" method=\"post\">";
-              echo "<button type=\"submit\" name=\"removeCitacao\" value=\"$post[codInteracao]\"><p class=\"interacao-remover-txt\">Remover citacao sua</p></button>";
+              echo "<button type=\"submit\" name=\"removeCitacao\" class=\"interacao-remover-txt\" value=\"$post[codInteracao]\"><p>Remover sua citação</p></button>";
               echo "</form>";
             }
             // echo "<div class=\"div-post-icons-bar-divs\">";

@@ -143,7 +143,7 @@
       ?>
       <?php echo "<div align=center class=divUsername>";
             echo "<h3 class=perfil>$user[username]</h3>";
-            echo "<a href=editNavio.php?user=$_SESSION[userid]><img class=img-pencil src=\"imgs/icons/clarity_pencil-line.png\"</img></a>";
+            if($isOwner) echo"<a href=editNavio.php?user=$_SESSION[userid]><img class=img-pencil src=\"imgs/icons/clarity_pencil-line.png\"</img></a>";
             echo "</div>";
       ?>
     </div>
@@ -176,8 +176,8 @@
               echo "<div class=\"insert-interacao-smallBtns-a\" onclick=\"newPostSelect('pessoas')\"><img class=\"insert-interacao-smallBtns-icon\" src=\"imgs/icons/multiple-users-silhouette.png\" alt=\"\" srcset=\"\">Citar Pessoas</div>";
               echo "<div class=\"insert-interacao-smallBtns-a\" onclick=\"newPostSelect('assuntos')\"><img class=\"insert-interacao-smallBtns-icon\" src=\"imgs/icons/price-tag.png\" alt=\"\" srcset=\"\">Assunto</div>";
             echo "</div>";
-            echo "<input class=\"insert-interacao-submit\" type=\"submit\" name=\"novoPost\" />";
-            echo "<hr id=\"post-hr\" class=\"post-hr\" >";
+            echo "<input class=\"insert-interacao-submit\" type=\"submit\" name=\"novoPost\"/>";
+            echo "<hr id=\"post-hr\" class=\"post-hr\">";
             echo "<div class=\"post-divLocal\">";
               echo "<select id=\"select-local\" onclick=\"unsetError(this)\">";
                 foreach ($locaisArray as $value) {
