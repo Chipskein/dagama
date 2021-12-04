@@ -1544,8 +1544,7 @@
                 where 
                     porto.ativo = 1
                     ".($isOwner ? " and participa = true" : "")."
-                ".($limit > 0 ? " limit $limit " : " ")."
-                offset $offset");
+                ".($limit > 0 ? " limit $limit offset $offset" : " "));
                 while ($row = $result->fetchArray()) {
                     array_push($results,$row);
                 }
