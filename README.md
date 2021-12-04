@@ -51,7 +51,7 @@ Telas
     * Portos
         - 3) CRUD de interações
             Falta validações, paginações, excluir interação sua e relacionada as suas; interagir com outras interações; editar as suas interações;
-        16) Atribuir automaticamente um selo de fã, com validade determinada para a semana atual, para os usuários do grupo 
+        - 16) Atribuir automaticamente um selo de fã, com validade determinada para a semana atual, para os usuários do grupo 
         G conforme a tabela
     * Perfil
         - 2) CRUD de usuários

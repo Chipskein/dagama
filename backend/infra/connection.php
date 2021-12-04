@@ -668,6 +668,32 @@
             }
         }
     }
+    function updateImg($id,$img,$oldimgid){
+        $db_connection = db_connection();
+        $db = $db_connection['db'];
+        $db_type = $db_connection['db_type'];
+        $FOLDERS=array("root"=>"14oQWzTorITdqsK7IiFwfTYs91Gh_NcjS","avatares"=>"1Z3A4iqIe1eMerkdTEkXnjApRPupaPq-M","portos"=>"1e5T21RxDQ-4Kqw8EDVUBICGPeGIRSNHx","users"=>"1j2ivb8gBxV_AINaQ7FHjbd1OI0otCpEO");
+        if($db){
+            if($db_type == 'sqlite'){
+                if($img){
+                    $type=$img['type'];
+                    $server_path=$img['tmp_name'];
+                    $link="https://drive.google.com/uc?export=download&id=".insertFile("$type","$server_path","$FOLDERS[avatares]","avatar");
+                    rmFile($oldimgid);
+                    $response = $db->exec("update perfil set img='$link' where codigo=$id");
+                    if($response){
+                        $response2=$db->query("select img from perfil where codigo=$id")->fetchArray()['img'];
+                        if($response2) return $response2;
+                        else return false;
+                    }
+                    else return false;
+                }
+                else return false;
+                
+            }
+        }
+        else exit;
+    }
     /*----------------------------------------*/
 
     /* FEED */
@@ -701,7 +727,8 @@
                 $postsOriginais = $db->query("
                 select
                     interacao.codigo as codInteracao, 
-                    interacao.post as codPost, 
+                    interacao.post as codPost,
+                    interacao.postPai as codPostPai, 
                     interacao.isReaction as isReaction, 
                     interacao.texto as textoPost, 
                     interacao.data as dataPost,
@@ -820,7 +847,7 @@
                     left join uf on cidade.uf = uf.codigo
                     left join pais on uf.pais = pais.codigo
                     left join porto on interacao.porto = porto.codigo
-                where interacao.ativo = 1
+                where interacao.ativo = 1 and interacao.postPai is null
                 group by codPost
                 order by tmp1.data desc
                 limit $limit offset $offset");
@@ -840,9 +867,11 @@
                         left join interacao_assunto on interacao.codigo = interacao_assunto.interacao
                         left join assunto on interacao_assunto.assunto = assunto.codigo
                     where
-                        interacao.ativo = 1");
+                        interacao.ativo = 1 and
+                        interacao.codigo = $row[codInteracao]");
                     $assuntos = [];
                     while ($row2 = $resAssuntosParent->fetchArray()) {
+                        // print_r($row2);
                         $assuntos[] = $row2;
                     }
                     $postsArray[$row['codInteracao']]['assuntos'] = $assuntos;
@@ -867,7 +896,7 @@
                         left join cidade on cidade.codigo = interacao.local
                         left join uf on cidade.uf = uf.codigo
                         left join pais on uf.pais = pais.codigo
-                    where interacao.isSharing is null and interacao.post = ".$row['codInteracao']);
+                    where interacao.isSharing is null and interacao.postPai = $row[codInteracao] and interacao.post = $row[codInteracao]");
                     $childInteracoes = [];
                     if($temInteracoes){
                         while($row3 = $temInteracoes->fetchArray()){
@@ -878,7 +907,6 @@
                                 $citacoes[] = $row4;
                             }
                             $childInteracoes[$row3['codInteracao']]['citacoes'] = $citacoes;
-                            
                             $resAssuntosChild = $db->query("
                             select interacao.codigo as interacao, assunto.codigo as codAssunto, assunto.nome as nomeAssunto from interacao
                                 left join interacao_assunto on interacao.codigo = interacao_assunto.interacao
@@ -890,6 +918,68 @@
                                 $assuntos[] = $row5;
                             }
                             $childInteracoes[$row3['codInteracao']]['assuntos'] = $assuntos;
+
+                            $temInnerInteracoes = $db->query("
+                            select
+                                interacao.codigo as codInteracao, 
+                                interacao.post as codPost, 
+                                interacao.isReaction as isReaction, 
+                                interacao.texto as textoPost, 
+                                interacao.data as dataPost,
+                                interacao.isSharing as isSharing, 
+                                interacao.emote as emote,
+                                interacao.ativo as ativo,
+                                cidade.nome as nomeCidade,
+                                uf.nome as nomeUF,
+                                pais.nome as nomePais,
+                                perfil.codigo as codPerfil, 
+                                perfil.username as nomePerfil,
+                                perfil.img as iconPerfil
+                            from interacao
+                                join perfil on interacao.perfil = perfil.codigo
+                                left join cidade on cidade.codigo = interacao.local
+                                left join uf on cidade.uf = uf.codigo
+                                left join pais on uf.pais = pais.codigo
+                            where 
+                                interacao.isSharing is null and 
+                                interacao.postPai = $row[codInteracao] and 
+                                interacao.post != $row[codInteracao]");
+                            $grandChildInteracoes = [];
+                            if($temInnerInteracoes){
+                                while ($row6 = $temInnerInteracoes->fetchArray()) {
+                                    $grandChildInteracoes[$row6['codInteracao']] = $row6;
+                                    $resCitacoesGrandChild = $db->query("select citacao.interacao as interacao, perfil.codigo as codPerfil, perfil.username as nomePerfil from citacao join perfil on perfil.codigo = citacao.perfil where citacao.ativo = 1 and citacao.interacao = $row6[codInteracao]");
+                                    $citacoes = [];
+                                    while ($row7 = $resCitacoesGrandChild->fetchArray()) {
+                                        $citacoes[] = $row7;
+                                    }
+                                    $grandChildInteracoes[$row6['codInteracao']]['citacoes'] = $citacoes;
+                                    
+                                    $resAssuntosGrandChild = $db->query("
+                                    select interacao.codigo as interacao, assunto.codigo as codAssunto, assunto.nome as nomeAssunto from interacao
+                                        left join interacao_assunto on interacao.codigo = interacao_assunto.interacao
+                                        left join assunto on interacao_assunto.assunto = assunto.codigo
+                                    where
+                                        interacao.ativo = 1 and
+                                        interacao.codigo = ".$row6['codInteracao']);
+                                    $assuntos = [];
+                                    while ($row8 = $resAssuntosGrandChild->fetchArray()) {
+                                        $assuntos[] = $row8;
+                                    }
+                                    $grandChildInteracoes[$row6['codInteracao']]['assuntos'] = $assuntos;
+                                }                                
+                            }
+                            foreach($childInteracoes as $child){
+                                print_r($child);
+                                echo "<br>";
+                                foreach ($grandChildInteracoes as $grandChild) {
+                                    if($child['codInteracao'] == $grandChild['codPost']){
+                                        $child['respostas'] = $grandChild;
+                                    } else {
+                                        $child['respostas'] = [];    
+                                    }
+                                }
+                            }
                         }
                     }
                     $postsArray[$row['codInteracao']]['comentarios'] = $childInteracoes;
@@ -2041,19 +2131,20 @@
     /*-----------------------------------*/
     
     /* INTERAÇÕES */
-    function addInteracao($perfil, $texto, $perfil_posting, $porto, $isSharing, $post, $isReaction, $emote, $local){
+    function addInteracao($perfil, $texto, $perfil_posting, $porto, $isSharing, $post, $postPai, $isReaction, $emote, $local){
         $db_connection=db_connection();
         $db=$db_connection['db'];
         $db_type=$db_connection['db_type'];
         if($db_type == 'sqlite'){
             // echo $perfil_posting;
-            $response = $db->exec("insert into interacao (perfil, texto, perfil_posting, porto, isSharing, post, isReaction, emote, local) values 
+            $response = $db->exec("insert into interacao (perfil, texto, perfil_posting, porto, isSharing, post, postPai, isReaction, emote, local) values 
             ($perfil, 
             '".($texto ? $texto : '')."', 
             ".($perfil_posting ? $perfil_posting : 'null').", 
             ".($porto ? $porto : 'null').", 
             ".($isSharing ? $isSharing : 'null').", 
             ".($post ? $post : 'null').", 
+            ".($postPai ? $postPai : 'null').", 
             ".($isReaction ? $isReaction : 'null').", 
             ".($emote ? "'".$emote."'" : 'null').", 
             ".($local ? $local : 'null').")");
@@ -2061,13 +2152,13 @@
             else return false;
         }
         if($db_type == 'postgresql'){
-            $preparing = pg_prepare($db, "interacao", "insert into interacao (perfil, texto, perfil_posting, porto, isSharing, post, isReaction, emote) values ($1, $2, $3, $4, $5, $6, $7, $8)");
-            if($preparing){
-                $response = pg_execute($db, "interacao", array($perfil, "$texto", $perfil_posting, $porto, $isSharing, $post, $isReaction, "$emote"));
-                if($response) return $response;
-                else return false;
-            }
-            else return false;
+            // $preparing = pg_prepare($db, "interacao", "insert into interacao (perfil, texto, perfil_posting, porto, isSharing, post, isReaction, emote) values ($1, $2, $3, $4, $5, $6, $7, $8)");
+            // if($preparing){
+            //     $response = pg_execute($db, "interacao", array($perfil, "$texto", $perfil_posting, $porto, $isSharing, $post, $isReaction, "$emote"));
+            //     if($response) return $response;
+            //     else return false;
+            // }
+            // else return false;
         }
         else exit;
     }
@@ -2318,18 +2409,17 @@ function getTop(){
     $db=$db_connection['db'];
     $db_type=$db_connection['db_type'];
     if($db_type == 'sqlite'){
-$response= $db ->query("select assunto.nome, strftime('%m', interacao.data) as mes from interacao 
-join interacao_assunto on interacao.codigo = interacao_assunto.interacao 
-join assunto on interacao_assunto.assunto = assunto.codigo
-left join cidade on interacao.local = cidade.codigo --left join pois pode nao ter local
-    left join uf on cidade.uf = uf.codigo
-    left join pais on uf.pais = pais.codigo
-where pais.codigo =$pais and  date(interacao.data, 'localtime') between date('now', '-$mes months', 'localtime') and date('now', 'localtime')
-group by assunto.nome, mes
-    order by count(assunto.nome) desc
-    limit $top");
-    
-}
+        $response= $db ->query("select assunto.nome, strftime('%m', interacao.data) as mes from interacao 
+        join interacao_assunto on interacao.codigo = interacao_assunto.interacao 
+        join assunto on interacao_assunto.assunto = assunto.codigo
+        left join cidade on interacao.local = cidade.codigo --left join pois pode nao ter local
+            left join uf on cidade.uf = uf.codigo
+            left join pais on uf.pais = pais.codigo
+        where pais.codigo =$pais and  date(interacao.data, 'localtime') between date('now', '-$mes months', 'localtime') and date('now', 'localtime')
+        group by assunto.nome, mes
+            order by count(assunto.nome) desc
+            limit $top");
+    }
 }
     /*-----------------------------------*/
   ?>

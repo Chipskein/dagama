@@ -5334,20 +5334,14 @@ insert into assunto (nome) values
 ('Três Tom Holland é sacanagem');
 
 -- Interações
---insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, isSharing, emote) values (5, null, null, null, 'Conta 5 fazendo post normal', null, null, null); 
---insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, isSharing, emote) values (4, null, null, 1, 'Conta 4 comentando no post 1', null, null, null); 
---insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, isSharing, emote) values (1, null, null, 1, 'Conta 1 compartilhando post 1', null, 1, null); 
---insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, isSharing, emote) values (4, null, null, null, 'Conta 4 fazendo post normal', null, null, null);
---insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, isSharing, emote) values (3, null, null, 4, 'Conta 3 compartilhando post 4', null, 1, null); 
---insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, isSharing, emote) values (4, null, null, 5, 'Conta 5 compartilhando post 5', null, 1, null); 
---insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, isSharing, emote) values (4, null, null, null, 'Conta 4 fazendo post normal: Batman is a superhero who appears in American comic books published by DC Comics. The character was created by artist Bob Kane and writer Bill Finger...', null, null, null); 
---insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, isSharing, emote) values (5, null, null, 7, 'Conta 5 compartilhando post 7: Spider-Man is a superhero created by writer-editor Stan Lee and writer-artist Steve Ditko. He first appeared in the anthology comic book Amazing Fantasy #15 in the Silver Age of Comic Books...', null, 1, null); 
---insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, isSharing, emote) values (5, 4, null, null, 'Conta 5 postando no perfil 4: Spider-Man is a superhero created by writer-editor Stan Lee and writer-artist Steve Ditko. He first appeared in the anthology comic book Amazing Fantasy #15 in the Silver Age of Comic Books...', null, null, null); 
---insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, isSharing, emote) values (5, null, 3, null, 'Conta 5 postando no porto 3: Spider-Man is a superhero created by writer-editor Stan Lee and writer-artist Steve Ditko. He first appeared in the anthology comic book Amazing Fantasy #15 in the Silver Age of Comic Books...', null, null, null); 
---insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, isSharing, emote) values (4, null, 3, null, 'Conta 5 postando no porto 3: Spider-Man is a superhero created by writer-editor Stan Lee and writer-artist Steve Ditko. He first appeared in the anthology comic book Amazing Fantasy #15 in the Silver Age of Comic Books...', null, null, null); 
---insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, isSharing, emote) values (1, null, 3, null, 'Conta 5 postando no porto 3: Spider-Man is a superhero created by writer-editor Stan Lee and writer-artist Steve Ditko. He first appeared in the anthology comic book Amazing Fantasy #15 in the Silver Age of Comic Books...', null, null, null); 
---insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, isSharing, emote) values (4, null, 2, null, 'Quero ver terminar esse bangu até domingo...', 1, null, 'sad'); 
---insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, isSharing, emote) values (5, null, null, 13, 'dbwlkjawlkdlakndxlklxkqnlkxqnwkjnxw', null, 1, null); 
+insert into interacao (perfil, perfil_posting, porto, post, postPai, texto, isReaction, isSharing, emote) values 
+(1, null, null, null, null, 'Conta 1 fazendo post normal', null, null, null),
+(4, null, null, 1, 1, 'Conta 4 fazendo comentario no post 1', null, null, null),
+(3, null, null, 1, 1, 'Conta 3 fazendo comentario no post 1', null, null, null),
+(1, null, null, 2, 1, 'Conta 1 fazendo resposta no comentario 2 no post 1', null, null, null),
+(3, null, null, 4, 1, 'Conta 3 fazendo resposta no comentario 4 no post 1', null, null, null),
+(4, null, null, 3, 1, 'Conta 4 fazendo resposta no comentario 3 no post 1', null, null, null);
+
 
 --insert into interacao_assunto (assunto, interacao) values (1, 13), (2, 13), (3,13);
 --porto

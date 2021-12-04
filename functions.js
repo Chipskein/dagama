@@ -164,32 +164,40 @@ function addAssuntos(){
     var option = document.getElementById('optionAssunto'+assunto.id);
     option.remove();
     assuntos.push(assunto.id);
-    const p = document.createElement('p')
-    p.id='assunto'+assunto.id
+    const p = document.createElement('p');
+    const input = document.createElement('input');
+    p.id='assunto'+assunto.id;
     p.innerHTML += `${assunto.name} <button type="button" onclick="removeAssuntos('${assunto.id}', '${assunto.name}')">❌</button>`;
-    div.append(p)
+    input.type = 'hidden';
+    input.name= 'assunto'+assunto.id;
+    input.id='assuntoInput'+assunto.id;
+    input.value = assunto.id;
+    div.append(p);
+    div.append(input);
     } else{
-      const buttonAddAssuntos = document.createElement('button')
-      buttonAddAssuntos.textContent='adicioar assunto';
-      buttonAddAssuntos.id = 'buttonAssunto';
-      buttonAddAssuntos.type = 'button';
-      // button.onclick = () => {  }
-      const inputAssunto = document.createElement('input')
-    inputAssunto.id='InputCidade'
-    inputAssunto.className='StylesInputs'
-    inputAssunto.placeholder='adicione o assunto'
-    div.append(inputAssunto)
-    div.append(buttonAddAssuntos)
-    document.getElementById('select-assunto').disabled = true;
-    document.getElementById('select-assunto-button').disabled = true;
+        const buttonAddAssuntos = document.createElement('button')
+        buttonAddAssuntos.textContent='adicioar assunto';
+        buttonAddAssuntos.id = 'buttonAssunto';
+        buttonAddAssuntos.type = 'button';
+        // button.onclick = () => {  }
+        const inputAssunto = document.createElement('input')
+        inputAssunto.id='InputCidade'
+        inputAssunto.className='StylesInputs'
+        inputAssunto.placeholder='adicione o assunto'
+        div.append(inputAssunto)
+        div.append(buttonAddAssuntos)
+        document.getElementById('select-assunto').disabled = true;
+        document.getElementById('select-assunto-button').disabled = true;
     }
   }
 function removeAssuntos(id, name){
     var div = document.getElementById('divAssuntos');
     var p = document.getElementById('assunto'+id);
+    var input = document.getElementById('assuntoInput'+id);
     var select = document.getElementById('select-assuntos');
     select.innerHTML += `<option id='optionAssunto${id}' value='{ "id": "${id}", "name": "${name}" }'>${name}</option>\n`;
     p.remove();
+    input.remove();
     for(var i = 0; i < assuntos.length; i++){ 
         if ( assuntos[i] == id) {
             assuntos.splice(i, 1); 

@@ -46,7 +46,7 @@
               $citacoes[] = $_POST["pessoa$c"];
           }
       }
-      $response = addInteracao($_SESSION['userid'], $texto, 0, 0, 0, 0, 0, 0, $local);
+      $response = addInteracao($_SESSION['userid'], $texto, 0, 0, 0, 0, 0, 0, 0, $local);
       if($response) {
         if(count($assuntos) > 0){
           foreach ($assuntos as $value) {
@@ -501,29 +501,59 @@
           //Comentários
           if($post['comentarios'] && $post['comentarios'] != []){
             echo "<hr class=\"post-hr\">";
-            foreach ($post['comentarios'] as $elem) {
+            foreach ($post['comentarios'] as $comentario) {
               echo "<div class=\"comment-container\">";
                 echo "<div class=\"comment-container-top\">";
-                  echo "<a href=navio.php?user=$elem[codPerfil]><img src=\"".$elem['iconPerfil']."\" alt=\"\" class=\"comment-icon\"></a>";
-                  echo "<p class=\"comment-txt\"><i>@".$elem['nomePerfil']."</i> ";
-                  echo ($elem['textoPost'] ? $elem['textoPost'] : '');
-                  echo ", em ".$elem['dataPost'];
+                  echo "<a href=navio.php?user=$comentario[codPerfil]><img src=\"".$comentario['iconPerfil']."\" alt=\"\" class=\"comment-icon\"></a>";
+                  echo "<p class=\"comment-txt\"><i>@".$comentario['nomePerfil']."</i> ";
+                  echo ($comentario['textoPost'] ? $comentario['textoPost'] : '');
+                  echo ", em ".$comentario['dataPost'];
                   echo "</p>";
                 echo "</div>";
                 echo "<div class=\"comment-reagir\">";
-                echo "<a href=\"interagirInteracao.php?interacao=$elem[codInteracao]\">Reagir</a>";
-                  if($elem['codPerfil'] == $_SESSION['userid']) {
+                echo "<a href=\"interagirInteracao.php?interacao=$comentario[codInteracao]\">Reagir</a>";
+                  if($comentario['codPerfil'] == $_SESSION['userid']) {
                     echo "<a href=\"interagirInteracao.php?edit=$_SESSION[userid]\"><p class=\"interacao-editar-txt\">- Editar -</p></a>";
                     echo "<form action=\"feed.php?user=$_SESSION[userid]\" method=\"post\">";
                     echo "<button type=\"submit\" name=\"deletePost\" value=\"$post[codInteracao]\"><p class=\"interacao-remover-txt\">Remover</p></button>";
                     echo "</form>";
                   }
-                  if($elem['codPerfil'] != $_SESSION['userid'] && $post['codPerfil'] == $_SESSION['userid']) {
+                  if($comentario['codPerfil'] != $_SESSION['userid'] && $post['codPerfil'] == $_SESSION['userid']) {
                     echo "<form action=\"feed.php?user=$_SESSION[userid]\" method=\"post\">";
                     echo "<button type=\"submit\" name=\"deletePost\" value=\"$post[codInteracao]\"><p class=\"interacao-remover-txt\">- Remover</p></button>";
                     echo "</form>";
                   }
                 echo "</div>";
+                // Respostas
+                if($comentario['respostas'] && $comentario['respostas'] != []){
+                  echo "<hr class=\"post-hr\">";
+                  foreach ($comentario['respostas'] as $resposta) {
+                    echo "<div class=\"comment-container\">";
+                      echo "<div class=\"comment-container-top\">";
+                        echo "<a href=navio.php?user=$resposta[codPerfil]><img src=\"".$resposta['iconPerfil']."\" alt=\"\" class=\"comment-icon\"></a>";
+                        echo "<p class=\"comment-txt\"><i>@".$resposta['nomePerfil']."</i> ";
+                        echo ($resposta['textoPost'] ? $resposta['textoPost'] : '');
+                        echo ", em ".$resposta['dataPost'];
+                        echo "</p>";
+                      echo "</div>";
+                      echo "<div class=\"comment-reagir\">";
+                      echo "<a href=\"interagirInteracao.php?interacao=$resposta[codInteracao]\">Reagir</a>";
+                        if($resposta['codPerfil'] == $_SESSION['userid']) {
+                          echo "<a href=\"interagirInteracao.php?edit=$_SESSION[userid]\"><p class=\"interacao-editar-txt\">- Editar -</p></a>";
+                          echo "<form action=\"feed.php?user=$_SESSION[userid]\" method=\"post\">";
+                          echo "<button type=\"submit\" name=\"deletePost\" value=\"$comentario[codInteracao]\"><p class=\"interacao-remover-txt\">Remover</p></button>";
+                          echo "</form>";
+                        }
+                        if($resposta['codPerfil'] != $_SESSION['userid'] && $comentario['codPerfil'] == $_SESSION['userid']) {
+                          echo "<form action=\"feed.php?user=$_SESSION[userid]\" method=\"post\">";
+                          echo "<button type=\"submit\" name=\"deletePost\" value=\"$post[codInteracao]\"><p class=\"interacao-remover-txt\">- Remover</p></button>";
+                          echo "</form>";
+                        }
+                      echo "</div>";
+                      
+                    echo "</div>";
+                  }
+          }
               echo "</div>";
             }
           }
