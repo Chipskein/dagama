@@ -771,7 +771,8 @@
                             interacao.data
                         from interacao 
                         where
-                            post in (select codigo from interacao where perfil = $user)
+                            interacao.post in (select codigo from interacao where perfil = $user and ativo = 1) or
+                            interacao.codigo in (select postPai from interacao where perfil = $user and ativo = 1 group by postPai)
                         union
                         select 
                             case

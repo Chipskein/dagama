@@ -390,6 +390,22 @@ insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, i
 
 select count(interacao.perfil), pais.nome from interacao join perfil on interacao.perfil= perfil.codigo join cidade on perfil.cidade = cidade.codigo join uf on cidade.uf= uf.codigo join pais on uf.pais = pais.codigo where perfil.genero = "M" and pais.nome="Brazil" and date(interacao.data) between date('now','-2 years') and date('now') and date(perfil.datanasc) between date('now','-20 years') and date('now', '-0 years');
 
+---
+select 
+    case
+        when interacao.post is null then interacao.codigo
+        when interacao.isSharing is not null then interacao.codigo
+        else interacao.post
+    end as codPost,
+    interacao.data
+from interacao 
+where
+    interacao.post in (select codigo from interacao where perfil = $user and ativo = 1) or
+    interacao.codigo in (select postPai from interacao where perfil = $user and ativo = 1 group by postPai)
+---
+
+
+
 select 
 porto.codigo as codPorto,
 perfil.username as nomePart,

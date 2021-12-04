@@ -349,6 +349,7 @@
       echo "<button class=\"insert-interacao-submit\" name=\"ordenarBtn\">Ordenar<button/>";
       echo "</div>";
       foreach ($postsArray as $post) {
+        // print_r($post['comentarios'][2]['respostas']);
         echo "<div class=\"div-post\">";
           if($post['codPorto']){
             echo "<p class=\"compartilhado-txt\"><i>Postado no porto <a href=porto.php?porto=$post[codPorto] class=\"txt-linktoporto\">$post[nomePorto]</a></i></p>";
@@ -548,57 +549,12 @@
             echo "<hr class=\"post-hr\">";
             foreach ($post['comentarios'] as $comentario) {
               echo "<div class=\"comment-container\">";
-                // Top
-                echo "<div class=\"div-post-top\">";
-                  echo "<a href=navio.php?user=$post[codPerfil]><img src=\"".$post['iconPerfil']."\" alt=\"\" class=\"div-post-top-icon\"></a>";
-                  echo "<div class=\"div-post-top-infos\">";
-                    echo "<p class=\"div-post-top-username\"><i>@".$post['nomePerfil']."</i>";
-                    if($post['nomeCidade']){
-                      echo " em ".$post['nomeCidade'].", ".$post['nomePais']." - ";
-                    }
-                    $tmpHora = explode(' ', $post['dataPost'])[1];
-                    $tmpData = explode(' ', $post['dataPost'])[0];
-                    $tmpData = explode('-', $tmpData);
-                    echo " ".$tmpData[2]."/".$tmpData[1]."/".$tmpData[0]." ".$tmpHora."</p>";
-                    $tmpArray = [];
-                    // print_r($post['assuntos']);
-                    foreach($post['assuntos'] as $elements){
-                      foreach ($elements as $key => $value) {
-                        if($key === 'nomeAssunto') $tmpArray[] = $value;
-                      }
-                    }
-                    echo "<p class=\"div-post-top-subjects\" title=\"".implode($tmpArray, ', ')."\"><b>";
-                    $tmpArray = implode($tmpArray, ', ');
-                    if(strlen($tmpArray) > 30){
-                      $tmpArray = substr($tmpArray, 0, 27);
-                      echo $tmpArray."...";
-                    } else {
-                      echo $tmpArray;
-                    }
-                    echo "</b></p>";
-                  echo "</div>";
-                  if($post['isSharing'] && ($sharedPost['codPerfil'] == $_SESSION['userid'])){
-                    echo "<div class=\"div-post-top-editicons\">";
-                    echo "<form action=\"feed.php?user=$_SESSION[userid]\" method=\"post\">";
-                    echo "<button type=\"submit\" name=\"deletePost\" value=\"$post[codInteracao]\"><img src=\"./imgs/icons/trash.png\" class=\"div-post-top-editicons-trash\" alt=\"\" /></button>";
-                    echo "</form>";
-                    echo "</div>";
-                  } 
-                  if($post['codPerfil'] == $_SESSION['userid']) {
-                    echo "<div class=\"div-post-top-editicons\">";
-                    echo "<a href=\"editarInteracao.php?interacao=$post[codInteracao]\"><img src=\"./imgs/icons/pencil.png\" class=\"div-post-top-editicons-pencil\" alt=\"\" /></a>";
-                    echo "<form action=\"feed.php?user=$_SESSION[userid]\" method=\"post\">";
-                    echo "<button type=\"submit\" name=\"deletePost\" value=\"$post[codInteracao]\"><img src=\"./imgs/icons/trash.png\" class=\"div-post-top-editicons-trash\" alt=\"\" /></button>";
-                    echo "</form>";
-                    echo "</div>";
-                  }
-                echo "</div>";
-                //Texto
-                echo "<div class=\"div-post-txt\">";
-                  echo "<p><i style=\"color: #7A9EFB\">@$post[nomePerfil]</i> ";
-                  if($post['isReaction']) {
+                echo "<div class=\"comment-container-top\">";
+                  echo "<a href=navio.php?user=$comentario[codPerfil]><img src=\"".$comentario['iconPerfil']."\" alt=\"\" class=\"comment-icon\"></a>";
+                  echo "<p class=\"comment-txt\"><i>@".$comentario['nomePerfil']."</i> ";
+                  if($comentario['isReaction']) {
                     echo "<b><i>reagiu</i></b> com ";
-                    switch ($post['emote']){
+                    switch ($comentario['emote']){
                       case 'curtir':
                         echo "👌";
                         break;
@@ -620,12 +576,12 @@
                     }
                     echo ", ";
                   }
-                  $isMentioned = 0;
-                  if(count($post['citacoes']) > 0) {
+                  $isMentioned2 = 0;
+                  if(count($comentario['citacoes']) > 0) {
                     $tmpCitacoes = [];
-                    foreach ($post['citacoes'] as $pessoa) {
+                    foreach ($comentario['citacoes'] as $pessoa) {
                       $tmpCitacoes[] = "@".$pessoa['nomePerfil'];
-                      if($pessoa['codPerfil'] == $_SESSION['userid'] && $post['codPerfil'] != $_SESSION['userid']) $isMentioned = 1;
+                      if($pessoa['codPerfil'] == $_SESSION['userid'] && $comentario['codPerfil'] != $_SESSION['userid']) $isMentioned2 = 1;
                     }
                     $tmpCitacoes = implode($tmpCitacoes, ', ');
                     echo "<b><i>marcando</i></b> <i title=\"".$tmpCitacoes."\">";
@@ -637,7 +593,31 @@
                     }
                     echo ", </i>";
                   }
-                  echo "$post[textoPost]</p>";
+                  if(count($comentario['assuntos']) > 0) {
+                    $tmpAssuntos = [];
+                    foreach ($comentario['assuntos'] as $assunto) {
+                      $tmpAssuntos[] = $assunto['nomeAssunto'];
+                    }
+                    $tmpAssuntos = implode($tmpAssuntos, ', ');
+                    echo "com os <b><i>assuntos</i></b> <i title=\"".$tmpAssuntos."\">";
+                    if(strlen($tmpAssuntos) > 10){
+                      $tmpAssuntos = substr($tmpAssuntos, 0, 7);
+                      echo $tmpAssuntos."...";
+                    } else {
+                      echo $tmpAssuntos;
+                    }
+                    echo ", </i>";
+                  }
+                  echo ($comentario['textoPost'] ? $comentario['textoPost'] : '');
+                  echo ", em ";
+                  if($comentario['nomeCidade']){
+                    echo $comentario['nomeCidade'].", ".$comentario['nomePais']." - ";
+                  }
+                  $tmpHora = explode(' ', $comentario['dataPost'])[1];
+                  $tmpData = explode(' ', $comentario['dataPost'])[0];
+                  $tmpData = explode('-', $tmpData);
+                  echo " ".$tmpData[2]."/".$tmpData[1]."/".$tmpData[0]." ".$tmpHora."</p>";
+                  echo "</p>";
                 echo "</div>";
                 echo "<div class=\"comment-reagir\">";
                 echo "<a href=\"interagirInteracao.php?interacao=$comentario[codInteracao]\">Reagir</a>";
@@ -660,8 +640,71 @@
                       echo "<div class=\"comment-container-top\">";
                         echo "<a href=navio.php?user=$resposta[codPerfil]><img src=\"".$resposta['iconPerfil']."\" alt=\"\" class=\"comment-icon\"></a>";
                         echo "<p class=\"comment-txt\"><i>@".$resposta['nomePerfil']."</i> ";
+                        if($resposta['isReaction']) {
+                          echo "<b><i>reagiu</i></b> com ";
+                          switch ($resposta['emote']){
+                            case 'curtir':
+                              echo "👌";
+                              break;
+                            case 'kkk':
+                              echo "🤣";
+                              break;
+                            case 'amei':
+                              echo "❤️";
+                              break;
+                            case 'grr':
+                              echo "🤬";
+                              break;
+                            case 'wow':
+                              echo "🤯";
+                              break;
+                            case 'sad':
+                              echo "😭";
+                              break;                  
+                          }
+                          echo ", ";
+                        }
+                        $isMentioned2 = 0;
+                        if(count($resposta['citacoes']) > 0) {
+                          $tmpCitacoes = [];
+                          foreach ($resposta['citacoes'] as $pessoa) {
+                            $tmpCitacoes[] = "@".$pessoa['nomePerfil'];
+                            if($pessoa['codPerfil'] == $_SESSION['userid'] && $resposta['codPerfil'] != $_SESSION['userid']) $isMentioned2 = 1;
+                          }
+                          $tmpCitacoes = implode($tmpCitacoes, ', ');
+                          echo "<b><i>marcando</i></b> <i title=\"".$tmpCitacoes."\">";
+                          if(strlen($tmpCitacoes) > 10){
+                            $tmpCitacoes = substr($tmpCitacoes, 0, 7);
+                            echo $tmpCitacoes."...";
+                          } else {
+                            echo $tmpCitacoes;
+                          }
+                          echo ", </i>";
+                        }
+                        if(count($resposta['assuntos']) > 0) {
+                          $tmpAssuntos = [];
+                          foreach ($resposta['assuntos'] as $assunto) {
+                            $tmpAssuntos[] = $assunto['nomeAssunto'];
+                          }
+                          $tmpAssuntos = implode($tmpAssuntos, ', ');
+                          echo "com os <b><i>assuntos</i></b> <i title=\"".$tmpAssuntos."\">";
+                          if(strlen($tmpAssuntos) > 10){
+                            $tmpAssuntos = substr($tmpAssuntos, 0, 7);
+                            echo $tmpAssuntos."...";
+                          } else {
+                            echo $tmpAssuntos;
+                          }
+                          echo ", </i>";
+                        }
                         echo ($resposta['textoPost'] ? $resposta['textoPost'] : '');
-                        echo ", em ".$resposta['dataPost'];
+                        echo ", em ";
+                        if($resposta['nomeCidade']){
+                          echo $resposta['nomeCidade'].", ".$resposta['nomePais']." - ";
+                        }
+                        $tmpHora = explode(' ', $resposta['dataPost'])[1];
+                        $tmpData = explode(' ', $resposta['dataPost'])[0];
+                        $tmpData = explode('-', $tmpData);
+                        echo " ".$tmpData[2]."/".$tmpData[1]."/".$tmpData[0]." ".$tmpHora."</p>";
                         echo "</p>";
                       echo "</div>";
                       echo "<div class=\"comment-reagir\">";
