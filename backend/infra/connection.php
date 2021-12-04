@@ -974,7 +974,7 @@
                     $assuntos[$row['interacao']][$row['codAssunto']] = $row;
                 }
 
-
+                
                 $response = $result->fetchArray();
                 if(in_array($response['codInteracao'], array_keys($assuntos))){
                     $response['assuntos'] = $assuntos[$response['codInteracao']];

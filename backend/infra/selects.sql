@@ -664,3 +664,22 @@ select assunto from (
     )
     order by total desc
 )
+
+
+
+
+
+
+
+
+
+
+
+insert into interacao (perfil, perfil_posting, porto, post,postPai, texto, isReaction, isSharing, emote) values (1, null, null, 1,null, 'Isto é um comentario', null, null, null); 
+insert into interacao (perfil, perfil_posting, porto, post,postPai, texto, isReaction, isSharing, emote) values (1, null, null, 1,null, 'Isto é um comentario', null, null, null); 
+insert into interacao (perfil, perfil_posting, porto, post,postPai, texto, isReaction, isSharing, emote) values (1, null, null, 1,null, 'Isto é um comentario', null, null, null); 
+
+insert into interacao (perfil, perfil_posting, porto, post,postPai, texto, isReaction, isSharing, emote) values (1, null, null, 1,3, 'Isto é uma resposta', null, null, null); 
+insert into interacao (perfil, perfil_posting, porto, post,postPai, texto, isReaction, isSharing, emote) values (1, null, null, 1,2, 'Isto é uma resposta', null, null, null); 
+insert into interacao (perfil, perfil_posting, porto, post,postPai, texto, isReaction, isSharing, emote) values (1, null, null, 1,4, 'Isto é uma resposta', null, null, null); 
+
