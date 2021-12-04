@@ -30,7 +30,7 @@
     $suggestFriends = suggestFriends($_SESSION['userid'], 4, 0);
     $postsArray = getPosts($_SESSION['userid'], 0, 30);
     $portosArray = getAllPorto($_SESSION['userid'], true, 0, 3);
-    $portosArrayForShare = getAllPorto($_SESSION['userid'], true, 0, 0);
+    // $portosArrayForShare = getAllPorto($_SESSION['userid'], true, 0, 0);
     $errorMessage = [];
     // var_dump($_POST);
     if(isset($_POST['buttonAssunto'])){
@@ -311,16 +311,21 @@
           echo "<button id=\"select-reacao-button\"  class=\"confirm-type\" type=\"button\" onclick=\"addReacoes()\">Confirmar</button>";
           echo "<div class=\"comment-container-top\" id=\"divReacoes\"></div>";
         echo "</div>";
-        echo "<div class=\"post-divCompart\">";
-          echo "<select id=\"select-compartilhar\" onclick=\"unsetError(this)\">";
-            echo "<option id='optionCompartilhar' value=''>Selecione onde vai compartilhar</option>\n";
-            echo "<option id='optionCompartilhar' value='feed'>No feed</option>\n";
-            echo "<option id='optionCompartilhar' value='grupo'>Em um grupo</option>\n";
-            echo "<option id='optionCompartilhar' value='perfil'>Em um perfil</option>\n";
-          echo "</select>";
-          echo "<button id=\"select-reacao-button\"  class=\"confirm-type\" type=\"button\" onclick=\"addReacoes()\">Confirmar</button>";
-          echo "<div class=\"comment-container-top\" id=\"divReacoes\"></div>";
-        echo "</div>";
+        // echo "<div class=\"post-divCompart\">";
+        //   echo "<select id=\"select-compartilhar\" onchange=\"changeCompartilhar(this)\">";
+        //     echo "<option id='optionCompartilhar' value=''>Selecione onde vai compartilhar</option>\n";
+        //     echo "<option id='optionCompartilhar' value='feed'>No feed</option>\n";
+        //     echo "<option id='optionCompartilhar' value='grupo'>Em um grupo</option>\n";
+        //     echo "<option id='optionCompartilhar' value='perfil'>Em um perfil</option>\n";
+        //   echo "</select>";
+        //   echo "<select id=\"select-compartilhar-porto\">";
+        //   foreach ($portosArrayForShare as $porto) {
+        //     echo "<option id='optionCompartilharPorto' value='$porto[codigo]'>$porto[nome]</option>\n";
+        //   }
+        //   echo "</select>";
+        //   echo "<button id=\"select-reacao-button\"  class=\"confirm-type\" type=\"button\" onclick=\"addReacoes()\">Confirmar</button>";
+        //   echo "<div class=\"comment-container-top\" id=\"divReacoes\"></div>";
+        // echo "</div>";
       echo "</form>";
     echo "</div>";
 
