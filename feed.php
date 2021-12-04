@@ -23,11 +23,10 @@
     
     $assuntosArray = getAssuntos();
     $pessoasArray = getPessoas();
-
+    $topAssuntos=OndasDoMomento(3,$user['cidade']);
     $paises=getPaises();
     $estados=getStates();
     $cidades=getCities();
-
     $suggestFriends = suggestFriends($_SESSION['userid'], 4, 0);
     $postsArray = getPosts($_SESSION['userid'], 0, 30);
     $portosArray = getAllPorto($_SESSION['userid'], true, 0, 3);
@@ -46,7 +45,7 @@
       
       // Local
       $local = $user['cidade'];
-      $codPais = $_POST['insert-codigo-pais'];
+ +     $codPais = $_POST['insert-codigo-pais'];
       $novoPaisNome = $_POST['insert-nome-pais'];
       $codEstado = $_POST['insert-codigo-estado'];
       $novoEstadoNome = $_POST['insert-nome-estado'];
@@ -199,9 +198,11 @@
   <div align=center class=background2>
         <p class=portosAtracados>Ondas do momento:</p>
       <div align=start>
-        <p class=trending>1ª Elon musk</p>
-        <p class=trending>1ª Elon musk</p>
-        <p class=trending>1ª Elon musk</p>
+        <?php  
+          foreach ($topAssuntos as $topassunto){
+            echo "<p class=trending>$topassunto[nome]</p>";
+          }
+        ?>
       </div>
     </div>
   </aside>

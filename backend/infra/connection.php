@@ -1121,6 +1121,52 @@
         }
         else exit;
     }
+    function OndasDoMomento($top,$cidade){
+        $db_connection=db_connection();
+        $db=$db_connection['db'];
+        $db_type=$db_connection['db_type'];
+        if($db){
+            if($db_type=='sqlite'){
+                $response=$db->query("
+                select 
+                assunto.nome as nome,count(*) as total
+                from interacao 
+                join cidade on interacao.local=cidade.codigo
+                join uf on cidade.uf=uf.codigo
+                join pais on pais.codigo=uf.pais
+                join INTERACAO_ASSUNTO on interacao.codigo=INTERACAO_ASSUNTO.interacao
+                join assunto on INTERACAO_ASSUNTO.assunto=assunto.codigo
+                where 
+                    interacao.local=$cidade
+                group by assunto.codigo
+                having count(*) in (
+                    select 
+                    distinct
+                    count(*) as total_per_assunto
+                    from interacao 
+                    join cidade on interacao.local=cidade.codigo
+                    join uf on cidade.uf=uf.codigo
+                    join pais on pais.codigo=uf.pais
+                    join INTERACAO_ASSUNTO on interacao.codigo=INTERACAO_ASSUNTO.interacao
+                    join assunto on INTERACAO_ASSUNTO.assunto=assunto.codigo
+                    where 
+                        interacao.local=$cidade
+                    group by assunto.codigo
+                    order by total_per_assunto desc
+                    limit $top
+                )");
+                if($response){
+                    $results=[];
+                    while($row = $response->fetchArray()){
+                        array_push($results,$row);
+                    }
+                    return $results;
+                }
+                else return false;
+            }
+        }
+        else exit;
+    }
     /*-----------------------------------------*/    
 
     /* FRIENDS */
