@@ -728,7 +728,11 @@
                 select
                     interacao.codigo as codInteracao, 
                     interacao.post as codPost,
-                    interacao.postPai as codPostPai, 
+                    interacao.postPai as codPostPai,
+                    case 
+                        when tmpQtd.qtd is null then 0
+                        else tmpQtd.qtd
+                    end as qtdInteracao,
                     interacao.isReaction as isReaction, 
                     interacao.texto as textoPost, 
                     interacao.data as dataPost,
@@ -843,6 +847,7 @@
                         where porto_participa.perfil = $user or porto.perfil = $user) as tmp1
                     join interacao on tmp1.codPost = interacao.codigo
                     join perfil on interacao.perfil = perfil.codigo
+                    left join (select postPai, count(*) as qtd from interacao where postPai is not null group by postPai) as tmpQtd on interacao.codigo = tmpQtd.postPai
                     left join cidade on interacao.local = cidade.codigo
                     left join uf on cidade.uf = uf.codigo
                     left join pais on uf.pais = pais.codigo
@@ -855,7 +860,11 @@
                 while($row = $postsOriginais->fetchArray()){
                     $postsArray[$row['codInteracao']] = $row;
 
-                    $resCitacoesParent = $db->query("select citacao.interacao as interacao, perfil.codigo as codPerfil, perfil.username as nomePerfil from citacao join perfil on perfil.codigo = citacao.perfil where citacao.ativo = 1 and citacao.interacao = $row[codInteracao]");
+                    $resCitacoesParent = $db->query("select citacao.interacao as interacao, perfil.codigo as codPerfil, perfil.username as nomePerfil 
+                    from citacao join perfil on perfil.codigo = citacao.perfil 
+                    where 
+                        citacao.ativo = 1 and 
+                        citacao.interacao = $row[codInteracao]");
                     $citacoes = [];
                     while ($row2 = $resCitacoesParent->fetchArray()) {
                         $citacoes[] = $row2;
@@ -867,11 +876,10 @@
                         left join interacao_assunto on interacao.codigo = interacao_assunto.interacao
                         left join assunto on interacao_assunto.assunto = assunto.codigo
                     where
-                        interacao.ativo = 1 and
+                        interacao_assunto.ativo = 1 and
                         interacao.codigo = $row[codInteracao]");
                     $assuntos = [];
                     while ($row2 = $resAssuntosParent->fetchArray()) {
-                        // print_r($row2);
                         $assuntos[] = $row2;
                     }
                     $postsArray[$row['codInteracao']]['assuntos'] = $assuntos;
@@ -896,12 +904,21 @@
                         left join cidade on cidade.codigo = interacao.local
                         left join uf on cidade.uf = uf.codigo
                         left join pais on uf.pais = pais.codigo
-                    where interacao.isSharing is null and interacao.postPai = $row[codInteracao] and interacao.post = $row[codInteracao]");
+                    where
+                        interacao.ativo = 1 and 
+                        interacao.isSharing is null 
+                        and interacao.postPai = $row[codInteracao] 
+                        and interacao.post = $row[codInteracao]");
                     $childInteracoes = [];
                     if($temInteracoes){
                         while($row3 = $temInteracoes->fetchArray()){
                             $childInteracoes[$row3['codInteracao']] = $row3;
-                            $resCitacoesChild = $db->query("select citacao.interacao as interacao, perfil.codigo as codPerfil, perfil.username as nomePerfil from citacao join perfil on perfil.codigo = citacao.perfil where citacao.ativo = 1 and citacao.interacao = $row3[codInteracao]");
+                            $resCitacoesChild = $db->query("select citacao.interacao as interacao, perfil.codigo as codPerfil, perfil.username as nomePerfil 
+                            from citacao 
+                                join perfil on perfil.codigo = citacao.perfil 
+                            where 
+                                citacao.ativo = 1 and 
+                                citacao.interacao = $row3[codInteracao]");
                             $citacoes = [];
                             while ($row4 = $resCitacoesChild->fetchArray()) {
                                 $citacoes[] = $row4;
@@ -912,7 +929,8 @@
                                 left join interacao_assunto on interacao.codigo = interacao_assunto.interacao
                                 left join assunto on interacao_assunto.assunto = assunto.codigo
                             where
-                                interacao.ativo = 1");
+                                interacao_assunto.ativo = 1 and
+                                interacao.codigo = $row3[codInteracao]");
                             $assuntos = [];
                             while ($row5 = $resAssuntosChild->fetchArray()) {
                                 $assuntos[] = $row5;
@@ -941,14 +959,22 @@
                                 left join uf on cidade.uf = uf.codigo
                                 left join pais on uf.pais = pais.codigo
                             where 
+                                interacao.ativo = 1 and 
                                 interacao.isSharing is null and 
                                 interacao.postPai = $row[codInteracao] and 
-                                interacao.post != $row[codInteracao]");
+                                interacao.post = $row3[codInteracao]");
+                                
                             $grandChildInteracoes = [];
+                            $childInteracoes[$row3['codInteracao']]['respostas'] = [];
                             if($temInnerInteracoes){
                                 while ($row6 = $temInnerInteracoes->fetchArray()) {
                                     $grandChildInteracoes[$row6['codInteracao']] = $row6;
-                                    $resCitacoesGrandChild = $db->query("select citacao.interacao as interacao, perfil.codigo as codPerfil, perfil.username as nomePerfil from citacao join perfil on perfil.codigo = citacao.perfil where citacao.ativo = 1 and citacao.interacao = $row6[codInteracao]");
+                                    $resCitacoesGrandChild = $db->query("
+                                    select citacao.interacao as interacao, perfil.codigo as codPerfil, perfil.username as nomePerfil from citacao 
+                                        join perfil on perfil.codigo = citacao.perfil 
+                                    where 
+                                        citacao.ativo = 1 and 
+                                        citacao.interacao = $row6[codInteracao]");
                                     $citacoes = [];
                                     while ($row7 = $resCitacoesGrandChild->fetchArray()) {
                                         $citacoes[] = $row7;
@@ -960,26 +986,17 @@
                                         left join interacao_assunto on interacao.codigo = interacao_assunto.interacao
                                         left join assunto on interacao_assunto.assunto = assunto.codigo
                                     where
-                                        interacao.ativo = 1 and
+                                        interacao_assunto.ativo = 1 and
                                         interacao.codigo = ".$row6['codInteracao']);
                                     $assuntos = [];
                                     while ($row8 = $resAssuntosGrandChild->fetchArray()) {
                                         $assuntos[] = $row8;
                                     }
                                     $grandChildInteracoes[$row6['codInteracao']]['assuntos'] = $assuntos;
+                                    $childInteracoes[$row3['codInteracao']]['respostas'][$row6['codInteracao']] = $grandChildInteracoes[$row6['codInteracao']];
                                 }                                
                             }
-                            foreach($childInteracoes as $child){
-                                print_r($child);
-                                echo "<br>";
-                                foreach ($grandChildInteracoes as $grandChild) {
-                                    if($child['codInteracao'] == $grandChild['codPost']){
-                                        $child['respostas'] = $grandChild;
-                                    } else {
-                                        $child['respostas'] = [];    
-                                    }
-                                }
-                            }
+                            
                         }
                     }
                     $postsArray[$row['codInteracao']]['comentarios'] = $childInteracoes;
@@ -987,28 +1004,28 @@
                 return $postsArray;
 
             }
-            if($db_type=='postgresql'){ // FIXME: tem que deixar igual ao de cima
-                $result=pg_fetch_all(pg_query($db, "
-                select 
-                    interacao.codigo as codInteracao, 
-                    interacao.post as codPost, 
-                    interacao.isReaction as isReaction, 
-                    interacao.texto as textoPost, 
-                    interacao.data as dataPost, 
-                    interacao.isSharing as isSharing, 
-                    interacao.emote as emote,
-                    interacao.ativo as ativo,
-                    porto.codigo as codPorto, porto.nome as nomePorto, 
-                    perfil.codigo as codPerfil, perfil.username as nomePerfil, perfil.img as iconPerfil
-                from interacao
-                    join perfil on interacao.perfil = perfil.codigo
-                    left join porto on porto.codigo = interacao.porto
-                where
-                    interacao.ativo = 1 and
-                    interacao.isReaction is null and
-                    (interacao.post is null or interacao.isSharing is not null)
-                limit $limit offset $offset"));
-                return $result;
+            if($db_type=='postgresql'){ 
+                // $result=pg_fetch_all(pg_query($db, "
+                // select 
+                //     interacao.codigo as codInteracao, 
+                //     interacao.post as codPost, 
+                //     interacao.isReaction as isReaction, 
+                //     interacao.texto as textoPost, 
+                //     interacao.data as dataPost, 
+                //     interacao.isSharing as isSharing, 
+                //     interacao.emote as emote,
+                //     interacao.ativo as ativo,
+                //     porto.codigo as codPorto, porto.nome as nomePorto, 
+                //     perfil.codigo as codPerfil, perfil.username as nomePerfil, perfil.img as iconPerfil
+                // from interacao
+                //     join perfil on interacao.perfil = perfil.codigo
+                //     left join porto on porto.codigo = interacao.porto
+                // where
+                //     interacao.ativo = 1 and
+                //     interacao.isReaction is null and
+                //     (interacao.post is null or interacao.isSharing is not null)
+                // limit $limit offset $offset"));
+                // return $result;
             }
         }
         else exit;
