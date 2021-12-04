@@ -541,13 +541,13 @@
         $db_type = $db_connection['db_type'];
         if($db){
             if($db_type == 'sqlite'){
-                $response = $db->query("select codigo, email, ativo, img, username from perfil where codigo='$id'");
+                $response = $db->query("select codigo, email, ativo, img, username, cidade from perfil where codigo='$id'");
                 if($response) return $response->fetchArray();
                 else return false;
             }
             if($db_type == 'postgresql'){
                 if($db_type == 'postgresql'){
-                    $response = pg_query($db,"select codigo, email, ativo, img, username from perfil where codigo='$id'");
+                    $response = pg_query($db,"select codigo, email, ativo, img, username, cidade from perfil where codigo='$id'");
                     if($response) return pg_fetch_array($response);
                     else return false;
                 }
@@ -1116,6 +1116,52 @@
                     left join porto on interacao.porto = porto.codigo
                 where interacao.codigo = $post"));
                 if($result) return $result;
+                else return false;
+            }
+        }
+        else exit;
+    }
+    function OndasDoMomento($top,$cidade){
+        $db_connection=db_connection();
+        $db=$db_connection['db'];
+        $db_type=$db_connection['db_type'];
+        if($db){
+            if($db_type=='sqlite'){
+                $response=$db->query("
+                select 
+                assunto.nome as nome,count(*) as total
+                from interacao 
+                join cidade on interacao.local=cidade.codigo
+                join uf on cidade.uf=uf.codigo
+                join pais on pais.codigo=uf.pais
+                join INTERACAO_ASSUNTO on interacao.codigo=INTERACAO_ASSUNTO.interacao
+                join assunto on INTERACAO_ASSUNTO.assunto=assunto.codigo
+                where 
+                    interacao.local=$cidade
+                group by assunto.codigo
+                having count(*) in (
+                    select 
+                    distinct
+                    count(*) as total_per_assunto
+                    from interacao 
+                    join cidade on interacao.local=cidade.codigo
+                    join uf on cidade.uf=uf.codigo
+                    join pais on pais.codigo=uf.pais
+                    join INTERACAO_ASSUNTO on interacao.codigo=INTERACAO_ASSUNTO.interacao
+                    join assunto on INTERACAO_ASSUNTO.assunto=assunto.codigo
+                    where 
+                        interacao.local=$cidade
+                    group by assunto.codigo
+                    order by total_per_assunto desc
+                    limit $top
+                )");
+                if($response){
+                    $results=[];
+                    while($row = $response->fetchArray()){
+                        array_push($results,$row);
+                    }
+                    return $results;
+                }
                 else return false;
             }
         }
