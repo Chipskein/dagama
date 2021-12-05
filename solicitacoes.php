@@ -22,7 +22,6 @@
     else echo "Erro ao aceitar solicitação amizade...";
   }
   if(isset($_POST['insert-interacao-decline'])){
-    echo 'texte';
     $response = declineFriendRequest($_SESSION["userid"],$_POST["insert-interacao-decline"]);
     if($response) header("refresh:1;url=solicitacoes.php");
     else echo "Erro ao rejeitar solicitação amizade...";

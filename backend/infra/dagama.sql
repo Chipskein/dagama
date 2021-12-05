@@ -67,6 +67,7 @@ CREATE TABLE PORTO(
     descr VARCHAR(250) NOT NULL,
     img VARCHAR(250) NOT NULL DEFAULT 'https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg',
     ativo BOOLEAN NOT NULL DEFAULT 1 CHECK(ativo=1 OR ativo=0),
+    dataRegis DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY(codigo),
     FOREIGN KEY (perfil) REFERENCES PERFIL(codigo) 
 );
@@ -5311,12 +5312,12 @@ INSERT INTO PERFIL VALUES(3,1,'silvioquintana1@hotmail.com','$2y$10$k5Z0zf/spQK8
 INSERT INTO PERFIL VALUES(4,1,'victortavamaral@gmail.com','$2y$10$LmeaGQainGy2LCxzRPkUqORv0927DCdV6WbpHWUADIwY1Fu29pAgi','M','vitão','https://drive.google.com/uc?export=download&id=1oNvSVJiFJiWzlu7H5o4lVgK_9aZ4EBQd','2002-04-22','2021-11-26 13:07:48',1);
 INSERT INTO PERFIL VALUES(5,1,'victortavaresjedi150@gmail.com','$2y$10$FFXBwoh4u00MW7yk2.ME0.1pj9ZqYRfdtvJEPZlfZBotM1nSDrLpS','M','geraldao','https://drive.google.com/uc?export=download&id=1svSmr4LV-mU2G9lXWFSOwiDdcJuzyW5O','2002-04-22','2021-11-26 15:13:08',1);
 
-INSERT INTO PORTO VALUES(1,4,'Resident Evil','asdasdas','https://drive.google.com/uc?export=download&id=1iK1-bCRZd4fKHgQG0TWN98DkfmrkWxve',1);
-INSERT INTO PORTO VALUES(2,4,'Hogwarts','Sla mano','https://drive.google.com/uc?export=download&id=1pGLvGzhlf9XXFM3jGa9FhTRTihBPQHB3',1);
-INSERT INTO PORTO VALUES(3,4,'Casa de Hades','asdasdasdasd','https://drive.google.com/uc?export=download&id=1EqbendRznjPYMFfQ634jYIoHJcPYkdpS',1);
-INSERT INTO PORTO VALUES(4,4,'Medjais de Siuá','asdasddsasad','https://drive.google.com/uc?export=download&id=1AuTDe8UFD0nJrg7HXfQ3Kmg4BnIlTF2k',1);
-INSERT INTO PORTO VALUES(5,5,'Jill da massa','asdasdasdasdas','https://drive.google.com/uc?export=download&id=1PC588dOlBzvhuPSvrj03mUIA6fv-EJvZ',1);
-INSERT INTO PORTO VALUES(6,5,'Hunters o Yharnam','Bloodborne is an action role-playing game developed by FromSoftware and published by Sony Computer Entertainment, which was released for the PlayStation 4 in March 2015. Bloodborne follows the players character, a Hunter, through the decrepit...','https://drive.google.com/uc?export=download&id=1BYDQwBM91JAmJzCfd8Wsk4OZ16TywSlN',1);
+INSERT INTO PORTO VALUES(1,4,'Resident Evil','asdasdas','https://drive.google.com/uc?export=download&id=1iK1-bCRZd4fKHgQG0TWN98DkfmrkWxve',1,'2021-11-26 01:27:05');
+INSERT INTO PORTO VALUES(2,4,'Hogwarts','Sla mano','https://drive.google.com/uc?export=download&id=1pGLvGzhlf9XXFM3jGa9FhTRTihBPQHB3',1,'2021-11-26 01:27:00');
+INSERT INTO PORTO VALUES(3,4,'Casa de Hades','asdasdasdasd','https://drive.google.com/uc?export=download&id=1EqbendRznjPYMFfQ634jYIoHJcPYkdpS',1,'2021-11-22 01:27:05');
+INSERT INTO PORTO VALUES(4,4,'Medjais de Siuá','asdasddsasad','https://drive.google.com/uc?export=download&id=1AuTDe8UFD0nJrg7HXfQ3Kmg4BnIlTF2k',1,'2021-01-26 01:27:05');
+INSERT INTO PORTO VALUES(5,5,'Jill da massa','asdasdasdasdas','https://drive.google.com/uc?export=download&id=1PC588dOlBzvhuPSvrj03mUIA6fv-EJvZ',1,'2001-11-26 01:27:05');
+INSERT INTO PORTO VALUES(6,5,'Hunters o Yharnam','Bloodborne is an action role-playing game developed by FromSoftware and published by Sony Computer Entertainment, which was released for the PlayStation 4 in March 2015. Bloodborne follows the players character, a Hunter, through the decrepit...','https://drive.google.com/uc?export=download&id=1BYDQwBM91JAmJzCfd8Wsk4OZ16TywSlN',1, '2021-11-26 01:27:05');
 
 INSERT INTO solicitacao_amigo VALUES(1,3,'2021-11-26 01:27:05',1);
 INSERT INTO solicitacao_amigo VALUES(2,3,'2021-11-26 01:27:08',1);

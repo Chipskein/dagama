@@ -47,6 +47,12 @@ a {
 	background-color: var(--white-color);
 	border: 1px solid #000;
 }
+.paginacaoNumber {
+    text-decoration: none;
+    color: white;
+    font-size: 20px;
+	margin-left: 3px;
+}
 .header-searchBar-icon {
 	width: 22px;
 	height: 23px;
@@ -1026,6 +1032,9 @@ main {
 	flex-direction: column;
 	margin-left: 13px;
 	float: right;
+}
+#select-ordenar {
+	margin-left: 10px;
 }
 /* .div-post-top-username {} */
 .div-post-top-subjects {
