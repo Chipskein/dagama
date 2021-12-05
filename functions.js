@@ -1,6 +1,64 @@
+function verifydate(day,month,year){
+    let day_qt //31,30,29,28
+    let bissexto = false;
+    if ((year % 4 == 0 && year % 100 !== 0) || (year % 400 == 0)) bissexto = true;//
+    switch (month) {
+      case 1:
+        day_qt = 31
+        break
+      case 2:
+        if (bissexto) day_qt = 29
+        else day_qt = 28
+        break
+      case 3:
+        day_qt = 31
+        break
+      case 4:
+        day_qt = 30
+        break
+      case 5:
+        day_qt = 31
+        break
+      case 6:
+        day_qt = 30
+        break
+      case 7:
+        day_qt = 31
+        break
+      case 8:
+        day_qt = 31
+        break
+      case 9:
+        day_qt = 30
+        break
+      case 10:
+        day_qt = 31
+        break
+      case 11:
+        day_qt = 30
+        break
+      case 12:
+        day_qt = 31
+        break
+    }
+    if (day <= day_qt) return true
+    else return false
+}
 function verificar(){
-    //validar inputs
-    document.getElementById("form").submit();
+    let email=document.getElementsByName("email")[0];
+    let pass=document.getElementsByName("password")[0];
+    let regex=new RegExp("^[a-zA-Z0-9\.]*@[a-z0-9\.]*\.[a-z]*$");
+    if(pass.value.trim()!=''){
+        if(!regex.test(email.value)){
+            email.value='';
+            email.focus();
+        }
+        else document.getElementById("form").submit();
+    }
+    else {
+        pass.value='';
+        pass.focus();
+    }
 };
 
 function showRegister(){
@@ -12,6 +70,105 @@ function showRegister(){
 
 function register(){
     //validar inputs
+    let passed=false;
+    let username=document.getElementsByName("username")[0];
+    let email=document.getElementsByName("email")[1];
+    let pass=document.getElementsByName("password")[1];
+    let cpass=document.getElementsByName("cpassword")[0];
+    let genero=document.getElementsByName("genero")[0];
+    let bdate=document.getElementsByName("bdate")[0];
+    let pais=document.getElementsByName("pais")[0];
+    let estado=document.getElementsByName("estado")[0];
+    let cidade=document.getElementsByName("cidade")[0];
+    let newpais=document.getElementsByName("newpais")[0];
+    let newestado=document.getElementsByName("newestado")[0];
+    let newcidade=document.getElementsByName("newcidade")[0];
+    let termos=document.getElementsByName("termos")[0];
+    let regex_number=new RegExp("")
+    let regex_email=new RegExp("^[a-zA-Z0-9\.]*@[a-z0-9\.]*\.[a-z]*$");
+    let regex_bdate=new RegExp("^[0-9]*-(0[1-9]|1[0-2])-(0[1-9]|1[0-9]|2[0-9]|3[0-1])$");
+    let regex_text=new RegExp("^([a-z0-9áạàảãăắặằẳẵâấậầẩẫéẹèẻẽêếệềểễíịìỉĩóọòỏõôốộồổỗơớợờởỡúụùủũưứựừửữýỵỳỷỹđA-ZÁẠÀẢÃĂẮẶẰẲẴÂẤẬẦẨẪÉẸÈẺẼÊẾỆỀỂỄÍỊÌỈĨÓỌÒỎÕÔỐỘỒỔỖƠỚỢỜỞỠÚỤÙỦŨƯỨỰỪỬỮÝỴỲỶỸĐ]+)?(( [a-z0-9áạàảãăắặằẳẵâấậầẩẫéẹèẻẽêếệềểễíịìỉĩóọòỏõôốộồổỗơớợờởỡúụùủũưứựừửữýỵỳỷỹđA-ZÁẠÀẢÃĂẮẶẰẲẴÂẤẬẦẨẪÉẸÈẺẼÊẾỆỀỂỄÍỊÌỈĨÓỌÒỎÕÔỐỘỒỔỖƠỚỢỜỞỠÚỤÙỦŨƯỨỰỪỬỮÝỴỲỶỸĐ]+)?)+$");
+    if(username.value.trim()==''){
+        username.value='';
+        username.focus();
+        return
+    }
+    if(!regex_email.test(email.value)){
+        email.value='';
+        email.focus();
+        return;
+    }
+    if(pass.value!=cpass.value){
+        pass.value='';
+        cpass.value='';
+        pass.focus();
+        return
+    }
+    if(pass.value.trim()==''){
+        pass.value='';
+        pass.focus();
+    }
+    if(!termos.checked){
+        termos.focus();
+        return
+    }
+    if(genero.value!='M'&&genero.value!='F'&&genero.value!='O'){
+        genero.focus();
+        return
+    }
+    if(regex_bdate.test(bdate.value)){
+        console.log(bdate.value);
+        let year=parseInt(bdate.value.substr(0,4));
+        let month=parseInt(bdate.value.substr(5,2));
+        let day=parseInt(bdate.value.substr(8,2));
+        console.log(year);
+        console.log(month);
+        console.log(day);
+        if(!verifydate(day,month,year)){
+            bdate.value='';
+            bdate.focus();
+            return;
+        };
+    }
+    else{
+        bdate.value='';
+        bdate.focus();
+        return;
+    }
+    if(pais.value=='null'){
+        pais.focus();
+        return
+    }
+    if(estado.value=='null'){
+        estado.focus();
+        return
+        
+    }
+    if(cidade.value=='null'){
+        cidade.focus();
+        return
+    }
+    if(pais.value=='outro'){
+        if(!regex_text.test(newpais.value)){
+            newpais.value='';
+            newpais.focus();
+            return
+        }
+    }
+    if(estado.value=='outro'){
+        if(!regex_text.test(newestado.value)){
+            newestado.value='';
+            newestado.focus();
+            return
+        }
+    }
+    if(cidade.value=='outro'){
+        if(!regex_text.test(newcidade.value)){
+            newcidade.value='';
+            newcidade.focus();
+            return
+        }
+    }
     document.getElementById("formRegister").submit();
 }
 

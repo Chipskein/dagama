@@ -57,9 +57,11 @@
             <input class="inputs" name="email" type="email" placeholder="Email">
             <input class="inputs" name="password" type="password" placeholder='Senha'>
             <input type="button" class="button" id="loginBtn" onclick="verificar()" value="Entrar"/>
-            <div class="containerLinkMenor">
-              <a class="linkMenor">Esqueceu sua senha?</a>
-            </div>
+            <!--
+              <div class="containerLinkMenor">
+                <a class="linkMenor">Esqueceu sua senha?</a>
+              </div>
+            -->
             <input type="button" class="button registerBtn"  onclick="showRegister()" value="Cadastrar-se"/>
           </div>
         </form>
