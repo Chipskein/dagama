@@ -1411,3 +1411,37 @@ main {
 .margin-top {
 	margin-top: 35px;
 }
+
+table.adm{
+	border: solid 3px black;
+	background-color: white;
+}
+table.adm td{
+	color: black;
+	font-weight: bold;
+	border: solid 1px black;
+	text-align: center;
+	width: 20px;
+	height: 15px;
+}
+
+table.adm-assuntos{
+	background-color: white;
+	color: black;
+}
+table.adm-assuntos td{
+	background-color: white;
+	color: black;
+	font-weight: bold;
+	border: solid 1px black;
+}
+
+.masc{
+	color:var(--azulClaro-color) !important;
+}
+.fem{
+	color:var(--roxoClaro-color) !important;
+}
+body.adm{
+	background-color: var(--azulEscuro-color);
+}

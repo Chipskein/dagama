@@ -2364,14 +2364,60 @@
                 }
         }   
     }
+    //17
+    function getInterationDatabyGender($pais,$meses){
+        $db_connection=db_connection();
+        $db=$db_connection['db'];
+        $db_type=$db_connection['db_type'];
+        if($db_type == 'sqlite'){
+            $response=$db->query("
+                    select 
+                        pais.nome as pais,
+                        perfil.genero as genero,
+                        case
+                            when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) < 18 then  '- 18'
+                            when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) between 18 and 21 then '18-21'
+                            when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) between 21 and 25 then '21-25'
+                            when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) between 25 and 30 then '25-30'
+                            when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) between 30 and 36 then '30-36'
+                            when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) between 36 and 43 then '36-43'
+                            when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) between 43 and 51 then '43-51'
+                            when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) between 51 and 60 then '51-60'
+                            when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) > 60 then '60-'
+                        end as faixaEtaria,
+                        count(*) as total
+                    from interacao 
+                            join perfil on perfil.codigo=interacao.perfil
+                            join cidade on cidade.codigo=interacao.local
+                            join uf on uf.codigo=cidade.uf
+                            join pais on uf.pais=pais.codigo
+                            where 
+                                date(interacao.data) between date('now','-$meses month') and  date('now')
+                                and pais.codigo=$pais
+                        group by perfil.genero,faixaEtaria
+                        order by faixaEtaria,perfil.genero desc
+                    ");   
+            $results=[];
+            if($response){
+                while ($row = $response->fetchArray()){
+                    array_push($results,$row);
+                }
+                return($results);
+            }
+            else return false;
+        } 
+        else exit;
+    }
 
     //10)
+    /*
     function countLikesbyCountry($pais,$dias,$hora,$likes){
         $db_connection=db_connection();
         $db=$db_connection['db'];
         $db_type=$db_connection['db_type'];
         if($db_type == 'sqlite'){
-            $response = $db->query("select count(perfil.codigo) from perfil
+            $response = $db->query("
+            select count(perfil.codigo) from perfil
             where perfil.codigo in (
                 select perfil.codigo from interacao 
                     join perfil on interacao.perfil = perfil.codigo
@@ -2383,7 +2429,7 @@
                     reacoes.isReaction = 1 and 
                     reacoes.emote = 'curtir' and
                     pais.codigo = $pais and
-                    date(reacoes.data) between date('now', '- $dias', 'localtime') and date('now', 'localtime') and
+                    date(reacoes.data) between date('now', '-$dias days', 'localtime') and date('now', 'localtime') and
                     date(reacoes.data) between date(interacao.data, 'localtime') and date(interacao.data, '+$hora hours', 'localtime')
                 group by perfil.codigo
                 having count(*) > $likes
@@ -2406,83 +2452,360 @@
         }
         else exit;
     };
-
+    */
+    //10
+    function countLikesbyCountry($pais,$dias,$hora,$likes){
+        $db_connection=db_connection();
+        $db=$db_connection['db'];
+        $db_type=$db_connection['db_type'];
+        if($db_type == 'sqlite'){
+            $response = $db->query("
+            select count(*) as qt
+            from 
+            (
+                select 
+                distinct
+                posts.perfil
+                from
+                ( 
+                    select 
+                    pais.nome as pais,
+                    interacao.perfil as perfil,
+                    interacao.codigo as postagem,
+                    interacao.data as postagem_timestamp
+                    from interacao
+                    join cidade on cidade.codigo=interacao.local
+                    join uf on cidade.uf=uf.codigo
+                    join pais on pais.codigo=uf.pais
+                    where 
+                        pais.codigo=$pais
+                        and interacao.isReaction is null
+                        and interacao.data between datetime('now','-$dias days') and datetime('now') 
+                ) as posts
+                join interacao on posts.postagem=interacao.post
+                where 
+                    interacao.isReaction is not null
+                    and interacao.data between datetime(posts.postagem_timestamp) and datetime(posts.postagem_timestamp,'+$hora hours')
+                group by posts.postagem
+                having count(*)>$likes
+            )");
+            if($response) return $response->fetchArray()['qt'];
+            else return false;
+        }
+        if($db_type == 'postgresql'){
+            $response = pg_prepare($db, "", "");
+            if($response){
+                $response = pg_execute($db, "", array(""));
+                if($response) return $response;
+                else return false;
+            }
+            else return false;
+        }
+        else exit;
+    };
     //11)
     function getFaixaEtaria($grupo,$dia){
         $db_connection=db_connection();
         $db=$db_connection['db'];
         $db_type=$db_connection['db_type'];
         if($db_type == 'sqlite'){
-        $response= $db ->query("select case
-        when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) < 18 then '- 18'    
-        when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) between 18 and 21 then '18-21'
-        when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) between 21 and 25 then '21-25'
-        when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) between 25 and 30 then '25-30'
-        when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) between 30 and 36 then '30-36'
-        when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) between 36 and 43 then '36-43'
-        when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) between 43 and 51 then '43-51'
-        when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) between 51 and 60 then '51-60'
-        when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) > 60 then '60-'
-    end as faixaEtaria, count(*) as qtdReacoes
-    from interacao
-        join perfil on interacao.perfil = perfil.codigo
-    where 
-        date(interacao.data, 'localtime') between date('now', '-$dia days', 'localtime') and date('now', 'localtime') and
-        interacao.codigo in (
-            select interacao.codigo from interacao
-                join porto on interacao.porto = porto.codigo
-            where porto.codigo = $grupo
-        )
-    group by faixaEtaria
-    having qtdReacoes = (
-            select qtdReacoes from (
+            $response= $db ->query("
                 select case
-                    when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) < 18 then  '- 18'
-                    when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) between 18 and 21 then '18-21'
-                    when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) between 21 and 25 then '21-25'
-                    when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) between 25 and 30 then '25-30'
-                    when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) between 30 and 36 then '30-36'
-                    when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) between 36 and 43 then '36-43'
-                    when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) between 43 and 51 then '43-51'
-                    when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) between 51 and 60 then '51-60'
-                    when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) > 60 then '60-'
+                when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) < 18 then '- 18'    
+                when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) between 18 and 21 then '18-21'
+                when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) between 21 and 25 then '21-25'
+                when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) between 25 and 30 then '25-30'
+                when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) between 30 and 36 then '30-36'
+                when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) between 36 and 43 then '36-43'
+                when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) between 43 and 51 then '43-51'
+                when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) between 51 and 60 then '51-60'
+                when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) > 60 then '60-'
                 end as faixaEtaria, count(*) as qtdReacoes
                 from interacao
                     join perfil on interacao.perfil = perfil.codigo
                 where 
+                    date(interacao.data, 'localtime') between date('now', '-$dia days', 'localtime') and date('now', 'localtime') and
                     interacao.codigo in (
-                         select interacao.codigo from interacao
-                join porto on interacao.porto = porto.codigo
-            where porto.codigo = $grupo
-                    ) and
-                    date(interacao.data, 'localtime') between date('now', '-$dia days', 'localtime') and date('now', 'localtime')
+                        select interacao.codigo from interacao
+                            join porto on interacao.porto = porto.codigo
+                        where porto.codigo = $grupo
+                    )
                 group by faixaEtaria
-                order by qtdReacoes desc
-            )
-            limit 1
-        ) order by qtdReacoes desc;");
-         
+                having qtdReacoes = (
+                        select qtdReacoes from (
+                            select case
+                                when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) < 18 then  '- 18'
+                                when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) between 18 and 21 then '18-21'
+                                when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) between 21 and 25 then '21-25'
+                                when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) between 25 and 30 then '25-30'
+                                when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) between 30 and 36 then '30-36'
+                                when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) between 36 and 43 then '36-43'
+                                when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) between 43 and 51 then '43-51'
+                                when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) between 51 and 60 then '51-60'
+                                when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) > 60 then '60-'
+                            end as faixaEtaria, count(*) as qtdReacoes
+                            from interacao
+                                join perfil on interacao.perfil = perfil.codigo
+                            where 
+                                interacao.codigo in (
+                                    select interacao.codigo from interacao
+                            join porto on interacao.porto = porto.codigo
+                        where porto.codigo = $grupo
+                                ) and
+                                date(interacao.data, 'localtime') between date('now', '-$dia days', 'localtime') and date('now', 'localtime')
+                            group by faixaEtaria
+                            order by qtdReacoes desc
+                        )
+                        limit 1
+                    ) order by qtdReacoes desc"
+            );
+            if($response) return $response->fetchArray();
+            else return false;
+        };
     };
-};
 
-//12)
-
-function getTop(){
-     $db_connection=db_connection();
-    $db=$db_connection['db'];
-    $db_type=$db_connection['db_type'];
-    if($db_type == 'sqlite'){
-        $response= $db ->query("select assunto.nome, strftime('%m', interacao.data) as mes from interacao 
-        join interacao_assunto on interacao.codigo = interacao_assunto.interacao 
-        join assunto on interacao_assunto.assunto = assunto.codigo
-        left join cidade on interacao.local = cidade.codigo --left join pois pode nao ter local
-            left join uf on cidade.uf = uf.codigo
-            left join pais on uf.pais = pais.codigo
-        where pais.codigo =$pais and  date(interacao.data, 'localtime') between date('now', '-$mes months', 'localtime') and date('now', 'localtime')
-        group by assunto.nome, mes
-            order by count(assunto.nome) desc
-            limit $top");
+    //12)
+    function getTop($pais,$top,$mes){
+        $db_connection=db_connection();
+        $db=$db_connection['db'];
+        $db_type=$db_connection['db_type'];
+        if($db_type == 'sqlite'){
+            $response= $db ->query("
+                select 
+                    pais.nome as pais,
+                    assunto.nome as assunto, 
+                    case strftime('%m',interacao.data)
+                    when '01' then 'janeiro' 
+                    when '02' then 'fevereiro' 
+                    when '03' then 'março' 
+                    when '04' then 'abril' 
+                    when '05' then 'maio' 
+                    when '06' then 'junho' 
+                    when '07' then 'julho' 
+                    when '08' then 'agosto' 
+                    when '09' then 'setembro' 
+                    when '10' then 'outubro' 
+                    when '11' then 'novembro' 
+                    when '12' then 'dezembro' 
+                    end as mes,
+                    count(assunto.nome) as qt,
+                    DENSE_RANK () OVER ( 
+                        ORDER BY count(assunto.nome) desc 
+                    ) as rank
+                    from interacao 
+                        join interacao_assunto on interacao.codigo = interacao_assunto.interacao 
+                        join assunto on interacao_assunto.assunto = assunto.codigo
+                        join cidade on interacao.local = cidade.codigo
+                        join uf on cidade.uf = uf.codigo
+                        join pais on uf.pais = pais.codigo
+                        where 
+                        pais.codigo = $pais 
+                        and  date(interacao.data, 'localtime') between date('now', '-$mes months', 'localtime') and date('now', 'localtime')
+                    group by strftime('%m',interacao.data),assunto.nome
+                    having count(*) in (
+                        select
+                        distinct
+                        count(assunto.nome) 
+                        from interacao 
+                            join interacao_assunto on interacao.codigo = interacao_assunto.interacao 
+                            join assunto on interacao_assunto.assunto = assunto.codigo
+                            join cidade on interacao.local = cidade.codigo
+                            join uf on cidade.uf = uf.codigo
+                            join pais on uf.pais = pais.codigo
+                            where 
+                            pais.codigo = $pais 
+                            and  date(interacao.data, 'localtime') between date('now', '-$mes months', 'localtime') and date('now', 'localtime')
+                        group by strftime('%m',interacao.data),assunto.nome
+                        order by count(assunto.nome) desc
+                        limit $top
+                    )
+                    order by count(assunto.nome) desc
+                    "
+            );
+            $results=[];
+            if($response){
+                while($row = $response->fetchArray()){
+                    array_push($results,$row);
+                }
+                return $results;
+            }
+            else return false;
+        }
+        else exit;
     }
-}
+    //13
+    function getAssuntMoreHyped($pais,$top,$mes){
+        $db_connection=db_connection();
+        $db=$db_connection['db'];
+        $db_type=$db_connection['db_type'];
+        if($db_type == 'sqlite'){
+            $response=$db->query("
+                select 
+                result.assunto as assunto,count(*) as total
+                from
+                (
+                    select 
+                    assunto.nome as assunto, 
+                    case strftime('%m',interacao.data)
+                    when '01' then 'janeiro' 
+                    when '02' then 'fevereiro' 
+                    when '03' then 'março' 
+                    when '04' then 'abril' 
+                    when '05' then 'maio' 
+                    when '06' then 'junho' 
+                    when '07' then 'julho' 
+                    when '08' then 'agosto' 
+                    when '09' then 'setembro' 
+                    when '10' then 'outubro' 
+                    when '11' then 'novembro' 
+                    when '12' then 'dezembro' 
+                    end as mes,
+                    count(assunto.nome) as qt
+                    from interacao 
+                        join interacao_assunto on interacao.codigo = interacao_assunto.interacao 
+                        join assunto on interacao_assunto.assunto = assunto.codigo
+                        join cidade on interacao.local = cidade.codigo
+                        join uf on cidade.uf = uf.codigo
+                        join pais on uf.pais = pais.codigo
+                        where 
+                        pais.codigo = $pais 
+                        and  date(interacao.data, 'localtime') between date('now', '-$mes months', 'localtime') and date('now', 'localtime')
+                    group by strftime('%m',interacao.data),assunto.nome
+                    having count(*) in 
+                    (
+                        select
+                        distinct
+                        count(assunto.nome) 
+                        from interacao 
+                            join interacao_assunto on interacao.codigo = interacao_assunto.interacao 
+                            join assunto on interacao_assunto.assunto = assunto.codigo
+                            join cidade on interacao.local = cidade.codigo
+                            join uf on cidade.uf = uf.codigo
+                            join pais on uf.pais = pais.codigo
+                            where 
+                            pais.codigo = $pais 
+                            and  date(interacao.data, 'localtime') between date('now', '-$mes months', 'localtime') and date('now', 'localtime')
+                        group by strftime('%m',interacao.data),assunto.nome
+                        order by count(assunto.nome) desc
+                        limit $top
+                    )
+                    order by count(assunto.nome) desc
+                ) as result
+                group by result.assunto
+                having count(*) = 
+                (
+                    select 
+                    count(*) as total
+                    from
+                    (
+                        select 
+                        assunto.nome as assunto, 
+                        case strftime('%m',interacao.data)
+                        when '01' then 'janeiro' 
+                        when '02' then 'fevereiro' 
+                        when '03' then 'março' 
+                        when '04' then 'abril' 
+                        when '05' then 'maio' 
+                        when '06' then 'junho' 
+                        when '07' then 'julho' 
+                        when '08' then 'agosto' 
+                        when '09' then 'setembro' 
+                        when '10' then 'outubro' 
+                        when '11' then 'novembro' 
+                        when '12' then 'dezembro' 
+                        end as mes,
+                        count(assunto.nome) as qt
+                        from interacao 
+                            join interacao_assunto on interacao.codigo = interacao_assunto.interacao 
+                            join assunto on interacao_assunto.assunto = assunto.codigo
+                            join cidade on interacao.local = cidade.codigo
+                            join uf on cidade.uf = uf.codigo
+                            join pais on uf.pais = pais.codigo
+                            where 
+                            pais.codigo = $pais 
+                            and  date(interacao.data, 'localtime') between date('now', '-$mes months', 'localtime') and date('now', 'localtime')
+                        group by strftime('%m',interacao.data),assunto.nome
+                        having count(*) in 
+                        (
+                            select
+                            distinct
+                            count(assunto.nome) 
+                            from interacao 
+                                join interacao_assunto on interacao.codigo = interacao_assunto.interacao 
+                                join assunto on interacao_assunto.assunto = assunto.codigo
+                                join cidade on interacao.local = cidade.codigo
+                                join uf on cidade.uf = uf.codigo
+                                join pais on uf.pais = pais.codigo
+                                where 
+                                pais.codigo = $pais 
+                                and  date(interacao.data, 'localtime') between date('now', '-$mes months', 'localtime') and date('now', 'localtime')
+                            group by strftime('%m',interacao.data),assunto.nome
+                            order by count(assunto.nome) desc
+                            limit $top
+                        )
+                        order by count(assunto.nome) desc
+                    ) as result
+                    group by result.assunto
+                    limit 1
+                )
+            ");
+            $results=[];
+            if($response){
+                while($row = $response->fetchArray()){
+                    array_push($results,$row);
+                }
+                return $results;
+            }
+            else return false;
+        }
+        else exit;
+    }
+    //15
+    function deactivateAllDeadUsersByCountry($pais,$limityear){
+        $db_connection=db_connection();
+        $db=$db_connection['db'];
+        $db_type=$db_connection['db_type'];
+        if($db_type == 'sqlite'){
+            //desativar usuario
+            $exec1=$db->exec("
+                update 
+                perfil 
+                set ativo=0 
+                where
+                    perfil.codigo not in
+                    (
+                        select
+                        distinct 
+                        perfil.codigo 
+                        from perfil
+                            join cidade on perfil.cidade=cidade.codigo
+                            join uf on cidade.uf=uf.codigo
+                            join pais on pais.codigo=uf.pais
+                            join interacao on interacao.perfil=perfil.codigo
+                        where 
+                            interacao.data between datetime('now','-$limityear years') and datetime('now')
+                            and pais.codigo=$pais
+                    )
+                    and perfil.dataregis between datetime('now','-2 days') and datetime('now')
+            ");
+            //desativar interacoes do usuario
+            $exec2=$db->exec("update interacao set ativo=0 where interacao.perfil in (select codigo from perfil where ativo=0)");
+            //desativar portos do usuario
+            $exec3=$db->exec("update porto set ativo=0 where porto.perfil in (select codigo from perfil where ativo=0)");
+            //desativa amizades com esse usuario
+            $exec4=$db->exec("update amigo set ativo=0 where amigo.perfil in (select codigo from perfil where ativo=0) or amigo.amigo in (select codigo from perfil where ativo=0)");
+            //desativa citacoes com esse usuario
+            $exec5=$db->exec("update citacao set ativo=0 where citacao.perfil in (select codigo from perfil where ativo=0)");
+            //desativa porto_participa desse usuario
+            $exec6=$db->exec("update porto_participa set ativo=0 where porto_participa.perfil in (select codigo from perfil where ativo=0)");
+            //desativa solicitaçoes de amizade desse usuario
+            $exec7=$db->exec("update solicitacao_amigo set ativo=0 where solicitacao_amigo.perfil in (select codigo from perfil where ativo=0) or solicitacao_amigo.amigo in (select codigo from perfil where ativo=0)");
+
+            if($exec1&&$exec2&&$exec3&&$exec4&&$exec5&&$exec6&&$exec7) return true;
+            else return false;    
+        }
+        else exit;
+    }
+
     /*-----------------------------------*/
-  ?>
+?>
