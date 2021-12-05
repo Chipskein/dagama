@@ -24,6 +24,7 @@
       $locaisArray = getLocais();
       $assuntosArray = getAssuntos();
       $pessoasArray = getPessoas();
+      $selo = 3;
       if(isset($_POST['entrarPorto'])){
         $response = entrarPorto($_SESSION['userid'], $_GET['porto']);
         if(!$response){
@@ -64,11 +65,47 @@
       }
 
       if(isset($_POST['novoPost'])){
-        // var_dump($_POST);
         $texto = ''.$_POST['texto'];
-        $local = isset($_POST['local']) ? $_POST['local'] : 0;
+        $reacao = isset($_POST['reacao']) ? $_POST['reacao'] : 0;
+        $isReaction = isset($_POST['reacao']) ? 1 : 0;
+        $local = isset($_POST['local']) ? $_POST['local'] : $user['cidade'];
         $assuntos = [];
         $citacoes = [];
+        // Local
+        $local = $user['cidade'];
+        $codPais = $_POST['insert-codigo-pais'];
+        $novoPaisNome = $_POST['insert-nome-pais'];
+        $codEstado = $_POST['insert-codigo-estado'];
+        $novoEstadoNome = $_POST['insert-nome-estado'];
+        $codCidade = $_POST['insert-codigo-cidade'];
+        $novoCidadeNome = $_POST['insert-nome-cidade'];
+        if(isset($codPais) && isset($codEstado) && isset($codCidade)){
+          if($codPais != "" && $codEstado != "" && $codCidade != ""){
+            if($codPais == 0){
+              // cria novo pais, estado e cidade
+              $pais = addPais($novoPaisNome);
+              $estado = addEstado($novoEstadoNome, $pais);
+              $local = addCidade($novoCidadeNome, $estado);
+            }
+            if($codPais != 0 && preg_match('#^[0-9]{1,}$#', $codPais)){  
+              if($codEstado == 0){
+                // cria novo estado e cidade
+                $estado = addEstado($novoEstadoNome, $codPais);
+                $local = addCidade($novoCidadeNome, $estado);
+              }
+            if($codEstado != 0 && preg_match('#^[0-9]{1,}$#', $codEstado)){
+              if($codCidade == 0){
+                  // cria nova cidade
+                  $local = addCidade($novoCidadeNome, $codEstado);
+                }
+                if($codCidade != 0 && preg_match('#^[0-9]{1,}$#', $codCidade)){
+                  $local = $codCidade;
+                }
+              }
+            }
+          }
+        }
+       
         $qtdAssuntos = count(getAssuntos());
         for($c = 1; $c <= $qtdAssuntos; $c++){
             if(isset($_POST["assunto$c"])){
@@ -81,7 +118,7 @@
                 $citacoes[] = $_POST["pessoa$c"];
             }
         }
-        $response = addInteracao($_SESSION['userid'], $texto, 0, $_GET['porto'], 0, 0, 0, 0, $local);
+        $response = addInteracao($_SESSION['userid'], $texto,0,$_GET['porto'], 0, 0, 0, $isReaction,$reacao,$local);
         if($response) {
           if(count($assuntos) > 0){
             foreach ($assuntos as $value) {
@@ -192,57 +229,112 @@
     <?php
       // initial insert post
       // if usuário ta no grupo.
-    echo "<div class=\"insert-interacao\">";
-      echo "<div class=\"insert-interacao-user\">";
+      if($portoInfo['participa']||$portoInfo['owner']){
+        
+        echo "<div class=\"insert-interacao\">";
+        echo "<div class=\"insert-interacao-user\">";
         echo "<img class=\"interaction-mainuser-user-icon\" src=\"".$user["img"]."\" alt=\"\" srcset=\"\">";
         echo "<div>";
-          echo "<p class=\"insert-interacao-user-name\">".$user["username"].":</p>";
-          echo "<p class=\"insert-interacao-user-assuntos\"></p>";
+        echo "<p class=\"insert-interacao-user-name\">".$user["username"].":</p>";
+        echo "<p class=\"insert-interacao-user-assuntos\"></p>";
         echo "</div>";
+        echo "</div>";
+        echo "<form name=\"newPost\" action=\"porto.php?porto=$_GET[porto]\" method=\"post\" >";
+          echo "<textarea name=\"texto\" class=\"insert-interacao-input\" id=\"insert-interacao-input\" type=\"text\" placeholder=\"Escreva um post ...\" ></textarea>";
+          echo "<div class=\"insert-interacao-smallBtns\">";
+            echo "<div class=\"insert-interacao-smallBtns-a\" onclick=\"newPostSelect('local')\"><img class=\"insert-interacao-smallBtns-icon\" src=\"imgs/icons/maps-and-flags.png\" alt=\"\" srcset=\"\">Adicionar um Local</div>";
+            echo "<div class=\"insert-interacao-smallBtns-a\" onclick=\"newPostSelect('pessoas')\"><img class=\"insert-interacao-smallBtns-icon\" src=\"imgs/icons/multiple-users-silhouette.png\" alt=\"\" srcset=\"\">Citar Pessoas</div>";
+            echo "<div class=\"insert-interacao-smallBtns-a\" onclick=\"newPostSelect('assuntos')\"><img class=\"insert-interacao-smallBtns-icon\" src=\"imgs/icons/price-tag.png\" alt=\"\" srcset=\"\">Assunto</div>";
+            echo "<div class=\"insert-interacao-smallBtns-a\" onclick=\"newPostSelect('reacoes')\"><img class=\"insert-interacao-smallBtns-icon\" src=\"imgs/icons/Like.png\" alt=\"\" srcset=\"\">Reação</div>";
+            echo "<div class=\"insert-interacao-smallBtns-a\" onclick=\"newPostSelect('compartilhar')\"><img class=\"insert-interacao-smallBtns-icon\" src=\"imgs/icons/send.png\" alt=\"\" srcset=\"\">Compartilhar</div>";
+          echo "</div>";
+          echo "<input class=\"insert-interacao-submit\" type=\"submit\" name=\"novoPost\" />";
+          echo "<hr id=\"post-hr\" class=\"post-hr\" >";
+          echo "<div class=\"post-divLocal\">";
+  
+            echo "<input id=\"insert-codigo-pais\" name=\"insert-codigo-pais\" type=\"hidden\" value=\"\">";
+            echo "<input id=\"insert-codigo-estado\" name=\"insert-codigo-estado\" type=\"hidden\" value=\"\">";
+            echo "<input id=\"insert-codigo-cidade\" name=\"insert-codigo-cidade\" type=\"hidden\" value=\"\">";
+          
+            echo "<select id=\"select-pais\" onchange=\"selectPais(this)\">";
+              echo "<option value=\"selecionar-pais\">Selecionar Pais</option>";
+              foreach ($paises as $value) {
+                echo "<option id='optionPais".$value['codigo']."' value='$value[codigo]'>".$value['nome']."</option>\n";
+              }
+              echo "<option value=\"0\">Outro</option>";
+            echo "</select>";
+            foreach ($paises as $value) {
+              echo "<select id=\"select-estado-pais$value[codigo]\" class=\"select-estado-pais\" style=\"display: none\" onchange=\"selectEstado(this)\">";
+                echo "<option value=\"selecionar-estado\">Selecionar Estado</option>";
+                foreach ($estados as $value2) {
+                  if($value2['pais'] == $value['codigo']){
+                    echo "<option id='optionEstado$value2[codigo]' value='$value2[codigo]'>$value2[nome]</option>\n";
+                  }
+                }
+                echo "<option value=\"0\">Outro</option>";
+              echo "</select>";
+            }
+            foreach ($estados as $value) {
+              echo "<select id=\"select-cidade-estado$value[codigo]\" class=\"select-cidade-estado\" style=\"display: none\" onchange=\"selectCidade(this)\">";
+                echo "<option value=\"selecionar-cidade\">Selecionar Cidade</option>";
+                foreach ($cidades as $value2) {
+                  if($value2['uf'] == $value['codigo']){
+                    echo "<option id='optionCidade$value2[codigo]' value='{ \"id\": \"".$value2['codigo']."\", \"name\": \"".$value2['nome']."\" }'>$value2[nome]</option>\n";
+                  }
+                }
+                echo "<option value='{ \"id\": \"0\", \"name\": \"null\" }'>Outro</option>";
+              echo "</select>";
+            }
+            echo "<input id=\"insert-nome-pais\" name=\"insert-nome-pais\" placeholder=\"Digite o nome do novo pais\" class=hidden>";
+            echo "<input id=\"insert-nome-estado\" name=\"insert-nome-estado\" placeholder=\"Digite o nome do novo estado\" class=hidden>";
+            echo "<input id=\"insert-nome-cidade\" name=\"insert-nome-cidade\" placeholder=\"Digite o nome da nova cidade \" class=hidden>";
+            echo "<button id=\"select-local-button\"  class=\"confirm-type\" type=\"button\" onclick=\"addLocal()\">Confirmar</button>";
+            echo "<div class=\"comment-container-top\" id=\"divCidade\"></div>";
+  
+          echo "</div>";
+          echo "<div class=\"post-divPessoas\">";
+            echo "<select id=\"select-pessoas\" onclick=\"unsetError(this)\">";
+              foreach ($pessoasArray as $value) {
+                echo "<option id='optionPessoa".$value['codigo']."' value='{ \"id\": \"".$value['codigo']."\", \"name\": \"".$value['username']."\" }'\">".$value['username']."</option>\n";
+              }
+            echo "</select>";
+            echo "<button id=\"select-pessoa-button\"  class=\"confirm-type\" type=\"button\" onclick=\"addPessoas()\">Confirmar</button>";
+            echo "<div class=\"comment-container-top\" id=\"divPessoas\"></div>";
+          echo "</div>";
+          echo "<div class=\"post-divAssuntos\">";
+            echo "<select id=\"select-assuntos\" onclick=\"unsetError(this)\">";
+              foreach ($assuntosArray as $value) {
+                echo "<option id='optionAssunto".$value['codigo']."' value='{ \"id\": \"".$value['codigo']."\", \"name\": \"".$value['nome']."\" }'\">".$value['nome']."</option>\n";
+              }
+              echo "<option value=\"0\">Outro</option>";
+            echo "</select>";
+            echo "<button id=\"select-assunto-button\"  class=\"confirm-type\" type=\"button\" onclick=\"addAssuntos()\">Confirmar</button>";
+            echo "<div class=\"comment-container-top\" id=\"divAssuntos\"></div>";
+          echo "</div>";
+          echo "<div class=\"post-divReacoes\">";
+            echo "<select id=\"select-reacoes\" onclick=\"unsetError(this)\">";
+              $reacoesArray = [['codigo'=>'curtir', 'emoji'=>'👌'],['codigo'=>'kkk', 'emoji'=> '🤣'],['codigo'=>'amei', 'emoji'=> '❤️'],['codigo'=>'grr', 'emoji'=> '🤬'],['codigo'=>'wow', 'emoji'=> '🤯'],['codigo'=>'sad', 'emoji'=> '😭']];
+              foreach ($reacoesArray as $value) {
+                echo "<option id='optionReacao".$value['codigo']."' value='{ \"id\": \"".$value['codigo']."\", \"name\": \"".$value['emoji']."\" }'\">$value[emoji] $value[codigo]</option>\n";
+              }
+            echo "</select>";
+            echo "<button id=\"select-reacao-button\"  class=\"confirm-type\" type=\"button\" onclick=\"addReacoes()\">Confirmar</button>";
+            echo "<div class=\"comment-container-top\" id=\"divReacoes\"></div>";
+          echo "</div>";
+          echo "<div class=\"post-divCompart\">";
+            echo "<select id=\"select-compartilhar\" onclick=\"unsetError(this)\">";
+              echo "<option id='optionCompartilhar' value=''>Selecione onde vai compartilhar</option>\n";
+              echo "<option id='optionCompartilhar' value='feed'>No feed</option>\n";
+              echo "<option id='optionCompartilhar' value='grupo'>Em um grupo</option>\n";
+              echo "<option id='optionCompartilhar' value='perfil'>Em um perfil</option>\n";
+            echo "</select>";
+            echo "<button id=\"select-reacao-button\"  class=\"confirm-type\" type=\"button\" onclick=\"addReacoes()\">Confirmar</button>";
+            echo "<div class=\"comment-container-top\" id=\"divReacoes\"></div>";
+          echo "</div>";
+        echo "</form>";
       echo "</div>";
-      echo "<form name=\"newPost\" action=\"porto.php?porto=$_GET[porto]\" method=\"post\" >";
-        echo "<textarea name=\"texto\" class=\"insert-interacao-input\" id=\"insert-interacao-input\" type=\"text\" placeholder=\"Escreva um post ...\" ></textarea>";
-        echo "<div class=\"insert-interacao-smallBtns\">";
-          echo "<div class=\"insert-interacao-smallBtns-a\" onclick=\"newPostSelect('local')\"><img class=\"insert-interacao-smallBtns-icon\" src=\"imgs/icons/maps-and-flags.png\" alt=\"\" srcset=\"\">Adicionar um Local</div>";
-          echo "<div class=\"insert-interacao-smallBtns-a\" onclick=\"newPostSelect('pessoas')\"><img class=\"insert-interacao-smallBtns-icon\" src=\"imgs/icons/multiple-users-silhouette.png\" alt=\"\" srcset=\"\">Citar Pessoas</div>";
-          echo "<div class=\"insert-interacao-smallBtns-a\" onclick=\"newPostSelect('assuntos')\"><img class=\"insert-interacao-smallBtns-icon\" src=\"imgs/icons/price-tag.png\" alt=\"\" srcset=\"\">Assunto</div>";
-        echo "</div>";
-        echo "<input class=\"insert-interacao-submit\" type=\"submit\" name=\"novoPost\" />";
-        echo "<hr id=\"post-hr\" class=\"post-hr\" >";
-        echo "<div class=\"post-divLocal\">";
-          echo "<select id=\"select-local\" onclick=\"unsetError(this)\">";
-            foreach ($locaisArray as $value) {
-              echo "<option id='optionLocal".$value['codCidade']."' value='{ \"id\": \"".$value['codCidade']."\", \"name\": \"".$value['nomeCidade']."\" }'\">".$value['nomeCidade']."</option>\n";
-            }
-            echo "<option value=\"0\">Outro</option>";
-          echo "</select>";
-          echo "<input id=\"value-localId\" name=\"select-local-value\" class=hidden>";
-          echo "<button id=\"select-local-button\"  class=\"confirm-type\" type=\"button\" onclick=\"addLocal()\">Confirmar</button>";
-          echo "<table id=\"tableLocal\" border=\"1\" name=\"tableLocal\"></table>";
-        echo "</div>";
-        echo "<div class=\"post-divPessoas\">";
-          echo "<select id=\"select-pessoas\" onclick=\"unsetError(this)\">";
-            foreach ($pessoasArray as $value) {
-              echo "<option id='optionPessoa".$value['codigo']."' value='{ \"id\": \"".$value['codigo']."\", \"name\": \"".$value['username']."\" }'\">".$value['username']."</option>\n";
-            }
-          echo "</select>";
-          echo "<button id=\"select-pessoa-button\"  class=\"confirm-type\" type=\"button\" onclick=\"addPessoas()\">Confirmar</button>";
-          echo "<table id=\"tablePessoas\" border=\"1\" name=\"tablePessoas\"></table>";
-        echo "</div>";
-        echo "<div class=\"post-divAssuntos\">";
-          echo "<select id=\"select-assuntos\" onclick=\"unsetError(this)\">";
-            foreach ($assuntosArray as $value) {
-              echo "<option id='optionAssunto".$value['codigo']."' value='{ \"id\": \"".$value['codigo']."\", \"name\": \"".$value['nome']."\" }'\">".$value['nome']."</option>\n";
-            }
-            echo "<option value=\"0\">Outro</option>";
-          echo "</select>";
-          echo "<button id=\"select-assunto-button\"  class=\"confirm-type\" type=\"button\" onclick=\"addAssuntos()\">Confirmar</button>";
-          echo "<table id=\"tableAssuntos\" border=\"1\" name=\"tableAssuntos\"></table>";
-        echo "</div>";
-      echo "</form>";
-    echo "</div>";
 
-    
+  }
     // posts
     if($postsArray){
       echo "<div class=\"order-btn\">";
@@ -478,75 +570,5 @@
 ?>
 
 <script src="functions.js"></script>
-<script>
-var tmpLocal = 0;
-function addLocal(){
-    var local = document.getElementById('select-local').value;
-    local = JSON.parse(local);
-    var table = document.getElementById('tableLocal');
-    var option = document.getElementById('optionLocal'+local.id);
-    option.remove();
-    tmpLocal = local.id;
-    table.innerHTML += `<tr id="row${local.id}"><td>${local.name}<input type="hidden" value="${local.id}" name="local" /></td><td><button onclick="removeLocal('${local.id}', '${local.name}')">❌</button></td></tr>`;
-    document.getElementById('select-local').disabled = true;
-    document.getElementById('select-local-button').disabled = true;
-}
-function removeLocal(id, name){
-    var table = document.getElementById('tableLocal');
-    var row = document.getElementById('row'+id);
-    var select = document.getElementById('select-local');
-    select.innerHTML += `<option id='optionLocal${id}' value='{ "id": "${id}", "name": "${name}" }'>${name}</option>\n`;
-    row.remove();
-    tmpLocal = 0;
-    document.getElementById('select-local').disabled = false;
-    document.getElementById('select-local-button').disabled = false;
-}
-
-var pessoas = [];
-function addPessoas(){
-    var pessoa = document.getElementById('select-pessoas').value;
-    pessoa = JSON.parse(pessoa);
-    var table = document.getElementById('tablePessoas');
-    var option = document.getElementById('optionPessoa'+pessoa.id);
-    option.remove();
-    pessoas.push(pessoa.id);
-    table.innerHTML += `<tr id="row${pessoa.id}"><td>${pessoa.name}<input type="hidden" value="${pessoa.id}" name="pessoa${pessoa.id}" /></td><td><button onclick="removePessoas('${pessoa.id}', '${pessoa.name}')">❌</button></td></tr>`;
-}
-function removePessoas(id, name){
-    var table = document.getElementById('tablePessoas');
-    var row = document.getElementById('row'+id);
-    var select = document.getElementById('select-pessoas');
-    select.innerHTML += `<option id='optionPessoa${id}' value='{ "id": "${id}", "name": "${name}" }'>${name}</option>\n`;
-    row.remove();
-    for(var i = 0; i < pessoas.length; i++){ 
-        if ( pessoas[i] == id) {
-            pessoas.splice(i, 1); 
-        }    
-    }
-}
-
-var assuntos = [];
-function addAssuntos(){
-    var assunto = document.getElementById('select-assuntos').value;
-    assunto = JSON.parse(assunto);
-    var table = document.getElementById('tableAssuntos');
-    var option = document.getElementById('optionAssunto'+assunto.id);
-    option.remove();
-    assuntos.push(assunto.id);
-    table.innerHTML += `<tr id="row${assunto.id}"><td>${assunto.name}<input type="hidden" value="${assunto.id}" name="assunto${assunto.id}" /></td><td><button onclick="removeAssuntos('${assunto.id}', '${assunto.name}')">❌</button></td></tr>`;
-}
-function removeAssuntos(id, name){
-    var table = document.getElementById('tableAssuntos');
-    var row = document.getElementById('row'+id);
-    var select = document.getElementById('select-assuntos');
-    select.innerHTML += `<option id='optionAssunto${id}' value='{ "id": "${id}", "name": "${name}" }'>${name}</option>\n`;
-    row.remove();
-    for(var i = 0; i < assuntos.length; i++){ 
-        if ( assuntos[i] == id) {
-            assuntos.splice(i, 1); 
-        }    
-    }
-}
-</script>
 </body>
 </html>

@@ -14,9 +14,28 @@
   include './backend/infra/connection.php';
   session_start();
   if(isset($_SESSION['userid'])){
+    function url($campo, $valor) {
+      $result = array();
+      // if (isset($_GET["sabor"])) $result["sabor"] = "sabor=".$_GET["sabor"];
+      // if (isset($_GET["tipo"])) $result["tipo"] = "tipo=".$_GET["tipo"];
+      // if (isset($_GET["ingrediente"])) $result["ingrediente"] = "ingrediente=".$_GET["ingrediente"];
+      if (isset($_GET["orderby"])) $result["orderby"] = "orderby=".$_GET["orderby"];
+      if (isset($_GET["offset"])) $result["offset"] = "offset=".$_GET["offset"];
+      $result[$campo] = $campo."=".$valor;
+      return("feed.php?user=$_SESSION[userid]&&".strtr(implode("&", $result), " ", "+"));
+  }
+  function pages($campo, $valor){
+      $result = array();
+      if (isset($_GET["page"])) $result["page"] = "page=".$_GET["page"];
+      $result[$campo] = $campo."=".$valor;
+      return '&'.(strtr(implode("&",$result), " ", "+"));
+  }
     $user = getUserInfo("$_SESSION[userid]");
-    $limit = 10;
+    // $offset = (isset($_GET["offset"])) ? max(0, min($_GET["offset"], $total-1)) : 0;
+    // $offset = $offset-($offset%$limit);
+    $limit = 5;
     $offset = isset($_GET['offset']) ? $_GET['offset'] : 0;
+    $orderby = (isset($_GET["orderby"])) ? $_GET["orderby"] : "tmp1.data desc";
     $feedArray = getFeed($offset,$limit);
     $locaisArray = getLocais();
     $assuntosArray = getAssuntos();
@@ -26,9 +45,11 @@
     $estados=getStates();
     $cidades=getCities();
     $suggestFriends = suggestFriends($_SESSION['userid'], 4, 0);
-    $postsArray = getPosts($_SESSION['userid'], 0, 30);
-    $portosArray = getAllPorto($_SESSION['userid'], true, 0, 3);
-    $portosArrayForShare = getAllPorto($_SESSION['userid'], true, 0, 0);
+    $postsArray = getPosts($_SESSION['userid'], $offset, $limit, $orderby);
+    $getAllPosts = getAllPosts($_SESSION['userid']);
+    echo $offset;
+    $portosArray = getAllPorto($_SESSION['userid'], true, 0, 3, null);
+    $portosArrayForShare = getAllPorto($_SESSION['userid'], true, 0, 0,null);
     $errorMessage = [];
     // var_dump($_POST);
     if(isset($_POST['buttonAssunto'])){
@@ -218,7 +239,7 @@
               $c++;
             }
           } else {
-            echo "Sem assuntos na cidade...";
+            echo "<p align=center>Sem assuntos na cidade...</p>";
           }
         echo "</div>";
       echo "</div>";
@@ -373,17 +394,17 @@
     
     // posts
     if($postsArray){
+      echo "<form action=\"feed.php?user=$_SESSION[userid]\" id=\"formOrderby\" method=\"get\">";
       echo "<div class=\"order-btn\">";
-      echo "<select id=\"select-ordenar\" name=\"select-ordenar\">";
-        echo "<option value=\"data\">Data</option>";
-        echo "<option value=\"qtd\">Qtd interacoes</option>";
+      echo "<p>Ordene por </p>";
+      echo "<select onchange=\"document.getElementById('formOrderby').submit();\" id=\"select-ordenar\" name=\"orderby\">";
+      echo "<option value=\"tmp1.data desc\" ".($_GET['orderby'] == "tmp1.data desc" ? "selected" : "").">Data descrecente</option>";
+        echo "<option value=\"tmp1.data asc\" ".($_GET['orderby'] == "tmp1.data asc" ? "selected" : "").">Data crescente</option>";
+        echo "<option value=\"tmpQtd.qtd desc\" ".($_GET['orderby'] == "tmpQtd.qtd desc" ? "selected" : "").">Popularidade descrescente</option>";
+        echo "<option value=\"tmpQtd.qtd asc\" ".($_GET['orderby'] == "tmpQtd.qtd asc" ? "selected" : "").">Popularidade crescente</option>";
       echo "</select>";
-      echo "<select id=\"select-ordenar-2\" name=\"select-ordenar-2\">";
-        echo "<option value=\"cres\">Cres</option>";
-        echo "<option value=\"decre\">Decre</option>";
-      echo "</select>";
-      echo "<button class=\"insert-interacao-submit\" name=\"ordenarBtn\">Ordenar<button/>";
       echo "</div>";
+      echo "</form>";
       foreach ($postsArray as $post) {
         // print_r($post);
         echo "<div class=\"div-post\">";
@@ -781,6 +802,27 @@
           }
         echo "</div>";
       }
+      echo "<footer style=\"padding-top:20px; padding-bottom:20px\" align=center>";
+      $links = 4;
+      $page = isset($_GET["page"]) ? strtr($_GET["page"], " ", "%") : 0;
+      echo "<div style=\"row\">";
+      echo "<a class=\"paginacaoNumber\" href=\"".url("offset",0*$limit).pages("page", 1)."\">primeira </a>";
+      for($pag_inf = $page - $links ;$pag_inf <= $page - 1;$pag_inf++){
+          if($pag_inf >= 1 ){
+              echo "<a class=\"paginacaoNumber\" href=\"".url("offset",($pag_inf-1)*$limit).pages("page", $pag_inf)."\"> ".($pag_inf)." </a>";
+          }
+      };
+      if($page != 0 ){
+          echo "<a class=\"paginacaoNumber\" style=color:yellow;>$page</a>";
+      };
+      for($pag_sub = $page+1;$pag_sub <= $page + $links;$pag_sub++){
+          if($pag_sub <= ceil(count($getAllPosts)/$limit)){
+              echo "<a class=\"paginacaoNumber\" href=\"".url("offset",($pag_sub-1)*$limit).pages("page", $pag_sub)."\"> ".($pag_sub)." </a>";
+          }
+      }
+      echo "<a class=\"paginacaoNumber\" href=\"".url("offset",ceil(count($getAllPosts)/$limit)*$limit/$limit).pages("page", ceil(count($getAllPosts)/$limit))."\"> ultima</a>";
+      echo "</div>";
+      echo "</footer>";
     }
     echo "</main>";    
   }
@@ -791,16 +833,7 @@
   }
   ?>
   </div>
-  <footer>
-          <<  
-          <?php
-            //provisório
-            for ($page = 0; $page < ceil((count($portosArray))/$limit); $page++) {
-              echo (($offset == $page*$limit) ? ($page+1) : "<a class=page-link href=\"".url("offset", $page*$limit)."\">".($page+1)."</a>")." \n";
-            }
-          ?>
-          >>
-</footer>  
+
 <script src="functions.js">
 </script>
 </body>

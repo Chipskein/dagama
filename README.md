@@ -21,9 +21,10 @@ Telas
         - 1) CRUD de localidades
             Falta excluir localidades, e validar, paginação
         - 2) CRUD de usuários
-            Falta excluir usuários e validar, paginação
+            Falta validar, paginação
         - 10) Mostrar quantos usuários receberam mais de C curtidas em uma postagem, em menos de H horas após a postagem,
         no país P nos últimos D dias
+            Falta validar só
         - 11) Mostrar qual faixa etária mais interagiu às postagens do grupo G nos últimos D dias
         - 12) Mostrar quais os top T assuntos mais interagidos por mês no país P nos últimos M meses
         - 13) Mostrar qual assunto permaneceu por mais meses consecutivos entre os top T mais interagidos por mês no país P 

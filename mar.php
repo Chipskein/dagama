@@ -14,18 +14,26 @@
   function url($campo, $valor) {
     $result = array();
     if (isset($_GET["offset"])) $result["offset"] = "offset=".$_GET["offset"];
+    if (isset($_GET["orderby"])) $result["orderby"] = "orderby=".$_GET["orderby"];
     $result[$campo] = $campo."=".$valor;
     return("mar.php?".strtr(implode("&", $result), " ", "+"));
   }
+function pages($campo, $valor){
+    $result = array();
+    if (isset($_GET["page"])) $result["page"] = "page=".$_GET["page"];
+    $result[$campo] = $campo."=".$valor;
+    return '&'.(strtr(implode("&",$result), " ", "+"));
+}
   include './backend/infra/connection.php';
   if(!isset($_SESSION)) { 
     session_start(); 
   }
   if(isset($_SESSION['userid'])){
-    $limit=10;//mudar pra 10 dps
+    $limit=2;//mudar pra 10 dps
     $offset= isset($_GET['offset']) ? $_GET['offset']:0;
     //falta o pesquisar e ordenar
-    $portos=getAllPorto($_SESSION['userid'], false, $offset, $limit);
+    $orderby = (isset($_GET["orderby"])) ? $_GET["orderby"] : "data desc";
+    $portos=getAllPorto($_SESSION['userid'], false, $offset, $limit, $orderby);
     $total=getTotalPorto();
     
     if(isset($_POST['entrarPorto'])){
@@ -70,8 +78,18 @@
     <br>
     <div align=center>
     <h1>Mar de portos</h1>
-    <div id='teste'></div>
     <?php
+            echo "<form action=\"navio.php?user=$_SESSION[userid]\" id=\"formOrderby\" method=\"get\">";
+            echo "<div class=\"order-btn\">";
+            echo "<p>Ordene por </p>";
+            echo "<select onchange=\"document.getElementById('formOrderby').submit();\" id=\"select-ordenar\" name=\"orderby\">";
+            echo "<option value=\"data desc\" ".($_GET['orderby'] == "data desc" ? "selected" : "").">Data descrecente</option>";
+              echo "<option value=\"data asc\" ".($_GET['orderby'] == "data asc" ? "selected" : "").">Data crescente</option>";
+              echo "<option value=\"tmpQtd.qtd desc\" ".($_GET['orderby'] == "tmpQtd.qtd desc" ? "selected" : "").">Nome descrescente</option>";
+              echo "<option value=\"tmpQtd.qtd asc\" ".($_GET['orderby'] == "tmpQtd.qtd asc" ? "selected" : "").">Nome crescente</option>";
+            echo "</select>";
+            echo "</div>";
+            echo "</form>";
       echo "<div class=\"mar-top-row\">";
         echo "<div class=\"order-btn\">";
         echo "<button class=\"btn-create-porto\"><a href=\"createPorto.php\">Criar um porto</a></button>";
@@ -97,20 +115,29 @@
       <p></p>
     </div>
   </main>
-  <footer>
-    <div align=center>
-        <h3>
-          <<  
           <?php
-            //provisório
-            for ($page = 0; $page < ceil($total/$limit); $page++) {
-              echo (($offset == $page*$limit) ? ($page+1) : "<a class=page-link href=\"".url("offset", $page*$limit)."\">".($page+1)."</a>")." \n";
-            }
+      echo "<footer style=\"padding-top:20px; padding-bottom:20px\" align=center>";
+      $links = 4;
+      $page = isset($_GET["page"]) ? strtr($_GET["page"], " ", "%") : 0;
+      echo "<div class=\"row\">";
+      echo "<a class=\"paginacaoNumber\" href=\"".url("offset",0*$limit).pages("page", 1)."\">primeira </a>";
+      for($pag_inf = $page - $links ;$pag_inf <= $page - 1;$pag_inf++){
+          if($pag_inf >= 1 ){
+              echo "<a class=\"paginacaoNumber\" href=\"".url("offset",($pag_inf-1)*$limit).pages("page", $pag_inf)."\"> ".($pag_inf)." </a>";
+          }
+      };
+      if($page != 0 ){
+          echo "<a class=\"paginacaoNumber\" style=color:yellow;>$page</a>";
+      };
+      for($pag_sub = $page+1;$pag_sub <= $page + $links;$pag_sub++){
+          if($pag_sub <= ceil($total/$limit)){
+              echo "<a class=\"paginacaoNumber\" href=\"".url("offset",($pag_sub-1)*$limit).pages("page", $pag_sub)."\"> ".($pag_sub)." </a>";
+          }
+      }
+      echo "<a class=\"paginacaoNumber\" href=\"".url("offset",ceil($total/$limit)*$limit/$limit).pages("page", ceil($total/$limit))."\"> ultima</a>";
+      echo "</div>";
+      echo "</footer>";
           ?>
-          >>
-       </h3>  
-    </div>
-  </footer>
   <script src="./teste.js" type="module">
     </script>
 </body>
