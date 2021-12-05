@@ -1054,7 +1054,8 @@
                         porto.nome as nomePorto,
                         perfil.codigo as codPerfil, 
                         perfil.username as nomePerfil,
-                        perfil.img as iconPerfil
+                        perfil.img as iconPerfil,
+                        interacao.postPai as postPai
                     from interacao
                         join perfil on interacao.perfil = perfil.codigo
                         left join porto on interacao.porto = porto.codigo
