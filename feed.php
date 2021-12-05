@@ -32,7 +32,7 @@
     $portosArray = getAllPorto($_SESSION['userid'], true, 0, 3);
     // $portosArrayForShare = getAllPorto($_SESSION['userid'], true, 0, 0);
     $errorMessage = [];
-    // var_dump($_POST);
+    var_dump($_POST);
     if(isset($_POST['buttonAssunto'])){
       $addAssunto = addAssunto("$_POST[buttonAssunto]");
       header("refresh:0;url=feed.php?user=$_SESSION[userid]"); 
