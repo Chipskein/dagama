@@ -105,9 +105,13 @@
                     while ($row = $response->fetchArray()) {
                         array_push($results, $row);
                     }
+                    $db->close();
                     return $results; 
                 }
-                else return false;
+                else {
+                    $db->close();
+                    return false;
+                }
             }
         }
         else exit;
@@ -120,8 +124,15 @@
             $results=[];
             if($db_type == 'sqlite'){
                 $response = $db->query("select count(*)as total from perfil");
-                if($response) return $response->fetchArray()['total'];
-                else return false;
+                if($response) {
+                    $response = $response->fetchArray()['total'];
+                    $db->close();
+                    return $response;
+                }
+                else {
+                    $db->close();
+                    return false;
+                }
             }
         }
         else exit;
@@ -140,6 +151,7 @@
                 while ($row = $result->fetchArray()) {
                     array_push($results,$row);
                 }
+                $db->close();
                 return $results;
             }
         }
@@ -151,8 +163,14 @@
         $db_type=$db_connection['db_type'];
         if($db_type == 'sqlite'){
             $response = $db->exec("insert into pais (nome) values ('$nome')");
-            if($response) return $db->lastInsertRowID();
-            else return false;
+            if($response) {
+                $res = $db->lastInsertRowID();
+                $db->close();
+                return $res;
+            } else {
+                $db->close();
+                return false;
+            }
         }
         else exit;
     }
@@ -162,8 +180,14 @@
         $db_type=$db_connection['db_type'];
         if($db_type == 'sqlite'){
             $response = $db->exec("update pais set ativo = 0 where codigo = $pais");
-            if($response) return $response;
-            else return false;
+            if($response) {
+                $db->close();
+                return $response;
+            }
+            else {
+                $db->close();
+                return false;
+            }
         }
         else exit;
     }
@@ -178,6 +202,7 @@
                 while ($row = $result->fetchArray()) {
                     array_push($results,$row);
                 }
+                $db->close();
                 return $results;
             }
         }
@@ -189,8 +214,15 @@
         $db_type=$db_connection['db_type'];
         if($db_type == 'sqlite'){
             $response = $db->exec("insert into uf (nome, pais) values ('$nome', $pais)");
-            if($response) return $db->lastInsertRowID();
-            else return false;
+            if($response) {
+                $res = $db->lastInsertRowID();
+                $db->close();
+                return $res;
+            }
+            else {
+                $db->close();
+                return false;
+            }
         }
         else exit;
     }
@@ -200,8 +232,13 @@
         $db_type=$db_connection['db_type'];
         if($db_type == 'sqlite'){
             $response = $db->exec("update uf set ativo = 0 where codigo = $estado");
-            if($response) return $response;
-            else return false;
+            if($response) {
+                $db->close();
+                return $response;
+            } else {
+                $db->close();
+                return false;
+            }
         }
         else exit;
     }
@@ -216,6 +253,7 @@
                 while ($row = $result->fetchArray()) {
                     array_push($results,$row);
                 }
+                $db->close();
                 return $results;
             }
         }
@@ -227,8 +265,14 @@
         $db_type=$db_connection['db_type'];
         if($db_type == 'sqlite'){
             $response = $db->exec("insert into cidade (nome, uf) values ('$nome', $estado)");
-            if($response) return $db->lastInsertRowID();
-            else return false;
+            if($response) {
+                $res = $db->lastInsertRowID();
+                $db->close();
+                return $res;
+            } else {
+                $db->close();
+                return false;
+            }
         }
         else exit;
     }
@@ -238,8 +282,13 @@
         $db_type=$db_connection['db_type'];
         if($db_type == 'sqlite'){
             $response = $db->exec("update cidade set ativo = 0 where codigo = $cidade");
-            if($response) return $response;
-            else return false;
+            if($response) {
+                $db->close();
+                return $response;
+            } else {
+                $db->close();
+                return false;
+            }
         }
         else exit;
     }
@@ -258,9 +307,13 @@
                     while ($row = $response->fetchArray()) {
                         array_push($results, $row);
                     }
+                    $db->close();
                     return $results; 
                 }
-                else return false;
+                else {
+                    $db->close();
+                    return false;
+                }
             }
         }
         else exit;
@@ -274,8 +327,14 @@
         $db_type=$db_connection['db_type'];
         if($db_type == 'sqlite'){
             $response = $db->exec("insert into assunto (nome) values ('$nome')");
-            if($response) return $db->lastInsertRowID();
-            else return false;
+            if($response) {
+                $res = $db->lastInsertRowID();
+                $db->close();
+                return $res;
+            } else {
+                $db->close();
+                return false;
+            }
         }
         else exit;
     }
@@ -285,8 +344,13 @@
         $db_type=$db_connection['db_type'];
         if($db_type == 'sqlite'){
             $response = $db->exec("update assunto set ativo = 0 where codigo = $assunto");
-            if($response) return $response;
-            else return false;
+            if($response) {
+                $db->close();
+                return $response;
+            } else {
+                $db->close();
+                return false;
+            }
         }
         else exit;
     }
@@ -300,8 +364,14 @@
         if($db){
             if($db_type=='sqlite'){
                 $verify=$db->query("select codigo,senha as pass,ativo,img,username from perfil where perfil.email='$email'")->fetchArray();
-                if(password_verify($password,$verify['pass'])) return $verify;
-                else return false;
+                if(password_verify($password,$verify['pass'])) {
+                    $db->close();
+                    return $verify;
+                }
+                else {
+                    $db->close();
+                    return false;
+                }
             }
         }
         else exit;
@@ -313,8 +383,13 @@
         if($db){
             if($db_type=='sqlite'){
                 $verify=$db->query("select codigo,senha as pass,ativo,img,username from perfil where perfil.email='$email'")->fetchArray();
-                if("$password"=="$verify[pass]") return $verify;
-                else return false;
+                if("$password"=="$verify[pass]") {
+                    $db->close();
+                    return $verify;
+                } else {
+                    $db->close();
+                    return false;
+                }
             }
         }
         else exit;
@@ -333,8 +408,13 @@
         if($db){
             if($db_type == 'sqlite'){
                 $verify = $db->exec("insert into perfil (cidade, email, senha, genero, username, datanasc,img) values ('".$cidade."', '".$email."', '".$password."', '".$genero."', '".$username."', '".$bdate."', '".$link."'".")");
-                if($verify) return $verify;
-                else return false;
+                if($verify) {
+                    $db->close();
+                    return $verify;
+                } else {
+                    $db->close();
+                    return false;
+                }
             }
         }
         else exit;  
@@ -346,8 +426,13 @@
         if($db){
             if($db_type == 'sqlite'){
                 $response = $db->query("select email from perfil")->fetchArray();
-                if($response) return $response;
-                else return false;
+                if($response) {
+                    $db->close();
+                    return $response;
+                } else {
+                    $db->close();
+                    return false;
+                }
             }
         }
         else exit;
@@ -359,8 +444,14 @@
         if($db){
             if($db_type == 'sqlite'){
                 $response = $db->query("select email from perfil where email='$email'");
-                if($response) return $response->fetchArray();
-                else return false;
+                if($response) {
+                    $response = $response->fetchArray();
+                    $db->close();
+                    return $response;
+                } else {
+                    $db->close();
+                    return false;
+                }
             }
         }
         else exit;
@@ -375,8 +466,14 @@
         if($db){
             if($db_type == 'sqlite'){
                 $response = $db->query("select codigo, email, ativo, img, username, cidade from perfil where codigo='$id'");
-                if($response) return $response->fetchArray();
-                else return false;
+                if($response) {
+                    $response = $response->fetchArray();
+                    $db->close();
+                    return $response;
+                } else {
+                    $db->close();
+                    return false;
+                }
             }
         }
         else exit;
@@ -388,8 +485,14 @@
         if($db){
             if($db_type == 'sqlite'){
                 $response = $db->query("select codigo from perfil where email='$email'");
-                if($response) return $response->fetchArray()['codigo'];
-                else return false;
+                if($response) {
+                    $response = $response->fetchArray()['codigo'];
+                    $db->close();
+                    return $response;
+                } else {
+                    $db->close();
+                    return false;
+                }
             }
         }
         else exit;
@@ -403,10 +506,18 @@
                 $response = $db->exec("update perfil set ativo='1' where codigo=$id");
                 if($response) {
                     $res=$db->query("select email,senha as password from perfil where codigo='$id'");
-                    if($res) return $res->fetchArray();
-                    else return false;
+                    if($res) {
+                        $res = $res->fetchArray();
+                        $db->close();
+                        return $res;
+                    } else {
+                        $db->close();
+                        return false;
+                    }
+                } else {
+                    $db->close();
+                    return false;
                 }
-                else return false;
             }
         }
         else exit;
@@ -418,6 +529,7 @@
         if($db){
             if($db_type == 'sqlite'){
                 $response = $db->exec("update perfil set ativo='0' where codigo=$user");
+                $db->close();
                 return true;
             }
         }
@@ -430,6 +542,7 @@
         if($db){
             if($db_type == 'sqlite'){
                 $response = $db->exec("update perfil set username='$name' where codigo=$id");
+                $db->close();
                 return true;
             }
         }
@@ -442,6 +555,7 @@
         if($db){
             if($db_type == 'sqlite'){
                 $response = $db->exec("update perfil set email='$email' where codigo=$id");
+                $db->close();
                 return true;
             }
         }
@@ -454,6 +568,7 @@
         if($db){
             if($db_type == 'sqlite'){
                 $response = $db->exec("update perfil set\\ senha='$senha' where codigo=$id");
+                $db->close();
                 return true;
             }
         }
@@ -473,13 +588,21 @@
                     $response = $db->exec("update perfil set img='$link' where codigo=$id");
                     if($response){
                         $response2=$db->query("select img from perfil where codigo=$id")->fetchArray()['img'];
-                        if($response2) return $response2;
-                        else return false;
+                        if($response2) {
+                            $db->close();
+                            return $response2;
+                        } else {
+                            $db->close();
+                            return false;
+                        }
+                    } else {
+                        $db->close();
+                        return false;
                     }
-                    else return false;
-                }
-                else return false;
-                
+                } else {
+                    $db->close();
+                    return false;
+                }                
             }
         }
         else exit;
@@ -783,6 +906,7 @@
                     }
                     $postsArray[$row['codInteracao']]['comentarios'] = $childInteracoes;
                 }
+                $db->close();
                 return $postsArray;
 
             }
@@ -1083,6 +1207,7 @@
                     }
                     $postsArray[$row['codInteracao']]['comentarios'] = $childInteracoes;
                 }
+                $db->close();
                 return $postsArray;
 
             }
@@ -1151,6 +1276,7 @@
                 $response['assuntos'] = $assuntos;
                 $response['citacoes'] = $citacoes;
                 
+                $db->close();
                 return $response;
             }
         }
@@ -1195,9 +1321,12 @@
                     while($row = $response->fetchArray()){
                         array_push($results,$row);
                     }
+                    $db->close();
                     return $results;
+                } else {
+                    $db->close();
+                    return false;
                 }
-                else return false;
             }
         }
         else exit;
@@ -1323,6 +1452,7 @@
                 while ($row = $result->fetchArray()) {
                     array_push($results, $row);
                 }
+                $db->close();
                 return $results;
             }
         }
@@ -1338,13 +1468,18 @@
             if($hasRequest){
                 if($hasRequest['ativo'] == 0) {
                     $friendRequest = $db->exec("update SOLICITACAO_AMIGO set ativo = 1 where (amigo = $user and perfil = $friend) or (perfil = $user and amigo = $friend)");    
-                    if($friendRequest) return $friendRequest;
-                    else return false;
+                    if($friendRequest) {$db->close();return $friendRequest;}
+                    else {$db->close();return false;}
                 }
             } else {
                 $friendRequest = $db->exec("insert into SOLICITACAO_AMIGO (perfil, amigo, dateEnvio) values ($user, $friend, CURRENT_TIMESTAMP)");
-                if($friendRequest) return $friendRequest;
-                else return false;
+                if($friendRequest) {
+                    $db->close();
+                    return $friendRequest;
+                } else {
+                    $db->close();
+                    return false;
+                }
             }
         }
         else exit;
@@ -1355,8 +1490,13 @@
         $db_type=$db_connection['db_type'];
         if($db_type == 'sqlite'){
             $friendRequest = $db->exec("update SOLICITACAO_AMIGO set ativo = 0 where perfil = $user and amigo = $friend");
-            if($friendRequest) return $friendRequest;
-            else return false;
+            if($friendRequest) {
+                $db->close();
+                return $friendRequest;
+            } else {
+                $db->close();
+                return false;
+            }
         }
         else exit;
     }
@@ -1367,8 +1507,13 @@
         if($db_type == 'sqlite'){
             $friendRequest = $db->exec("update SOLICITACAO_AMIGO set ativo = 0 where amigo = $user and perfil = $friend");
             $friendAdd = $db->exec("insert into amigo (amigo, perfil, dateAceito) values ($user, $friend, CURRENT_TIMESTAMP)");
-            if($friendAdd) return $friendAdd;
-            else return false;
+            if($friendAdd) {
+                $db->close();
+                return $friendAdd;
+            } else {
+                $db->close();
+                return false;
+            }
         }
         else exit;
     }
@@ -1378,8 +1523,13 @@
         $db_type=$db_connection['db_type'];
         if($db_type == 'sqlite'){
             $friendRequest = $db->exec("update SOLICITACAO_AMIGO set ativo = 0 where amigo = $user and perfil = $friend");
-            if($friendRequest) return $friendRequest;
-            else return false;
+            if($friendRequest) {
+                $db->close();
+                return $friendRequest;
+            } else {
+                $db->close();
+                return false;
+            }
         }
         else exit;
     }
@@ -1406,6 +1556,7 @@
                 while ($row = $result->fetchArray()) {
                     array_push($results, $row);
                 }
+                $db->close();
                 return $results;
             }
         }
@@ -1417,8 +1568,13 @@
         $db_type=$db_connection['db_type'];
         if($db_type == 'sqlite'){
             $delFriend = $db->exec("update amigo set ativo = 0 where (perfil = $user and amigo = $friend) or (amigo = $user and perfil = $friend)");
-            if($delFriend) return $delFriend;
-            else return false;
+            if($delFriend) {
+                $db->close();
+                return $delFriend;
+            } else {
+                $db->close();
+                return false;
+            }
         }
         else exit;
     }
@@ -1450,6 +1606,7 @@
                 while ($row = $result->fetchArray()) {
                     array_push($results, $row);
                 }
+                $db->close();
                 return $results;
             }
         }
@@ -1494,6 +1651,7 @@
                 while ($row = $result->fetchArray()) {
                     array_push($results,$row);
                 }
+                $db->close();
                 return $results;
             }
         }
@@ -1516,9 +1674,12 @@
                     while ($row = $result->fetchArray()) {
                         array_push($results, $row);
                     }
+                    $db->close();
                     return $results;
+                } else {
+                    $db->close();
+                    return false;
                 }
-                else return false;
             }
         }
         else exit;
@@ -1534,8 +1695,14 @@
                 where 
                     porto.ativo = 1 and
                     porto.perfil = $user");
-                if($result) return $result->fetchArray()['total'];
-                else return false;
+                if($result) {
+                    $result = $result->fetchArray()['total'];
+                    $db->close();
+                    return $result;
+                } else {
+                    $db->close();
+                    return false;
+                }
             }
         }
         else exit;
@@ -1548,9 +1715,13 @@
             if($db_type=='sqlite'){
                 $result=$db->query("select count(*) as total from porto where ativo=1");
                 if($result){
-                    return $result->fetchArray()['total'];
+                    $result = $result->fetchArray()['total'];
+                    $db->close();
+                    return $result;
+                } else {
+                    $db->close();
+                    return false;
                 }
-                return false;
             }
         }
         else exit;
@@ -1593,8 +1764,14 @@
                     porto.codigo = $porto
                 group by porto.codigo
                 order by porto_participa.dataregis desc");
-                if($response) return $response->fetchArray();
-                else return false;
+                if($response) {
+                    $response = $response->fetchArray();
+                    $db->close();
+                    return $response;
+                } else {
+                    $db->close();
+                    return false;
+                }
             }
         }
         else exit;
@@ -1614,8 +1791,13 @@
             if($db_type == 'sqlite'){
                 $verify = $db->exec("insert into porto (perfil,nome,descr,img) values ('".$perfil."', '".$nome."', '".$descr."', '".$link."'".")");
                 $portoId = $db->lastInsertRowID();
-                if($portoId) return $portoId;
-                else return false;
+                if($portoId) {
+                    $db->close();
+                    return $portoId;
+                } else {
+                    $db->close();
+                    return false;
+                }
             }
         }
         else exit; 
@@ -1634,8 +1816,13 @@
         if($db){
             if($db_type == 'sqlite'){
                 $response = $db->exec("update porto set ativo = 0 where codigo = $porto");
-                if($response) return $response;
-                else return false;
+                if($response) {
+                    $db->close();
+                    return $response;
+                } else {
+                    $db->close();
+                    return false;
+                }
             }
         }
         else exit; 
@@ -1653,12 +1840,22 @@
             $response = $response->fetchArray();
             if($response['participa'] == 'off') {
                 $response2 = $db->exec("update porto_participa set ativo = 1, dataregis = CURRENT_TIMESTAMP where perfil = $user and porto = $porto");
-                if($response2) return $response2;
-                else return $response2;
+                if($response2) {
+                    $db->close();
+                    return $response2;
+                } else {
+                    $db->close();
+                    return $response2;
+                }
             } else {
                 $response2 = $db->exec("insert into porto_participa (perfil, porto) values ($user, $porto)");
-                if($response2) return $response2;
-                else return $response2;
+                if($response2) {
+                    $db->close();
+                    return $response2;
+                } else {
+                    $db->close();
+                    return $response2;
+                }
             }
 
         }
@@ -1670,8 +1867,13 @@
         $db_type=$db_connection['db_type'];
         if($db_type == 'sqlite'){
             $response = $db->exec("update porto_participa set ativo = 0 where perfil = $user and porto = $porto");
-            if($response) return $response;
-            else return false;
+            if($response) {
+                $db->close();
+                return $response;
+            } else {
+                $db->close();
+                return false;
+            }
         }
         else exit;
     }
@@ -1698,8 +1900,13 @@
         if($db){
             if($db_type == 'sqlite'){
                 $verify = $db->exec("update porto set nome='$newname',descr='$newdescr' ".($link ? ",img='$link'" : " ")." where codigo=$porto and ativo=1");
-                if($verify) return $verify;
-                else return false;
+                if($verify) {
+                    $db->close();
+                    return $verify;
+                } else {
+                    $db->close();
+                    return false;
+                }
             }
         }
         else exit; 
@@ -1794,6 +2001,7 @@
                     }
                     array_push($results, $row);
                 }
+                $db->close();
                 return $results;
             }
         }
@@ -1823,6 +2031,7 @@
                 while ($row = $result->fetchArray()) {
                     array_push($results, $row);
                 }
+                $db->close();
                 return $results;
             }
         }
@@ -1971,8 +2180,10 @@
                                 break;
                         }
                     }
+                } else {
+                    $db->close();
+                    return false;
                 }
-                else return false;
             }
         }
         else exit;
@@ -1997,8 +2208,14 @@
             ".($isReaction ? $isReaction : 'null').", 
             ".($emote ? "'".$emote."'" : 'null').", 
             ".($local ? $local : 'null').")");
-            if($response) return $db->lastInsertRowID();
-            else return false;
+            if($response){
+                $res = $db->lastInsertRowID();
+                $db->close();
+                return $res;
+            } else {
+                $db->close();
+                return false;
+            }
         }
         else exit;
     }
@@ -2011,9 +2228,12 @@
             if($response) {
                 $response2 = $db->exec("update citacao set ativo = 0 where interacao = $post");
                 $response3 = $db->exec("update interacao_assunto set ativo = 0 where interacao = $post");
+                $db->close();
                 return $response;
+            } else {
+                $db->close();
+                return false;
             }
-            else return false;
         }
         else exit;
     }
@@ -2029,8 +2249,13 @@
             "data = CURRENT_TIMESTAMP"];
             $txt = implode($txt, ', ');
             $response = $db->exec("update interacao set $txt where codigo = $interacao");
-            if($response) return true;
-            else return false;
+            if($response) {
+                $db->close();
+                return true;
+            } else {
+                $db->close();
+                return false;
+            }
         }
         else exit;
     }
@@ -2040,8 +2265,12 @@
         $db_type=$db_connection['db_type'];
         if($db_type == 'sqlite'){
             $response = $db->exec("insert into citacao (perfil, interacao) values ($user, $post)");
-            if($response) return $response;
-            else return false;
+            if($response) {
+                $db->close();
+                return $response;
+            } else {
+                $db->close();return false;
+            }
         }
         else exit;
     }
@@ -2051,8 +2280,13 @@
         $db_type=$db_connection['db_type'];
         if($db_type == 'sqlite'){
             $response = $db->exec("update citacao set ativo = 0 where interacao = $post and perfil = $pessoa");
-            if($response) return $response;
-            else return false;
+            if($response) {
+                $db->close();
+                return $response;
+            } else {
+                $db->close();
+                return false;
+            }
         }
         else exit;
     }
@@ -2062,8 +2296,13 @@
         $db_type=$db_connection['db_type'];
         if($db_type == 'sqlite'){
             $response = $db->exec("insert into interacao_assunto (interacao, assunto) values ($post, $assunto)");
-            if($response) return $response;
-            else return false;
+            if($response) {
+                $db->close();
+                return $response;
+            } else {
+                $db->close();
+                return false;
+            }
         }
         else exit;
     }
@@ -2073,8 +2312,13 @@
         $db_type=$db_connection['db_type'];
         if($db_type == 'sqlite'){
             $response = $db->exec("update interacao_assunto set ativo = 0 where interacao = $post and assunto = $assunto");
-            if($response) return $response;
-            else return false;
+            if($response) {
+                $db->close();
+                return $response;
+            } else {
+                $db->close();
+                return false;
+            }
         }
         else exit;
     }
@@ -2088,12 +2332,13 @@
         if($db_type == 'sqlite'){
             $interacaoMasc = $db->query("select count(interacao.perfil) as total, pais.nome as pais from interacao join perfil on interacao.perfil= perfil.codigo join cidade on perfil.cidade = cidade.codigo join uf on cidade.uf= uf.codigo join pais on uf.pais = pais.codigo where perfil.genero = \"M\" and pais.nome=\"$pais\" and date(interacao.data) between date('now','-$mes months') and date('now') and date(perfil.datanasc) between date('now','-$faixamax years') and date('now', '-$faixamin years')");
             $results=[];    
-                if($interacaoMasc){
-                    while ($row = $interacaoMasc->fetchArray()) {
-                        array_push($results, $row);
-                    }
-                    return $results; 
+            if($interacaoMasc){
+                while ($row = $interacaoMasc->fetchArray()) {
+                    array_push($results, $row);
                 }
+                $db->close();
+                return $results;
+            }
         }   
     }
     function numerosGraficoFem($faixamin, $faixamax, $pais, $mes){
@@ -2107,7 +2352,8 @@
                 while ($row = $interacaoFem->fetchArray()) {
                     array_push($results, $row);
                 }
-                return $results; 
+                $db->close();
+                return $results;
             }
         }   
     }
@@ -2149,9 +2395,13 @@
                 while ($row = $response->fetchArray()){
                     array_push($results,$row);
                 }
+                $db->close();
                 return($results);
             }
-            else return false;
+            else {
+                $db->close();
+                return false;
+            }
         } 
         else exit;
     }
@@ -2191,17 +2441,31 @@
                 group by posts.postagem
                 having count(*)>$likes
             )");
-            if($response) return $response->fetchArray()['qt'];
-            else return false;
+            if($response) {
+                $response = $response->fetchArray()['qt'];
+                $db->close();
+                return $response;
+            }
+            else {
+                $db->close();
+                return false;
+            }
         }
         if($db_type == 'postgresql'){
             $response = pg_prepare($db, "", "");
             if($response){
                 $response = pg_execute($db, "", array(""));
-                if($response) return $response;
-                else return false;
+                if($response) {
+                    $db->close();
+                    return $response;
+                } else {
+                    $db->close();
+                    return false;
+                }
+            } else {
+                $db->close();
+                return false;
             }
-            else return false;
         }
         else exit;
     };
@@ -2261,8 +2525,14 @@
                         limit 1
                     ) order by qtdReacoes desc"
             );
-            if($response) return $response->fetchArray();
-            else return false;
+            if($response) {
+                $response = $response->fetchArray();
+                $db->close();
+                return $response;
+            } else {
+                $db->close();
+                return false;
+            }
         };
     };
     //12)
@@ -2328,9 +2598,15 @@
                 while($row = $response->fetchArray()){
                     array_push($results,$row);
                 }
-                return $results;
+                {
+                    $db->close();
+                    return $results;
+                }
             }
-            else return false;
+            else {
+                $db->close();
+                return false;
+            }
         }
         else exit;
     }
@@ -2455,9 +2731,15 @@
                 while($row = $response->fetchArray()){
                     array_push($results,$row);
                 }
-                return $results;
+                {
+                    $db->close();
+                    return $results;
+                }
             }
-            else return false;
+            else {
+                $db->close();
+                return false;
+            }
         }
         else exit;
     }
@@ -2502,8 +2784,14 @@
             //desativa solicitaçoes de amizade desse usuario
             $exec7=$db->exec("update solicitacao_amigo set ativo=0 where solicitacao_amigo.perfil in (select codigo from perfil where ativo=0) or solicitacao_amigo.amigo in (select codigo from perfil where ativo=0)");
 
-            if($exec1&&$exec2&&$exec3&&$exec4&&$exec5&&$exec6&&$exec7) return true;
-            else return false;    
+            if($exec1&&$exec2&&$exec3&&$exec4&&$exec5&&$exec6&&$exec7) {
+                $db->close();
+                return true;
+            }
+            else {
+                $db->close();
+                return false;
+            }
         }
         else exit;
     }

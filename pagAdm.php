@@ -686,10 +686,55 @@
           echo "</form>";
     }
   echo "<div>";
-//16 Atribuir automaticamente um selo de fã, com validade determinada para a semana atual, para os usuários do grupo G conforme a tabela
+  // 16) Atribuir automaticamente um selo de fã, com validade determinada para a semana atual, para os usuários do grupo G conforme a tabela 
+  // Funcinoa no porto ao entrar
+  // 1) CRUD de Localidades
+  echo "<div align=center>";
+    echo "<h1> Desativar Países Cadastrados </h1>";
+    if(isset($_POST['desativar-pais'])){
+      if(preg_match("#^[1-9]{1}[0-9]*$#",$_POST["desativar-pais"])){
+        $pass = false;
+        foreach ($paises as $pais){
+          if($pais['codigo'] == $_POST["desativar-pais"]){
+            $pass=true;
+            break;
+          };
+        }
+        if($pass){
+          $pais=$_POST['desativar-pais'];
+          $limityear=$_POST['desativar-minano'];
+          $exec=deactivateAllDeadUsersByCountry($pais,$limityear);
+          if($exec){
+            echo "<h4>Usuarios do <p id=paisnome2></p> desativados com sucesso!</h4><br>";
+            echo "<script>";
+                  echo "paises.forEach(e=>{
+                    if(e.codigo==$pais) document.getElementById(\"paisnome2\").innerHTML=e.nome;
+                  });";
+            echo "</script>";
+          }
+          else echo "<h4>FALHOU!</h4><br>";
+        }
+        else echo "<h4>Pais invalido</h4>";
+      }
+      else echo "<h4>Dados invalidos</h4>";
+    }
+    else{
+      echo "<form id=form-desativar method=POST>";
+            echo "<select class=inputs name=desativar-pais>";
+              echo "<option selected >Selecione o pais</option>";
+              foreach($paises as $pais){
+                echo "<option value=$pais[codigo]>$pais[nome]</option>";
+              }
+            echo "</select><br>";
+            echo "Anos sem interações:<input class=inputHalf name=desativar-minano type=number min=1><br>";
+            echo "<input class=button type=button value='Enviar' onclick=verificar15()>";
+          echo "</form>";
+    }
+  echo "<div>";
   echo "<br><br>";
 ?>
 </main>
+
 <script>
 function verificar10(){
   let form=document.getElementById("form-paises-curtidas");
