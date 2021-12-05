@@ -16,30 +16,62 @@
   }
   if(isset($_SESSION['userid'])){
     $user = getUserInfo("$_SESSION[userid]");
+    echo $_GET['interacao'];
     $post = getOriginalPost($_GET['interacao']);
+    $postPai = $post['postPai'] ? $post['postPai'] : $_GET['interacao'];
     $locaisArray = getLocais();
     $assuntosArray = getAssuntos();
     $pessoasArray = getPessoas();
     $paises=getPaises();
     $estados=getStates();
     $cidades=getCities();
-    if(isset($_POST['novoPost'])){
+    $errorMessage = [];
+    if(isset($_POST['buttonAssunto'])){
+      $addAssunto = addAssunto("$_POST[buttonAssunto]");
+      header("refresh:0;url=feed.php?user=$_SESSION[userid]"); 
+    };
+    if(isset($_POST['novoPost2'])){
       $texto = ''.$_POST['texto'];
       $reacao = isset($_POST['reacao']) ? $_POST['reacao'] : 0;
       $isReaction = isset($_POST['reacao']) ? 1 : 0;
-      $local = isset($_POST['local']) ? $_POST['local'] : 0;
+      $local = isset($_POST['local']) ? $_POST['local'] : $user['cidade'];
       $assuntos = [];
       $citacoes = [];
-      // if(isset($_POST['addEstado'])){
-      //   $pais = $_POST['SelectedPais'];
-      //   $estado = "$_POST[addEstado]";
-      //  $addEstado = addEstado($estado, $pais);
-      // };
-      // if(isset($_POST['addCidade'])){
-      //   // $estado = lastInsertRowID();
-      //   $cidade = "$_POST[addCidade]";
-      //   $addCidade = addCidade($cidade, $estado);
-      // };
+      // Local
+      $local = $user['cidade'];
+      $codPais = $_POST['insert-codigo-pais'];
+      $novoPaisNome = $_POST['insert-nome-pais'];
+      $codEstado = $_POST['insert-codigo-estado'];
+      $novoEstadoNome = $_POST['insert-nome-estado'];
+      $codCidade = $_POST['insert-codigo-cidade'];
+      $novoCidadeNome = $_POST['insert-nome-cidade'];
+      if(isset($codPais) && isset($codEstado) && isset($codCidade)){
+        if($codPais != "" && $codEstado != "" && $codCidade != ""){
+          if($codPais == 0){
+            // cria novo pais, estado e cidade
+            $pais = addPais($novoPaisNome);
+            $estado = addEstado($novoEstadoNome, $pais);
+            $local = addCidade($novoCidadeNome, $estado);
+          }
+          if($codPais != 0 && preg_match('#^[0-9]{1,}$#', $codPais)){  
+            if($codEstado == 0){
+              // cria novo estado e cidade
+              $estado = addEstado($novoEstadoNome, $codPais);
+              $local = addCidade($novoCidadeNome, $estado);
+            }
+          if($codEstado != 0 && preg_match('#^[0-9]{1,}$#', $codEstado)){
+            if($codCidade == 0){
+                // cria nova cidade
+                $local = addCidade($novoCidadeNome, $codEstado);
+              }
+              if($codCidade != 0 && preg_match('#^[0-9]{1,}$#', $codCidade)){
+                $local = $codCidade;
+              }
+            }
+          }
+        }
+      }
+     
       $qtdAssuntos = count(getAssuntos());
       for($c = 1; $c <= $qtdAssuntos; $c++){
           if(isset($_POST["assunto$c"])){
@@ -52,7 +84,7 @@
               $citacoes[] = $_POST["pessoa$c"];
           }
       }
-      $response = addInteracao($_SESSION['userid'], $texto, 0, 0, 0, 0, 0, $isReaction, $reacao, $local);
+      $response = addInteracao($_SESSION['userid'],$texto,0,0,0,22,22,$isReaction,$reacao,$local);
       if($response) {
         if(count($assuntos) > 0){
           foreach ($assuntos as $value) {
@@ -64,16 +96,10 @@
             addCitacaoInteracao($value, $response);
           }
         }
-        // header("refresh:0;url=feed.php?user=$_SESSION[userid]"); 
+        header("refresh:0;url=interagirInteracao.php?user=$_SESSION[userid]"); 
       }
       else return false;
     }
-  }
-  else {
-    echo "<h2 align=center>Para ver este conteudo faça um cadastro no dagama!!!</h2>";
-    header("refresh:1;url=index.php");
-    die();
-  }
 ?>
     <header class="header-main">
     <img class="header-icon" src="imgs/icon.png" alt="">
@@ -92,7 +118,6 @@
   </header>
   <main class="container-center">
     <?php
-   if($post){
         echo "<div class=\"div-post\">";
           if($post['codPorto']){
             echo "<p class=\"compartilhado-txt\"><i>Postado no porto <a href=porto.php?porto=$post[codPorto] class=\"txt-linktoporto\">$post[nomePorto]</a></i></p>";
@@ -297,7 +322,8 @@
           echo "<br><br>";
           
           echo "</div>";
-          //Interar
+        
+          //Interagir
         echo "<br> <br>";
         echo "<div class=\"insert-interacao\">";
         echo "<div class=\"insert-interacao-user\">";
@@ -307,17 +333,23 @@
             echo "<p class=\"insert-interacao-user-assuntos\"></p>";
           echo "</div>";
         echo "</div>";
-        echo "<form name=\"newPost\" action=\"feed.php?user=$_SESSION[userid]\" method=\"post\" >";
+        echo "<form name=\"newPost\" action=\"interagirInteracao.php?interacao=$_GET[interacao]\" method=\"post\" >";
           echo "<textarea name=\"texto\" class=\"insert-interacao-input\" id=\"insert-interacao-input\" type=\"text\" placeholder=\"Escreva um post ...\" ></textarea>";
           echo "<div class=\"insert-interacao-smallBtns\">";
             echo "<div class=\"insert-interacao-smallBtns-a\" onclick=\"newPostSelect('local')\"><img class=\"insert-interacao-smallBtns-icon\" src=\"imgs/icons/maps-and-flags.png\" alt=\"\" srcset=\"\">Adicionar um Local</div>";
             echo "<div class=\"insert-interacao-smallBtns-a\" onclick=\"newPostSelect('pessoas')\"><img class=\"insert-interacao-smallBtns-icon\" src=\"imgs/icons/multiple-users-silhouette.png\" alt=\"\" srcset=\"\">Citar Pessoas</div>";
             echo "<div class=\"insert-interacao-smallBtns-a\" onclick=\"newPostSelect('assuntos')\"><img class=\"insert-interacao-smallBtns-icon\" src=\"imgs/icons/price-tag.png\" alt=\"\" srcset=\"\">Assunto</div>";
             echo "<div class=\"insert-interacao-smallBtns-a\" onclick=\"newPostSelect('reacoes')\"><img class=\"insert-interacao-smallBtns-icon\" src=\"imgs/icons/Like.png\" alt=\"\" srcset=\"\">Reação</div>";
+            echo "<div class=\"insert-interacao-smallBtns-a\" onclick=\"newPostSelect('compartilhar')\"><img class=\"insert-interacao-smallBtns-icon\" src=\"imgs/icons/send.png\" alt=\"\" srcset=\"\">Compartilhar</div>";
           echo "</div>";
-          echo "<input class=\"insert-interacao-submit\" type=\"submit\" name=\"novoPost\" />";
+          echo "<input class=\"insert-interacao-submit\" type=\"submit\" name=\"novoPost2\" />";
           echo "<hr id=\"post-hr\" class=\"post-hr\" >";
           echo "<div class=\"post-divLocal\">";
+  
+            echo "<input id=\"insert-codigo-pais\" name=\"insert-codigo-pais\" type=\"hidden\" value=\"\">";
+            echo "<input id=\"insert-codigo-estado\" name=\"insert-codigo-estado\" type=\"hidden\" value=\"\">";
+            echo "<input id=\"insert-codigo-cidade\" name=\"insert-codigo-cidade\" type=\"hidden\" value=\"\">";
+          
             echo "<select id=\"select-pais\" onchange=\"selectPais(this)\">";
               echo "<option value=\"selecionar-pais\">Selecionar Pais</option>";
               foreach ($paises as $value) {
@@ -344,14 +376,15 @@
                     echo "<option id='optionCidade$value2[codigo]' value='{ \"id\": \"".$value2['codigo']."\", \"name\": \"".$value2['nome']."\" }'>$value2[nome]</option>\n";
                   }
                 }
-                echo "<option value=\"0\">Outro</option>";
+                echo "<option value='{ \"id\": \"0\", \"name\": \"null\" }'>Outro</option>";
               echo "</select>";
             }
-            echo "<input id=\"insert-nome-pais\" name=\"insert-nome-pais\" class=hidden>";
-            echo "<input id=\"insert-nome-estado\" name=\"insert-nome-estado\" class=hidden>";
-            echo "<input id=\"insert-nome-cidade\" name=\"insert-nome-cidade\" class=hidden>";
+            echo "<input id=\"insert-nome-pais\" name=\"insert-nome-pais\" placeholder=\"Digite o nome do novo pais\" class=hidden>";
+            echo "<input id=\"insert-nome-estado\" name=\"insert-nome-estado\" placeholder=\"Digite o nome do novo estado\" class=hidden>";
+            echo "<input id=\"insert-nome-cidade\" name=\"insert-nome-cidade\" placeholder=\"Digite o nome da nova cidade \" class=hidden>";
             echo "<button id=\"select-local-button\"  class=\"confirm-type\" type=\"button\" onclick=\"addLocal()\">Confirmar</button>";
             echo "<div class=\"comment-container-top\" id=\"divCidade\"></div>";
+  
           echo "</div>";
           echo "<div class=\"post-divPessoas\">";
             echo "<select id=\"select-pessoas\" onclick=\"unsetError(this)\">";
@@ -382,7 +415,16 @@
             echo "<button id=\"select-reacao-button\"  class=\"confirm-type\" type=\"button\" onclick=\"addReacoes()\">Confirmar</button>";
             echo "<div class=\"comment-container-top\" id=\"divReacoes\"></div>";
           echo "</div>";
-          
+          echo "<div class=\"post-divCompart\">";
+            echo "<select id=\"select-compartilhar\" onclick=\"unsetError(this)\">";
+              echo "<option id='optionCompartilhar' value=''>Selecione onde vai compartilhar</option>\n";
+              echo "<option id='optionCompartilhar' value='feed'>No feed</option>\n";
+              echo "<option id='optionCompartilhar' value='grupo'>Em um grupo</option>\n";
+              echo "<option id='optionCompartilhar' value='perfil'>Em um perfil</option>\n";
+            echo "</select>";
+            echo "<button id=\"select-reacao-button\"  class=\"confirm-type\" type=\"button\" onclick=\"addReacoes()\">Confirmar</button>";
+            echo "<div class=\"comment-container-top\" id=\"divReacoes\"></div>";
+          echo "</div>";
         echo "</form>";
       echo "</div>";
     echo "</main>";    
