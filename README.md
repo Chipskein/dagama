@@ -89,4 +89,4 @@ Observações:
     l) O procedimento de atribuir selo de fã será executado automaticamente às 00:00:00 de cada domingo
 
 Bugs
-    
+    - O count comentarios ta considerando os cometarios não ativos

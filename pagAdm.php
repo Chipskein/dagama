@@ -14,15 +14,7 @@
 
 <?php
   include './backend/infra/connection.php';
-  var_dump($_POST);
-  $paises=getPaises();
-  $grupos=getGrupos();
-  echo "<h1> Gráfico Interações </h1>";
-  //$masc = numerosGraficoMasc(0, 18, 'Brasil', $mes);
-  $mascres = numerosGraficoMasc(0, 18, 'Brasil', 12);
-  $masc = $mascres[0]["total"]; 
-  $femres = numerosGraficoFem(0, 18, 'Brasil', 12);
-  $fem = $femres[0]["total"];
+ 
   //10) Mostrar quantos usuários receberam mais de C curtidas em uma postagem, em menos de H horas após a postagem, no país P nos últimos D dias
   echo "<h1> Mais curtidas por país </h1>";
   if(!isset($_POST["select-paises-curtidas"])&&!isset($_POST["dia"])&&!isset($_POST["hora"])&&!isset($_POST["curtidas"])){
@@ -114,8 +106,51 @@
     }
 //15 Desativar temporariamente as contas dos usuários do país P que não possuem qualquer interação há mais de A anos
 
+
+/*
+ function deactivateUser($user){
+        $db_connection = db_connection();
+        $db = $db_connection['db'];
+        $db_type = $db_connection['db_type'];
+        if($db){
+            if($db_type == 'sqlite'){
+                $response = $db->exec("update perfil set ativo='0' where codigo=$user");
+                return true;
+            }
+            if($db_type == 'postgresql'){
+                $response = pg_query($db,"update perfil set ativo=false where codigo=$user");
+                return pg_fetch_array($response);
+            } 
+        }
+        else exit;
+    }
+*/
 //16 Atribuir automaticamente um selo de fã, com validade determinada para a semana atual, para os usuários do grupo G conforme a tabela
-    //17 Mostrar o gráfico de colunas da quantidade de interaçõe
+   
+
+//17 Mostrar o gráfico de colunas da quantidade de interações
+
+var_dump($_POST);
+$paises=getPaises();
+$grupos=getGrupos();
+echo "<h1> Gráfico Interações </h1>";
+echo "<h2> -18 </h2>";
+$mascres = numerosGraficoMasc(0, 18, 'Brasil', $mes);
+$masc = $mascres[0]["total"]; 
+$femres = numerosGraficoFem(0, 18, 'Brasil', $mes);
+$fem = $femres[0]["total"];
+
+
+echo "<h2> -18 </h2>";
+$mascres2 = numerosGraficoMasc(0, 18, 'Brasil', $mes);
+$masc2 = $mascres2[0]["total"]; 
+$femres2 = numerosGraficoFem(0, 18, 'Brasil', $mes);
+$fem2 = $femres2[0]["total"];
+
+echo "<table>";
+echo "<tr><th>- </th> <th>18 </th> </tr>";
+
+echo "</table>";
 ?>
 </main>
 </body>
