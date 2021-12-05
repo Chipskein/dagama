@@ -17,29 +17,60 @@
   if(isset($_SESSION['userid'])){
     $user = getUserInfo("$_SESSION[userid]");
     $post = getOriginalPost($_GET['interacao']);
+    $postPai = $post['postPai'] ? $post['postPai'] : $_GET['interacao'];
+    echo $post['postPai'];
     $locaisArray = getLocais();
     $assuntosArray = getAssuntos();
     $pessoasArray = getPessoas();
     $paises=getPaises();
     $estados=getStates();
     $cidades=getCities();
+    $errorMessage = [];
+    if(isset($_POST['buttonAssunto'])){
+      $addAssunto = addAssunto("$_POST[buttonAssunto]");
+      header("refresh:0;url=feed.php?user=$_SESSION[userid]"); 
+    };
     if(isset($_POST['novoPost'])){
       $texto = ''.$_POST['texto'];
       $reacao = isset($_POST['reacao']) ? $_POST['reacao'] : 0;
       $isReaction = isset($_POST['reacao']) ? 1 : 0;
-      $local = isset($_POST['local']) ? $_POST['local'] : 0;
+      $local = isset($_POST['local']) ? $_POST['local'] : $user['cidade'];
       $assuntos = [];
       $citacoes = [];
-      // if(isset($_POST['addEstado'])){
-      //   $pais = $_POST['SelectedPais'];
-      //   $estado = "$_POST[addEstado]";
-      //  $addEstado = addEstado($estado, $pais);
-      // };
-      // if(isset($_POST['addCidade'])){
-      //   // $estado = lastInsertRowID();
-      //   $cidade = "$_POST[addCidade]";
-      //   $addCidade = addCidade($cidade, $estado);
-      // };
+      // Local
+      $local = $user['cidade'];
+      $codPais = $_POST['insert-codigo-pais'];
+      $novoPaisNome = $_POST['insert-nome-pais'];
+      $codEstado = $_POST['insert-codigo-estado'];
+      $novoEstadoNome = $_POST['insert-nome-estado'];
+      $codCidade = $_POST['insert-codigo-cidade'];
+      $novoCidadeNome = $_POST['insert-nome-cidade'];
+      if(isset($codPais) && isset($codEstado) && isset($codCidade)){
+        if($codPais != "" && $codEstado != "" && $codCidade != ""){
+          if($codPais == 0){
+            // cria novo pais, estado e cidade
+            $pais = addPais($novoPaisNome);
+            $estado = addEstado($novoEstadoNome, $pais);
+            $local = addCidade($novoCidadeNome, $estado);
+          }
+          if($codPais != 0 && preg_match('#^[0-9]{1,}$#', $codPais)){  
+            if($codEstado == 0){
+              // cria novo estado e cidade
+              $estado = addEstado($novoEstadoNome, $codPais);
+              $local = addCidade($novoCidadeNome, $estado);
+            }
+          if($codEstado != 0 && preg_match('#^[0-9]{1,}$#', $codEstado)){
+            if($codCidade == 0){
+                // cria nova cidade
+                $local = addCidade($novoCidadeNome, $codEstado);
+              }
+              if($codCidade != 0 && preg_match('#^[0-9]{1,}$#', $codCidade)){
+                $local = $codCidade;
+              }
+            }
+          }
+        }
+      }
       $qtdAssuntos = count(getAssuntos());
       for($c = 1; $c <= $qtdAssuntos; $c++){
           if(isset($_POST["assunto$c"])){
@@ -52,7 +83,7 @@
               $citacoes[] = $_POST["pessoa$c"];
           }
       }
-      $response = addInteracao($_SESSION['userid'], $texto, 0, 0, 0, 0, 0, $isReaction, $reacao, $local);
+      $response = addInteracao($_SESSION['userid'], $texto, 0, 0, 0,$_GET['interacao'],$postPai,$isReaction, $reacao, $local);
       if($response) {
         if(count($assuntos) > 0){
           foreach ($assuntos as $value) {
@@ -64,16 +95,10 @@
             addCitacaoInteracao($value, $response);
           }
         }
-        // header("refresh:0;url=feed.php?user=$_SESSION[userid]"); 
+        header("refresh:0;url=feed.php?user=$_SESSION[userid]"); 
       }
       else return false;
     }
-  }
-  else {
-    echo "<h2 align=center>Para ver este conteudo faça um cadastro no dagama!!!</h2>";
-    header("refresh:1;url=index.php");
-    die();
-  }
 ?>
     <header class="header-main">
     <img class="header-icon" src="imgs/icon.png" alt="">
@@ -100,7 +125,7 @@
             echo "<p class=\"insert-interacao-user-assuntos\"></p>";
           echo "</div>";
         echo "</div>";
-        echo "<form name=\"newPost\" action=\"feed.php?user=$_SESSION[userid]\" method=\"post\" >";
+        echo "<form name=\"newPost\" action=\"editarInteracao.php?interacao=$_GET[interacao]\" method=\"post\" >";
           echo "<textarea name=\"texto\" class=\"insert-interacao-input\" id=\"insert-interacao-input\" type=\"text\" placeholder=\"Escreva um post ...\" >$post[textoPost]</textarea>";
           echo "<div class=\"insert-interacao-smallBtns\">";
             echo "<div class=\"insert-interacao-smallBtns-a\" onclick=\"newPostSelect('local')\"><img class=\"insert-interacao-smallBtns-icon\" src=\"imgs/icons/maps-and-flags.png\" alt=\"\" srcset=\"\">Adicionar um Local</div>";
@@ -153,7 +178,11 @@
               }
             echo "</select>";
             echo "<button id=\"select-pessoa-button\"  class=\"confirm-type\" type=\"button\" onclick=\"addPessoas()\">Confirmar</button>";
-            echo "<div class=\"comment-container-top\" id=\"divPessoas\"></div>";
+            echo "<div class=\"comment-container-top\" id=\"divPessoas\">";
+            foreach ($post['citacoes'] as $isso){
+              echo "<p>".$isso['nomePerfil']."<button type=\"button\" onclick=\"removeAssuntos('$isso[codPerfil]', '$isso[nomePerfil]')\">❌</button></p>";
+           }
+           echo "</div>";
           echo "</div>";
           echo "<div class=\"post-divAssuntos\">";
             echo "<select id=\"select-assuntos\" onclick=\"unsetError(this)\">";
@@ -161,9 +190,13 @@
                 echo "<option id='optionAssunto".$value['codigo']."' value='{ \"id\": \"".$value['codigo']."\", \"name\": \"".$value['nome']."\" }'\">".$value['nome']."</option>\n";
               }
               echo "<option value=\"0\">Outro</option>";
-            echo "</select>";
-            echo "<button id=\"select-assunto-button\"  class=\"confirm-type\" type=\"button\" onclick=\"addAssuntos()\">Confirmar</button>";
-            echo "<div class=\"comment-container-top\" id=\"divAssuntos\"></div>";
+              echo "</select>";
+              echo "<button id=\"select-assunto-button\"  class=\"confirm-type\" type=\"button\" onclick=\"addAssuntos()\">Confirmar</button>";
+              echo "<div class=\"comment-container-top\" id=\"divAssuntos\">";
+              foreach ($post['assuntos'] as $isso){
+              echo "<p>".$isso['nomeAssunto']."<button type=\"button\" onclick=\"removeAssuntos('$isso[codAssunto]', '$isso[nomeAssunto]')\">❌</button></p>";
+           }
+            echo "</div>";
           echo "</div>";
           echo "<div class=\"post-divReacoes\">";
             echo "<select id=\"select-reacoes\" onclick=\"unsetError(this)\">";
@@ -173,14 +206,23 @@
               }
             echo "</select>";
             echo "<button id=\"select-reacao-button\"  class=\"confirm-type\" type=\"button\" onclick=\"addReacoes()\">Confirmar</button>";
-            echo "<div class=\"comment-container-top\" id=\"divReacoes\"></div>";
+            echo "<div class=\"comment-container-top\" id=\"divAssuntos\">";
+            foreach ($post['assuntos'] as $isso){
+            echo "<p>".$isso['nomeAssunto']."<button type=\"button\" onclick=\"removeAssuntos('$isso[codAssunto]', '$isso[nomeAssunto]')\">❌</button></p>";
+         }
+          echo "</div>";
           echo "</div>";
           
         echo "</form>";
       echo "</div>";
-    echo "</main>";    
+    echo "</main>"; 
+    }   
+    else {
+      echo "<h2 align=center>Para ver este conteudo faça um cadastro no dagama!!!</h2>";
+      header("refresh:1;url=index.php");
+      die();
+    }
   ?>
-  </main>
 
 <script src='./functions.js'>
     

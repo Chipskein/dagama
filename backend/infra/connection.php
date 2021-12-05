@@ -848,7 +848,7 @@
                         where porto_participa.perfil = $user or porto.perfil = $user) as tmp1
                     join interacao on tmp1.codPost = interacao.codigo
                     join perfil on interacao.perfil = perfil.codigo
-                    left join (select postPai, count(*) as qtd from interacao where postPai is not null group by postPai) as tmpQtd on interacao.codigo = tmpQtd.postPai
+                    left join (select postPai, count(*) as qtd from interacao where postPai is not null and interacao.ativo=1 group by postPai) as tmpQtd on interacao.codigo = tmpQtd.postPai
                     left join cidade on interacao.local = cidade.codigo
                     left join uf on cidade.uf = uf.codigo
                     left join pais on uf.pais = pais.codigo

@@ -16,7 +16,6 @@
   }
   if(isset($_SESSION['userid'])){
     $user = getUserInfo("$_SESSION[userid]");
-    echo $_GET['interacao'];
     $post = getOriginalPost($_GET['interacao']);
     $postPai = $post['postPai'] ? $post['postPai'] : $_GET['interacao'];
     $locaisArray = getLocais();
@@ -84,7 +83,7 @@
               $citacoes[] = $_POST["pessoa$c"];
           }
       }
-      $response = addInteracao($_SESSION['userid'],$texto,0,0,0,22,22,$isReaction,$reacao,$local);
+      $response = addInteracao($_SESSION['userid'],$texto,0,0,0,$_GET['interacao'],$postPai,$isReaction,$reacao,$local);
       if($response) {
         if(count($assuntos) > 0){
           foreach ($assuntos as $value) {
@@ -96,7 +95,7 @@
             addCitacaoInteracao($value, $response);
           }
         }
-        header("refresh:0;url=interagirInteracao.php?user=$_SESSION[userid]"); 
+        header("refresh:0;url=feed.php?user=$_SESSION[userid]"); 
       }
       else return false;
     }
@@ -310,14 +309,6 @@
           echo "</div>";
           //Ícones
           echo "<div class=\"div-post-icons-bar\">";
-            // if($isMentioned) {
-            //   echo "<form action=\"feed.php?user=$_SESSION[userid]\" method=\"post\">";
-            //   echo "<button type=\"submit\" name=\"removeCitacao\" class=\"interacao-remover-txt\" value=\"$post[codInteracao]\"><p>Remover sua citação</p></button>";
-            //   echo "</form>";
-            // }
-            // echo "<div class=\"div-post-icons-bar-divs\">";
-            //   echo "<p>$post[qtdInteracao]</p><img src=\"imgs/icons/chat.png\" class=\"div-post-icons-bar-icons\" alt=\"\">";
-            // echo "</div>";
           echo "</div>";
           echo "<br><br>";
           
