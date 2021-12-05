@@ -394,7 +394,7 @@
         $db_type=$db_connection['db_type'];
         if($db_type == 'sqlite'){
             $response = $db->exec("insert into assunto (nome) values ('$nome')");
-            if($response) return $response;
+            if($response) return $db->lastInsertRowID();
             else return false;
         }
         if($db_type == 'postgresql'){

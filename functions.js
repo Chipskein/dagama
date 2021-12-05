@@ -305,41 +305,54 @@ function removePessoas(id, name){
     }
 }
 
+let cNewAssunto = 0;
+function selectAssunto(id){
+    var assunto = JSON.parse(id.value);
+    var div = document.getElementById('divNovosAssuntos');
+    var input = document.getElementById('insert-nome-assunto');
+    input.style.display = 'none';
+    if(assunto == 0){
+        input.style.display = 'flex'
+    }
+}
 var assuntos = [];
 function addAssuntos(){
     var assunto = document.getElementById('select-assuntos').value;
     assunto = JSON.parse(assunto);
     var div = document.getElementById('divAssuntos');
-    if(assunto !== 0){
-    var option = document.getElementById('optionAssunto'+assunto.id);
-    option.remove();
-    assuntos.push(assunto.id);
-    const p = document.createElement('p');
-    const input = document.createElement('input');
-    p.id='assunto'+assunto.id;
-    p.innerHTML += `${assunto.name} <button type="button" onclick="removeAssuntos('${assunto.id}', '${assunto.name}')">❌</button>`;
-    input.type = 'hidden';
-    input.name= 'assunto'+assunto.id;
-    input.id='assuntoInput'+assunto.id;
-    input.value = assunto.id;
-    div.append(p);
-    div.append(input);
+    var divNew = document.getElementById('divNewAssuntos');
+    if(assunto != 0){
+        var option = document.getElementById('optionAssunto'+assunto.id);
+        option.remove();
+        assuntos.push(assunto.id);
+        const p = document.createElement('p');
+        const input = document.createElement('input');
+        p.id='assunto'+assunto.id;
+        p.innerHTML += `${assunto.name} <button type="button" onclick="removeAssuntos('${assunto.id}', '${assunto.name}')">❌</button>`;
+        input.type = 'hidden';
+        input.name= 'assunto'+assunto.id;
+        input.id='assuntoInput'+assunto.id;
+        input.value = assunto.id;
+        div.append(p);
+        div.append(input);
     } else{
-        const buttonAddAssuntos = document.createElement('button')
-        buttonAddAssuntos.textContent='adicioar assunto';
-        buttonAddAssuntos.id = 'buttonAssunto';
-        buttonAddAssuntos.type = 'button';
-        // button.onclick = () => {  }
-        const inputAssunto = document.createElement('input')
-        inputAssunto.id='InputCidade'
-        inputAssunto.className='StylesInputs'
-        inputAssunto.placeholder='adicione o assunto'
-        div.append(inputAssunto)
-        div.append(buttonAddAssuntos)
-        document.getElementById('select-assunto').disabled = true;
-        document.getElementById('select-assunto-button').disabled = true;
+        cNewAssunto++;
+        var input = document.getElementById('insert-nome-assunto');
+        var newInput = "<input id=\"insert-new-assunto"+cNewAssunto+"\" name=\"insert-new-assunto"+cNewAssunto+"\" type=\"hidden\" value=\""+input.value+"\">";
+        divNew.innerHTML += newInput;
+        const p = document.createElement('p');
+        p.id='newAssunto'+cNewAssunto;
+        p.innerHTML += `${input.value} <button type="button" onclick="removeNewAssuntos('newAssunto${cNewAssunto}', 'insert-new-assunto${cNewAssunto}')">❌</button>`;
+        div.append(p);
+        var input = document.getElementById('insert-nome-assunto');
+        input.style.display = 'none';
+        if(cNewAssunto >= 5) {
+            var button = document.getElementById('select-assunto-button');
+            button.disabled = true;
+            alert('Você atingiu o limite de 5 assuntos novos');
+        }
     }
-  }
+}
 function removeAssuntos(id, name){
     var div = document.getElementById('divAssuntos');
     var p = document.getElementById('assunto'+id);
@@ -352,6 +365,18 @@ function removeAssuntos(id, name){
         if ( assuntos[i] == id) {
             assuntos.splice(i, 1); 
         }    
+    }
+}
+function removeNewAssuntos(idP, idInput){
+    cNewAssunto--;
+    var input = document.getElementById(idInput);
+    input.remove();
+    var p = document.getElementById(idP);
+    p.remove();
+    var qtd = document.getElementById('newAssuntosQtd');
+    if(cNewAssunto < 5) {
+        var button = document.getElementById('select-assunto-button');
+        button.disabled = false;
     }
 }
 

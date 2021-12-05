@@ -28,9 +28,9 @@
     $suggestFriends = suggestFriends($_SESSION['userid'], 4, 0);
     $postsArray = getPosts($_SESSION['userid'], 0, 30);
     $portosArray = getAllPorto($_SESSION['userid'], true, 0, 3);
-    // $portosArrayForShare = getAllPorto($_SESSION['userid'], true, 0, 0);
+    $portosArrayForShare = getAllPorto($_SESSION['userid'], true, 0, 0);
     $errorMessage = [];
-    var_dump($_POST);
+    // var_dump($_POST);
     if(isset($_POST['buttonAssunto'])){
       $addAssunto = addAssunto("$_POST[buttonAssunto]");
       header("refresh:0;url=feed.php?user=$_SESSION[userid]"); 
@@ -75,6 +75,17 @@
               }
             }
           }
+        }
+      }
+      $newAssuntos = [];
+      for($c = 1; $c <= 5 ; $c++){
+        if(isset($_POST['insert-new-assunto'.$c])){
+          $newAssuntos[] = $_POST['insert-new-assunto'.$c];
+        }
+      }
+      if(count($newAssuntos) > 0){
+        foreach ($newAssuntos as $value) {
+          $assuntos[] = addAssunto($value);
         }
       }
 
@@ -234,7 +245,7 @@
           echo "<div class=\"insert-interacao-smallBtns-a\" onclick=\"newPostSelect('pessoas')\"><img class=\"insert-interacao-smallBtns-icon\" src=\"imgs/icons/multiple-users-silhouette.png\" alt=\"\" srcset=\"\">Citar Pessoas</div>";
           echo "<div class=\"insert-interacao-smallBtns-a\" onclick=\"newPostSelect('assuntos')\"><img class=\"insert-interacao-smallBtns-icon\" src=\"imgs/icons/price-tag.png\" alt=\"\" srcset=\"\">Assunto</div>";
           echo "<div class=\"insert-interacao-smallBtns-a\" onclick=\"newPostSelect('reacoes')\"><img class=\"insert-interacao-smallBtns-icon\" src=\"imgs/icons/Like.png\" alt=\"\" srcset=\"\">Reação</div>";
-          echo "<div class=\"insert-interacao-smallBtns-a\" onclick=\"newPostSelect('compartilhar')\"><img class=\"insert-interacao-smallBtns-icon\" src=\"imgs/icons/send.png\" alt=\"\" srcset=\"\">Compartilhar</div>";
+          // echo "<div class=\"insert-interacao-smallBtns-a\" onclick=\"newPostSelect('compartilhar')\"><img class=\"insert-interacao-smallBtns-icon\" src=\"imgs/icons/send.png\" alt=\"\" srcset=\"\">Compartilhar</div>";
         echo "</div>";
         echo "<input class=\"insert-interacao-submit\" type=\"submit\" name=\"novoPost\" />";
         echo "<hr id=\"post-hr\" class=\"post-hr\" >";
@@ -290,12 +301,14 @@
           echo "<div class=\"comment-container-top\" id=\"divPessoas\"></div>";
         echo "</div>";
         echo "<div class=\"post-divAssuntos\">";
-          echo "<select id=\"select-assuntos\" onclick=\"unsetError(this)\">";
+          echo "<select id=\"select-assuntos\" onchange=\"selectAssunto(this)\">";
             foreach ($assuntosArray as $value) {
               echo "<option id='optionAssunto".$value['codigo']."' value='{ \"id\": \"".$value['codigo']."\", \"name\": \"".$value['nome']."\" }'\">".$value['nome']."</option>\n";
             }
             echo "<option value=\"0\">Outro</option>";
           echo "</select>";
+          echo "<div id=\"divNewAssuntos\"></div>";
+          echo "<input id=\"insert-nome-assunto\" placeholder=\"Digite o nome do novo assunto\" class=hidden>";
           echo "<button id=\"select-assunto-button\"  class=\"confirm-type\" type=\"button\" onclick=\"addAssuntos()\">Confirmar</button>";
           echo "<div class=\"comment-container-top\" id=\"divAssuntos\"></div>";
         echo "</div>";
