@@ -67,6 +67,7 @@ CREATE TABLE PORTO(
     descr VARCHAR(250) NOT NULL,
     img VARCHAR(250) NOT NULL DEFAULT 'https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg',
     ativo BOOLEAN NOT NULL DEFAULT 1 CHECK(ativo=1 OR ativo=0),
+    dataRegis DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY(codigo),
     FOREIGN KEY (perfil) REFERENCES PERFIL(codigo) 
 );

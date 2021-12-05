@@ -1048,8 +1048,11 @@
                         interacao.emote as emote,
                         interacao.ativo as ativo,
                         cidade.nome as nomeCidade,
+                        cidade.codigo as codCidade,
                         uf.nome as nomeUF,
+                        uf.codigo as codUF,
                         pais.nome as nomePais,
+                        pais.codigo as codPais,
                         porto.codigo as codPorto,
                         porto.nome as nomePorto,
                         perfil.codigo as codPerfil, 
@@ -1065,60 +1068,55 @@
                     where interacao.codigo = $post");
                 
                 $results2 = $db->query("
-                    select citacao.interacao as interacao, perfil.codigo as codPerfil, perfil.username as nomePerfil from citacao join perfil on perfil.codigo = citacao.perfil where citacao.ativo = 1
-                ");
+                    select citacao.interacao as interacao, perfil.codigo as codPerfil, perfil.username as nomePerfil from citacao 
+                        join perfil on perfil.codigo = citacao.perfil 
+                    where 
+                        citacao.ativo = 1 and citacao.interacao = $post");
                 $citacoes = [];
                 while ($row = $results2->fetchArray()) {
-                    $citacoes[$row['interacao']][$row['codPerfil']] = $row;
+                    $citacoes[$row['codPerfil']] = $row;
                 }
                 
                 $results3 = $db->query("
                 select interacao.codigo as interacao, assunto.codigo as codAssunto, assunto.nome as nomeAssunto from interacao
-                    left join interacao_assunto on interacao.codigo = interacao_assunto.interacao
-                    left join assunto on interacao_assunto.assunto = assunto.codigo
+                    join interacao_assunto on interacao.codigo = interacao_assunto.interacao
+                    join assunto on interacao_assunto.assunto = assunto.codigo
                 where
-                    interacao.ativo = 1");
+                    interacao.ativo = 1 and interacao.codigo = $post");
                 $assuntos = [];
                 while ($row = $results3->fetchArray()) {
-                    $assuntos[$row['interacao']][$row['codAssunto']] = $row;
+                    $assuntos[$row['codAssunto']] = $row;
                 }
 
                 
                 $response = $result->fetchArray();
-                if(in_array($response['codInteracao'], array_keys($assuntos))){
-                    $response['assuntos'] = $assuntos[$response['codInteracao']];
-                } else {
-                    $response['assuntos'] = [];
-                }
-                if(in_array($response['codInteracao'], array_keys($citacoes))){
-                    $response['citacoes'] = $citacoes[$response['codInteracao']];
-                } else {
-                    $response['citacoes'] = [];
-                }
+                $response['assuntos'] = $assuntos;
+                $response['citacoes'] = $citacoes;
+                
                 return $response;
             }
-            if($db_type=='postgresql'){ // FIXME: tem que deixar igual ao de cima
-                $result=pg_fetch_all(pg_query($db, "
-                select
-                    interacao.codigo as codInteracao, 
-                    interacao.post as codPost, 
-                    interacao.isReaction as isReaction, 
-                    interacao.texto as textoPost, 
-                    interacao.data as dataPost,
-                    interacao.isSharing as isSharing, 
-                    interacao.emote as emote,
-                    interacao.ativo as ativo,
-                    porto.codigo as codPorto,
-                    porto.nome as nomePorto,
-                    perfil.codigo as codPerfil, 
-                    perfil.username as nomePerfil,
-                    perfil.img as iconPerfil
-                from interacao
-                    join perfil on interacao.perfil = perfil.codigo
-                    left join porto on interacao.porto = porto.codigo
-                where interacao.codigo = $post"));
-                if($result) return $result;
-                else return false;
+            if($db_type=='postgresql'){
+                // $result=pg_fetch_all(pg_query($db, "
+                // select
+                //     interacao.codigo as codInteracao, 
+                //     interacao.post as codPost, 
+                //     interacao.isReaction as isReaction, 
+                //     interacao.texto as textoPost, 
+                //     interacao.data as dataPost,
+                //     interacao.isSharing as isSharing, 
+                //     interacao.emote as emote,
+                //     interacao.ativo as ativo,
+                //     porto.codigo as codPorto,
+                //     porto.nome as nomePorto,
+                //     perfil.codigo as codPerfil, 
+                //     perfil.username as nomePerfil,
+                //     perfil.img as iconPerfil
+                // from interacao
+                //     join perfil on interacao.perfil = perfil.codigo
+                //     left join porto on interacao.porto = porto.codigo
+                // where interacao.codigo = $post"));
+                // if($result) return $result;
+                // else return false;
             }
         }
         else exit;
@@ -2250,6 +2248,32 @@
         }
         else exit;
     }
+    function ediInteracao($interacao, $texto, $isReaction, $emote, $local){
+        $db_connection=db_connection();
+        $db=$db_connection['db'];
+        $db_type=$db_connection['db_type'];
+        if($db_type == 'sqlite'){
+            $txt = [($texto ? "texto = '$texto'" : "texto = ''"),
+            ($isReaction ? "isReaction = ".$isReaction : "isReaction = null"),
+            ($emote ? "emote = '".$emote."'" : 'emote = null'),
+            ($local ? "local = ".$local : 'local = null'),
+            "data = CURRENT_TIMESTAMP"];
+            $txt = implode($txt, ', ');
+            $response = $db->exec("update interacao set $txt where codigo = $interacao");
+            if($response) return true;
+            else return false;
+        }
+        if($db_type == 'postgresql'){
+            // $preparing = pg_prepare($db, "interacao", "insert into interacao (perfil, texto, perfil_posting, porto, isSharing, post, isReaction, emote) values ($1, $2, $3, $4, $5, $6, $7, $8)");
+            // if($preparing){
+            //     $response = pg_execute($db, "interacao", array($perfil, "$texto", $perfil_posting, $porto, $isSharing, $post, $isReaction, "$emote"));
+            //     if($response) return $response;
+            //     else return false;
+            // }
+            // else return false;
+        }
+        else exit;
+    }
     function addCitacaoInteracao($user, $post){
         $db_connection=db_connection();
         $db=$db_connection['db'];
@@ -2565,7 +2589,6 @@
             else return false;
         };
     };
-
     //12)
     function getTop($pais,$top,$mes){
         $db_connection=db_connection();
