@@ -394,7 +394,7 @@
         $db_type=$db_connection['db_type'];
         if($db_type == 'sqlite'){
             $response = $db->exec("insert into assunto (nome) values ('$nome')");
-            if($response) return $response;
+            if($response) return $db->lastInsertRowID();
             else return false;
         }
         if($db_type == 'postgresql'){
@@ -771,7 +771,8 @@
                             interacao.data
                         from interacao 
                         where
-                            post in (select codigo from interacao where perfil = $user)
+                            interacao.post in (select codigo from interacao where perfil = $user and ativo = 1) or
+                            interacao.codigo in (select postPai from interacao where perfil = $user and ativo = 1 group by postPai)
                         union
                         select 
                             case
@@ -847,7 +848,7 @@
                         where porto_participa.perfil = $user or porto.perfil = $user) as tmp1
                     join interacao on tmp1.codPost = interacao.codigo
                     join perfil on interacao.perfil = perfil.codigo
-                    left join (select postPai, count(*) as qtd from interacao where postPai is not null group by postPai) as tmpQtd on interacao.codigo = tmpQtd.postPai
+                    left join (select postPai, count(*) as qtd from interacao where postPai is not null and interacao.ativo=1 group by postPai) as tmpQtd on interacao.codigo = tmpQtd.postPai
                     left join cidade on interacao.local = cidade.codigo
                     left join uf on cidade.uf = uf.codigo
                     left join pais on uf.pais = pais.codigo
@@ -1053,7 +1054,8 @@
                         porto.nome as nomePorto,
                         perfil.codigo as codPerfil, 
                         perfil.username as nomePerfil,
-                        perfil.img as iconPerfil
+                        perfil.img as iconPerfil,
+                        interacao.postPai as postPai
                     from interacao
                         join perfil on interacao.perfil = perfil.codigo
                         left join porto on interacao.porto = porto.codigo
@@ -1129,7 +1131,7 @@
             if($db_type=='sqlite'){
                 $response=$db->query("
                 select 
-                assunto.nome as nome,count(*) as total
+                assunto.nome as nome, count(*) as total, cidade.nome as nomeCidade
                 from interacao 
                 join cidade on interacao.local=cidade.codigo
                 join uf on cidade.uf=uf.codigo
@@ -1137,7 +1139,7 @@
                 join INTERACAO_ASSUNTO on interacao.codigo=INTERACAO_ASSUNTO.interacao
                 join assunto on INTERACAO_ASSUNTO.assunto=assunto.codigo
                 where 
-                    interacao.local=$cidade
+                    interacao.local= $cidade
                 group by assunto.codigo
                 having count(*) in (
                     select 
@@ -1150,11 +1152,11 @@
                     join INTERACAO_ASSUNTO on interacao.codigo=INTERACAO_ASSUNTO.interacao
                     join assunto on INTERACAO_ASSUNTO.assunto=assunto.codigo
                     where 
-                        interacao.local=$cidade
+                        interacao.local= $cidade
                     group by assunto.codigo
                     order by total_per_assunto desc
-                    limit $top
-                )");
+                    limit $top)
+                order by total desc");
                 if($response){
                     $results=[];
                     while($row = $response->fetchArray()){
@@ -1543,7 +1545,7 @@
                 where 
                     porto.ativo = 1
                     ".($isOwner ? " and participa = true" : "")."
-                limit $limit offset $offset");
+                ".($limit > 0 ? " limit $limit offset $offset" : " "));
                 while ($row = $result->fetchArray()) {
                     array_push($results,$row);
                 }

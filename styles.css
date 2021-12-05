@@ -830,6 +830,15 @@ main {
 	height: 64px;
 	border-radius: 50px;
 }
+.interaction-mainuser-user-selo {
+	width: 18px;
+	height: 18px;
+	margin-top: 15px;
+}
+.coment-mainuser-user-selo {
+	width: 18px;
+	height: 18px;
+}
 .insert-interacao-user-name {
 	margin-left: 10px;
 	font-style: italic;
@@ -885,10 +894,10 @@ main {
 .post-divLocal,
 .post-divPessoas,
 .post-divAssuntos,
-.post-divReacoes {
+.post-divReacoes,
+.post-divCompart {
 	display: none;
 }
-
 
 .post-selectUser-icon {
 	width: 12px;
@@ -1022,6 +1031,7 @@ main {
 .div-post-top-subjects {
 	margin-top: -12px;
 }
+
 .div-post-txt {
 	margin-left: 10px;
 	margin-right: 10px;

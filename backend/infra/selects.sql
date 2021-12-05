@@ -390,6 +390,50 @@ insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, i
 
 select count(interacao.perfil), pais.nome from interacao join perfil on interacao.perfil= perfil.codigo join cidade on perfil.cidade = cidade.codigo join uf on cidade.uf= uf.codigo join pais on uf.pais = pais.codigo where perfil.genero = "M" and pais.nome="Brazil" and date(interacao.data) between date('now','-2 years') and date('now') and date(perfil.datanasc) between date('now','-20 years') and date('now', '-0 years');
 
+---
+select 
+    case
+        when interacao.post is null then interacao.codigo
+        when interacao.isSharing is not null then interacao.codigo
+        else interacao.post
+    end as codPost,
+    interacao.data
+from interacao 
+where
+    interacao.post in (select codigo from interacao where perfil = $user and ativo = 1) or
+    interacao.codigo in (select postPai from interacao where perfil = $user and ativo = 1 group by postPai)
+---
+select 
+    assunto.nome as nome, count(*) as total, cidade.nome as nomeCidade
+    from interacao 
+    join cidade on interacao.local=cidade.codigo
+    join uf on cidade.uf=uf.codigo
+    join pais on pais.codigo=uf.pais
+    join INTERACAO_ASSUNTO on interacao.codigo=INTERACAO_ASSUNTO.interacao
+    join assunto on INTERACAO_ASSUNTO.assunto=assunto.codigo
+    where 
+        interacao.local= $cidade
+    group by assunto.codigo
+    having count(*) in (
+        select 
+        distinct
+        count(*) as total_per_assunto
+        from interacao 
+        join cidade on interacao.local=cidade.codigo
+        join uf on cidade.uf=uf.codigo
+        join pais on pais.codigo=uf.pais
+        join INTERACAO_ASSUNTO on interacao.codigo=INTERACAO_ASSUNTO.interacao
+        join assunto on INTERACAO_ASSUNTO.assunto=assunto.codigo
+        where 
+            interacao.local= $cidade
+        group by assunto.codigo
+        order by total_per_assunto desc
+        limit $top)
+    order by total desc;
+
+--
+
+
 select 
 porto.codigo as codPorto,
 perfil.username as nomePart,
@@ -1195,3 +1239,79 @@ update solicitacao_amigo set ativo=0 where solicitacao_amigo.perfil in (select c
 
 
 
+
+
+
+
+
+insert into interacao (perfil, perfil_posting, porto, post,postPai, texto, isReaction, isSharing, emote) values (1, null, null, 1,null, 'Isto é um comentario', null, null, null); 
+insert into interacao (perfil, perfil_posting, porto, post,postPai, texto, isReaction, isSharing, emote) values (1, null, null, 1,null, 'Isto é um comentario', null, null, null); 
+insert into interacao (perfil, perfil_posting, porto, post,postPai, texto, isReaction, isSharing, emote) values (1, null, null, 1,null, 'Isto é um comentario', null, null, null); 
+
+insert into interacao (perfil, perfil_posting, porto, post,postPai, texto, isReaction, isSharing, emote) values (1, null, null, 1,3, 'Isto é uma resposta', null, null, null); 
+insert into interacao (perfil, perfil_posting, porto, post,postPai, texto, isReaction, isSharing, emote) values (1, null, null, 1,2, 'Isto é uma resposta', null, null, null); 
+insert into interacao (perfil, perfil_posting, porto, post,postPai, texto, isReaction, isSharing, emote) values (1, null, null, 1,4, 'Isto é uma resposta', null, null, null); 
+
+--interacao abaixo de 05/12/21
+
+select perfil.username from interacao
+   join perfil on interacao.perfil = perfil.cjoin cidade on perfil.cidade = cidade.codigo join uf on cidade.uf = uf.codigo join pais on uf.pais = pais.codigo odigo 
+l(ultimainteracao)where date(select interacao.data as ultimainteracao 
+    from interacao 
+    order by interacao.data desc limit 1) between date('now', '-2 days', 'localtime') and date('now', 'localtime')
+
+-- Como eu tinha feito antes
+update usuario set isAtivo =  false
+where usuario.email not in
+(select usuario.email from usuario 
+                join post on usuario.email = post.usuario
+                join cidade on usuario.cidade= cidade.codigo
+                join estado on cidade.estado = estado.codigodaUF
+                join pais on estado.pais = pais.codigoISO
+                where date(datadopost) between date('now', '-5 years') and date('now') and pais.codigoISO='BRA'
+                group by post.usuario
+ union  select usuario.email from usuario 
+                join postreacao on usuario.email = postreacao.usuario
+                join cidade on usuario.cidade= cidade.codigo
+                join estado on cidade.estado = estado.codigodaUF
+                join pais on estado.pais = pais.codigoISO
+                where date(datapostreacao) between date('now', '-5 years') and date('now') and pais.codigoISO='BRA'
+                group by postreacao.usuario
+union select amigo.usuario1 from amigo
+             join usuario on amigo.usuario1=usuario.email
+              join cidade on usuario.cidade= cidade.codigo
+                join estado on cidade.estado = estado.codigodaUF
+                join pais on estado.pais = pais.codigoISO
+             where datadeamizade between date('now', '-5 years') and date('now') and pais.codigoISO='BRA'
+union select amigo.usuario2 from amigo
+             join usuario on amigo.usuario1=usuario.email
+              join cidade on usuario.cidade= cidade.codigo
+                join estado on cidade.estado = estado.codigodaUF
+                join pais on estado.pais = pais.codigoISO
+             where datadeamizade between date('now', '-5 years') and date('now') and pais.codigoISO='BRA'
+
+union select usuario.email from usuario 
+                join cidade on usuario.cidade= cidade.codigo
+                join estado on cidade.estado = estado.codigodaUF
+                join pais on estado.pais = pais.codigoISO
+             where datadecadastro between date('now', '-5 years') and date('now') and pais.codigoISO='BRA'
+
+union select comentario.usuario from comentario
+ join usuario on comentario.usuario=usuario.email join cidade on usuario.cidade= cidade.codigo
+                join estado on cidade.estado = estado.codigodaUF
+                join pais on estado.pais = pais.codigoISO
+           where datacomentario between date('now', '-5 years') and date('now') and pais.codigoISO='BRA'
+
+union select comentarioreacao.usuario from comentarioreacao
+join usuario on comentarioreacao.usuario=usuario.email join cidade on usuario.cidade= cidade.codigo
+                join estado on cidade.estado = estado.codigodaUF
+                join pais on estado.pais = pais.codigoISO
+           where datacomentarioreacao between date('now', '-5 years') and date('now') and pais.codigoISO='BRA'
+
+union select compartilhar.usuario from compartilhar 
+ join usuario on compartilhar.usuario=usuario.email join cidade on usuario.cidade= cidade.codigo
+                join estado on cidade.estado = estado.codigodaUF
+                join pais on estado.pais = pais.codigoISO
+                where datadecompartilhamento between date('now', '-5 years') and date('now') and pais.codigoISO='BRA'
+);
+               
