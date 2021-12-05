@@ -134,6 +134,7 @@ CREATE TABLE INTERACAO(
     CHECK (
         (post IS NOT NULL AND perfil_posting IS NULL AND porto IS NULL) OR
         (post IS NULL AND perfil_posting IS NOT NULL AND porto IS NULL) OR
+        (post IS NOT NULL AND perfil_posting IS NULL AND porto IS NOT NULL) OR
         (post IS NULL AND perfil_posting IS NULL AND porto IS NOT NULL) OR
         (post IS NULL AND perfil_posting IS NULL AND porto IS NULL)
     ),
@@ -5309,14 +5310,14 @@ INSERT INTO CIDADE (codigo, uf, nome) VALUES(2,2001,'Pelotas');
 INSERT INTO PERFIL VALUES(1,1,'abfn0905@gmail.com','$2y$10$vaJf.MBckE0gkUdu0WE3p.c8ZxwWw6OM/sJcZNc3rzV2yt87DVAFy','M','CHPK-9','https://drive.google.com/uc?export=download&id=18Q0QWF1iRWc7wq0nezRxgdLYEQUc2Thz','2002-05-09','2021-11-25 21:34:09',1);
 INSERT INTO PERFIL VALUES(2,1,'bruno.nascimento@aluno.riogrande.ifrs.edu','$2y$10$QVuXeaCgue9b9Gfxoqpyle2ubbwpIVKlYCPb3G.ueO0jQw5bM8yom','M','CHPK-10','https://drive.google.com/uc?export=download&id=1wrkf7nkkKn-ThbxSjHJoSFb-0KGnQefq','2002-05-09','2021-11-25 22:27:26',1);
 INSERT INTO PERFIL VALUES(3,1,'silvioquintana1@hotmail.com','$2y$10$k5Z0zf/spQK8Jq8.I0LZ6OHABB/3no.2zEZlPGlryJAVdHtCkibV6','M','SilMusk3','https://upload.wikimedia.org/wikipedia/commons/4/4a/Pirate_icon.gif','2002-04-26','2021-11-26 01:19:04',1);
-INSERT INTO PERFIL VALUES(4,1,'victortavamaral@gmail.com','$2y$10$LmeaGQainGy2LCxzRPkUqORv0927DCdV6WbpHWUADIwY1Fu29pAgi','M','vitão','https://drive.google.com/uc?export=download&id=14hdol600M_-m9mhuuN1OmPBxnNV4nVyV','2002-04-22','2021-11-26 13:07:48',1);
+INSERT INTO PERFIL VALUES(4,1,'victortavamaral@gmail.com','$2y$10$LmeaGQainGy2LCxzRPkUqORv0927DCdV6WbpHWUADIwY1Fu29pAgi','M','vitão','https://drive.google.com/uc?export=download&id=13WNY72tmCRtk5HX6hthhM9fZRPaZiJzm','2002-04-22','2021-11-26 13:07:48',1);
 
 INSERT INTO PORTO VALUES(1,4,'Resident Evil','asdasdas','https://drive.google.com/uc?export=download&id=1iK1-bCRZd4fKHgQG0TWN98DkfmrkWxve',1,'2021-11-26 01:27:05');
 INSERT INTO PORTO VALUES(2,4,'Hogwarts','Sla mano','https://drive.google.com/uc?export=download&id=1pGLvGzhlf9XXFM3jGa9FhTRTihBPQHB3',1,'2021-11-26 01:27:00');
 INSERT INTO PORTO VALUES(3,4,'Casa de Hades','asdasdasdasd','https://drive.google.com/uc?export=download&id=1EqbendRznjPYMFfQ634jYIoHJcPYkdpS',1,'2021-11-22 01:27:05');
 INSERT INTO PORTO VALUES(4,4,'Medjais de Siuá','asdasddsasad','https://drive.google.com/uc?export=download&id=1AuTDe8UFD0nJrg7HXfQ3Kmg4BnIlTF2k',1,'2021-01-26 01:27:05');
-INSERT INTO PORTO VALUES(5,5,'Jill da massa','asdasdasdasdas','https://drive.google.com/uc?export=download&id=1PC588dOlBzvhuPSvrj03mUIA6fv-EJvZ',1,'2001-11-26 01:27:05');
-INSERT INTO PORTO VALUES(6,5,'Hunters o Yharnam','Bloodborne is an action role-playing game developed by FromSoftware and published by Sony Computer Entertainment, which was released for the PlayStation 4 in March 2015. Bloodborne follows the players character, a Hunter, through the decrepit...','https://drive.google.com/uc?export=download&id=1BYDQwBM91JAmJzCfd8Wsk4OZ16TywSlN',1, '2021-11-26 01:27:05');
+INSERT INTO PORTO VALUES(5,4,'Jill da massa','asdasdasdasdas','https://drive.google.com/uc?export=download&id=1PC588dOlBzvhuPSvrj03mUIA6fv-EJvZ',1,'2001-11-26 01:27:05');
+INSERT INTO PORTO VALUES(6,4,'Hunters o Yharnam','Bloodborne is an action role-playing game developed by FromSoftware and published by Sony Computer Entertainment, which was released for the PlayStation 4 in March 2015. Bloodborne follows the players character, a Hunter, through the decrepit...','https://drive.google.com/uc?export=download&id=1BYDQwBM91JAmJzCfd8Wsk4OZ16TywSlN',1, '2021-11-26 01:27:05');
 
 INSERT INTO solicitacao_amigo VALUES(1,3,'2021-11-26 01:27:05',1);
 INSERT INTO solicitacao_amigo VALUES(2,3,'2021-11-26 01:27:08',1);

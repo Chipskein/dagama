@@ -726,7 +726,36 @@ having count(*) =
 ;
 
 
-
+select
+    -- interacao.codigo as codInteracao, 
+    -- interacao.post as codPost, 
+    -- interacao.isReaction as isReaction, 
+    -- interacao.texto as textoPost, 
+    -- interacao.data as dataPost,
+    -- interacao.isSharing as isSharing, 
+    -- interacao.emote as emote,
+    -- interacao.ativo as ativo,
+    case 
+        when tmpQtd.qtd is null then 0
+        else tmpQtd.qtd
+    end as qtdInteracao,
+    -- cidade.nome as nomeCidade,
+    -- uf.nome as nomeUF,
+    -- pais.nome as nomePais,
+    -- perfil.codigo as codPerfil, 
+    -- perfil.username as nomePerfil,
+    perfil.img as iconPerfil
+from interacao
+    join perfil on interacao.perfil = perfil.codigo
+    left join cidade on cidade.codigo = interacao.local
+    left join uf on cidade.uf = uf.codigo
+    left join pais on uf.pais = pais.codigo
+    left join (select post, count(*) as qtd from interacao where interacao.postPai is not null and interacao.post is not null and interacao.ativo = 1 group by interacao.post) as tmpQtd on interacao.codigo = tmpQtd.post
+where
+    interacao.ativo = 1 and 
+    interacao.isSharing is null 
+    and interacao.postPai = 22
+    and interacao.post = 23
 
 
 
@@ -1314,4 +1343,9 @@ union select compartilhar.usuario from compartilhar
                 join pais on estado.pais = pais.codigoISO
                 where datadecompartilhamento between date('now', '-5 years') and date('now') and pais.codigoISO='BRA'
 );
-               
+
+     --Interacao completa
+
+     
+insert into interacao (perfil, perfil_posting, porto, post, postPai, texto, isReaction, isSharing, emote, local,data) values (22, null, null, null, 27,'TESTE', null, null, null,1,'2021-11-04 00:00:00');
+select codigo, postPai from interacao

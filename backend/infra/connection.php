@@ -16,14 +16,14 @@
             }
             $db_type='sqlite';
         }
-        if(preg_match("/dagama.herokuapp/","$_SERVER[HTTP_HOST]")){
-            $db=pg_connect(getenv("DATABASE_URL"));
-            if (!$db) {
-                echo "<br>Um erro de conexão com banco ocorreu<br>"; 
-                exit;
-            }
-            $db_type='postgresql';
-        }
+        // if(preg_match("/dagama.herokuapp/","$_SERVER[HTTP_HOST]")){
+        //     $db=pg_connect(getenv("DATABASE_URL"));
+        //     if (!$db) {
+        //         echo "<br>Um erro de conexão com banco ocorreu<br>"; 
+        //         exit;
+        //     }
+        //     $db_type='postgresql';
+        // }
         return ['db'=>$db,'db_type'=>$db_type];
     }
 
@@ -38,16 +38,6 @@
                 $response = $db->query("select * from assunto");
                 if($response){
                     while ($row = $response->fetchArray()) {
-                        array_push($results, $row);
-                    }
-                    return $results; 
-                }
-                else return false;
-            }
-            if($db_type == 'postgresql'){
-                $response = pg_query($db, "select * from assunto");
-                if($response){
-                    while ($row = pg_fetch_array($response)) {
                         array_push($results, $row);
                     }
                     return $results; 
@@ -69,19 +59,13 @@
                     while ($row = $response->fetchArray()) {
                         array_push($results, $row);
                     }
+                    $db->close();
                     return $results; 
                 }
-                else return false;
-            }
-            if($db_type == 'postgresql'){
-                $response = pg_query($db, "select codigo, username, img from perfil where ativo = true");
-                if($response){
-                    while ($row = pg_fetch_array($response)) {
-                        array_push($results, $row);
-                    }
-                    return $results; 
+                else { 
+                    $db->close();
+                    return false;
                 }
-                else return false;
             }
         }
         else exit;
@@ -99,19 +83,12 @@
                     while ($row = $response->fetchArray()) {
                         array_push($results, $row);
                     }
+                    $db->close();
                     return $results;
                 }                
-                else return false;
-            }
-            if($db_type == 'postgresql'){
-                $response = pg_query($db, "select codigo, nome from porto where ativo = true");
-                if($response){
-                    while ($row = pg_fetch_array($response)) {
-                        array_push($results, $row);
-                    }
-                    return $results; 
+                else {
+                    return false;
                 }
-                else return false;
             }
         }
         else exit;
@@ -165,16 +142,6 @@
                 }
                 return $results;
             }
-            if($db_type == 'postgresql'){
-                $response = pg_query($db, "select * from pais where ativo = true");
-                if($response){
-                    while ($row = pg_fetch_array($response)) {
-                        array_push($results, $row);
-                    }
-                    return $results; 
-                }
-                else return false;
-            }
         }
         else exit;
     };
@@ -187,15 +154,6 @@
             if($response) return $db->lastInsertRowID();
             else return false;
         }
-        if($db_type == 'postgresql'){
-            $preparing = pg_prepare($db, "pais", "insert into pais (nome) values ($1) returning codigo");
-            if($preparing){
-                $response = pg_execute($db, "pais", array("$nome"));
-                if($response) return $response;
-                else return false;
-            }
-            else return false;
-        }
         else exit;
     }
     function delPais($pais){
@@ -205,15 +163,6 @@
         if($db_type == 'sqlite'){
             $response = $db->exec("update pais set ativo = 0 where codigo = $pais");
             if($response) return $response;
-            else return false;
-        }
-        if($db_type == 'postgresql'){
-            $response = pg_prepare($db, "delPais", "update pais set ativo = false where codigo = $1");
-            if($response){
-                $response = pg_execute($db, "delPais", array("$pais"));
-                if($response) return $response;
-                else return false;
-            }
             else return false;
         }
         else exit;
@@ -231,16 +180,6 @@
                 }
                 return $results;
             }
-            if($db_type == 'postgresql'){
-                $response = pg_query($db, "select * from uf where ativo = true");
-                if($response){
-                    while ($row = pg_fetch_array($response)) {
-                        array_push($results, $row);
-                    }
-                    return $results; 
-                }
-                else return false;
-            }
         }
         else exit;
     };
@@ -253,15 +192,6 @@
             if($response) return $db->lastInsertRowID();
             else return false;
         }
-        if($db_type == 'postgresql'){
-            $preparing = pg_prepare($db, "estado", "insert into uf (nome, pais) values ($1, $2) returning codigo");
-            if($preparing){
-                $response = pg_execute($db, "estado", array("$nome", "$pais"));
-                if($response) return $response;
-                else return false;
-            }
-            else return false;
-        }
         else exit;
     }
     function delEstado($estado){
@@ -271,15 +201,6 @@
         if($db_type == 'sqlite'){
             $response = $db->exec("update uf set ativo = 0 where codigo = $estado");
             if($response) return $response;
-            else return false;
-        }
-        if($db_type == 'postgresql'){
-            $response = pg_prepare($db, "delEstado", "update uf set ativo = false where codigo = $1");
-            if($response){
-                $response = pg_execute($db, "delEstado", array("$estado"));
-                if($response) return $response;
-                else return false;
-            }
             else return false;
         }
         else exit;
@@ -297,16 +218,6 @@
                 }
                 return $results;
             }
-            if($db_type == 'postgresql'){
-                $response = pg_query($db, "select * from cidade where ativo = true");
-                if($response){
-                    while ($row = pg_fetch_array($response)) {
-                        array_push($results, $row);
-                    }
-                    return $results; 
-                }
-                else return false;
-            }
         }
         else exit;
     };
@@ -319,15 +230,6 @@
             if($response) return $db->lastInsertRowID();
             else return false;
         }
-        if($db_type == 'postgresql'){
-            $preparing = pg_prepare($db, "cidade", "insert into cidade (nome, uf) values ($1, $2) returning codigo");
-            if($preparing){
-                $response = pg_execute($db, "cidade", array("$nome", "$estado"));
-                if($response) return $response;
-                else return false;
-            }
-            else return false;
-        }
         else exit;
     }
     function delCidade($cidade){
@@ -337,15 +239,6 @@
         if($db_type == 'sqlite'){
             $response = $db->exec("update cidade set ativo = 0 where codigo = $cidade");
             if($response) return $response;
-            else return false;
-        }
-        if($db_type == 'postgresql'){
-            $response = pg_prepare($db, "delCidade", "update cidade set ativo = false where codigo = $1");
-            if($response){
-                $response = pg_execute($db, "delCidade", array("$cidade"));
-                if($response) return $response;
-                else return false;
-            }
             else return false;
         }
         else exit;
@@ -369,19 +262,6 @@
                 }
                 else return false;
             }
-            if($db_type == 'postgresql'){
-                $response = pg_query($db, "select cidade.codigo as codCidade, cidade.nome as nomeCidade, uf.codigo as codUf, uf.nome as nomeUf, pais.codigo as codPais, pais.nome as nomePais from cidade
-                    join uf on cidade.uf = uf.codigo
-                    join pais on uf.pais = pais.codigo
-                group by cidade.codigo");
-                if($response){
-                    while ($row = pg_fetch_array($response)) {
-                        array_push($results, $row);
-                    }
-                    return $results; 
-                }
-                else return false;
-            }
         }
         else exit;
     };
@@ -397,15 +277,6 @@
             if($response) return $db->lastInsertRowID();
             else return false;
         }
-        if($db_type == 'postgresql'){
-            $preparing = pg_prepare($db, "assunto", "insert into assunto (nome) values ($1)");
-            if($preparing){
-                $response = pg_execute($db, "assunto", array("$nome"));
-                if($response) return $response;
-                else return false;
-            }
-            else return false;
-        }
         else exit;
     }
     function delAssunto($assunto){
@@ -415,15 +286,6 @@
         if($db_type == 'sqlite'){
             $response = $db->exec("update assunto set ativo = 0 where codigo = $assunto");
             if($response) return $response;
-            else return false;
-        }
-        if($db_type == 'postgresql'){
-            $response = pg_prepare($db, "delAssunto", "update assunto set ativo = false where codigo = $1");
-            if($response){
-                $response = pg_execute($db, "delAssunto", array("$assunto"));
-                if($response) return $response;
-                else return false;
-            }
             else return false;
         }
         else exit;
@@ -441,11 +303,6 @@
                 if(password_verify($password,$verify['pass'])) return $verify;
                 else return false;
             }
-            if($db_type=='postgresql'){
-                $verify=pg_fetch_array(pg_query($db,"select codigo,senha as pass,ativo,img,username from perfil where perfil.email='$email'"));
-                if(password_verify($password,$verify['pass'])) return $verify;
-                else return false;
-            }
         }
         else exit;
     }
@@ -456,11 +313,6 @@
         if($db){
             if($db_type=='sqlite'){
                 $verify=$db->query("select codigo,senha as pass,ativo,img,username from perfil where perfil.email='$email'")->fetchArray();
-                if("$password"=="$verify[pass]") return $verify;
-                else return false;
-            }
-            if($db_type=='postgresql'){
-                $verify=pg_fetch_array(pg_query($db,"select codigo,senha as pass,ativo,img,username from perfil where perfil.email='$email'"));
                 if("$password"=="$verify[pass]") return $verify;
                 else return false;
             }
@@ -484,15 +336,6 @@
                 if($verify) return $verify;
                 else return false;
             }
-            if($db_type == 'postgresql'){
-                $preparing = pg_prepare($db, "Register", "insert into perfil (cidade, email, senha, genero, username, datanasc,img) values ($1,$2,$3,$4,$5,$6,$7)");
-                if($preparing){
-                    $verify = pg_execute($db, "Register", array("$cidade","$email","$password","$genero","$username","$bdate","$link"));
-                    if($verify) return $verify;
-                    else return false;
-                }
-                else return false;
-            }
         }
         else exit;  
     };
@@ -503,11 +346,6 @@
         if($db){
             if($db_type == 'sqlite'){
                 $response = $db->query("select email from perfil")->fetchArray();
-                if($response) return $response;
-                else return false;
-            }
-            if($db_type == 'postgresql'){
-                $response = pg_fetch_array(pg_query($db, "select email from perfil"));
                 if($response) return $response;
                 else return false;
             }
@@ -522,11 +360,6 @@
             if($db_type == 'sqlite'){
                 $response = $db->query("select email from perfil where email='$email'");
                 if($response) return $response->fetchArray();
-                else return false;
-            }
-            if($db_type == 'postgresql'){
-                $response = pg_query($db,"select email from perfil where email='$email'");
-                if($response) return pg_fetch_array($response);
                 else return false;
             }
         }
@@ -545,13 +378,6 @@
                 if($response) return $response->fetchArray();
                 else return false;
             }
-            if($db_type == 'postgresql'){
-                if($db_type == 'postgresql'){
-                    $response = pg_query($db,"select codigo, email, ativo, img, username, cidade from perfil where codigo='$id'");
-                    if($response) return pg_fetch_array($response);
-                    else return false;
-                }
-            }
         }
         else exit;
     };
@@ -564,13 +390,6 @@
                 $response = $db->query("select codigo from perfil where email='$email'");
                 if($response) return $response->fetchArray()['codigo'];
                 else return false;
-            }
-            if($db_type == 'postgresql'){
-                if($db_type == 'postgresql'){
-                    $response = pg_query($db,"select codigo from perfil where email='$email'");
-                    if($response) return pg_fetch_array($response)['codigo'];
-                    else return false;
-                }
             }
         }
         else exit;
@@ -589,19 +408,6 @@
                 }
                 else return false;
             }
-            if($db_type == 'postgresql'){
-                $preparing = pg_prepare($db, "ActivateUser","update perfil set ativo=true where codigo=$1");
-                if($preparing){
-                    $verify = pg_execute($db, "ActivateUser", array("$id"));
-                    if($verify){
-                        $response = pg_query($db,"select email,senha as password from perfil where codigo=$id");
-                        if($response) return pg_fetch_array($response);
-                        else return false;
-                    } 
-                    else return false;
-                }
-                else return false;
-            }
         }
         else exit;
     }
@@ -614,10 +420,6 @@
                 $response = $db->exec("update perfil set ativo='0' where codigo=$user");
                 return true;
             }
-            if($db_type == 'postgresql'){
-                $response = pg_query($db,"update perfil set ativo=false where codigo=$user");
-                return pg_fetch_array($response);
-            } 
         }
         else exit;
     }
@@ -630,10 +432,6 @@
                 $response = $db->exec("update perfil set username='$name' where codigo=$id");
                 return true;
             }
-            if($db_type == 'postgresql'){
-                        $response = pg_query($db,"update perfil set nome=$name where codigo=$id");
-                        return pg_fetch_array($response);
-                    } 
         }
         else exit;
     }
@@ -646,10 +444,6 @@
                 $response = $db->exec("update perfil set email='$email' where codigo=$id");
                 return true;
             }
-            if($db_type == 'postgresql'){
-                        $response = pg_query($db,"update perfil set email='$email' where codigo=$id");
-                        return pg_fetch_array($response);
-                    } 
         }
         else exit;
     }
@@ -661,10 +455,6 @@
             if($db_type == 'sqlite'){
                 $response = $db->exec("update perfil set\\ senha='$senha' where codigo=$id");
                 return true;
-            }
-            if($db_type=='postgresql'){ // FIXME: tem que deixar igual ao de cima
-                $result=pg_fetch_all(pg_query($db, ""));
-                return $result;
             }
         }
     }
@@ -697,28 +487,7 @@
     /*----------------------------------------*/
 
     /* FEED */
-    function getFeed($offset,$limit=10){
-        $db_connection=db_connection();
-        $db=$db_connection['db'];
-        $db_type=$db_connection['db_type'];
-        if($db){
-            if($db_type=='sqlite'){
-                $results=[];
-                $result = $db->query("select * from interacao where isReaction is null and isSharing is null and ativo = 1 limit $limit offset $offset");
-                while ($row = $result->fetchArray()) {
-                    array_push($results, $row);
-                }
-                return $results;
-            }
-            if($db_type=='postgresql'){
-                $result=pg_fetch_all(pg_query($db, "select * from interacao where isReaction is null and isSharing is null and ativo = true limit $limit offset $offset"));
-                return $result;
-            }
-        }
-        else exit;
-    }
     function getPosts($user, $offset,$limit, $order){
-        echo $order;
         $db_connection=db_connection();
         $db=$db_connection['db'];
         $db_type=$db_connection['db_type'];
@@ -896,6 +665,10 @@
                         interacao.isSharing as isSharing, 
                         interacao.emote as emote,
                         interacao.ativo as ativo,
+                        case 
+                            when tmpQtd.qtd is null then 0
+                            else tmpQtd.qtd
+                        end as qtdInteracao,
                         cidade.nome as nomeCidade,
                         uf.nome as nomeUF,
                         pais.nome as nomePais,
@@ -907,6 +680,7 @@
                         left join cidade on cidade.codigo = interacao.local
                         left join uf on cidade.uf = uf.codigo
                         left join pais on uf.pais = pais.codigo
+                        left join (select post, count(*) as qtd from interacao where interacao.postPai is not null and interacao.post is not null and interacao.ativo = 1 group by interacao.post) as tmpQtd on interacao.codigo = tmpQtd.post
                     where
                         interacao.ativo = 1 and 
                         interacao.isSharing is null 
@@ -950,6 +724,10 @@
                                 interacao.isSharing as isSharing, 
                                 interacao.emote as emote,
                                 interacao.ativo as ativo,
+                                case 
+                                    when tmpQtd.qtd is null then 0
+                                    else tmpQtd.qtd
+                                end as qtdInteracao,
                                 cidade.nome as nomeCidade,
                                 uf.nome as nomeUF,
                                 pais.nome as nomePais,
@@ -961,6 +739,7 @@
                                 left join cidade on cidade.codigo = interacao.local
                                 left join uf on cidade.uf = uf.codigo
                                 left join pais on uf.pais = pais.codigo
+                                left join (select post, count(*) as qtd from interacao where interacao.postPai is not null and interacao.post is not null and interacao.ativo = 1 group by interacao.post) as tmpQtd on interacao.codigo = tmpQtd.post
                             where 
                                 interacao.ativo = 1 and 
                                 interacao.isSharing is null and 
@@ -1006,29 +785,6 @@
                 }
                 return $postsArray;
 
-            }
-            if($db_type=='postgresql'){ 
-                // $result=pg_fetch_all(pg_query($db, "
-                // select 
-                //     interacao.codigo as codInteracao, 
-                //     interacao.post as codPost, 
-                //     interacao.isReaction as isReaction, 
-                //     interacao.texto as textoPost, 
-                //     interacao.data as dataPost, 
-                //     interacao.isSharing as isSharing, 
-                //     interacao.emote as emote,
-                //     interacao.ativo as ativo,
-                //     porto.codigo as codPorto, porto.nome as nomePorto, 
-                //     perfil.codigo as codPerfil, perfil.username as nomePerfil, perfil.img as iconPerfil
-                // from interacao
-                //     join perfil on interacao.perfil = perfil.codigo
-                //     left join porto on porto.codigo = interacao.porto
-                // where
-                //     interacao.ativo = 1 and
-                //     interacao.isReaction is null and
-                //     (interacao.post is null or interacao.isSharing is not null)
-                // limit $limit offset $offset"));
-                // return $result;
             }
         }
         else exit;
@@ -1209,6 +965,10 @@
                         interacao.isSharing as isSharing, 
                         interacao.emote as emote,
                         interacao.ativo as ativo,
+                        case 
+                            when tmpQtd.qtd is null then 0
+                            else tmpQtd.qtd
+                        end as qtdInteracao,
                         cidade.nome as nomeCidade,
                         uf.nome as nomeUF,
                         pais.nome as nomePais,
@@ -1220,6 +980,7 @@
                         left join cidade on cidade.codigo = interacao.local
                         left join uf on cidade.uf = uf.codigo
                         left join pais on uf.pais = pais.codigo
+                        left join (select post, count(*) as qtd from interacao where interacao.postPai is not null and interacao.post is not null and interacao.ativo = 1 group by interacao.post) as tmpQtd on interacao.codigo = tmpQtd.post
                     where
                         interacao.ativo = 1 and 
                         interacao.isSharing is null 
@@ -1263,6 +1024,10 @@
                                 interacao.isSharing as isSharing, 
                                 interacao.emote as emote,
                                 interacao.ativo as ativo,
+                                case 
+                                    when tmpQtd.qtd is null then 0
+                                    else tmpQtd.qtd
+                                end as qtdInteracao,
                                 cidade.nome as nomeCidade,
                                 uf.nome as nomeUF,
                                 pais.nome as nomePais,
@@ -1274,6 +1039,7 @@
                                 left join cidade on cidade.codigo = interacao.local
                                 left join uf on cidade.uf = uf.codigo
                                 left join pais on uf.pais = pais.codigo
+                                left join (select post, count(*) as qtd from interacao where interacao.postPai is not null and interacao.post is not null and interacao.ativo = 1 group by interacao.post) as tmpQtd on interacao.codigo = tmpQtd.post
                             where 
                                 interacao.ativo = 1 and 
                                 interacao.isSharing is null and 
@@ -1319,29 +1085,6 @@
                 }
                 return $postsArray;
 
-            }
-            if($db_type=='postgresql'){ 
-                // $result=pg_fetch_all(pg_query($db, "
-                // select 
-                //     interacao.codigo as codInteracao, 
-                //     interacao.post as codPost, 
-                //     interacao.isReaction as isReaction, 
-                //     interacao.texto as textoPost, 
-                //     interacao.data as dataPost, 
-                //     interacao.isSharing as isSharing, 
-                //     interacao.emote as emote,
-                //     interacao.ativo as ativo,
-                //     porto.codigo as codPorto, porto.nome as nomePorto, 
-                //     perfil.codigo as codPerfil, perfil.username as nomePerfil, perfil.img as iconPerfil
-                // from interacao
-                //     join perfil on interacao.perfil = perfil.codigo
-                //     left join porto on porto.codigo = interacao.porto
-                // where
-                //     interacao.ativo = 1 and
-                //     interacao.isReaction is null and
-                //     (interacao.post is null or interacao.isSharing is not null)
-                // limit $limit offset $offset"));
-                // return $result;
             }
         }
         else exit;
@@ -1409,29 +1152,6 @@
                 $response['citacoes'] = $citacoes;
                 
                 return $response;
-            }
-            if($db_type=='postgresql'){
-                // $result=pg_fetch_all(pg_query($db, "
-                // select
-                //     interacao.codigo as codInteracao, 
-                //     interacao.post as codPost, 
-                //     interacao.isReaction as isReaction, 
-                //     interacao.texto as textoPost, 
-                //     interacao.data as dataPost,
-                //     interacao.isSharing as isSharing, 
-                //     interacao.emote as emote,
-                //     interacao.ativo as ativo,
-                //     porto.codigo as codPorto,
-                //     porto.nome as nomePorto,
-                //     perfil.codigo as codPerfil, 
-                //     perfil.username as nomePerfil,
-                //     perfil.img as iconPerfil
-                // from interacao
-                //     join perfil on interacao.perfil = perfil.codigo
-                //     left join porto on interacao.porto = porto.codigo
-                // where interacao.codigo = $post"));
-                // if($result) return $result;
-                // else return false;
             }
         }
         else exit;
@@ -1605,10 +1325,6 @@
                 }
                 return $results;
             }
-            if($db_type=='postgresql'){
-                $result=pg_fetch_all(pg_query($db, ""));
-                return $result;
-            }
         }
         else exit;
     }
@@ -1631,15 +1347,6 @@
                 else return false;
             }
         }
-        if($db_type == 'postgresql'){ // FIXME: deixar igual ao de cima
-            $preparing = pg_prepare($db, "sendFriendRequest", "insert into SOLICITACAO_AMIGO (perfil, amigo, dateEnvio) values ($1, $2, CURRENT_TIMESTAMP)");
-            if($preparing){
-                $friendRequest = pg_execute($db, "sendFriendRequest", array("$user","$friend"));
-                if($friendRequest) return $friendRequest;
-                else return false;
-            }
-            else return false;
-        }
         else exit;
     }
     function unsendFriendRequest($user, $friend) {
@@ -1649,15 +1356,6 @@
         if($db_type == 'sqlite'){
             $friendRequest = $db->exec("update SOLICITACAO_AMIGO set ativo = 0 where perfil = $user and amigo = $friend");
             if($friendRequest) return $friendRequest;
-            else return false;
-        }
-        if($db_type == 'postgresql'){
-            $preparing = pg_prepare($db, "unsendFriendRequest", "update SOLICITACAO_AMIGO set ativo = false where perfil = $1 and amigo = $2");
-            if($preparing){
-                $friendRequest = pg_execute($db, "unsendFriendRequest", array("$user","$friend"));
-                if($friendRequest) return $friendRequest;
-                else return false;
-            }
             else return false;
         }
         else exit;
@@ -1672,20 +1370,6 @@
             if($friendAdd) return $friendAdd;
             else return false;
         }
-        if($db_type == 'postgresql'){
-            $preparing = pg_prepare($db, "unsendFriendRequest", "update SOLICITACAO_AMIGO set ativo = false where amigo = $user and perfil = $friend");
-            if($preparing){
-                $friendRequest = pg_execute($db, "unsendFriendRequest", array("$user","$friend"));
-                if(!$friendRequest) return false;
-                $preparing2 = pg_prepare($db, "addFriend", "insert into amigo (amigo, perfil, dateAceito) values ($1, $2, CURRENT_TIMESTAMP)");
-                if($preparing2){
-                    $friendAdd = pg_execute($db, "addFriend", array("$user","$friend"));
-                    if($friendAdd) return $friendAdd;
-                    else return false;
-                } else return false;
-            }
-            else return false;
-        }
         else exit;
     }
     function declineFriendRequest($user, $friend) {
@@ -1695,15 +1379,6 @@
         if($db_type == 'sqlite'){
             $friendRequest = $db->exec("update SOLICITACAO_AMIGO set ativo = 0 where amigo = $user and perfil = $friend");
             if($friendRequest) return $friendRequest;
-            else return false;
-        }
-        if($db_type == 'postgresql'){
-            $preparing = pg_prepare($db, "declineFriendRequest", "update SOLICITACAO_AMIGO set ativo = 0 where amigo = $1 and perfil = $2");
-            if($preparing){
-                $friendRequest = pg_execute($db, "declineFriendRequest", array("$user","$friend"));
-                if($friendRequest) return $friendRequest;
-                else return false;
-            }
             else return false;
         }
         else exit;
@@ -1733,21 +1408,6 @@
                 }
                 return $results;
             }
-            if($db_type=='postgresql'){
-                $result=pg_fetch_all(pg_query($db, "select perfil.username as nome, perfil.img as img, solicitacao_amigo.dateEnvio as data, solicitacao_amigo.perfil, solicitacao_amigo.amigo as amigocod, amigo.perfil as otherPerfil, amigo.amigo as otherAmigo from solicitacao_amigo, perfil
-                left join amigo on 
-                    (solicitacao_amigo.perfil = amigo.perfil and solicitacao_amigo.amigo = amigo.amigo) or 
-                    (solicitacao_amigo.amigo = amigo.perfil and solicitacao_amigo.perfil = amigo.amigo)
-            where 
-                perfil.codigo = solicitacao_amigo.perfil and
-                solicitacao_amigo.perfil not in (
-                    select codigo from perfil where ativo = false
-                ) and
-                perfil.ativo = true and
-                solicitacao_amigo.amigo = $user and
-                solicitacao_amigo.ativo = true"));
-                return $result;
-            }
         }
         else exit;
     }
@@ -1758,15 +1418,6 @@
         if($db_type == 'sqlite'){
             $delFriend = $db->exec("update amigo set ativo = 0 where (perfil = $user and amigo = $friend) or (amigo = $user and perfil = $friend)");
             if($delFriend) return $delFriend;
-            else return false;
-        }
-        if($db_type == 'postgresql'){
-            $preparing = pg_prepare($db, "delAmigo", "update amigo set ativo = 0 where (perfil = $1 and amigo = $2) or (amigo = $1 and perfil = $2)");
-            if($preparing){
-                $delFriend = pg_execute($db, "delAmigo", array("$user","$friend"));
-                if($delFriend) return $delFriend;
-                else return false;
-            }
             else return false;
         }
         else exit;
@@ -1800,27 +1451,6 @@
                     array_push($results, $row);
                 }
                 return $results;
-            }
-            if($db_type=='postgresql'){
-                $result=pg_fetch_all(pg_query($db, "
-                select perfil.codigo, case 
-                        when amigo.perfil = perfil.codigo then amigo.amigo
-                        when amigo.amigo = perfil.codigo then amigo.perfil
-                    end as amigoCod,
-                    amigo.dateAceito,
-                    tmp1.codigo as codAmigo,
-                    tmp1.username as nameAmigo,
-                    tmp1.img as imgAmigo,
-                    (select count(*) from amigo where amigo = $user or perfil = $user and amigo.ativo = true) as qtdAmigos
-                from perfil 
-                    join amigo on perfil.codigo = amigo.perfil or amigo.amigo
-                    join (select * from perfil) as tmp1 on tmp1.codigo = amigoCod
-                where 
-                    perfil.codigo = $user and 
-                    amigo.ativo = true
-                order by amigo.dateAceito desc
-                limit $limit offset $offset"));
-                return $result;
             }
         }
         else exit;
@@ -1866,33 +1496,6 @@
                 }
                 return $results;
             }
-            if($db_type=='postgresql'){
-                $result=pg_fetch_all(pg_query($db, "
-                select 
-                    porto.codigo as codigo, 
-                    porto.nome as nome, 
-                    porto.descr as descr, 
-                    porto.img as img, 
-                    tmp1.participa as participa 
-                from porto
-                    left join (
-                        select case 
-                                when (porto.perfil = perfil.codigo) or (porto_participa.perfil = perfil.codigo and porto_participa.ativo = 1) then true
-                                else false
-                            end as participa,
-                            porto.codigo as porto
-                        from porto 
-                            left join porto_participa on porto.codigo = porto_participa.porto
-                            left join perfil on (porto.perfil = perfil.codigo) or (porto_participa.perfil = perfil.codigo and porto_participa.ativo = 1)
-                        where 
-                            perfil.codigo = $user
-                    ) as tmp1 on porto.codigo = tmp1.porto
-                where 
-                    porto.ativo = 1
-                    ".($isOwner ? " and participa = true" : "")."
-                limit $limit offset $offset"));
-                return $result;
-            }
         }
         else exit;
     }
@@ -1903,22 +1506,6 @@
         if($db){
             if($db_type=='sqlite'){
                 $result=$db->query("
-                select * from porto
-                where 
-                    porto.ativo = 1 and
-                    porto.perfil = $user
-                limit $limit offset $offset");
-                if($result) {
-                    $results = [];
-                    while ($row = $result->fetchArray()) {
-                        array_push($results, $row);
-                    }
-                    return $results;
-                }
-                else return false;
-            }
-            if($db_type=='postgresql'){
-                $result = pg_query($db, "
                 select * from porto
                 where 
                     porto.ativo = 1 and
@@ -1950,15 +1537,6 @@
                 if($result) return $result->fetchArray()['total'];
                 else return false;
             }
-            if($db_type=='postgresql'){
-                $result = pg_fetch_all(pg_query($db, "
-                select count(*) as total from porto
-                where 
-                    porto.ativo = 1 and
-                    porto.perfil = $user"));
-                if($result) return $result['total'];
-                else return false;
-            }
         }
         else exit;
     }
@@ -1973,10 +1551,6 @@
                     return $result->fetchArray()['total'];
                 }
                 return false;
-            }
-            if($db_type=='postgresql'){
-                $result=pg_fetch_array(pg_query($db,"select count(*) as total from porto where ativo=true"));
-                return $result['total'];
             }
         }
         else exit;
@@ -2022,43 +1596,6 @@
                 if($response) return $response->fetchArray();
                 else return false;
             }
-            if($db_type == 'postgresql'){
-                if($db_type == 'postgresql'){
-                    $response = pg_query($db,"
-                    select 
-                    porto.codigo as codigo, 
-                    porto.nome as nome, 
-                    porto.descr as descr, 
-                    porto.img as img, 
-                    perfil.codigo as codAdm, 
-                    perfil.username as nomeAdm, 
-                    perfil.img as imgAdm, 
-                    (select case 
-                        when porto.perfil = perfil.codigo or (porto_participa.perfil = perfil.codigo and porto_participa.ativo = 1) then true
-                        else false
-                    end as participa
-                    from perfil 
-                        join porto_participa on perfil.codigo = porto_participa.perfil
-                        join porto on porto_participa.porto = porto.codigo
-                    where 
-                        porto_participa.ativo = 1 and
-                        perfil.codigo = $user) as participa,
-                    case 
-                        when porto.perfil = $user then true
-                        else false
-                    end as owner
-                    from porto
-                        join perfil on porto.perfil = perfil.codigo
-                        left join porto_participa on porto.codigo = porto_participa.porto
-                    where 
-                        porto.ativo = 1 and
-                        porto.codigo = $porto
-                    group by porto.codigo
-                    order by porto_participa.dataregis desc");
-                    if($response) return pg_fetch_array($response);
-                    else return false;
-                }
-            }
         }
         else exit;
     }
@@ -2080,15 +1617,6 @@
                 if($portoId) return $portoId;
                 else return false;
             }
-            if($db_type == 'postgresql'){
-                $preparing = pg_prepare($db, "addPorto", "insert into porto (perfil,nome,descr,img) values ($1,$2,$3,$4)");
-                if($preparing){
-                    $verify = pg_execute($db, "addPorto", array("$perfil","$nome","$descr","$link"));
-                    if($verify) return $verify;
-                    else return false;
-                }
-                else return false;
-            }
         }
         else exit; 
     }
@@ -2107,15 +1635,6 @@
             if($db_type == 'sqlite'){
                 $response = $db->exec("update porto set ativo = 0 where codigo = $porto");
                 if($response) return $response;
-                else return false;
-            }
-            if($db_type == 'postgresql'){
-                $preparing = pg_prepare($db, "delPorto", "update porto set ativo = 0 where codigo = $1");
-                if($preparing){
-                    $response = pg_execute($db, "delPorto", array("$porto"));
-                    if($response) return $response;
-                    else return false;
-                }
                 else return false;
             }
         }
@@ -2143,26 +1662,6 @@
             }
 
         }
-        if($db_type == 'postgresql'){
-            $response = pg_query($db, "select case 
-                when porto_participa.ativo = false then 'off' 
-                when porto_participa.ativo = true then 'on' 
-            end as participa from porto_participa 
-            where perfil = $user and porto = $porto");
-            $response = pg_fetch_array($response);
-            if($response['participa'] == 'off') {
-                $response2 = pg_prepare($db, "entrarPorto", "update porto_participa set ativo = true, dataregis = CURRENT_TIMESTAMP where perfil = $1 and porto = $2)");                
-                $response2 = pg_execute($db, "entrarPorto", array("$user","$porto"));
-                if($response2) return $response2;
-                else return false;
-            } else {
-                $response2 = pg_prepare($db, "entrarPorto", "insert into porto_participa (perfil, porto) values ($1, $2)");
-                $response2 = pg_execute($db, "entrarPorto", array("$user","$porto"));
-                if($response2) return $response2;
-                else return false;
-            }
-            
-        }
         else exit;
     }
     function sairPorto($user, $porto){
@@ -2172,15 +1671,6 @@
         if($db_type == 'sqlite'){
             $response = $db->exec("update porto_participa set ativo = 0 where perfil = $user and porto = $porto");
             if($response) return $response;
-            else return false;
-        }
-        if($db_type == 'postgresql'){
-            $response = pg_prepare($db, "sairPorto", "update porto_participa set ativo = false where perfil = $1 and porto = $2");
-            if($response){
-                $response = pg_execute($db, "sairPorto", array("$user","$porto"));
-                if($response) return $response;
-                else return false;
-            }
             else return false;
         }
         else exit;
@@ -2306,10 +1796,6 @@
                 }
                 return $results;
             }
-            if($db_type=='postgresql'){ // FIXME: tem que deixar igual ao de cima
-                $result=pg_fetch_all(pg_query($db, ""));
-                return $result;
-            }
         }
         else exit;
     }
@@ -2339,27 +1825,10 @@
                 }
                 return $results;
             }
-            if($db_type=='postgresql'){
-                $result=pg_fetch_all(pg_query($db, "                
-                select 
-                porto.codigo as codPorto,
-                porto_participa.dataregis as dataRegis,
-                perfil.codigo as codPart,
-                perfil.username as nomePart,
-                perfil.img as imgPart
-                from porto
-                    left join porto_participa on porto.codigo = porto_participa.porto
-                    left join perfil on porto_participa.perfil = perfil.codigo
-                where 
-                    porto_participa.ativo = true and
-                    porto.codigo = $porto
-                limit $limit offset $offset"));
-                return $result;
-            }
         }
         else exit;
     }
-    function upsertSelo($perfil,$porto){
+    function upsertSelo($perfil, $porto){
         $db_connection = db_connection();
         $db = $db_connection['db'];
         $db_type = $db_connection['db_type'];
@@ -2531,15 +2000,6 @@
             if($response) return $db->lastInsertRowID();
             else return false;
         }
-        if($db_type == 'postgresql'){
-            // $preparing = pg_prepare($db, "interacao", "insert into interacao (perfil, texto, perfil_posting, porto, isSharing, post, isReaction, emote) values ($1, $2, $3, $4, $5, $6, $7, $8)");
-            // if($preparing){
-            //     $response = pg_execute($db, "interacao", array($perfil, "$texto", $perfil_posting, $porto, $isSharing, $post, $isReaction, "$emote"));
-            //     if($response) return $response;
-            //     else return false;
-            // }
-            // else return false;
-        }
         else exit;
     }
     function delInteracao($post){
@@ -2549,19 +2009,11 @@
         if($db_type == 'sqlite'){
             $response = $db->exec("update interacao set ativo = 0 where codigo = $post");
             if($response) {
-                // $response2 = $db->exec("update interacao set ativo = 0 where post in (select codigo from interacao where ativo = 0)");                
+                $response2 = $db->exec("update citacao set ativo = 0 where interacao = $post");
+                $response3 = $db->exec("update interacao_assunto set ativo = 0 where interacao = $post");
                 return $response;
             }
             else return false;
-        }
-        if($db_type == 'postgresql'){
-            // $response = pg_prepare($db, "delInteracao", "update interacao set ativo = false where codigo = $1");
-            // if($response){
-            //     $response = pg_execute($db, "delInteracao", array("$post"));
-            //     if($response) return $response;
-            //     else return false;
-            // }
-            // else return false;
         }
         else exit;
     }
@@ -2580,15 +2032,6 @@
             if($response) return true;
             else return false;
         }
-        if($db_type == 'postgresql'){
-            // $preparing = pg_prepare($db, "interacao", "insert into interacao (perfil, texto, perfil_posting, porto, isSharing, post, isReaction, emote) values ($1, $2, $3, $4, $5, $6, $7, $8)");
-            // if($preparing){
-            //     $response = pg_execute($db, "interacao", array($perfil, "$texto", $perfil_posting, $porto, $isSharing, $post, $isReaction, "$emote"));
-            //     if($response) return $response;
-            //     else return false;
-            // }
-            // else return false;
-        }
         else exit;
     }
     function addCitacaoInteracao($user, $post){
@@ -2598,15 +2041,6 @@
         if($db_type == 'sqlite'){
             $response = $db->exec("insert into citacao (perfil, interacao) values ($user, $post)");
             if($response) return $response;
-            else return false;
-        }
-        if($db_type == 'postgresql'){
-            $preparing = pg_prepare($db, "citacao", "insert into citacao (perfil, interacao) values ($1, $2)");
-            if($preparing){
-                $response = pg_execute($db, "citacao", array("$user", "$post"));
-                if($response) return $response;
-                else return false;
-            }
             else return false;
         }
         else exit;
@@ -2620,15 +2054,6 @@
             if($response) return $response;
             else return false;
         }
-        if($db_type == 'postgresql'){
-            $response = pg_prepare($db, "delCitacao", "update citacao set ativo = false where interacao = $1 and perfil = $2");
-            if($response){
-                $response = pg_execute($db, "delCitacao", array("$post", "$pessoa"));
-                if($response) return $response;
-                else return false;
-            }
-            else return false;
-        }
         else exit;
     }
     function addAssuntoInteracao($post, $assunto){
@@ -2640,15 +2065,6 @@
             if($response) return $response;
             else return false;
         }
-        if($db_type == 'postgresql'){
-            $preparing = pg_prepare($db, "interacao_assunto", "insert into interacao_assunto (interacao, assunto) values ($1, $2)");
-            if($preparing){
-                $response = pg_execute($db, "interacao_assunto", array("$post", "$assunto"));
-                if($response) return $response;
-                else return false;
-            }
-            else return false;
-        }
         else exit;
     }
     function delAssuntoInteracao($post, $assunto){
@@ -2658,15 +2074,6 @@
         if($db_type == 'sqlite'){
             $response = $db->exec("update interacao_assunto set ativo = 0 where interacao = $post and assunto = $assunto");
             if($response) return $response;
-            else return false;
-        }
-        if($db_type == 'postgresql'){
-            $response = pg_prepare($db, "delAssuntoInteracao", "update interacao_assunto set ativo = false where interacao = $1 and assunto = $2");
-            if($response){
-                $response = pg_execute($db, "delAssuntoInteracao", array("$post", "$assunto"));
-                if($response) return $response;
-                else return false;
-            }
             else return false;
         }
         else exit;
@@ -2687,7 +2094,6 @@
                     }
                     return $results; 
                 }
-        
         }   
     }
     function numerosGraficoFem($faixamin, $faixamax, $pais, $mes){
@@ -2696,15 +2102,13 @@
         $db_type=$db_connection['db_type'];
         if($db_type == 'sqlite'){
             $interacaoFem = $db->query("select count(interacao.perfil) as total, pais.nome as pais from interacao join perfil on interacao.perfil= perfil.codigo join cidade on perfil.cidade = cidade.codigo join uf on cidade.uf= uf.codigo join pais on uf.pais = pais.codigo where perfil.genero = \"F\" and pais.nome=\"$pais\" and date(interacao.data) between date('now','-$mes months') and date('now') and date(perfil.datanasc) between date('now','-$faixamax years') and date('now', '-$faixamin years')");
-          //  $response = $interacaoFem->fetchArray();
             $results=[];
-            
-                if($interacaoFem){
-                    while ($row = $interacaoFem->fetchArray()) {
-                        array_push($results, $row);
-                    }
-                    return $results; 
+            if($interacaoFem){
+                while ($row = $interacaoFem->fetchArray()) {
+                    array_push($results, $row);
                 }
+                return $results; 
+            }
         }   
     }
     //17
@@ -2751,52 +2155,7 @@
         } 
         else exit;
     }
-
     //10)
-    /*
-    function countLikesbyCountry($pais,$dias,$hora,$likes){
-        $db_connection=db_connection();
-        $db=$db_connection['db'];
-        $db_type=$db_connection['db_type'];
-        if($db_type == 'sqlite'){
-            $response = $db->query("
-            select count(perfil.codigo) from perfil
-            where perfil.codigo in (
-                select perfil.codigo from interacao 
-                    join perfil on interacao.perfil = perfil.codigo
-                    left join (select post, isReaction, emote, data, local from interacao) as reacoes on interacao.codigo = reacoes.post
-                    left join cidade on reacoes.local = cidade.codigo --left join pois pode nao ter local
-                    left join uf on cidade.uf = uf.codigo
-                    left join pais on uf.pais = pais.codigo
-                where 
-                    reacoes.isReaction = 1 and 
-                    reacoes.emote = 'curtir' and
-                    pais.codigo = $pais and
-                    date(reacoes.data) between date('now', '-$dias days', 'localtime') and date('now', 'localtime') and
-                    date(reacoes.data) between date(interacao.data, 'localtime') and date(interacao.data, '+$hora hours', 'localtime')
-                group by perfil.codigo
-                having count(*) > $likes
-                order by count(*) desc  
-            );");
-            if($response) {
-                $response = $response->fetchArray();
-                return $response;
-            }
-            else return false;
-        }
-        if($db_type == 'postgresql'){
-            $response = pg_prepare($db, "", "");
-            if($response){
-                $response = pg_execute($db, "", array(""));
-                if($response) return $response;
-                else return false;
-            }
-            else return false;
-        }
-        else exit;
-    };
-    */
-    //10
     function countLikesbyCountry($pais,$dias,$hora,$likes){
         $db_connection=db_connection();
         $db=$db_connection['db'];
@@ -3150,4 +2509,6 @@
     }
 
     /*-----------------------------------*/
+
+   
 ?>

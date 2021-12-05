@@ -15,7 +15,8 @@
     session_start(); 
   }
   if(isset($_SESSION['userid'])){
- 
+    $idInteracao = $_GET['interacao'];
+
   }
   else {
     echo "<h2 align=center>Para ver este conteudo faça um cadastro no dagama!!!</h2>";

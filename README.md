@@ -24,23 +24,30 @@ Telas
             Falta validar, paginação
         - 10) Mostrar quantos usuários receberam mais de C curtidas em uma postagem, em menos de H horas após a postagem,
         no país P nos últimos D dias
-            Falta validar só
+            ok
         - 11) Mostrar qual faixa etária mais interagiu às postagens do grupo G nos últimos D dias
+            ok
         - 12) Mostrar quais os top T assuntos mais interagidos por mês no país P nos últimos M meses
+            ok
         - 13) Mostrar qual assunto permaneceu por mais meses consecutivos entre os top T mais interagidos por mês no país P 
         nos últimos M meses
+            ok
         - 15) Desativar temporariamente as contas dos usuários do país P que não possuem qualquer interação há mais de A 
         anos
+            ok
+        - 16) Atribuir automaticamente um selo de fã, com validade determinada para a semana atual, para os usuários do grupo G conforme a tabela
+        ATENÇÃO, AINDA NÃO FEITA
         - 17) Mostrar o gráfico de colunas da quantidade de interações por gênero por faixa etária no país P nos últimos M meses,
         como no exemplo
+            ok
     * Feed
         - 3) CRUD de interações
-            Falta validações e paginação
+            Falta validações
         - 9) Mostrar um feed com as interações do usuário U, com interações de outros usuários relacionadas a estas interações; 
         as interações de outros usuários que citam o usuário U; as interações dos amigos do usuário U; as postagens dos 
         grupos que o usuário U participa, da interação mais recente para a mais antiga, com paginação e no máximo E 
         elementos por página
-            Falta paginação, ordenar, filtrar e pesquisar; validações;
+            Falta filtrar, pesquisar e validações;
         - 13) Mostrar qual assunto permaneceu por mais meses consecutivos entre os top T mais interagidos por mês no país P 
         nos últimos M meses
             ok
@@ -57,14 +64,14 @@ Telas
         G conforme a tabela
     * Perfil
         - 2) CRUD de usuários
-            Falta validações, ordernar, filtrar;
+            Falta validações;
         - 3) CRUD de interações
             Falta validações, paginações, excluir interação sua e relacionada as suas; interagir com outras interações; editar as suas interações;
         - 6) CRUD de amizades de um usuário 
             Falta validação, paginação, ordernar e filtrar
     * Interações
         - 3) CRUD de interações
-            Falta compartilhar, validações, paginações
+            Falta compartilhar, validações, melhorar css
         - 4) CRUD de assuntos de uma interação
             Falta validação
         - 5) CRUD de usuários citados em uma interação
@@ -91,3 +98,4 @@ Observações:
     l) O procedimento de atribuir selo de fã será executado automaticamente às 00:00:00 de cada domingo
 
 Bugs
+    - Bug no local do editar

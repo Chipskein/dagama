@@ -21,6 +21,13 @@
     $locaisArray = getLocais();
     $assuntosArray = getAssuntos();
     $pessoasArray = getPessoas();
+    $portosArrayForShare = getAllPorto($_SESSION['userid'], 1, 0, getTotalPorto(), 1);
+    $qtdAmigos = getFriends($_SESSION['userid'], 0, 1);
+    $friends = [];
+    if(count($qtdAmigos) != 0){
+      $qtdAmigos = $qtdAmigos[0]['qtdAmigos'];            
+      $friends = getFriends($_SESSION['userid'], 0, $qtdAmigos);
+    } 
     $paises=getPaises();
     $estados=getStates();
     $cidades=getCities();
@@ -29,13 +36,17 @@
       $addAssunto = addAssunto("$_POST[buttonAssunto]");
       header("refresh:0;url=feed.php?user=$_SESSION[userid]"); 
     };
-    if(isset($_POST['novoPost2'])){
+    if(isset($_POST['novoPost'])){
+      var_dump($_POST);
       $texto = ''.$_POST['texto'];
       $reacao = isset($_POST['reacao']) ? $_POST['reacao'] : 0;
       $isReaction = isset($_POST['reacao']) ? 1 : 0;
-      $local = isset($_POST['local']) ? $_POST['local'] : $user['cidade'];
+      $isSharing = 0;
+      $porto = 0;
+      $perfil_posting = 0;
       $assuntos = [];
       $citacoes = [];
+      
       // Local
       $local = $user['cidade'];
       $codPais = $_POST['insert-codigo-pais'];
@@ -44,6 +55,7 @@
       $novoEstadoNome = $_POST['insert-nome-estado'];
       $codCidade = $_POST['insert-codigo-cidade'];
       $novoCidadeNome = $_POST['insert-nome-cidade'];
+
       if(isset($codPais) && isset($codEstado) && isset($codCidade)){
         if($codPais != "" && $codEstado != "" && $codCidade != ""){
           if($codPais == 0){
@@ -70,7 +82,18 @@
           }
         }
       }
-     
+      $newAssuntos = [];
+      for($c = 1; $c <= 5 ; $c++){
+        if(isset($_POST['insert-new-assunto'.$c])){
+          $newAssuntos[] = $_POST['insert-new-assunto'.$c];
+        }
+      }
+      if(count($newAssuntos) > 0){
+        foreach ($newAssuntos as $value) {
+          $assuntos[] = addAssunto($value);
+        }
+      }
+
       $qtdAssuntos = count(getAssuntos());
       for($c = 1; $c <= $qtdAssuntos; $c++){
           if(isset($_POST["assunto$c"])){
@@ -83,7 +106,21 @@
               $citacoes[] = $_POST["pessoa$c"];
           }
       }
-      $response = addInteracao($_SESSION['userid'],$texto,0,0,0,$_GET['interacao'],$postPai,$isReaction,$reacao,$local);
+      $postPai = $post['postPai'] ? $post['postPai'] : $post['codInteracao'];
+      if(isset($_POST['compartilhar-feed'])){
+        $isSharing = 1;
+      }
+      if(isset($_POST['compartilhar-porto'])){
+        $isSharing = 1;
+        $porto = $_POST['compartilhar-porto'];
+      }
+      if(isset($_POST['compartilhar-perfil'])){
+        $isSharing = 1;
+        $perfil_posting = $_POST['compartilhar-perfil'];
+      }
+      // print_r([$_SESSION['userid'], $texto, $perfil_posting, $porto, $isSharing, $post['codInteracao'], $postPai, $isReaction, $reacao, $local]);
+
+      $response = addInteracao($_SESSION['userid'], $texto, $perfil_posting, $porto, $isSharing, $post['codInteracao'], $postPai, $isReaction, $reacao, $local);
       if($response) {
         if(count($assuntos) > 0){
           foreach ($assuntos as $value) {
@@ -203,8 +240,6 @@
                     echo $tmpCitacoes;
                   }
                   echo ", </i>";
-                  
-
                 }
                 echo "$sharedPost[textoPost]</p>";
               echo "</div>";
@@ -314,9 +349,9 @@
           
           echo "</div>";
         
-          //Interagir
-        echo "<br> <br>";
-        echo "<div class=\"insert-interacao\">";
+      //Interagir
+      echo "<br> <br>";
+      echo "<div class=\"insert-interacao\">";
         echo "<div class=\"insert-interacao-user\">";
           echo "<img class=\"interaction-mainuser-user-icon\" src=\"".$user["img"]."\" alt=\"\" srcset=\"\">";
           echo "<div>";
@@ -324,7 +359,7 @@
             echo "<p class=\"insert-interacao-user-assuntos\"></p>";
           echo "</div>";
         echo "</div>";
-        echo "<form name=\"newPost\" action=\"interagirInteracao.php?interacao=$_GET[interacao]\" method=\"post\" >";
+        echo "<form name=\"newPost\" action=\"interagirInteracao.php?interacao=$_GET[interacao]".(isset($_GET['porto']) ? "&".$_GET['porto'] : "" )."\" method=\"post\" >";
           echo "<textarea name=\"texto\" class=\"insert-interacao-input\" id=\"insert-interacao-input\" type=\"text\" placeholder=\"Escreva um post ...\" ></textarea>";
           echo "<div class=\"insert-interacao-smallBtns\">";
             echo "<div class=\"insert-interacao-smallBtns-a\" onclick=\"newPostSelect('local')\"><img class=\"insert-interacao-smallBtns-icon\" src=\"imgs/icons/maps-and-flags.png\" alt=\"\" srcset=\"\">Adicionar um Local</div>";
@@ -333,10 +368,10 @@
             echo "<div class=\"insert-interacao-smallBtns-a\" onclick=\"newPostSelect('reacoes')\"><img class=\"insert-interacao-smallBtns-icon\" src=\"imgs/icons/Like.png\" alt=\"\" srcset=\"\">Reação</div>";
             echo "<div class=\"insert-interacao-smallBtns-a\" onclick=\"newPostSelect('compartilhar')\"><img class=\"insert-interacao-smallBtns-icon\" src=\"imgs/icons/send.png\" alt=\"\" srcset=\"\">Compartilhar</div>";
           echo "</div>";
-          echo "<input class=\"insert-interacao-submit\" type=\"submit\" name=\"novoPost2\" />";
+          echo "<input class=\"insert-interacao-submit\" type=\"submit\" name=\"novoPost\" />";
           echo "<hr id=\"post-hr\" class=\"post-hr\" >";
           echo "<div class=\"post-divLocal\">";
-  
+
             echo "<input id=\"insert-codigo-pais\" name=\"insert-codigo-pais\" type=\"hidden\" value=\"\">";
             echo "<input id=\"insert-codigo-estado\" name=\"insert-codigo-estado\" type=\"hidden\" value=\"\">";
             echo "<input id=\"insert-codigo-cidade\" name=\"insert-codigo-cidade\" type=\"hidden\" value=\"\">";
@@ -375,7 +410,7 @@
             echo "<input id=\"insert-nome-cidade\" name=\"insert-nome-cidade\" placeholder=\"Digite o nome da nova cidade \" class=hidden>";
             echo "<button id=\"select-local-button\"  class=\"confirm-type\" type=\"button\" onclick=\"addLocal()\">Confirmar</button>";
             echo "<div class=\"comment-container-top\" id=\"divCidade\"></div>";
-  
+
           echo "</div>";
           echo "<div class=\"post-divPessoas\">";
             echo "<select id=\"select-pessoas\" onclick=\"unsetError(this)\">";
@@ -387,12 +422,14 @@
             echo "<div class=\"comment-container-top\" id=\"divPessoas\"></div>";
           echo "</div>";
           echo "<div class=\"post-divAssuntos\">";
-            echo "<select id=\"select-assuntos\" onclick=\"unsetError(this)\">";
+            echo "<select id=\"select-assuntos\" onchange=\"selectAssunto(this)\">";
               foreach ($assuntosArray as $value) {
                 echo "<option id='optionAssunto".$value['codigo']."' value='{ \"id\": \"".$value['codigo']."\", \"name\": \"".$value['nome']."\" }'\">".$value['nome']."</option>\n";
               }
               echo "<option value=\"0\">Outro</option>";
             echo "</select>";
+            echo "<div id=\"divNewAssuntos\"></div>";
+            echo "<input id=\"insert-nome-assunto\" placeholder=\"Digite o nome do novo assunto\" class=hidden>";
             echo "<button id=\"select-assunto-button\"  class=\"confirm-type\" type=\"button\" onclick=\"addAssuntos()\">Confirmar</button>";
             echo "<div class=\"comment-container-top\" id=\"divAssuntos\"></div>";
           echo "</div>";
@@ -406,15 +443,28 @@
             echo "<button id=\"select-reacao-button\"  class=\"confirm-type\" type=\"button\" onclick=\"addReacoes()\">Confirmar</button>";
             echo "<div class=\"comment-container-top\" id=\"divReacoes\"></div>";
           echo "</div>";
-          echo "<div class=\"post-divCompart\">";
-            echo "<select id=\"select-compartilhar\" onclick=\"unsetError(this)\">";
-              echo "<option id='optionCompartilhar' value=''>Selecione onde vai compartilhar</option>\n";
+          echo "<div class=\"post-divCompart\">"; // TODO:
+            echo "<select id=\"select-compartilhar\" onchange=\"selectCompartilhar(this)\">";
+              echo "<option id='optionCompartilhar' selected value=''>Selecione onde vai compartilhar</option>\n";
               echo "<option id='optionCompartilhar' value='feed'>No feed</option>\n";
               echo "<option id='optionCompartilhar' value='grupo'>Em um grupo</option>\n";
               echo "<option id='optionCompartilhar' value='perfil'>Em um perfil</option>\n";
             echo "</select>";
-            echo "<button id=\"select-reacao-button\"  class=\"confirm-type\" type=\"button\" onclick=\"addReacoes()\">Confirmar</button>";
-            echo "<div class=\"comment-container-top\" id=\"divReacoes\"></div>";
+            echo "<select id=\"select-compartilhar-porto\" class=hidden>";
+            foreach ($portosArrayForShare as $porto) {
+              echo "<option id='optionCompartilharPorto$porto[codigo]' value='$porto[codigo]'>$porto[nome]</option>\n";
+            }
+            echo "</select>";
+            echo "<select id=\"select-compartilhar-amigo\" class=hidden>";
+            echo "<option id='optionCompartilharAmigo$_SESSION[userid]' value='$_SESSION[userid]'>No seu perfil</option>\n";
+            foreach ($friends as $perfil) {
+              echo "<option id='optionCompartilharAmigo$perfil[amigoCod]' value='$perfil[amigoCod]'>$perfil[nameAmigo]</option>\n";
+            }
+            echo "</select>";
+            echo "<div id=\"divCompart\"></div>";
+            echo "<button id=\"select-compartilhar-button\"  class=\"confirm-type\" type=\"button\" onclick=\"addCompartilhar()\">Confirmar</button>";
+            echo "<div class=\"comment-container-top\" id=\"divReacoes\">";
+            echo "</div>";
           echo "</div>";
         echo "</form>";
       echo "</div>";

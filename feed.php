@@ -36,7 +36,6 @@
     $limit = 5;
     $offset = isset($_GET['offset']) ? $_GET['offset'] : 0;
     $orderby = (isset($_GET["orderby"])) ? $_GET["orderby"] : "tmp1.data desc";
-    $feedArray = getFeed($offset,$limit);
     $locaisArray = getLocais();
     $assuntosArray = getAssuntos();
     $pessoasArray = getPessoas();
@@ -47,7 +46,6 @@
     $suggestFriends = suggestFriends($_SESSION['userid'], 4, 0);
     $postsArray = getPosts($_SESSION['userid'], $offset, $limit, $orderby);
     $getAllPosts = getAllPosts($_SESSION['userid']);
-    echo $offset;
     $portosArray = getAllPorto($_SESSION['userid'], true, 0, 3, null);
     $portosArrayForShare = getAllPorto($_SESSION['userid'], true, 0, 0,null);
     $errorMessage = [];
@@ -366,7 +364,7 @@
       echo "<div class=\"add-amigo\">";
       echo "<div class=\"add-amigo-top\">";
       echo "<p class=\"add-amigo-suggesTxt\">Sugestão de amigos:</p>";
-      echo "<p class=\"add-amigo-verMais\">VER MAIS</p>";
+      echo "<a class=\"add-amigo-verMais\" href=\"verMaisSugestoes.php\">VER MAIS</a>";
       echo "</div>";
       echo "<div class=\"add-amigo-cards\">";
       foreach ($suggestFriends as $person) {
@@ -706,77 +704,78 @@
                       echo "<div class=\"comment-container-top\">";
                         echo "<a href=navio.php?user=$resposta[codPerfil]><img src=\"".$resposta['iconPerfil']."\" alt=\"\" class=\"comment-icon\"></a>";
                         echo "<div class=\"row\">";
-                        // echo "<img class=\"coment-mainuser-user-selo\" src=\"./imgs/icons/bronze-medal.png\"/>";   
-                        echo "<p class=\"comment-txt\"><i>@".$resposta['nomePerfil']."</i> ";
-                        if($resposta['isReaction']) {
-                          echo "<b><i>reagiu</i></b> com ";
-                          switch ($resposta['emote']){
-                            case 'curtir':
-                              echo "👌";
-                              break;
-                            case 'kkk':
-                              echo "🤣";
-                              break;
-                            case 'amei':
-                              echo "❤️";
-                              break;
-                            case 'grr':
-                              echo "🤬";
-                              break;
-                            case 'wow':
-                              echo "🤯";
-                              break;
-                            case 'sad':
-                              echo "😭";
-                              break;                  
+                          // echo "<img class=\"coment-mainuser-user-selo\" src=\"./imgs/icons/bronze-medal.png\"/>";   
+                          echo "<p class=\"comment-txt\"><i>@".$resposta['nomePerfil']."</i> ";
+                          if($resposta['isReaction']) {
+                            echo "<b><i>reagiu</i></b> com ";
+                            switch ($resposta['emote']){
+                              case 'curtir':
+                                echo "👌";
+                                break;
+                              case 'kkk':
+                                echo "🤣";
+                                break;
+                              case 'amei':
+                                echo "❤️";
+                                break;
+                              case 'grr':
+                                echo "🤬";
+                                break;
+                              case 'wow':
+                                echo "🤯";
+                                break;
+                              case 'sad':
+                                echo "😭";
+                                break;                  
+                            }
+                            echo ", ";
                           }
-                          echo ", ";
-                        }
-                        $isMentioned2 = 0;
-                        if(count($resposta['citacoes']) > 0) {
-                          $tmpCitacoes = [];
-                          foreach ($resposta['citacoes'] as $pessoa) {
-                            $tmpCitacoes[] = "@".$pessoa['nomePerfil'];
-                            if($pessoa['codPerfil'] == $_SESSION['userid'] && $resposta['codPerfil'] != $_SESSION['userid']) $isMentioned2 = 1;
+                          $isMentioned2 = 0;
+                          if(count($resposta['citacoes']) > 0) {
+                            $tmpCitacoes = [];
+                            foreach ($resposta['citacoes'] as $pessoa) {
+                              $tmpCitacoes[] = "@".$pessoa['nomePerfil'];
+                              if($pessoa['codPerfil'] == $_SESSION['userid'] && $resposta['codPerfil'] != $_SESSION['userid']) $isMentioned2 = 1;
+                            }
+                            $tmpCitacoes = implode($tmpCitacoes, ', ');
+                            echo "<b><i>marcando</i></b> <i title=\"".$tmpCitacoes."\">";
+                            if(strlen($tmpCitacoes) > 10){
+                              $tmpCitacoes = substr($tmpCitacoes, 0, 7);
+                              echo $tmpCitacoes."...";
+                            } else {
+                              echo $tmpCitacoes;
+                            }
+                            echo ", </i>";
                           }
-                          $tmpCitacoes = implode($tmpCitacoes, ', ');
-                          echo "<b><i>marcando</i></b> <i title=\"".$tmpCitacoes."\">";
-                          if(strlen($tmpCitacoes) > 10){
-                            $tmpCitacoes = substr($tmpCitacoes, 0, 7);
-                            echo $tmpCitacoes."...";
-                          } else {
-                            echo $tmpCitacoes;
+                          if(count($resposta['assuntos']) > 0) {
+                            $tmpAssuntos = [];
+                            foreach ($resposta['assuntos'] as $assunto) {
+                              $tmpAssuntos[] = $assunto['nomeAssunto'];
+                            }
+                            $tmpAssuntos = implode($tmpAssuntos, ', ');
+                            echo "com os <b><i>assuntos</i></b> <i title=\"".$tmpAssuntos."\">";
+                            if(strlen($tmpAssuntos) > 10){
+                              $tmpAssuntos = substr($tmpAssuntos, 0, 7);
+                              echo $tmpAssuntos."...";
+                            } else {
+                              echo $tmpAssuntos;
+                            }
+                            echo ", </i>";
                           }
-                          echo ", </i>";
-                        }
-                        if(count($resposta['assuntos']) > 0) {
-                          $tmpAssuntos = [];
-                          foreach ($resposta['assuntos'] as $assunto) {
-                            $tmpAssuntos[] = $assunto['nomeAssunto'];
+                          echo ($resposta['textoPost'] ? $resposta['textoPost'] : '');
+                          echo ", em ";
+                          if($resposta['nomeCidade']){
+                            echo $resposta['nomeCidade'].", ".$resposta['nomePais']." - ";
                           }
-                          $tmpAssuntos = implode($tmpAssuntos, ', ');
-                          echo "com os <b><i>assuntos</i></b> <i title=\"".$tmpAssuntos."\">";
-                          if(strlen($tmpAssuntos) > 10){
-                            $tmpAssuntos = substr($tmpAssuntos, 0, 7);
-                            echo $tmpAssuntos."...";
-                          } else {
-                            echo $tmpAssuntos;
-                          }
-                          echo ", </i>";
-                        }
-                        echo ($resposta['textoPost'] ? $resposta['textoPost'] : '');
-                        echo ", em ";
-                        if($resposta['nomeCidade']){
-                          echo $resposta['nomeCidade'].", ".$resposta['nomePais']." - ";
-                        }
-                        $tmpHora = explode(' ', $resposta['dataPost'])[1];
-                        $tmpData = explode(' ', $resposta['dataPost'])[0];
-                        $tmpData = explode('-', $tmpData);
-                        echo " ".$tmpData[2]."/".$tmpData[1]."/".$tmpData[0]." ".$tmpHora."</p>";
-                        echo "</p>";
+                          $tmpHora = explode(' ', $resposta['dataPost'])[1];
+                          $tmpData = explode(' ', $resposta['dataPost'])[0];
+                          $tmpData = explode('-', $tmpData);
+                          echo " ".$tmpData[2]."/".$tmpData[1]."/".$tmpData[0]." ".$tmpHora."</p>";
+                          echo "</p>";
+                        echo "</div>";
                       echo "</div>";
                       echo "<div class=\"comment-reagir\">";
-                      echo "<a href=\"interagirInteracao.php?interacao=$resposta[codInteracao]\">Reagir</a>";
+                        echo "<a href=\"interagirInteracao.php?interacao=$resposta[codInteracao]\">Reagir</a>";
                         if($resposta['codPerfil'] == $_SESSION['userid']) {
                           echo "<a href=\"editarInteracao.php?interacao=$resposta[codInteracao]\"><p class=\"interacao-editar-txt\">- Editar -</p></a>";
                           echo "<form action=\"feed.php?user=$_SESSION[userid]\" method=\"post\">";
@@ -792,13 +791,15 @@
                     echo "</div>";
                   }
                 }
-                echo "<p align=center><a href=completeInteracao.php?interacao=$comentario[codInteracao]>Ver mais respostas</a></p>";
+                if($comentario['qtdInteracao'] > 0){
+                  echo "<p align=center><a href=completeInteracao.php?interacao=$comentario[codInteracao]>Ver mais respostas</a></p>";
+                }
               echo "</div>";
             }
           }
           if($post['qtdInteracao'] > 0){
-            echo "<hr class=\"post-hr-gray\">";
-            echo "<p align=center ><a href=completeInteracao.php?interacao=$post[codInteracao] style=\"txt-verMaisComentarios\">Ver mais</a></p>";
+            // echo "<hr class=\"post-hr-gray\">";
+            // echo "<p align=center ><a href=completeInteracao.php?interacao=$post[codInteracao] style=\"txt-verMaisComentarios\">Ver mais</a></p>";
           }
         echo "</div>";
       }

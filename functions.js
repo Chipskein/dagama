@@ -197,7 +197,7 @@ function newPostSelect(value) {
     var divPessoas = document.getElementsByClassName('post-divPessoas')[0];
     var divAssuntos = document.getElementsByClassName('post-divAssuntos')[0];
     var divReacoes = document.getElementsByClassName('post-divReacoes')[0];
-    // var divCompart = document.getElementsByClassName('post-divCompart')[0];
+    var divCompart = document.getElementsByClassName('post-divCompart')[0];
     var hr = document.getElementById('post-hr');
     if(postSelectArr == value){
         postSelectArr = '';
@@ -206,7 +206,7 @@ function newPostSelect(value) {
         divPessoas.style.display = 'none';
         divAssuntos.style.display = 'none';
         divReacoes.style.display = 'none';
-        // divCompart.style.display = 'none';
+        divCompart.style.display = 'none';
         insert.style.height = '262px';
     } else {
         insert.style.height = '400px';
@@ -217,7 +217,7 @@ function newPostSelect(value) {
             divPessoas.style.display = 'none';
             divAssuntos.style.display = 'none';
             divReacoes.style.display = 'none';
-            // divCompart.style.display = 'none';
+            divCompart.style.display = 'none';
         }
         if(value == 'pessoas'){
             postSelectArr = value;
@@ -226,7 +226,7 @@ function newPostSelect(value) {
             divPessoas.style.display = 'block';
             divAssuntos.style.display = 'none';
             divReacoes.style.display = 'none';
-            // divCompart.style.display = 'none';
+            divCompart.style.display = 'none';
         }
         if(value == 'assuntos'){
             postSelectArr = value;
@@ -235,7 +235,7 @@ function newPostSelect(value) {
             divPessoas.style.display = 'none';
             divAssuntos.style.display = 'block';
             divReacoes.style.display = 'none';
-            // divCompart.style.display = 'none';
+            divCompart.style.display = 'none';
         }
         if(value == 'reacoes'){
             postSelectArr = value;
@@ -244,7 +244,7 @@ function newPostSelect(value) {
             divPessoas.style.display = 'none';
             divAssuntos.style.display = 'none';
             divReacoes.style.display = 'block';
-            // divCompart.style.display = 'none';
+            divCompart.style.display = 'none';
         }
         if(value == 'compartilhar'){
             postSelectArr = value;
@@ -253,7 +253,7 @@ function newPostSelect(value) {
             divPessoas.style.display = 'none';
             divAssuntos.style.display = 'none';
             divReacoes.style.display = 'none';
-            // divCompart.style.display = 'block';
+            divCompart.style.display = 'block';
         }
     }
 }
@@ -347,6 +347,9 @@ function addLocal(){
     for(let c = 0; c < selectCidades.length; c++){
         selectCidades[c].style.display = 'none';
     }
+    var inputCodPais = document.getElementById('insert-codigo-pais');
+    var inputCodEstado = document.getElementById('insert-codigo-estado');
+    var inputCodCidade = document.getElementById('insert-codigo-cidade');
     var inputPais = document.getElementById('insert-nome-pais');
     var inputEstado = document.getElementById('insert-nome-estado');
     var inputCidade = document.getElementById('insert-nome-cidade');
@@ -355,7 +358,7 @@ function addLocal(){
     inputCidade.style.display = 'none';
     var btn = document.getElementById('select-local-button');
     var div = document.getElementById('divCidade');
-    if(inputPais.value != '' && inputEstado.value != '' && inputCidade.value != ''){
+    if(inputCodPais.value != '' && inputCodEstado.value != '' && inputCodCidade.value != ''){
         selectPais.style.display = 'none';
         if(selectPais.value == 0){
             var p = document.createElement('p');
@@ -390,7 +393,7 @@ function addLocal(){
                     p.innerHTML += `${cidade.name} <button type="button" onclick="removeLocal('${cidade.id}', '${cidade.name}')">❌</button>`;
                     input.type = 'hidden';
                     input.id = 'cidadeInput'+cidade.id;
-                    input.name = 'cidade';
+                    input.name = 'insert-codigo-cidade';
                     input.value = cidade.id;
                     div.append(p);
                     div.append(input);
@@ -585,6 +588,97 @@ function removeReacoes(id, name){
     btn.style.display = 'block';
     document.getElementById('select-reacoes').style.display = 'block';
 }
+
+function selectCompartilhar(){
+    var selectWhere = document.getElementById('select-compartilhar');
+    var selectPorto = document.getElementById('select-compartilhar-porto');
+    var selectAmigo = document.getElementById('select-compartilhar-amigo');
+    var div = document.getElementById('divCompart');
+    var input = document.getElementById('inputCompart');
+    var p = document.getElementById('pCompart');
+    if(input){
+        input.remove();
+    }
+    if(p){
+        p.remove();
+    }
+    selectPorto.style.display = 'none';
+    selectAmigo.style.display = 'none';
+    if(selectWhere.value == 'grupo'){
+        selectPorto.style.display = 'flex';
+    }
+    if(selectWhere.value == 'perfil'){
+        selectAmigo.style.display = 'flex';
+    }
+}
+function addCompartilhar() {
+    var selectWhere = document.getElementById('select-compartilhar');
+    var selectPorto = document.getElementById('select-compartilhar-porto');
+    var selectAmigo = document.getElementById('select-compartilhar-amigo');
+    var btn = document.getElementById('select-compartilhar-button');
+    var div = document.getElementById('divCompart');
+    selectWhere.style.display = 'none';
+    selectPorto.style.display = 'none';
+    selectAmigo.style.display = 'none';
+    btn.style.display = 'none';
+    if(selectWhere.value == 'feed'){
+        var newInput = document.createElement('input');
+        newInput.id = 'inputCompart';
+        newInput.name = 'compartilhar-feed';
+        newInput.type = 'hidden';
+        newInput.value = 'feed';
+        var newP = document.createElement('p');
+        newP.id = 'pCompart';
+        newP.innerHTML = 'Compartilhar no feed <button type="button" onclick="removeCompartilhar()">❌</button>';
+        div.append(newInput);
+        div.append(newP);
+    }
+    if(selectWhere.value == 'grupo'){
+        var newInput = document.createElement('input');
+        newInput.id = 'inputCompart';
+        newInput.name = 'compartilhar-porto';
+        newInput.type = 'hidden';
+        newInput.value = selectPorto.value;
+        var newP = document.createElement('p');
+        newP.id = 'pCompart';
+        newP.innerHTML = (document.getElementById('optionCompartilharPorto'+selectPorto.value).innerHTML)+' <button type="button" onclick="removeCompartilhar()">❌</button>';
+        div.append(newInput);
+        div.append(newP);
+    }
+    if(selectWhere.value == 'perfil'){
+        var newInput = document.createElement('input');
+        newInput.id = 'inputCompart';
+        newInput.name = 'compartilhar-perfil';
+        newInput.type = 'hidden';
+        newInput.value = selectAmigo.value;
+        var newP = document.createElement('p');
+        newP.id = 'pCompart';
+        var text = (document.getElementById('optionCompartilharAmigo'+selectAmigo.value).innerHTML == 'No seu perfil' ? 
+        'Compartilhar no seu perfil' : 'Compartilhar no perfil de'+document.getElementById('optionCompartilharAmigo'+selectAmigo.value).innerHTML);
+        newP.innerHTML = text;
+        div.append(newInput);
+        div.append(newP);
+    }
+}
+function removeCompartilhar() {
+    var selectWhere = document.getElementById('select-compartilhar');
+    var selectPorto = document.getElementById('select-compartilhar-porto');
+    var selectAmigo = document.getElementById('select-compartilhar-amigo');
+    var btn = document.getElementById('select-compartilhar-button');
+    selectWhere.style.display = 'block';
+    selectPorto.style.display = 'none';
+    selectAmigo.style.display = 'none';
+    btn.style.display = 'block';
+    var input = document.getElementById('inputCompart');
+    var p = document.getElementById('pCompart');
+    if(input){
+        input.remove();
+    }
+    if(p){
+        p.remove();
+    }
+}
+
 
 
 function unsetError(){
