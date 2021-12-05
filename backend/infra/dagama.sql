@@ -5309,29 +5309,25 @@ INSERT INTO CIDADE (codigo, uf, nome) VALUES(2,2001,'Pelotas');
 INSERT INTO PERFIL VALUES(1,1,'abfn0905@gmail.com','$2y$10$vaJf.MBckE0gkUdu0WE3p.c8ZxwWw6OM/sJcZNc3rzV2yt87DVAFy','M','CHPK-9','https://drive.google.com/uc?export=download&id=18Q0QWF1iRWc7wq0nezRxgdLYEQUc2Thz','2002-05-09','2021-11-25 21:34:09',1);
 INSERT INTO PERFIL VALUES(2,1,'bruno.nascimento@aluno.riogrande.ifrs.edu','$2y$10$QVuXeaCgue9b9Gfxoqpyle2ubbwpIVKlYCPb3G.ueO0jQw5bM8yom','M','CHPK-10','https://drive.google.com/uc?export=download&id=1wrkf7nkkKn-ThbxSjHJoSFb-0KGnQefq','2002-05-09','2021-11-25 22:27:26',1);
 INSERT INTO PERFIL VALUES(3,1,'silvioquintana1@hotmail.com','$2y$10$k5Z0zf/spQK8Jq8.I0LZ6OHABB/3no.2zEZlPGlryJAVdHtCkibV6','M','SilMusk3','https://upload.wikimedia.org/wikipedia/commons/4/4a/Pirate_icon.gif','2002-04-26','2021-11-26 01:19:04',1);
-INSERT INTO PERFIL VALUES(4,1,'victortavamaral@gmail.com','$2y$10$LmeaGQainGy2LCxzRPkUqORv0927DCdV6WbpHWUADIwY1Fu29pAgi','M','vitão','https://drive.google.com/uc?export=download&id=1oNvSVJiFJiWzlu7H5o4lVgK_9aZ4EBQd','2002-04-22','2021-11-26 13:07:48',1);
-INSERT INTO PERFIL VALUES(5,1,'victortavaresjedi150@gmail.com','$2y$10$FFXBwoh4u00MW7yk2.ME0.1pj9ZqYRfdtvJEPZlfZBotM1nSDrLpS','M','geraldao','https://drive.google.com/uc?export=download&id=1svSmr4LV-mU2G9lXWFSOwiDdcJuzyW5O','2002-04-22','2021-11-26 15:13:08',1);
+INSERT INTO PERFIL VALUES(4,1,'victortavamaral@gmail.com','$2y$10$LmeaGQainGy2LCxzRPkUqORv0927DCdV6WbpHWUADIwY1Fu29pAgi','M','vitão','https://drive.google.com/uc?export=download&id=14hdol600M_-m9mhuuN1OmPBxnNV4nVyV','2002-04-22','2021-11-26 13:07:48',1);
 
-INSERT INTO PORTO VALUES(1,4,'Resident Evil','asdasdas','https://drive.google.com/uc?export=download&id=1iK1-bCRZd4fKHgQG0TWN98DkfmrkWxve',1);
-INSERT INTO PORTO VALUES(2,4,'Hogwarts','Sla mano','https://drive.google.com/uc?export=download&id=1pGLvGzhlf9XXFM3jGa9FhTRTihBPQHB3',1);
-INSERT INTO PORTO VALUES(3,4,'Casa de Hades','asdasdasdasd','https://drive.google.com/uc?export=download&id=1EqbendRznjPYMFfQ634jYIoHJcPYkdpS',1);
-INSERT INTO PORTO VALUES(4,4,'Medjais de Siuá','asdasddsasad','https://drive.google.com/uc?export=download&id=1AuTDe8UFD0nJrg7HXfQ3Kmg4BnIlTF2k',1);
-INSERT INTO PORTO VALUES(5,5,'Jill da massa','asdasdasdasdas','https://drive.google.com/uc?export=download&id=1PC588dOlBzvhuPSvrj03mUIA6fv-EJvZ',1);
-INSERT INTO PORTO VALUES(6,5,'Hunters o Yharnam','Bloodborne is an action role-playing game developed by FromSoftware and published by Sony Computer Entertainment, which was released for the PlayStation 4 in March 2015. Bloodborne follows the players character, a Hunter, through the decrepit...','https://drive.google.com/uc?export=download&id=1BYDQwBM91JAmJzCfd8Wsk4OZ16TywSlN',1);
+INSERT INTO PORTO VALUES(1,4,'Resident Evil','asdasdas','https://drive.google.com/uc?export=download&id=1iK1-bCRZd4fKHgQG0TWN98DkfmrkWxve',1, CURRENT_TIMESTAMP);
+INSERT INTO PORTO VALUES(2,4,'Hogwarts','Sla mano','https://drive.google.com/uc?export=download&id=1pGLvGzhlf9XXFM3jGa9FhTRTihBPQHB3',1, CURRENT_TIMESTAMP);
+INSERT INTO PORTO VALUES(3,4,'Casa de Hades','asdasdasdasd','https://drive.google.com/uc?export=download&id=1EqbendRznjPYMFfQ634jYIoHJcPYkdpS',1, CURRENT_TIMESTAMP);
+INSERT INTO PORTO VALUES(4,4,'Medjais de Siuá','asdasddsasad','https://drive.google.com/uc?export=download&id=1AuTDe8UFD0nJrg7HXfQ3Kmg4BnIlTF2k',1, CURRENT_TIMESTAMP);
+INSERT INTO PORTO VALUES(5,4,'Jill da massa','asdasdasdasdas','https://drive.google.com/uc?export=download&id=1PC588dOlBzvhuPSvrj03mUIA6fv-EJvZ',1, CURRENT_TIMESTAMP);
+INSERT INTO PORTO VALUES(6,4,'Hunters o Yharnam','Bloodborne is an action role-playing game developed by FromSoftware and published by Sony Computer Entertainment, which was released for the PlayStation 4 in March 2015. Bloodborne follows the players character, a Hunter, through the decrepit...','https://drive.google.com/uc?export=download&id=1BYDQwBM91JAmJzCfd8Wsk4OZ16TywSlN',1, CURRENT_TIMESTAMP);
 
 INSERT INTO solicitacao_amigo VALUES(1,3,'2021-11-26 01:27:05',1);
 INSERT INTO solicitacao_amigo VALUES(2,3,'2021-11-26 01:27:08',1);
 INSERT INTO solicitacao_amigo VALUES(3,4,'2021-11-26 15:07:49',1);
 INSERT INTO solicitacao_amigo VALUES(2,4,'2021-11-26 15:07:51',1);
-INSERT INTO solicitacao_amigo VALUES(4,5,'2021-11-26 15:14:22',1);
-INSERT INTO solicitacao_amigo VALUES(3,5,'2021-11-26 15:15:43',1);
-INSERT INTO solicitacao_amigo VALUES(2,5,'2021-11-26 15:15:46',1);
 
 -- Assuntos
 insert into assunto (nome) values 
 ('Banco de Dados'), 
-('Silvão, pescador de ilusões'), 
-('Miranha'),
+('Facebook do Betito'), 
+('Preciso de férias'),
 ('Três Tom Holland é sacanagem');
 
 -- Interações
@@ -5342,7 +5338,6 @@ insert into interacao (perfil, perfil_posting, porto, post, postPai, texto, isRe
 (1, null, null, 2, 1, 'Conta 1 fazendo resposta no comentario 2 no post 1', null, null, null),
 (3, null, null, 4, 1, 'Conta 3 fazendo resposta no comentario 4 no post 1', null, null, null),
 (4, null, null, 3, 1, 'Conta 4 fazendo resposta no comentario 3 no post 1', null, null, null);
-
 
 --insert into interacao_assunto (assunto, interacao) values (1, 13), (2, 13), (3,13);
 --porto

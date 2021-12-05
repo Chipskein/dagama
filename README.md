@@ -34,7 +34,7 @@ Telas
         como no exemplo
     * Feed
         - 3) CRUD de interações
-            interagir com outras interações; editar as suas interações; validações e paginação
+            Falta validações e paginação
         - 9) Mostrar um feed com as interações do usuário U, com interações de outros usuários relacionadas a estas interações; 
         as interações de outros usuários que citam o usuário U; as interações dos amigos do usuário U; as postagens dos 
         grupos que o usuário U participa, da interação mais recente para a mais antiga, com paginação e no máximo E 
@@ -42,6 +42,7 @@ Telas
             Falta paginação, ordenar, filtrar e pesquisar; validações;
         - 13) Mostrar qual assunto permaneceu por mais meses consecutivos entre os top T mais interagidos por mês no país P 
         nos últimos M meses
+            ok
         - 14) Sugerir amigos ao usuário U, considerando que, se U e V não são amigos mas possuem no mínimo A assuntos em 
         comum entre os B assuntos mais comentados por cada um nos últimos M meses, V deve ser sugerido como amigo de U
             Falta validação e testes
@@ -62,11 +63,11 @@ Telas
             Falta validação, paginação, ordernar e filtrar
     * Interações
         - 3) CRUD de interações
-            Falta validações, paginações, interagir com outras interações; editar as suas interações;
+            Falta compartilhar, validações, paginações
         - 4) CRUD de assuntos de uma interação
-            Falta remover assuntos e validação
+            Falta validação
         - 5) CRUD de usuários citados em uma interação
-            Falta remover citações e validação
+            Falta validação
 
 Observações:
     a) Todas as entradas de dados devem ser validadas tanto no front-end quando no back-end
@@ -89,4 +90,3 @@ Observações:
     l) O procedimento de atribuir selo de fã será executado automaticamente às 00:00:00 de cada domingo
 
 Bugs
-    - O count comentarios ta considerando os cometarios não ativos
