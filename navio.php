@@ -41,6 +41,7 @@
     if(isset($_GET['user'])){
       $orderby = (isset($_GET["orderby"])) ? $_GET["orderby"] : "tmp1.data desc";
       $user=getUserInfo("$_GET[user]");
+      $userSelf=getUserInfo("$_SESSION[userid]");
       if(!$user){
         echo "Usuario inválido";
         header("refresh:1;url=mar.php");
@@ -52,7 +53,7 @@
       $orderby = (isset($_GET["orderby"])) ? $_GET["offset"] : "tmp1.data desc";
       $getAllPosts = getAllPosts($_GET['user']);
       $postsArray = getPosts($_GET['user'], $offset, $limit, $orderby);
-        $amigosUser = getFriends($_GET['user'], 0, 3,'');
+      $amigosUser = getFriends($_GET['user'], 0, 3,'');
       $portosArray = getAllPorto($_GET['user'], true, 0, 3, null);
       $portosUser = getUserPortoQtd($_GET['user']);
       $locaisArray = getLocais();
@@ -61,114 +62,110 @@
       $paises=getPaises();
       $estados=getStates();
       $cidades=getCities();
-        if(isset($_POST['buttonAssunto'])){
-          $addAssunto = addAssunto("$_POST[buttonAssunto]");
-          header("refresh:0;url=navio.php?user=$_SESSION[userid]"); 
-        };
-        if(isset($_POST['novoPost'])){
-          $texto = ''.$_POST['texto'];
-          $reacao = isset($_POST['reacao']) ? $_POST['reacao'] : 0;
-          $isReaction = isset($_POST['reacao']) ? 1 : 0;
-          $assuntos = [];
-          $citacoes = [];
-          
-          // Local
-          $local = $user['cidade'];
-          $codPais = $_POST['insert-codigo-pais'];
-          $novoPaisNome = $_POST['insert-nome-pais'];
-          $codEstado = $_POST['insert-codigo-estado'];
-          $novoEstadoNome = $_POST['insert-nome-estado'];
-          $codCidade = $_POST['insert-codigo-cidade'];
-          $novoCidadeNome = $_POST['insert-nome-cidade'];
+      if(isset($_POST['novoPost'])){
+        $texto = ''.$_POST['texto'];
+        $reacao = isset($_POST['reacao']) ? $_POST['reacao'] : 0;
+        $isReaction = isset($_POST['reacao']) ? 1 : 0;
+        $assuntos = [];
+        $citacoes = [];
+        
+        // Local
+        $local = $user['cidade'];
+        $codPais = $_POST['insert-codigo-pais'];
+        $novoPaisNome = $_POST['insert-nome-pais'];
+        $codEstado = $_POST['insert-codigo-estado'];
+        $novoEstadoNome = $_POST['insert-nome-estado'];
+        $codCidade = $_POST['insert-codigo-cidade'];
+        $novoCidadeNome = $_POST['insert-nome-cidade'];
 
-          if(isset($codPais) && isset($codEstado) && isset($codCidade)){
-            if($codPais != "" && $codEstado != "" && $codCidade != ""){
-              if($codPais == 0){
-                // cria novo pais, estado e cidade
-                $pais = addPais($novoPaisNome);
-                $estado = addEstado($novoEstadoNome, $pais);
+        if(isset($codPais) && isset($codEstado) && isset($codCidade)){
+          if($codPais != "" && $codEstado != "" && $codCidade != ""){
+            if($codPais == 0){
+              // cria novo pais, estado e cidade
+              $pais = addPais($novoPaisNome);
+              $estado = addEstado($novoEstadoNome, $pais);
+              $local = addCidade($novoCidadeNome, $estado);
+            }
+            if($codPais != 0 && preg_match('#^[0-9]{1,}$#', $codPais)){  
+              if($codEstado == 0){
+                // cria novo estado e cidade
+                $estado = addEstado($novoEstadoNome, $codPais);
                 $local = addCidade($novoCidadeNome, $estado);
               }
-              if($codPais != 0 && preg_match('#^[0-9]{1,}$#', $codPais)){  
-                if($codEstado == 0){
-                  // cria novo estado e cidade
-                  $estado = addEstado($novoEstadoNome, $codPais);
-                  $local = addCidade($novoCidadeNome, $estado);
+            if($codEstado != 0 && preg_match('#^[0-9]{1,}$#', $codEstado)){
+              if($codCidade == 0){
+                  // cria nova cidade
+                  $local = addCidade($novoCidadeNome, $codEstado);
                 }
-              if($codEstado != 0 && preg_match('#^[0-9]{1,}$#', $codEstado)){
-                if($codCidade == 0){
-                    // cria nova cidade
-                    $local = addCidade($novoCidadeNome, $codEstado);
-                  }
-                  if($codCidade != 0 && preg_match('#^[0-9]{1,}$#', $codCidade)){
-                    $local = $codCidade;
-                  }
+                if($codCidade != 0 && preg_match('#^[0-9]{1,}$#', $codCidade)){
+                  $local = $codCidade;
                 }
               }
             }
           }
-          $newAssuntos = [];
-          for($c = 1; $c <= 5 ; $c++){
-            if(isset($_POST['insert-new-assunto'.$c])){
-              $newAssuntos[] = $_POST['insert-new-assunto'.$c];
-            }
+        }
+        $newAssuntos = [];
+        for($c = 1; $c <= 5 ; $c++){
+          if(isset($_POST['insert-new-assunto'.$c])){
+            $newAssuntos[] = $_POST['insert-new-assunto'.$c];
           }
-          if(count($newAssuntos) > 0){
-            foreach ($newAssuntos as $value) {
-              $assuntos[] = addAssunto($value);
-            }
+        }
+        if(count($newAssuntos) > 0){
+          foreach ($newAssuntos as $value) {
+            $assuntos[] = addAssunto($value);
           }
+        }
 
-          $qtdAssuntos = count(getAssuntos());
-          for($c = 1; $c <= $qtdAssuntos; $c++){
-              if(isset($_POST["assunto$c"])){
-                  $assuntos[] = $_POST["assunto$c"];
-              }
-          }
-          $qtdPessoas = count(getPessoas());
-          for($c = 1; $c <= $qtdPessoas; $c++){
-              if(isset($_POST["pessoa$c"])){
-                  $citacoes[] = $_POST["pessoa$c"];
-              }
-          }
-          $response = addInteracao($_SESSION['userid'], $texto, $_GET['user'], 0, 0, 0, 0, $isReaction, $reacao, $local);
-          if($response) {
-            if(count($assuntos) > 0){
-              foreach ($assuntos as $value) {
-                addAssuntoInteracao($response, $value);
-              }
+        $qtdAssuntos = count(getAssuntos());
+        for($c = 1; $c <= $qtdAssuntos; $c++){
+            if(isset($_POST["assunto$c"])){
+                $assuntos[] = $_POST["assunto$c"];
             }
-            if(count($citacoes) > 0){
-              foreach ($citacoes as $value) {
-                addCitacaoInteracao($value, $response);
-              }
+        }
+        $qtdPessoas = count(getPessoas());
+        for($c = 1; $c <= $qtdPessoas; $c++){
+            if(isset($_POST["pessoa$c"])){
+                $citacoes[] = $_POST["pessoa$c"];
             }
-            header("refresh:0;url=navio.php?user=$_SESSION[userid]"); 
-          }
-          else return false;
         }
-        if(isset($_POST['deletePost'])){
-          $post = $_POST['deletePost'];
-          $user = $_SESSION['userid'];
-          $erros = [];
-          // Validação
-          // ...
-          if($erros == []){
-            delInteracao($post);
-            header("refresh:0;url=navio.php?user=$_SESSION[userid]"); 
+        $response = addInteracao($_SESSION['userid'], $texto, $_GET['user'], 0, 0, 0, 0, $isReaction, $reacao, $local);
+        if($response) {
+          if(count($assuntos) > 0){
+            foreach ($assuntos as $value) {
+              addAssuntoInteracao($response, $value);
+            }
           }
-        }
-        if(isset($_POST['removeCitacao'])){
-          $post = $_POST['removeCitacao'];
-          $user = $_SESSION['userid'];
-          $erros = [];
-          // Validação
-          // ...
-          if($erros == []){
-            delCitacao($post, $user);
-            header("refresh:0;url=navio.php?user=$_SESSION[userid]"); 
+          if(count($citacoes) > 0){
+            foreach ($citacoes as $value) {
+              addCitacaoInteracao($value, $response);
+            }
           }
+          header("refresh:0;url=navio.php?user=$_GET[user]"); 
         }
+        else return false;
+      }
+      if(isset($_POST['deletePost'])){
+        $post = $_POST['deletePost'];
+        $user = $_SESSION['userid'];
+        $erros = [];
+        // Validação
+        // ...
+        if($erros == []){
+          delInteracao($post);
+          header("refresh:0;url=navio.php?user=$_GET[user]"); 
+        }
+      }
+      if(isset($_POST['removeCitacao'])){
+        $post = $_POST['removeCitacao'];
+        $user = $_SESSION['userid'];
+        $erros = [];
+        // Validação
+        // ...
+        if($erros == []){
+          delCitacao($post, $user);
+          header("refresh:0;url=navio.php?user=$_GET[user]"); 
+        }
+      }
     } else{
       echo "Usuario inválido";
       header("refresh:1;url=mar.php");
@@ -232,7 +229,7 @@
     <!--Add onlick change-->
       <br>
       <div id="img_perfil" class=perfil></div>
-      <form id=formPhoto action=<?php echo "navio.php?user=$_SESSION[userid]"?> enctype=multipart/form-data method="POST">
+      <form id=formPhoto action=<?php echo "navio.php?user=$_GET[user]"?> enctype=multipart/form-data method="POST">
           <input id="imgInp" class="hidden" type="file" name="photo">
       </form>
       <?php 
@@ -240,7 +237,7 @@
       ?>
       <?php echo "<div align=center class=divUsername>";
             echo "<h3 class=perfil>$user[username]</h3>";
-            if($isOwner) echo"<a href=editNavio.php?user=$_SESSION[userid]><img class=img-pencil src=\"imgs/icons/clarity_pencil-line.png\"</img></a>";
+            if($isOwner) echo"<a href=editNavio.php?user=$_GET[user]><img class=img-pencil src=\"imgs/icons/clarity_pencil-line.png\"</img></a>";
             echo "</div>";
       ?>
     </div>
@@ -265,13 +262,13 @@
         // initial insert post
         echo "<div class=\"insert-interacao\">";
           echo "<div class=\"insert-interacao-user\">";
-            echo "<img class=\"interaction-mainuser-user-icon\" src=\"".$user["img"]."\" alt=\"\" srcset=\"\">";
+            echo "<img class=\"interaction-mainuser-user-icon\" src=\"".$userSelf["img"]."\" alt=\"\" srcset=\"\">";
             echo "<div>";
-              echo "<p class=\"insert-interacao-user-name\">".$user["username"].":</p>";
+              echo "<p class=\"insert-interacao-user-name\">".$userSelf["username"].":</p>";
               echo "<p class=\"insert-interacao-user-assuntos\"></p>";
             echo "</div>";
           echo "</div>";
-          echo "<form name=\"newPost\" action=\"navio.php?user=$_SESSION[userid]\" method=\"post\" >";
+          echo "<form name=\"newPost\" action=\"navio.php?user=$_GET[user]\" method=\"post\" >";
             echo "<textarea name=\"texto\" class=\"insert-interacao-input\" id=\"insert-interacao-input\" type=\"text\" placeholder=\"Escreva um post ...\" ></textarea>";
             echo "<div class=\"insert-interacao-smallBtns\">";
               echo "<div class=\"insert-interacao-smallBtns-a\" onclick=\"newPostSelect('local')\"><img class=\"insert-interacao-smallBtns-icon\" src=\"imgs/icons/maps-and-flags.png\" alt=\"\" srcset=\"\">Adicionar um Local</div>";
@@ -376,7 +373,7 @@
 
       // posts
     if($postsArray){
-      echo "<form action=\"feed.php?user=$_SESSION[userid]\" id=\"formOrderby\" method=\"get\">";
+      echo "<form action=\"navio.php?user=$_GET[user]\" id=\"formOrderby\" method=\"get\">";
       echo "<div class=\"order-btn\">";
       echo "<p>Ordene por </p>";
       echo "<select onchange=\"document.getElementById('formOrderby').submit();\" id=\"select-ordenar\" name=\"orderby\">";
@@ -517,7 +514,7 @@
             echo "</div>";
             if($post['isSharing'] && ($sharedPost['codPerfil'] == $_SESSION['userid'])){
               echo "<div class=\"div-post-top-editicons\">";
-              echo "<form action=\"feed.php?user=$_SESSION[userid]\" method=\"post\">";
+              echo "<form action=\"navio.php?user=$_GET[user]\" method=\"post\">";
               echo "<button type=\"submit\" name=\"deletePost\" value=\"$post[codInteracao]\"><img src=\"./imgs/icons/trash.png\" class=\"div-post-top-editicons-trash\" alt=\"\" /></button>";
               echo "</form>";
               echo "</div>";
@@ -525,7 +522,7 @@
             if($post['codPerfil'] == $_SESSION['userid']) {
               echo "<div class=\"div-post-top-editicons\">";
               echo "<a href=\"editarInteracao.php?interacao=$post[codInteracao]\"><img src=\"./imgs/icons/pencil.png\" class=\"div-post-top-editicons-pencil\" alt=\"\" /></a>";
-              echo "<form action=\"feed.php?user=$_SESSION[userid]\" method=\"post\">";
+              echo "<form action=\"navio.php?user=$_GET[user]\" method=\"post\">";
               echo "<button type=\"submit\" name=\"deletePost\" value=\"$post[codInteracao]\"><img src=\"./imgs/icons/trash.png\" class=\"div-post-top-editicons-trash\" alt=\"\" /></button>";
               echo "</form>";
               echo "</div>";
@@ -580,7 +577,7 @@
           //Ícones
           echo "<div class=\"div-post-icons-bar\">";
             if($isMentioned) {
-              echo "<form action=\"feed.php?user=$_SESSION[userid]\" method=\"post\">";
+              echo "<form action=\"navio.php?user=$_GET[user]\" method=\"post\">";
               echo "<button type=\"submit\" name=\"removeCitacao\" class=\"interacao-remover-txt\" value=\"$post[codInteracao]\"><p>Remover sua citação</p></button>";
               echo "</form>";
             }
@@ -588,7 +585,7 @@
               echo "<p>$post[qtdInteracao]</p><img src=\"imgs/icons/chat.png\" class=\"div-post-icons-bar-icons\" alt=\"\">";
             echo "</div>";
             echo "<div class=\"div-post-icons-bar-interagir\">";
-              echo "<a href=\"interagirInteracao.php?interacao=$post[codInteracao]\"><img src=\"$user[img]\" class=\"div-post-icons-bar-interagir-icon\" alt=\"\"><p>Interagir...</p></a>";
+              echo "<a href=\"interagirInteracao.php?interacao=$post[codInteracao]\"><img src=\"$userSelf[img]\" class=\"div-post-icons-bar-interagir-icon\" alt=\"\"><p>Interagir...</p></a>";
             echo "</div>";
           echo "</div>";
           echo "<br><br>";
@@ -671,12 +668,12 @@
                 echo "<a href=\"interagirInteracao.php?interacao=$comentario[codInteracao]\">Reagir</a>";
                   if($comentario['codPerfil'] == $_SESSION['userid']) {
                     echo "<a href=\"editarInteracao.php?interacao=$comentario[codInteracao]\"><p class=\"interacao-editar-txt\">- Editar -</p></a>";
-                    echo "<form action=\"feed.php?user=$_SESSION[userid]\" method=\"post\">";
+                    echo "<form action=\"navio.php?user=$_GET[user]\" method=\"post\">";
                     echo "<button type=\"submit\" name=\"deletePost\" value=\"$comentario[codInteracao]\"><p class=\"interacao-remover-txt\">Remover</p></button>";
                     echo "</form>";
                   }
                   if($comentario['codPerfil'] != $_SESSION['userid'] && $post['codPerfil'] == $_SESSION['userid']) {
-                    echo "<form action=\"feed.php?user=$_SESSION[userid]\" method=\"post\">";
+                    echo "<form action=\"navio.php?user=$_GET[user]\" method=\"post\">";
                     echo "<button type=\"submit\" name=\"deletePost\" value=\"$comentario[codInteracao]\"><p class=\"interacao-remover-txt\">- Remover</p></button>";
                     echo "</form>";
                   }
@@ -762,12 +759,12 @@
                         echo "<a href=\"interagirInteracao.php?interacao=$resposta[codInteracao]\">Reagir</a>";
                         if($resposta['codPerfil'] == $_SESSION['userid']) {
                           echo "<a href=\"editarInteracao.php?interacao=$resposta[codInteracao]\"><p class=\"interacao-editar-txt\">- Editar -</p></a>";
-                          echo "<form action=\"feed.php?user=$_SESSION[userid]\" method=\"post\">";
+                          echo "<form action=\"navio.php?user=$_GET[user]\" method=\"post\">";
                           echo "<button type=\"submit\" name=\"deletePost\" value=\"$resposta[codInteracao]\"><p class=\"interacao-remover-txt\">Remover</p></button>";
                           echo "</form>";
                         }
                         if($resposta['codPerfil'] != $_SESSION['userid'] && $comentario['codPerfil'] == $_SESSION['userid']) {
-                          echo "<form action=\"feed.php?user=$_SESSION[userid]\" method=\"post\">";
+                          echo "<form action=\"navio.php?user=$_GET[user]\" method=\"post\">";
                           echo "<button type=\"submit\" name=\"deletePost\" value=\"$resposta[codInteracao]\"><p class=\"interacao-remover-txt\">- Remover</p></button>";
                           echo "</form>";
                         }
@@ -775,7 +772,7 @@
                     echo "</div>";
                   }
                 }
-                if($comentario['qtdInteracao'] > 0){
+                if($comentario['qtdInteracao'] > 1){
                   echo "<p align=center><a href=completeInteracao.php?interacao=$comentario[codInteracao]>Ver mais respostas</a></p>";
                 }
               echo "</div>";

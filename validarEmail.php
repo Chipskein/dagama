@@ -20,7 +20,7 @@ if(isset($_SESSION['userid'])){
     die();
 }
 if(isset($_GET["id"])){
-    $user=getUserInfo($_GET["id"]);
+    $user=getUserInfoRegister($_GET["id"]);
     if($user){
         echo "
         <div align=center>

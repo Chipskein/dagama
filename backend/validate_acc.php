@@ -12,7 +12,7 @@
 <?php
 if(isset($_GET['id'])){
     include './infra/connection.php';
-    $user=getUserInfo($_GET['id']);
+    $user=getUserInfoRegister($_GET['id']);
     if($user){
         //user[ativo]==0
         if(!$user['ativo']||$user['ativo']=='f'){

@@ -21,7 +21,8 @@
     $locaisArray = getLocais();
     $assuntosArray = getAssuntos();
     $pessoasArray = getPessoas();
-    $portosArrayForShare = getAllPorto($_SESSION['userid'], 1, 0, getTotalPorto(), 1);
+    $qtdPortos = getTotalPorto();
+    $portosArrayForShare = getAllPorto($_SESSION['userid'], true, 0, $qtdPortos, null);
     $qtdAmigos = getFriends($_SESSION['userid'], 0, 1,'');
     $friends = [];
     if(count($qtdAmigos) != 0){

@@ -791,7 +791,7 @@
                     echo "</div>";
                   }
                 }
-                if($comentario['qtdInteracao'] > 0){
+                if($comentario['qtdInteracao'] > 1){
                   echo "<p align=center><a href=completeInteracao.php?interacao=$comentario[codInteracao]>Ver mais respostas</a></p>";
                 }
               echo "</div>";

@@ -13,7 +13,7 @@
     include './infra/connection.php';
     //Terminar
     if(isset($_GET['id'])){
-        $user=getUserInfo($_GET['id']);
+        $user=getUserInfoRegister($_GET['id']);
         if($user){
             if(!$user['ativo']||$user['ativo']=='f'){
                 $email="$user[email]";

@@ -30,11 +30,7 @@
     $estados=getStates();
     $cidades=getCities();
     $errorMessage = [];
-    if(isset($_POST['buttonAssunto'])){
-      $addAssunto = addAssunto("$_POST[buttonAssunto]");
-      header("refresh:0;url=feed.php?user=$_SESSION[userid]"); 
-    };
-    if(isset($_POST['novoPost'])){
+    if(isset($_POST['editarPost'])){
       $texto = ''.$_POST['texto'];
       $reacao = isset($_POST['reacao']) ? $_POST['reacao'] : 0;
       $isReaction = isset($_POST['reacao']) ? 1 : 0;
@@ -117,7 +113,7 @@
         }
         if(count($citacoes) > 0){
           foreach ($citacoes as $value) {
-            addCitacaoInteracao($value, $response);
+            addCitacaoInteracao($value, $post['codInteracao']);
           }
         }
         header("refresh:0;url=feed.php?user=$_SESSION[userid]"); 
@@ -165,7 +161,7 @@
             echo "<div class=\"insert-interacao-smallBtns-a\" onclick=\"newPostSelect('reacoes')\"><img class=\"insert-interacao-smallBtns-icon\" src=\"imgs/icons/Like.png\" alt=\"\" srcset=\"\">Reação</div>";
             // echo "<div class=\"insert-interacao-smallBtns-a\" onclick=\"newPostSelect('compartilhar')\"><img class=\"insert-interacao-smallBtns-icon\" src=\"imgs/icons/send.png\" alt=\"\" srcset=\"\">Compartilhar</div>";
           echo "</div>";
-          echo "<input class=\"insert-interacao-submit\" type=\"submit\" name=\"novoPost\" />";
+          echo "<input class=\"insert-interacao-submit\" type=\"submit\" name=\"editarPost\" />";
           echo "<hr id=\"post-hr\" class=\"post-hr\" >";
           
           // Local

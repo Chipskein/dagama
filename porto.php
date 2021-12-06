@@ -411,7 +411,7 @@
           //Share
           $sharedPost = 0;
           if($post['isSharing']){
-            $sharedPost = getOriginalPost($post['codPost']);
+            $sharedPost = getOriginalPostOnPorto($post['codPost'], $_GET['porto']);
             echo "<p class=\"compartilhado-txt\"><i>Compartilhado</i></p>";
             echo "<div class=\"div-sharing-post\">";
               // Sharing-top
@@ -789,7 +789,7 @@
                     echo "</div>";
                   }
                 }
-                if($comentario['qtdInteracao'] > 0){
+                if($resposta['qtdInteracao'] > 1){
                   echo "<p align=center><a href=completeInteracao.php?interacao=$comentario[codInteracao]>Ver mais respostas</a></p>";
                 }
               echo "</div>";

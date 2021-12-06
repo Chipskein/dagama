@@ -479,6 +479,19 @@
     /*-----------------------------------------*/
 
     /* USER */
+    function getUserInfoRegister($id){
+        $db_connection = db_connection();
+        $db = $db_connection['db'];
+        $db_type = $db_connection['db_type'];
+        if($db){
+            if($db_type == 'sqlite'){
+                $response = $db->query("select codigo, email, ativo, img, username, cidade from perfil where codigo=$id");
+                if($response) return $response->fetchArray();
+                else return false;
+            }
+        }
+        else exit;
+    };
     function getUserInfo($id){
         $db_connection = db_connection();
         $db = $db_connection['db'];
@@ -1259,6 +1272,78 @@
                         interacao.postPai as postPai
                     from interacao
                         join perfil on interacao.perfil = perfil.codigo
+                        left join porto on interacao.porto = porto.codigo
+                        left join cidade on interacao.local = cidade.codigo
+                        left join uf on cidade.uf = uf.codigo
+                        left join pais on uf.pais = pais.codigo
+                    where interacao.codigo = $post");
+                
+                $results2 = $db->query("
+                    select citacao.interacao as interacao, perfil.codigo as codPerfil, perfil.username as nomePerfil from citacao 
+                        join perfil on perfil.codigo = citacao.perfil 
+                    where 
+                        citacao.ativo = 1 and citacao.interacao = $post");
+                $citacoes = [];
+                while ($row = $results2->fetchArray()) {
+                    $citacoes[$row['codPerfil']] = $row;
+                }
+                
+                $results3 = $db->query("
+                select interacao.codigo as interacao, assunto.codigo as codAssunto, assunto.nome as nomeAssunto from interacao
+                    join interacao_assunto on interacao.codigo = interacao_assunto.interacao
+                    join assunto on interacao_assunto.assunto = assunto.codigo
+                where
+                    interacao.ativo = 1 and interacao.codigo = $post");
+                $assuntos = [];
+                while ($row = $results3->fetchArray()) {
+                    $assuntos[$row['codAssunto']] = $row;
+                }
+
+                
+                $response = $result->fetchArray();
+                $response['assuntos'] = $assuntos;
+                $response['citacoes'] = $citacoes;
+                
+                $db->close();
+                return $response;
+            }
+        }
+        else exit;
+    }
+    function getOriginalPostOnPorto($post, $porto){
+        $db_connection=db_connection();
+        $db=$db_connection['db'];
+        $db_type=$db_connection['db_type'];
+        if($db){
+            if($db_type=='sqlite'){
+                $result = $db->query("
+                    select
+                        interacao.codigo as codInteracao, 
+                        interacao.post as codPost, 
+                        interacao.isReaction as isReaction, 
+                        interacao.texto as textoPost, 
+                        interacao.data as dataPost,
+                        interacao.isSharing as isSharing, 
+                        interacao.emote as emote,
+                        interacao.ativo as ativo,
+                        cidade.nome as nomeCidade,
+                        cidade.codigo as codCidade,
+                        uf.nome as nomeUF,
+                        uf.codigo as codUF,
+                        pais.nome as nomePais,
+                        pais.codigo as codPais,
+                        porto.codigo as codPorto,
+                        porto.nome as nomePorto,
+                        perfil.codigo as codPerfil, 
+                        perfil.username as nomePerfil,
+                        perfil.img as iconPerfil,
+                        interacao.postPai as postPai,
+                        selo.codigo as codSelo,
+                        selo.texto as nomeSelo
+                    from interacao
+                        join perfil on interacao.perfil = perfil.codigo
+                        left join seloUser on perfil.codigo = seloUser.perfil and seloUser.porto = $porto
+                        left join selo on seloUser.selo = selo.codigo
                         left join porto on interacao.porto = porto.codigo
                         left join cidade on interacao.local = cidade.codigo
                         left join uf on cidade.uf = uf.codigo
@@ -2507,12 +2592,24 @@
         $db=$db_connection['db'];
         $db_type=$db_connection['db_type'];
         if($db_type == 'sqlite'){
-            $response = $db->exec("insert into citacao (perfil, interacao) values ($user, $post)");
-            if($response) {
-                $db->close();
-                return $response;
+            $check = $db->query("select * from citacao where perfil = $user and interacao = $post");
+            $check = $check->fetchArray();
+            if($check){
+                $response = $db->exec("update citacao set ativo = 1 where perfil = $user and interacao = $post");
+                if($response) {
+                    $db->close();
+                    return $response;
+                } else {
+                    $db->close();return false;
+                }
             } else {
-                $db->close();return false;
+                $response = $db->exec("insert into citacao (perfil, interacao) values ($user, $post)");
+                if($response) {
+                    $db->close();
+                    return $response;
+                } else {
+                    $db->close();return false;
+                }
             }
         }
         else exit;

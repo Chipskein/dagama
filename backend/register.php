@@ -70,7 +70,8 @@ include './infra/connection.php';
     if(!isset($_SESSION['userid'])){
         $erros = [];
         echo "<br>";
-        // var_dump($_POST);
+        var_dump($_POST);
+        var_dump($_FILES);
         if(isset($_POST['email']) && isset($_POST['username']) && isset($_POST['password']) && isset($_POST['cpassword']) && isset($_POST['bdate']) &&isset($_POST['pais']) && isset($_POST['termos']) && isset($_POST['genero']))
         {
             if($_POST['termos']!='pass') $erros[] = "Você não concordou com os termos de uso";
@@ -184,7 +185,9 @@ include './infra/connection.php';
             }
             
             $genero = "$_POST[genero]";
-            $photo = is_uploaded_file($_FILES['photo']['tmp_name']) ? $_FILES['photo']:null;
+            $photo = null;
+            if($_FILES['photo']['tmp_name'])
+            $photo = is_uploaded_file($_FILES['photo']['tmp_name']) ? $_FILES['photo'] : null;
 
             $registered = Register($email, $password, $bdate, $username, $genero, $cidade, $photo);
             if($registered){

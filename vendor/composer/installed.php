@@ -5,7 +5,7 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '128724c1b830893891d8bbebc1189a59799a99e1',
+        'reference' => 'fd2858adf1442f143ab94d0838226b61359c67e2',
         'name' => 'chipskein/dagama',
         'dev' => true,
     ),
@@ -16,7 +16,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '128724c1b830893891d8bbebc1189a59799a99e1',
+            'reference' => 'fd2858adf1442f143ab94d0838226b61359c67e2',
             'dev_requirement' => false,
         ),
         'firebase/php-jwt' => array(
