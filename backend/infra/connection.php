@@ -179,7 +179,21 @@
         $db=$db_connection['db'];
         $db_type=$db_connection['db_type'];
         if($db_type == 'sqlite'){
+            $cidades = $db->query("select cidade.codigo from cidade
+                    join uf on uf.codigo = cidade.uf
+                where uf.pais = $pais");
+            $results = [];
+            if($cidades){
+                while ($row = $cidades->fetchArray()) {
+                    array_push($results, $row['codigo']);
+                }
+            }
             $response = $db->exec("update pais set ativo = 0 where codigo = $pais");
+            $response2 = $db->exec("update uf set ativo = 0 where pais = $pais");
+            if(count($results) > 0) {
+                $results = implode($results, ', ');
+                $response3 = $db->exec("update cidade set ativo = 0 where codigo in ($results)");
+            }
             if($response) {
                 $db->close();
                 return $response;
@@ -232,6 +246,7 @@
         $db_type=$db_connection['db_type'];
         if($db_type == 'sqlite'){
             $response = $db->exec("update uf set ativo = 0 where codigo = $estado");
+            $response2 = $db->exec("update cidade set ativo = 0 where uf = $estado");
             if($response) {
                 $db->close();
                 return $response;
