@@ -1017,8 +1017,8 @@ from interacao
 ;
 
 
-
-INSERT INTO PERFIL VALUES(6,1,'teste1@gmail.com','$2y$10$vaJf.MBckE0gkUdu0WE3p.c8ZxwWw6OM/sJcZNc3rzV2yt87DVAFy','F','CHPK-1','https://drive.google.com/uc?export=download&id=18Q0QWF1iRWc7wq0nezRxgdLYEQUc2Thz','1980-05-09','2021-11-25 21:34:09',1);
+select * from perfil
+INSERT INTO PERFIL VALUES(23,1,'teste1@gmail.com','$2y$10$vaJf.MBckE0gkUdu0WE3p.c8ZxwWw6OM/sJcZNc3rzV2yt87DVAFy','F','CHPK-1','https://drive.google.com/uc?export=download&id=18Q0QWF1iRWc7wq0nezRxgdLYEQUc2Thz','1980-05-09','2021-11-25 21:34:09',1);
 INSERT INTO PERFIL VALUES(7,1,'teste2@gmail.com','$2y$10$vaJf.MBckE0gkUdu0WE3p.c8ZxwWw6OM/sJcZNc3rzV2yt87DVAFy','F','CHPK-2','https://drive.google.com/uc?export=download&id=18Q0QWF1iRWc7wq0nezRxgdLYEQUc2Thz','1990-05-09','2021-11-25 21:34:09',1);
 INSERT INTO PERFIL VALUES(8,1,'teste3@gmail.com','$2y$10$vaJf.MBckE0gkUdu0WE3p.c8ZxwWw6OM/sJcZNc3rzV2yt87DVAFy','F','CHPK-3','https://drive.google.com/uc?export=download&id=18Q0QWF1iRWc7wq0nezRxgdLYEQUc2Thz','2000-05-09','2021-11-25 21:34:09',1);
 INSERT INTO PERFIL VALUES(9,1,'teste4@gmail.com','$2y$10$vaJf.MBckE0gkUdu0WE3p.c8ZxwWw6OM/sJcZNc3rzV2yt87DVAFy','F','CHPK-4','https://drive.google.com/uc?export=download&id=18Q0QWF1iRWc7wq0nezRxgdLYEQUc2Thz','1940-05-09','2021-11-25 21:34:09',1);
@@ -1038,27 +1038,27 @@ INSERT INTO PERFIL VALUES(21,1,'teste16@gmail.com','$2y$10$vaJf.MBckE0gkUdu0WE3p
 INSERT INTO PERFIL VALUES(22,1,'teste17@gmail.com','$2y$10$vaJf.MBckE0gkUdu0WE3p.c8ZxwWw6OM/sJcZNc3rzV2yt87DVAFy','M','CHPK-13','https://drive.google.com/uc?export=download&id=18Q0QWF1iRWc7wq0nezRxgdLYEQUc2Thz','2004-05-09','2021-11-25 21:34:09',1);
 
 
-insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, isSharing, emote, local) values (5, null, null, null, 'TESTE', null, null, null,1);
-insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, isSharing, emote, local) values (6, null, null, null, 'TESTE', null, null, null,1);
-insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, isSharing, emote, local) values (7, null, null, null, 'TESTE', null, null, null,1);
-insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, isSharing, emote, local) values (9, null, null, null, 'TESTE', null, null, null,1);
-insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, isSharing, emote, local) values (10, null, null, null, 'TESTE', null, null, null,1);
-insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, isSharing, emote, local) values (11, null, null, null, 'TESTE', null, null, null,1);
-insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, isSharing, emote, local) values (12, null, null, null, 'TESTE', null, null, null,1);
-insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, isSharing, emote, local) values (13, null, null, null, 'TESTE', null, null, null,1);
-insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, isSharing, emote, local) values (6, null, null, null, 'TESTE', null, null, null,1);
-insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, isSharing, emote, local) values (1, null, null, null, 'TESTE', null, null, null,1);
+insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, isSharing, emote, local) values (5, null, null, null, 'Populando banco', null, null, null,1);
+insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, isSharing, emote, local) values (6, null, null, null, 'Populando banco', null, null, null,1);
+insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, isSharing, emote, local) values (7, null, null, null, 'Populando banco', null, null, null,1);
+insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, isSharing, emote, local) values (9, null, null, null, 'Populando banco', null, null, null,1);
+insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, isSharing, emote, local) values (10, null, null, null, 'Populando banco', null, null, null,1);
+insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, isSharing, emote, local) values (11, null, null, null, 'Populando banco', null, null, null,1);
+insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, isSharing, emote, local) values (12, null, null, null, 'Populando banco', null, null, null,1);
+insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, isSharing, emote, local) values (13, null, null, null, 'Populando banco', null, null, null,1);
+insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, isSharing, emote, local) values (6, null, null, null, 'Populando banco', null, null, null,1);
+insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, isSharing, emote, local) values (1, null, null, null, 'Populando banco', null, null, null,1);
 
-insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, isSharing, emote, local) values (14, null, null, null, 'TESTE', null, null, null,1);
-insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, isSharing, emote, local) values (15, null, null, null, 'TESTE', null, null, null,1);
-insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, isSharing, emote, local) values (16, null, null, null, 'TESTE', null, null, null,1);
-insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, isSharing, emote, local) values (17, null, null, null, 'TESTE', null, null, null,1);
-insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, isSharing, emote, local) values (18, null, null, null, 'TESTE', null, null, null,1);
-insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, isSharing, emote, local) values (19, null, null, null, 'TESTE', null, null, null,1);
-insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, isSharing, emote, local) values (21, null, null, null, 'TESTE', null, null, null,1);
-insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, isSharing, emote, local) values (14, null, null, null, 'TESTE', null, null, null,1);
-insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, isSharing, emote, local) values (13, null, null, null, 'TESTE', null, null, null,1);
-insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, isSharing, emote, local) values (22, null, null, null, 'TESTE', null, null, null,1);
+insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, isSharing, emote, local) values (14, null, null, null, 'Populando banco', null, null, null,1);
+insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, isSharing, emote, local) values (15, null, null, null, 'Populando banco', null, null, null,1);
+insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, isSharing, emote, local) values (16, null, null, null, 'Populando banco', null, null, null,1);
+insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, isSharing, emote, local) values (17, null, null, null, 'Populando banco', null, null, null,1);
+insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, isSharing, emote, local) values (18, null, null, null, 'Populando banco', null, null, null,1);
+insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, isSharing, emote, local) values (19, null, null, null, 'Populando banco', null, null, null,1);
+insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, isSharing, emote, local) values (21, null, null, null, 'Populando banco', null, null, null,1);
+insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, isSharing, emote, local) values (14, null, null, null, 'Populando banco', null, null, null,1);
+insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, isSharing, emote, local) values (13, null, null, null, 'Populando banco', null, null, null,1);
+insert into interacao (perfil, perfil_posting, porto, post, texto, isReaction, isSharing, emote, local) values (22, null, null, null, 'Populando banco', null, null, null,1);
 
 
 select count(perfil.codigo) from perfil
