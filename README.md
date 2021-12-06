@@ -22,7 +22,7 @@
 Telas
     * Admin
         - 1) CRUD de localidades
-            Falta excluir localidades, e validar, paginação
+            ok
         - 2) CRUD de usuários
             Falta validar, paginação
         - 10) Mostrar quantos usuários receberam mais de C curtidas em uma postagem, em menos de H horas após a postagem,
@@ -102,3 +102,4 @@ Observações:
 
 Bugs
     - Bug no local do editar
+    - Deixar o get dos posts no porto e no perfil igual ao do feed

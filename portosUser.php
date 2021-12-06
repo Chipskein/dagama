@@ -28,13 +28,12 @@
     $portos = 0;
     if(isset($_GET['owner'])){
       $portos = getUserPorto($_SESSION['userid'], $offset, $limit);
-      // var_dump($portos);
     } else {
       if(isset($_GET['user'])){
         if($_SESSION['userid'] == $_GET['user']){
-          $portos = getAllPorto($_SESSION['userid'], true, $offset, $limit);
+          $portos = getAllPorto($_SESSION['userid'], true, $offset, $limit, 0);
         } else {
-          $portos = getAllPorto($_GET['user'], true, $offset, $limit);          
+          $portos = getAllPorto($_GET['user'], true, $offset, $limit, 0);          
         }
       }
     }

@@ -625,7 +625,7 @@
     /*----------------------------------------*/
 
     /* FEED */
-    function getPosts($user, $offset,$limit, $order){
+    function getPosts($user, $offset,$limit, $order){ // TODO:
         $db_connection=db_connection();
         $db=$db_connection['db'];
         $db_type=$db_connection['db_type'];
@@ -923,7 +923,6 @@
                 }
                 $db->close();
                 return $postsArray;
-
             }
         }
         else exit;
@@ -1932,24 +1931,38 @@
         $db_type=$db_connection['db_type'];
         if($db){
             if($db_type=='sqlite'){
-                $results=[];
-                $result = $db->query("
-                select 
+                $postsArray=[];
+                $postsOriginais = $db->query("
+                select
                     interacao.codigo as codInteracao, 
-                    interacao.post as codPost, 
+                    interacao.post as codPost,
+                    interacao.postPai as codPostPai,
+                    case 
+                        when tmpQtd.qtd is null then 0
+                        else tmpQtd.qtd
+                    end as qtdInteracao,
                     interacao.isReaction as isReaction, 
                     interacao.texto as textoPost, 
-                    interacao.data as dataPost, 
+                    interacao.data as dataPost,
                     interacao.isSharing as isSharing, 
                     interacao.emote as emote,
                     interacao.ativo as ativo,
                     cidade.nome as nomeCidade,
                     uf.nome as nomeUF,
                     pais.nome as nomePais,
-                    perfil.codigo as codPerfil, perfil.username as nomePerfil, perfil.img as iconPerfil
+                    porto.codigo as codPorto,
+                    porto.nome as nomePorto,
+                    perfil.codigo as codPerfil, 
+                    perfil.username as nomePerfil,
+                    perfil.img as iconPerfil,
+                    selo.codigo as codSelo,
+                    selo.texto as nomeSelo
                 from interacao
                     join porto on interacao.porto = porto.codigo
                     join perfil on interacao.perfil = perfil.codigo
+                    left join (select postPai, count(*) as qtd from interacao where postPai is not null and interacao.ativo=1 group by postPai) as tmpQtd on interacao.codigo = tmpQtd.postPai
+                    left join seloUser on perfil.codigo = seloUser.perfil and seloUser.porto = $porto
+                    left join selo on seloUser.selo = selo.codigo
                     left join cidade on interacao.local = cidade.codigo
                     left join uf on cidade.uf = uf.codigo
                     left join pais on uf.pais = pais.codigo
@@ -1959,61 +1972,200 @@
                 order by interacao.data desc
                 limit $limit offset $offset");
                 
-                $results2 = $db->query("
-                select interacao.codigo as interacao, assunto.codigo as codAssunto, assunto.nome as nomeAssunto from interacao
-                    left join interacao_assunto on interacao.codigo = interacao_assunto.interacao
-                    left join assunto on interacao_assunto.assunto = assunto.codigo
-                where
-                    interacao.ativo = 1");
-                $assuntos = [];
-                while ($row = $results2->fetchArray()) {
-                    $assuntos[$row['interacao']][$row['codAssunto']] = $row;
-                }
+                while($row = $postsOriginais->fetchArray()){
+                    $postsArray[$row['codInteracao']] = $row;
 
-                $results3 = $db->query("
+                    $resCitacoesParent = $db->query("select citacao.interacao as interacao, perfil.codigo as codPerfil, perfil.username as nomePerfil 
+                    from citacao join perfil on perfil.codigo = citacao.perfil 
+                    where 
+                        citacao.ativo = 1 and 
+                        citacao.interacao = $row[codInteracao]");
+                    $citacoes = [];
+                    while ($row2 = $resCitacoesParent->fetchArray()) {
+                        $citacoes[] = $row2;
+                    }
+                    $postsArray[$row['codInteracao']]['citacoes'] = $citacoes;
+                    
+                    $resAssuntosParent = $db->query("
+                    select interacao.codigo as interacao, assunto.codigo as codAssunto, assunto.nome as nomeAssunto from interacao
+                        left join interacao_assunto on interacao.codigo = interacao_assunto.interacao
+                        left join assunto on interacao_assunto.assunto = assunto.codigo
+                    where
+                        interacao_assunto.ativo = 1 and
+                        interacao.codigo = $row[codInteracao]");
+                    $assuntos = [];
+                    while ($row2 = $resAssuntosParent->fetchArray()) {
+                        $assuntos[] = $row2;
+                    }
+                    $postsArray[$row['codInteracao']]['assuntos'] = $assuntos;
+                    $temInteracoes = $db->query("
+                    select
+                        interacao.codigo as codInteracao, 
+                        interacao.post as codPost, 
+                        interacao.isReaction as isReaction, 
+                        interacao.texto as textoPost, 
+                        interacao.data as dataPost,
+                        interacao.isSharing as isSharing, 
+                        interacao.emote as emote,
+                        interacao.ativo as ativo,
+                        selo.codigo as codSelo,
+                        selo.texto as nomeSelo,
+                        case 
+                            when tmpQtd.qtd is null then 0
+                            else tmpQtd.qtd
+                        end as qtdInteracao,
+                        cidade.nome as nomeCidade,
+                        uf.nome as nomeUF,
+                        pais.nome as nomePais,
+                        perfil.codigo as codPerfil, 
+                        perfil.username as nomePerfil,
+                        perfil.img as iconPerfil
+                    from interacao
+                        join perfil on interacao.perfil = perfil.codigo
+                        left join seloUser on perfil.codigo = seloUser.perfil and seloUser.porto = $porto
+                        left join selo on seloUser.selo = selo.codigo
+                        left join cidade on cidade.codigo = interacao.local
+                        left join uf on cidade.uf = uf.codigo
+                        left join pais on uf.pais = pais.codigo
+                        left join (select post, count(*) as qtd from interacao where interacao.postPai is not null and interacao.post is not null and interacao.ativo = 1 group by interacao.post) as tmpQtd on interacao.codigo = tmpQtd.post
+                    where
+                        interacao.ativo = 1 and 
+                        interacao.isSharing is null 
+                        and interacao.postPai = $row[codInteracao] 
+                        and interacao.post = $row[codInteracao]");
+                    $childInteracoes = [];
+                    if($temInteracoes){
+                        while($row3 = $temInteracoes->fetchArray()){
+                            $childInteracoes[$row3['codInteracao']] = $row3;
+                            $resCitacoesChild = $db->query("select citacao.interacao as interacao, perfil.codigo as codPerfil, perfil.username as nomePerfil 
+                            from citacao 
+                                join perfil on perfil.codigo = citacao.perfil 
+                            where 
+                                citacao.ativo = 1 and 
+                                citacao.interacao = $row3[codInteracao]");
+                            $citacoes = [];
+                            while ($row4 = $resCitacoesChild->fetchArray()) {
+                                $citacoes[] = $row4;
+                            }
+                            $childInteracoes[$row3['codInteracao']]['citacoes'] = $citacoes;
+                            $resAssuntosChild = $db->query("
+                            select interacao.codigo as interacao, assunto.codigo as codAssunto, assunto.nome as nomeAssunto from interacao
+                                left join interacao_assunto on interacao.codigo = interacao_assunto.interacao
+                                left join assunto on interacao_assunto.assunto = assunto.codigo
+                            where
+                                interacao_assunto.ativo = 1 and
+                                interacao.codigo = $row3[codInteracao]");
+                            $assuntos = [];
+                            while ($row5 = $resAssuntosChild->fetchArray()) {
+                                $assuntos[] = $row5;
+                            }
+                            $childInteracoes[$row3['codInteracao']]['assuntos'] = $assuntos;
+
+                            $temInnerInteracoes = $db->query("
+                            select
+                                interacao.codigo as codInteracao, 
+                                interacao.post as codPost, 
+                                interacao.isReaction as isReaction, 
+                                interacao.texto as textoPost, 
+                                interacao.data as dataPost,
+                                interacao.isSharing as isSharing, 
+                                interacao.emote as emote,
+                                interacao.ativo as ativo,
+                                case 
+                                    when tmpQtd.qtd is null then 0
+                                    else tmpQtd.qtd
+                                end as qtdInteracao,
+                                cidade.nome as nomeCidade,
+                                uf.nome as nomeUF,
+                                pais.nome as nomePais,
+                                perfil.codigo as codPerfil, 
+                                perfil.username as nomePerfil,
+                                perfil.img as iconPerfil,
+                                selo.codigo as codSelo,
+                                selo.texto as nomeSelo
+                            from interacao
+                                join perfil on interacao.perfil = perfil.codigo
+                                left join seloUser on perfil.codigo = seloUser.perfil and seloUser.porto = $porto
+                                left join selo on seloUser.selo = selo.codigo
+                                left join cidade on cidade.codigo = interacao.local
+                                left join uf on cidade.uf = uf.codigo
+                                left join pais on uf.pais = pais.codigo
+                                left join (select post, count(*) as qtd from interacao where interacao.postPai is not null and interacao.post is not null and interacao.ativo = 1 group by interacao.post) as tmpQtd on interacao.codigo = tmpQtd.post
+                            where 
+                                interacao.ativo = 1 and 
+                                interacao.isSharing is null and 
+                                interacao.postPai = $row[codInteracao] and 
+                                interacao.post = $row3[codInteracao]");
+                                
+                            $grandChildInteracoes = [];
+                            $childInteracoes[$row3['codInteracao']]['respostas'] = [];
+                            if($temInnerInteracoes){
+                                while ($row6 = $temInnerInteracoes->fetchArray()) {
+                                    $grandChildInteracoes[$row6['codInteracao']] = $row6;
+                                    $resCitacoesGrandChild = $db->query("
+                                    select citacao.interacao as interacao, perfil.codigo as codPerfil, perfil.username as nomePerfil from citacao 
+                                        join perfil on perfil.codigo = citacao.perfil 
+                                    where 
+                                        citacao.ativo = 1 and 
+                                        citacao.interacao = $row6[codInteracao]");
+                                    $citacoes = [];
+                                    while ($row7 = $resCitacoesGrandChild->fetchArray()) {
+                                        $citacoes[] = $row7;
+                                    }
+                                    $grandChildInteracoes[$row6['codInteracao']]['citacoes'] = $citacoes;
+                                    
+                                    $resAssuntosGrandChild = $db->query("
+                                    select interacao.codigo as interacao, assunto.codigo as codAssunto, assunto.nome as nomeAssunto from interacao
+                                        left join interacao_assunto on interacao.codigo = interacao_assunto.interacao
+                                        left join assunto on interacao_assunto.assunto = assunto.codigo
+                                    where
+                                        interacao_assunto.ativo = 1 and
+                                        interacao.codigo = ".$row6['codInteracao']);
+                                    $assuntos = [];
+                                    while ($row8 = $resAssuntosGrandChild->fetchArray()) {
+                                        $assuntos[] = $row8;
+                                    }
+                                    $grandChildInteracoes[$row6['codInteracao']]['assuntos'] = $assuntos;
+                                    $childInteracoes[$row3['codInteracao']]['respostas'][$row6['codInteracao']] = $grandChildInteracoes[$row6['codInteracao']];
+                                }                                
+                            }
+                            
+                        }
+                    }
+                    $postsArray[$row['codInteracao']]['comentarios'] = $childInteracoes;
+                }
+                $db->close();
+                return $postsArray;
+            }
+        }
+        else exit;
+    }
+    function getPortoParticipants($porto, $offset, $limit=10){
+        $db_connection=db_connection();
+        $db=$db_connection['db'];
+        $db_type=$db_connection['db_type'];
+        if($db){
+            if($db_type=='sqlite'){
+                $results=[];
+                $result = $db->query("                
                 select 
-                    interacao.codigo as codInteracao, 
-                    interacao.post as codPost, 
-                    interacao.isReaction as isReaction, 
-                    interacao.texto as textoPost, 
-                    interacao.data as dataPost, 
-                    interacao.isSharing as isSharing, 
-                    interacao.emote as emote,
-                    interacao.ativo as ativo,
-                    porto.codigo as codPorto, porto.nome as nomePorto, 
-                    perfil.codigo as codPerfil, perfil.username as nomePerfil, perfil.img as iconPerfil
-                from interacao
-                    join perfil on interacao.perfil = perfil.codigo
-                    left join porto on porto.codigo = interacao.porto
-                where
-                    interacao.ativo = 1 and
-                    interacao.post is not null and
-                    interacao.isSharing is null");
-                $interacoes = [];
-                while ($row = $results3->fetchArray()) {
-                    $interacoes[$row['codPost']][$row['codInteracao']] = $row;
-                }
-
-                $results4 = $db->query("
-                    select citacao.interacao as interacao, perfil.codigo as codPerfil, perfil.username as nomePerfil from citacao join perfil on perfil.codigo = citacao.perfil where citacao.ativo = 1
-                ");
-                $citacoes = [];
-                while ($row = $results4->fetchArray()) {
-                    $citacoes[$row['interacao']][$row['codPerfil']] = $row;
-                }
-
+                porto.codigo as codPorto,
+                porto_participa.dataregis as dataRegis,
+                perfil.codigo as codPart,
+                perfil.username as nomePart,
+                perfil.img as imgPart,
+                selo.codigo as codSelo,
+                selo.texto as nomeSelo
+                from porto
+                    left join porto_participa on porto.codigo = porto_participa.porto
+                    left join perfil on porto_participa.perfil = perfil.codigo
+                    left join seloUser on perfil.codigo = seloUser.perfil and seloUser.porto = $porto
+                    left join selo on seloUser.selo = selo.codigo
+                where 
+                    porto_participa.ativo = 1 and
+                    porto.codigo = $porto
+                limit $limit offset $offset");
                 while ($row = $result->fetchArray()) {
-                    $row['assuntos'] = $assuntos[$row['codInteracao']];
-                    if(in_array($row['codInteracao'], array_keys($interacoes))){
-                        $row['comentarios'] = $interacoes[$row['codInteracao']];
-                    } else {
-                        $row['comentarios'] = [];
-                    }
-                    if(in_array($row['codInteracao'], array_keys($citacoes))){
-                        $row['citacoes'] = $citacoes[$row['codInteracao']];
-                    } else {
-                        $row['citacoes'] = [];
-                    }
                     array_push($results, $row);
                 }
                 $db->close();
@@ -2022,7 +2174,7 @@
         }
         else exit;
     }
-    function getPortoParticipants($porto, $offset, $limit=10){
+    function getAllPortoParticipants($porto){
         $db_connection=db_connection();
         $db=$db_connection['db'];
         $db_type=$db_connection['db_type'];
@@ -2041,8 +2193,7 @@
                     left join perfil on porto_participa.perfil = perfil.codigo
                 where 
                     porto_participa.ativo = 1 and
-                    porto.codigo = $porto
-                limit $limit offset $offset");
+                    porto.codigo = $porto");
                 while ($row = $result->fetchArray()) {
                     array_push($results, $row);
                 }

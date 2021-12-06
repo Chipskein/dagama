@@ -161,10 +161,7 @@ CREATE TABLE INTERACAO_ASSUNTO(
     FOREIGN KEY (interacao) REFERENCES INTERACAO(codigo)
 );
 
-INSERT INTO SELO(texto) values ('super-fa');
-INSERT INTO SELO(texto) values ('ultra-fa');
-INSERT INTO SELO(texto) values ('fa');
-
+INSERT INTO SELO(codigo, texto) values (1, 'ultra-fa'), (2, 'super-fa'), (3, 'fa');
 
 INSERT INTO PAIS (codigo, nome) VALUES (1, 'Afeganistão'),
     (2, 'Ilhas Åland'),

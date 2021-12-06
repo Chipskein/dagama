@@ -70,7 +70,7 @@ include './infra/connection.php';
     if(!isset($_SESSION['userid'])){
         $erros = [];
         echo "<br>";
-        var_dump($_POST);
+        // var_dump($_POST);
         if(isset($_POST['email']) && isset($_POST['username']) && isset($_POST['password']) && isset($_POST['cpassword']) && isset($_POST['bdate']) &&isset($_POST['pais']) && isset($_POST['termos']) && isset($_POST['genero']))
         {
             if($_POST['termos']!='pass') $erros[] = "Você não concordou com os termos de uso";

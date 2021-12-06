@@ -218,7 +218,7 @@
             <a class=nomePort href=porto.php?porto=$value[codigo]>$value[nome]</a>
           </div>";
         }
-        echo "<br><a class=portosAtracadosMais href=portosUser.php>Ver todos</a>";
+        echo "<br><a class=portosAtracadosMais href=portosUser.php?user=$_SESSION[userid]>Ver todos</a>";
       } else {
         echo "<p>Você não está em nenhum porto ainda</p>";
       }
