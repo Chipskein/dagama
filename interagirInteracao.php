@@ -443,7 +443,7 @@
             echo "<button id=\"select-reacao-button\"  class=\"confirm-type\" type=\"button\" onclick=\"addReacoes()\">Confirmar</button>";
             echo "<div class=\"comment-container-top\" id=\"divReacoes\"></div>";
           echo "</div>";
-          echo "<div class=\"post-divCompart\">"; // TODO:
+          echo "<div class=\"post-divCompart\">";
             echo "<select id=\"select-compartilhar\" onchange=\"selectCompartilhar(this)\">";
               echo "<option id='optionCompartilhar' selected value=''>Selecione onde vai compartilhar</option>\n";
               echo "<option id='optionCompartilhar' value='feed'>No feed</option>\n";
