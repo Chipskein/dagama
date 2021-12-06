@@ -248,7 +248,7 @@
             if($user['ativo']){
               echo "<a href=amigos.php?user=$_GET[user] class=amigos> Amigos: ".($amigosUser ? $amigosUser[0]['qtdAmigos'] : 0)."</a>";
             }
-            if($isOwner) echo "<h3><a href=portosUser.php?owner&user=$_GET[user] class=amigos>Seus Portos: $portosUser</a></h3>";
+            if($isOwner) echo "<h3><a href=portosUser.php?owner&user=$_GET[user] class=amigos>Meus Portos: $portosUser</a></h3>";
         echo "</div>";
       echo "</div>";
     ?>
