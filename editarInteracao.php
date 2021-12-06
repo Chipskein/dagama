@@ -22,7 +22,6 @@
     if($post['isSharing']){
       $originalPost = getOriginalPost($post['codPost']);
     }
-    print_r($originalPost);
     $postPai = $post['postPai'] ? $post['postPai'] : $_GET['interacao'];
     $locaisArray = getLocais();
     $assuntosArray = getAssuntos();

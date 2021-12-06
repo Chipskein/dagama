@@ -37,7 +37,7 @@
       header("refresh:0;url=feed.php?user=$_SESSION[userid]"); 
     };
     if(isset($_POST['novoPost'])){
-      var_dump($_POST);
+      // var_dump($_POST);
       $texto = ''.$_POST['texto'];
       $reacao = isset($_POST['reacao']) ? $_POST['reacao'] : 0;
       $isReaction = isset($_POST['reacao']) ? 1 : 0;

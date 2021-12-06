@@ -625,7 +625,7 @@
     /*----------------------------------------*/
 
     /* FEED */
-    function getPosts($user, $offset,$limit, $order){ // TODO:
+    function getPosts($user, $offset,$limit, $order){
         $db_connection=db_connection();
         $db=$db_connection['db'];
         $db_type=$db_connection['db_type'];
