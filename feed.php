@@ -30,7 +30,9 @@
       $result[$campo] = $campo."=".$valor;
       return '&'.(strtr(implode("&",$result), " ", "+"));
   }
-    $user = getUserInfo("$_SESSION[userid]");
+  $user = getUserInfo("$_SESSION[userid]");
+  // $where = 'and username ===';
+  //   $SeachUser = getUserInfo("$_SESSION[userid]", $where);
     // $offset = (isset($_GET["offset"])) ? max(0, min($_GET["offset"], $total-1)) : 0;
     // $offset = $offset-($offset%$limit);
     $limit = 5;
@@ -44,9 +46,10 @@
     $estados=getStates();
     $cidades=getCities();
     $suggestFriends = suggestFriends($_SESSION['userid'], 4, 0);
+    $where = 'vi';
     $postsArray = getPosts($_SESSION['userid'], $offset, $limit, $orderby);
     $getAllPosts = getAllPosts($_SESSION['userid']);
-    $portosArray = getAllPorto($_SESSION['userid'], true, 0, 3, null);
+    $portosArray = getAllPorto($_SESSION['userid'], true, 0, 3, null, );
     $portosArrayForShare = getAllPorto($_SESSION['userid'], true, 0, 0,null);
     $errorMessage = [];
     // var_dump($_POST);
@@ -186,18 +189,15 @@
 <div id=principal>
   <header class="header-main">
     <img class="header-icon" src="imgs/icon.png" alt="">
-    <div class="header-searchBar">
+    <form class="header-searchBar" name="search" action="usuarios.php" method="get">
       <select id="select-filtro" name="select-filtro">
         <option value="perfil">Perfil</option>
         <option value="porto">Porto</option>
-        <option value="reacao">Reação</option>
-        <option value="assunto">Assunto</option>
-        <option value="local">Local</option>
-        <option value="data">Data</option>
       </select>
-      <input class="header-searchBar-input" type="text" placeholder="Faça sua pesquisa ..." />
-      <img class="header-searchBar-icon" src="imgs/icons/search.png" alt="" srcset="">
-    </div>
+      <input class="header-searchBar-input" name="username" type="text" placeholder="Faça sua pesquisa ..." />
+      <button type='submit'><img class="header-searchBar-icon" src="imgs/icons/search.png" alt="" srcset=""></button>
+
+  </form>
     <div class="header-links">
     <?php 
       echo "<a class=\"header-links-a a-selected\" href=feed.php>Feed</a> ";

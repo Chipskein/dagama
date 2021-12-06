@@ -56,8 +56,14 @@ a {
 .header-searchBar-icon {
 	width: 22px;
 	height: 23px;
-	margin-top: 7px;
-	margin-left: 13px;
+	margin-top: -50px;
+	margin-left: 18px;
+}
+.header-searchBar-icon2 {
+	width: 22px;
+	height: 23px;
+	margin-top: -35px;
+	margin-left: 20px;
 }
 .header-searchBar-input {
 	width: 500px;

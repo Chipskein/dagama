@@ -93,14 +93,19 @@
         }
         else exit;
     }
-    function getAllUserInfo($offset,$limit=10){
+    function getAllUserInfo($offset,$limit,$where=''){
         $db_connection = db_connection();
         $db = $db_connection['db'];
         $db_type = $db_connection['db_type'];
         if($db){
             $results=[];
             if($db_type == 'sqlite'){
-                $response = $db->query("select * from perfil limit $limit offset $offset");
+                if($where !== ''){
+                    echo $where;
+                    $response = $db->query("select * from perfil where username like '%$where%' limit $limit offset $offset");
+                }else {
+                    $response = $db->query("select * from perfil limit $limit offset $offset");
+                }
                 if($response){
                     while ($row = $response->fetchArray()) {
                         array_push($results, $row);
@@ -374,7 +379,20 @@
         $db_type = $db_connection['db_type'];
         if($db){
             if($db_type == 'sqlite'){
-                $response = $db->query("select codigo, email, ativo, img, username, cidade from perfil where codigo='$id'");
+                $response = $db->query("select codigo, email, ativo, img, username, cidade from perfil where codigo='$id' and ativo=1 ");
+                if($response) return $response->fetchArray();
+                else return false;
+            }
+        }
+        else exit;
+    };
+    function searchUser($where){
+        $db_connection = db_connection();
+        $db = $db_connection['db'];
+        $db_type = $db_connection['db_type'];
+        if($db){
+            if($db_type == 'sqlite'){
+                $response = $db->query("select * from perfil where username like '%$where%' and ativo=1 ");
                 if($response) return $response->fetchArray();
                 else return false;
             }
@@ -487,7 +505,7 @@
     /*----------------------------------------*/
 
     /* FEED */
-    function getPosts($user, $offset,$limit, $order){
+    function getPosts($user, $offset,$limit,$order){
         $db_connection=db_connection();
         $db=$db_connection['db'];
         $db_type=$db_connection['db_type'];
@@ -627,7 +645,9 @@
                 group by codPost
                 order by $order
                 limit $limit 
-                offset $offset");
+                offset $offset
+                ");
+
 
                 while($row = $postsOriginais->fetchArray()){
                     $postsArray[$row['codInteracao']] = $row;
@@ -1422,31 +1442,55 @@
         }
         else exit;
     }
-    function getFriends($user, $offset, $limit=10){
+
+    function getFriends($user, $offset, $limit=10, $where){
         $db_connection=db_connection();
         $db=$db_connection['db'];
         $db_type=$db_connection['db_type'];
         if($db){
             if($db_type=='sqlite'){
                 $results=[];
-                $result = $db->query("
-                select perfil.codigo, case 
-                        when amigo.perfil = perfil.codigo then amigo.amigo
-                        when amigo.amigo = perfil.codigo then amigo.perfil
-                    end as amigoCod,
-                    amigo.dateAceito,
-                    tmp1.codigo as codAmigo,
-                    tmp1.username as nameAmigo,
-                    tmp1.img as imgAmigo,
-                    (select count(*) from amigo where amigo = $user or perfil = $user and amigo.ativo = 1) as qtdAmigos
-                from perfil 
-                    join amigo on perfil.codigo = amigo.perfil or amigo.amigo
-                    join (select * from perfil) as tmp1 on tmp1.codigo = amigoCod
-                where 
-                    perfil.codigo = $user and 
-                    amigo.ativo = 1
-                order by amigo.dateAceito desc
-                limit $limit offset $offset");
+                if($where !== ''){
+                    $result = $db->query("
+                    select perfil.codigo, case 
+                            when amigo.perfil = perfil.codigo then amigo.amigo
+                            when amigo.amigo = perfil.codigo then amigo.perfil
+                        end as amigoCod,
+                        amigo.dateAceito,
+                        tmp1.codigo as codAmigo,
+                        tmp1.username as nameAmigo,
+                        tmp1.img as imgAmigo,
+                        (select count(*) from amigo where amigo = $user or perfil = $user and amigo.ativo = 1) as qtdAmigos
+                    from perfil 
+                        join amigo on perfil.codigo = amigo.perfil or amigo.amigo
+                        join (select * from perfil) as tmp1 on tmp1.codigo = amigoCod
+                    where 
+                    nameAmigo like '%$where%' and
+                        perfil.codigo = $user and 
+                        amigo.ativo = 1
+                    order by amigo.dateAceito desc
+                    limit $limit offset $offset");
+                }else{
+                    $result = $db->query("
+                    select perfil.codigo, case 
+                            when amigo.perfil = perfil.codigo then amigo.amigo
+                            when amigo.amigo = perfil.codigo then amigo.perfil
+                        end as amigoCod,
+                        amigo.dateAceito,
+                        tmp1.codigo as codAmigo,
+                        tmp1.username as nameAmigo,
+                        tmp1.img as imgAmigo,
+                        (select count(*) from amigo where amigo = $user or perfil = $user and amigo.ativo = 1) as qtdAmigos
+                    from perfil 
+                        join amigo on perfil.codigo = amigo.perfil or amigo.amigo
+                        join (select * from perfil) as tmp1 on tmp1.codigo = amigoCod
+                    where 
+                        perfil.codigo = $user and 
+                        amigo.ativo = 1
+                    order by amigo.dateAceito desc
+                    limit $limit offset $offset");
+
+                }
                 while ($row = $result->fetchArray()) {
                     array_push($results, $row);
                 }
@@ -1491,6 +1535,58 @@
                     ".($order ? "order by $order" : "")."
                     ".($isOwner ? " and participa = true" : "")."
                 ".($limit > 0 ? " limit $limit offset $offset" : " "));
+                while ($row = $result->fetchArray()) {
+                    array_push($results,$row);
+                }
+                return $results;
+            }
+        }
+        else exit;
+    }
+    function getAllPortos($offset, $limit=10, $order, $where){
+        $db_connection=db_connection();
+        $db=$db_connection['db'];
+        $db_type=$db_connection['db_type'];
+        if($db){
+            if($db_type=='sqlite'){
+                $results=[];
+                if($where != ''){
+                    $result=$db->query("
+                    select *
+                    from porto
+                    where 
+                    nome like '%$where%' and
+                        ativo = 1
+                        ".($order ? "order by $order" : "")."
+                    ".($limit > 0 ? " limit $limit offset $offset" : " "));
+                }else {
+                    $result=$db->query("
+                    select 
+                        porto.codigo as codigo, 
+                        porto.nome as nome, 
+                        porto.descr as descr, 
+                        porto.img as img,
+                        porto.dataRegis as data,
+                        tmp1.participa as participa 
+                    from porto
+                        left join (
+                            select case 
+                                    when (porto.perfil = perfil.codigo) or (porto_participa.perfil = perfil.codigo and porto_participa.ativo = 1) then true
+                                    else false
+                                end as participa,
+                                porto.codigo as porto
+                            from porto 
+                                left join porto_participa on porto.codigo = porto_participa.porto
+                                left join perfil on (porto.perfil = perfil.codigo) or (porto_participa.perfil = perfil.codigo and porto_participa.ativo = 1)
+                            where 
+                                perfil.codigo = $user
+                        ) as tmp1 on porto.codigo = tmp1.porto
+                    where 
+                        porto.ativo = 1
+                        ".($order ? "order by $order" : "")."
+                        ".($isOwner ? " and participa = true" : "")."
+                    ".($limit > 0 ? " limit $limit offset $offset" : " "));
+                }
                 while ($row = $result->fetchArray()) {
                     array_push($results,$row);
                 }

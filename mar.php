@@ -61,10 +61,15 @@ function pages($campo, $valor){
 ?>
    <header class="header-main">
     <img class="header-icon" src="imgs/icon.png" alt="">
-    <div class="header-searchBar">
-      <input class="header-searchBar-input" type="text" placeholder="Faça sua pesquisa ..." />
-      <img class="header-searchBar-icon" src="imgs/icons/search.png" alt="" srcset="">
-    </div>
+    <form class="header-searchBar" name="search" action="usuarios.php" method="get">
+      <select id="select-filtro" name="select-filtro">
+        <option value="perfil">Perfil</option>
+        <option value="porto">Porto</option>
+      </select>
+      <input class="header-searchBar-input" name="username" type="text" placeholder="Faça sua pesquisa ..." />
+      <button type='submit'><img class="header-searchBar-icon" src="imgs/icons/search.png" alt="" srcset=""></button>
+
+  </form>
     <div class="header-links">
     <?php 
       echo "<a class=\"header-links-a\" href=feed.php>Feed</a> ";

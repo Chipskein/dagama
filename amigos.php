@@ -22,7 +22,8 @@
     die();
   } else {
       if(isset($_GET['user'])){
-        $amigosUser = getFriends($_GET['user'], 0, 10);
+        $where = $_GET['username'] ? $_GET['username'] : '';
+        $amigosUser = getFriends($_GET['user'], 0, 10,$where);
         if($_SESSION['userid'] == $_GET['user']){
           $amigos=getRequestAndFriends($_SESSION["userid"],false);
           if(isset($_POST['desfazerAmizade'])){
@@ -33,8 +34,9 @@
         }
       } else {
         if($_SESSION['userid']){
+          $where = $_GET['username'] ? $_GET['username'] : '';
           $amigos=getRequestAndFriends($_SESSION["userid"],false);
-          $amigosUser = getFriends($_SESSION['userid'], 0, 10);
+          $amigosUser = getFriends($_SESSION['userid'], 0, 10, $where);
           if(isset($_POST['desfazerAmizade'])){
             $response = delFriend($_SESSION['userid'], $_POST['amigo']);
             if($response) header("refresh:1;url=amigos.php");
@@ -51,14 +53,15 @@
 ?>
  <header class="header-main">
     <img class="header-icon" src="imgs/icon.png" alt="">
-    <div class="header-searchBar">
+       <form class="header-searchBar" name="search" action="usuarios.php" method="get">
       <select id="select-filtro" name="select-filtro">
-        <option value="nome">Nome</option>
-        <option value="data">Data</option>
+        <option value="perfil">Perfil</option>
+        <option value="porto">Porto</option>
       </select>
-      <input class="header-searchBar-input" type="text" placeholder="Faça sua pesquisa ..." />
-      <img class="header-searchBar-icon" src="imgs/icons/search.png" alt="" srcset="">
-    </div>
+      <input class="header-searchBar-input" name="username" type="text" placeholder="Faça sua pesquisa ..." />
+      <button type='submit'><img class="header-searchBar-icon" src="imgs/icons/search.png" alt="" srcset=""></button>
+
+  </form>
     <div class="header-links">
     <?php 
       echo "<a class=\"header-links-a\" href=feed.php>Feed</a> ";
@@ -73,21 +76,12 @@
     <!--Add onlick change-->
     <div class="container-center">
     <?php
-      echo "<div class=\"mar-top-row\">";
-        echo "<div class=\"order-btn\">";
-        echo "<select id=\"select-ordenar\" name=\"select-ordenar\">";
-          echo "<option value=\"nome\">Nome</option>";
-          echo "<option value=\"data\">Data de criação</option>";
-          echo "<option value=\"qtd\">Qtd interacoes</option>";
-        echo "</select>";
-        echo "<select id=\"select-ordenar-2\" name=\"select-ordenar-2\">";
-          echo "<option value=\"cres\">Cres</option>";
-          echo "<option value=\"decre\">Decre</option>";
-        echo "</select>";
-        echo "<button class=\"insert-interacao-submit\" name=\"ordenarBtn\">Ordenar<button/>";
-        echo "<button class=\"btn-create-porto\"><a href=\"createPorto.php\">Criar um porto</a></button>";
-        echo "</div>";
-      echo "</div>";
+      echo "<form class=\"header-searchBar\" name=\"search\" action=\"amigos.php\" method=\"get\">";
+      echo "<input class=\"header-searchBar-input\" name=\"username\" type=text placeholder=\"digite o nome do seu amigo\" />";
+      echo "<button><img class=\"header-searchBar-icon2\" src=\"imgs/icons/search.png\"></button>";
+      echo "</form>";
+
+
       if(!isset($_GET['user']) && count($amigos) > 0){
         echo "<a href=solicitacoes.php class=header>Você tem ".count($amigos)." solicitações</a>";
       } else {
@@ -122,7 +116,7 @@
           echo "</div>";          
         }
       }
-      else echo "<p>Você Não tem amigos ainda</p>";
+      else echo "<p>Não foi encontrado amigos</p>";
     ?>
     </div>
 </main>

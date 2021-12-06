@@ -22,11 +22,11 @@
     $assuntosArray = getAssuntos();
     $pessoasArray = getPessoas();
     $portosArrayForShare = getAllPorto($_SESSION['userid'], 1, 0, getTotalPorto(), 1);
-    $qtdAmigos = getFriends($_SESSION['userid'], 0, 1);
+    $qtdAmigos = getFriends($_SESSION['userid'], 0, 1,'');
     $friends = [];
     if(count($qtdAmigos) != 0){
       $qtdAmigos = $qtdAmigos[0]['qtdAmigos'];            
-      $friends = getFriends($_SESSION['userid'], 0, $qtdAmigos);
+      $friends = getFriends($_SESSION['userid'], 0, $qtdAmigos,'');
     } 
     $paises=getPaises();
     $estados=getStates();
@@ -139,10 +139,15 @@
 ?>
     <header class="header-main">
     <img class="header-icon" src="imgs/icon.png" alt="">
-    <div class="header-searchBar">
-      <img class="header-searchBar-icon" src="imgs/icons/search.png" alt="" srcset="">
-      <input class="header-searchBar-input" type="text" placeholder="Faça sua pesquisa ..." />
-    </div>
+    <form class="header-searchBar" name="search" action="usuarios.php" method="get">
+      <select id="select-filtro" name="select-filtro">
+        <option value="perfil">Perfil</option>
+        <option value="porto">Porto</option>
+      </select>
+      <input class="header-searchBar-input" name="username" type="text" placeholder="Faça sua pesquisa ..." />
+      <button type='submit'><img class="header-searchBar-icon" src="imgs/icons/search.png" alt="" srcset=""></button>
+
+  </form>
     <div class="header-links">
     <?php 
       echo "<a class=\"header-links-a a-selected\" href=feed.php?user=$_SESSION[userid]>Feed</a> ";

@@ -186,18 +186,15 @@
 <div id=principal>
   <header class="header-main">
     <img class="header-icon" src="imgs/icon.png" alt="">
-    <div class="header-searchBar">
+    <form class="header-searchBar" name="search" action="usuarios.php" method="get">
       <select id="select-filtro" name="select-filtro">
         <option value="perfil">Perfil</option>
         <option value="porto">Porto</option>
-        <option value="reacao">Reação</option>
-        <option value="assunto">Assunto</option>
-        <option value="local">Local</option>
-        <option value="data">Data</option>
       </select>
-      <input class="header-searchBar-input" type="text" placeholder="Faça sua pesquisa ..." />
-      <img class="header-searchBar-icon" src="imgs/icons/search.png" alt="" srcset="">
-    </div>
+      <input class="header-searchBar-input" name="username" type="text" placeholder="Faça sua pesquisa ..." />
+      <button type='submit'><img class="header-searchBar-icon" src="imgs/icons/search.png" alt="" srcset=""></button>
+
+  </form>
     <div class="header-links">
     <?php 
       echo "<a class=\"header-links-a a-selected\" href=feed.php>Feed</a> ";

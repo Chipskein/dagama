@@ -17,61 +17,73 @@
     $result[$campo] = $campo."=".$valor;
     return("usuarios.php?".strtr(implode("&", $result), " ", "+"));
   }
+  $campo = $_GET['select-filtro'];
+  $limit=5;
+  $offset= isset($_GET['offset']) ? $_GET['offset']:0;
+  $order = null;
+
 ?>
  <header class="header-main">
     <img class="header-icon" src="imgs/icon.png" alt="">
-    <div class="header-searchBar">
+       <form class="header-searchBar" name="search" action="usuarios.php" method="get">
       <select id="select-filtro" name="select-filtro">
-        <option value="nome">Nome</option>
-        <option value="data">Data</option>
+        <option value="perfil">Perfil</option>
+        <option value="porto">Porto</option>
       </select>
-      <input class="header-searchBar-input" type="text" placeholder="Faça sua pesquisa ..." />
-      <img class="header-searchBar-icon" src="imgs/icons/search.png" alt="" srcset="">
-    </div>
+      <input class="header-searchBar-input" name="username" type="text" placeholder="Faça sua pesquisa ..." />
+      <button type='submit'><img class="header-searchBar-icon" src="imgs/icons/search.png" alt="" srcset=""></button>
+
+  </form>
   </header>
 <main>
     <div align=center>
     <div class="container-center">
         <?php
-        $limit=5;
-        $offset= isset($_GET['offset']) ? $_GET['offset']:0;
-        $users=getAllUserInfo($offset,$limit);
+        $portos = getAllPortos($offset, $limit, $order, $_GET['username']);
+        $users=getAllUserInfo($offset,$limit,$_GET['username']);
         $total=countAllUsers();
-        echo "<div class=\"mar-top-row\">";
-            echo "<div class=\"order-btn\">";
-            echo "<select id=\"select-ordenar\" name=\"select-ordenar\">";
-            echo "<option value=\"nome\">Nome</option>";
-            echo "<option value=\"data\">Data de criação</option>";
-            echo "<option value=\"qtd\">Qtd interacoes</option>";
-            echo "</select>";
-            echo "<select id=\"select-ordenar-2\" name=\"select-ordenar-2\">";
-            echo "<option value=\"cres\">Cres</option>";
-            echo "<option value=\"decre\">Decre</option>";
-            echo "</select>";
-            echo "<button class=\"insert-interacao-submit\" name=\"ordenarBtn\">Ordenar<button/>";
-            echo "</div>";
-        echo "</div>";
+
         echo "<div class=\"div-amigo\">";
-        if(count($users)>0){
-            foreach ($users as $user) {
-            echo "<div class=\"div-amigo-row\">";
-                echo "<div class=\"row\">";
-                    echo "<img src=\"$user[img]\" alt=\"\" class=\"div-amigo-image\">";
-                    echo "<div class=\"div-amigo-textos\">";
-                        echo "<p style=\"color: #fff\">$user[username]</p>";
-                        $datanasc="$user[datanasc]";
-                        echo "<p class=\"\">Registrado em $user[dataregis]</p>";
-                        echo "<p class=\"\">Email é $user[email]</p>";
-                        echo "<p class=\"\">Nasceu em $datanasc</p>";
-                        echo "<p class=\"\">Genero é $user[genero]</p>";
-                        echo "<p class=\"\">Mora em $user[cidade]</p>";
-                        echo "<p class=\"\">Ativo $user[ativo]</p>";
-                    echo "</div>";
-                echo "</div>";
-            echo "</div>";
-            }
+        if($campo == 'porto'){
+          if(count($portos)>0){
+              foreach ($portos as $porto) {
+              echo "<div class=\"div-amigo-row\">";
+                  echo "<div class=\"row\">";
+                      echo "<a href=porto.php?porto=$porto[codigo]><img src=\"$porto[img]\" alt=\"\" class=\"div-amigo-image\"></a>";
+                      echo "<div class=\"div-amigo-textos\">";
+                          echo "<p style=\"color: #fff\">$porto[nome]</p>";
+                          echo "<p class=\"\">Registrado em $porto[dataRegis]</p>";
+                          // echo "<p class=\"\">criado por $porto[perfil]</p>";
+                          echo "<p class=\"\">Ativo $porto[ativo]</p>";
+                      echo "</div>";
+                  echo "</div>";
+              echo "</div>";
+              }
+          }
+          else echo "<p>Sem usuarios</p>";
         }
-        else echo "<p>Sem usuarios</p>";
+        if($campo == 'perfil'){
+          if(count($users)>0){
+              foreach ($users as $user) {
+              echo "<div class=\"div-amigo-row\">";
+                  echo "<div class=\"row\">";
+                      echo "<a href=navio.php?user=$user[codigo]><img src=\"$user[img]\" alt=\"\" class=\"div-amigo-image\"></a>";
+                      echo "<div class=\"div-amigo-textos\">";
+                          echo "<p style=\"color: #fff\">$user[username]</p>";
+                          $datanasc="$user[datanasc]";
+                          echo "<p class=\"\">Registrado em $user[dataregis]</p>";
+                          echo "<p class=\"\">Email é $user[email]</p>";
+                          echo "<p class=\"\">Nasceu em $datanasc</p>";
+                          echo "<p class=\"\">Genero é $user[genero]</p>";
+                          echo "<p class=\"\">Mora em $user[cidade]</p>";
+                          echo "<p class=\"\">Ativo $user[ativo]</p>";
+                      echo "</div>";
+                  echo "</div>";
+              echo "</div>";
+              }
+          }
+          else echo "<p>Sem Portos com esse nome</p>";
+        }
         echo "</div>";
         ?>
     </div>
