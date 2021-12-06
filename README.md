@@ -2,9 +2,10 @@
 ## Descrição
     Rede Social em PHP para disciplina de banco de dados(2021). 
 ## Nota
-    Para utilizar todas as funcionalidades do sistema, é necessário instalar o composer.
-      composer install
-    Rodar no localhost:8080
+    Para utilizar todas as funcionalidades do sistema,
+       composer install(Caso repo esteja sem a pasta vendor/)
+    Caso rode local
+    Use localhost:8080,localhost:8081 ou localhost:8082 para o sistema de email funcionar
 ## Requisitos
 * [PDF](https://github.com/Chipskein/dagama/blob/main/lista9-projeto.pdf)
 ## Integrantes do projeto
