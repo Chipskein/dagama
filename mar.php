@@ -29,7 +29,7 @@ function pages($campo, $valor){
     session_start(); 
   }
   if(isset($_SESSION['userid'])){
-    $limit=2;//mudar pra 10 dps
+    $limit=5;//mudar pra 10 dps
     $offset= isset($_GET['offset']) ? $_GET['offset']:0;
     //falta o pesquisar e ordenar
     $orderby = (isset($_GET["orderby"])) ? $_GET["orderby"] : "data desc";
