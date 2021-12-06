@@ -28,7 +28,7 @@
     session_start(); 
   }
   if(isset($_SESSION['userid'])){
-    $limit=1;//mudar pra 10 dps
+    $limit=10;//mudar pra 10 dps
     $offset= isset($_GET['offset']) ? $_GET['offset']:0;
     //falta o pesquisar e ordenar
     $portos = 0;
@@ -76,9 +76,9 @@
     <div align=center>
       <?php 
         if(isset($_GET['owner'])){
-          echo "<h1>Seus portos</h1>";
+          echo "<h1>Meus portos</h1>";
         } else {
-          echo "<h1>Seus portos e portos atracados</h1>";
+          echo "<h1>Meus portos e portos atracados</h1>";
         }
       ?>
       <?php
