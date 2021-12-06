@@ -36,6 +36,8 @@
  */
  include './backend/infra/connection.php';
   $paises=getPaises();
+  $estados=getStates();
+  $cidades=getCities();
   $grupos=getGrupos();
   //utils
   echo "<script>";
@@ -686,11 +688,142 @@
           echo "</form>";
     }
   echo "<div>";
-//16 Atribuir automaticamente um selo de fã, com validade determinada para a semana atual, para os usuários do grupo G conforme a tabela
+  // 16) Atribuir automaticamente um selo de fã, com validade determinada para a semana atual, para os usuários do grupo G conforme a tabela 
+  // Funcinoa no porto ao entrar
+  // 1) CRUD de Localidades
+  echo "<div align=center>";
+    echo "<h1> Desativar Países Cadastrados </h1>";
+    if(isset($_POST['crud-pais'])){
+      if(preg_match("#^[1-9]{1}[0-9]*$#",$_POST["crud-pais"])){
+        $pass = false;
+        foreach ($paises as $pais){
+          if($pais['codigo'] == $_POST["crud-pais"]){
+            $pass=true;
+            break;
+          };
+        }
+        if($pass){
+          $pais = $_POST['crud-pais'];         
+          $res = delPais($pais);
+          if($res) echo "Pais excluído com sucesso!";
+          else echo "<h4>FALHOU!</h4><br>";
+        }
+        else echo "<h4>Pais invalido</h4>";
+      }
+      else echo "<h4>Dados invalidos</h4>";
+    }
+    else{
+      echo "<form id=form-desativar-pais method=POST>";
+            echo "<select class=inputs name=crud-pais>";
+              echo "<option selected >Selecione o pais</option>";
+              foreach($paises as $pais){
+                echo "<option value=$pais[codigo]>$pais[nome]</option>";
+              }
+            echo "</select><br>";
+            echo "<input class=button type=button value='Enviar' onclick=verificar1()>";
+          echo "</form>";
+    }
+  echo "<div>";
+  // Estados
+  echo "<div align=center>";
+    echo "<h1> Desativar Estados Cadastrados </h1>";
+    if(isset($_POST['crud-estado'])){
+      if(preg_match("#^[1-9]{1}[0-9]*$#",$_POST["crud-estado"])){
+        $pass = false;
+        foreach ($estados as $estado){
+          if($estado['codigo'] == $_POST["crud-estado"]){
+            $pass=true;
+            break;
+          };
+        }
+        if($pass){
+          $pais = $_POST['crud-estado'];         
+          $res = delEstado($estado);
+          if($res) echo "Estado excluído com sucesso!";
+          else echo "<h4>FALHOU!</h4><br>";
+        }
+        else echo "<h4>Estado invalido</h4>";
+      }
+      else echo "<h4>Dados invalidos</h4>";
+    }
+    else{
+      echo "<form id=form-desativar-estado method=POST>";
+            echo "<select class=inputs name=crud-estado>";
+              echo "<option selected >Selecione o estado</option>";
+              foreach($estados as $estado){
+                echo "<option value=$estado[codigo]>$estado[nome]</option>";
+              }
+            echo "</select><br>";
+            echo "<input class=button type=button value='Enviar' onclick=verificar1Estado()>";
+          echo "</form>";
+    }
+  echo "<div>";
+  // Cidades
+  echo "<div align=center>";
+    echo "<h1> Desativar Cidades Cadastrados </h1>";
+    if(isset($_POST['crud-cidade'])){
+      if(preg_match("#^[1-9]{1}[0-9]*$#",$_POST["crud-cidade"])){
+        $pass = false;
+        foreach ($cidades as $cidade){
+          if($cidade['codigo'] == $_POST["crud-cidade"]){
+            $pass=true;
+            break;
+          };
+        }
+        if($pass){
+          $cidade = $_POST['crud-cidade'];         
+          $res = delCidade($cidade);
+          if($res) echo "Cidade excluído com sucesso!";
+          else echo "<h4>FALHOU!</h4><br>";
+        }
+        else echo "<h4>Cidade invalida</h4>";
+      }
+      else echo "<h4>Dados invalidos</h4>";
+    }
+    else{
+      echo "<form id=form-desativar-cidade method=POST>";
+            echo "<select class=inputs name=crud-cidade>";
+              echo "<option selected >Selecione o cidade</option>";
+              foreach($cidades as $cidade){
+                echo "<option value=$cidade[codigo]>$cidade[nome]</option>";
+              }
+            echo "</select><br>";
+            echo "<input class=button type=button value='Enviar' onclick=verificar1Cidade()>";
+          echo "</form>";
+    }
+  echo "<div>";
   echo "<br><br>";
 ?>
 </main>
+
 <script>
+function verificar1(){
+  let form=document.getElementById("form-desativar-pais");
+  let select=document.getElementsByName("crud-pais")[0];
+  if(select.selectedIndex != 0){
+    form.submit()
+  } else {
+    alert('Selecione um Pais');
+  }
+}
+function verificar1Estado(){
+  let form=document.getElementById("form-desativar-estado");
+  let select=document.getElementsByName("crud-estado")[0];
+  if(select.selectedIndex != 0){
+    form.submit()
+  } else {
+    alert('Selecione um Estado');
+  }
+}
+function verificar1Cidade(){
+  let form=document.getElementById("form-desativar-cidade");
+  let select=document.getElementsByName("crud-cidade")[0];
+  if(select.selectedIndex != 0){
+    form.submit()
+  } else {
+    alert('Selecione uma Cidade');
+  }
+}
 function verificar10(){
   let form=document.getElementById("form-paises-curtidas");
   let select=document.getElementsByName("select-paises-curtidas")[0];
@@ -714,22 +847,6 @@ function verificar10(){
         input3.focus();
         return;
       }
-    }
-    else{
-      if(select.selectedIndex!=0){
-        form.submit()
-      }
-    }
-}
-function verificar17(){
-  let form=document.getElementById("grafico-form");
-  let select=document.getElementsByName("grafico-paises")[0];
-  let input=document.getElementsByName("grafico-meses")[0];
-  let regexp = new RegExp("^[1-9]{1}[0-9]*$");
-    if (!regexp.test(input.value)) {
-        input.value = "";
-        input.focus();
-        return;
     }
     else{
       if(select.selectedIndex!=0){
@@ -810,6 +927,22 @@ function verificar15(){
       
         input1.value = "";
         input1.focus();
+        return;
+    }
+    else{
+      if(select.selectedIndex!=0){
+        form.submit()
+      }
+    }
+}
+function verificar17(){
+  let form=document.getElementById("grafico-form");
+  let select=document.getElementsByName("grafico-paises")[0];
+  let input=document.getElementsByName("grafico-meses")[0];
+  let regexp = new RegExp("^[1-9]{1}[0-9]*$");
+    if (!regexp.test(input.value)) {
+        input.value = "";
+        input.focus();
         return;
     }
     else{

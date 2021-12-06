@@ -1,6 +1,10 @@
 # [Dagama](https://dagama.herokuapp.com/)
 ## Descrição
-    Rede Social em PHP para disciplina de banco de dados(2021). Rodar no localhost:8080.
+    Rede Social em PHP para disciplina de banco de dados(2021). 
+## Nota
+    Para utilizar todas as funcionalidades do sistema, é necessário instalar o composer.
+      composer install
+    Rodar no localhost:8080
 ## Requisitos
 * [PDF](https://github.com/Chipskein/dagama/blob/main/lista9-projeto.pdf)
 ## Integrantes do projeto

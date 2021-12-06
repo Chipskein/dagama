@@ -208,7 +208,7 @@
 
 <?php
     echo array_key_exists('friendRequest',$errorMessage) ? $errorMessage['friendRequest'][2] : '';
-    // add friends FIXME:
+    // add friends
     if(count($suggestFriends) > 0){
       echo "<div class=\"add-amigo\">";
       echo "<div class=\"add-amigo-top\">";

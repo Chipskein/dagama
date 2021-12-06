@@ -21,8 +21,12 @@
     header("refresh:1;url=index.php");
     die();
   } else {
+    if(isset($_GET['username'])){
+      $where = $_GET['username'];
+    } else{
+      $where = '';
+    }
       if(isset($_GET['user'])){
-        $where = $_GET['username'] ? $_GET['username'] : '';
         $amigosUser = getFriends($_GET['user'], 0, 10,$where);
         if($_SESSION['userid'] == $_GET['user']){
           $amigos=getRequestAndFriends($_SESSION["userid"],false);
@@ -85,8 +89,10 @@
       if(!isset($_GET['user']) && count($amigos) > 0){
         echo "<a href=solicitacoes.php class=header>Você tem ".count($amigos)." solicitações</a>";
       } else {
-        if($_SESSION['userid'] == $_GET['user'] && count($amigos) > 0){
-          echo "<a href=solicitacoes.php class=header>Você tem ".count($amigos)." solicitações</a>";
+        if(isset($_GET['user'])){
+          if($_SESSION['userid'] == $_GET['user'] && count($amigos) > 0){
+            echo "<a href=solicitacoes.php class=header>Você tem ".count($amigos)." solicitações</a>";
+          }
         }
       }
       echo "<div class=\"div-amigo\">";

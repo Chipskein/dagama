@@ -52,22 +52,73 @@
       $orderby = (isset($_GET["orderby"])) ? $_GET["offset"] : "tmp1.data desc";
       $getAllPosts = getAllPosts($_GET['user']);
       $postsArray = getPosts($_GET['user'], $offset, $limit, $orderby);
-        $portosArray = getAllPorto($_GET['user'], true, 0, 3, null);
-        $portosUser = getUserPortoQtd($_GET['user']);
         $amigosUser = getFriends($_GET['user'], 0, 3,'');
-        $locaisArray = getLocais();
-        $assuntosArray = getAssuntos();
-        $pessoasArray = getPessoas();
+      $portosArray = getAllPorto($_GET['user'], true, 0, 3, null);
+      $portosUser = getUserPortoQtd($_GET['user']);
+      $locaisArray = getLocais();
+      $assuntosArray = getAssuntos();
+      $pessoasArray = getPessoas();
+      $paises=getPaises();
+      $estados=getStates();
+      $cidades=getCities();
         if(isset($_POST['buttonAssunto'])){
           $addAssunto = addAssunto("$_POST[buttonAssunto]");
-          header("refresh:0;url=feed.php?user=$_SESSION[userid]"); 
+          header("refresh:0;url=navio.php?user=$_SESSION[userid]"); 
         };
         if(isset($_POST['novoPost'])){
-          // var_dump($_POST);
           $texto = ''.$_POST['texto'];
-          $local = isset($_POST['local']) ? $_POST['local'] : 0;
+          $reacao = isset($_POST['reacao']) ? $_POST['reacao'] : 0;
+          $isReaction = isset($_POST['reacao']) ? 1 : 0;
           $assuntos = [];
           $citacoes = [];
+          
+          // Local
+          $local = $user['cidade'];
+          $codPais = $_POST['insert-codigo-pais'];
+          $novoPaisNome = $_POST['insert-nome-pais'];
+          $codEstado = $_POST['insert-codigo-estado'];
+          $novoEstadoNome = $_POST['insert-nome-estado'];
+          $codCidade = $_POST['insert-codigo-cidade'];
+          $novoCidadeNome = $_POST['insert-nome-cidade'];
+
+          if(isset($codPais) && isset($codEstado) && isset($codCidade)){
+            if($codPais != "" && $codEstado != "" && $codCidade != ""){
+              if($codPais == 0){
+                // cria novo pais, estado e cidade
+                $pais = addPais($novoPaisNome);
+                $estado = addEstado($novoEstadoNome, $pais);
+                $local = addCidade($novoCidadeNome, $estado);
+              }
+              if($codPais != 0 && preg_match('#^[0-9]{1,}$#', $codPais)){  
+                if($codEstado == 0){
+                  // cria novo estado e cidade
+                  $estado = addEstado($novoEstadoNome, $codPais);
+                  $local = addCidade($novoCidadeNome, $estado);
+                }
+              if($codEstado != 0 && preg_match('#^[0-9]{1,}$#', $codEstado)){
+                if($codCidade == 0){
+                    // cria nova cidade
+                    $local = addCidade($novoCidadeNome, $codEstado);
+                  }
+                  if($codCidade != 0 && preg_match('#^[0-9]{1,}$#', $codCidade)){
+                    $local = $codCidade;
+                  }
+                }
+              }
+            }
+          }
+          $newAssuntos = [];
+          for($c = 1; $c <= 5 ; $c++){
+            if(isset($_POST['insert-new-assunto'.$c])){
+              $newAssuntos[] = $_POST['insert-new-assunto'.$c];
+            }
+          }
+          if(count($newAssuntos) > 0){
+            foreach ($newAssuntos as $value) {
+              $assuntos[] = addAssunto($value);
+            }
+          }
+
           $qtdAssuntos = count(getAssuntos());
           for($c = 1; $c <= $qtdAssuntos; $c++){
               if(isset($_POST["assunto$c"])){
@@ -80,7 +131,7 @@
                   $citacoes[] = $_POST["pessoa$c"];
               }
           }
-          $response = addInteracao($_SESSION['userid'], $texto, $_GET['user'], 0, 0, 0, 0, 0, $local);
+          $response = addInteracao($_SESSION['userid'], $texto, $_GET['user'], 0, 0, 0, 0, $isReaction, $reacao, $local);
           if($response) {
             if(count($assuntos) > 0){
               foreach ($assuntos as $value) {
@@ -92,16 +143,37 @@
                 addCitacaoInteracao($value, $response);
               }
             }
-            header("refresh:0;url=navio.php?user=$_GET[user]"); 
+            header("refresh:0;url=navio.php?user=$_SESSION[userid]"); 
           }
           else return false;
         }
-      }
-      else{
-        echo "Usuario inválido";
-        header("refresh:1;url=mar.php");
-        die();
-      }
+        if(isset($_POST['deletePost'])){
+          $post = $_POST['deletePost'];
+          $user = $_SESSION['userid'];
+          $erros = [];
+          // Validação
+          // ...
+          if($erros == []){
+            delInteracao($post);
+            header("refresh:0;url=navio.php?user=$_SESSION[userid]"); 
+          }
+        }
+        if(isset($_POST['removeCitacao'])){
+          $post = $_POST['removeCitacao'];
+          $user = $_SESSION['userid'];
+          $erros = [];
+          // Validação
+          // ...
+          if($erros == []){
+            delCitacao($post, $user);
+            header("refresh:0;url=navio.php?user=$_SESSION[userid]"); 
+          }
+        }
+    } else{
+      echo "Usuario inválido";
+      header("refresh:1;url=mar.php");
+      die();
+    }
   }
   if(isset($_FILES["photo"])){
     $photo=$_FILES["photo"];
@@ -303,71 +375,234 @@
       echo "</div>";
 
       // posts
-      if($postsArray){
-        echo "<form action=\"feed.php?user=$_SESSION[userid]\" id=\"formOrderby\" method=\"get\">";
-        echo "<div class=\"order-btn\">";
-        echo "<p>Ordene por </p>";
-        echo "<select onchange=\"document.getElementById('formOrderby').submit();\" id=\"select-ordenar\" name=\"orderby\">";
-        echo "<option value=\"tmp1.data desc\" ".($_GET['orderby'] == "tmp1.data desc" ? "selected" : "").">Data descrecente</option>";
-          echo "<option value=\"tmp1.data asc\" ".($_GET['orderby'] == "tmp1.data asc" ? "selected" : "").">Data crescente</option>";
-          echo "<option value=\"tmpQtd.qtd desc\" ".($_GET['orderby'] == "tmpQtd.qtd desc" ? "selected" : "").">Popularidade descrescente</option>";
-          echo "<option value=\"tmpQtd.qtd asc\" ".($_GET['orderby'] == "tmpQtd.qtd asc" ? "selected" : "").">Popularidade crescente</option>";
-        echo "</select>";
-        echo "</div>";
-        echo "</form>";
-        foreach ($postsArray as $post) {
-          // print_r($post);
-          echo "<div class=\"div-post\">";
-            if($post['codPorto']){
-              echo "<p class=\"compartilhado-txt\"><i>Postado no porto <a href=porto.php?porto=$post[codPorto] class=\"txt-linktoporto\">$post[nomePorto]</a></i></p>";
-            }
-            //Share
-            $sharedPost = 0;
-            if($post['isSharing']){
-              $sharedPost = getOriginalPost($post['codPost']);
-              echo "<p class=\"compartilhado-txt\"><i>Compartilhado</i></p>";
-              echo "<div class=\"div-sharing-post\">";
-                // Sharing-top
-                echo "<div class=\"div-sharing-post-top\">";
-                  echo "<a href=navio.php?user=$sharedPost[codPerfil]><img src=\"".$sharedPost['iconPerfil']."\" alt=\"\" class=\"div-sharing-post-top-icon\"></a>";
-                  echo "<div class=\"div-post-top-infos\">";
-                  echo "<div class=\"row\">";
-                  if($selo==3)echo "<img class=\"coment-mainuser-user-selo\" src=\"./imgs/icons/bronze-medal.png\"/>";
-                  if($selo==2)echo "<img class=\"coment-mainuser-user-selo\" src=\"./imgs/icons/silver-medal.png\"/>";
-                  if($selo==1)echo "<img class=\"coment-mainuser-user-selo\" src=\"./imgs/icons/gold-medal.png\"/>";
-                  echo "<p class=\"div-post-top-username\"><i>@".$sharedPost['nomePerfil']."</i>";
-                  echo "</div>";
-                    if($sharedPost['nomeCidade']){
-                      echo " em ".$sharedPost['nomeCidade'].", ".$sharedPost['nomePais']." - ";
-                    }
-                    $tmpHora = explode(' ', $sharedPost['dataPost'])[1];
-                    $tmpData = explode(' ', $sharedPost['dataPost'])[0];
-                    $tmpData = explode('-', $tmpData);
-                    echo " ".$tmpData[2]."/".$tmpData[1]."/".$tmpData[0]." ".$tmpHora."</p>";
-                    $tmpArray = [];
-                    // print_r($post['assuntos']);
-                    foreach($sharedPost['assuntos'] as $elements){
-                      foreach ($elements as $key => $value) {
-                        if($key === 'nomeAssunto') $tmpArray[] = $value;
-                      }
-                    }
-                    echo "<p class=\"div-post-top-subjects\" title=\"".implode($tmpArray, ', ')."\"><b>";
-                    $tmpArray = implode($tmpArray, ', ');
-                    if(strlen($tmpArray) > 30){
-                      $tmpArray = substr($tmpArray, 0, 27);
-                      echo $tmpArray."...";
-                    } else {
-                      echo $tmpArray;
-                    }
-                    echo "</b></p>";
-                  echo "</div>";
+    if($postsArray){
+      echo "<form action=\"feed.php?user=$_SESSION[userid]\" id=\"formOrderby\" method=\"get\">";
+      echo "<div class=\"order-btn\">";
+      echo "<p>Ordene por </p>";
+      echo "<select onchange=\"document.getElementById('formOrderby').submit();\" id=\"select-ordenar\" name=\"orderby\">";
+      echo "<option value=\"tmp1.data desc\" ".($_GET['orderby'] == "tmp1.data desc" ? "selected" : "").">Data descrecente</option>";
+        echo "<option value=\"tmp1.data asc\" ".($_GET['orderby'] == "tmp1.data asc" ? "selected" : "").">Data crescente</option>";
+        echo "<option value=\"tmpQtd.qtd desc\" ".($_GET['orderby'] == "tmpQtd.qtd desc" ? "selected" : "").">Popularidade descrescente</option>";
+        echo "<option value=\"tmpQtd.qtd asc\" ".($_GET['orderby'] == "tmpQtd.qtd asc" ? "selected" : "").">Popularidade crescente</option>";
+      echo "</select>";
+      echo "</div>";
+      echo "</form>";
+      foreach ($postsArray as $post) {
+        // print_r($post);
+        echo "<div class=\"div-post\">";
+          if($post['codPorto']){
+            echo "<p class=\"compartilhado-txt\"><i>Postado no porto <a href=porto.php?porto=$post[codPorto] class=\"txt-linktoporto\">$post[nomePorto]</a></i></p>";
+          }
+          //Share
+          $sharedPost = 0;
+          if($post['isSharing']){
+            $sharedPost = getOriginalPost($post['codPost']);
+            echo "<p class=\"compartilhado-txt\"><i>Compartilhado</i></p>";
+            echo "<div class=\"div-sharing-post\">";
+              // Sharing-top
+              echo "<div class=\"div-sharing-post-top\">";
+                echo "<a href=navio.php?user=$sharedPost[codPerfil]><img src=\"".$sharedPost['iconPerfil']."\" alt=\"\" class=\"div-sharing-post-top-icon\"></a>";
+                echo "<div class=\"div-post-top-infos\">";
+                echo "<div class=\"row\">";
+                if($selo==3)echo "<img class=\"coment-mainuser-user-selo\" src=\"./imgs/icons/bronze-medal.png\"/>";
+                if($selo==2)echo "<img class=\"coment-mainuser-user-selo\" src=\"./imgs/icons/silver-medal.png\"/>";
+                if($selo==1)echo "<img class=\"coment-mainuser-user-selo\" src=\"./imgs/icons/gold-medal.png\"/>";
+                echo "<p class=\"div-post-top-username\"><i>@".$sharedPost['nomePerfil']."</i>";
                 echo "</div>";
-                // Sharing-texto
-                echo "<div class=\"div-post-txt\">";
-                  echo "<p><i style=\"color: #7A9EFB\">@$sharedPost[nomePerfil]</i> ";
-                  if($sharedPost['isReaction']) {
+                  if($sharedPost['nomeCidade']){
+                    echo " em ".$sharedPost['nomeCidade'].", ".$sharedPost['nomePais']." - ";
+                  }
+                  $tmpHora = explode(' ', $sharedPost['dataPost'])[1];
+                  $tmpData = explode(' ', $sharedPost['dataPost'])[0];
+                  $tmpData = explode('-', $tmpData);
+                  echo " ".$tmpData[2]."/".$tmpData[1]."/".$tmpData[0]." ".$tmpHora."</p>";
+                  $tmpArray = [];
+                  // print_r($post['assuntos']);
+                  foreach($sharedPost['assuntos'] as $elements){
+                    foreach ($elements as $key => $value) {
+                      if($key === 'nomeAssunto') $tmpArray[] = $value;
+                    }
+                  }
+                  echo "<p class=\"div-post-top-subjects\" title=\"".implode($tmpArray, ', ')."\"><b>";
+                  $tmpArray = implode($tmpArray, ', ');
+                  if(strlen($tmpArray) > 30){
+                    $tmpArray = substr($tmpArray, 0, 27);
+                    echo $tmpArray."...";
+                  } else {
+                    echo $tmpArray;
+                  }
+                  echo "</b></p>";
+                echo "</div>";
+              echo "</div>";
+              // Sharing-texto
+              echo "<div class=\"div-post-txt\">";
+                echo "<p><i style=\"color: #7A9EFB\">@$sharedPost[nomePerfil]</i> ";
+                if($sharedPost['isReaction']) {
+                  echo "<b><i>reagiu</i></b> com ";
+                  switch ($sharedPost['emote']){
+                    case 'curtir':
+                      echo "👌";
+                      break;
+                    case 'kkk':
+                      echo "🤣";
+                      break;
+                    case 'amei':
+                      echo "❤️";
+                      break;
+                    case 'grr':
+                      echo "🤬";
+                      break;
+                    case 'wow':
+                      echo "🤯";
+                      break;
+                    case 'sad':
+                      echo "😭";
+                      break;                  
+                  }
+                  echo ", ";
+                }
+                if(count($sharedPost['citacoes']) > 0) {
+                  $tmpCitacoes = [];
+                  foreach ($sharedPost['citacoes'] as $pessoa) {
+                    $tmpCitacoes[] = "@".$pessoa['nomePerfil'];
+                  }
+                  $tmpCitacoes = implode($tmpCitacoes, ', ');
+                  echo "<b><i>marcando</i></b> <i title=\"".$tmpCitacoes."\">";
+                  if(strlen($tmpCitacoes) > 10){
+                    $tmpCitacoes = substr($tmpCitacoes, 0, 7);
+                    echo $tmpCitacoes."...";
+                  } else {
+                    echo $tmpCitacoes;
+                  }
+                  echo ", </i>";
+                  
+                }
+                echo "$sharedPost[textoPost]</p>";
+              echo "</div>";
+            echo "</div>";
+          }
+          //Top
+          echo "<div class=\"div-post-top\">";
+            echo "<a href=navio.php?user=$post[codPerfil]><img src=\"".$post['iconPerfil']."\" alt=\"\" class=\"div-post-top-icon\"></a>";
+            echo "<div class=\"div-post-top-infos\">";
+            // echo "<div class=\"row\">";
+            // if($selo==3)echo "<img class=\"coment-mainuser-user-selo\" src=\"./imgs/icons/bronze-medal.png\"/>";
+            // if($selo==2)echo "<img class=\"coment-mainuser-user-selo\" src=\"./imgs/icons/silver-medal.png\"/>";
+            // if($selo==1)echo "<img class=\"coment-mainuser-user-selo\" src=\"./imgs/icons/gold-medal.png\"/>";
+            echo "<p class=\"div-post-top-username\"><i>@".$post['nomePerfil']."</i>";
+            // echo "</div>";
+              if($post['nomeCidade']){
+                echo " em ".$post['nomeCidade'].", ".$post['nomePais']." - ";
+              }
+              $tmpHora = explode(' ', $post['dataPost'])[1];
+              $tmpData = explode(' ', $post['dataPost'])[0];
+              $tmpData = explode('-', $tmpData);
+              echo " ".$tmpData[2]."/".$tmpData[1]."/".$tmpData[0]." ".$tmpHora."</p>";
+              $tmpArray = [];
+              // print_r($post['assuntos']);
+              foreach($post['assuntos'] as $elements){
+                foreach ($elements as $key => $value) {
+                  if($key === 'nomeAssunto') $tmpArray[] = $value;
+                }
+              }
+              echo "<p class=\"div-post-top-subjects\" title=\"".implode($tmpArray, ', ')."\"><b>";
+              $tmpArray = implode($tmpArray, ', ');
+              if(strlen($tmpArray) > 30){
+                $tmpArray = substr($tmpArray, 0, 27);
+                echo $tmpArray."...";
+              } else {
+                echo $tmpArray;
+              }
+              echo "</b></p>";
+            echo "</div>";
+            if($post['isSharing'] && ($sharedPost['codPerfil'] == $_SESSION['userid'])){
+              echo "<div class=\"div-post-top-editicons\">";
+              echo "<form action=\"feed.php?user=$_SESSION[userid]\" method=\"post\">";
+              echo "<button type=\"submit\" name=\"deletePost\" value=\"$post[codInteracao]\"><img src=\"./imgs/icons/trash.png\" class=\"div-post-top-editicons-trash\" alt=\"\" /></button>";
+              echo "</form>";
+              echo "</div>";
+            } 
+            if($post['codPerfil'] == $_SESSION['userid']) {
+              echo "<div class=\"div-post-top-editicons\">";
+              echo "<a href=\"editarInteracao.php?interacao=$post[codInteracao]\"><img src=\"./imgs/icons/pencil.png\" class=\"div-post-top-editicons-pencil\" alt=\"\" /></a>";
+              echo "<form action=\"feed.php?user=$_SESSION[userid]\" method=\"post\">";
+              echo "<button type=\"submit\" name=\"deletePost\" value=\"$post[codInteracao]\"><img src=\"./imgs/icons/trash.png\" class=\"div-post-top-editicons-trash\" alt=\"\" /></button>";
+              echo "</form>";
+              echo "</div>";
+            }
+          echo "</div>";
+          //Texto
+          echo "<div class=\"div-post-txt\">";
+            echo "<p><i style=\"color: #7A9EFB\">@$post[nomePerfil]</i> ";
+            if($post['isReaction']) {
+              echo "<b><i>reagiu</i></b> com ";
+              switch ($post['emote']){
+                case 'curtir':
+                  echo "👌";
+                  break;
+                case 'kkk':
+                  echo "🤣";
+                  break;
+                case 'amei':
+                  echo "❤️";
+                  break;
+                case 'grr':
+                  echo "🤬";
+                  break;
+                case 'wow':
+                  echo "🤯";
+                  break;
+                case 'sad':
+                  echo "😭";
+                  break;                  
+              }
+              echo ", ";
+            }
+            $isMentioned = 0;
+            if(count($post['citacoes']) > 0) {
+              $tmpCitacoes = [];
+              foreach ($post['citacoes'] as $pessoa) {
+                $tmpCitacoes[] = "@".$pessoa['nomePerfil'];
+                if($pessoa['codPerfil'] == $_SESSION['userid'] && $post['codPerfil'] != $_SESSION['userid']) $isMentioned = 1;
+              }
+              $tmpCitacoes = implode($tmpCitacoes, ', ');
+              echo "<b><i>marcando</i></b> <i title=\"".$tmpCitacoes."\">";
+              if(strlen($tmpCitacoes) > 10){
+                $tmpCitacoes = substr($tmpCitacoes, 0, 7);
+                echo $tmpCitacoes."...";
+              } else {
+                echo $tmpCitacoes;
+              }
+              echo ", </i>";
+            }
+            echo "$post[textoPost]</p>";
+          echo "</div>";
+          //Ícones
+          echo "<div class=\"div-post-icons-bar\">";
+            if($isMentioned) {
+              echo "<form action=\"feed.php?user=$_SESSION[userid]\" method=\"post\">";
+              echo "<button type=\"submit\" name=\"removeCitacao\" class=\"interacao-remover-txt\" value=\"$post[codInteracao]\"><p>Remover sua citação</p></button>";
+              echo "</form>";
+            }
+            echo "<div class=\"div-post-icons-bar-divs\">";
+              echo "<p>$post[qtdInteracao]</p><img src=\"imgs/icons/chat.png\" class=\"div-post-icons-bar-icons\" alt=\"\">";
+            echo "</div>";
+            echo "<div class=\"div-post-icons-bar-interagir\">";
+              echo "<a href=\"interagirInteracao.php?interacao=$post[codInteracao]\"><img src=\"$user[img]\" class=\"div-post-icons-bar-interagir-icon\" alt=\"\"><p>Interagir...</p></a>";
+            echo "</div>";
+          echo "</div>";
+          echo "<br><br>";
+          //Comentários
+          if($post['comentarios'] && $post['comentarios'] != []){
+            echo "<hr class=\"post-hr\">";
+            foreach ($post['comentarios'] as $comentario) {
+              echo "<div class=\"comment-container\">";
+                echo "<div class=\"comment-container-top\">";
+                  echo "<a href=navio.php?user=$comentario[codPerfil]><img src=\"".$comentario['iconPerfil']."\" alt=\"\" class=\"comment-icon\"></a>";
+                  echo "<p class=\"comment-txt\"><i>@".$comentario['nomePerfil']."</i> ";
+                  if($comentario['isReaction']) {
                     echo "<b><i>reagiu</i></b> com ";
-                    switch ($sharedPost['emote']){
+                    switch ($comentario['emote']){
                       case 'curtir':
                         echo "👌";
                         break;
@@ -389,10 +624,12 @@
                     }
                     echo ", ";
                   }
-                  if(count($sharedPost['citacoes']) > 0) {
+                  $isMentioned2 = 0;
+                  if(count($comentario['citacoes']) > 0) {
                     $tmpCitacoes = [];
-                    foreach ($sharedPost['citacoes'] as $pessoa) {
+                    foreach ($comentario['citacoes'] as $pessoa) {
                       $tmpCitacoes[] = "@".$pessoa['nomePerfil'];
+                      if($pessoa['codPerfil'] == $_SESSION['userid'] && $comentario['codPerfil'] != $_SESSION['userid']) $isMentioned2 = 1;
                     }
                     $tmpCitacoes = implode($tmpCitacoes, ', ');
                     echo "<b><i>marcando</i></b> <i title=\"".$tmpCitacoes."\">";
@@ -403,320 +640,156 @@
                       echo $tmpCitacoes;
                     }
                     echo ", </i>";
-                    
                   }
-                  echo "$sharedPost[textoPost]</p>";
-                echo "</div>";
-              echo "</div>";
-            }
-            //Top
-            echo "<div class=\"div-post-top\">";
-              echo "<a href=navio.php?user=$post[codPerfil]><img src=\"".$post['iconPerfil']."\" alt=\"\" class=\"div-post-top-icon\"></a>";
-              echo "<div class=\"div-post-top-infos\">";
-              // echo "<div class=\"row\">";
-              // if($selo==3)echo "<img class=\"coment-mainuser-user-selo\" src=\"./imgs/icons/bronze-medal.png\"/>";
-              // if($selo==2)echo "<img class=\"coment-mainuser-user-selo\" src=\"./imgs/icons/silver-medal.png\"/>";
-              // if($selo==1)echo "<img class=\"coment-mainuser-user-selo\" src=\"./imgs/icons/gold-medal.png\"/>";
-              echo "<p class=\"div-post-top-username\"><i>@".$post['nomePerfil']."</i>";
-              // echo "</div>";
-                if($post['nomeCidade']){
-                  echo " em ".$post['nomeCidade'].", ".$post['nomePais']." - ";
-                }
-                $tmpHora = explode(' ', $post['dataPost'])[1];
-                $tmpData = explode(' ', $post['dataPost'])[0];
-                $tmpData = explode('-', $tmpData);
-                echo " ".$tmpData[2]."/".$tmpData[1]."/".$tmpData[0]." ".$tmpHora."</p>";
-                $tmpArray = [];
-                // print_r($post['assuntos']);
-                foreach($post['assuntos'] as $elements){
-                  foreach ($elements as $key => $value) {
-                    if($key === 'nomeAssunto') $tmpArray[] = $value;
+                  if(count($comentario['assuntos']) > 0) {
+                    $tmpAssuntos = [];
+                    foreach ($comentario['assuntos'] as $assunto) {
+                      $tmpAssuntos[] = $assunto['nomeAssunto'];
+                    }
+                    $tmpAssuntos = implode($tmpAssuntos, ', ');
+                    echo "com os <b><i>assuntos</i></b> <i title=\"".$tmpAssuntos."\">";
+                    if(strlen($tmpAssuntos) > 10){
+                      $tmpAssuntos = substr($tmpAssuntos, 0, 7);
+                      echo $tmpAssuntos."...";
+                    } else {
+                      echo $tmpAssuntos;
+                    }
+                    echo ", </i>";
                   }
-                }
-                echo "<p class=\"div-post-top-subjects\" title=\"".implode($tmpArray, ', ')."\"><b>";
-                $tmpArray = implode($tmpArray, ', ');
-                if(strlen($tmpArray) > 30){
-                  $tmpArray = substr($tmpArray, 0, 27);
-                  echo $tmpArray."...";
-                } else {
-                  echo $tmpArray;
-                }
-                echo "</b></p>";
-              echo "</div>";
-              if($post['isSharing'] && ($sharedPost['codPerfil'] == $_SESSION['userid'])){
-                echo "<div class=\"div-post-top-editicons\">";
-                echo "<form action=\"feed.php?user=$_SESSION[userid]\" method=\"post\">";
-                echo "<button type=\"submit\" name=\"deletePost\" value=\"$post[codInteracao]\"><img src=\"./imgs/icons/trash.png\" class=\"div-post-top-editicons-trash\" alt=\"\" /></button>";
-                echo "</form>";
+                  echo ($comentario['textoPost'] ? $comentario['textoPost'] : '');
+                  echo ", em ";
+                  if($comentario['nomeCidade']){
+                    echo $comentario['nomeCidade'].", ".$comentario['nomePais']." - ";
+                  }
+                  $tmpHora = explode(' ', $comentario['dataPost'])[1];
+                  $tmpData = explode(' ', $comentario['dataPost'])[0];
+                  $tmpData = explode('-', $tmpData);
+                  echo " ".$tmpData[2]."/".$tmpData[1]."/".$tmpData[0]." ".$tmpHora."</p>";
+                  echo "</p>";
                 echo "</div>";
-              } 
-              if($post['codPerfil'] == $_SESSION['userid']) {
-                echo "<div class=\"div-post-top-editicons\">";
-                echo "<a href=\"editarInteracao.php?interacao=$post[codInteracao]\"><img src=\"./imgs/icons/pencil.png\" class=\"div-post-top-editicons-pencil\" alt=\"\" /></a>";
-                echo "<form action=\"feed.php?user=$_SESSION[userid]\" method=\"post\">";
-                echo "<button type=\"submit\" name=\"deletePost\" value=\"$post[codInteracao]\"><img src=\"./imgs/icons/trash.png\" class=\"div-post-top-editicons-trash\" alt=\"\" /></button>";
-                echo "</form>";
+                echo "<div class=\"comment-reagir\">";
+                echo "<a href=\"interagirInteracao.php?interacao=$comentario[codInteracao]\">Reagir</a>";
+                  if($comentario['codPerfil'] == $_SESSION['userid']) {
+                    echo "<a href=\"editarInteracao.php?interacao=$comentario[codInteracao]\"><p class=\"interacao-editar-txt\">- Editar -</p></a>";
+                    echo "<form action=\"feed.php?user=$_SESSION[userid]\" method=\"post\">";
+                    echo "<button type=\"submit\" name=\"deletePost\" value=\"$comentario[codInteracao]\"><p class=\"interacao-remover-txt\">Remover</p></button>";
+                    echo "</form>";
+                  }
+                  if($comentario['codPerfil'] != $_SESSION['userid'] && $post['codPerfil'] == $_SESSION['userid']) {
+                    echo "<form action=\"feed.php?user=$_SESSION[userid]\" method=\"post\">";
+                    echo "<button type=\"submit\" name=\"deletePost\" value=\"$comentario[codInteracao]\"><p class=\"interacao-remover-txt\">- Remover</p></button>";
+                    echo "</form>";
+                  }
                 echo "</div>";
-              }
-            echo "</div>";
-            //Texto
-            echo "<div class=\"div-post-txt\">";
-              echo "<p><i style=\"color: #7A9EFB\">@$post[nomePerfil]</i> ";
-              if($post['isReaction']) {
-                echo "<b><i>reagiu</i></b> com ";
-                switch ($post['emote']){
-                  case 'curtir':
-                    echo "👌";
-                    break;
-                  case 'kkk':
-                    echo "🤣";
-                    break;
-                  case 'amei':
-                    echo "❤️";
-                    break;
-                  case 'grr':
-                    echo "🤬";
-                    break;
-                  case 'wow':
-                    echo "🤯";
-                    break;
-                  case 'sad':
-                    echo "😭";
-                    break;                  
-                }
-                echo ", ";
-              }
-              $isMentioned = 0;
-              if(count($post['citacoes']) > 0) {
-                $tmpCitacoes = [];
-                foreach ($post['citacoes'] as $pessoa) {
-                  $tmpCitacoes[] = "@".$pessoa['nomePerfil'];
-                  if($pessoa['codPerfil'] == $_SESSION['userid'] && $post['codPerfil'] != $_SESSION['userid']) $isMentioned = 1;
-                }
-                $tmpCitacoes = implode($tmpCitacoes, ', ');
-                echo "<b><i>marcando</i></b> <i title=\"".$tmpCitacoes."\">";
-                if(strlen($tmpCitacoes) > 10){
-                  $tmpCitacoes = substr($tmpCitacoes, 0, 7);
-                  echo $tmpCitacoes."...";
-                } else {
-                  echo $tmpCitacoes;
-                }
-                echo ", </i>";
-              }
-              echo "$post[textoPost]</p>";
-            echo "</div>";
-            //Ícones
-            echo "<div class=\"div-post-icons-bar\">";
-              if($isMentioned) {
-                echo "<form action=\"feed.php?user=$_SESSION[userid]\" method=\"post\">";
-                echo "<button type=\"submit\" name=\"removeCitacao\" class=\"interacao-remover-txt\" value=\"$post[codInteracao]\"><p>Remover sua citação</p></button>";
-                echo "</form>";
-              }
-              echo "<div class=\"div-post-icons-bar-divs\">";
-                echo "<p>$post[qtdInteracao]</p><img src=\"imgs/icons/chat.png\" class=\"div-post-icons-bar-icons\" alt=\"\">";
-              echo "</div>";
-              echo "<div class=\"div-post-icons-bar-interagir\">";
-                echo "<a href=\"interagirInteracao.php?interacao=$post[codInteracao]\"><img src=\"$user[img]\" class=\"div-post-icons-bar-interagir-icon\" alt=\"\"><p>Interagir...</p></a>";
-              echo "</div>";
-            echo "</div>";
-            echo "<br><br>";
-            //Comentários
-            if($post['comentarios'] && $post['comentarios'] != []){
-              echo "<hr class=\"post-hr\">";
-              foreach ($post['comentarios'] as $comentario) {
-                echo "<div class=\"comment-container\">";
-                  echo "<div class=\"comment-container-top\">";
-                    echo "<a href=navio.php?user=$comentario[codPerfil]><img src=\"".$comentario['iconPerfil']."\" alt=\"\" class=\"comment-icon\"></a>";
-                    echo "<p class=\"comment-txt\"><i>@".$comentario['nomePerfil']."</i> ";
-                    if($comentario['isReaction']) {
-                      echo "<b><i>reagiu</i></b> com ";
-                      switch ($comentario['emote']){
-                        case 'curtir':
-                          echo "👌";
-                          break;
-                        case 'kkk':
-                          echo "🤣";
-                          break;
-                        case 'amei':
-                          echo "❤️";
-                          break;
-                        case 'grr':
-                          echo "🤬";
-                          break;
-                        case 'wow':
-                          echo "🤯";
-                          break;
-                        case 'sad':
-                          echo "😭";
-                          break;                  
-                      }
-                      echo ", ";
-                    }
-                    $isMentioned2 = 0;
-                    if(count($comentario['citacoes']) > 0) {
-                      $tmpCitacoes = [];
-                      foreach ($comentario['citacoes'] as $pessoa) {
-                        $tmpCitacoes[] = "@".$pessoa['nomePerfil'];
-                        if($pessoa['codPerfil'] == $_SESSION['userid'] && $comentario['codPerfil'] != $_SESSION['userid']) $isMentioned2 = 1;
-                      }
-                      $tmpCitacoes = implode($tmpCitacoes, ', ');
-                      echo "<b><i>marcando</i></b> <i title=\"".$tmpCitacoes."\">";
-                      if(strlen($tmpCitacoes) > 10){
-                        $tmpCitacoes = substr($tmpCitacoes, 0, 7);
-                        echo $tmpCitacoes."...";
-                      } else {
-                        echo $tmpCitacoes;
-                      }
-                      echo ", </i>";
-                    }
-                    if(count($comentario['assuntos']) > 0) {
-                      $tmpAssuntos = [];
-                      foreach ($comentario['assuntos'] as $assunto) {
-                        $tmpAssuntos[] = $assunto['nomeAssunto'];
-                      }
-                      $tmpAssuntos = implode($tmpAssuntos, ', ');
-                      echo "com os <b><i>assuntos</i></b> <i title=\"".$tmpAssuntos."\">";
-                      if(strlen($tmpAssuntos) > 10){
-                        $tmpAssuntos = substr($tmpAssuntos, 0, 7);
-                        echo $tmpAssuntos."...";
-                      } else {
-                        echo $tmpAssuntos;
-                      }
-                      echo ", </i>";
-                    }
-                    echo ($comentario['textoPost'] ? $comentario['textoPost'] : '');
-                    echo ", em ";
-                    if($comentario['nomeCidade']){
-                      echo $comentario['nomeCidade'].", ".$comentario['nomePais']." - ";
-                    }
-                    $tmpHora = explode(' ', $comentario['dataPost'])[1];
-                    $tmpData = explode(' ', $comentario['dataPost'])[0];
-                    $tmpData = explode('-', $tmpData);
-                    echo " ".$tmpData[2]."/".$tmpData[1]."/".$tmpData[0]." ".$tmpHora."</p>";
-                    echo "</p>";
-                  echo "</div>";
-                  echo "<div class=\"comment-reagir\">";
-                  echo "<a href=\"interagirInteracao.php?interacao=$comentario[codInteracao]\">Reagir</a>";
-                    if($comentario['codPerfil'] == $_SESSION['userid']) {
-                      echo "<a href=\"editarInteracao.php?interacao=$comentario[codInteracao]\"><p class=\"interacao-editar-txt\">- Editar -</p></a>";
-                      echo "<form action=\"feed.php?user=$_SESSION[userid]\" method=\"post\">";
-                      echo "<button type=\"submit\" name=\"deletePost\" value=\"$comentario[codInteracao]\"><p class=\"interacao-remover-txt\">Remover</p></button>";
-                      echo "</form>";
-                    }
-                    if($comentario['codPerfil'] != $_SESSION['userid'] && $post['codPerfil'] == $_SESSION['userid']) {
-                      echo "<form action=\"feed.php?user=$_SESSION[userid]\" method=\"post\">";
-                      echo "<button type=\"submit\" name=\"deletePost\" value=\"$comentario[codInteracao]\"><p class=\"interacao-remover-txt\">- Remover</p></button>";
-                      echo "</form>";
-                    }
-                  echo "</div>";
-                  // Respostas
-                  if($comentario['respostas'] && $comentario['respostas'] != []){
-                    foreach ($comentario['respostas'] as $resposta) {
-                      echo "<div class=\"comment-resp-container\">";
-                        echo "<div class=\"comment-container-top\">";
-                          echo "<a href=navio.php?user=$resposta[codPerfil]><img src=\"".$resposta['iconPerfil']."\" alt=\"\" class=\"comment-icon\"></a>";
-                          echo "<div class=\"row\">";
-                            // echo "<img class=\"coment-mainuser-user-selo\" src=\"./imgs/icons/bronze-medal.png\"/>";   
-                            echo "<p class=\"comment-txt\"><i>@".$resposta['nomePerfil']."</i> ";
-                            if($resposta['isReaction']) {
-                              echo "<b><i>reagiu</i></b> com ";
-                              switch ($resposta['emote']){
-                                case 'curtir':
-                                  echo "👌";
-                                  break;
-                                case 'kkk':
-                                  echo "🤣";
-                                  break;
-                                case 'amei':
-                                  echo "❤️";
-                                  break;
-                                case 'grr':
-                                  echo "🤬";
-                                  break;
-                                case 'wow':
-                                  echo "🤯";
-                                  break;
-                                case 'sad':
-                                  echo "😭";
-                                  break;                  
-                              }
-                              echo ", ";
+                // Respostas
+                if($comentario['respostas'] && $comentario['respostas'] != []){
+                  foreach ($comentario['respostas'] as $resposta) {
+                    echo "<div class=\"comment-resp-container\">";
+                      echo "<div class=\"comment-container-top\">";
+                        echo "<a href=navio.php?user=$resposta[codPerfil]><img src=\"".$resposta['iconPerfil']."\" alt=\"\" class=\"comment-icon\"></a>";
+                        echo "<div class=\"row\">";
+                          // echo "<img class=\"coment-mainuser-user-selo\" src=\"./imgs/icons/bronze-medal.png\"/>";   
+                          echo "<p class=\"comment-txt\"><i>@".$resposta['nomePerfil']."</i> ";
+                          if($resposta['isReaction']) {
+                            echo "<b><i>reagiu</i></b> com ";
+                            switch ($resposta['emote']){
+                              case 'curtir':
+                                echo "👌";
+                                break;
+                              case 'kkk':
+                                echo "🤣";
+                                break;
+                              case 'amei':
+                                echo "❤️";
+                                break;
+                              case 'grr':
+                                echo "🤬";
+                                break;
+                              case 'wow':
+                                echo "🤯";
+                                break;
+                              case 'sad':
+                                echo "😭";
+                                break;                  
                             }
-                            $isMentioned2 = 0;
-                            if(count($resposta['citacoes']) > 0) {
-                              $tmpCitacoes = [];
-                              foreach ($resposta['citacoes'] as $pessoa) {
-                                $tmpCitacoes[] = "@".$pessoa['nomePerfil'];
-                                if($pessoa['codPerfil'] == $_SESSION['userid'] && $resposta['codPerfil'] != $_SESSION['userid']) $isMentioned2 = 1;
-                              }
-                              $tmpCitacoes = implode($tmpCitacoes, ', ');
-                              echo "<b><i>marcando</i></b> <i title=\"".$tmpCitacoes."\">";
-                              if(strlen($tmpCitacoes) > 10){
-                                $tmpCitacoes = substr($tmpCitacoes, 0, 7);
-                                echo $tmpCitacoes."...";
-                              } else {
-                                echo $tmpCitacoes;
-                              }
-                              echo ", </i>";
-                            }
-                            if(count($resposta['assuntos']) > 0) {
-                              $tmpAssuntos = [];
-                              foreach ($resposta['assuntos'] as $assunto) {
-                                $tmpAssuntos[] = $assunto['nomeAssunto'];
-                              }
-                              $tmpAssuntos = implode($tmpAssuntos, ', ');
-                              echo "com os <b><i>assuntos</i></b> <i title=\"".$tmpAssuntos."\">";
-                              if(strlen($tmpAssuntos) > 10){
-                                $tmpAssuntos = substr($tmpAssuntos, 0, 7);
-                                echo $tmpAssuntos."...";
-                              } else {
-                                echo $tmpAssuntos;
-                              }
-                              echo ", </i>";
-                            }
-                            echo ($resposta['textoPost'] ? $resposta['textoPost'] : '');
-                            echo ", em ";
-                            if($resposta['nomeCidade']){
-                              echo $resposta['nomeCidade'].", ".$resposta['nomePais']." - ";
-                            }
-                            $tmpHora = explode(' ', $resposta['dataPost'])[1];
-                            $tmpData = explode(' ', $resposta['dataPost'])[0];
-                            $tmpData = explode('-', $tmpData);
-                            echo " ".$tmpData[2]."/".$tmpData[1]."/".$tmpData[0]." ".$tmpHora."</p>";
-                            echo "</p>";
-                          echo "</div>";
-                        echo "</div>";
-                        echo "<div class=\"comment-reagir\">";
-                        echo "<a href=\"interagirInteracao.php?interacao=$resposta[codInteracao]\">Reagir</a>";
-                          if($resposta['codPerfil'] == $_SESSION['userid']) {
-                            echo "<a href=\"editarInteracao.php?interacao=$resposta[codInteracao]\"><p class=\"interacao-editar-txt\">- Editar -</p></a>";
-                            echo "<form action=\"feed.php?user=$_SESSION[userid]\" method=\"post\">";
-                            echo "<button type=\"submit\" name=\"deletePost\" value=\"$resposta[codInteracao]\"><p class=\"interacao-remover-txt\">Remover</p></button>";
-                            echo "</form>";
+                            echo ", ";
                           }
-                          if($resposta['codPerfil'] != $_SESSION['userid'] && $comentario['codPerfil'] == $_SESSION['userid']) {
-                            echo "<form action=\"feed.php?user=$_SESSION[userid]\" method=\"post\">";
-                            echo "<button type=\"submit\" name=\"deletePost\" value=\"$resposta[codInteracao]\"><p class=\"interacao-remover-txt\">- Remover</p></button>";
-                            echo "</form>";
+                          $isMentioned2 = 0;
+                          if(count($resposta['citacoes']) > 0) {
+                            $tmpCitacoes = [];
+                            foreach ($resposta['citacoes'] as $pessoa) {
+                              $tmpCitacoes[] = "@".$pessoa['nomePerfil'];
+                              if($pessoa['codPerfil'] == $_SESSION['userid'] && $resposta['codPerfil'] != $_SESSION['userid']) $isMentioned2 = 1;
+                            }
+                            $tmpCitacoes = implode($tmpCitacoes, ', ');
+                            echo "<b><i>marcando</i></b> <i title=\"".$tmpCitacoes."\">";
+                            if(strlen($tmpCitacoes) > 10){
+                              $tmpCitacoes = substr($tmpCitacoes, 0, 7);
+                              echo $tmpCitacoes."...";
+                            } else {
+                              echo $tmpCitacoes;
+                            }
+                            echo ", </i>";
                           }
+                          if(count($resposta['assuntos']) > 0) {
+                            $tmpAssuntos = [];
+                            foreach ($resposta['assuntos'] as $assunto) {
+                              $tmpAssuntos[] = $assunto['nomeAssunto'];
+                            }
+                            $tmpAssuntos = implode($tmpAssuntos, ', ');
+                            echo "com os <b><i>assuntos</i></b> <i title=\"".$tmpAssuntos."\">";
+                            if(strlen($tmpAssuntos) > 10){
+                              $tmpAssuntos = substr($tmpAssuntos, 0, 7);
+                              echo $tmpAssuntos."...";
+                            } else {
+                              echo $tmpAssuntos;
+                            }
+                            echo ", </i>";
+                          }
+                          echo ($resposta['textoPost'] ? $resposta['textoPost'] : '');
+                          echo ", em ";
+                          if($resposta['nomeCidade']){
+                            echo $resposta['nomeCidade'].", ".$resposta['nomePais']." - ";
+                          }
+                          $tmpHora = explode(' ', $resposta['dataPost'])[1];
+                          $tmpData = explode(' ', $resposta['dataPost'])[0];
+                          $tmpData = explode('-', $tmpData);
+                          echo " ".$tmpData[2]."/".$tmpData[1]."/".$tmpData[0]." ".$tmpHora."</p>";
+                          echo "</p>";
                         echo "</div>";
                       echo "</div>";
-                    }
+                      echo "<div class=\"comment-reagir\">";
+                        echo "<a href=\"interagirInteracao.php?interacao=$resposta[codInteracao]\">Reagir</a>";
+                        if($resposta['codPerfil'] == $_SESSION['userid']) {
+                          echo "<a href=\"editarInteracao.php?interacao=$resposta[codInteracao]\"><p class=\"interacao-editar-txt\">- Editar -</p></a>";
+                          echo "<form action=\"feed.php?user=$_SESSION[userid]\" method=\"post\">";
+                          echo "<button type=\"submit\" name=\"deletePost\" value=\"$resposta[codInteracao]\"><p class=\"interacao-remover-txt\">Remover</p></button>";
+                          echo "</form>";
+                        }
+                        if($resposta['codPerfil'] != $_SESSION['userid'] && $comentario['codPerfil'] == $_SESSION['userid']) {
+                          echo "<form action=\"feed.php?user=$_SESSION[userid]\" method=\"post\">";
+                          echo "<button type=\"submit\" name=\"deletePost\" value=\"$resposta[codInteracao]\"><p class=\"interacao-remover-txt\">- Remover</p></button>";
+                          echo "</form>";
+                        }
+                      echo "</div>";
+                    echo "</div>";
                   }
-                  if($comentario['qtdInteracao'] > 0){
-                    echo "<p align=center><a href=completeInteracao.php?interacao=$comentario[codInteracao]>Ver mais respostas</a></p>";
-                  }
-                echo "</div>";
-              }
+                }
+                if($comentario['qtdInteracao'] > 0){
+                  echo "<p align=center><a href=completeInteracao.php?interacao=$comentario[codInteracao]>Ver mais respostas</a></p>";
+                }
+              echo "</div>";
             }
-            if($post['qtdInteracao'] > 0){
-              // echo "<hr class=\"post-hr-gray\">";
-              // echo "<p align=center ><a href=completeInteracao.php?interacao=$post[codInteracao] style=\"txt-verMaisComentarios\">Ver mais</a></p>";
-            }
-          echo "</div>";
-        }
+          }
+          if($post['qtdInteracao'] > 0){
+            // echo "<hr class=\"post-hr-gray\">";
+            // echo "<p align=center ><a href=completeInteracao.php?interacao=$post[codInteracao] style=\"txt-verMaisComentarios\">Ver mais</a></p>";
+          }
+        echo "</div>";
       }
+  
     }
+  }
   ?>
     </div>
   <?php 
@@ -786,74 +859,6 @@ file.addEventListener('change', (event) =>{
   reader.readAsDataURL(file.files[0])
 })
 
-var tmpLocal = 0;
-function addLocal(){
-    var local = document.getElementById('select-local').value;
-    local = JSON.parse(local);
-    var table = document.getElementById('tableLocal');
-    var option = document.getElementById('optionLocal'+local.id);
-    option.remove();
-    tmpLocal = local.id;
-    table.innerHTML += `<tr id="row${local.id}"><td>${local.name}<input type="hidden" value="${local.id}" name="local" /></td><td><button onclick="removeLocal('${local.id}', '${local.name}')">❌</button></td></tr>`;
-    document.getElementById('select-local').disabled = true;
-    document.getElementById('select-local-button').disabled = true;
-}
-function removeLocal(id, name){
-    var table = document.getElementById('tableLocal');
-    var row = document.getElementById('row'+id);
-    var select = document.getElementById('select-local');
-    select.innerHTML += `<option id='optionLocal${id}' value='{ "id": "${id}", "name": "${name}" }'>${name}</option>\n`;
-    row.remove();
-    tmpLocal = 0;
-    document.getElementById('select-local').disabled = false;
-    document.getElementById('select-local-button').disabled = false;
-}
-
-var pessoas = [];
-function addPessoas(){
-    var pessoa = document.getElementById('select-pessoas').value;
-    pessoa = JSON.parse(pessoa);
-    var table = document.getElementById('tablePessoas');
-    var option = document.getElementById('optionPessoa'+pessoa.id);
-    option.remove();
-    pessoas.push(pessoa.id);
-    table.innerHTML += `<tr id="row${pessoa.id}"><td>${pessoa.name}<input type="hidden" value="${pessoa.id}" name="pessoa${pessoa.id}" /></td><td><button onclick="removePessoas('${pessoa.id}', '${pessoa.name}')">❌</button></td></tr>`;
-}
-function removePessoas(id, name){
-    var table = document.getElementById('tablePessoas');
-    var row = document.getElementById('row'+id);
-    var select = document.getElementById('select-pessoas');
-    select.innerHTML += `<option id='optionPessoa${id}' value='{ "id": "${id}", "name": "${name}" }'>${name}</option>\n`;
-    row.remove();
-    for(var i = 0; i < pessoas.length; i++){ 
-        if ( pessoas[i] == id) {
-            pessoas.splice(i, 1); 
-        }    
-    }
-}
-
-var assuntos = [];
-function addAssuntos(){
-    var assunto = document.getElementById('select-assuntos').value;
-    assunto = JSON.parse(assunto);
-    var table = document.getElementById('tableAssuntos');
-    var option = document.getElementById('optionAssunto'+assunto.id);
-    option.remove();
-    assuntos.push(assunto.id);
-    table.innerHTML += `<tr id="row${assunto.id}"><td>${assunto.name}<input type="hidden" value="${assunto.id}" name="assunto${assunto.id}" /></td><td><button onclick="removeAssuntos('${assunto.id}', '${assunto.name}')">❌</button></td></tr>`;
-}
-function removeAssuntos(id, name){
-    var table = document.getElementById('tableAssuntos');
-    var row = document.getElementById('row'+id);
-    var select = document.getElementById('select-assuntos');
-    select.innerHTML += `<option id='optionAssunto${id}' value='{ "id": "${id}", "name": "${name}" }'>${name}</option>\n`;
-    row.remove();
-    for(var i = 0; i < assuntos.length; i++){ 
-        if ( assuntos[i] == id) {
-            assuntos.splice(i, 1); 
-        }    
-    }
-}
 </script>
 </body>
 </html>

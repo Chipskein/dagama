@@ -37,7 +37,7 @@
       header("refresh:0;url=feed.php?user=$_SESSION[userid]"); 
     };
     if(isset($_POST['novoPost'])){
-      var_dump($_POST);
+      // var_dump($_POST);
       $texto = ''.$_POST['texto'];
       $reacao = isset($_POST['reacao']) ? $_POST['reacao'] : 0;
       $isReaction = isset($_POST['reacao']) ? 1 : 0;
@@ -448,7 +448,7 @@
             echo "<button id=\"select-reacao-button\"  class=\"confirm-type\" type=\"button\" onclick=\"addReacoes()\">Confirmar</button>";
             echo "<div class=\"comment-container-top\" id=\"divReacoes\"></div>";
           echo "</div>";
-          echo "<div class=\"post-divCompart\">"; // TODO:
+          echo "<div class=\"post-divCompart\">";
             echo "<select id=\"select-compartilhar\" onchange=\"selectCompartilhar(this)\">";
               echo "<option id='optionCompartilhar' selected value=''>Selecione onde vai compartilhar</option>\n";
               echo "<option id='optionCompartilhar' value='feed'>No feed</option>\n";
