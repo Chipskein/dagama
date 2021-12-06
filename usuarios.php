@@ -11,6 +11,7 @@
 <body class=perfil>
 <?php
   include './backend/infra/connection.php';
+  session_start();
   function url($campo, $valor) {
     $result = array();
     if (isset($_GET["offset"])) $result["offset"] = "offset=".$_GET["offset"];
@@ -32,8 +33,15 @@
       </select>
       <input class="header-searchBar-input" name="username" type="text" placeholder="Faça sua pesquisa ..." />
       <button type='submit'><img class="header-searchBar-icon" src="imgs/icons/search.png" alt="" srcset=""></button>
-
   </form>
+  <div class="header-links">
+    <?php 
+      echo "<a class=\"header-links-a\" href=feed.php>Mar</a> ";
+      echo "<a class=\"header-links-a\" href=mar.php>Portos</a> ";
+      echo "<a class=\"header-links-a\" href=navio.php?user=$_SESSION[userid]>Meu navio</a> ";
+      echo "<a class=\"header-links-a\" href=backend/logoff.php>Sair </a><img class=\"header-links-icon\" src=\"imgs/icons/sair.png\" alt=\"\">";
+    ?>
+    </div>
   </header>
 <main>
     <div align=center>

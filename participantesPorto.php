@@ -55,9 +55,9 @@
   </form>
     <div class="header-links">
     <?php 
-      echo "<a class=\"header-links-a\" href=feed.php>Feed</a> ";
-      echo "<a class=\"header-links-a\" href=mar.php>Mar</a> ";
-      echo "<a class=\"header-links-a a-selected\" href=navio.php?user=$_SESSION[userid]>Navio</a> ";
+      echo "<a class=\"header-links-a\" href=feed.php>Mar</a> ";
+      echo "<a class=\"header-links-a\" href=mar.php>Portos</a> ";
+      echo "<a class=\"header-links-a a-selected\" href=navio.php?user=$_SESSION[userid]>Meu navio</a> ";
       echo "<a class=\"header-links-a\" href=backend/logoff.php>Sair </a><img class=\"header-links-icon\" src=\"imgs/icons/sair.png\" alt=\"\">";
     ?>
     </div>

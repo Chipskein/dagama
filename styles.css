@@ -441,9 +441,9 @@ a {
 	}
 	.order-btn {
 		display: flex;
-		margin-right: 40px;
 		margin-top: 10px;
 		align-items: center;
+		justify-content: center;
 	}
 	.order-btn-icon {
 		width: 24px;
@@ -1471,4 +1471,11 @@ table.adm-assuntos td{
 }
 body.adm{
 	background-color: var(--azulEscuro-color);
+}
+.paddingVertical {
+	padding-top: 20px;
+	padding-bottom: 20px;
+	font-size: 20px;
+	text-decoration: none;
+	color: var(--white-color);
 }

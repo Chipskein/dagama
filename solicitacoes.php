@@ -10,11 +10,26 @@
 </head>
 <body class=perfil>
 <?php
+function url($campo, $valor) {
+  $result = array();
+  if (isset($_GET["offset"])) $result["offset"] = "offset=".$_GET["offset"];
+  $result[$campo] = $campo."=".$valor;
+  return("amigos.php?".strtr(implode("&", $result), " ", "+"));
+}
+function pages($campo, $valor){
+    $result = array();
+    if (isset($_GET["page"])) $result["page"] = "page=".$_GET["page"];
+    $result[$campo] = $campo."=".$valor;
+    return '&'.(strtr(implode("&",$result), " ", "+"));
+}
   include './backend/infra/connection.php';
   if(!isset($_SESSION)) { 
     session_start(); 
   }
   $amigos=getRequestAndFriends($_SESSION["userid"],false);
+  $offset=0;
+  $total = 5;
+  $limit = 5;
   // var_dump($amigos);
   if(isset($_POST['insert-interacao-accept'])){
     $response = confirmFriendRequest($_SESSION["userid"], (int)$_POST['insert-interacao-accept']);
@@ -45,9 +60,9 @@
   </form>
     <div class="header-links">
     <?php 
-      echo "<a class=\"header-links-a\" href=feed.php>Feed</a> ";
-      echo "<a class=\"header-links-a\" href=mar.php>Mar</a> ";
-      echo "<a class=\"header-links-a a-selected\" href=navio.php?user=$_SESSION[userid]>Navio</a> ";
+      echo "<a class=\"header-links-a\" href=feed.php>Mar</a> ";
+      echo "<a class=\"header-links-a\" href=mar.php>Portos</a> ";
+      echo "<a class=\"header-links-a a-selected\" href=navio.php?user=$_SESSION[userid]>Meu navio</a> ";
       echo "<a class=\"header-links-a\" href=backend/logoff.php>Sair </a><img class=\"header-links-icon\" src=\"imgs/icons/sair.png\" alt=\"\">";
     ?>
     </div>
@@ -85,10 +100,29 @@
     ?>
     </div>
 </main>
-<footer class="container-bottom" ><p align="center"><< 1 2 3 >></p></footer>
-<!-- <?php 
-  // echo "<script>img_perfil.style.backgroundImage=\"url($user[img])\"</script>";
-?> -->
+<?php 
+echo "<footer style=\"padding-top:20px; padding-bottom:20px\" align=center>";
+$links = 4;
+$page = isset($_GET["page"]) ? strtr($_GET["page"], " ", "%") : 0;
+echo "<div style=\"row\">";
+echo "<a class=\"paginacaoNumber\" href=\"".url("offset",0*$limit).pages("page", 1)."\">primeira </a>";
+for($pag_inf = $page - $links ;$pag_inf <= $page - 1;$pag_inf++){
+    if($pag_inf >= 1 ){
+        echo "<a class=\"paginacaoNumber\" href=\"".url("offset",($pag_inf-1)*$limit).pages("page", $pag_inf)."\"> ".($pag_inf)." </a>";
+    }
+};
+if($page != 0 ){
+    echo "<a class=\"paginacaoNumber\" style=color:yellow;>$page</a>";
+};
+for($pag_sub = $page+1;$pag_sub <= $page + $links;$pag_sub++){
+    if($pag_sub <= ceil($total/$limit)){
+        echo "<a class=\"paginacaoNumber\" href=\"".url("offset",($pag_sub-1)*$limit).pages("page", $pag_sub)."\"> ".($pag_sub)." </a>";
+    }
+}
+echo "<a class=\"paginacaoNumber\" href=\"".url("offset",ceil($total/$limit)*$limit/$limit).pages("page", ceil($total/$limit))."\"> ultima</a>";
+echo "</div>";
+echo "</footer>";
+?> 
 
 </body>
 </html>

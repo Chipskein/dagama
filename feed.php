@@ -200,9 +200,9 @@
   </form>
     <div class="header-links">
     <?php 
-      echo "<a class=\"header-links-a a-selected\" href=feed.php>Feed</a> ";
-      echo "<a class=\"header-links-a\" href=mar.php>Mar</a> ";
-      echo "<a class=\"header-links-a\" href=navio.php?user=$_SESSION[userid]>Navio</a> ";
+      echo "<a class=\"header-links-a a-selected\" href=feed.php>Mar</a> ";
+      echo "<a class=\"header-links-a\" href=mar.php>Portos</a> ";
+      echo "<a class=\"header-links-a\" href=navio.php?user=$_SESSION[userid]>Meu navio</a> ";
       echo "<a class=\"header-links-a\" href=backend/logoff.php>Sair </a><img class=\"header-links-icon\" src=\"imgs/icons/sair.png\" alt=\"\">";
     ?>
     </div>
@@ -420,9 +420,9 @@
                 echo "<a href=navio.php?user=$sharedPost[codPerfil]><img src=\"".$sharedPost['iconPerfil']."\" alt=\"\" class=\"div-sharing-post-top-icon\"></a>";
                 echo "<div class=\"div-post-top-infos\">";
                 echo "<div class=\"row\">";
-                if($selo==3)echo "<img class=\"coment-mainuser-user-selo\" src=\"./imgs/icons/bronze-medal.png\"/>";
-                if($selo==2)echo "<img class=\"coment-mainuser-user-selo\" src=\"./imgs/icons/silver-medal.png\"/>";
-                if($selo==1)echo "<img class=\"coment-mainuser-user-selo\" src=\"./imgs/icons/gold-medal.png\"/>";
+                echo "<img class=\"coment-mainuser-user-selo\" src=\"./imgs/icons/bronze-medal.png\"/>";
+                echo "<img class=\"coment-mainuser-user-selo\" src=\"./imgs/icons/silver-medal.png\"/>";
+                echo "<img class=\"coment-mainuser-user-selo\" src=\"./imgs/icons/gold-medal.png\"/>";
                 echo "<p class=\"div-post-top-username\"><i>@".$sharedPost['nomePerfil']."</i>";
                 echo "</div>";
                   if($sharedPost['nomeCidade']){

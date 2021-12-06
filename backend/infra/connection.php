@@ -1679,7 +1679,7 @@
         else exit;
     }
 
-    function getFriends($user, $offset, $limit=10, $where){
+    function getFriends($user, $offset, $limit, $where){
         $db_connection=db_connection();
         $db=$db_connection['db'];
         $db_type=$db_connection['db_type'];
@@ -1739,39 +1739,68 @@
     /* ---------------------------------------*/
 
     /* PORTO */
-    function getAllPorto($user, $isOwner, $offset, $limit=10, $order){
+    function getAllPorto($user, $isOwner, $offset, $limit, $order){
         $db_connection=db_connection();
         $db=$db_connection['db'];
         $db_type=$db_connection['db_type'];
         if($db){
             if($db_type=='sqlite'){
                 $results=[];
-                $result=$db->query("
-                select 
-                    porto.codigo as codigo, 
-                    porto.nome as nome, 
-                    porto.descr as descr, 
-                    porto.img as img,
-                    porto.dataRegis as data,
-                    tmp1.participa as participa 
-                from porto
-                    left join (
-                        select case 
-                                when (porto.perfil = perfil.codigo) or (porto_participa.perfil = perfil.codigo and porto_participa.ativo = 1) then true
-                                else false
-                            end as participa,
-                            porto.codigo as porto
-                        from porto 
-                            left join porto_participa on porto.codigo = porto_participa.porto
-                            left join perfil on (porto.perfil = perfil.codigo) or (porto_participa.perfil = perfil.codigo and porto_participa.ativo = 1)
-                        where 
-                            perfil.codigo = $user
-                    ) as tmp1 on porto.codigo = tmp1.porto
-                where 
-                    porto.ativo = 1
-                    ".($order ? "order by $order" : "")."
-                    ".($isOwner ? " and participa = true" : "")."
-                ".($limit > 0 ? " limit $limit offset $offset" : " "));
+                if($limit){
+                    $result=$db->query("
+                    select 
+                        porto.codigo as codigo, 
+                        porto.nome as nome, 
+                        porto.descr as descr, 
+                        porto.img as img,
+                        porto.dataRegis as data,
+                        tmp1.participa as participa 
+                    from porto
+                        left join (
+                            select case 
+                                    when (porto.perfil = perfil.codigo) or (porto_participa.perfil = perfil.codigo and porto_participa.ativo = 1) then true
+                                    else false
+                                end as participa,
+                                porto.codigo as porto
+                            from porto 
+                                left join porto_participa on porto.codigo = porto_participa.porto
+                                left join perfil on (porto.perfil = perfil.codigo) or (porto_participa.perfil = perfil.codigo and porto_participa.ativo = 1)
+                            where 
+                                perfil.codigo = $user
+                        ) as tmp1 on porto.codigo = tmp1.porto
+                    where 
+                        porto.ativo = 1
+                        ".($order ? "order by $order" : "")."
+                        ".($isOwner ? " and participa = true" : "")."
+                    ".($limit > 0 ? " limit $limit offset $offset" : " "));
+                } else{
+                    $result=$db->query("
+                    select 
+                        porto.codigo as codigo, 
+                        porto.nome as nome, 
+                        porto.descr as descr, 
+                        porto.img as img,
+                        porto.dataRegis as data,
+                        tmp1.participa as participa 
+                    from porto
+                        left join (
+                            select case 
+                                    when (porto.perfil = perfil.codigo) or (porto_participa.perfil = perfil.codigo and porto_participa.ativo = 1) then true
+                                    else false
+                                end as participa,
+                                porto.codigo as porto
+                            from porto 
+                                left join porto_participa on porto.codigo = porto_participa.porto
+                                left join perfil on (porto.perfil = perfil.codigo) or (porto_participa.perfil = perfil.codigo and porto_participa.ativo = 1)
+                            where 
+                                perfil.codigo = $user
+                        ) as tmp1 on porto.codigo = tmp1.porto
+                    where 
+                        porto.ativo = 1
+                        ".($order ? "order by $order" : "")."
+                        ".($isOwner ? " and participa = true" : "")."
+                    ");
+                }
                 while ($row = $result->fetchArray()) {
                     array_push($results,$row);
                 }
@@ -1833,18 +1862,26 @@
         }
         else exit;
     }
-    function getUserPorto($user, $offset, $limit=10){
+    function getUserPorto($user, $offset, $limit){
         $db_connection=db_connection();
         $db=$db_connection['db'];
         $db_type=$db_connection['db_type'];
         if($db){
             if($db_type=='sqlite'){
-                $result=$db->query("
-                select * from porto
-                where 
-                    porto.ativo = 1 and
-                    porto.perfil = $user
-                limit $limit offset $offset");
+                if($offset && $limit){
+                    $result=$db->query("
+                    select * from porto
+                    where 
+                        porto.ativo = 1 and
+                        porto.perfil = $user
+                    limit $limit offset $offset");
+                }else{
+                    $result=$db->query("
+                    select * from porto
+                    where 
+                        porto.ativo = 1 and
+                        porto.perfil = $user");
+                }
                 if($result) {
                     $results = [];
                     while ($row = $result->fetchArray()) {

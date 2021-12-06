@@ -72,9 +72,9 @@ function pages($campo, $valor){
   </form>
     <div class="header-links">
     <?php 
-      echo "<a class=\"header-links-a\" href=feed.php>Feed</a> ";
-      echo "<a class=\"header-links-a a-selected\" href=mar.php>Mar</a> ";
-      echo "<a class=\"header-links-a\" href=navio.php?user=$_SESSION[userid]>Navio</a> ";
+      echo "<a class=\"header-links-a\" href=feed.php>Mar</a> ";
+      echo "<a class=\"header-links-a a-selected\" href=mar.php>Portos</a> ";
+      echo "<a class=\"header-links-a\" href=navio.php?user=$_SESSION[userid]>Meu navio</a> ";
       echo "<a class=\"header-links-a\" href=backend/logoff.php>Sair </a><img class=\"header-links-icon\" src=\"imgs/icons/sair.png\" alt=\"\">";
     ?>
     </div>
@@ -82,10 +82,10 @@ function pages($campo, $valor){
   <main>
     <br>
     <div align=center>
-    <h1>Mar de portos</h1>
+    <h1>Portos</h1>
     <?php
-            echo "<form action=\"navio.php?user=$_SESSION[userid]\" id=\"formOrderby\" method=\"get\">";
-            echo "<div class=\"order-btn\">";
+            echo "<form  action=\"navio.php?user=$_SESSION[userid]\" id=\"formOrderby\" method=\"get\">";
+            echo "<div class=\"order-btn\" >";
             echo "<p>Ordene por </p>";
             echo "<select onchange=\"document.getElementById('formOrderby').submit();\" id=\"select-ordenar\" name=\"orderby\">";
             echo "<option value=\"data desc\" ".($_GET['orderby'] == "data desc" ? "selected" : "").">Data descrecente</option>";
@@ -124,7 +124,7 @@ function pages($campo, $valor){
       echo "<footer style=\"padding-top:20px; padding-bottom:20px\" align=center>";
       $links = 4;
       $page = isset($_GET["page"]) ? strtr($_GET["page"], " ", "%") : 0;
-      echo "<div class=\"row\">";
+      echo "<div style=\"row\">";
       echo "<a class=\"paginacaoNumber\" href=\"".url("offset",0*$limit).pages("page", 1)."\">primeira </a>";
       for($pag_inf = $page - $links ;$pag_inf <= $page - 1;$pag_inf++){
           if($pag_inf >= 1 ){
