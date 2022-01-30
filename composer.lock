@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "firebase/php-jwt",
-            "version": "v5.4.0",
+            "version": "v5.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/firebase/php-jwt.git",
-                "reference": "d2113d9b2e0e349796e72d2a63cf9319100382d2"
+                "reference": "83b609028194aa042ea33b5af2d41a7427de80e6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/firebase/php-jwt/zipball/d2113d9b2e0e349796e72d2a63cf9319100382d2",
-                "reference": "d2113d9b2e0e349796e72d2a63cf9319100382d2",
+                "url": "https://api.github.com/repos/firebase/php-jwt/zipball/83b609028194aa042ea33b5af2d41a7427de80e6",
+                "reference": "83b609028194aa042ea33b5af2d41a7427de80e6",
                 "shasum": ""
             },
             "require": {
@@ -59,22 +59,22 @@
             ],
             "support": {
                 "issues": "https://github.com/firebase/php-jwt/issues",
-                "source": "https://github.com/firebase/php-jwt/tree/v5.4.0"
+                "source": "https://github.com/firebase/php-jwt/tree/v5.5.1"
             },
-            "time": "2021-06-23T19:00:23+00:00"
+            "time": "2021-11-08T20:18:51+00:00"
         },
         {
             "name": "google/apiclient",
-            "version": "v2.11.0",
+            "version": "v2.12.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/googleapis/google-api-php-client.git",
-                "reference": "7db9eb40c8ba887e81c0fe84f2888a967396cdfb"
+                "reference": "1530583a711f4414407112c4068464bcbace1c71"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/googleapis/google-api-php-client/zipball/7db9eb40c8ba887e81c0fe84f2888a967396cdfb",
-                "reference": "7db9eb40c8ba887e81c0fe84f2888a967396cdfb",
+                "url": "https://api.github.com/repos/googleapis/google-api-php-client/zipball/1530583a711f4414407112c4068464bcbace1c71",
+                "reference": "1530583a711f4414407112c4068464bcbace1c71",
                 "shasum": ""
             },
             "require": {
@@ -105,7 +105,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.x-dev"
+                    "dev-main": "2.x-dev"
                 }
             },
             "autoload": {
@@ -130,22 +130,22 @@
             ],
             "support": {
                 "issues": "https://github.com/googleapis/google-api-php-client/issues",
-                "source": "https://github.com/googleapis/google-api-php-client/tree/v2.11.0"
+                "source": "https://github.com/googleapis/google-api-php-client/tree/v2.12.1"
             },
-            "time": "2021-09-20T21:15:55+00:00"
+            "time": "2021-12-02T03:34:25+00:00"
         },
         {
             "name": "google/apiclient-services",
-            "version": "v0.219.0",
+            "version": "v0.232.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/googleapis/google-api-php-client-services.git",
-                "reference": "ea990973edf24d959c9e9f550182a53672d5a4bc"
+                "reference": "e671adddfd3d2b36a415e7bf22189b1626bc13f8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/googleapis/google-api-php-client-services/zipball/ea990973edf24d959c9e9f550182a53672d5a4bc",
-                "reference": "ea990973edf24d959c9e9f550182a53672d5a4bc",
+                "url": "https://api.github.com/repos/googleapis/google-api-php-client-services/zipball/e671adddfd3d2b36a415e7bf22189b1626bc13f8",
+                "reference": "e671adddfd3d2b36a415e7bf22189b1626bc13f8",
                 "shasum": ""
             },
             "require": {
@@ -174,9 +174,9 @@
             ],
             "support": {
                 "issues": "https://github.com/googleapis/google-api-php-client-services/issues",
-                "source": "https://github.com/googleapis/google-api-php-client-services/tree/v0.219.0"
+                "source": "https://github.com/googleapis/google-api-php-client-services/tree/v0.232.0"
             },
-            "time": "2021-10-06T11:20:29+00:00"
+            "time": "2022-01-28T12:22:13+00:00"
         },
         {
             "name": "google/auth",
@@ -236,16 +236,16 @@
         },
         {
             "name": "guzzlehttp/guzzle",
-            "version": "7.4.0",
+            "version": "7.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/guzzle.git",
-                "reference": "868b3571a039f0ebc11ac8f344f4080babe2cb94"
+                "reference": "ee0a041b1760e6a53d2a39c8c34115adc2af2c79"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/868b3571a039f0ebc11ac8f344f4080babe2cb94",
-                "reference": "868b3571a039f0ebc11ac8f344f4080babe2cb94",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/ee0a041b1760e6a53d2a39c8c34115adc2af2c79",
+                "reference": "ee0a041b1760e6a53d2a39c8c34115adc2af2c79",
                 "shasum": ""
             },
             "require": {
@@ -254,7 +254,7 @@
                 "guzzlehttp/psr7": "^1.8.3 || ^2.1",
                 "php": "^7.2.5 || ^8.0",
                 "psr/http-client": "^1.0",
-                "symfony/deprecation-contracts": "^2.2"
+                "symfony/deprecation-contracts": "^2.2 || ^3.0"
             },
             "provide": {
                 "psr/http-client-implementation": "1.0"
@@ -340,7 +340,7 @@
             ],
             "support": {
                 "issues": "https://github.com/guzzle/guzzle/issues",
-                "source": "https://github.com/guzzle/guzzle/tree/7.4.0"
+                "source": "https://github.com/guzzle/guzzle/tree/7.4.1"
             },
             "funding": [
                 {
@@ -356,7 +356,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-10-18T09:52:00+00:00"
+            "time": "2021-12-06T18:43:05+00:00"
         },
         {
             "name": "guzzlehttp/promises",
@@ -559,16 +559,16 @@
         },
         {
             "name": "league/oauth2-client",
-            "version": "2.6.0",
+            "version": "2.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/oauth2-client.git",
-                "reference": "badb01e62383430706433191b82506b6df24ad98"
+                "reference": "2334c249907190c132364f5dae0287ab8666aa19"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/oauth2-client/zipball/badb01e62383430706433191b82506b6df24ad98",
-                "reference": "badb01e62383430706433191b82506b6df24ad98",
+                "url": "https://api.github.com/repos/thephpleague/oauth2-client/zipball/2334c249907190c132364f5dae0287ab8666aa19",
+                "reference": "2334c249907190c132364f5dae0287ab8666aa19",
                 "shasum": ""
             },
             "require": {
@@ -577,9 +577,9 @@
                 "php": "^5.6 || ^7.0 || ^8.0"
             },
             "require-dev": {
-                "mockery/mockery": "^1.3",
-                "php-parallel-lint/php-parallel-lint": "^1.2",
-                "phpunit/phpunit": "^5.7 || ^6.0 || ^9.3",
+                "mockery/mockery": "^1.3.5",
+                "php-parallel-lint/php-parallel-lint": "^1.3.1",
+                "phpunit/phpunit": "^5.7 || ^6.0 || ^9.5",
                 "squizlabs/php_codesniffer": "^2.3 || ^3.0"
             },
             "type": "library",
@@ -623,9 +623,9 @@
             ],
             "support": {
                 "issues": "https://github.com/thephpleague/oauth2-client/issues",
-                "source": "https://github.com/thephpleague/oauth2-client/tree/2.6.0"
+                "source": "https://github.com/thephpleague/oauth2-client/tree/2.6.1"
             },
-            "time": "2020-10-28T02:03:40+00:00"
+            "time": "2021-12-22T16:42:49+00:00"
         },
         {
             "name": "league/oauth2-google",
@@ -783,16 +783,16 @@
         },
         {
             "name": "paragonie/constant_time_encoding",
-            "version": "v2.4.0",
+            "version": "v2.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/paragonie/constant_time_encoding.git",
-                "reference": "f34c2b11eb9d2c9318e13540a1dbc2a3afbd939c"
+                "reference": "9229e15f2e6ba772f0c55dd6986c563b937170a8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/paragonie/constant_time_encoding/zipball/f34c2b11eb9d2c9318e13540a1dbc2a3afbd939c",
-                "reference": "f34c2b11eb9d2c9318e13540a1dbc2a3afbd939c",
+                "url": "https://api.github.com/repos/paragonie/constant_time_encoding/zipball/9229e15f2e6ba772f0c55dd6986c563b937170a8",
+                "reference": "9229e15f2e6ba772f0c55dd6986c563b937170a8",
                 "shasum": ""
             },
             "require": {
@@ -846,7 +846,7 @@
                 "issues": "https://github.com/paragonie/constant_time_encoding/issues",
                 "source": "https://github.com/paragonie/constant_time_encoding"
             },
-            "time": "2020-12-06T15:14:20+00:00"
+            "time": "2022-01-17T05:32:27+00:00"
         },
         {
             "name": "paragonie/random_compat",
@@ -900,16 +900,16 @@
         },
         {
             "name": "phpmailer/phpmailer",
-            "version": "v6.5.1",
+            "version": "v6.5.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPMailer/PHPMailer.git",
-                "reference": "dd803df5ad7492e1b40637f7ebd258fee5ca7355"
+                "reference": "baeb7cde6b60b1286912690ab0693c7789a31e71"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPMailer/PHPMailer/zipball/dd803df5ad7492e1b40637f7ebd258fee5ca7355",
-                "reference": "dd803df5ad7492e1b40637f7ebd258fee5ca7355",
+                "url": "https://api.github.com/repos/PHPMailer/PHPMailer/zipball/baeb7cde6b60b1286912690ab0693c7789a31e71",
+                "reference": "baeb7cde6b60b1286912690ab0693c7789a31e71",
                 "shasum": ""
             },
             "require": {
@@ -966,7 +966,7 @@
             "description": "PHPMailer is a full-featured email creation and transfer class for PHP",
             "support": {
                 "issues": "https://github.com/PHPMailer/PHPMailer/issues",
-                "source": "https://github.com/PHPMailer/PHPMailer/tree/v6.5.1"
+                "source": "https://github.com/PHPMailer/PHPMailer/tree/v6.5.3"
             },
             "funding": [
                 {
@@ -974,20 +974,20 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-08-18T09:14:16+00:00"
+            "time": "2021-11-25T16:34:11+00:00"
         },
         {
             "name": "phpseclib/phpseclib",
-            "version": "3.0.11",
+            "version": "3.0.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpseclib/phpseclib.git",
-                "reference": "6e794226a35159eb06f355efe59a0075a16551dd"
+                "reference": "1443ab79364eea48665fa8c09ac67f37d1025f7e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/6e794226a35159eb06f355efe59a0075a16551dd",
-                "reference": "6e794226a35159eb06f355efe59a0075a16551dd",
+                "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/1443ab79364eea48665fa8c09ac67f37d1025f7e",
+                "reference": "1443ab79364eea48665fa8c09ac67f37d1025f7e",
                 "shasum": ""
             },
             "require": {
@@ -1069,7 +1069,7 @@
             ],
             "support": {
                 "issues": "https://github.com/phpseclib/phpseclib/issues",
-                "source": "https://github.com/phpseclib/phpseclib/tree/3.0.11"
+                "source": "https://github.com/phpseclib/phpseclib/tree/3.0.13"
             },
             "funding": [
                 {
@@ -1085,7 +1085,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-10-27T03:01:46+00:00"
+            "time": "2022-01-30T08:50:05+00:00"
         },
         {
             "name": "psr/cache",
@@ -1392,16 +1392,16 @@
         },
         {
             "name": "symfony/deprecation-contracts",
-            "version": "v2.4.0",
+            "version": "v2.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/deprecation-contracts.git",
-                "reference": "5f38c8804a9e97d23e0c8d63341088cd8a22d627"
+                "reference": "6f981ee24cf69ee7ce9736146d1c57c2780598a8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/deprecation-contracts/zipball/5f38c8804a9e97d23e0c8d63341088cd8a22d627",
-                "reference": "5f38c8804a9e97d23e0c8d63341088cd8a22d627",
+                "url": "https://api.github.com/repos/symfony/deprecation-contracts/zipball/6f981ee24cf69ee7ce9736146d1c57c2780598a8",
+                "reference": "6f981ee24cf69ee7ce9736146d1c57c2780598a8",
                 "shasum": ""
             },
             "require": {
@@ -1410,7 +1410,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-main": "2.4-dev"
+                    "dev-main": "2.5-dev"
                 },
                 "thanks": {
                     "name": "symfony/contracts",
@@ -1439,7 +1439,7 @@
             "description": "A generic function and convention to trigger deprecation notices",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/deprecation-contracts/tree/v2.4.0"
+                "source": "https://github.com/symfony/deprecation-contracts/tree/v2.5.0"
             },
             "funding": [
                 {
@@ -1455,7 +1455,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-03-23T23:28:01+00:00"
+            "time": "2021-07-12T14:48:14+00:00"
         }
     ],
     "packages-dev": [],
@@ -1466,5 +1466,5 @@
     "prefer-lowest": false,
     "platform": [],
     "platform-dev": [],
-    "plugin-api-version": "2.1.0"
+    "plugin-api-version": "2.2.0"
 }
