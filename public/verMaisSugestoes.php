@@ -200,7 +200,7 @@
             echo "<a class=\"header-links-a a-selected\" href=feed.php>Mar</a> ";
       echo "<a class=\"header-links-a\" href=mar.php>Portos</a> ";
       echo "<a class=\"header-links-a\" href=navio.php?user=$_SESSION[userid]>Meu navio</a> ";
-      echo "<a class=\"header-links-a\" href=backend/logoff.php>Sair </a><img class=\"header-links-icon\" src=\"imgs/icons/sair.png\" alt=\"\">";
+      echo "<a class=\"header-links-a\" href=../backend/logoff.php>Sair </a><img class=\"header-links-icon\" src=\"imgs/icons/sair.png\" alt=\"\">";
     ?>
     </div>
   </header>
