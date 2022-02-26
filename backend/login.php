@@ -9,7 +9,7 @@
 </head>
 <body>
 <?php
-    include './infra/connection.php';
+    include './infra/services.php';
     if(!isset($_SESSION)) { 
         session_start(); 
     } 
@@ -20,8 +20,6 @@
             $regex_email="/^[a-zA-Z0-9\.]*@[a-z0-9\.]*\.[a-z]*$/";
             if(preg_match($regex_email,$_POST['email'])){
                 $email="$_POST[email]";
-                //email=abfn@gmail.com
-                //password=kasjfkajsfjaisf
                 $pass="$_POST[password]";
                 $passed=Login("$email","$pass");
                 if($passed){
@@ -33,7 +31,7 @@
                         $_SESSION["userid"] = $USERID;
                         $_SESSION["userimg"] = $USERIMG;
                         $_SESSION["username"] = $USERNAME;
-                        header("refresh:1;url=../mar.php");
+                        header("refresh:1;url=../index.php");
                         die();
                     }
                     else{

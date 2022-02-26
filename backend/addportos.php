@@ -10,7 +10,7 @@
 </head>
 <body>
 <?php
-    include './infra/connection.php';
+    include './infra/services.php';
     if(!isset($_SESSION)) { 
         session_start(); 
     } 

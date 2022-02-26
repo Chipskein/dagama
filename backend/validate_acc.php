@@ -11,7 +11,7 @@
 <body>
 <?php
 if(isset($_GET['id'])){
-    include './infra/connection.php';
+    include './infra/services.php';
     $user=getUserInfoRegister($_GET['id']);
     if($user){
         //user[ativo]==0

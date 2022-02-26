@@ -10,7 +10,7 @@
 </head>
 <body>
 <?php 
-    include './infra/connection.php';
+    include './infra/services.php';
     //Terminar
     if(isset($_GET['id'])){
         $user=getUserInfoRegister($_GET['id']);
