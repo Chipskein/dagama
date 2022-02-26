@@ -5,8 +5,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="./imgs/icon.png" type="image/jpg">
-  <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="../responsive.css" media="screen and (max-width: 1680px)"/>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/responsive.css" media="screen and (max-width: 1680px)"/>
   <title>Dagama | Mar</title>
 </head>
 <body class="mar_porto">
@@ -18,13 +18,13 @@
     $result[$campo] = $campo."=".$valor;
     return("mar.php?".strtr(implode("&", $result), " ", "+"));
   }
-function pages($campo, $valor){
-    $result = array();
-    if (isset($_GET["page"])) $result["page"] = "page=".$_GET["page"];
-    $result[$campo] = $campo."=".$valor;
-    return '&'.(strtr(implode("&",$result), " ", "+"));
-}
-  include '../backend/infra/connection.php';
+  function pages($campo, $valor){
+      $result = array();
+      if (isset($_GET["page"])) $result["page"] = "page=".$_GET["page"];
+      $result[$campo] = $campo."=".$valor;
+      return '&'.(strtr(implode("&",$result), " ", "+"));
+  }
+  include '../backend/infra/services.php';
   if(!isset($_SESSION)) { 
     session_start(); 
   }
@@ -75,7 +75,7 @@ function pages($campo, $valor){
       echo "<a class=\"header-links-a\" href=feed.php>Mar</a> ";
       echo "<a class=\"header-links-a a-selected\" href=mar.php>Portos</a> ";
       echo "<a class=\"header-links-a\" href=navio.php?user=$_SESSION[userid]>Meu navio</a> ";
-      echo "<a class=\"header-links-a\" href=backend/logoff.php>Sair </a><img class=\"header-links-icon\" src=\"imgs/icons/sair.png\" alt=\"\">";
+      echo "<a class=\"header-links-a\" href=../backend/logoff.php>Sair </a><img class=\"header-links-icon\" src=\"imgs/icons/sair.png\" alt=\"\">";
     ?>
     </div>
   </header>
@@ -120,7 +120,7 @@ function pages($campo, $valor){
       <p></p>
     </div>
   </main>
-          <?php
+    <?php
       echo "<footer style=\"padding-top:20px; padding-bottom:20px\" align=center>";
       $links = 4;
       $page = isset($_GET["page"]) ? strtr($_GET["page"], " ", "%") : 0;
@@ -142,8 +142,6 @@ function pages($campo, $valor){
       echo "<a class=\"paginacaoNumber\" href=\"".url("offset",ceil($total/$limit)*$limit/$limit).pages("page", ceil($total/$limit))."\"> ultima</a>";
       echo "</div>";
       echo "</footer>";
-          ?>
-  <script src="./teste.js" type="module">
-    </script>
+    ?>
 </body>
 </html>

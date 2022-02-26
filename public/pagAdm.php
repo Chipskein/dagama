@@ -704,7 +704,7 @@
         }
         if($pass){
           $pais = $_POST['crud-pais'];         
-          $res = delPais($pais);
+          //$res = delPais($pais);
           if($res) echo "Pais excluído com sucesso!";
           else echo "<h4>FALHOU!</h4><br>";
         }

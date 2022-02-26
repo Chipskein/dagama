@@ -194,7 +194,7 @@ include './infra/services.php';
             $registered = Register($email, $password, $bdate, $username, $genero, $cidade, $photo);
             if($registered){
                 $id=getIdbyEmail($email);
-                header("refresh:2;url=./validarEmail.php?id=$id");
+                header("refresh:2;url=./validate_acc.php?id=$id");
                 die();
             } 
             else echo "Um erro ocorreu no registro!";

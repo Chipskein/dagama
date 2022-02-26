@@ -36,7 +36,7 @@
                     }
                     else{
                         echo "<h2 align=center>Ative seu usuario</h2>";
-                        header("refresh:1;url=../validarEmail.php?id=$passed[codigo]");
+                        header("refresh:1;url=../validate_acc.php?id=$passed[codigo]");
                         die();
                     }
                 }
@@ -60,7 +60,7 @@
     }
     else{
         echo "<h2>Você já esta logado!!</h2>";
-        header('refresh=1;url=../mar.php');
+        header('refresh=1;url=../public/mar.php');
         die();
     }
     echo "</div>";

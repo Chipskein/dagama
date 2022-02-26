@@ -26,7 +26,7 @@ if(isset($_SESSION['email'])&&isset($_SESSION['password'])){
         $_SESSION["userid"] = $USERID;
         $_SESSION["userimg"] = $USERIMG;
         $_SESSION["username"] = $USERNAME;
-        header("refresh:1;url=../mar.php");
+        header("refresh:1;url=../public/mar.php");
         die();
     }
     else{
