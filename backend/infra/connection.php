@@ -9,11 +9,11 @@ if (file_exists($dotenv_dir.'.env')) {
 function db_connection(){
     $db=false;
     $db_type=false;
-    $DB_DBNAME_LOCAL=$_ENV['DB_DBNAME_LOCAL'];
-    $DB_USER_LOCAL=$_ENV['DB_USER_LOCAL'];
-    $DB_PASSWORD_LOCAL=$_ENV['DB_PASSWORD_LOCAL'];
-    $DB_HOST_LOCAL=$_ENV['DB_HOST_LOCAL'];
-    $DB_PORT_LOCAL=$_ENV['DB_PORT_LOCAL'];
+    $DB_DBNAME_LOCAL= $_ENV['DB_DBNAME_LOCAL'] ? $_ENV['DB_DBNAME_LOCAL']:NULL;
+    $DB_USER_LOCAL= $_ENV['DB_USER_LOCAL'] ? $_ENV['DB_USER_LOCAL']:NULL;
+    $DB_PASSWORD_LOCAL= $_ENV['DB_PASSWORD_LOCAL'] ? $_ENV['DB_PASSWORD_LOCAL']:NULL;
+    $DB_HOST_LOCAL= $_ENV['DB_HOST_LOCAL'] ? $_ENV['DB_HOST_LOCAL']:NULL;
+    $DB_PORT_LOCAL= $_ENV['DB_PORT_LOCAL'] ? $_ENV['DB_PORT_LOCAL']:NULL;
     if(preg_match("/localhost/","$_SERVER[HTTP_HOST]")){
         $db=mysqli_connect($DB_HOST_LOCAL,$DB_USER_LOCAL,$DB_PASSWORD_LOCAL,$DB_DBNAME_LOCAL,$DB_PORT_LOCAL);
         $db_type='mysql-local';
