@@ -8,7 +8,6 @@ function load_dotenv(){
         $dotenv = Dotenv\Dotenv::createImmutable($dotenv_dir, '.env');
         $dotenv->load();
     }
-    var_dump($_ENV);
 }
 function db_connection(){
     $db=false;
