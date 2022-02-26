@@ -1,8 +1,14 @@
 <?php
-    include '/app/backend/mailer/mailer.php';
-    include '/app/backend/gdrive/driver.php';
-    include '/app/backend/infra/connection.php';
-
+    if(preg_match("/localhost/","$_SERVER[HTTP_HOST]")){
+        include '../backend/mailer/mailer.php';
+        include '../backend/gdrive/driver.php';
+        include '../backend/infra/connection.php';
+    }
+    else{
+        include '/app/backend/mailer/mailer.php';
+        include '/app/backend/gdrive/driver.php';
+        include '/app/backend/infra/connection.php';
+    }
     /* BASICS */
     function getAssuntos(){
         $db_connection = db_connection();

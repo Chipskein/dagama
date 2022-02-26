@@ -1,6 +1,14 @@
 
 <?php
-require '/app/vendor/autoload.php';
+if(preg_match("/localhost/","$_SERVER[HTTP_HOST]")){
+    require_once '../vendor/autoload.php';
+}
+else{
+    require_once '/app/vendor/autoload.php';
+}
+
+
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\OAuth;

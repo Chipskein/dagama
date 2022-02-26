@@ -1,5 +1,10 @@
 <?php
-  require_once '/app/vendor/autoload.php';
+  if(preg_match("/localhost/","$_SERVER[HTTP_HOST]")){
+    require_once '../vendor/autoload.php';
+  }
+  else{
+    require_once '/app/vendor/autoload.php';
+  }
   function getClient(){
       $client = new Google\Client();
       $client->setApplicationName("dagama-gdrive");
