@@ -12,7 +12,7 @@
 </head>
 <body>
   <?php 
-    include '../backend/infra/connection.php';
+    include '../backend/infra/services.php';
     session_start();
     if(isset($_SESSION['userid'])){
       echo "<h2>Voce já esta logado</h2>";
