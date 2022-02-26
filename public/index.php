@@ -114,7 +114,7 @@
             </select>
             <input type='text' class="inputs hide-visibility" name='newcidade' id='newcidade' placeholder='Digite uma nova cidade'>           
             <div id="divTermos">
-              <input value='pass' name="termos" type="checkbox"> <p>Concordo com os <a href="" target="_blank" style="color: #7ED8FF;">termos de uso</a></p>
+              <input value='pass' name="termos" type="checkbox"> <p>Concordo com os <a href="../LICENSE" target="_blank" style="color: #7ED8FF;">termos de uso</a></p>
             </div>
             <input type="button" class="button registerBtn" id="registerBtn" onclick="register()" value="Enviar"/>
           </div>
