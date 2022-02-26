@@ -5,8 +5,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="./imgs/icon.png" type="image/jpg">
-  <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="../responsive.css" media="screen and (max-width: 1680px)"/>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/responsive.css" media="screen and (max-width: 1680px)"/>
   <title>Dagama | Feed</title>
 </head>
 <body>

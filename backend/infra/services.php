@@ -518,7 +518,7 @@
                 if($response) {
                     $res=mysqli_query($db,"select email,senha as password from perfil where codigo='$id'");
                     if($res) {
-                        $res = $res->fetch_array();
+                        $res = mysqli_fetch_array($res);
                         mysqli_close($db);
                         return $res;
                     } else {
@@ -765,7 +765,7 @@
                 ");
 
 
-                while($row = $postsOriginais->fetch_array()){
+                while($row = mysqli_fetch_array($postsOriginais)){
                     $postsArray[$row['codInteracao']] = $row;
 
                     $resCitacoesParent = mysqli_query($db,"select citacao.interacao as interacao, perfil.codigo as codPerfil, perfil.username as nomePerfil 
@@ -774,7 +774,7 @@
                         citacao.ativo = 1 and 
                         citacao.interacao = $row[codInteracao]");
                     $citacoes = [];
-                    while ($row2 = $resCitacoesParent->fetch_array()) {
+                    while ($row2 = mysqli_fetch_array($resCitacoesParent)) {
                         $citacoes[] = $row2;
                     }
                     $postsArray[$row['codInteracao']]['citacoes'] = $citacoes;
@@ -787,7 +787,7 @@
                         interacao_assunto.ativo = 1 and
                         interacao.codigo = $row[codInteracao]");
                     $assuntos = [];
-                    while ($row2 = $resAssuntosParent->fetch_array()) {
+                    while ($row2 = mysqli_fetch_array($resAssuntosParent)) {
                         $assuntos[] = $row2;
                     }
                     $postsArray[$row['codInteracao']]['assuntos'] = $assuntos;
@@ -824,7 +824,7 @@
                         and interacao.post = $row[codInteracao]");
                     $childInteracoes = [];
                     if($temInteracoes){
-                        while($row3 = $temInteracoes->fetch_array()){
+                        while($row3 = mysqli_fetch_array($temInteracoes)){
                             $childInteracoes[$row3['codInteracao']] = $row3;
                             $resCitacoesChild = mysqli_query($db,"select citacao.interacao as interacao, perfil.codigo as codPerfil, perfil.username as nomePerfil 
                             from citacao 
@@ -833,7 +833,7 @@
                                 citacao.ativo = 1 and 
                                 citacao.interacao = $row3[codInteracao]");
                             $citacoes = [];
-                            while ($row4 = $resCitacoesChild->fetch_array()) {
+                            while ($row4 = mysqli_fetch_array($resCitacoesChild)) {
                                 $citacoes[] = $row4;
                             }
                             $childInteracoes[$row3['codInteracao']]['citacoes'] = $citacoes;
@@ -845,7 +845,7 @@
                                 interacao_assunto.ativo = 1 and
                                 interacao.codigo = $row3[codInteracao]");
                             $assuntos = [];
-                            while ($row5 = $resAssuntosChild->fetch_array()) {
+                            while ($row5 = mysqli_fetch_array($resAssuntosChild)) {
                                 $assuntos[] = $row5;
                             }
                             $childInteracoes[$row3['codInteracao']]['assuntos'] = $assuntos;
@@ -885,7 +885,7 @@
                             $grandChildInteracoes = [];
                             $childInteracoes[$row3['codInteracao']]['respostas'] = [];
                             if($temInnerInteracoes){
-                                while ($row6 = $temInnerInteracoes->fetch_array()) {
+                                while ($row6 = mysqli_fetch_array($temInnerInteracoes)) {
                                     $grandChildInteracoes[$row6['codInteracao']] = $row6;
                                     $resCitacoesGrandChild = mysqli_query($db,"
                                     select citacao.interacao as interacao, perfil.codigo as codPerfil, perfil.username as nomePerfil from citacao 
@@ -894,7 +894,7 @@
                                         citacao.ativo = 1 and 
                                         citacao.interacao = $row6[codInteracao]");
                                     $citacoes = [];
-                                    while ($row7 = $resCitacoesGrandChild->fetch_array()) {
+                                    while ($row7 = mysqli_fetch_array($resCitacoesGrandChild)) {
                                         $citacoes[] = $row7;
                                     }
                                     $grandChildInteracoes[$row6['codInteracao']]['citacoes'] = $citacoes;
@@ -907,7 +907,7 @@
                                         interacao_assunto.ativo = 1 and
                                         interacao.codigo = ".$row6['codInteracao']);
                                     $assuntos = [];
-                                    while ($row8 = $resAssuntosGrandChild->fetch_array()) {
+                                    while ($row8 = mysqli_fetch_array($resAssuntosGrandChild)) {
                                         $assuntos[] = $row8;
                                     }
                                     $grandChildInteracoes[$row6['codInteracao']]['assuntos'] = $assuntos;
@@ -1065,7 +1065,7 @@
                 group by codPost
                 ");
 
-                while($row = $postsOriginais->fetch_array()){
+                while($row = mysqli_fetch_array($postsOriginais)){
                     $postsArray[$row['codInteracao']] = $row;
 
                     $resCitacoesParent = mysqli_query($db,"select citacao.interacao as interacao, perfil.codigo as codPerfil, perfil.username as nomePerfil 
@@ -1074,7 +1074,7 @@
                         citacao.ativo = 1 and 
                         citacao.interacao = $row[codInteracao]");
                     $citacoes = [];
-                    while ($row2 = $resCitacoesParent->fetch_array()) {
+                    while ($row2 = mysqli_fetch_array($resCitacoesParent)) {
                         $citacoes[] = $row2;
                     }
                     $postsArray[$row['codInteracao']]['citacoes'] = $citacoes;
@@ -1087,7 +1087,7 @@
                         interacao_assunto.ativo = 1 and
                         interacao.codigo = $row[codInteracao]");
                     $assuntos = [];
-                    while ($row2 = $resAssuntosParent->fetch_array()) {
+                    while ($row2 = mysqli_fetch_array($resAssuntosParent)) {
                         $assuntos[] = $row2;
                     }
                     $postsArray[$row['codInteracao']]['assuntos'] = $assuntos;
@@ -1124,7 +1124,7 @@
                         and interacao.post = $row[codInteracao]");
                     $childInteracoes = [];
                     if($temInteracoes){
-                        while($row3 = $temInteracoes->fetch_array()){
+                        while($row3 = mysqli_fetch_array($temInteracoes)){
                             $childInteracoes[$row3['codInteracao']] = $row3;
                             $resCitacoesChild = mysqli_query($db,"select citacao.interacao as interacao, perfil.codigo as codPerfil, perfil.username as nomePerfil 
                             from citacao 
@@ -1133,7 +1133,7 @@
                                 citacao.ativo = 1 and 
                                 citacao.interacao = $row3[codInteracao]");
                             $citacoes = [];
-                            while ($row4 = $resCitacoesChild->fetch_array()) {
+                            while ($row4 = mysqli_fetch_array($resCitacoesChild)) {
                                 $citacoes[] = $row4;
                             }
                             $childInteracoes[$row3['codInteracao']]['citacoes'] = $citacoes;
@@ -1145,7 +1145,7 @@
                                 interacao_assunto.ativo = 1 and
                                 interacao.codigo = $row3[codInteracao]");
                             $assuntos = [];
-                            while ($row5 = $resAssuntosChild->fetch_array()) {
+                            while ($row5 = mysqli_fetch_array($resAssuntosChild)) {
                                 $assuntos[] = $row5;
                             }
                             $childInteracoes[$row3['codInteracao']]['assuntos'] = $assuntos;
@@ -1185,7 +1185,7 @@
                             $grandChildInteracoes = [];
                             $childInteracoes[$row3['codInteracao']]['respostas'] = [];
                             if($temInnerInteracoes){
-                                while ($row6 = $temInnerInteracoes->fetch_array()) {
+                                while ($row6 = mysqli_fetch_array($temInnerInteracoes)) {
                                     $grandChildInteracoes[$row6['codInteracao']] = $row6;
                                     $resCitacoesGrandChild = mysqli_query($db,"
                                     select citacao.interacao as interacao, perfil.codigo as codPerfil, perfil.username as nomePerfil from citacao 
@@ -1194,7 +1194,7 @@
                                         citacao.ativo = 1 and 
                                         citacao.interacao = $row6[codInteracao]");
                                     $citacoes = [];
-                                    while ($row7 = $resCitacoesGrandChild->fetch_array()) {
+                                    while ($row7 = mysqli_fetch_array($resCitacoesGrandChild)) {
                                         $citacoes[] = $row7;
                                     }
                                     $grandChildInteracoes[$row6['codInteracao']]['citacoes'] = $citacoes;
@@ -1207,7 +1207,7 @@
                                         interacao_assunto.ativo = 1 and
                                         interacao.codigo = ".$row6['codInteracao']);
                                     $assuntos = [];
-                                    while ($row8 = $resAssuntosGrandChild->fetch_array()) {
+                                    while ($row8 = mysqli_fetch_array($resAssuntosGrandChild)) {
                                         $assuntos[] = $row8;
                                     }
                                     $grandChildInteracoes[$row6['codInteracao']]['assuntos'] = $assuntos;
@@ -1268,7 +1268,7 @@
                     where 
                         citacao.ativo = 1 and citacao.interacao = $post");
                 $citacoes = [];
-                while ($row = $results2->fetch_array()) {
+                while ($row = mysqli_fetch_array($results2)) {
                     $citacoes[$row['codPerfil']] = $row;
                 }
                 
@@ -1279,7 +1279,7 @@
                 where
                     interacao.ativo = 1 and interacao.codigo = $post");
                 $assuntos = [];
-                while ($row = $results3->fetch_array()) {
+                while ($row = mysqli_fetch_array($results3)) {
                     $assuntos[$row['codAssunto']] = $row;
                 }
 
@@ -1340,7 +1340,7 @@
                     where 
                         citacao.ativo = 1 and citacao.interacao = $post");
                 $citacoes = [];
-                while ($row = $results2->fetch_array()) {
+                while ($row = mysqli_fetch_array($results2)) {
                     $citacoes[$row['codPerfil']] = $row;
                 }
                 
@@ -1351,7 +1351,7 @@
                 where
                     interacao.ativo = 1 and interacao.codigo = $post");
                 $assuntos = [];
-                while ($row = $results3->fetch_array()) {
+                while ($row = mysqli_fetch_array($results3)) {
                     $assuntos[$row['codAssunto']] = $row;
                 }
 
@@ -1548,7 +1548,7 @@
         $db_type=$db_connection['db_type'];
         if($db_type == 'mysql'){
             $hasRequest = mysqli_query($db,"select * from SOLICITACAO_AMIGO where (perfil = $user and amigo = $friend) or (amigo = $user and perfil = $friend)");
-            $hasRequest = $hasRequest->fetch_array();
+            $hasRequest = mysqli_fetch_array($hasRequest);
             if($hasRequest){
                 if($hasRequest['ativo'] == 0) {
                     $friendRequest = mysqli_query($db,"update SOLICITACAO_AMIGO set ativo = 1 where (amigo = $user and perfil = $friend) or (perfil = $user and amigo = $friend)");    
@@ -2158,7 +2158,7 @@
                 order by interacao.data desc
                 limit $limit offset $offset");
                 
-                while($row = $postsOriginais->fetch_array()){
+                while($row = mysqli_fetch_array($postsOriginais)){
                     $postsArray[$row['codInteracao']] = $row;
 
                     $resCitacoesParent = mysqli_query($db,"select citacao.interacao as interacao, perfil.codigo as codPerfil, perfil.username as nomePerfil 
@@ -2167,7 +2167,7 @@
                         citacao.ativo = 1 and 
                         citacao.interacao = $row[codInteracao]");
                     $citacoes = [];
-                    while ($row2 = $resCitacoesParent->fetch_array()) {
+                    while ($row2 = mysqli_fetch_array($resCitacoesParent)) {
                         $citacoes[] = $row2;
                     }
                     $postsArray[$row['codInteracao']]['citacoes'] = $citacoes;
@@ -2180,7 +2180,7 @@
                         interacao_assunto.ativo = 1 and
                         interacao.codigo = $row[codInteracao]");
                     $assuntos = [];
-                    while ($row2 = $resAssuntosParent->fetch_array()) {
+                    while ($row2 = mysqli_fetch_array($resAssuntosParent)) {
                         $assuntos[] = $row2;
                     }
                     $postsArray[$row['codInteracao']]['assuntos'] = $assuntos;
@@ -2221,7 +2221,7 @@
                         and interacao.post = $row[codInteracao]");
                     $childInteracoes = [];
                     if($temInteracoes){
-                        while($row3 = $temInteracoes->fetch_array()){
+                        while($row3 = mysqli_fetch_array($temInteracoes)){
                             $childInteracoes[$row3['codInteracao']] = $row3;
                             $resCitacoesChild = mysqli_query($db,"select citacao.interacao as interacao, perfil.codigo as codPerfil, perfil.username as nomePerfil 
                             from citacao 
@@ -2230,7 +2230,7 @@
                                 citacao.ativo = 1 and 
                                 citacao.interacao = $row3[codInteracao]");
                             $citacoes = [];
-                            while ($row4 = $resCitacoesChild->fetch_array()) {
+                            while ($row4 = mysqli_fetch_array($resCitacoesChild)) {
                                 $citacoes[] = $row4;
                             }
                             $childInteracoes[$row3['codInteracao']]['citacoes'] = $citacoes;
@@ -2242,7 +2242,7 @@
                                 interacao_assunto.ativo = 1 and
                                 interacao.codigo = $row3[codInteracao]");
                             $assuntos = [];
-                            while ($row5 = $resAssuntosChild->fetch_array()) {
+                            while ($row5 = mysqli_fetch_array($resAssuntosChild)) {
                                 $assuntos[] = $row5;
                             }
                             $childInteracoes[$row3['codInteracao']]['assuntos'] = $assuntos;
@@ -2286,7 +2286,7 @@
                             $grandChildInteracoes = [];
                             $childInteracoes[$row3['codInteracao']]['respostas'] = [];
                             if($temInnerInteracoes){
-                                while ($row6 = $temInnerInteracoes->fetch_array()) {
+                                while ($row6 = mysqli_fetch_array($temInnerInteracoes)) {
                                     $grandChildInteracoes[$row6['codInteracao']] = $row6;
                                     $resCitacoesGrandChild = mysqli_query($db,"
                                     select citacao.interacao as interacao, perfil.codigo as codPerfil, perfil.username as nomePerfil from citacao 
@@ -2295,7 +2295,7 @@
                                         citacao.ativo = 1 and 
                                         citacao.interacao = $row6[codInteracao]");
                                     $citacoes = [];
-                                    while ($row7 = $resCitacoesGrandChild->fetch_array()) {
+                                    while ($row7 = mysqli_fetch_array($resCitacoesGrandChild)) {
                                         $citacoes[] = $row7;
                                     }
                                     $grandChildInteracoes[$row6['codInteracao']]['citacoes'] = $citacoes;
@@ -2308,7 +2308,7 @@
                                         interacao_assunto.ativo = 1 and
                                         interacao.codigo = ".$row6['codInteracao']);
                                     $assuntos = [];
-                                    while ($row8 = $resAssuntosGrandChild->fetch_array()) {
+                                    while ($row8 = mysqli_fetch_array($resAssuntosGrandChild)) {
                                         $assuntos[] = $row8;
                                     }
                                     $grandChildInteracoes[$row6['codInteracao']]['assuntos'] = $assuntos;
@@ -2486,7 +2486,7 @@
                     tmp1.perfil=$perfil
                 ");
                 if($response2){
-                    $response2=$response2->fetch_array();
+                    $response2=mysqli_fetch_array($response2);
                     $selo='nenhum';
                     $reaction_p=$response2["reaction_porcent"];
                     $comment_p=$response2["comments_porce"];
@@ -2617,7 +2617,7 @@
         $db_type=$db_connection['db_type'];
         if($db_type == 'mysql'){
             $check = mysqli_query($db,"select * from citacao where perfil = $user and interacao = $post");
-            $check = $check->fetch_array();
+            $check = mysqli_fetch_array($check);
             if($check){
                 $response = mysqli_query($db,"update citacao set ativo = 1 where perfil = $user and interacao = $post");
                 if($response) {
@@ -2697,7 +2697,7 @@
             $interacaoMasc = mysqli_query($db,"select count(interacao.perfil) as total, pais.nome as pais from interacao join perfil on interacao.perfil= perfil.codigo join cidade on perfil.cidade = cidade.codigo join uf on cidade.uf= uf.codigo join pais on uf.pais = pais.codigo where perfil.genero = \"M\" and pais.nome=\"$pais\" and date(interacao.data) between date('now','-$mes months') and date('now') and date(perfil.datanasc) between date('now','-$faixamax years') and date('now', '-$faixamin years')");
             $results=[];    
             if($interacaoMasc){
-                while ($row = $interacaoMasc->fetch_array()) {
+                while ($row = mysqli_fetch_array($interacaoMasc)) {
                     array_push($results, $row);
                 }
                 mysqli_close($db);
@@ -2713,7 +2713,7 @@
             $interacaoFem = mysqli_query($db,"select count(interacao.perfil) as total, pais.nome as pais from interacao join perfil on interacao.perfil= perfil.codigo join cidade on perfil.cidade = cidade.codigo join uf on cidade.uf= uf.codigo join pais on uf.pais = pais.codigo where perfil.genero = \"F\" and pais.nome=\"$pais\" and date(interacao.data) between date('now','-$mes months') and date('now') and date(perfil.datanasc) between date('now','-$faixamax years') and date('now', '-$faixamin years')");
             $results=[];
             if($interacaoFem){
-                while ($row = $interacaoFem->fetch_array()) {
+                while ($row =  mysqli_fetch_array($interacaoFem)) {
                     array_push($results, $row);
                 }
                 mysqli_close($db);
