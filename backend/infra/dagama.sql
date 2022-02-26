@@ -1,53 +1,49 @@
 SET FOREIGN_KEY_CHECKS = 0;
-    DROP TABLE IF EXISTS `INTERACAO_ASSUNTO`;
-    DROP TABLE IF EXISTS `INTERACAO`;
-    DROP TABLE IF EXISTS `CITACAOPERFIL`;
-    DROP TABLE IF EXISTS `CITACAO`;
-    DROP TABLE IF EXISTS `SOLICITACAO_AMIGO`;
-    DROP TABLE IF EXISTS `AMIGO`;
-    DROP TABLE IF EXISTS `SELOUSER`;
-    DROP TABLE IF EXISTS `SELO`;
-    DROP TABLE IF EXISTS `PORTO_PARTICIPA`;
-    DROP TABLE IF EXISTS `PORTO`;
-    DROP TABLE IF EXISTS `PERFIL`;
-    DROP TABLE IF EXISTS `ASSUNTO`;
-    DROP TABLE IF EXISTS `CIDADE`;
-    DROP TABLE IF EXISTS `UF`;
-    DROP TABLE IF EXISTS `PAIS`;
+    DROP TABLE IF EXISTS `interacao_assunto`;
+    DROP TABLE IF EXISTS `interacao`;
+    DROP TABLE IF EXISTS `citacao`;
+    DROP TABLE IF EXISTS `solicita_amigo`;
+    DROP TABLE IF EXISTS `amigo`;
+    DROP TABLE IF EXISTS `porto_participa`;
+    DROP TABLE IF EXISTS `porto`;
+    DROP TABLE IF EXISTS `perfil`;
+    DROP TABLE IF EXISTS `assunto`;
+    DROP TABLE IF EXISTS `cidade`;
+    DROP TABLE IF EXISTS `uf`;
+    DROP TABLE IF EXISTS `pais`;
 SET FOREIGN_KEY_CHECKS = 1;
-
-CREATE TABLE `PAIS`(
-    codigo  INTEGER NOT NULL,
+CREATE TABLE `pais`(
+    codigo  INTEGER NOT NULL AUTO_INCREMENT,
     nome    VARCHAR(250) NOT NULL,
     ativo BOOLEAN NOT NULL DEFAULT 1 CHECK(ativo=1 OR ativo=0),
     PRIMARY KEY(codigo)
 );
-CREATE TABLE `UF`(
-    codigo  INTEGER NOT NULL,
+CREATE TABLE `uf`(
+    codigo  INTEGER NOT NULL AUTO_INCREMENT,
     pais    INTEGER NOT NULL,
     nome    VARCHAR(250) NOT NULL,
     ativo BOOLEAN NOT NULL DEFAULT 1 CHECK(ativo=1 OR ativo=0),
     PRIMARY KEY(codigo),
-    FOREIGN KEY (pais) REFERENCES PAIS(codigo) 
+    FOREIGN KEY (pais) REFERENCES `pais`(codigo) 
 
 );
-CREATE TABLE `CIDADE`(
-    codigo  INTEGER NOT NULL,
+CREATE TABLE `cidade`(
+    codigo  INTEGER NOT NULL AUTO_INCREMENT,
     uf      INTEGER NOT NULL,
     nome    VARCHAR(250) NOT NULL,
     ativo BOOLEAN NOT NULL DEFAULT 1 CHECK(ativo=1 OR ativo=0),
     PRIMARY KEY(codigo),
-    FOREIGN KEY (uf) REFERENCES UF(codigo) 
+    FOREIGN KEY (uf) REFERENCES `uf`(codigo) 
 );
 
-CREATE TABLE `ASSUNTO`(
-    codigo  INTEGER NOT NULL,
+CREATE TABLE `assunto`(
+    codigo  INTEGER NOT NULL AUTO_INCREMENT,
     nome    VARCHAR(250) NOT NULL,
     ativo BOOLEAN NOT NULL DEFAULT 1 CHECK(ativo=1 OR ativo=0),
     PRIMARY KEY(codigo)
 );
-CREATE TABLE `PERFIL`(
-    codigo INTEGER NOT NULL,
+CREATE TABLE `perfil`(
+    codigo INTEGER NOT NULL AUTO_INCREMENT,
     cidade INTEGER NOT NULL,
     email VARCHAR(250) NOT NULL UNIQUE,
     senha VARCHAR(250) NOT NULL,
@@ -58,10 +54,10 @@ CREATE TABLE `PERFIL`(
     dataregis DATETIME DEFAULT CURRENT_TIMESTAMP,
     ativo BOOLEAN NOT NULL DEFAULT 0 CHECK(ativo=1 OR ativo=0),
     PRIMARY KEY(codigo),
-    FOREIGN KEY (cidade) REFERENCES CIDADE(codigo)
+    FOREIGN KEY (cidade) REFERENCES `cidade`(codigo)
 );
-CREATE TABLE `PORTO`(
-    codigo INTEGER NOT NULL,
+CREATE TABLE `porto`(
+    codigo INTEGER NOT NULL AUTO_INCREMENT,
     perfil INTEGER NOT NULL,
     nome VARCHAR(250) NOT NULL,
     descr VARCHAR(250) NOT NULL,
@@ -69,53 +65,35 @@ CREATE TABLE `PORTO`(
     ativo BOOLEAN NOT NULL DEFAULT 1 CHECK(ativo=1 OR ativo=0),
     dataRegis DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY(codigo),
-    FOREIGN KEY (perfil) REFERENCES PERFIL(codigo) 
+    FOREIGN KEY (perfil) REFERENCES `perfil`(codigo) 
 );
-CREATE TABLE `PORTO_PARTICIPA`(
+CREATE TABLE `porto_participa`(
     porto INTEGER NOT NULL,
     perfil INTEGER NOT NULL,
     ativo BOOLEAN NOT NULL DEFAULT 1 CHECK(ativo=1 OR ativo=0),
     dataregis DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (porto) REFERENCES PORTO(codigo),
-    FOREIGN KEY (perfil) REFERENCES PERFIL(codigo)
+    FOREIGN KEY (porto) REFERENCES `porto`(codigo),
+    FOREIGN KEY (perfil) REFERENCES `perfil`(codigo)
 );
-CREATE TABLE `SELO`(
-    codigo INTEGER NOT NULL,
-    texto VARCHAR(250) NOT NULL,
-    ativo BOOLEAN NOT NULL DEFAULT 1 CHECK(ativo=1 OR ativo=0),
-    PRIMARY KEY(codigo)
-);
-
-CREATE TABLE `SELOUSER`(
-    selo INTEGER NOT NULL,
-    perfil INTEGER NOT NULL,
-    porto INTEGER NOT NULL,
-    dateVal DATETIME NOT NULL,
-    FOREIGN KEY (selo) REFERENCES SELO(codigo),
-    FOREIGN KEY (perfil) REFERENCES PERFIL(codigo),
-    FOREIGN KEY (porto) REFERENCES PORTO(codigo),
-    PRIMARY KEY(perfil,porto)
-);
-
-CREATE TABLE `AMIGO`(
+CREATE TABLE `amigo`(
     amigo INTEGER NOT NULL CHECK(amigo!=perfil),
     perfil INTEGER NOT NULL CHECK(amigo!=perfil),
     dateAceito DATETIME NOT NULL,
     ativo BOOLEAN NOT NULL DEFAULT 1 CHECK(ativo=1 OR ativo=0),
-    FOREIGN KEY (amigo) REFERENCES PERFIL(codigo),
-    FOREIGN KEY (perfil) REFERENCES PERFIL(codigo)
+    FOREIGN KEY (amigo) REFERENCES `perfil`(codigo),
+    FOREIGN KEY (perfil) REFERENCES `perfil`(codigo)
 );
-CREATE TABLE `SOLICITACAO_AMIGO`(
+CREATE TABLE `solicita_amigo`(
     amigo INTEGER NOT NULL CHECK(amigo!=perfil),
     perfil INTEGER NOT NULL CHECK(amigo!=perfil),
     dateEnvio DATETIME NOT NULL,
     ativo BOOLEAN NOT NULL DEFAULT 1 CHECK(ativo=1 OR ativo=0),
-    FOREIGN KEY (amigo) REFERENCES PERFIL(codigo),
-    FOREIGN KEY (perfil) REFERENCES PERFIL(codigo)
+    FOREIGN KEY (amigo) REFERENCES `perfil`(codigo),
+    FOREIGN KEY (perfil) REFERENCES `perfil`(codigo)
 );
 
-CREATE TABLE `INTERACAO`(
-    codigo INTEGER NOT NULL,
+CREATE TABLE `interacao`(
+    codigo INTEGER NOT NULL AUTO_INCREMENT,
     perfil INTEGER NOT NULL,
     perfil_posting INTEGER,
     porto INTEGER,
@@ -137,27 +115,30 @@ CREATE TABLE `INTERACAO`(
         (post IS NULL AND perfil_posting IS NULL AND porto IS NOT NULL) OR
         (post IS NULL AND perfil_posting IS NULL AND porto IS NULL)
     ),
-    FOREIGN KEY (perfil) REFERENCES PERFIL(codigo),
-    FOREIGN KEY (perfil_posting) REFERENCES PERFIL(codigo),
-    FOREIGN KEY (porto) REFERENCES PORTO(codigo),
-    FOREIGN KEY (post) REFERENCES INTERACAO(codigo),
-    FOREIGN KEY (local) REFERENCES CIDADE(codigo)
+    FOREIGN KEY (perfil) REFERENCES `perfil`(codigo),
+    FOREIGN KEY (perfil_posting) REFERENCES `perfil`(codigo),
+    FOREIGN KEY (porto) REFERENCES `porto`(codigo),
+    FOREIGN KEY (post) REFERENCES `interacao`(codigo),
+    FOREIGN KEY (local) REFERENCES `cidade`(codigo)
 );
-CREATE TABLE `CITACAO`(
-    interacao INTEGER NOT NULL,
+CREATE TABLE `citacao`(
+    interacao INTEGER NOT NULL AUTO_INCREMENT,
     perfil INTEGER NOT NULL,
     ativo BOOLEAN NOT NULL DEFAULT 1 CHECK(ativo=1 OR ativo=0),
     PRIMARY KEY(interacao, perfil),
-    FOREIGN KEY (perfil) REFERENCES PERFIL(codigo),
-    FOREIGN KEY (interacao) REFERENCES INTERACAO(codigo)
+    FOREIGN KEY (perfil) REFERENCES `perfil`(codigo),
+    FOREIGN KEY (interacao) REFERENCES `interacao`(codigo)
 );
 
-CREATE TABLE `INTERACAO_ASSUNTO`(
+CREATE TABLE `interacao_assunto`(
     assunto INTEGER NOT NULL,
     interacao INTEGER NOT NULL,
     ativo BOOLEAN NOT NULL DEFAULT 1 CHECK(ativo=1 OR ativo=0),
-    FOREIGN KEY (assunto) REFERENCES ASSUNTO(codigo),
-    FOREIGN KEY (interacao) REFERENCES INTERACAO(codigo)
+    FOREIGN KEY (assunto) REFERENCES `assunto`(codigo),
+    FOREIGN KEY (interacao) REFERENCES `interacao`(codigo)
 );
 
-
+insert into `pais`(nome,ativo) values('ue',1);
+insert into `pais`(nome,ativo) values('ue2',1);
+insert into `uf`(nome,ativo,pais) values('ue',1,1);
+insert into `cidade`(nome,ativo,uf) values('ue',1,1);
