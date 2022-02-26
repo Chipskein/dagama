@@ -52,7 +52,7 @@
     <div id="loginContainer">
       <p class="headerTxt">Login</p>
       <div class="divLogin">
-        <form action="backend/login.php" method="post" id="form" name="form">
+        <form action="/app/backend/login.php" method="post" id="form" name="form">
           <div class="containerLogin">
             <input class="inputs" name="email" type="email" placeholder="Email">
             <input class="inputs" name="password" type="password" placeholder='Senha'>
@@ -74,7 +74,7 @@
         <p class="headerTxt">Cadastro</p>
       </div>
       <div class="divRegister">
-        <form action="backend/register.php" method="post" id="formRegister" name="formRegister" enctype="multipart/form-data">
+        <form action="/app/backend/register.php" method="post" id="formRegister" name="formRegister" enctype="multipart/form-data">
           <div class="containerRegister">
             <div id="imgs_register">
                 <div id="img_input1">
@@ -114,7 +114,7 @@
             </select>
             <input type='text' class="inputs hide-visibility" name='newcidade' id='newcidade' placeholder='Digite uma nova cidade'>           
             <div id="divTermos">
-              <input value='pass' name="termos" type="checkbox"> <p>Concordo com os <a href="/app/LICENSE" target="_blank" style="color: #7ED8FF;">termos de uso</a></p>
+              <input value='pass' name="termos" type="checkbox"> <p>Concordo com os <a href="" target="_blank" style="color: #7ED8FF;">termos de uso</a></p>
             </div>
             <input type="button" class="button registerBtn" id="registerBtn" onclick="register()" value="Enviar"/>
           </div>
