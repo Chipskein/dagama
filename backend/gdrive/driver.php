@@ -1,9 +1,9 @@
 <?php
-  require_once $_SERVER['DOCUMENT_ROOT'].'/vendor/autoload.php';
+  require_once '/app/vendor/autoload.php';
   function getClient(){
       $client = new Google\Client();
       $client->setApplicationName("dagama-gdrive");
-      $client->setAuthConfig($_SERVER['DOCUMENT_ROOT'].'/backend/gdrive/credentials.json');
+      $client->setAuthConfig('/app/backend/gdrive/credentials.json');
       $client->addScope('https://www.googleapis.com/auth/drive');
       $client->addScope('https://www.googleapis.com/auth/drive.file');
       $client->addScope('https://www.googleapis.com/auth/drive.readonly');

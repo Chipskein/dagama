@@ -1,6 +1,6 @@
 
 <?php
-require $_SERVER['DOCUMENT_ROOT'].'/vendor/autoload.php';
+require '/app/vendor/autoload.php';
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\OAuth;
