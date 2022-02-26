@@ -19,7 +19,7 @@ function db_connection(){
         $db_type='mysql';
     }
     else{
-        $url = parse_url($_ENV["CLEARDB_DATABASE_URL"]);
+        $url = parse_url($_ENV["JAWSDB_MARIA_URL"]);
         $host = $url["host"];
         $user = $url["user"];
         $pass = $url["pass"];
