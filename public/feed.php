@@ -230,8 +230,9 @@
     <?php  
         echo "<p class=portosAtracados>Ondas do momento:</p>";
         echo "<div align=start>";
+          
           $c = 1;
-          if(count($topAssuntos) > 0){
+          if($topAssuntos!=false&& count($topAssuntos) > 0){
             foreach ($topAssuntos as $topassunto){
               echo "<p class=trending>$c º - $topassunto[nome]</p>";
               $c++;
@@ -239,6 +240,7 @@
           } else {
             echo "<p align=center>Sem assuntos na cidade...</p>";
           }
+
         echo "</div>";
       echo "</div>";
     ?>
@@ -439,8 +441,8 @@
                       if($key === 'nomeAssunto') $tmpArray[] = $value;
                     }
                   }
-                  echo "<p class=\"div-post-top-subjects\" title=\"".implode($tmpArray, ', ')."\"><b>";
-                  $tmpArray = implode($tmpArray, ', ');
+                  echo "<p class=\"div-post-top-subjects\" title=\"".implode(',',$tmpArray)."\"><b>";
+                  $tmpArray = implode(',',$tmpArray);
                   if(strlen($tmpArray) > 30){
                     $tmpArray = substr($tmpArray, 0, 27);
                     echo $tmpArray."...";
@@ -482,7 +484,8 @@
                   foreach ($sharedPost['citacoes'] as $pessoa) {
                     $tmpCitacoes[] = "@".$pessoa['nomePerfil'];
                   }
-                  $tmpCitacoes = implode($tmpCitacoes, ', ');
+                  
+                  $tmpCitacoes = implode(',',$tmpCitacoes);
                   echo "<b><i>marcando</i></b> <i title=\"".$tmpCitacoes."\">";
                   if(strlen($tmpCitacoes) > 10){
                     $tmpCitacoes = substr($tmpCitacoes, 0, 7);
@@ -521,8 +524,8 @@
                   if($key === 'nomeAssunto') $tmpArray[] = $value;
                 }
               }
-              echo "<p class=\"div-post-top-subjects\" title=\"".implode($tmpArray, ', ')."\"><b>";
-              $tmpArray = implode($tmpArray, ', ');
+              echo "<p class=\"div-post-top-subjects\" title=\"".implode(',',$tmpArray)."\"><b>";
+              $tmpArray = implode(',',$tmpArray);
               if(strlen($tmpArray) > 30){
                 $tmpArray = substr($tmpArray, 0, 27);
                 echo $tmpArray."...";
@@ -581,7 +584,8 @@
                 $tmpCitacoes[] = "@".$pessoa['nomePerfil'];
                 if($pessoa['codPerfil'] == $_SESSION['userid'] && $post['codPerfil'] != $_SESSION['userid']) $isMentioned = 1;
               }
-              $tmpCitacoes = implode($tmpCitacoes, ', ');
+              
+              $tmpCitacoes = implode(',',$tmpCitacoes);
               echo "<b><i>marcando</i></b> <i title=\"".$tmpCitacoes."\">";
               if(strlen($tmpCitacoes) > 10){
                 $tmpCitacoes = substr($tmpCitacoes, 0, 7);
@@ -647,7 +651,8 @@
                       $tmpCitacoes[] = "@".$pessoa['nomePerfil'];
                       if($pessoa['codPerfil'] == $_SESSION['userid'] && $comentario['codPerfil'] != $_SESSION['userid']) $isMentioned2 = 1;
                     }
-                    $tmpCitacoes = implode($tmpCitacoes, ', ');
+                    
+                    $tmpCitacoes = implode(',',$tmpCitacoes);
                     echo "<b><i>marcando</i></b> <i title=\"".$tmpCitacoes."\">";
                     if(strlen($tmpCitacoes) > 10){
                       $tmpCitacoes = substr($tmpCitacoes, 0, 7);
@@ -655,6 +660,7 @@
                     } else {
                       echo $tmpCitacoes;
                     }
+                    
                     echo ", </i>";
                   }
                   if(count($comentario['assuntos']) > 0) {
@@ -662,7 +668,8 @@
                     foreach ($comentario['assuntos'] as $assunto) {
                       $tmpAssuntos[] = $assunto['nomeAssunto'];
                     }
-                    $tmpAssuntos = implode($tmpAssuntos, ', ');
+                    
+                    $tmpAssuntos = implode(',',$tmpAssuntos);
                     echo "com os <b><i>assuntos</i></b> <i title=\"".$tmpAssuntos."\">";
                     if(strlen($tmpAssuntos) > 10){
                       $tmpAssuntos = substr($tmpAssuntos, 0, 7);
@@ -737,7 +744,8 @@
                               $tmpCitacoes[] = "@".$pessoa['nomePerfil'];
                               if($pessoa['codPerfil'] == $_SESSION['userid'] && $resposta['codPerfil'] != $_SESSION['userid']) $isMentioned2 = 1;
                             }
-                            $tmpCitacoes = implode($tmpCitacoes, ', ');
+                            
+                            $tmpCitacoes = implode(',',$tmpCitacoes);
                             echo "<b><i>marcando</i></b> <i title=\"".$tmpCitacoes."\">";
                             if(strlen($tmpCitacoes) > 10){
                               $tmpCitacoes = substr($tmpCitacoes, 0, 7);
@@ -752,7 +760,8 @@
                             foreach ($resposta['assuntos'] as $assunto) {
                               $tmpAssuntos[] = $assunto['nomeAssunto'];
                             }
-                            $tmpAssuntos = implode($tmpAssuntos, ', ');
+                            
+                            $tmpAssuntos = implode(', ',$tmpAssuntos);
                             echo "com os <b><i>assuntos</i></b> <i title=\"".$tmpAssuntos."\">";
                             if(strlen($tmpAssuntos) > 10){
                               $tmpAssuntos = substr($tmpAssuntos, 0, 7);
@@ -835,7 +844,7 @@
   ?>
   </div>
 
-<script src="functions.js">
+<script src="js/functions.js">
 </script>
 </body>
 </html>

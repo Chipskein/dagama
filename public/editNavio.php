@@ -136,7 +136,7 @@ echo "</div>";
           <<  
           >>
 </footer>   -->
-<script src="functions.js"></script>
+<script src="js/functions.js"></script>
 <script>
 const camera=document.getElementById("camera-edit");
 const img_perfil=document.getElementById("img_perfil");

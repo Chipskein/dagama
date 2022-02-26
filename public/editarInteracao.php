@@ -302,7 +302,7 @@
     }
   ?>
 
-<script src='./functions.js'>
+<script src='./js/functions.js'>
     
 </script>
 </body>

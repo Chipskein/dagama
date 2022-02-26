@@ -811,6 +811,6 @@
   // echo "<script>img_perfil.style.backgroundImage=\"url($user[img])\"</script>";
 ?>
 
-<script src="functions.js"></script>
+<script src="js/functions.js"></script>
 </body>
 </html>
