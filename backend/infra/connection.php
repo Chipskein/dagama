@@ -1,16 +1,12 @@
 <?php
-    include $_SERVER['DOCUMENT_ROOT'].'/backend/mailer/mailer.php';
-    include $_SERVER['DOCUMENT_ROOT'].'/backend/gdrive/driver.php';
+    include './mailer/mailer.php';
+    include './gdrive/driver.php';
     
-    $dotenv_dir=$_SERVER['DOCUMENT_ROOT'].'/backend';
+    $dotenv_dir='./';
+
     $dotenv = Dotenv\Dotenv::createImmutable($dotenv_dir, '.env');
     $dotenv->load();
-    
-    
-    
-    
-    
-    
+
     function db_connection(){
         $db=false;
         $db_type=false;
