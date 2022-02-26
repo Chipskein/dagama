@@ -22,6 +22,7 @@
     $paises=getPaises();
     $estados=getStates();
     $cidades=getCities();
+    
     echo "<script>";
       echo "let states=[];";
       echo "let cities=[];";
@@ -44,6 +45,7 @@
       echo "estado=null;";
       echo "cidade=null;";
     echo "</script>";
+    
   ?>
   <div id="main">
     <div class="divLogo">

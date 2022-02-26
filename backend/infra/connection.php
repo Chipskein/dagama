@@ -16,7 +16,7 @@ function db_connection(){
     $DB_PORT_LOCAL= isset($_ENV['DB_PORT_LOCAL']) ? $_ENV['DB_PORT_LOCAL']:NULL;
     if(preg_match("/localhost/","$_SERVER[HTTP_HOST]")){
         $db=mysqli_connect($DB_HOST_LOCAL,$DB_USER_LOCAL,$DB_PASSWORD_LOCAL,$DB_DBNAME_LOCAL,$DB_PORT_LOCAL);
-        $db_type='mysql-local';
+        $db_type='mysql';
     }
     else{
         $url = parse_url($_ENV["CLEARDB_DATABASE_URL"]);

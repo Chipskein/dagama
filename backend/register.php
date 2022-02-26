@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="../imgs/icon.png" type="image/jpg">
-    <link rel="stylesheet" href="../styles.css">
+    <link rel="icon" href="../public/imgs/icon.png" type="image/jpg">
+    <link rel="stylesheet" href="../public/css/styles.css">
     <title>Dagama | Register</title>
 </head>
 <body>
@@ -70,8 +70,9 @@ include './infra/services.php';
     if(!isset($_SESSION['userid'])){
         $erros = [];
         echo "<br>";
-        var_dump($_POST);
-        var_dump($_FILES);
+        //var_dump($_POST);
+        //var_dump($_FILES);
+        /*
         if(isset($_POST['email']) && isset($_POST['username']) && isset($_POST['password']) && isset($_POST['cpassword']) && isset($_POST['bdate']) &&isset($_POST['pais']) && isset($_POST['termos']) && isset($_POST['genero']))
         {
             if($_POST['termos']!='pass') $erros[] = "Você não concordou com os termos de uso";
@@ -156,7 +157,7 @@ include './infra/services.php';
             if($_POST['cpassword'] != $_POST['password']) $erros[] = "as senhas precisam ser iguais";
         } 
         else $erros[] = "campos faltando";
-
+        */
         if($erros != []) {
             echo "<h2>Erro: ".implode(", ", $erros)."</h2>";
             header("refresh:2;url=../index.php");
@@ -168,6 +169,7 @@ include './infra/services.php';
             $username = "$_POST[username]";
             $password = password_hash("$_POST[password]", PASSWORD_DEFAULT);
             $bdate = "$_POST[bdate]";//converter bdate to yyyy/mm/dd
+            /*
             if($_POST['pais'] == "outro"){
                 $pais = addPais($_POST['newpais']);
                 $estado = addEstado($_POST['newestado'], $pais);
@@ -183,7 +185,8 @@ include './infra/services.php';
             if($_POST['cidade'] != "outro" && $_POST['cidade'] != "null"){
                 $cidade = $_POST['cidade'];
             }
-            
+            */
+            $cidade=0;
             $genero = "$_POST[genero]";
             $photo = null;
             if($_FILES['photo']['tmp_name'])
@@ -192,7 +195,7 @@ include './infra/services.php';
             $registered = Register($email, $password, $bdate, $username, $genero, $cidade, $photo);
             if($registered){
                 $id=getIdbyEmail($email);
-                header("refresh:2;url=../validarEmail.php?id=$id");
+                header("refresh:2;url=./validarEmail.php?id=$id");
                 die();
             } 
             else echo "Um erro ocorreu no registro!";

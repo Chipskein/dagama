@@ -17,9 +17,9 @@
         if($db){
             $results=[];
             if($db_type == 'mysql'){
-                $response = $db->query("select * from assunto");
+                $response = mysqli_query($db,"select * from assunto");
                 if($response){
-                    while ($row = $response->fetch_array()) {
+                    while ($row = mysqli_fetch_array($response)) {
                         array_push($results, $row);
                     }
                     return $results; 
@@ -36,9 +36,9 @@
         if($db){
             $results=[];
             if($db_type == 'mysql'){
-                $response = $db->query("select codigo, username, img from perfil where ativo = 1");
+                $response = mysqli_query($db,"select codigo, username, img from perfil where ativo = 1");
                 if($response){
-                    while ($row = $response->fetch_array()) {
+                    while ($row = mysqli_fetch_array($response)) {
                         array_push($results, $row);
                     }
                     $db->close();
@@ -59,10 +59,10 @@
         if($db){
             $results=[];
             if($db_type == 'mysql'){
-                $response = $db->query("select codigo, nome from porto where ativo = 1");
+                $response = mysqli_query($db,"select codigo, nome from porto where ativo = 1");
                 if($response){
                     $results=[];
-                    while ($row = $response->fetch_array()) {
+                    while ($row = mysqli_fetch_array($response)) {
                         array_push($results, $row);
                     }
                     $db->close();
@@ -84,12 +84,12 @@
             if($db_type == 'mysql'){
                 if($where !== ''){
                     echo $where;
-                    $response = $db->query("select * from perfil where username like '%$where%' limit $limit offset $offset");
+                    $response = mysqli_query($db,"select * from perfil where username like '%$where%' limit $limit offset $offset");
                 }else {
-                    $response = $db->query("select * from perfil limit $limit offset $offset");
+                    $response = mysqli_query($db,"select * from perfil limit $limit offset $offset");
                 }
                 if($response){
-                    while ($row = $response->fetch_array()) {
+                    while ($row = mysqli_fetch_array($response)) {
                         array_push($results, $row);
                     }
                     $db->close();
@@ -110,9 +110,9 @@
         if($db){
             $results=[];
             if($db_type == 'mysql'){
-                $response = $db->query("select count(*)as total from perfil");
+                $response = mysqli_query($db,"select count(*)as total from perfil");
                 if($response) {
-                    $response = $response->fetch_array()['total'];
+                    $response = mysqli_fetch_array($response)['total'];
                     $db->close();
                     return $response;
                 }
@@ -134,11 +134,11 @@
         if($db){
             if($db_type == 'mysql'){
                 $results = [];
-                $result = $db->query("select * from pais where ativo = 1");
-                while ($row = $result->fetch_array()) {
+                $result = mysqli_query($db,"select * from pais where ativo=1");
+                while ($row = mysqli_fetch_array($result)) {
                     array_push($results,$row);
                 }
-                $db->close();
+                //$db->close();
                 return $results;
             }
         }
@@ -149,7 +149,7 @@
         $db=$db_connection['db'];
         $db_type=$db_connection['db_type'];
         if($db_type == 'mysql'){
-            $response = $db->query("insert into pais (nome) values ('$nome')");
+            $response = mysqli_query($db,"insert into pais (nome) values ('$nome')");
             if($response) {
                 $res = $db->insert_id;
                 $db->close();
@@ -167,7 +167,7 @@
         $db=$db_connection['db'];
         $db_type=$db_connection['db_type'];
         if($db_type == 'mysql'){
-            $cidades = $db->query("select cidade.codigo from cidade
+            $cidades = mysqli_query($db,"select cidade.codigo from cidade
                     join uf on uf.codigo = cidade.uf
                 where uf.pais = $pais");
             $results = [];
@@ -176,11 +176,11 @@
                     array_push($results, $row['codigo']);
                 }
             }
-            $response = $db->query("update pais set ativo = 0 where codigo = $pais");
-            $response2 = $db->query("update uf set ativo = 0 where pais = $pais");
+            $response = mysqli_query($db,"update pais set ativo = 0 where codigo = $pais");
+            $response2 = mysqli_query($db,"update uf set ativo = 0 where pais = $pais");
             if(count($results) > 0) {
                 $results = implode($results, ', ');
-                $response3 = $db->query("update cidade set ativo = 0 where codigo in ($results)");
+                $response3 = mysqli_query($db,"update cidade set ativo = 0 where codigo in ($results)");
             }
             if($response) {
                 $db->close();
@@ -201,8 +201,8 @@
         if($db){
             if($db_type == 'mysql'){
                 $results=[];
-                $result = $db->query("select * from uf where ativo = 1");
-                while ($row = $result->fetch_array()) {
+                $result = mysqli_query($db,"select * from uf where ativo = 1");
+                while ($row = mysqli_fetch_array($result)) {
                     array_push($results,$row);
                 }
                 $db->close();
@@ -216,7 +216,7 @@
         $db=$db_connection['db'];
         $db_type=$db_connection['db_type'];
         if($db_type == 'mysql'){
-            $response = $db->query("insert into uf (nome, pais) values ('$nome', $pais)");
+            $response = mysqli_query($db,"insert into uf (nome, pais) values ('$nome', $pais)");
             if($response) {
                 $res = $db->insert_id;
                 $db->close();
@@ -234,8 +234,8 @@
         $db=$db_connection['db'];
         $db_type=$db_connection['db_type'];
         if($db_type == 'mysql'){
-            $response = $db->query("update uf set ativo = 0 where codigo = $estado");
-            $response2 = $db->query("update cidade set ativo = 0 where uf = $estado");
+            $response = mysqli_query($db,"update cidade set ativo = 0 where codigo = $estado");
+            $response2 = mysqli_query($db,"update cidade set ativo = 0 where uf = $estado");
             if($response) {
                 $db->close();
                 return $response;
@@ -253,8 +253,8 @@
         if($db){
             if($db_type == 'mysql'){
                 $results=[];
-                $result = $db->query("select * from cidade where ativo = 1");
-                while ($row = $result->fetch_array()) {
+                $result = mysqli_query($db,"select * from cidade where ativo = 1");
+                while ($row = mysqli_fetch_array($result)) {
                     array_push($results,$row);
                 }
                 $db->close();
@@ -268,7 +268,7 @@
         $db=$db_connection['db'];
         $db_type=$db_connection['db_type'];
         if($db_type == 'mysql'){
-            $response = $db->query("insert into cidade (nome, uf) values ('$nome', $estado)");
+            $response = mysqli_query($db,"insert into cidade (nome, uf) values ('$nome', $estado)");
             if($response) {
                 $res = $db->insert_id;
                 $db->close();
@@ -285,7 +285,7 @@
         $db=$db_connection['db'];
         $db_type=$db_connection['db_type'];
         if($db_type == 'mysql'){
-            $response = $db->query("update cidade set ativo = 0 where codigo = $cidade");
+            $response = mysqli_query($db,"update cidade set ativo = 0 where codigo = $cidade");
             if($response) {
                 $db->close();
                 return $response;
@@ -303,12 +303,12 @@
         if($db){
             $results=[];
             if($db_type == 'mysql'){
-                $response = $db->query("select cidade.codigo as codCidade, cidade.nome as nomeCidade, uf.codigo as codUf, uf.nome as nomeUf, pais.codigo as codPais, pais.nome as nomePais from cidade
+                $response = mysqli_query($db,"select cidade.codigo as codCidade, cidade.nome as nomeCidade, uf.codigo as codUf, uf.nome as nomeUf, pais.codigo as codPais, pais.nome as nomePais from cidade
                     join uf on cidade.uf = uf.codigo
                     join pais on uf.pais = pais.codigo
                 group by cidade.codigo");
                 if($response){
-                    while ($row = $response->fetch_array()) {
+                    while ($row = mysqli_fetch_array($response)) {
                         array_push($results, $row);
                     }
                     $db->close();
@@ -330,7 +330,7 @@
         $db=$db_connection['db'];
         $db_type=$db_connection['db_type'];
         if($db_type == 'mysql'){
-            $response = $db->query("insert into assunto (nome) values ('$nome')");
+            $response = mysqli_query($db,"insert into assunto (nome) values ('$nome')");
             if($response) {
                 $res = $db->insert_id;
                 $db->close();
@@ -347,7 +347,7 @@
         $db=$db_connection['db'];
         $db_type=$db_connection['db_type'];
         if($db_type == 'mysql'){
-            $response = $db->query("update assunto set ativo = 0 where codigo = $assunto");
+            $response = mysqli_query($db,"update assunto set ativo = 0 where codigo = $assunto");
             if($response) {
                 $db->close();
                 return $response;
@@ -367,7 +367,7 @@
         $db_type=$db_connection['db_type'];
         if($db){
             if($db_type == 'mysql'){
-                $verify=$db->query("select codigo,senha as pass,ativo,img,username from perfil where perfil.email='$email'")->fetch_array();
+                $verify=mysqli_query($db,"select codigo,senha as pass,ativo,img,username from perfil where perfil.email='$email'")->fetch_array();
                 if(password_verify($password,$verify['pass'])) {
                     $db->close();
                     return $verify;
@@ -386,7 +386,7 @@
         $db_type=$db_connection['db_type'];
         if($db){
             if($db_type == 'mysql'){
-                $verify=$db->query("select codigo,senha as pass,ativo,img,username from perfil where perfil.email='$email'")->fetch_array();
+                $verify=mysqli_query($db,"select codigo,senha as pass,ativo,img,username from perfil where perfil.email='$email'")->fetch_array();
                 if("$password"=="$verify[pass]") {
                     $db->close();
                     return $verify;
@@ -399,6 +399,7 @@
         else exit;
     }
     function Register($email, $password, $bdate, $username, $genero, $cidade,$photo){
+        echo "ENtrou no register";
         $db_connection=db_connection();
         $db=$db_connection['db'];
         $db_type=$db_connection['db_type'];
@@ -411,7 +412,7 @@
         }
         if($db){
             if($db_type == 'mysql'){
-                $verify = $db->query("insert into perfil (cidade, email, senha, genero, username, datanasc,img) values ('".$cidade."', '".$email."', '".$password."', '".$genero."', '".$username."', '".$bdate."', '".$link."'".")");
+                $verify = mysqli_query($db,"insert into perfil (cidade, email, senha, genero, username, datanasc,img) values ('".$cidade."', '".$email."', '".$password."', '".$genero."', '".$username."', '".$bdate."', '".$link."'".")");
                 if($verify) {
                     $db->close();
                     return $verify;
@@ -429,7 +430,7 @@
         $db_type = $db_connection['db_type'];
         if($db){
             if($db_type == 'mysql'){
-                $response = $db->query("select email from perfil")->fetch_array();
+                $response = mysqli_query($db,"select email from perfil")->fetch_array();
                 if($response) {
                     $db->close();
                     return $response;
@@ -447,9 +448,9 @@
         $db_type = $db_connection['db_type'];
         if($db){
             if($db_type == 'mysql'){
-                $response = $db->query("select email from perfil where email='$email'");
+                $response = mysqli_query($db,"select email from perfil where email='$email'");
                 if($response) {
-                    $response = $response->fetch_array();
+                    $response = mysqli_fetch_array($response);
                     $db->close();
                     return $response;
                 } else {
@@ -469,8 +470,8 @@
         $db_type = $db_connection['db_type'];
         if($db){
             if($db_type == 'mysql'){
-                $response = $db->query("select codigo, email, ativo, img, username, cidade from perfil where codigo=$id");
-                if($response) return $response->fetch_array();
+                $response = mysqli_query($db,"select codigo, email, ativo, img, username, cidade from perfil where codigo=$id");
+                if($response) return mysqli_fetch_array($response);
                 else return false;
             }
         }
@@ -482,8 +483,8 @@
         $db_type = $db_connection['db_type'];
         if($db){
             if($db_type == 'mysql'){
-                $response = $db->query("select codigo, email, ativo, img, username, cidade from perfil where codigo='$id' and ativo=1 ");
-                if($response) return $response->fetch_array();
+                $response = mysqli_query($db,"select codigo, email, ativo, img, username, cidade from perfil where codigo='$id' and ativo=1 ");
+                if($response) return mysqli_fetch_array($response);
                 else return false;
             }
         }
@@ -495,9 +496,9 @@
         $db_type = $db_connection['db_type'];
         if($db){
             if($db_type == 'mysql'){
-                $response = $db->query("select codigo from perfil where email='$email'");
+                $response = mysqli_query($db,"select codigo from perfil where email='$email'");
                 if($response) {
-                    $response = $response->fetch_array()['codigo'];
+                    $response = mysqli_fetch_array($response)['codigo'];
                     $db->close();
                     return $response;
                 } else {
@@ -514,9 +515,9 @@
         $db_type = $db_connection['db_type'];
         if($db){
             if($db_type == 'mysql'){
-                $response = $db->query("update perfil set ativo='1' where codigo=$id");
+                $response = mysqli_query($db,"update perfil set ativo='1' where codigo=$id");
                 if($response) {
-                    $res=$db->query("select email,senha as password from perfil where codigo='$id'");
+                    $res=mysqli_query($db,"select email,senha as password from perfil where codigo='$id'");
                     if($res) {
                         $res = $res->fetch_array();
                         $db->close();
@@ -539,7 +540,7 @@
         $db_type = $db_connection['db_type'];
         if($db){
             if($db_type == 'mysql'){
-                $response = $db->query("update perfil set ativo='0' where codigo=$user");
+                $response = mysqli_query($db,"update perfil set ativo='0' where codigo=$user");
                 $db->close();
                 return true;
             }
@@ -552,7 +553,7 @@
         $db_type = $db_connection['db_type'];
         if($db){
             if($db_type == 'mysql'){
-                $response = $db->query("update perfil set username='$name' where codigo=$id");
+                $response = mysqli_query($db,"update perfil set username='$name' where codigo=$id");
                 $db->close();
                 return true;
             }
@@ -565,7 +566,7 @@
         $db_type = $db_connection['db_type'];
         if($db){
             if($db_type == 'mysql'){
-                $response = $db->query("update perfil set email='$email' where codigo=$id");
+                $response = mysqli_query($db,"update perfil set email='$email' where codigo=$id");
                 $db->close();
                 return true;
             }
@@ -578,7 +579,7 @@
         $db_type = $db_connection['db_type'];
         if($db){
             if($db_type == 'mysql'){
-                $response = $db->query("update perfil set\\ senha='$senha' where codigo=$id");
+                $response = mysqli_query($db,"update perfil set\\ senha='$senha' where codigo=$id");
                 $db->close();
                 return true;
             }
@@ -596,9 +597,9 @@
                     $server_path=$img['tmp_name'];
                     $link="https://drive.google.com/uc?export=download&id=".insertFile("$type","$server_path","$FOLDERS[avatares]","avatar");
                     rmFile($oldimgid);
-                    $response = $db->query("update perfil set img='$link' where codigo=$id");
+                    $response = mysqli_query($db,"update perfil set img='$link' where codigo=$id");
                     if($response){
-                        $response2=$db->query("select img from perfil where codigo=$id")->fetch_array()['img'];
+                        $response2=mysqli_query($db,"select img from perfil where codigo=$id")->fetch_array()['img'];
                         if($response2) {
                             $db->close();
                             return $response2;
@@ -628,7 +629,7 @@
         if($db){
             if($db_type == 'mysql'){
                 $postsArray=[];
-                $postsOriginais = $db->query("
+                $postsOriginais = mysqli_query($db,"
                 select
                     interacao.codigo as codInteracao, 
                     interacao.post as codPost,
@@ -768,7 +769,7 @@
                 while($row = $postsOriginais->fetch_array()){
                     $postsArray[$row['codInteracao']] = $row;
 
-                    $resCitacoesParent = $db->query("select citacao.interacao as interacao, perfil.codigo as codPerfil, perfil.username as nomePerfil 
+                    $resCitacoesParent = mysqli_query($db,"select citacao.interacao as interacao, perfil.codigo as codPerfil, perfil.username as nomePerfil 
                     from citacao join perfil on perfil.codigo = citacao.perfil 
                     where 
                         citacao.ativo = 1 and 
@@ -779,7 +780,7 @@
                     }
                     $postsArray[$row['codInteracao']]['citacoes'] = $citacoes;
                     
-                    $resAssuntosParent = $db->query("
+                    $resAssuntosParent = mysqli_query($db,"
                     select interacao.codigo as interacao, assunto.codigo as codAssunto, assunto.nome as nomeAssunto from interacao
                         left join interacao_assunto on interacao.codigo = interacao_assunto.interacao
                         left join assunto on interacao_assunto.assunto = assunto.codigo
@@ -791,7 +792,7 @@
                         $assuntos[] = $row2;
                     }
                     $postsArray[$row['codInteracao']]['assuntos'] = $assuntos;
-                    $temInteracoes = $db->query("
+                    $temInteracoes = mysqli_query($db,"
                     select
                         interacao.codigo as codInteracao, 
                         interacao.post as codPost, 
@@ -826,7 +827,7 @@
                     if($temInteracoes){
                         while($row3 = $temInteracoes->fetch_array()){
                             $childInteracoes[$row3['codInteracao']] = $row3;
-                            $resCitacoesChild = $db->query("select citacao.interacao as interacao, perfil.codigo as codPerfil, perfil.username as nomePerfil 
+                            $resCitacoesChild = mysqli_query($db,"select citacao.interacao as interacao, perfil.codigo as codPerfil, perfil.username as nomePerfil 
                             from citacao 
                                 join perfil on perfil.codigo = citacao.perfil 
                             where 
@@ -837,7 +838,7 @@
                                 $citacoes[] = $row4;
                             }
                             $childInteracoes[$row3['codInteracao']]['citacoes'] = $citacoes;
-                            $resAssuntosChild = $db->query("
+                            $resAssuntosChild = mysqli_query($db,"
                             select interacao.codigo as interacao, assunto.codigo as codAssunto, assunto.nome as nomeAssunto from interacao
                                 left join interacao_assunto on interacao.codigo = interacao_assunto.interacao
                                 left join assunto on interacao_assunto.assunto = assunto.codigo
@@ -850,7 +851,7 @@
                             }
                             $childInteracoes[$row3['codInteracao']]['assuntos'] = $assuntos;
 
-                            $temInnerInteracoes = $db->query("
+                            $temInnerInteracoes = mysqli_query($db,"
                             select
                                 interacao.codigo as codInteracao, 
                                 interacao.post as codPost, 
@@ -887,7 +888,7 @@
                             if($temInnerInteracoes){
                                 while ($row6 = $temInnerInteracoes->fetch_array()) {
                                     $grandChildInteracoes[$row6['codInteracao']] = $row6;
-                                    $resCitacoesGrandChild = $db->query("
+                                    $resCitacoesGrandChild = mysqli_query($db,"
                                     select citacao.interacao as interacao, perfil.codigo as codPerfil, perfil.username as nomePerfil from citacao 
                                         join perfil on perfil.codigo = citacao.perfil 
                                     where 
@@ -899,7 +900,7 @@
                                     }
                                     $grandChildInteracoes[$row6['codInteracao']]['citacoes'] = $citacoes;
                                     
-                                    $resAssuntosGrandChild = $db->query("
+                                    $resAssuntosGrandChild = mysqli_query($db,"
                                     select interacao.codigo as interacao, assunto.codigo as codAssunto, assunto.nome as nomeAssunto from interacao
                                         left join interacao_assunto on interacao.codigo = interacao_assunto.interacao
                                         left join assunto on interacao_assunto.assunto = assunto.codigo
@@ -932,7 +933,7 @@
         if($db){
             if($db_type == 'mysql'){
                 $postsArray=[];
-                $postsOriginais = $db->query("
+                $postsOriginais = mysqli_query($db,"
                 select
                     interacao.codigo as codInteracao, 
                     interacao.post as codPost,
@@ -1068,7 +1069,7 @@
                 while($row = $postsOriginais->fetch_array()){
                     $postsArray[$row['codInteracao']] = $row;
 
-                    $resCitacoesParent = $db->query("select citacao.interacao as interacao, perfil.codigo as codPerfil, perfil.username as nomePerfil 
+                    $resCitacoesParent = mysqli_query($db,"select citacao.interacao as interacao, perfil.codigo as codPerfil, perfil.username as nomePerfil 
                     from citacao join perfil on perfil.codigo = citacao.perfil 
                     where 
                         citacao.ativo = 1 and 
@@ -1079,7 +1080,7 @@
                     }
                     $postsArray[$row['codInteracao']]['citacoes'] = $citacoes;
                     
-                    $resAssuntosParent = $db->query("
+                    $resAssuntosParent = mysqli_query($db,"
                     select interacao.codigo as interacao, assunto.codigo as codAssunto, assunto.nome as nomeAssunto from interacao
                         left join interacao_assunto on interacao.codigo = interacao_assunto.interacao
                         left join assunto on interacao_assunto.assunto = assunto.codigo
@@ -1091,7 +1092,7 @@
                         $assuntos[] = $row2;
                     }
                     $postsArray[$row['codInteracao']]['assuntos'] = $assuntos;
-                    $temInteracoes = $db->query("
+                    $temInteracoes = mysqli_query($db,"
                     select
                         interacao.codigo as codInteracao, 
                         interacao.post as codPost, 
@@ -1126,7 +1127,7 @@
                     if($temInteracoes){
                         while($row3 = $temInteracoes->fetch_array()){
                             $childInteracoes[$row3['codInteracao']] = $row3;
-                            $resCitacoesChild = $db->query("select citacao.interacao as interacao, perfil.codigo as codPerfil, perfil.username as nomePerfil 
+                            $resCitacoesChild = mysqli_query($db,"select citacao.interacao as interacao, perfil.codigo as codPerfil, perfil.username as nomePerfil 
                             from citacao 
                                 join perfil on perfil.codigo = citacao.perfil 
                             where 
@@ -1137,7 +1138,7 @@
                                 $citacoes[] = $row4;
                             }
                             $childInteracoes[$row3['codInteracao']]['citacoes'] = $citacoes;
-                            $resAssuntosChild = $db->query("
+                            $resAssuntosChild = mysqli_query($db,"
                             select interacao.codigo as interacao, assunto.codigo as codAssunto, assunto.nome as nomeAssunto from interacao
                                 left join interacao_assunto on interacao.codigo = interacao_assunto.interacao
                                 left join assunto on interacao_assunto.assunto = assunto.codigo
@@ -1150,7 +1151,7 @@
                             }
                             $childInteracoes[$row3['codInteracao']]['assuntos'] = $assuntos;
 
-                            $temInnerInteracoes = $db->query("
+                            $temInnerInteracoes = mysqli_query($db,"
                             select
                                 interacao.codigo as codInteracao, 
                                 interacao.post as codPost, 
@@ -1187,7 +1188,7 @@
                             if($temInnerInteracoes){
                                 while ($row6 = $temInnerInteracoes->fetch_array()) {
                                     $grandChildInteracoes[$row6['codInteracao']] = $row6;
-                                    $resCitacoesGrandChild = $db->query("
+                                    $resCitacoesGrandChild = mysqli_query($db,"
                                     select citacao.interacao as interacao, perfil.codigo as codPerfil, perfil.username as nomePerfil from citacao 
                                         join perfil on perfil.codigo = citacao.perfil 
                                     where 
@@ -1199,7 +1200,7 @@
                                     }
                                     $grandChildInteracoes[$row6['codInteracao']]['citacoes'] = $citacoes;
                                     
-                                    $resAssuntosGrandChild = $db->query("
+                                    $resAssuntosGrandChild = mysqli_query($db,"
                                     select interacao.codigo as interacao, assunto.codigo as codAssunto, assunto.nome as nomeAssunto from interacao
                                         left join interacao_assunto on interacao.codigo = interacao_assunto.interacao
                                         left join assunto on interacao_assunto.assunto = assunto.codigo
@@ -1232,7 +1233,7 @@
         $db_type=$db_connection['db_type'];
         if($db){
             if($db_type == 'mysql'){
-                $result = $db->query("
+                $result = mysqli_query($db,"
                     select
                         interacao.codigo as codInteracao, 
                         interacao.post as codPost, 
@@ -1262,7 +1263,7 @@
                         left join pais on uf.pais = pais.codigo
                     where interacao.codigo = $post");
                 
-                $results2 = $db->query("
+                $results2 = mysqli_query($db,"
                     select citacao.interacao as interacao, perfil.codigo as codPerfil, perfil.username as nomePerfil from citacao 
                         join perfil on perfil.codigo = citacao.perfil 
                     where 
@@ -1272,7 +1273,7 @@
                     $citacoes[$row['codPerfil']] = $row;
                 }
                 
-                $results3 = $db->query("
+                $results3 = mysqli_query($db,"
                 select interacao.codigo as interacao, assunto.codigo as codAssunto, assunto.nome as nomeAssunto from interacao
                     join interacao_assunto on interacao.codigo = interacao_assunto.interacao
                     join assunto on interacao_assunto.assunto = assunto.codigo
@@ -1284,7 +1285,7 @@
                 }
 
                 
-                $response = $result->fetch_array();
+                $response = mysqli_fetch_array($result);
                 $response['assuntos'] = $assuntos;
                 $response['citacoes'] = $citacoes;
                 
@@ -1300,7 +1301,7 @@
         $db_type=$db_connection['db_type'];
         if($db){
             if($db_type == 'mysql'){
-                $result = $db->query("
+                $result = mysqli_query($db,"
                     select
                         interacao.codigo as codInteracao, 
                         interacao.post as codPost, 
@@ -1334,7 +1335,7 @@
                         left join pais on uf.pais = pais.codigo
                     where interacao.codigo = $post");
                 
-                $results2 = $db->query("
+                $results2 = mysqli_query($db,"
                     select citacao.interacao as interacao, perfil.codigo as codPerfil, perfil.username as nomePerfil from citacao 
                         join perfil on perfil.codigo = citacao.perfil 
                     where 
@@ -1344,7 +1345,7 @@
                     $citacoes[$row['codPerfil']] = $row;
                 }
                 
-                $results3 = $db->query("
+                $results3 = mysqli_query($db,"
                 select interacao.codigo as interacao, assunto.codigo as codAssunto, assunto.nome as nomeAssunto from interacao
                     join interacao_assunto on interacao.codigo = interacao_assunto.interacao
                     join assunto on interacao_assunto.assunto = assunto.codigo
@@ -1356,7 +1357,7 @@
                 }
 
                 
-                $response = $result->fetch_array();
+                $response = mysqli_fetch_array($result);
                 $response['assuntos'] = $assuntos;
                 $response['citacoes'] = $citacoes;
                 
@@ -1372,7 +1373,7 @@
         $db_type=$db_connection['db_type'];
         if($db){
             if($db_type == 'mysql'){
-                $response=$db->query("
+                $response=mysqli_query($db,"
                 select 
                 assunto.nome as nome, count(*) as total, cidade.nome as nomeCidade
                 from interacao 
@@ -1402,7 +1403,7 @@
                 order by total desc");
                 if($response){
                     $results=[];
-                    while($row = $response->fetch_array()){
+                    while($row = mysqli_fetch_array($response)){
                         array_push($results,$row);
                     }
                     $db->close();
@@ -1427,7 +1428,7 @@
             $M = 3; $A = 1; $B = 5; $U = $user;
             if($db_type == 'mysql'){
                 $results=[];
-                $result = $db->query("
+                $result = mysqli_query($db,"
                 select tmp1.codigo, tmp1.username, tmp1.img, tmp1.enviado, 
                     case
                         when solicitacao_amigo.perfil is null then 'false'
@@ -1533,7 +1534,7 @@
                     ) and
                     tmp1.codigo not in (select codigo from perfil where ativo = 0)
                 limit $limit offset $offset");
-                while ($row = $result->fetch_array()) {
+                while ($row = mysqli_fetch_array($result)) {
                     array_push($results, $row);
                 }
                 $db->close();
@@ -1547,16 +1548,16 @@
         $db=$db_connection['db'];
         $db_type=$db_connection['db_type'];
         if($db_type == 'mysql'){
-            $hasRequest = $db->query("select * from SOLICITACAO_AMIGO where (perfil = $user and amigo = $friend) or (amigo = $user and perfil = $friend)");
+            $hasRequest = mysqli_query($db,"select * from SOLICITACAO_AMIGO where (perfil = $user and amigo = $friend) or (amigo = $user and perfil = $friend)");
             $hasRequest = $hasRequest->fetch_array();
             if($hasRequest){
                 if($hasRequest['ativo'] == 0) {
-                    $friendRequest = $db->query("update SOLICITACAO_AMIGO set ativo = 1 where (amigo = $user and perfil = $friend) or (perfil = $user and amigo = $friend)");    
+                    $friendRequest = mysqli_query($db,"update SOLICITACAO_AMIGO set ativo = 1 where (amigo = $user and perfil = $friend) or (perfil = $user and amigo = $friend)");    
                     if($friendRequest) {$db->close();return $friendRequest;}
                     else {$db->close();return false;}
                 }
             } else {
-                $friendRequest = $db->query("insert into SOLICITACAO_AMIGO (perfil, amigo, dateEnvio) values ($user, $friend, CURRENT_TIMESTAMP)");
+                $friendRequest = mysqli_query($db,"insert into SOLICITACAO_AMIGO (perfil, amigo, dateEnvio) values ($user, $friend, CURRENT_TIMESTAMP)");
                 if($friendRequest) {
                     $db->close();
                     return $friendRequest;
@@ -1573,7 +1574,7 @@
         $db=$db_connection['db'];
         $db_type=$db_connection['db_type'];
         if($db_type == 'mysql'){
-            $friendRequest = $db->query("update SOLICITACAO_AMIGO set ativo = 0 where perfil = $user and amigo = $friend");
+            $friendRequest = mysqli_query($db,"update SOLICITACAO_AMIGO set ativo = 0 where perfil = $user and amigo = $friend");
             if($friendRequest) {
                 $db->close();
                 return $friendRequest;
@@ -1589,8 +1590,8 @@
         $db=$db_connection['db'];
         $db_type=$db_connection['db_type'];
         if($db_type == 'mysql'){
-            $friendRequest = $db->query("update SOLICITACAO_AMIGO set ativo = 0 where amigo = $user and perfil = $friend");
-            $friendAdd = $db->query("insert into amigo (amigo, perfil, dateAceito) values ($user, $friend, CURRENT_TIMESTAMP)");
+            $friendRequest = mysqli_query($db,"update SOLICITACAO_AMIGO set ativo = 0 where amigo = $user and perfil = $friend");
+            $friendAdd = mysqli_query($db,"insert into amigo (amigo, perfil, dateAceito) values ($user, $friend, CURRENT_TIMESTAMP)");
             if($friendAdd) {
                 $db->close();
                 return $friendAdd;
@@ -1606,7 +1607,7 @@
         $db=$db_connection['db'];
         $db_type=$db_connection['db_type'];
         if($db_type == 'mysql'){
-            $friendRequest = $db->query("update SOLICITACAO_AMIGO set ativo = 0 where amigo = $user and perfil = $friend");
+            $friendRequest = mysqli_query($db,"update SOLICITACAO_AMIGO set ativo = 0 where amigo = $user and perfil = $friend");
             if($friendRequest) {
                 $db->close();
                 return $friendRequest;
@@ -1624,7 +1625,7 @@
         if($db){
             if($db_type == 'mysql'){
                 $results=[];
-                $result = $db->query("
+                $result = mysqli_query($db,"
                 select perfil.username as nome, perfil.img as img, solicitacao_amigo.dateEnvio as data, solicitacao_amigo.perfil as amigocod, solicitacao_amigo.amigo, amigo.perfil as otherPerfil, amigo.amigo as otherAmigo from solicitacao_amigo, perfil
                     left join amigo on 
                         (solicitacao_amigo.perfil = amigo.perfil and solicitacao_amigo.amigo = amigo.amigo) or 
@@ -1637,7 +1638,7 @@
                     perfil.ativo = true and
                     solicitacao_amigo.amigo = $user and
                     solicitacao_amigo.ativo = 1");
-                while ($row = $result->fetch_array()) {
+                while ($row = mysqli_fetch_array($result)) {
                     array_push($results, $row);
                 }
                 $db->close();
@@ -1651,7 +1652,7 @@
         $db=$db_connection['db'];
         $db_type=$db_connection['db_type'];
         if($db_type == 'mysql'){
-            $delFriend = $db->query("update amigo set ativo = 0 where (perfil = $user and amigo = $friend) or (amigo = $user and perfil = $friend)");
+            $delFriend = mysqli_query($db,"update amigo set ativo = 0 where (perfil = $user and amigo = $friend) or (amigo = $user and perfil = $friend)");
             if($delFriend) {
                 $db->close();
                 return $delFriend;
@@ -1671,7 +1672,7 @@
             if($db_type == 'mysql'){
                 $results=[];
                 if($where !== ''){
-                    $result = $db->query("
+                    $result = mysqli_query($db,"
                     select perfil.codigo, case 
                             when amigo.perfil = perfil.codigo then amigo.amigo
                             when amigo.amigo = perfil.codigo then amigo.perfil
@@ -1691,7 +1692,7 @@
                     order by amigo.dateAceito desc
                     limit $limit offset $offset");
                 }else{
-                    $result = $db->query("
+                    $result = mysqli_query($db,"
                     select perfil.codigo, case 
                             when amigo.perfil = perfil.codigo then amigo.amigo
                             when amigo.amigo = perfil.codigo then amigo.perfil
@@ -1711,7 +1712,7 @@
                     limit $limit offset $offset");
 
                 }
-                while ($row = $result->fetch_array()) {
+                while ($row = mysqli_fetch_array($result)) {
                     array_push($results, $row);
                 }
                 $db->close();
@@ -1731,7 +1732,7 @@
             if($db_type == 'mysql'){
                 $results=[];
                 if($limit){
-                    $result=$db->query("
+                    $result=mysqli_query($db,"
                     select 
                         porto.codigo as codigo, 
                         porto.nome as nome, 
@@ -1758,7 +1759,7 @@
                         ".($isOwner ? " and participa = true" : "")."
                     ".($limit > 0 ? " limit $limit offset $offset" : " "));
                 } else{
-                    $result=$db->query("
+                    $result=mysqli_query($db,"
                     select 
                         porto.codigo as codigo, 
                         porto.nome as nome, 
@@ -1785,7 +1786,7 @@
                         ".($isOwner ? " and participa = true" : "")."
                     ");
                 }
-                while ($row = $result->fetch_array()) {
+                while ($row = mysqli_fetch_array($result)) {
                     array_push($results,$row);
                 }
                 $db->close();
@@ -1805,7 +1806,7 @@
             if($db_type=='mysql'){
                 $results=[];
                 if($where != ''){
-                    $result=$db->query("
+                    $result=mysqli_query($db,"
                     select *
                     from porto
                     where 
@@ -1814,7 +1815,7 @@
                         ".($order ? "order by $order" : "")."
                     ".($limit > 0 ? " limit $limit offset $offset" : " "));
                 }else {
-                    $result=$db->query("
+                    $result=mysqli_query($db,"
                     select 
                         porto.codigo as codigo, 
                         porto.nome as nome, 
@@ -1841,7 +1842,7 @@
                         ".($isOwner ? " and participa = true" : "")."
                     ".($limit > 0 ? " limit $limit offset $offset" : " "));
                 }
-                while ($row = $result->fetch_array()) {
+                while ($row = mysqli_fetch_array($result)) {
                     array_push($results,$row);
                 }
                 return $results;
@@ -1856,14 +1857,14 @@
         if($db){
             if($db_type == 'mysql'){
                 if($offset && $limit){
-                    $result=$db->query("
+                    $result=mysqli_query($db,"
                     select * from porto
                     where 
                         porto.ativo = 1 and
                         porto.perfil = $user
                     limit $limit offset $offset");
                 }else{
-                    $result=$db->query("
+                    $result=mysqli_query($db,"
                     select * from porto
                     where 
                         porto.ativo = 1 and
@@ -1871,7 +1872,7 @@
                 }
                 if($result) {
                     $results = [];
-                    while ($row = $result->fetch_array()) {
+                    while ($row = mysqli_fetch_array($result)) {
                         array_push($results, $row);
                     }
                     $db->close();
@@ -1890,13 +1891,13 @@
         $db_type=$db_connection['db_type'];
         if($db){
             if($db_type == 'mysql'){
-                $result=$db->query("
+                $result=mysqli_query($db,"
                 select count(*) as total from porto
                 where 
                     porto.ativo = 1 and
                     porto.perfil = $user");
                 if($result) {
-                    $result = $result->fetch_array()['total'];
+                    $result = mysqli_fetch_array($result)['total'];
                     $db->close();
                     return $result;
                 } else {
@@ -1913,9 +1914,9 @@
         $db_type=$db_connection['db_type'];
         if($db){
             if($db_type == 'mysql'){
-                $result=$db->query("select count(*) as total from porto where ativo=1");
+                $result=mysqli_query($db,"select count(*) as total from porto where ativo=1");
                 if($result){
-                    $result = $result->fetch_array()['total'];
+                    $result = mysqli_fetch_array($result)['total'];
                     $db->close();
                     return $result;
                 } else {
@@ -1932,7 +1933,7 @@
         $db_type = $db_connection['db_type'];
         if($db){
             if($db_type == 'mysql'){
-                $response = $db->query("
+                $response = mysqli_query($db,"
                 select 
                     porto.codigo as codigo, 
                     porto.nome as nome, 
@@ -1965,7 +1966,7 @@
                 group by porto.codigo
                 order by porto_participa.dataregis desc");
                 if($response) {
-                    $response = $response->fetch_array();
+                    $response = mysqli_fetch_array($response);
                     $db->close();
                     return $response;
                 } else {
@@ -1989,7 +1990,7 @@
         }
         if($db){
             if($db_type == 'mysql'){
-                $verify = $db->query("insert into porto (perfil,nome,descr,img) values ('".$perfil."', '".$nome."', '".$descr."', '".$link."'".")");
+                $verify = mysqli_query($db,"insert into porto (perfil,nome,descr,img) values ('".$perfil."', '".$nome."', '".$descr."', '".$link."'".")");
                 $portoId = $db->insert_id;
                 if($portoId) {
                     $db->close();
@@ -2015,7 +2016,7 @@
         // }
         if($db){
             if($db_type == 'mysql'){
-                $response = $db->query("update porto set ativo = 0 where codigo = $porto");
+                $response = mysqli_query($db,"update porto set ativo = 0 where codigo = $porto");
                 if($response) {
                     $db->close();
                     return $response;
@@ -2032,14 +2033,14 @@
         $db=$db_connection['db'];
         $db_type=$db_connection['db_type'];
         if($db_type == 'mysql'){
-            $response = $db->query("select case 
+            $response = mysqli_query($db,"select case 
                 when porto_participa.ativo = 0 then 'off' 
                 when porto_participa.ativo = 1 then 'on' 
             end as participa from porto_participa 
             where perfil = $user and porto = $porto");
-            $response = $response->fetch_array();
+            $response = mysqli_fetch_array($response);
             if($response['participa'] == 'off') {
-                $response2 = $db->query("update porto_participa set ativo = 1, dataregis = CURRENT_TIMESTAMP where perfil = $user and porto = $porto");
+                $response2 = mysqli_query($db,"update porto_participa set ativo = 1, dataregis = CURRENT_TIMESTAMP where perfil = $user and porto = $porto");
                 if($response2) {
                     $db->close();
                     return $response2;
@@ -2048,7 +2049,7 @@
                     return $response2;
                 }
             } else {
-                $response2 = $db->query("insert into porto_participa (perfil, porto) values ($user, $porto)");
+                $response2 = mysqli_query($db,"insert into porto_participa (perfil, porto) values ($user, $porto)");
                 if($response2) {
                     $db->close();
                     return $response2;
@@ -2066,7 +2067,7 @@
         $db=$db_connection['db'];
         $db_type=$db_connection['db_type'];
         if($db_type == 'mysql'){
-            $response = $db->query("update porto_participa set ativo = 0 where perfil = $user and porto = $porto");
+            $response = mysqli_query($db,"update porto_participa set ativo = 0 where perfil = $user and porto = $porto");
             if($response) {
                 $db->close();
                 return $response;
@@ -2099,7 +2100,7 @@
         }
         if($db){
             if($db_type == 'mysql'){
-                $verify = $db->query("update porto set nome='$newname',descr='$newdescr' ".($link ? ",img='$link'" : " ")." where codigo=$porto and ativo=1");
+                $verify = mysqli_query($db,"update porto set nome='$newname',descr='$newdescr' ".($link ? ",img='$link'" : " ")." where codigo=$porto and ativo=1");
                 if($verify) {
                     $db->close();
                     return $verify;
@@ -2118,7 +2119,7 @@
         if($db){
             if($db_type == 'mysql'){
                 $postsArray=[];
-                $postsOriginais = $db->query("
+                $postsOriginais = mysqli_query($db,"
                 select
                     interacao.codigo as codInteracao, 
                     interacao.post as codPost,
@@ -2161,7 +2162,7 @@
                 while($row = $postsOriginais->fetch_array()){
                     $postsArray[$row['codInteracao']] = $row;
 
-                    $resCitacoesParent = $db->query("select citacao.interacao as interacao, perfil.codigo as codPerfil, perfil.username as nomePerfil 
+                    $resCitacoesParent = mysqli_query($db,"select citacao.interacao as interacao, perfil.codigo as codPerfil, perfil.username as nomePerfil 
                     from citacao join perfil on perfil.codigo = citacao.perfil 
                     where 
                         citacao.ativo = 1 and 
@@ -2172,7 +2173,7 @@
                     }
                     $postsArray[$row['codInteracao']]['citacoes'] = $citacoes;
                     
-                    $resAssuntosParent = $db->query("
+                    $resAssuntosParent = mysqli_query($db,"
                     select interacao.codigo as interacao, assunto.codigo as codAssunto, assunto.nome as nomeAssunto from interacao
                         left join interacao_assunto on interacao.codigo = interacao_assunto.interacao
                         left join assunto on interacao_assunto.assunto = assunto.codigo
@@ -2184,7 +2185,7 @@
                         $assuntos[] = $row2;
                     }
                     $postsArray[$row['codInteracao']]['assuntos'] = $assuntos;
-                    $temInteracoes = $db->query("
+                    $temInteracoes = mysqli_query($db,"
                     select
                         interacao.codigo as codInteracao, 
                         interacao.post as codPost, 
@@ -2223,7 +2224,7 @@
                     if($temInteracoes){
                         while($row3 = $temInteracoes->fetch_array()){
                             $childInteracoes[$row3['codInteracao']] = $row3;
-                            $resCitacoesChild = $db->query("select citacao.interacao as interacao, perfil.codigo as codPerfil, perfil.username as nomePerfil 
+                            $resCitacoesChild = mysqli_query($db,"select citacao.interacao as interacao, perfil.codigo as codPerfil, perfil.username as nomePerfil 
                             from citacao 
                                 join perfil on perfil.codigo = citacao.perfil 
                             where 
@@ -2234,7 +2235,7 @@
                                 $citacoes[] = $row4;
                             }
                             $childInteracoes[$row3['codInteracao']]['citacoes'] = $citacoes;
-                            $resAssuntosChild = $db->query("
+                            $resAssuntosChild = mysqli_query($db,"
                             select interacao.codigo as interacao, assunto.codigo as codAssunto, assunto.nome as nomeAssunto from interacao
                                 left join interacao_assunto on interacao.codigo = interacao_assunto.interacao
                                 left join assunto on interacao_assunto.assunto = assunto.codigo
@@ -2247,7 +2248,7 @@
                             }
                             $childInteracoes[$row3['codInteracao']]['assuntos'] = $assuntos;
 
-                            $temInnerInteracoes = $db->query("
+                            $temInnerInteracoes = mysqli_query($db,"
                             select
                                 interacao.codigo as codInteracao, 
                                 interacao.post as codPost, 
@@ -2288,7 +2289,7 @@
                             if($temInnerInteracoes){
                                 while ($row6 = $temInnerInteracoes->fetch_array()) {
                                     $grandChildInteracoes[$row6['codInteracao']] = $row6;
-                                    $resCitacoesGrandChild = $db->query("
+                                    $resCitacoesGrandChild = mysqli_query($db,"
                                     select citacao.interacao as interacao, perfil.codigo as codPerfil, perfil.username as nomePerfil from citacao 
                                         join perfil on perfil.codigo = citacao.perfil 
                                     where 
@@ -2300,7 +2301,7 @@
                                     }
                                     $grandChildInteracoes[$row6['codInteracao']]['citacoes'] = $citacoes;
                                     
-                                    $resAssuntosGrandChild = $db->query("
+                                    $resAssuntosGrandChild = mysqli_query($db,"
                                     select interacao.codigo as interacao, assunto.codigo as codAssunto, assunto.nome as nomeAssunto from interacao
                                         left join interacao_assunto on interacao.codigo = interacao_assunto.interacao
                                         left join assunto on interacao_assunto.assunto = assunto.codigo
@@ -2333,7 +2334,7 @@
         if($db){
             if($db_type == 'mysql'){
                 $results=[];
-                $result = $db->query("                
+                $result = mysqli_query($db,"                
                 select 
                 porto.codigo as codPorto,
                 porto_participa.dataregis as dataRegis,
@@ -2351,7 +2352,7 @@
                     porto_participa.ativo = 1 and
                     porto.codigo = $porto
                 limit $limit offset $offset");
-                while ($row = $result->fetch_array()) {
+                while ($row = mysqli_fetch_array($result)) {
                     array_push($results, $row);
                 }
                 $db->close();
@@ -2367,7 +2368,7 @@
         if($db){
             if($db_type == 'mysql'){
                 $results=[];
-                $result = $db->query("                
+                $result = mysqli_query($db,"                
                 select 
                 porto.codigo as codPorto,
                 porto_participa.dataregis as dataRegis,
@@ -2380,7 +2381,7 @@
                 where 
                     porto_participa.ativo = 1 and
                     porto.codigo = $porto");
-                while ($row = $result->fetch_array()) {
+                while ($row = mysqli_fetch_array($result)) {
                     array_push($results, $row);
                 }
                 $db->close();
@@ -2395,8 +2396,8 @@
         $db_type = $db_connection['db_type'];
         if($db){
             if($db_type == 'mysql'){
-                $response=$db->query("select * from selouser where perfil=$perfil and porto=$porto");
-                $response2=$db->query("
+                $response=mysqli_query($db,"select * from selouser where perfil=$perfil and porto=$porto");
+                $response2=mysqli_query($db,"
                 select 
                 tmp1.perfil,reaction_porcent,comments_porce
                 from 
@@ -2503,32 +2504,32 @@
                     echo "reaÃ§ao:$reaction_p<br>";
                     echo "comment:$comment_p<br>";
                     echo "selo:$selo<br>";
-                    if($response->fetch_array()){
+                    if(mysqli_fetch_array($response)){
                         switch($selo){
                             case "fa":
-                                $response=$db->query("update SELOUSER set selo=3,dateVal=datetime(date('now'),'weekday 0','+7 days') where porto=$porto and perfil=$perfil");
+                                $response=mysqli_query($db,"update SELOUSER set selo=3,dateVal=datetime(date('now'),'weekday 0','+7 days') where porto=$porto and perfil=$perfil");
                                 break;
                             case "super-fa":
-                                $response=$db->query("update SELOUSER set selo=2,dateVal=datetime(date('now'),'weekday 0','+7 days') where porto=$porto and perfil=$perfil");
+                                $response=mysqli_query($db,"update SELOUSER set selo=2,dateVal=datetime(date('now'),'weekday 0','+7 days') where porto=$porto and perfil=$perfil");
                                 break;
                             case "ultra-fa":
-                                $response=$db->query("update SELOUSER set selo=1,dateVal=datetime(date('now'),'weekday 0','+7 days') where porto=$porto and perfil=$perfil");
+                                $response=mysqli_query($db,"update SELOUSER set selo=1,dateVal=datetime(date('now'),'weekday 0','+7 days') where porto=$porto and perfil=$perfil");
                                 break;
                         }
                     }
                     else{
                         switch($selo){
                             case "nenhum":
-                                $response=$db->query("delete from selouser where perfil=$perfil and porto=$porto");
+                                $response=mysqli_query($db,"delete from selouser where perfil=$perfil and porto=$porto");
                                 break;
                             case "fa":
-                                $response=$db->query("insert into SELOUSER(perfil,selo,porto,dateVal) VALUES($perfil,3,$porto,datetime(date('now'),'weekday 0','+7 days'))");
+                                $response=mysqli_query($db,"insert into SELOUSER(perfil,selo,porto,dateVal) VALUES($perfil,3,$porto,datetime(date('now'),'weekday 0','+7 days'))");
                                 break;
                             case "super-fa":
-                                $response=$db->query("insert into SELOUSER(perfil,selo,porto,dateVal) VALUES($perfil,2,$porto,datetime(date('now'),'weekday 0','+7 days'))");
+                                $response=mysqli_query($db,"insert into SELOUSER(perfil,selo,porto,dateVal) VALUES($perfil,2,$porto,datetime(date('now'),'weekday 0','+7 days'))");
                                 break;
                             case "ultra-fa":
-                                $response=$db->query("insert into SELOUSER(perfil,selo,porto,dateVal) VALUES($perfil,1,$porto,datetime(date('now'),'weekday 0','+7 days'))");
+                                $response=mysqli_query($db,"insert into SELOUSER(perfil,selo,porto,dateVal) VALUES($perfil,1,$porto,datetime(date('now'),'weekday 0','+7 days'))");
                                 break;
                         }
                     }
@@ -2549,7 +2550,7 @@
         $db_type=$db_connection['db_type'];
         if($db_type == 'mysql'){
             // echo $perfil_posting;
-            $response = $db->query("insert into interacao (perfil, texto, perfil_posting, porto, isSharing, post, postPai, isReaction, emote, local) values 
+            $response = mysqli_query($db,"insert into interacao (perfil, texto, perfil_posting, porto, isSharing, post, postPai, isReaction, emote, local) values 
             ($perfil, 
             '".($texto ? $texto : '')."', 
             ".($perfil_posting ? $perfil_posting : 'null').", 
@@ -2576,10 +2577,10 @@
         $db=$db_connection['db'];
         $db_type=$db_connection['db_type'];
         if($db_type == 'mysql'){
-            $response = $db->query("update interacao set ativo = 0 where codigo = $post");
+            $response = mysqli_query($db,"update interacao set ativo = 0 where codigo = $post");
             if($response) {
-                $response2 = $db->query("update citacao set ativo = 0 where interacao = $post");
-                $response3 = $db->query("update interacao_assunto set ativo = 0 where interacao = $post");
+                $response2 = mysqli_query($db,"update citacao set ativo = 0 where interacao = $post");
+                $response3 = mysqli_query($db,"update interacao_assunto set ativo = 0 where interacao = $post");
                 $db->close();
                 return $response;
             } else {
@@ -2600,7 +2601,7 @@
             ($local ? "local = ".$local : 'local = null'),
             "data = CURRENT_TIMESTAMP"];
             //$txt = implode($txt, ', ');
-            $response = $db->query("update interacao set $txt where codigo = $interacao");
+            $response = mysqli_query($db,"update interacao set $txt where codigo = $interacao");
             if($response) {
                 $db->close();
                 return true;
@@ -2616,10 +2617,10 @@
         $db=$db_connection['db'];
         $db_type=$db_connection['db_type'];
         if($db_type == 'mysql'){
-            $check = $db->query("select * from citacao where perfil = $user and interacao = $post");
+            $check = mysqli_query($db,"select * from citacao where perfil = $user and interacao = $post");
             $check = $check->fetch_array();
             if($check){
-                $response = $db->query("update citacao set ativo = 1 where perfil = $user and interacao = $post");
+                $response = mysqli_query($db,"update citacao set ativo = 1 where perfil = $user and interacao = $post");
                 if($response) {
                     $db->close();
                     return $response;
@@ -2627,7 +2628,7 @@
                     $db->close();return false;
                 }
             } else {
-                $response = $db->query("insert into citacao (perfil, interacao) values ($user, $post)");
+                $response = mysqli_query($db,"insert into citacao (perfil, interacao) values ($user, $post)");
                 if($response) {
                     $db->close();
                     return $response;
@@ -2643,7 +2644,7 @@
         $db=$db_connection['db'];
         $db_type=$db_connection['db_type'];
         if($db_type == 'mysql'){
-            $response = $db->query("update citacao set ativo = 0 where interacao = $post and perfil = $pessoa");
+            $response = mysqli_query($db,"update citacao set ativo = 0 where interacao = $post and perfil = $pessoa");
             if($response) {
                 $db->close();
                 return $response;
@@ -2659,7 +2660,7 @@
         $db=$db_connection['db'];
         $db_type=$db_connection['db_type'];
         if($db_type == 'mysql'){
-            $response = $db->query("insert into interacao_assunto (interacao, assunto) values ($post, $assunto)");
+            $response = mysqli_query($db,"insert into interacao_assunto (interacao, assunto) values ($post, $assunto)");
             if($response) {
                 $db->close();
                 return $response;
@@ -2675,7 +2676,7 @@
         $db=$db_connection['db'];
         $db_type=$db_connection['db_type'];
         if($db_type == 'mysql'){
-            $response = $db->query("update interacao_assunto set ativo = 0 where interacao = $post and assunto = $assunto");
+            $response = mysqli_query($db,"update interacao_assunto set ativo = 0 where interacao = $post and assunto = $assunto");
             if($response) {
                 $db->close();
                 return $response;
@@ -2694,7 +2695,7 @@
         $db=$db_connection['db'];
         $db_type=$db_connection['db_type'];
         if($db_type == 'mysql'){
-            $interacaoMasc = $db->query("select count(interacao.perfil) as total, pais.nome as pais from interacao join perfil on interacao.perfil= perfil.codigo join cidade on perfil.cidade = cidade.codigo join uf on cidade.uf= uf.codigo join pais on uf.pais = pais.codigo where perfil.genero = \"M\" and pais.nome=\"$pais\" and date(interacao.data) between date('now','-$mes months') and date('now') and date(perfil.datanasc) between date('now','-$faixamax years') and date('now', '-$faixamin years')");
+            $interacaoMasc = mysqli_query($db,"select count(interacao.perfil) as total, pais.nome as pais from interacao join perfil on interacao.perfil= perfil.codigo join cidade on perfil.cidade = cidade.codigo join uf on cidade.uf= uf.codigo join pais on uf.pais = pais.codigo where perfil.genero = \"M\" and pais.nome=\"$pais\" and date(interacao.data) between date('now','-$mes months') and date('now') and date(perfil.datanasc) between date('now','-$faixamax years') and date('now', '-$faixamin years')");
             $results=[];    
             if($interacaoMasc){
                 while ($row = $interacaoMasc->fetch_array()) {
@@ -2710,7 +2711,7 @@
         $db=$db_connection['db'];
         $db_type=$db_connection['db_type'];
         if($db_type == 'mysql'){
-            $interacaoFem = $db->query("select count(interacao.perfil) as total, pais.nome as pais from interacao join perfil on interacao.perfil= perfil.codigo join cidade on perfil.cidade = cidade.codigo join uf on cidade.uf= uf.codigo join pais on uf.pais = pais.codigo where perfil.genero = \"F\" and pais.nome=\"$pais\" and date(interacao.data) between date('now','-$mes months') and date('now') and date(perfil.datanasc) between date('now','-$faixamax years') and date('now', '-$faixamin years')");
+            $interacaoFem = mysqli_query($db,"select count(interacao.perfil) as total, pais.nome as pais from interacao join perfil on interacao.perfil= perfil.codigo join cidade on perfil.cidade = cidade.codigo join uf on cidade.uf= uf.codigo join pais on uf.pais = pais.codigo where perfil.genero = \"F\" and pais.nome=\"$pais\" and date(interacao.data) between date('now','-$mes months') and date('now') and date(perfil.datanasc) between date('now','-$faixamax years') and date('now', '-$faixamin years')");
             $results=[];
             if($interacaoFem){
                 while ($row = $interacaoFem->fetch_array()) {
@@ -2727,7 +2728,7 @@
         $db=$db_connection['db'];
         $db_type=$db_connection['db_type'];
         if($db_type == 'mysql'){
-            $response=$db->query("
+            $response=mysqli_query($db,"
                     select 
                         pais.nome as pais,
                         perfil.genero as genero,
@@ -2756,7 +2757,7 @@
                     ");   
             $results=[];
             if($response){
-                while ($row = $response->fetch_array()){
+                while ($row = mysqli_fetch_array($response)){
                     array_push($results,$row);
                 }
                 $db->close();
@@ -2775,7 +2776,7 @@
         $db=$db_connection['db'];
         $db_type=$db_connection['db_type'];
         if($db_type == 'mysql'){
-            $response = $db->query("
+            $response = mysqli_query($db,"
             select count(*) as qt
             from 
             (
@@ -2806,7 +2807,7 @@
                 having count(*)>$likes
             )");
             if($response) {
-                $response = $response->fetch_array()['qt'];
+                $response = mysqli_fetch_array($response)['qt'];
                 $db->close();
                 return $response;
             }
@@ -2874,7 +2875,7 @@
                     ) order by qtdReacoes desc"
             );
             if($response) {
-                $response = $response->fetch_array();
+                $response = mysqli_fetch_array($response);
                 $db->close();
                 return $response;
             } else {
@@ -2943,7 +2944,7 @@
             );
             $results=[];
             if($response){
-                while($row = $response->fetch_array()){
+                while($row = mysqli_fetch_array($response)){
                     array_push($results,$row);
                 }
                 {
@@ -2964,7 +2965,7 @@
         $db=$db_connection['db'];
         $db_type=$db_connection['db_type'];
         if($db_type == 'mysql'){
-            $response=$db->query("
+            $response=mysqli_query($db,"
                 select 
                 result.assunto as assunto,count(*) as total
                 from
@@ -3076,7 +3077,7 @@
             ");
             $results=[];
             if($response){
-                while($row = $response->fetch_array()){
+                while($row = mysqli_fetch_array($response)){
                     array_push($results,$row);
                 }
                 {
@@ -3098,7 +3099,7 @@
         $db_type=$db_connection['db_type'];
         if($db_type == 'mysql'){
             //desativar usuario
-            $query1=$db->query("
+            $query1=mysqli_query($db,"
                 update 
                 perfil 
                 set ativo=0 
@@ -3120,17 +3121,17 @@
                     and perfil.dataregis between datetime('now','-2 days') and datetime('now')
             ");
             //desativar interacoes do usuario
-            $query2=$db->query("update interacao set ativo=0 where interacao.perfil in (select codigo from perfil where ativo=0)");
+            $query2=mysqli_query($db,"update interacao set ativo=0 where interacao.perfil in (select codigo from perfil where ativo=0)");
             //desativar portos do usuario
-            $query3=$db->query("update porto set ativo=0 where porto.perfil in (select codigo from perfil where ativo=0)");
+            $query3=mysqli_query($db,"update porto set ativo=0 where porto.perfil in (select codigo from perfil where ativo=0)");
             //desativa amizades com esse usuario
-            $query4=$db->query("update amigo set ativo=0 where amigo.perfil in (select codigo from perfil where ativo=0) or amigo.amigo in (select codigo from perfil where ativo=0)");
+            $query4=mysqli_query($db,"update amigo set ativo=0 where amigo.perfil in (select codigo from perfil where ativo=0) or amigo.amigo in (select codigo from perfil where ativo=0)");
             //desativa citacoes com esse usuario
-            $query5=$db->query("update citacao set ativo=0 where citacao.perfil in (select codigo from perfil where ativo=0)");
+            $query5=mysqli_query($db,"update citacao set ativo=0 where citacao.perfil in (select codigo from perfil where ativo=0)");
             //desativa porto_participa desse usuario
-            $query6=$db->query("update porto_participa set ativo=0 where porto_participa.perfil in (select codigo from perfil where ativo=0)");
+            $query6=mysqli_query($db,"update porto_participa set ativo=0 where porto_participa.perfil in (select codigo from perfil where ativo=0)");
             //desativa solicitaçoes de amizade desse usuario
-            $query7=$db->query("update solicitacao_amigo set ativo=0 where solicitacao_amigo.perfil in (select codigo from perfil where ativo=0) or solicitacao_amigo.amigo in (select codigo from perfil where ativo=0)");
+            $query7=mysqli_query($db,"update solicitacao_amigo set ativo=0 where solicitacao_amigo.perfil in (select codigo from perfil where ativo=0) or solicitacao_amigo.amigo in (select codigo from perfil where ativo=0)");
 
             if($query1&&$query2&&$query3&&$query4&&$query5&&$query6&&$query7) {
                 $db->close();
