@@ -2,7 +2,7 @@
     include 'app/backend/mailer/mailer.php';
     include 'app/backend/gdrive/driver.php';
     
-    $dotenv_dir='./';
+    $dotenv_dir='app/backend';
 
     $dotenv = Dotenv\Dotenv::createImmutable($dotenv_dir, '.env');
     $dotenv->load();
