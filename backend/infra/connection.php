@@ -1,6 +1,6 @@
 <?php
-    include './mailer/mailer.php';
-    include './gdrive/driver.php';
+    include '../mailer/mailer.php';
+    include '../gdrive/driver.php';
     
     $dotenv_dir='./';
 
