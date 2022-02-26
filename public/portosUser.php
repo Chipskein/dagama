@@ -23,7 +23,7 @@
       $result[$campo] = $campo."=".$valor;
       return '&'.(strtr(implode("&",$result), " ", "+"));
   }
-  include './backend/infra/connection.php';
+  include '../backend/infra/connection.php';
   if(!isset($_SESSION)) { 
     session_start(); 
   }

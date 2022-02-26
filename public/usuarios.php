@@ -10,7 +10,7 @@
 </head>
 <body class=perfil>
 <?php
-  include './backend/infra/connection.php';
+  include '../backend/infra/connection.php';
   session_start();
   function url($campo, $valor) {
     $result = array();

@@ -169,7 +169,7 @@ include './infra/services.php';
             $username = "$_POST[username]";
             $password = password_hash("$_POST[password]", PASSWORD_DEFAULT);
             $bdate = "$_POST[bdate]";//converter bdate to yyyy/mm/dd
-            /*
+            
             if($_POST['pais'] == "outro"){
                 $pais = addPais($_POST['newpais']);
                 $estado = addEstado($_POST['newestado'], $pais);
@@ -185,8 +185,7 @@ include './infra/services.php';
             if($_POST['cidade'] != "outro" && $_POST['cidade'] != "null"){
                 $cidade = $_POST['cidade'];
             }
-            */
-            $cidade=0;
+            
             $genero = "$_POST[genero]";
             $photo = null;
             if($_FILES['photo']['tmp_name'])

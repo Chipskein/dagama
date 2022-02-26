@@ -11,7 +11,7 @@
 </head>
 <body>
 <?php
-  include './backend/infra/connection.php';
+  include '../backend/infra/connection.php';
   session_start();
   if(isset($_SESSION['userid'])){
     function url($campo, $valor) {

@@ -399,7 +399,6 @@
         else exit;
     }
     function Register($email, $password, $bdate, $username, $genero, $cidade,$photo){
-        echo "ENtrou no register";
         $db_connection=db_connection();
         $db=$db_connection['db'];
         $db_type=$db_connection['db_type'];
