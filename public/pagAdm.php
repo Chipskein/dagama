@@ -34,7 +34,7 @@
         como no exemplo
             ok
  */
- include '../backend/infra/connection.php';
+ include '../backend/infra/services.php';
   $paises=getPaises();
   $estados=getStates();
   $cidades=getCities();

@@ -41,11 +41,11 @@
                     while ($row = mysqli_fetch_array($response)) {
                         array_push($results, $row);
                     }
-                    $db->close();
+                    mysqli_close($db);
                     return $results; 
                 }
                 else { 
-                    $db->close();
+                    mysqli_close($db);
                     return false;
                 }
             }
@@ -65,7 +65,7 @@
                     while ($row = mysqli_fetch_array($response)) {
                         array_push($results, $row);
                     }
-                    $db->close();
+                    mysqli_close($db);
                     return $results;
                 }                
                 else {
@@ -92,11 +92,11 @@
                     while ($row = mysqli_fetch_array($response)) {
                         array_push($results, $row);
                     }
-                    $db->close();
+                    mysqli_close($db);
                     return $results; 
                 }
                 else {
-                    $db->close();
+                    mysqli_close($db);
                     return false;
                 }
             }
@@ -113,11 +113,11 @@
                 $response = mysqli_query($db,"select count(*)as total from perfil");
                 if($response) {
                     $response = mysqli_fetch_array($response)['total'];
-                    $db->close();
+                    mysqli_close($db);
                     return $response;
                 }
                 else {
-                    $db->close();
+                    mysqli_close($db);
                     return false;
                 }
             }
@@ -138,7 +138,7 @@
                 while ($row = mysqli_fetch_array($result)) {
                     array_push($results,$row);
                 }
-                //$db->close();
+                //mysqli_close($db);
                 return $results;
             }
         }
@@ -152,10 +152,10 @@
             $response = mysqli_query($db,"insert into pais (nome) values ('$nome')");
             if($response) {
                 $res = $db->insert_id;
-                $db->close();
+                mysqli_close($db);
                 return $res;
             } else {
-                $db->close();
+                mysqli_close($db);
                 return false;
             }
         }
@@ -183,11 +183,11 @@
                 $response3 = mysqli_query($db,"update cidade set ativo = 0 where codigo in ($results)");
             }
             if($response) {
-                $db->close();
+                mysqli_close($db);
                 return $response;
             }
             else {
-                $db->close();
+                mysqli_close($db);
                 return false;
             }
         }
@@ -205,7 +205,7 @@
                 while ($row = mysqli_fetch_array($result)) {
                     array_push($results,$row);
                 }
-                $db->close();
+                mysqli_close($db);
                 return $results;
             }
         }
@@ -219,11 +219,11 @@
             $response = mysqli_query($db,"insert into uf (nome, pais) values ('$nome', $pais)");
             if($response) {
                 $res = $db->insert_id;
-                $db->close();
+                mysqli_close($db);
                 return $res;
             }
             else {
-                $db->close();
+                mysqli_close($db);
                 return false;
             }
         }
@@ -237,10 +237,10 @@
             $response = mysqli_query($db,"update cidade set ativo = 0 where codigo = $estado");
             $response2 = mysqli_query($db,"update cidade set ativo = 0 where uf = $estado");
             if($response) {
-                $db->close();
+                mysqli_close($db);
                 return $response;
             } else {
-                $db->close();
+                mysqli_close($db);
                 return false;
             }
         }
@@ -257,7 +257,7 @@
                 while ($row = mysqli_fetch_array($result)) {
                     array_push($results,$row);
                 }
-                $db->close();
+                mysqli_close($db);
                 return $results;
             }
         }
@@ -271,10 +271,10 @@
             $response = mysqli_query($db,"insert into cidade (nome, uf) values ('$nome', $estado)");
             if($response) {
                 $res = $db->insert_id;
-                $db->close();
+                mysqli_close($db);
                 return $res;
             } else {
-                $db->close();
+                mysqli_close($db);
                 return false;
             }
         }
@@ -287,10 +287,10 @@
         if($db_type == 'mysql'){
             $response = mysqli_query($db,"update cidade set ativo = 0 where codigo = $cidade");
             if($response) {
-                $db->close();
+                mysqli_close($db);
                 return $response;
             } else {
-                $db->close();
+                mysqli_close($db);
                 return false;
             }
         }
@@ -311,11 +311,11 @@
                     while ($row = mysqli_fetch_array($response)) {
                         array_push($results, $row);
                     }
-                    $db->close();
+                    mysqli_close($db);
                     return $results; 
                 }
                 else {
-                    $db->close();
+                    mysqli_close($db);
                     return false;
                 }
             }
@@ -333,10 +333,10 @@
             $response = mysqli_query($db,"insert into assunto (nome) values ('$nome')");
             if($response) {
                 $res = $db->insert_id;
-                $db->close();
+                mysqli_close($db);
                 return $res;
             } else {
-                $db->close();
+                mysqli_close($db);
                 return false;
             }
         }
@@ -349,10 +349,10 @@
         if($db_type == 'mysql'){
             $response = mysqli_query($db,"update assunto set ativo = 0 where codigo = $assunto");
             if($response) {
-                $db->close();
+                mysqli_close($db);
                 return $response;
             } else {
-                $db->close();
+                mysqli_close($db);
                 return false;
             }
         }
@@ -369,11 +369,11 @@
             if($db_type == 'mysql'){
                 $verify=mysqli_query($db,"select codigo,senha as pass,ativo,img,username from perfil where perfil.email='$email'")->fetch_array();
                 if(password_verify($password,$verify['pass'])) {
-                    $db->close();
+                    mysqli_close($db);
                     return $verify;
                 }
                 else {
-                    $db->close();
+                    mysqli_close($db);
                     return false;
                 }
             }
@@ -388,10 +388,10 @@
             if($db_type == 'mysql'){
                 $verify=mysqli_query($db,"select codigo,senha as pass,ativo,img,username from perfil where perfil.email='$email'")->fetch_array();
                 if("$password"=="$verify[pass]") {
-                    $db->close();
+                    mysqli_close($db);
                     return $verify;
                 } else {
-                    $db->close();
+                    mysqli_close($db);
                     return false;
                 }
             }
@@ -413,10 +413,10 @@
             if($db_type == 'mysql'){
                 $verify = mysqli_query($db,"insert into perfil (cidade, email, senha, genero, username, datanasc,img) values ('".$cidade."', '".$email."', '".$password."', '".$genero."', '".$username."', '".$bdate."', '".$link."'".")");
                 if($verify) {
-                    $db->close();
+                    mysqli_close($db);
                     return $verify;
                 } else {
-                    $db->close();
+                    mysqli_close($db);
                     return false;
                 }
             }
@@ -431,10 +431,10 @@
             if($db_type == 'mysql'){
                 $response = mysqli_query($db,"select email from perfil")->fetch_array();
                 if($response) {
-                    $db->close();
+                    mysqli_close($db);
                     return $response;
                 } else {
-                    $db->close();
+                    mysqli_close($db);
                     return false;
                 }
             }
@@ -450,10 +450,10 @@
                 $response = mysqli_query($db,"select email from perfil where email='$email'");
                 if($response) {
                     $response = mysqli_fetch_array($response);
-                    $db->close();
+                    mysqli_close($db);
                     return $response;
                 } else {
-                    $db->close();
+                    mysqli_close($db);
                     return false;
                 }
             }
@@ -498,10 +498,10 @@
                 $response = mysqli_query($db,"select codigo from perfil where email='$email'");
                 if($response) {
                     $response = mysqli_fetch_array($response)['codigo'];
-                    $db->close();
+                    mysqli_close($db);
                     return $response;
                 } else {
-                    $db->close();
+                    mysqli_close($db);
                     return false;
                 }
             }
@@ -519,14 +519,14 @@
                     $res=mysqli_query($db,"select email,senha as password from perfil where codigo='$id'");
                     if($res) {
                         $res = $res->fetch_array();
-                        $db->close();
+                        mysqli_close($db);
                         return $res;
                     } else {
-                        $db->close();
+                        mysqli_close($db);
                         return false;
                     }
                 } else {
-                    $db->close();
+                    mysqli_close($db);
                     return false;
                 }
             }
@@ -540,7 +540,7 @@
         if($db){
             if($db_type == 'mysql'){
                 $response = mysqli_query($db,"update perfil set ativo='0' where codigo=$user");
-                $db->close();
+                mysqli_close($db);
                 return true;
             }
         }
@@ -553,7 +553,7 @@
         if($db){
             if($db_type == 'mysql'){
                 $response = mysqli_query($db,"update perfil set username='$name' where codigo=$id");
-                $db->close();
+                mysqli_close($db);
                 return true;
             }
         }
@@ -566,7 +566,7 @@
         if($db){
             if($db_type == 'mysql'){
                 $response = mysqli_query($db,"update perfil set email='$email' where codigo=$id");
-                $db->close();
+                mysqli_close($db);
                 return true;
             }
         }
@@ -579,7 +579,7 @@
         if($db){
             if($db_type == 'mysql'){
                 $response = mysqli_query($db,"update perfil set\\ senha='$senha' where codigo=$id");
-                $db->close();
+                mysqli_close($db);
                 return true;
             }
         }
@@ -600,18 +600,18 @@
                     if($response){
                         $response2=mysqli_query($db,"select img from perfil where codigo=$id")->fetch_array()['img'];
                         if($response2) {
-                            $db->close();
+                            mysqli_close($db);
                             return $response2;
                         } else {
-                            $db->close();
+                            mysqli_close($db);
                             return false;
                         }
                     } else {
-                        $db->close();
+                        mysqli_close($db);
                         return false;
                     }
                 } else {
-                    $db->close();
+                    mysqli_close($db);
                     return false;
                 }                
             }
@@ -919,7 +919,7 @@
                     }
                     $postsArray[$row['codInteracao']]['comentarios'] = $childInteracoes;
                 }
-                $db->close();
+                mysqli_close($db);
                 return $postsArray;
             }
         }
@@ -1219,7 +1219,7 @@
                     }
                     $postsArray[$row['codInteracao']]['comentarios'] = $childInteracoes;
                 }
-                $db->close();
+                mysqli_close($db);
                 return $postsArray;
 
             }
@@ -1288,7 +1288,7 @@
                 $response['assuntos'] = $assuntos;
                 $response['citacoes'] = $citacoes;
                 
-                $db->close();
+                mysqli_close($db);
                 return $response;
             }
         }
@@ -1360,7 +1360,7 @@
                 $response['assuntos'] = $assuntos;
                 $response['citacoes'] = $citacoes;
                 
-                $db->close();
+                mysqli_close($db);
                 return $response;
             }
         }
@@ -1405,10 +1405,10 @@
                     while($row = mysqli_fetch_array($response)){
                         array_push($results,$row);
                     }
-                    $db->close();
+                    mysqli_close($db);
                     return $results;
                 } else {
-                    $db->close();
+                    mysqli_close($db);
                     return false;
                 }
             }
@@ -1536,7 +1536,7 @@
                 while ($row = mysqli_fetch_array($result)) {
                     array_push($results, $row);
                 }
-                $db->close();
+                mysqli_close($db);
                 return $results;
             }
         }
@@ -1552,16 +1552,16 @@
             if($hasRequest){
                 if($hasRequest['ativo'] == 0) {
                     $friendRequest = mysqli_query($db,"update SOLICITACAO_AMIGO set ativo = 1 where (amigo = $user and perfil = $friend) or (perfil = $user and amigo = $friend)");    
-                    if($friendRequest) {$db->close();return $friendRequest;}
-                    else {$db->close();return false;}
+                    if($friendRequest) {mysqli_close($db);return $friendRequest;}
+                    else {mysqli_close($db);return false;}
                 }
             } else {
                 $friendRequest = mysqli_query($db,"insert into SOLICITACAO_AMIGO (perfil, amigo, dateEnvio) values ($user, $friend, CURRENT_TIMESTAMP)");
                 if($friendRequest) {
-                    $db->close();
+                    mysqli_close($db);
                     return $friendRequest;
                 } else {
-                    $db->close();
+                    mysqli_close($db);
                     return false;
                 }
             }
@@ -1575,10 +1575,10 @@
         if($db_type == 'mysql'){
             $friendRequest = mysqli_query($db,"update SOLICITACAO_AMIGO set ativo = 0 where perfil = $user and amigo = $friend");
             if($friendRequest) {
-                $db->close();
+                mysqli_close($db);
                 return $friendRequest;
             } else {
-                $db->close();
+                mysqli_close($db);
                 return false;
             }
         }
@@ -1592,10 +1592,10 @@
             $friendRequest = mysqli_query($db,"update SOLICITACAO_AMIGO set ativo = 0 where amigo = $user and perfil = $friend");
             $friendAdd = mysqli_query($db,"insert into amigo (amigo, perfil, dateAceito) values ($user, $friend, CURRENT_TIMESTAMP)");
             if($friendAdd) {
-                $db->close();
+                mysqli_close($db);
                 return $friendAdd;
             } else {
-                $db->close();
+                mysqli_close($db);
                 return false;
             }
         }
@@ -1608,10 +1608,10 @@
         if($db_type == 'mysql'){
             $friendRequest = mysqli_query($db,"update SOLICITACAO_AMIGO set ativo = 0 where amigo = $user and perfil = $friend");
             if($friendRequest) {
-                $db->close();
+                mysqli_close($db);
                 return $friendRequest;
             } else {
-                $db->close();
+                mysqli_close($db);
                 return false;
             }
         }
@@ -1640,7 +1640,7 @@
                 while ($row = mysqli_fetch_array($result)) {
                     array_push($results, $row);
                 }
-                $db->close();
+                mysqli_close($db);
                 return $results;
             }
         }
@@ -1653,10 +1653,10 @@
         if($db_type == 'mysql'){
             $delFriend = mysqli_query($db,"update amigo set ativo = 0 where (perfil = $user and amigo = $friend) or (amigo = $user and perfil = $friend)");
             if($delFriend) {
-                $db->close();
+                mysqli_close($db);
                 return $delFriend;
             } else {
-                $db->close();
+                mysqli_close($db);
                 return false;
             }
         }
@@ -1714,7 +1714,7 @@
                 while ($row = mysqli_fetch_array($result)) {
                     array_push($results, $row);
                 }
-                $db->close();
+                mysqli_close($db);
                 return $results;
             }
         }
@@ -1788,7 +1788,7 @@
                 while ($row = mysqli_fetch_array($result)) {
                     array_push($results,$row);
                 }
-                $db->close();
+                mysqli_close($db);
                 return $results;
             }
         }
@@ -1874,10 +1874,10 @@
                     while ($row = mysqli_fetch_array($result)) {
                         array_push($results, $row);
                     }
-                    $db->close();
+                    mysqli_close($db);
                     return $results;
                 } else {
-                    $db->close();
+                    mysqli_close($db);
                     return false;
                 }
             }
@@ -1897,10 +1897,10 @@
                     porto.perfil = $user");
                 if($result) {
                     $result = mysqli_fetch_array($result)['total'];
-                    $db->close();
+                    mysqli_close($db);
                     return $result;
                 } else {
-                    $db->close();
+                    mysqli_close($db);
                     return false;
                 }
             }
@@ -1916,10 +1916,10 @@
                 $result=mysqli_query($db,"select count(*) as total from porto where ativo=1");
                 if($result){
                     $result = mysqli_fetch_array($result)['total'];
-                    $db->close();
+                    mysqli_close($db);
                     return $result;
                 } else {
-                    $db->close();
+                    mysqli_close($db);
                     return false;
                 }
             }
@@ -1966,10 +1966,10 @@
                 order by porto_participa.dataregis desc");
                 if($response) {
                     $response = mysqli_fetch_array($response);
-                    $db->close();
+                    mysqli_close($db);
                     return $response;
                 } else {
-                    $db->close();
+                    mysqli_close($db);
                     return false;
                 }
             }
@@ -1992,10 +1992,10 @@
                 $verify = mysqli_query($db,"insert into porto (perfil,nome,descr,img) values ('".$perfil."', '".$nome."', '".$descr."', '".$link."'".")");
                 $portoId = $db->insert_id;
                 if($portoId) {
-                    $db->close();
+                    mysqli_close($db);
                     return $portoId;
                 } else {
-                    $db->close();
+                    mysqli_close($db);
                     return false;
                 }
             }
@@ -2017,10 +2017,10 @@
             if($db_type == 'mysql'){
                 $response = mysqli_query($db,"update porto set ativo = 0 where codigo = $porto");
                 if($response) {
-                    $db->close();
+                    mysqli_close($db);
                     return $response;
                 } else {
-                    $db->close();
+                    mysqli_close($db);
                     return false;
                 }
             }
@@ -2041,19 +2041,19 @@
             if($response['participa'] == 'off') {
                 $response2 = mysqli_query($db,"update porto_participa set ativo = 1, dataregis = CURRENT_TIMESTAMP where perfil = $user and porto = $porto");
                 if($response2) {
-                    $db->close();
+                    mysqli_close($db);
                     return $response2;
                 } else {
-                    $db->close();
+                    mysqli_close($db);
                     return $response2;
                 }
             } else {
                 $response2 = mysqli_query($db,"insert into porto_participa (perfil, porto) values ($user, $porto)");
                 if($response2) {
-                    $db->close();
+                    mysqli_close($db);
                     return $response2;
                 } else {
-                    $db->close();
+                    mysqli_close($db);
                     return $response2;
                 }
             }
@@ -2068,10 +2068,10 @@
         if($db_type == 'mysql'){
             $response = mysqli_query($db,"update porto_participa set ativo = 0 where perfil = $user and porto = $porto");
             if($response) {
-                $db->close();
+                mysqli_close($db);
                 return $response;
             } else {
-                $db->close();
+                mysqli_close($db);
                 return false;
             }
         }
@@ -2101,10 +2101,10 @@
             if($db_type == 'mysql'){
                 $verify = mysqli_query($db,"update porto set nome='$newname',descr='$newdescr' ".($link ? ",img='$link'" : " ")." where codigo=$porto and ativo=1");
                 if($verify) {
-                    $db->close();
+                    mysqli_close($db);
                     return $verify;
                 } else {
-                    $db->close();
+                    mysqli_close($db);
                     return false;
                 }
             }
@@ -2320,7 +2320,7 @@
                     }
                     $postsArray[$row['codInteracao']]['comentarios'] = $childInteracoes;
                 }
-                $db->close();
+                mysqli_close($db);
                 return $postsArray;
             }
         }
@@ -2354,7 +2354,7 @@
                 while ($row = mysqli_fetch_array($result)) {
                     array_push($results, $row);
                 }
-                $db->close();
+                mysqli_close($db);
                 return $results;
             }
         }
@@ -2383,7 +2383,7 @@
                 while ($row = mysqli_fetch_array($result)) {
                     array_push($results, $row);
                 }
-                $db->close();
+                mysqli_close($db);
                 return $results;
             }
         }
@@ -2533,7 +2533,7 @@
                         }
                     }
                 } else {
-                    $db->close();
+                    mysqli_close($db);
                     return false;
                 }
             }
@@ -2562,10 +2562,10 @@
             ".($local ? $local : 'null').")");
             if($response){
                 $res = $db->insert_id;
-                $db->close();
+                mysqli_close($db);
                 return $res;
             } else {
-                $db->close();
+                mysqli_close($db);
                 return false;
             }
         }
@@ -2580,10 +2580,10 @@
             if($response) {
                 $response2 = mysqli_query($db,"update citacao set ativo = 0 where interacao = $post");
                 $response3 = mysqli_query($db,"update interacao_assunto set ativo = 0 where interacao = $post");
-                $db->close();
+                mysqli_close($db);
                 return $response;
             } else {
-                $db->close();
+                mysqli_close($db);
                 return false;
             }
         }
@@ -2602,10 +2602,10 @@
             //$txt = implode($txt, ', ');
             $response = mysqli_query($db,"update interacao set $txt where codigo = $interacao");
             if($response) {
-                $db->close();
+                mysqli_close($db);
                 return true;
             } else {
-                $db->close();
+                mysqli_close($db);
                 return false;
             }
         }
@@ -2621,18 +2621,18 @@
             if($check){
                 $response = mysqli_query($db,"update citacao set ativo = 1 where perfil = $user and interacao = $post");
                 if($response) {
-                    $db->close();
+                    mysqli_close($db);
                     return $response;
                 } else {
-                    $db->close();return false;
+                    mysqli_close($db);return false;
                 }
             } else {
                 $response = mysqli_query($db,"insert into citacao (perfil, interacao) values ($user, $post)");
                 if($response) {
-                    $db->close();
+                    mysqli_close($db);
                     return $response;
                 } else {
-                    $db->close();return false;
+                    mysqli_close($db);return false;
                 }
             }
         }
@@ -2645,10 +2645,10 @@
         if($db_type == 'mysql'){
             $response = mysqli_query($db,"update citacao set ativo = 0 where interacao = $post and perfil = $pessoa");
             if($response) {
-                $db->close();
+                mysqli_close($db);
                 return $response;
             } else {
-                $db->close();
+                mysqli_close($db);
                 return false;
             }
         }
@@ -2661,10 +2661,10 @@
         if($db_type == 'mysql'){
             $response = mysqli_query($db,"insert into interacao_assunto (interacao, assunto) values ($post, $assunto)");
             if($response) {
-                $db->close();
+                mysqli_close($db);
                 return $response;
             } else {
-                $db->close();
+                mysqli_close($db);
                 return false;
             }
         }
@@ -2677,10 +2677,10 @@
         if($db_type == 'mysql'){
             $response = mysqli_query($db,"update interacao_assunto set ativo = 0 where interacao = $post and assunto = $assunto");
             if($response) {
-                $db->close();
+                mysqli_close($db);
                 return $response;
             } else {
-                $db->close();
+                mysqli_close($db);
                 return false;
             }
         }
@@ -2700,7 +2700,7 @@
                 while ($row = $interacaoMasc->fetch_array()) {
                     array_push($results, $row);
                 }
-                $db->close();
+                mysqli_close($db);
                 return $results;
             }
         }   
@@ -2716,7 +2716,7 @@
                 while ($row = $interacaoFem->fetch_array()) {
                     array_push($results, $row);
                 }
-                $db->close();
+                mysqli_close($db);
                 return $results;
             }
         }   
@@ -2759,11 +2759,11 @@
                 while ($row = mysqli_fetch_array($response)){
                     array_push($results,$row);
                 }
-                $db->close();
+                mysqli_close($db);
                 return($results);
             }
             else {
-                $db->close();
+                mysqli_close($db);
                 return false;
             }
         } 
@@ -2807,11 +2807,11 @@
             )");
             if($response) {
                 $response = mysqli_fetch_array($response)['qt'];
-                $db->close();
+                mysqli_close($db);
                 return $response;
             }
             else {
-                $db->close();
+                mysqli_close($db);
                 return false;
             }
         }
@@ -2875,10 +2875,10 @@
             );
             if($response) {
                 $response = mysqli_fetch_array($response);
-                $db->close();
+                mysqli_close($db);
                 return $response;
             } else {
-                $db->close();
+                mysqli_close($db);
                 return false;
             }
         };
@@ -2947,12 +2947,12 @@
                     array_push($results,$row);
                 }
                 {
-                    $db->close();
+                    mysqli_close($db);
                     return $results;
                 }
             }
             else {
-                $db->close();
+                mysqli_close($db);
                 return false;
             }
         }
@@ -3080,12 +3080,12 @@
                     array_push($results,$row);
                 }
                 {
-                    $db->close();
+                    mysqli_close($db);
                     return $results;
                 }
             }
             else {
-                $db->close();
+                mysqli_close($db);
                 return false;
             }
         }
@@ -3133,11 +3133,11 @@
             $query7=mysqli_query($db,"update solicitacao_amigo set ativo=0 where solicitacao_amigo.perfil in (select codigo from perfil where ativo=0) or solicitacao_amigo.amigo in (select codigo from perfil where ativo=0)");
 
             if($query1&&$query2&&$query3&&$query4&&$query5&&$query6&&$query7) {
-                $db->close();
+                mysqli_close($db);
                 return true;
             }
             else {
-                $db->close();
+                mysqli_close($db);
                 return false;
             }
         }

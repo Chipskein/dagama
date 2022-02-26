@@ -10,7 +10,7 @@
 </head>
 <body>
 <?php
-include '../backend/infra/connection.php';
+include '../backend/infra/services.php';
 if(!isset($_SESSION)) { 
     session_start(); 
 }
