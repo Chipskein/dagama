@@ -12,10 +12,6 @@
 </head>
 <body>
   <?php 
-    echo "<pre>";
-    var_dump($_SERVER);
-    echo "</pre>";
-
     include '../backend/infra/connection.php';
     session_start();
     if(isset($_SESSION['userid'])){
