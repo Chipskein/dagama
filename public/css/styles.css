@@ -299,7 +299,7 @@ a {
 	div#img_perfil {
 		width: 90px;
 		height: 90px;
-		background-image: url("imgs/icons/user-icon.png");
+		background-image: url("../imgs/icons/user-icon.png");
 		background-size: cover;
 		background-position: center;
 		border-radius: 50%;
