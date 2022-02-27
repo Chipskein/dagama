@@ -10,7 +10,10 @@ O projeto dagama inicialmente foi desenvolvido por:
 * [Silvio Quintana](https://github.com/SilvioGQ)
 * [Adriele Colossi](https://github.com/adrielecolossi)
 
-**Já esta versão se trata de uma versão com outro banco de dados(Mysql),refatorada e com alguns features removidos**
+**Já esta versão se trata de uma versão com outro banco de dados(Mysql),refatorada e com alguns features removidos estes sendo:**
+* Selos
+* Localização(cidade,estado) para apenas paises
+
 ## Para Testar
   [Heroku](https://dagama.herokuapp.com/)
 ## Caso rode local
