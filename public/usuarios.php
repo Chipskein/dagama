@@ -83,7 +83,7 @@
                           echo "<p class=\"\">Email é $user[email]</p>";
                           echo "<p class=\"\">Nasceu em $datanasc</p>";
                           echo "<p class=\"\">Genero é $user[genero]</p>";
-                          echo "<p class=\"\">Mora em $user[cidade]</p>";
+                          echo "<p class=\"\">Mora em $user[pais]</p>";
                           echo "<p class=\"\">Ativo $user[ativo]</p>";
                       echo "</div>";
                   echo "</div>";

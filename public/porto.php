@@ -29,12 +29,12 @@
           upsertSelo($participante['codPart'], $_GET['porto']);
         }
       }
-      $locaisArray = getLocais();
+      $locaisArray = [];
       $assuntosArray = getAssuntos();
       $pessoasArray = getPessoas();
       $paises=getPaises();
-      $estados=getStates();
-      $cidades=getCities();
+      $estados=[];
+      $cidades=[];
       // $selo = 0;
       if(isset($_POST['entrarPorto'])){
         $response = entrarPorto($_SESSION['userid'], $_GET['porto']);

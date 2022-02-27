@@ -18,7 +18,7 @@
     $user = getUserInfo("$_SESSION[userid]");
     $post = getOriginalPost($_GET['interacao']);
     $postPai = $post['postPai'] ? $post['postPai'] : $_GET['interacao'];
-    $locaisArray = getLocais();
+    $locaisArray = [];
     $assuntosArray = getAssuntos();
     $pessoasArray = getPessoas();
     $qtdPortos = getTotalPorto();
@@ -30,8 +30,8 @@
       $friends = getFriends($_SESSION['userid'], 0, $qtdAmigos,'');
     } 
     $paises=getPaises();
-    $estados=getStates();
-    $cidades=getCities();
+    $estados=[];
+    $cidades=[];
     $errorMessage = [];
     if(isset($_POST['buttonAssunto'])){
       $addAssunto = addAssunto("$_POST[buttonAssunto]");

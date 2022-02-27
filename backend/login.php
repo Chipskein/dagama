@@ -36,7 +36,7 @@
                     }
                     else{
                         echo "<h2 align=center>Ative seu usuario</h2>";
-                        header("refresh:1;url=../validate_acc.php?id=$passed[codigo]");
+                        header("refresh:1;url=../backend/validate_acc.php?id=$passed[codigo]");
                         die();
                     }
                 }

@@ -23,12 +23,12 @@
       $originalPost = getOriginalPost($post['codPost']);
     }
     $postPai = $post['postPai'] ? $post['postPai'] : $_GET['interacao'];
-    $locaisArray = getLocais();
+    $locaisArray = [];
     $assuntosArray = getAssuntos();
     $pessoasArray = getPessoas();
     $paises=getPaises();
-    $estados=getStates();
-    $cidades=getCities();
+    $estados=[];
+    $cidades=[];
     $errorMessage = [];
     if(isset($_POST['editarPost'])){
       $texto = ''.$_POST['texto'];

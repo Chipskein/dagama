@@ -143,185 +143,7 @@
             }
         }
         else exit;
-    };
-    function addPais($nome){
-        $db_connection=db_connection();
-        $db=$db_connection['db'];
-        $db_type=$db_connection['db_type'];
-        if($db_type == 'mysql'){
-            $response = mysqli_query($db,"insert into pais (nome) values ('$nome')");
-            if($response) {
-                $res = $db->insert_id;
-                mysqli_close($db);
-                return $res;
-            } else {
-                mysqli_close($db);
-                return false;
-            }
-        }
-        else exit;
-    }
-    /*
-    function delPais($pais){
-        $db_connection=db_connection();
-        $db=$db_connection['db'];
-        $db_type=$db_connection['db_type'];
-        if($db_type == 'mysql'){
-            $cidades = mysqli_query($db,"select cidade.codigo from cidade
-                    join uf on uf.codigo = cidade.uf
-                where uf.pais = $pais");
-            $results = [];
-            if($cidades){
-                while ($row = $cidades->fetch_array()) {
-                    array_push($results, $row['codigo']);
-                }
-            }
-            $response = mysqli_query($db,"update pais set ativo = 0 where codigo = $pais");
-            $response2 = mysqli_query($db,"update uf set ativo = 0 where pais = $pais");
-            if(count($results) > 0) {
-                $results = implode($results, ', ');
-                $response3 = mysqli_query($db,"update cidade set ativo = 0 where codigo in ($results)");
-            }
-            if($response) {
-                mysqli_close($db);
-                return $response;
-            }
-            else {
-                mysqli_close($db);
-                return false;
-            }
-        }
-        else exit;
-    }
-    */
-    function getStates(){
-        $db_connection = db_connection();
-        $db = $db_connection['db'];
-        $db_type = $db_connection['db_type'];
-        if($db){
-            if($db_type == 'mysql'){
-                $results=[];
-                $result = mysqli_query($db,"select * from uf where ativo = 1");
-                while ($row = mysqli_fetch_array($result)) {
-                    array_push($results,$row);
-                }
-                mysqli_close($db);
-                return $results;
-            }
-        }
-        else exit;
-    };
-    function addEstado($nome, $pais){
-        $db_connection=db_connection();
-        $db=$db_connection['db'];
-        $db_type=$db_connection['db_type'];
-        if($db_type == 'mysql'){
-            $response = mysqli_query($db,"insert into uf (nome, pais) values ('$nome', $pais)");
-            if($response) {
-                $res = $db->insert_id;
-                mysqli_close($db);
-                return $res;
-            }
-            else {
-                mysqli_close($db);
-                return false;
-            }
-        }
-        else exit;
-    }
-    function delEstado($estado){
-        $db_connection=db_connection();
-        $db=$db_connection['db'];
-        $db_type=$db_connection['db_type'];
-        if($db_type == 'mysql'){
-            $response = mysqli_query($db,"update cidade set ativo = 0 where codigo = $estado");
-            $response2 = mysqli_query($db,"update cidade set ativo = 0 where uf = $estado");
-            if($response) {
-                mysqli_close($db);
-                return $response;
-            } else {
-                mysqli_close($db);
-                return false;
-            }
-        }
-        else exit;
-    }
-    function getCities(){
-        $db_connection = db_connection();
-        $db = $db_connection['db'];
-        $db_type = $db_connection['db_type'];
-        if($db){
-            if($db_type == 'mysql'){
-                $results=[];
-                $result = mysqli_query($db,"select * from cidade where ativo = 1");
-                while ($row = mysqli_fetch_array($result)) {
-                    array_push($results,$row);
-                }
-                mysqli_close($db);
-                return $results;
-            }
-        }
-        else exit;
-    };
-    function addCidade($nome, $estado){
-        $db_connection=db_connection();
-        $db=$db_connection['db'];
-        $db_type=$db_connection['db_type'];
-        if($db_type == 'mysql'){
-            $response = mysqli_query($db,"insert into cidade (nome, uf) values ('$nome', $estado)");
-            if($response) {
-                $res = $db->insert_id;
-                mysqli_close($db);
-                return $res;
-            } else {
-                mysqli_close($db);
-                return false;
-            }
-        }
-        else exit;
-    }
-    function delCidade($cidade){
-        $db_connection=db_connection();
-        $db=$db_connection['db'];
-        $db_type=$db_connection['db_type'];
-        if($db_type == 'mysql'){
-            $response = mysqli_query($db,"update cidade set ativo = 0 where codigo = $cidade");
-            if($response) {
-                mysqli_close($db);
-                return $response;
-            } else {
-                mysqli_close($db);
-                return false;
-            }
-        }
-        else exit;
-    }
-    function getLocais(){
-        $db_connection = db_connection();
-        $db = $db_connection['db'];
-        $db_type = $db_connection['db_type'];
-        if($db){
-            $results=[];
-            if($db_type == 'mysql'){
-                $response = mysqli_query($db,"select cidade.codigo as codCidade, cidade.nome as nomeCidade, uf.codigo as codUf, uf.nome as nomeUf, pais.codigo as codPais, pais.nome as nomePais from cidade
-                    join uf on cidade.uf = uf.codigo
-                    join pais on uf.pais = pais.codigo
-                group by cidade.codigo");
-                if($response){
-                    while ($row = mysqli_fetch_array($response)) {
-                        array_push($results, $row);
-                    }
-                    mysqli_close($db);
-                    return $results; 
-                }
-                else {
-                    mysqli_close($db);
-                    return false;
-                }
-            }
-        }
-        else exit;
-    };
+    }; 
     /*---------------------------------------------------------*/
     
     /* ASSUNTOS */
@@ -398,7 +220,7 @@
         }
         else exit;
     }
-    function Register($email, $password, $bdate, $username, $genero, $cidade,$photo){
+    function Register($email, $password, $bdate, $username, $genero, $pais,$photo){
         $db_connection=db_connection();
         $db=$db_connection['db'];
         $db_type=$db_connection['db_type'];
@@ -411,7 +233,7 @@
         }
         if($db){
             if($db_type == 'mysql'){
-                $verify = mysqli_query($db,"insert into perfil (cidade, email, senha, genero, username, datanasc,img) values ('".$cidade."', '".$email."', '".$password."', '".$genero."', '".$username."', '".$bdate."', '".$link."'".")");
+                $verify = mysqli_query($db,"insert into perfil (pais, email, senha, genero, username, datanasc,img) values ('".$pais."', '".$email."', '".$password."', '".$genero."', '".$username."', '".$bdate."', '".$link."'".")");
                 if($verify) {
                     mysqli_close($db);
                     return $verify;
@@ -469,7 +291,7 @@
         $db_type = $db_connection['db_type'];
         if($db){
             if($db_type == 'mysql'){
-                $response = mysqli_query($db,"select codigo, email, ativo, img, username, cidade from perfil where codigo=$id");
+                $response = mysqli_query($db,"select codigo, email, ativo, img, username, pais from perfil where codigo=$id");
                 if($response) return mysqli_fetch_array($response);
                 else return false;
             }
@@ -482,7 +304,7 @@
         $db_type = $db_connection['db_type'];
         if($db){
             if($db_type == 'mysql'){
-                $response = mysqli_query($db,"select codigo, email, ativo, img, username, cidade from perfil where codigo='$id' and ativo=1 ");
+                $response = mysqli_query($db,"select codigo, email, ativo, img, username, pais from perfil where codigo='$id' and ativo=1 ");
                 if($response) return mysqli_fetch_array($response);
                 else return false;
             }
@@ -621,6 +443,7 @@
     /*----------------------------------------*/
 
     /* FEED */
+    /*
     function getPosts($user, $offset,$limit,$order){
         $db_connection=db_connection();
         $db=$db_connection['db'];
@@ -1364,6 +1187,8 @@
         }
         else exit;
     }
+    /* 
+    */
     /*
     function OndasDoMomento($top,$cidade){
         $db_connection=db_connection();
@@ -1621,6 +1446,7 @@
         }
         else exit;
     }
+    /*
     function getRequestAndFriends($user, $isOwner){
         $db_connection=db_connection();
         $db=$db_connection['db'];
@@ -1652,6 +1478,7 @@
         }
         else exit;
     }
+    */
     function delFriend($user, $friend){
         $db_connection=db_connection();
         $db=$db_connection['db'];

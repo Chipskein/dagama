@@ -36,8 +36,8 @@
  */
  include '../backend/infra/services.php';
   $paises=getPaises();
-  $estados=getStates();
-  $cidades=getCities();
+  $estados=[];
+  $cidades=[];
   $grupos=getGrupos();
   //utils
   echo "<script>";

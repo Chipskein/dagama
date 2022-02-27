@@ -36,13 +36,13 @@
     $limit = 5;
     $offset = isset($_GET['offset']) ? $_GET['offset'] : 0;
     $orderby = (isset($_GET["orderby"])) ? $_GET["orderby"] : "tmp1.data desc";
-    $locaisArray = getLocais();
+    $locaisArray = [];
     $assuntosArray = getAssuntos();
     $pessoasArray = getPessoas();
     $topAssuntos=OndasDoMomento(3,$user['cidade']);
     $paises=getPaises();
-    $estados=getStates();
-    $cidades=getCities();
+    $estados=[];
+    $cidades=[];
     $suggestFriends = suggestFriends($_SESSION['userid'], 4, 0); // AQUIII
     $postsArray = getPosts($_SESSION['userid'], $offset, $limit, $orderby);
     $getAllPosts = getAllPosts($_SESSION['userid']);

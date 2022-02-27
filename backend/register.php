@@ -119,7 +119,7 @@ include './infra/services.php';
                     if(!preg_match("/^([a-z0-9áạàảãăắặằẳẵâấậầẩẫéẹèẻẽêếệềểễíịìỉĩóọòỏõôốộồổỗơớợờởỡúụùủũưứựừửữýỵỳỷỹđA-ZÁẠÀẢÃĂẮẶẰẲẴÂẤẬẦẨẪÉẸÈẺẼÊẾỆỀỂỄÍỊÌỈĨÓỌÒỎÕÔỐỘỒỔỖƠỚỢỜỞỠÚỤÙỦŨƯỨỰỪỬỮÝỴỲỶỸĐ]+)?(( [a-z0-9áạàảãăắặằẳẵâấậầẩẫéẹèẻẽêếệềểễíịìỉĩóọòỏõôốộồổỗơớợờởỡúụùủũưứựừửữýỵỳỷỹđA-ZÁẠÀẢÃĂẮẶẰẲẴÂẤẬẦẨẪÉẸÈẺẼÊẾỆỀỂỄÍỊÌỈĨÓỌÒỎÕÔỐỘỒỔỖƠỚỢỜỞỠÚỤÙỦŨƯỨỰỪỬỮÝỴỲỶỸĐ]+)?)+$/", $_POST['newcidade']) || trim($_POST['newcidade']) == "") $erros[] = "Nome de cidade inválido";
                 }
                 if($_POST['estado'] != "outro" && $_POST['estado'] != "null") {
-                    $estadosArray = getStates();
+                    $estadosArray = [];
                     $c2 = 1;
                     $found2 = 0;
                     foreach ($estadosArray as $estado) {
@@ -137,7 +137,7 @@ include './infra/services.php';
                         if(!preg_match("/^([a-z0-9áạàảãăắặằẳẵâấậầẩẫéẹèẻẽêếệềểễíịìỉĩóọòỏõôốộồổỗơớợờởỡúụùủũưứựừửữýỵỳỷỹđA-ZÁẠÀẢÃĂẮẶẰẲẴÂẤẬẦẨẪÉẸÈẺẼÊẾỆỀỂỄÍỊÌỈĨÓỌÒỎÕÔỐỘỒỔỖƠỚỢỜỞỠÚỤÙỦŨƯỨỰỪỬỮÝỴỲỶỸĐ]+)?(( [a-z0-9áạàảãăắặằẳẵâấậầẩẫéẹèẻẽêếệềểễíịìỉĩóọòỏõôốộồổỗơớợờởỡúụùủũưứựừửữýỵỳỷỹđA-ZÁẠÀẢÃĂẮẶẰẲẴÂẤẬẦẨẪÉẸÈẺẼÊẾỆỀỂỄÍỊÌỈĨÓỌÒỎÕÔỐỘỒỔỖƠỚỢỜỞỠÚỤÙỦŨƯỨỰỪỬỮÝỴỲỶỸĐ]+)?)+$/", $_POST['newcidade']) || trim($_POST['newcidade']) == "") $erros[] = "Nome de cidade inválido";
                     }
                     if($_POST['cidade'] != "outro" && $_POST['cidade'] != "null") {
-                        $cidadesArray = getCities();
+                        $cidadesArray = [];
                         $c3 = 1;
                         $found3 = 0;
                         foreach ($cidadesArray as $cidade) {
@@ -169,7 +169,7 @@ include './infra/services.php';
             $username = "$_POST[username]";
             $password = password_hash("$_POST[password]", PASSWORD_DEFAULT);
             $bdate = "$_POST[bdate]";//converter bdate to yyyy/mm/dd
-            
+            /*
             if($_POST['pais'] == "outro"){
                 $pais = addPais($_POST['newpais']);
                 $estado = addEstado($_POST['newestado'], $pais);
@@ -185,13 +185,14 @@ include './infra/services.php';
             if($_POST['cidade'] != "outro" && $_POST['cidade'] != "null"){
                 $cidade = $_POST['cidade'];
             }
-            
+            */
+            $pais=$_POST["pais"];
             $genero = "$_POST[genero]";
             $photo = null;
             if($_FILES['photo']['tmp_name'])
             $photo = is_uploaded_file($_FILES['photo']['tmp_name']) ? $_FILES['photo'] : null;
 
-            $registered = Register($email, $password, $bdate, $username, $genero, $cidade, $photo);
+            $registered = Register($email, $password, $bdate, $username, $genero, $pais, $photo);
             if($registered){
                 $id=getIdbyEmail($email);
                 header("refresh:2;url=./validate_acc.php?id=$id");

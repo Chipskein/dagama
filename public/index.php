@@ -20,32 +20,6 @@
       die();
     }
     $paises=getPaises();
-    $estados=getStates();
-    $cidades=getCities();
-    
-    echo "<script>";
-      echo "let states=[];";
-      echo "let cities=[];";
-      foreach($estados as $estado){
-        echo "estado={";
-        echo "pais:$estado[pais],";
-        echo "codigo:$estado[codigo],";
-        echo "nome:\"$estado[nome]\"";
-        echo "};";
-        echo "states.push(estado);";
-      }
-      foreach($cidades as $cidade){
-        echo "cidade={";
-        echo "uf:$cidade[uf],";
-        echo "codigo:$cidade[codigo],";
-        echo "nome:\"$cidade[nome]\"";
-        echo "};";
-        echo "cities.push(cidade);";
-      }
-      echo "estado=null;";
-      echo "cidade=null;";
-    echo "</script>";
-    
   ?>
   <div id="main">
     <div class="divLogo">
@@ -97,24 +71,12 @@
             </select>
             <select class="inputs" name="pais" id='pais'>
               <option value="null" selected>Selecione o seu pais:</option>
-              <option value="outro">Adicionar Pais:</option>
               <?php
                 foreach($paises as $pais){
                     echo "<option value=$pais[codigo]>$pais[nome]</option>";
                 }
               ?>
-            </select>
-            <input type='text' class="inputs hide-visibility" name='newpais' id='newpais' placeholder='Digite um novo pais'>
-            <select class="inputs hide-visibility" name="estado" id=estado>
-            <option value="null" selected>Selecione o seu estado:</option>
-            <option value="outro">Adicionar Estado:</option>
-            </select>
-            <input type='text' class="inputs hide-visibility" name='newestado' id='newestado' placeholder='Digite um novo estado'>
-            <select class="inputs hide-visibility" name="cidade" id=cidade>
-                <option value="null" selected>Selecione o sua cidade:</option>
-                <option value="outro">Adicionar Cidade:</option>
-            </select>
-            <input type='text' class="inputs hide-visibility" name='newcidade' id='newcidade' placeholder='Digite uma nova cidade'>           
+            </select>         
             <div id="divTermos">
               <input value='pass' name="termos" type="checkbox"> <p>Concordo com os <a href="../LICENSE" target="_blank" style="color: #7ED8FF;">termos de uso</a></p>
             </div>
