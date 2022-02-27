@@ -680,9 +680,8 @@
                     echo ", </i>";
                   }
                   echo ($comentario['textoPost'] ? $comentario['textoPost'] : '');
-                  echo ", em ";
-                  if($comentario['nomeCidade']){
-                    echo $comentario['nomeCidade'].", ".$comentario['nomePais']." - ";
+                  if(isset($comentario['nomePais'])){
+                    echo "em $comentario[nomePais]";
                   }
                   $tmpHora = explode(' ', $comentario['dataPost'])[1];
                   $tmpData = explode(' ', $comentario['dataPost'])[0];
