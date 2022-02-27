@@ -26,7 +26,7 @@ function pages($campo, $valor){
   if(!isset($_SESSION)) { 
     session_start(); 
   }
-  $amigos=getRequestAndFriends($_SESSION["userid"],false);
+  $amigos=[];//getRequestAndFriends($_SESSION["userid"],false);
   $offset=0;
   $total = 5;
   $limit = 5;

@@ -39,13 +39,13 @@
     $locaisArray = [];
     $assuntosArray = getAssuntos();
     $pessoasArray = getPessoas();
-    $topAssuntos=OndasDoMomento(3,$user['cidade']);
+    $topAssuntos=[];//OndasDoMomento(3,$user['cidade']);
     $paises=getPaises();
     $estados=[];
     $cidades=[];
-    $suggestFriends = suggestFriends($_SESSION['userid'], 4, 0); // AQUIII
-    $postsArray = getPosts($_SESSION['userid'], $offset, $limit, $orderby);
-    $getAllPosts = getAllPosts($_SESSION['userid']);
+    $suggestFriends = [];//suggestFriends($_SESSION['userid'], 4, 0); // AQUIII
+    $postsArray = [];//getPosts($_SESSION['userid'], $offset, $limit, $orderby);
+    $getAllPosts = [];//getAllPosts($_SESSION['userid']);
     $portosArray = getAllPorto($_SESSION['userid'], true, 0, 3, null);
     $portosArrayForShare = getAllPorto($_SESSION['userid'], true, 0, 0,null);
     $errorMessage = [];
@@ -74,20 +74,20 @@
         if($codPais != "" && $codEstado != "" && $codCidade != ""){
           if($codPais == 0){
             // cria novo pais, estado e cidade
-            $pais = addPais($novoPaisNome);
-            $estado = addEstado($novoEstadoNome, $pais);
-            $local = addCidade($novoCidadeNome, $estado);
+            $pais = [];//addPais($novoPaisNome);
+            $estado = [];//addEstado($novoEstadoNome, $pais);
+            $local = [];//addCidade($novoCidadeNome, $estado);
           }
           if($codPais != 0 && preg_match('#^[0-9]{1,}$#', $codPais)){  
             if($codEstado == 0){
               // cria novo estado e cidade
-              $estado = addEstado($novoEstadoNome, $codPais);
-              $local = addCidade($novoCidadeNome, $estado);
+              $estado = [];//addEstado($novoEstadoNome, $codPais);
+              $local = [];//addCidade($novoCidadeNome, $estado);
             }
           if($codEstado != 0 && preg_match('#^[0-9]{1,}$#', $codEstado)){
             if($codCidade == 0){
                 // cria nova cidade
-                $local = addCidade($novoCidadeNome, $codEstado);
+                $local = [];//addCidade($novoCidadeNome, $codEstado);
               }
               if($codCidade != 0 && preg_match('#^[0-9]{1,}$#', $codCidade)){
                 $local = $codCidade;
@@ -165,7 +165,7 @@
       if(!preg_match('#^[0-9]+$#', $_POST['sendFriendRequest'])){
         $erros[] = "A pessoa precisa ser um número";
       } else {
-        $response = getRequestAndFriends($user['codigo'], true);
+        $response = [];//getRequestAndFriends($user['codigo'], true);
         for($c = 0; $c < count($response); $c++) {
           if($response[$c]['amigo'] == $_POST['sendFriendRequest'] && $response[$c]['ativo'] == 1){
             $erros[] = "Solicitação já enviada";

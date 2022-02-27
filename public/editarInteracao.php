@@ -17,10 +17,10 @@
   if(isset($_SESSION['userid'])){
     // var_dump($_POST);
     $user = getUserInfo("$_SESSION[userid]");
-    $post = getOriginalPost($_GET['interacao']);
+    $post = [];//getOriginalPost($_GET['interacao']);
     $originalPost = [];
     if($post['isSharing']){
-      $originalPost = getOriginalPost($post['codPost']);
+      $originalPost = [];//getOriginalPost($post['codPost']);
     }
     $postPai = $post['postPai'] ? $post['postPai'] : $_GET['interacao'];
     $locaisArray = [];
@@ -50,20 +50,20 @@
         if($codPais != "" && $codEstado != "" && $codCidade != ""){
           if($codPais == 0){
             // cria novo pais, estado e cidade
-            $pais = addPais($novoPaisNome);
-            $estado = addEstado($novoEstadoNome, $pais);
-            $local = addCidade($novoCidadeNome, $estado);
+            $pais = [];//addPais($novoPaisNome);
+            $estado = [];//addEstado($novoEstadoNome, $pais);
+            $local = [];//addCidade($novoCidadeNome, $estado);
           }
           if($codPais != 0 && preg_match('#^[0-9]{1,}$#', $codPais)){  
             if($codEstado == 0){
               // cria novo estado e cidade
-              $estado = addEstado($novoEstadoNome, $codPais);
-              $local = addCidade($novoCidadeNome, $estado);
+              $estado = [];//addEstado($novoEstadoNome, $codPais);
+              $local = [];//addCidade($novoCidadeNome, $estado);
             }
           if($codEstado != 0 && preg_match('#^[0-9]{1,}$#', $codEstado)){
             if($codCidade == 0){
                 // cria nova cidade
-                $local = addCidade($novoCidadeNome, $codEstado);
+                $local = [];//addCidade($novoCidadeNome, $codEstado);
               }
               if($codCidade != 0 && preg_match('#^[0-9]{1,}$#', $codCidade)){
                 $local = $codCidade;

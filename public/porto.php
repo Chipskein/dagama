@@ -97,20 +97,20 @@
           if($codPais != "" && $codEstado != "" && $codCidade != ""){
             if($codPais == 0){
               // cria novo pais, estado e cidade
-              $pais = addPais($novoPaisNome);
-              $estado = addEstado($novoEstadoNome, $pais);
-              $local = addCidade($novoCidadeNome, $estado);
+              $pais = [];//addPais($novoPaisNome);
+              $estado = [];//addEstado($novoEstadoNome, $pais);
+              $local = [];//addCidade($novoCidadeNome, $estado);
             }
             if($codPais != 0 && preg_match('#^[0-9]{1,}$#', $codPais)){  
               if($codEstado == 0){
                 // cria novo estado e cidade
-                $estado = addEstado($novoEstadoNome, $codPais);
-                $local = addCidade($novoCidadeNome, $estado);
+                $estado = [];//addEstado($novoEstadoNome, $codPais);
+                $local = [];//addCidade($novoCidadeNome, $estado);
               }
             if($codEstado != 0 && preg_match('#^[0-9]{1,}$#', $codEstado)){
               if($codCidade == 0){
                   // cria nova cidade
-                  $local = addCidade($novoCidadeNome, $codEstado);
+                  $local = [];//addCidade($novoCidadeNome, $codEstado);
                 }
                 if($codCidade != 0 && preg_match('#^[0-9]{1,}$#', $codCidade)){
                   $local = $codCidade;
@@ -411,7 +411,7 @@
           //Share
           $sharedPost = 0;
           if($post['isSharing']){
-            $sharedPost = getOriginalPostOnPorto($post['codPost'], $_GET['porto']);
+            $sharedPost = [];//getOriginalPostOnPorto($post['codPost'], $_GET['porto']);
             echo "<p class=\"compartilhado-txt\"><i>Compartilhado</i></p>";
             echo "<div class=\"div-sharing-post\">";
               // Sharing-top

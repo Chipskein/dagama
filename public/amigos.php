@@ -42,9 +42,9 @@ function pages($campo, $valor){
         $offset=0;
         $total = 5;
         $limit = 5;
-        $amigosUser = getFriends($_GET['user'], $offset, 10,$where);
+        $amigosUser =[];//getFriends($_GET['user'], $offset, 10,$where);
         if($_SESSION['userid'] == $_GET['user']){
-          $amigos=getRequestAndFriends($_SESSION["userid"],false);
+          $amigos=[];//getRequestAndFriends($_SESSION["userid"],false);
           if(isset($_POST['desfazerAmizade'])){
             $response = delFriend($_SESSION['userid'], $_POST['amigo']);
             if($response) header("refresh:1;url=amigos.php");
@@ -54,8 +54,8 @@ function pages($campo, $valor){
       } else {
         if($_SESSION['userid']){
           $where = $_GET['username'] ? $_GET['username'] : '';
-          $amigos=getRequestAndFriends($_SESSION["userid"],false);
-          $amigosUser = getFriends($_SESSION['userid'], $offset, $limit, $where);
+          $amigos=[];//getRequestAndFriends($_SESSION["userid"],false);
+          $amigosUser = [];//getFriends($_SESSION['userid'], $offset, $limit, $where);
           if(isset($_POST['desfazerAmizade'])){
             $response = delFriend($_SESSION['userid'], $_POST['amigo']);
             if($response) header("refresh:1;url=amigos.php");

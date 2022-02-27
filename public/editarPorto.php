@@ -75,7 +75,7 @@
                   echo "Erro no update!";
                 }
             } else {
-                echo "Erro: ".implode($erros, ', ');
+                echo "Erro: ".implode(', ',$erros);
             }
         }
     }

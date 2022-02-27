@@ -16,18 +16,18 @@
   }
   if(isset($_SESSION['userid'])){
     $user = getUserInfo("$_SESSION[userid]");
-    $post = getOriginalPost($_GET['interacao']);
+    $post = [];//getOriginalPost($_GET['interacao']);
     $postPai = $post['postPai'] ? $post['postPai'] : $_GET['interacao'];
     $locaisArray = [];
     $assuntosArray = getAssuntos();
     $pessoasArray = getPessoas();
     $qtdPortos = getTotalPorto();
     $portosArrayForShare = getAllPorto($_SESSION['userid'], true, 0, $qtdPortos, null);
-    $qtdAmigos = getFriends($_SESSION['userid'], 0, 1,'');
+    $qtdAmigos = [];//getFriends($_SESSION['userid'], 0, 1,'');
     $friends = [];
     if(count($qtdAmigos) != 0){
       $qtdAmigos = $qtdAmigos[0]['qtdAmigos'];            
-      $friends = getFriends($_SESSION['userid'], 0, $qtdAmigos,'');
+      $friends = [];//getFriends($_SESSION['userid'], 0, $qtdAmigos,'');
     } 
     $paises=getPaises();
     $estados=[];
@@ -61,20 +61,20 @@
         if($codPais != "" && $codEstado != "" && $codCidade != ""){
           if($codPais == 0){
             // cria novo pais, estado e cidade
-            $pais = addPais($novoPaisNome);
-            $estado = addEstado($novoEstadoNome, $pais);
-            $local = addCidade($novoCidadeNome, $estado);
+            $pais = [];//addPais($novoPaisNome);
+            $estado = [];//addEstado($novoEstadoNome, $pais);
+            $local = [];//addCidade($novoCidadeNome, $estado);
           }
           if($codPais != 0 && preg_match('#^[0-9]{1,}$#', $codPais)){  
             if($codEstado == 0){
               // cria novo estado e cidade
-              $estado = addEstado($novoEstadoNome, $codPais);
-              $local = addCidade($novoCidadeNome, $estado);
+              $estado = [];//addEstado($novoEstadoNome, $codPais);
+              $local = [];//addCidade($novoCidadeNome, $estado);
             }
           if($codEstado != 0 && preg_match('#^[0-9]{1,}$#', $codEstado)){
             if($codCidade == 0){
                 // cria nova cidade
-                $local = addCidade($novoCidadeNome, $codEstado);
+                $local = [];//addCidade($novoCidadeNome, $codEstado);
               }
               if($codCidade != 0 && preg_match('#^[0-9]{1,}$#', $codCidade)){
                 $local = $codCidade;
@@ -167,7 +167,7 @@
           //Share
           $sharedPost = 0;
           if($post['isSharing']){
-            $sharedPost = getOriginalPost($post['codPost']);
+            $sharedPost = [];//getOriginalPost($post['codPost']);
             echo "<p class=\"compartilhado-txt\"><i>Compartilhado</i></p>";
             echo "<div class=\"div-sharing-post\">";
               // Sharing-top
@@ -194,8 +194,8 @@
                       if($key === 'nomeAssunto') $tmpArray[] = $value;
                     }
                   }
-                  echo "<p class=\"div-post-top-subjects\" title=\"".implode($tmpArray, ', ')."\"><b>";
-                  $tmpArray = implode($tmpArray, ', ');
+                  echo "<p class=\"div-post-top-subjects\" title=\"".implode(', ',$tmpArray)."\"><b>";
+                  $tmpArray = implode(', ',$tmpArray);
                   if(strlen($tmpArray) > 30){
                     $tmpArray = substr($tmpArray, 0, 27);
                     echo $tmpArray."...";
@@ -237,7 +237,7 @@
                   foreach ($sharedPost['citacoes'] as $pessoa) {
                     $tmpCitacoes[] = "@".$pessoa['nomePerfil'];
                   }
-                  $tmpCitacoes = implode($tmpCitacoes, ', ');
+                  $tmpCitacoes = implode(', ',$tmpCitacoes);
                   echo "<b><i>marcando</i></b> <i title=\"".$tmpCitacoes."\">";
                   if(strlen($tmpCitacoes) > 10){
                     $tmpCitacoes = substr($tmpCitacoes, 0, 7);
@@ -276,8 +276,8 @@
                   if($key === 'nomeAssunto') $tmpArray[] = $value;
                 }
               }
-              echo "<p class=\"div-post-top-subjects\" title=\"".implode($tmpArray, ', ')."\"><b>";
-              $tmpArray = implode($tmpArray, ', ');
+              echo "<p class=\"div-post-top-subjects\" title=\"".implode(', ',$tmpArray)."\"><b>";
+              $tmpArray = implode(', ',$tmpArray);
               if(strlen($tmpArray) > 30){
                 $tmpArray = substr($tmpArray, 0, 27);
                 echo $tmpArray."...";
@@ -336,7 +336,7 @@
                 $tmpCitacoes[] = "@".$pessoa['nomePerfil'];
                 if($pessoa['codPerfil'] == $_SESSION['userid']) $isMentioned = 1;
               }
-              $tmpCitacoes = implode($tmpCitacoes, ', ');
+              $tmpCitacoes = implode(', ',$tmpCitacoes);
               echo "<b><i>marcando</i></b> <i title=\"".$tmpCitacoes."\">";
               if(strlen($tmpCitacoes) > 10){
                 $tmpCitacoes = substr($tmpCitacoes, 0, 7);
