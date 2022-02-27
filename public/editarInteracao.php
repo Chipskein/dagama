@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="../responsive.css" media="screen and (max-width: 1680px)"/>
+    <link rel="icon" href="./imgs/icon.png" type="image/jpg">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/responsive.css" media="screen and (max-width: 1680px)"/>
     <title>Dagama | Interagir</title>
 </head>
 <body>
@@ -17,18 +18,16 @@
   if(isset($_SESSION['userid'])){
     // var_dump($_POST);
     $user = getUserInfo("$_SESSION[userid]");
-    $post = [];//getOriginalPost($_GET['interacao']);
+    $post = getOriginalPost($_GET['interacao']);
     $originalPost = [];
-    if($post['isSharing']){
+    if(isset($post['isSharing'])&&$post['isSharing']){
       $originalPost = [];//getOriginalPost($post['codPost']);
     }
-    $postPai = $post['postPai'] ? $post['postPai'] : $_GET['interacao'];
+    $postPai = isset($post['postPai']) ? $post['postPai'] : $_GET['interacao'];
     $locaisArray = [];
     $assuntosArray = getAssuntos();
     $pessoasArray = getPessoas();
     $paises=getPaises();
-    $estados=[];
-    $cidades=[];
     $errorMessage = [];
     if(isset($_POST['editarPost'])){
       $texto = ''.$_POST['texto'];
@@ -38,40 +37,8 @@
       $citacoes = [];
       
       // Local
-      $local = $user['cidade'];
-      $codPais = $_POST['insert-codigo-pais'];
-      $novoPaisNome = $_POST['insert-nome-pais'];
-      $codEstado = $_POST['insert-codigo-estado'];
-      $novoEstadoNome = $_POST['insert-nome-estado'];
-      $codCidade = $_POST['insert-codigo-cidade'];
-      $novoCidadeNome = $_POST['insert-nome-cidade'];
+      $local = $user['pais'];
 
-      if(isset($codPais) && isset($codEstado) && isset($codCidade)){
-        if($codPais != "" && $codEstado != "" && $codCidade != ""){
-          if($codPais == 0){
-            // cria novo pais, estado e cidade
-            $pais = [];//addPais($novoPaisNome);
-            $estado = [];//addEstado($novoEstadoNome, $pais);
-            $local = [];//addCidade($novoCidadeNome, $estado);
-          }
-          if($codPais != 0 && preg_match('#^[0-9]{1,}$#', $codPais)){  
-            if($codEstado == 0){
-              // cria novo estado e cidade
-              $estado = [];//addEstado($novoEstadoNome, $codPais);
-              $local = [];//addCidade($novoCidadeNome, $estado);
-            }
-          if($codEstado != 0 && preg_match('#^[0-9]{1,}$#', $codEstado)){
-            if($codCidade == 0){
-                // cria nova cidade
-                $local = [];//addCidade($novoCidadeNome, $codEstado);
-              }
-              if($codCidade != 0 && preg_match('#^[0-9]{1,}$#', $codCidade)){
-                $local = $codCidade;
-              }
-            }
-          }
-        }
-      }
       $newAssuntos = [];
       for($c = 1; $c <= 5 ; $c++){
         if(isset($_POST['insert-new-assunto'.$c])){
@@ -168,8 +135,6 @@
           echo "<div class=\"post-divLocal\">";
 
             echo "<input id=\"insert-codigo-pais\" name=\"insert-codigo-pais\" type=\"hidden\" value=\"$post[codPais]\">";
-            echo "<input id=\"insert-codigo-estado\" name=\"insert-codigo-estado\" type=\"hidden\" value=\"$post[codUF]\">";
-            echo "<input id=\"insert-codigo-cidade\" name=\"insert-codigo-cidade\" type=\"hidden\" value=\"$post[codCidade]\">";
           
             echo "<select id=\"select-pais\" onchange=\"selectPais(this)\" class=hidden >";
               echo "<option value=\"selecionar-pais\">Selecionar Pais</option>";
@@ -178,36 +143,7 @@
               }
               echo "<option value=\"0\">Outro</option>";
             echo "</select>";
-            foreach ($paises as $value) {
-              echo "<select id=\"select-estado-pais$value[codigo]\" class=\"select-estado-pais\" style=\"display: none\" onchange=\"selectEstado(this)\">";
-                echo "<option value=\"selecionar-estado\">Selecionar Estado</option>";
-                foreach ($estados as $value2) {
-                  if($value2['pais'] == $value['codigo']){
-                    echo "<option id='optionEstado$value2[codigo]' value='$value2[codigo]'>$value2[nome]</option>\n";
-                  }
-                }
-                echo "<option value=\"0\">Outro</option>";
-              echo "</select>";
-            }
-            foreach ($estados as $value) {
-              echo "<select id=\"select-cidade-estado$value[codigo]\" class=\"select-cidade-estado\" style=\"display: none\" onchange=\"selectCidade(this)\">";
-                echo "<option value=\"selecionar-cidade\">Selecionar Cidade</option>";
-                foreach ($cidades as $value2) {
-                  if($value2['uf'] == $value['codigo'] && $value2['codigo'] != $post['codCidade']){
-                    echo "<option id='optionCidade$value2[codigo]' value='{ \"id\": \"".$value2['codigo']."\", \"name\": \"".$value2['nome']."\" }'>$value2[nome]</option>\n";
-                  }
-                }
-                echo "<option value='{ \"id\": \"0\", \"name\": \"null\" }'>Outro</option>";
-              echo "</select>";
-            }
-            echo "<input id=\"insert-nome-pais\" name=\"insert-nome-pais\" placeholder=\"Digite o nome do novo pais\" class=hidden>";
-            echo "<input id=\"insert-nome-estado\" name=\"insert-nome-estado\" placeholder=\"Digite o nome do novo estado\" class=hidden>";
-            echo "<input id=\"insert-nome-cidade\" name=\"insert-nome-cidade\" placeholder=\"Digite o nome da nova cidade \" class=hidden>";
-            echo "<button id=\"select-local-button\"  class=\"confirm-type hidden\" type=\"button\" onclick=\"addLocal()\">Confirmar</button>";
-            echo "<div class=\"comment-container-top\" id=\"divCidade\">";
-            echo "<p id=\"cidade$post[codCidade]\">$post[nomeCidade] <button type=\"button\" onclick=\"removeLocal('$post[codCidade]', '$post[nomeCidade]')\">❌</button></p>";
-            echo "<input type=\"hidden\" id=\"cidadeInput$post[codCidade]\" name=\"cidade\" value=\"$post[codCidade]\">";
-            echo "</div>";
+                     
           echo "</div>";
           
           // Citações

@@ -110,7 +110,7 @@
         if($db){
             $results=[];
             if($db_type == 'mysql'){
-                $response = mysqli_query($db,"select count(*)as total from perfil");
+                $response = mysqli_query($db,"select count(*)as total from perfil where ativo=1");
                 if($response) {
                     $response = mysqli_fetch_array($response)['total'];
                     mysqli_close($db);
@@ -1047,6 +1047,7 @@
         }
         else exit;
     }
+    */
     function getOriginalPost($post){
         $db_connection=db_connection();
         $db=$db_connection['db'];
@@ -1063,10 +1064,6 @@
                         interacao.isSharing as isSharing, 
                         interacao.emote as emote,
                         interacao.ativo as ativo,
-                        cidade.nome as nomeCidade,
-                        cidade.codigo as codCidade,
-                        uf.nome as nomeUF,
-                        uf.codigo as codUF,
                         pais.nome as nomePais,
                         pais.codigo as codPais,
                         porto.codigo as codPorto,
@@ -1078,9 +1075,7 @@
                     from interacao
                         join perfil on interacao.perfil = perfil.codigo
                         left join porto on interacao.porto = porto.codigo
-                        left join cidade on interacao.local = cidade.codigo
-                        left join uf on cidade.uf = uf.codigo
-                        left join pais on uf.pais = pais.codigo
+                        left join pais on interacao.local = pais.codigo
                     where interacao.codigo = $post");
                 
                 $results2 = mysqli_query($db,"
@@ -1131,10 +1126,6 @@
                         interacao.isSharing as isSharing, 
                         interacao.emote as emote,
                         interacao.ativo as ativo,
-                        cidade.nome as nomeCidade,
-                        cidade.codigo as codCidade,
-                        uf.nome as nomeUF,
-                        uf.codigo as codUF,
                         pais.nome as nomePais,
                         pais.codigo as codPais,
                         porto.codigo as codPorto,
@@ -1142,17 +1133,11 @@
                         perfil.codigo as codPerfil, 
                         perfil.username as nomePerfil,
                         perfil.img as iconPerfil,
-                        interacao.postPai as postPai,
-                        selo.codigo as codSelo,
-                        selo.texto as nomeSelo
+                        interacao.postPai as postPai
                     from interacao
                         join perfil on interacao.perfil = perfil.codigo
-                        left join seloUser on perfil.codigo = seloUser.perfil and seloUser.porto = $porto
-                        left join selo on seloUser.selo = selo.codigo
                         left join porto on interacao.porto = porto.codigo
-                        left join cidade on interacao.local = cidade.codigo
-                        left join uf on cidade.uf = uf.codigo
-                        left join pais on uf.pais = pais.codigo
+                        left join pais on interacao.local = pais.codigo
                     where interacao.codigo = $post");
                 
                 $results2 = mysqli_query($db,"
@@ -1914,12 +1899,6 @@
         else exit;
     }
     function editarPorto($porto,$newname,$newdescr,$newimg,$oldimgid){
-        echo "<pre>";
-        var_dump($porto);
-        var_dump($newname);
-        var_dump($newdescr);
-        var_dump($newimg);
-        echo "</pre>";
         $db_connection=db_connection();
         $db=$db_connection['db'];
         $db_type=$db_connection['db_type'];
@@ -2022,25 +2001,17 @@
                             interacao.isSharing as isSharing, 
                             interacao.emote as emote,
                             interacao.ativo as ativo,
-                            selo.codigo as codSelo,
-                            selo.texto as nomeSelo,
                             case 
                                 when tmpQtd.qtd is null then 0
                                 else tmpQtd.qtd
                             end as qtdInteracao,
-                            cidade.nome as nomeCidade,
-                            uf.nome as nomeUF,
                             pais.nome as nomePais,
                             perfil.codigo as codPerfil, 
                             perfil.username as nomePerfil,
                             perfil.img as iconPerfil
                         from interacao
                             join perfil on interacao.perfil = perfil.codigo
-                            left join seloUser on perfil.codigo = seloUser.perfil and seloUser.porto = $porto
-                            left join selo on seloUser.selo = selo.codigo
-                            left join cidade on cidade.codigo = interacao.local
-                            left join uf on cidade.uf = uf.codigo
-                            left join pais on uf.pais = pais.codigo
+                            left join pais on interacao.local = pais.codigo
                             left join (select post, count(*) as qtd from interacao where interacao.postPai is not null and interacao.post is not null and interacao.ativo = 1 group by interacao.post) as tmpQtd on interacao.codigo = tmpQtd.post
                         where
                             interacao.ativo = 1 and 
@@ -2089,21 +2060,13 @@
                                         when tmpQtd.qtd is null then 0
                                         else tmpQtd.qtd
                                     end as qtdInteracao,
-                                    cidade.nome as nomeCidade,
-                                    uf.nome as nomeUF,
                                     pais.nome as nomePais,
                                     perfil.codigo as codPerfil, 
                                     perfil.username as nomePerfil,
-                                    perfil.img as iconPerfil,
-                                    selo.codigo as codSelo,
-                                    selo.texto as nomeSelo
+                                    perfil.img as iconPerfil
                                 from interacao
                                     join perfil on interacao.perfil = perfil.codigo
-                                    left join seloUser on perfil.codigo = seloUser.perfil and seloUser.porto = $porto
-                                    left join selo on seloUser.selo = selo.codigo
-                                    left join cidade on cidade.codigo = interacao.local
-                                    left join uf on cidade.uf = uf.codigo
-                                    left join pais on uf.pais = pais.codigo
+                                    left join pais on interacao.local = pais.codigo
                                     left join (select post, count(*) as qtd from interacao where interacao.postPai is not null and interacao.post is not null and interacao.ativo = 1 group by interacao.post) as tmpQtd on interacao.codigo = tmpQtd.post
                                 where 
                                     interacao.ativo = 1 and 
@@ -2169,13 +2132,9 @@
                 perfil.codigo as codPart,
                 perfil.username as nomePart,
                 perfil.img as imgPart,
-                selo.codigo as codSelo,
-                selo.texto as nomeSelo
                 from porto
                     left join porto_participa on porto.codigo = porto_participa.porto
                     left join perfil on porto_participa.perfil = perfil.codigo
-                    left join seloUser on perfil.codigo = seloUser.perfil and seloUser.porto = $porto
-                    left join selo on seloUser.selo = selo.codigo
                 where 
                     porto_participa.ativo = 1 and
                     porto.codigo = $porto
@@ -2216,157 +2175,6 @@
                 }
                 mysqli_close($db);
                 return $results;
-            }
-        }
-        else exit;
-    }
-    function upsertSelo($perfil, $porto){
-        $db_connection = db_connection();
-        $db = $db_connection['db'];
-        $db_type = $db_connection['db_type'];
-        if($db){
-            if($db_type == 'mysql'){
-                $response=mysqli_query($db,"select * from selouser where perfil=$perfil and porto=$porto");
-                $response2=mysqli_query($db,"
-                select 
-                tmp1.perfil,reaction_porcent,comments_porce
-                from 
-                (
-                    select 
-                        tmp.perfil as perfil,cast(tmp.reaction_qt*100/tmp.total as real) as reaction_porcent
-                    from
-                    (
-                        select 
-                        reactions.perfil as perfil,reactions.qt as reaction_qt,(
-                                select 
-                                count(*) as total
-                                from 
-                                interacao 
-                                    join porto on porto.codigo=interacao.porto
-                                where 
-                                porto.codigo=$porto and 
-                                interacao.post is null and interacao.ativo=1 and datetime(interacao.data) between  datetime(date('now','weekday 0','-14 days')) and datetime(date('now','weekday 0','-7 days'))
-                            ) as total
-                        from(
-                        select 
-                            interacao.perfil as perfil,count(*) as qt
-                            from 
-                            interacao 
-                            where
-                            interacao.isReaction is not null and interacao.ativo=1
-                            and datetime(interacao.data) between  datetime(date('now','weekday 0','-14 days')) and datetime(date('now','weekday 0','-7 days'))
-                            and interacao.post in(
-                                select 
-                                interacao.codigo
-                                from 
-                                interacao 
-                                    join porto on porto.codigo=interacao.porto
-                                where 
-                                porto.codigo=$porto and 
-                                interacao.post is null and interacao.ativo=1
-                            and datetime(interacao.data) between  datetime(date('now','weekday 0','-14 days')) and datetime(date('now','weekday 0','-7 days'))
-                            )
-                            group by interacao.perfil
-                        ) as reactions
-                    )as tmp
-                ) as tmp1
-                ,(
-                    select 
-                    tmp2.perfil as perfil,cast (tmp2.qt*100/tmp2.total as real) as comments_porce
-                    from
-                    (
-                        select 
-                        comments.perfil as perfil,comments.qt as qt
-                        ,(
-                            select 
-                            interacao.codigo
-                            from 
-                            interacao 
-                                join porto on porto.codigo=interacao.porto
-                            where 
-                            porto.codigo=$porto and 
-                            interacao.post is null and interacao.ativo=1
-                            and datetime(interacao.data) between  datetime(date('now','weekday 0','-14 days')) and datetime(date('now','weekday 0','-7 days'))
-                        ) as total
-                        from(
-                            select 
-                            interacao.perfil as perfil,count(*) as qt
-                            from 
-                            interacao 
-                            where
-                            interacao.isReaction is null and
-                            interacao.isSharing is null and interacao.ativo=1
-                            and datetime(interacao.data) between  datetime(date('now','weekday 0','-14 days')) and datetime(date('now','weekday 0','-7 days'))
-                            and interacao.post in(
-                                select 
-                                interacao.codigo
-                                from 
-                                interacao 
-                                    join porto on porto.codigo=interacao.porto
-                                where 
-                                porto.codigo=$porto and 
-                                interacao.post is null and interacao.ativo=1
-                            and datetime(interacao.data) between  datetime(date('now','weekday 0','-14 days')) and datetime(date('now','weekday 0','-7 days'))
-                            )
-                            group by interacao.perfil
-                        ) as comments
-                    ) as tmp2
-                ) as tmp2
-                where 
-                    tmp1.perfil=tmp2.perfil and 
-                    tmp1.perfil=$perfil
-                ");
-                if($response2){
-                    $response2=mysqli_fetch_array($response2);
-                    $selo='nenhum';
-                    $reaction_p=$response2["reaction_porcent"];
-                    $comment_p=$response2["comments_porce"];
-                    if(($reaction_p>=25)&&($comment_p>=10)){
-                        $selo='fa';
-                    }
-                    if(($reaction_p>=50)&&($comment_p>=20)){
-                        $selo='super-fa';
-                    }
-                    if($reaction_p>=75&&$comment_p>=30){
-                        $selo='ultra-fa';
-                    }
-                        
-                    echo "reaÃ§ao:$reaction_p<br>";
-                    echo "comment:$comment_p<br>";
-                    echo "selo:$selo<br>";
-                    if(mysqli_fetch_array($response)){
-                        switch($selo){
-                            case "fa":
-                                $response=mysqli_query($db,"update SELOUSER set selo=3,dateVal=datetime(date('now'),'weekday 0','+7 days') where porto=$porto and perfil=$perfil");
-                                break;
-                            case "super-fa":
-                                $response=mysqli_query($db,"update SELOUSER set selo=2,dateVal=datetime(date('now'),'weekday 0','+7 days') where porto=$porto and perfil=$perfil");
-                                break;
-                            case "ultra-fa":
-                                $response=mysqli_query($db,"update SELOUSER set selo=1,dateVal=datetime(date('now'),'weekday 0','+7 days') where porto=$porto and perfil=$perfil");
-                                break;
-                        }
-                    }
-                    else{
-                        switch($selo){
-                            case "nenhum":
-                                $response=mysqli_query($db,"delete from selouser where perfil=$perfil and porto=$porto");
-                                break;
-                            case "fa":
-                                $response=mysqli_query($db,"insert into SELOUSER(perfil,selo,porto,dateVal) VALUES($perfil,3,$porto,datetime(date('now'),'weekday 0','+7 days'))");
-                                break;
-                            case "super-fa":
-                                $response=mysqli_query($db,"insert into SELOUSER(perfil,selo,porto,dateVal) VALUES($perfil,2,$porto,datetime(date('now'),'weekday 0','+7 days'))");
-                                break;
-                            case "ultra-fa":
-                                $response=mysqli_query($db,"insert into SELOUSER(perfil,selo,porto,dateVal) VALUES($perfil,1,$porto,datetime(date('now'),'weekday 0','+7 days'))");
-                                break;
-                        }
-                    }
-                } else {
-                    mysqli_close($db);
-                    return false;
-                }
             }
         }
         else exit;
@@ -2430,7 +2238,7 @@
             ($emote ? "emote = '".$emote."'" : 'emote = null'),
             ($local ? "local = ".$local : 'local = null'),
             "data = CURRENT_TIMESTAMP"];
-            //$txt = implode($txt, ', ');
+            $txt = implode(', ',$txt);
             $response = mysqli_query($db,"update interacao set $txt where codigo = $interacao");
             if($response) {
                 mysqli_close($db);
@@ -2517,464 +2325,6 @@
         }
         else exit;
     }
-    /*-----------------------------------*/
-
-    /*----ESTATISTICAS-------------*/
-    function numerosGraficoMasc($faixamin, $faixamax, $pais, $mes){
-        $db_connection=db_connection();
-        $db=$db_connection['db'];
-        $db_type=$db_connection['db_type'];
-        if($db_type == 'mysql'){
-            $interacaoMasc = mysqli_query($db,"select count(interacao.perfil) as total, pais.nome as pais from interacao join perfil on interacao.perfil= perfil.codigo join cidade on perfil.cidade = cidade.codigo join uf on cidade.uf= uf.codigo join pais on uf.pais = pais.codigo where perfil.genero = \"M\" and pais.nome=\"$pais\" and date(interacao.data) between date('now','-$mes months') and date('now') and date(perfil.datanasc) between date('now','-$faixamax years') and date('now', '-$faixamin years')");
-            $results=[];    
-            if($interacaoMasc){
-                while ($row = mysqli_fetch_array($interacaoMasc)) {
-                    array_push($results, $row);
-                }
-                mysqli_close($db);
-                return $results;
-            }
-        }   
-    }
-    function numerosGraficoFem($faixamin, $faixamax, $pais, $mes){
-        $db_connection=db_connection();
-        $db=$db_connection['db'];
-        $db_type=$db_connection['db_type'];
-        if($db_type == 'mysql'){
-            $interacaoFem = mysqli_query($db,"select count(interacao.perfil) as total, pais.nome as pais from interacao join perfil on interacao.perfil= perfil.codigo join cidade on perfil.cidade = cidade.codigo join uf on cidade.uf= uf.codigo join pais on uf.pais = pais.codigo where perfil.genero = \"F\" and pais.nome=\"$pais\" and date(interacao.data) between date('now','-$mes months') and date('now') and date(perfil.datanasc) between date('now','-$faixamax years') and date('now', '-$faixamin years')");
-            $results=[];
-            if($interacaoFem){
-                while ($row =  mysqli_fetch_array($interacaoFem)) {
-                    array_push($results, $row);
-                }
-                mysqli_close($db);
-                return $results;
-            }
-        }   
-    }
-    //17
-    function getInterationDatabyGender($pais,$meses){
-        $db_connection=db_connection();
-        $db=$db_connection['db'];
-        $db_type=$db_connection['db_type'];
-        if($db_type == 'mysql'){
-            $response=mysqli_query($db,"
-                    select 
-                        pais.nome as pais,
-                        perfil.genero as genero,
-                        case
-                            when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) < 18 then  '- 18'
-                            when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) between 18 and 21 then '18-21'
-                            when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) between 21 and 25 then '21-25'
-                            when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) between 25 and 30 then '25-30'
-                            when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) between 30 and 36 then '30-36'
-                            when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) between 36 and 43 then '36-43'
-                            when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) between 43 and 51 then '43-51'
-                            when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) between 51 and 60 then '51-60'
-                            when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) > 60 then '60-'
-                        end as faixaEtaria,
-                        count(*) as total
-                    from interacao 
-                            join perfil on perfil.codigo=interacao.perfil
-                            join cidade on cidade.codigo=interacao.local
-                            join uf on uf.codigo=cidade.uf
-                            join pais on uf.pais=pais.codigo
-                            where 
-                                date(interacao.data) between date('now','-$meses month') and  date('now')
-                                and pais.codigo=$pais
-                        group by perfil.genero,faixaEtaria
-                        order by faixaEtaria,perfil.genero desc
-                    ");   
-            $results=[];
-            if($response){
-                while ($row = mysqli_fetch_array($response)){
-                    array_push($results,$row);
-                }
-                mysqli_close($db);
-                return($results);
-            }
-            else {
-                mysqli_close($db);
-                return false;
-            }
-        } 
-        else exit;
-    }
-    //10)
-    function countLikesbyCountry($pais,$dias,$hora,$likes){
-        $db_connection=db_connection();
-        $db=$db_connection['db'];
-        $db_type=$db_connection['db_type'];
-        if($db_type == 'mysql'){
-            $response = mysqli_query($db,"
-            select count(*) as qt
-            from 
-            (
-                select 
-                distinct
-                posts.perfil
-                from
-                ( 
-                    select 
-                    pais.nome as pais,
-                    interacao.perfil as perfil,
-                    interacao.codigo as postagem,
-                    interacao.data as postagem_timestamp
-                    from interacao
-                    join cidade on cidade.codigo=interacao.local
-                    join uf on cidade.uf=uf.codigo
-                    join pais on pais.codigo=uf.pais
-                    where 
-                        pais.codigo=$pais
-                        and interacao.isReaction is null
-                        and interacao.data between datetime('now','-$dias days') and datetime('now') 
-                ) as posts
-                join interacao on posts.postagem=interacao.post
-                where 
-                    interacao.isReaction is not null
-                    and interacao.data between datetime(posts.postagem_timestamp) and datetime(posts.postagem_timestamp,'+$hora hours')
-                group by posts.postagem
-                having count(*)>$likes
-            )");
-            if($response) {
-                $response = mysqli_fetch_array($response)['qt'];
-                mysqli_close($db);
-                return $response;
-            }
-            else {
-                mysqli_close($db);
-                return false;
-            }
-        }
-        else exit;
-    };
-    //11)
-    function getFaixaEtaria($grupo,$dia){
-        $db_connection=db_connection();
-        $db=$db_connection['db'];
-        $db_type=$db_connection['db_type'];
-        if($db_type == 'mysql'){
-            $response= $db ->query("
-                select case
-                when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) < 18 then '- 18'    
-                when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) between 18 and 21 then '18-21'
-                when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) between 21 and 25 then '21-25'
-                when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) between 25 and 30 then '25-30'
-                when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) between 30 and 36 then '30-36'
-                when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) between 36 and 43 then '36-43'
-                when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) between 43 and 51 then '43-51'
-                when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) between 51 and 60 then '51-60'
-                when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) > 60 then '60-'
-                end as faixaEtaria, count(*) as qtdReacoes
-                from interacao
-                    join perfil on interacao.perfil = perfil.codigo
-                where 
-                    date(interacao.data, 'localtime') between date('now', '-$dia days', 'localtime') and date('now', 'localtime') and
-                    interacao.codigo in (
-                        select interacao.codigo from interacao
-                            join porto on interacao.porto = porto.codigo
-                        where porto.codigo = $grupo
-                    )
-                group by faixaEtaria
-                having qtdReacoes = (
-                        select qtdReacoes from (
-                            select case
-                                when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) < 18 then  '- 18'
-                                when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) between 18 and 21 then '18-21'
-                                when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) between 21 and 25 then '21-25'
-                                when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) between 25 and 30 then '25-30'
-                                when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) between 30 and 36 then '30-36'
-                                when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) between 36 and 43 then '36-43'
-                                when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) between 43 and 51 then '43-51'
-                                when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) between 51 and 60 then '51-60'
-                                when cast((julianday('now', 'localtime')-julianday(perfil.datanasc, 'localtime'))/365.2422 as integer) > 60 then '60-'
-                            end as faixaEtaria, count(*) as qtdReacoes
-                            from interacao
-                                join perfil on interacao.perfil = perfil.codigo
-                            where 
-                                interacao.codigo in (
-                                    select interacao.codigo from interacao
-                            join porto on interacao.porto = porto.codigo
-                        where porto.codigo = $grupo
-                                ) and
-                                date(interacao.data, 'localtime') between date('now', '-$dia days', 'localtime') and date('now', 'localtime')
-                            group by faixaEtaria
-                            order by qtdReacoes desc
-                        )
-                        limit 1
-                    ) order by qtdReacoes desc"
-            );
-            if($response) {
-                $response = mysqli_fetch_array($response);
-                mysqli_close($db);
-                return $response;
-            } else {
-                mysqli_close($db);
-                return false;
-            }
-        };
-    };
-    //12)
-    function getTop($pais,$top,$mes){
-        $db_connection=db_connection();
-        $db=$db_connection['db'];
-        $db_type=$db_connection['db_type'];
-        if($db_type == 'mysql'){
-            $response= $db ->query("
-                select 
-                    pais.nome as pais,
-                    assunto.nome as assunto, 
-                    case strftime('%m',interacao.data)
-                    when '01' then 'janeiro' 
-                    when '02' then 'fevereiro' 
-                    when '03' then 'março' 
-                    when '04' then 'abril' 
-                    when '05' then 'maio' 
-                    when '06' then 'junho' 
-                    when '07' then 'julho' 
-                    when '08' then 'agosto' 
-                    when '09' then 'setembro' 
-                    when '10' then 'outubro' 
-                    when '11' then 'novembro' 
-                    when '12' then 'dezembro' 
-                    end as mes,
-                    count(assunto.nome) as qt,
-                    DENSE_RANK () OVER ( 
-                        ORDER BY count(assunto.nome) desc 
-                    ) as rank
-                    from interacao 
-                        join interacao_assunto on interacao.codigo = interacao_assunto.interacao 
-                        join assunto on interacao_assunto.assunto = assunto.codigo
-                        join cidade on interacao.local = cidade.codigo
-                        join uf on cidade.uf = uf.codigo
-                        join pais on uf.pais = pais.codigo
-                        where 
-                        pais.codigo = $pais 
-                        and  date(interacao.data, 'localtime') between date('now', '-$mes months', 'localtime') and date('now', 'localtime')
-                    group by strftime('%m',interacao.data),assunto.nome
-                    having count(*) in (
-                        select
-                        distinct
-                        count(assunto.nome) 
-                        from interacao 
-                            join interacao_assunto on interacao.codigo = interacao_assunto.interacao 
-                            join assunto on interacao_assunto.assunto = assunto.codigo
-                            join cidade on interacao.local = cidade.codigo
-                            join uf on cidade.uf = uf.codigo
-                            join pais on uf.pais = pais.codigo
-                            where 
-                            pais.codigo = $pais 
-                            and  date(interacao.data, 'localtime') between date('now', '-$mes months', 'localtime') and date('now', 'localtime')
-                        group by strftime('%m',interacao.data),assunto.nome
-                        order by count(assunto.nome) desc
-                        limit $top
-                    )
-                    order by count(assunto.nome) desc
-                    "
-            );
-            $results=[];
-            if($response){
-                while($row = mysqli_fetch_array($response)){
-                    array_push($results,$row);
-                }
-                {
-                    mysqli_close($db);
-                    return $results;
-                }
-            }
-            else {
-                mysqli_close($db);
-                return false;
-            }
-        }
-        else exit;
-    }
-    //13
-    function getAssuntMoreHyped($pais,$top,$mes){
-        $db_connection=db_connection();
-        $db=$db_connection['db'];
-        $db_type=$db_connection['db_type'];
-        if($db_type == 'mysql'){
-            $response=mysqli_query($db,"
-                select 
-                result.assunto as assunto,count(*) as total
-                from
-                (
-                    select 
-                    assunto.nome as assunto, 
-                    case strftime('%m',interacao.data)
-                    when '01' then 'janeiro' 
-                    when '02' then 'fevereiro' 
-                    when '03' then 'março' 
-                    when '04' then 'abril' 
-                    when '05' then 'maio' 
-                    when '06' then 'junho' 
-                    when '07' then 'julho' 
-                    when '08' then 'agosto' 
-                    when '09' then 'setembro' 
-                    when '10' then 'outubro' 
-                    when '11' then 'novembro' 
-                    when '12' then 'dezembro' 
-                    end as mes,
-                    count(assunto.nome) as qt
-                    from interacao 
-                        join interacao_assunto on interacao.codigo = interacao_assunto.interacao 
-                        join assunto on interacao_assunto.assunto = assunto.codigo
-                        join cidade on interacao.local = cidade.codigo
-                        join uf on cidade.uf = uf.codigo
-                        join pais on uf.pais = pais.codigo
-                        where 
-                        pais.codigo = $pais 
-                        and  date(interacao.data, 'localtime') between date('now', '-$mes months', 'localtime') and date('now', 'localtime')
-                    group by strftime('%m',interacao.data),assunto.nome
-                    having count(*) in 
-                    (
-                        select
-                        distinct
-                        count(assunto.nome) 
-                        from interacao 
-                            join interacao_assunto on interacao.codigo = interacao_assunto.interacao 
-                            join assunto on interacao_assunto.assunto = assunto.codigo
-                            join cidade on interacao.local = cidade.codigo
-                            join uf on cidade.uf = uf.codigo
-                            join pais on uf.pais = pais.codigo
-                            where 
-                            pais.codigo = $pais 
-                            and  date(interacao.data, 'localtime') between date('now', '-$mes months', 'localtime') and date('now', 'localtime')
-                        group by strftime('%m',interacao.data),assunto.nome
-                        order by count(assunto.nome) desc
-                        limit $top
-                    )
-                    order by count(assunto.nome) desc
-                ) as result
-                group by result.assunto
-                having count(*) = 
-                (
-                    select 
-                    count(*) as total
-                    from
-                    (
-                        select 
-                        assunto.nome as assunto, 
-                        case strftime('%m',interacao.data)
-                        when '01' then 'janeiro' 
-                        when '02' then 'fevereiro' 
-                        when '03' then 'março' 
-                        when '04' then 'abril' 
-                        when '05' then 'maio' 
-                        when '06' then 'junho' 
-                        when '07' then 'julho' 
-                        when '08' then 'agosto' 
-                        when '09' then 'setembro' 
-                        when '10' then 'outubro' 
-                        when '11' then 'novembro' 
-                        when '12' then 'dezembro' 
-                        end as mes,
-                        count(assunto.nome) as qt
-                        from interacao 
-                            join interacao_assunto on interacao.codigo = interacao_assunto.interacao 
-                            join assunto on interacao_assunto.assunto = assunto.codigo
-                            join cidade on interacao.local = cidade.codigo
-                            join uf on cidade.uf = uf.codigo
-                            join pais on uf.pais = pais.codigo
-                            where 
-                            pais.codigo = $pais 
-                            and  date(interacao.data, 'localtime') between date('now', '-$mes months', 'localtime') and date('now', 'localtime')
-                        group by strftime('%m',interacao.data),assunto.nome
-                        having count(*) in 
-                        (
-                            select
-                            distinct
-                            count(assunto.nome) 
-                            from interacao 
-                                join interacao_assunto on interacao.codigo = interacao_assunto.interacao 
-                                join assunto on interacao_assunto.assunto = assunto.codigo
-                                join cidade on interacao.local = cidade.codigo
-                                join uf on cidade.uf = uf.codigo
-                                join pais on uf.pais = pais.codigo
-                                where 
-                                pais.codigo = $pais 
-                                and  date(interacao.data, 'localtime') between date('now', '-$mes months', 'localtime') and date('now', 'localtime')
-                            group by strftime('%m',interacao.data),assunto.nome
-                            order by count(assunto.nome) desc
-                            limit $top
-                        )
-                        order by count(assunto.nome) desc
-                    ) as result
-                    group by result.assunto
-                    limit 1
-                )
-            ");
-            $results=[];
-            if($response){
-                while($row = mysqli_fetch_array($response)){
-                    array_push($results,$row);
-                }
-                {
-                    mysqli_close($db);
-                    return $results;
-                }
-            }
-            else {
-                mysqli_close($db);
-                return false;
-            }
-        }
-        else exit;
-    }
-    //15
-    function deactivateAllDeadUsersByCountry($pais,$limityear){
-        $db_connection=db_connection();
-        $db=$db_connection['db'];
-        $db_type=$db_connection['db_type'];
-        if($db_type == 'mysql'){
-            //desativar usuario
-            $query1=mysqli_query($db,"
-                update 
-                perfil 
-                set ativo=0 
-                where
-                    perfil.codigo not in
-                    (
-                        select
-                        distinct 
-                        perfil.codigo 
-                        from perfil
-                            join cidade on perfil.cidade=cidade.codigo
-                            join uf on cidade.uf=uf.codigo
-                            join pais on pais.codigo=uf.pais
-                            join interacao on interacao.perfil=perfil.codigo
-                        where 
-                            interacao.data between datetime('now','-$limityear years') and datetime('now')
-                            and pais.codigo=$pais
-                    )
-                    and perfil.dataregis between datetime('now','-2 days') and datetime('now')
-            ");
-            //desativar interacoes do usuario
-            $query2=mysqli_query($db,"update interacao set ativo=0 where interacao.perfil in (select codigo from perfil where ativo=0)");
-            //desativar portos do usuario
-            $query3=mysqli_query($db,"update porto set ativo=0 where porto.perfil in (select codigo from perfil where ativo=0)");
-            //desativa amizades com esse usuario
-            $query4=mysqli_query($db,"update amigo set ativo=0 where amigo.perfil in (select codigo from perfil where ativo=0) or amigo.amigo in (select codigo from perfil where ativo=0)");
-            //desativa citacoes com esse usuario
-            $query5=mysqli_query($db,"update citacao set ativo=0 where citacao.perfil in (select codigo from perfil where ativo=0)");
-            //desativa porto_participa desse usuario
-            $query6=mysqli_query($db,"update porto_participa set ativo=0 where porto_participa.perfil in (select codigo from perfil where ativo=0)");
-            //desativa solicitaçoes de amizade desse usuario
-            $query7=mysqli_query($db,"update solicitacao_amigo set ativo=0 where solicitacao_amigo.perfil in (select codigo from perfil where ativo=0) or solicitacao_amigo.amigo in (select codigo from perfil where ativo=0)");
-
-            if($query1&&$query2&&$query3&&$query4&&$query5&&$query6&&$query7) {
-                mysqli_close($db);
-                return true;
-            }
-            else {
-                mysqli_close($db);
-                return false;
-            }
-        }
-        else exit;
-    }
-
     /*-----------------------------------*/
 
 ?>
