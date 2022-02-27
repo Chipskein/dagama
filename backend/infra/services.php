@@ -628,7 +628,7 @@
                             perfil.img as iconPerfil
                         from interacao
                             join perfil on interacao.perfil = perfil.codigo
-                            left join pais on pais.local = pais.codigo
+                            left join pais on interacao.local = pais.codigo
                             left join (select post, count(*) as qtd from interacao where interacao.postPai is not null and interacao.post is not null and interacao.ativo = 1 group by interacao.post) as tmpQtd on interacao.codigo = tmpQtd.post
                         where
                             interacao.ativo = 1 and 
@@ -683,7 +683,7 @@
                                     perfil.img as iconPerfil
                                 from interacao
                                     join perfil on interacao.perfil = perfil.codigo
-                                    left join pais on pais.local = pais.codigo
+                                    left join pais on interacao.local = pais.codigo
                                     left join (select post, count(*) as qtd from interacao where interacao.postPai is not null and interacao.post is not null and interacao.ativo = 1 group by interacao.post) as tmpQtd on interacao.codigo = tmpQtd.post
                                 where 
                                     interacao.ativo = 1 and 
@@ -1173,7 +1173,7 @@
                     distinct
                     count(*) as total_per_assunto
                     from interacao 
-                    join pais on pais.codigo=pais.local
+                    join pais on pais.codigo=interacao.local
                     join INTERACAO_ASSUNTO on interacao.codigo=INTERACAO_ASSUNTO.interacao
                     join assunto on INTERACAO_ASSUNTO.assunto=assunto.codigo
                     where 
