@@ -45,7 +45,7 @@
     $paises=getPaises();
     $estados=getStates();
     $cidades=getCities();
-    $suggestFriends = suggestFriends($_SESSION['userid'], 4, 0);
+    $suggestFriends = [];//suggestFriends($_SESSION['userid'], 4, 0);
     $where = 'vi';
     $postsArray = getPosts($_SESSION['userid'], $offset, $limit, $orderby);
     $getAllPosts = getAllPosts($_SESSION['userid']);
