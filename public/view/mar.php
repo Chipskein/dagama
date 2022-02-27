@@ -24,40 +24,33 @@
       $result[$campo] = $campo."=".$valor;
       return '&'.(strtr(implode("&",$result), " ", "+"));
   }
-  include '../backend/infra/services.php';
-  if(!isset($_SESSION)) { 
-    session_start(); 
-  }
-  if(isset($_SESSION['userid'])){
-    $limit=5;//mudar pra 10 dps
-    $offset= isset($_GET['offset']) ? $_GET['offset']:0;
-    //falta o pesquisar e ordenar
-    $orderby = (isset($_GET["orderby"])) ? $_GET["orderby"] : "data desc";
-    $portos=getAllPorto($_SESSION['userid'], false, $offset, $limit, $orderby);
-    $total=getTotalPorto();
-    
-    if(isset($_POST['entrarPorto'])){
-      $response = entrarPorto($_SESSION['userid'], $_POST['entrarPorto']);
-      if(!$response){
-        echo "Erro ao entrar no porto";
-      } else {
-        header("refresh:0;url=porto.php?porto=$_POST[entrarPorto]"); 
-      }
-    }
-    if(isset($_POST['sairPorto'])){
-      $response = sairPorto($_SESSION['userid'], $_POST['entrarPorto']);
-      if(!$response){
-        echo "Erro ao sair do porto";
-      } else {
-        header("refresh:0;url=porto.php?porto=$_POST[entrarPorto]");
-      }
+
+  $limit=5;//mudar pra 10 dps
+  $offset= isset($_GET['offset']) ? $_GET['offset']:0;
+  //falta o pesquisar e ordenar
+  $orderby = (isset($_GET["orderby"])) ? $_GET["orderby"] : "data desc";
+  $portos=PortoController::getAllPorto($_SESSION['userid'], false, $offset, $limit, $orderby);
+  $total=PortoController::getTotalPorto();
+  
+  /*
+  if(isset($_POST['entrarPorto'])){
+    $response = entrarPorto($_SESSION['userid'], $_POST['entrarPorto']);
+    if(!$response){
+      echo "Erro ao entrar no porto";
+    } else {
+      header("refresh:0;url=porto.php?porto=$_POST[entrarPorto]"); 
     }
   }
-  else {
-    echo "<h2 align=center>Para ver este conteudo faça um cadastro no dagama!!!</h2>";
-    header("refresh:1;url=index.php");
-    die();
+  if(isset($_POST['sairPorto'])){
+    $response = sairPorto($_SESSION['userid'], $_POST['entrarPorto']);
+    if(!$response){
+      echo "Erro ao sair do porto";
+    } else {
+      header("refresh:0;url=porto.php?porto=$_POST[entrarPorto]");
+    }
   }
+  */
+
 ?>
    <header class="header-main">
     <img class="header-icon" src="imgs/icon.png" alt="">
