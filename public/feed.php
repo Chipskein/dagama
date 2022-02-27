@@ -41,7 +41,7 @@
     $locaisArray = getLocais();
     $assuntosArray = getAssuntos();
     $pessoasArray = getPessoas();
-    $topAssuntos=OndasDoMomento(3,$user['cidade']);
+    $topAssuntos=[];//OndasDoMomento(3,$user['cidade']);
     $paises=getPaises();
     $estados=getStates();
     $cidades=getCities();

@@ -1364,6 +1364,7 @@
         }
         else exit;
     }
+    /*
     function OndasDoMomento($top,$cidade){
         $db_connection=db_connection();
         $db=$db_connection['db'];
@@ -1413,6 +1414,7 @@
         }
         else exit;
     }
+    */
     /*-----------------------------------------*/    
 
     /* FRIENDS */
@@ -1664,7 +1666,7 @@
         }
         else exit;
     }
-
+    /*
     function getFriends($user, $offset, $limit, $where){
         $db_connection=db_connection();
         $db=$db_connection['db'];
@@ -1724,6 +1726,7 @@
         }
         else exit;
     }
+    */
     /* ---------------------------------------*/
 
     /* PORTO */

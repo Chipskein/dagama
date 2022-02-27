@@ -53,7 +53,7 @@
       $orderby = (isset($_GET["orderby"])) ? $_GET["offset"] : "tmp1.data desc";
       $getAllPosts = getAllPosts($_GET['user']);
       $postsArray = getPosts($_GET['user'], $offset, $limit, $orderby);
-      $amigosUser = getFriends($_GET['user'], 0, 3,'');
+      $amigosUser =[]; //getFriends($_GET['user'], 0, 3,'');
       $portosArray = getAllPorto($_GET['user'], true, 0, 3, null);
       $portosUser = getUserPortoQtd($_GET['user']);
       $locaisArray = getLocais();
