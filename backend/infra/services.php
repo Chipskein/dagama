@@ -689,7 +689,6 @@
                             join citacao on interacao.codigo = citacao.interacao
                         where citacao.perfil = $user
                         union
-                        --amigos
                         select
                             case
                                 when interacao.post is null then interacao.codigo
@@ -738,7 +737,6 @@
                                 end as amigo
                             from amigo)
                         union
-                        -- grupo
                         select
                             case
                                 when interacao.post is null then interacao.codigo
@@ -994,7 +992,6 @@
                             join citacao on interacao.codigo = citacao.interacao
                         where citacao.perfil = $user
                         union
-                        --amigos
                         select
                             case
                                 when interacao.post is null then interacao.codigo
@@ -1043,7 +1040,6 @@
                                 end as amigo
                             from amigo)
                         union
-                        -- grupo
                         select
                             case
                                 when interacao.post is null then interacao.codigo
