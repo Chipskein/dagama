@@ -19,7 +19,7 @@
     $user = getUserInfo("$_SESSION[userid]");
     //validar porto
     if(isset($_GET['porto'])){
-      $postsArray = getPostsOnPorto($_GET['porto'], 0, 10);
+      $postsArray = [];//getPostsOnPorto($_GET['porto'], 0, 10);
       $participantesPorto = getPortoParticipants($_GET['porto'], 0, 5);
       $allParticipantesPorto = getAllPortoParticipants($_GET['porto']);
       $dateTest = getDate()['wday'];
