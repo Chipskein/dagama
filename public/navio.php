@@ -51,8 +51,8 @@
       $limit = 5;
       $offset = isset($_GET['offset']) ? $_GET['offset'] : 0;
       $orderby = (isset($_GET["orderby"])) ? $_GET["offset"] : "tmp1.data desc";
-      $getAllPosts = [];//getAllPosts($_GET['user']);
-      $postsArray = [];//getPosts($_GET['user'], $offset, $limit, $orderby);
+      $getAllPosts = getAllPosts($_GET['user']);
+      $postsArray = getPosts($_GET['user'], $offset, $limit, $orderby);
       $amigosUser =[]; //getFriends($_GET['user'], 0, 3,'');
       $portosArray = getAllPorto($_GET['user'], true, 0, 3, null);
       $portosUser = getUserPortoQtd($_GET['user']);
@@ -461,8 +461,8 @@
             // if($selo==1)echo "<img class=\"coment-mainuser-user-selo\" src=\"./imgs/icons/gold-medal.png\"/>";
             echo "<p class=\"div-post-top-username\"><i>@".$post['nomePerfil']."</i>";
             // echo "</div>";
-              if($post['nomeCidade']){
-                echo " em ".$post['nomeCidade'].", ".$post['nomePais']." - ";
+              if(isset($post['nomePais'])){
+                echo " em $post[nomePais]";
               }
               $tmpHora = explode(' ', $post['dataPost'])[1];
               $tmpData = explode(' ', $post['dataPost'])[0];

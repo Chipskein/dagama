@@ -443,7 +443,7 @@
     /*----------------------------------------*/
 
     /* FEED */
-    /*
+    
     function getPosts($user, $offset,$limit,$order){
         $db_connection=db_connection();
         $db=$db_connection['db'];
@@ -466,8 +466,6 @@
                     interacao.isSharing as isSharing, 
                     interacao.emote as emote,
                     interacao.ativo as ativo,
-                    cidade.nome as nomeCidade,
-                    uf.nome as nomeUF,
                     pais.nome as nomePais,
                     porto.codigo as codPorto,
                     porto.nome as nomePorto,
@@ -574,9 +572,7 @@
                     join interacao on tmp1.codPost = interacao.codigo
                     join perfil on interacao.perfil = perfil.codigo
                     left join (select postPai, count(*) as qtd from interacao where postPai is not null and interacao.ativo=1 group by postPai) as tmpQtd on interacao.codigo = tmpQtd.postPai
-                    left join cidade on interacao.local = cidade.codigo
-                    left join uf on cidade.uf = uf.codigo
-                    left join pais on uf.pais = pais.codigo
+                    left join pais on interacao.local = pais.codigo
                     left join porto on interacao.porto = porto.codigo
                 where interacao.ativo = 1 and interacao.postPai is null
                 group by codPost
@@ -626,17 +622,13 @@
                                 when tmpQtd.qtd is null then 0
                                 else tmpQtd.qtd
                             end as qtdInteracao,
-                            cidade.nome as nomeCidade,
-                            uf.nome as nomeUF,
                             pais.nome as nomePais,
                             perfil.codigo as codPerfil, 
                             perfil.username as nomePerfil,
                             perfil.img as iconPerfil
                         from interacao
                             join perfil on interacao.perfil = perfil.codigo
-                            left join cidade on cidade.codigo = interacao.local
-                            left join uf on cidade.uf = uf.codigo
-                            left join pais on uf.pais = pais.codigo
+                            left join pais on pais.local = pais.codigo
                             left join (select post, count(*) as qtd from interacao where interacao.postPai is not null and interacao.post is not null and interacao.ativo = 1 group by interacao.post) as tmpQtd on interacao.codigo = tmpQtd.post
                         where
                             interacao.ativo = 1 and 
@@ -685,17 +677,13 @@
                                         when tmpQtd.qtd is null then 0
                                         else tmpQtd.qtd
                                     end as qtdInteracao,
-                                    cidade.nome as nomeCidade,
-                                    uf.nome as nomeUF,
                                     pais.nome as nomePais,
                                     perfil.codigo as codPerfil, 
                                     perfil.username as nomePerfil,
                                     perfil.img as iconPerfil
                                 from interacao
                                     join perfil on interacao.perfil = perfil.codigo
-                                    left join cidade on cidade.codigo = interacao.local
-                                    left join uf on cidade.uf = uf.codigo
-                                    left join pais on uf.pais = pais.codigo
+                                    left join pais on pais.local = pais.codigo
                                     left join (select post, count(*) as qtd from interacao where interacao.postPai is not null and interacao.post is not null and interacao.ativo = 1 group by interacao.post) as tmpQtd on interacao.codigo = tmpQtd.post
                                 where 
                                     interacao.ativo = 1 and 
@@ -769,8 +757,6 @@
                     interacao.isSharing as isSharing, 
                     interacao.emote as emote,
                     interacao.ativo as ativo,
-                    cidade.nome as nomeCidade,
-                    uf.nome as nomeUF,
                     pais.nome as nomePais,
                     porto.codigo as codPorto,
                     porto.nome as nomePorto,
@@ -877,9 +863,7 @@
                     join interacao on tmp1.codPost = interacao.codigo
                     join perfil on interacao.perfil = perfil.codigo
                     left join (select postPai, count(*) as qtd from interacao where postPai is not null and interacao.ativo=1 group by postPai) as tmpQtd on interacao.codigo = tmpQtd.postPai
-                    left join cidade on interacao.local = cidade.codigo
-                    left join uf on cidade.uf = uf.codigo
-                    left join pais on uf.pais = pais.codigo
+                    left join pais on interacao.local = pais.codigo
                     left join porto on interacao.porto = porto.codigo
                 where interacao.ativo = 1 and interacao.postPai is null
                 group by codPost
@@ -925,17 +909,13 @@
                                 when tmpQtd.qtd is null then 0
                                 else tmpQtd.qtd
                             end as qtdInteracao,
-                            cidade.nome as nomeCidade,
-                            uf.nome as nomeUF,
                             pais.nome as nomePais,
                             perfil.codigo as codPerfil, 
                             perfil.username as nomePerfil,
                             perfil.img as iconPerfil
                         from interacao
                             join perfil on interacao.perfil = perfil.codigo
-                            left join cidade on cidade.codigo = interacao.local
-                            left join uf on cidade.uf = uf.codigo
-                            left join pais on uf.pais = pais.codigo
+                            left join pais on interacao.local = pais.codigo
                             left join (select post, count(*) as qtd from interacao where interacao.postPai is not null and interacao.post is not null and interacao.ativo = 1 group by interacao.post) as tmpQtd on interacao.codigo = tmpQtd.post
                         where
                             interacao.ativo = 1 and 
@@ -984,17 +964,13 @@
                                         when tmpQtd.qtd is null then 0
                                         else tmpQtd.qtd
                                     end as qtdInteracao,
-                                    cidade.nome as nomeCidade,
-                                    uf.nome as nomeUF,
                                     pais.nome as nomePais,
                                     perfil.codigo as codPerfil, 
                                     perfil.username as nomePerfil,
                                     perfil.img as iconPerfil
                                 from interacao
                                     join perfil on interacao.perfil = perfil.codigo
-                                    left join cidade on cidade.codigo = interacao.local
-                                    left join uf on cidade.uf = uf.codigo
-                                    left join pais on uf.pais = pais.codigo
+                                    left join pais on interacao.local= pais.codigo
                                     left join (select post, count(*) as qtd from interacao where interacao.postPai is not null and interacao.post is not null and interacao.ativo = 1 group by interacao.post) as tmpQtd on interacao.codigo = tmpQtd.post
                                 where 
                                     interacao.ativo = 1 and 
@@ -1047,7 +1023,7 @@
         }
         else exit;
     }
-    */
+    
     function getOriginalPost($post){
         $db_connection=db_connection();
         $db=$db_connection['db'];
@@ -1172,9 +1148,8 @@
         }
         else exit;
     }
-    /* 
-    */
-    
+    //rever no limit in subqueries
+    /*
     function OndasDoMomento($top,$cidade){
         $db_connection=db_connection();
         $db=$db_connection['db'];
@@ -1222,6 +1197,7 @@
         }
         else exit;
     }
+    */
     
     /*-----------------------------------------*/    
 

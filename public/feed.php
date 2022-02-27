@@ -47,8 +47,8 @@
     $cidades=[];
     $suggestFriends = [];//suggestFriends($_SESSION['userid'], 4, 0);
     $where = 'vi';
-    $postsArray = [];//getPosts($_SESSION['userid'], $offset, $limit, $orderby);
-    $getAllPosts = [];//getAllPosts($_SESSION['userid']);
+    $postsArray = getPosts($_SESSION['userid'], $offset, $limit, $orderby);
+    $getAllPosts = getAllPosts($_SESSION['userid']);
     $portosArray = getAllPorto($_SESSION['userid'], true, 0, 3, null, );
     $portosArrayForShare = getAllPorto($_SESSION['userid'], true, 0, 0,null);
     $errorMessage = [];
@@ -510,8 +510,8 @@
             // if($selo==1)echo "<img class=\"coment-mainuser-user-selo\" src=\"./imgs/icons/gold-medal.png\"/>";
             echo "<p class=\"div-post-top-username\"><i>@".$post['nomePerfil']."</i>";
             // echo "</div>";
-              if($post['nomeCidade']){
-                echo " em ".$post['nomeCidade'].", ".$post['nomePais']." - ";
+              if(isset($post['nomePais'])){
+                echo " em $post[nomePais] ";
               }
               $tmpHora = explode(' ', $post['dataPost'])[1];
               $tmpData = explode(' ', $post['dataPost'])[0];
