@@ -19,7 +19,7 @@
     $user = getUserInfo("$_SESSION[userid]");
     //validar porto
     if(isset($_GET['porto'])){
-      $postsArray = [];//getPostsOnPorto($_GET['porto'], 0, 10);
+      $postsArray = getPostsOnPorto($_GET['porto'], 0, 10);
       $participantesPorto = [];//getPortoParticipants($_GET['porto'], 0, 5);
       $allParticipantesPorto = getAllPortoParticipants($_GET['porto']);
       $dateTest = getDate()['wday'];
@@ -85,7 +85,7 @@
         $porto = $_GET['porto'];
 
         // Local
-        $local = $user['cidade'];
+        $local = $user['pais'];
         $codPais = $_POST['insert-codigo-pais'];
         $novoPaisNome = $_POST['insert-nome-pais'];
         $codEstado = $_POST['insert-codigo-estado'];
@@ -260,9 +260,6 @@
           if(count($participantesPorto) > 0){
             foreach ($participantesPorto as $part) {
               echo "<a href=navio.php?user=$part[codPart]><div><img src=$part[imgPart] class=div-amigo-image><p class=nomeAmigo>";
-              if($part['codSelo'] == 3)echo "<img class=\"coment-mainuser-user-selo\" src=\"./imgs/icons/bronze-medal.png\"/>";
-              if($part['codSelo'] == 2)echo "<img class=\"coment-mainuser-user-selo\" src=\"./imgs/icons/silver-medal.png\"/>";
-              if($part['codSelo'] == 1)echo "<img class=\"coment-mainuser-user-selo\" src=\"./imgs/icons/gold-medal.png\"/>";
               echo $part['nomePart']."</p></div></a>";
             }
             echo "<a class=portosAtracadosMais href=participantesPorto.php?porto=".$_GET['porto'].">Ver mais</a>";
@@ -395,10 +392,10 @@
       echo "<div class=\"order-btn\">";
       echo "<p>Ordene por </p>";
       echo "<select onchange=\"document.getElementById('formOrderby').submit();\" id=\"select-ordenar\" name=\"orderby\">";
-      echo "<option value=\"tmp1.data desc\" ".($_GET['orderby'] == "tmp1.data desc" ? "selected" : "").">Data descrecente</option>";
-        echo "<option value=\"tmp1.data asc\" ".($_GET['orderby'] == "tmp1.data asc" ? "selected" : "").">Data crescente</option>";
-        echo "<option value=\"tmpQtd.qtd desc\" ".($_GET['orderby'] == "tmpQtd.qtd desc" ? "selected" : "").">Popularidade descrescente</option>";
-        echo "<option value=\"tmpQtd.qtd asc\" ".($_GET['orderby'] == "tmpQtd.qtd asc" ? "selected" : "").">Popularidade crescente</option>";
+      echo "<option value=\"tmp1.data desc\" ".(isset($_GET['orderby'])&&$_GET['orderby'] == "tmp1.data desc" ? "selected" : "").">Data descrecente</option>";
+        echo "<option value=\"tmp1.data asc\" ".(isset($_GET['orderby'])&&$_GET['orderby'] == "tmp1.data asc" ? "selected" : "").">Data crescente</option>";
+        echo "<option value=\"tmpQtd.qtd desc\" ".(isset($_GET['orderby'])&&$_GET['orderby'] == "tmpQtd.qtd desc" ? "selected" : "").">Popularidade descrescente</option>";
+        echo "<option value=\"tmpQtd.qtd asc\" ".(isset($_GET['orderby'])&&$_GET['orderby'] == "tmpQtd.qtd asc" ? "selected" : "").">Popularidade crescente</option>";
       echo "</select>";
       echo "</div>";
       echo "</form>";
@@ -419,14 +416,9 @@
                 echo "<a href=navio.php?user=$sharedPost[codPerfil]><img src=\"".$sharedPost['iconPerfil']."\" alt=\"\" class=\"div-sharing-post-top-icon\"></a>";
                 echo "<div class=\"div-post-top-infos\">";
                 echo "<div class=\"row\">";
-                if($sharedPost['codSelo'] == 3)echo "<img class=\"coment-mainuser-user-selo\" src=\"./imgs/icons/bronze-medal.png\"/>";
-                if($sharedPost['codSelo'] == 2)echo "<img class=\"coment-mainuser-user-selo\" src=\"./imgs/icons/silver-medal.png\"/>";
-                if($sharedPost['codSelo'] == 1)echo "<img class=\"coment-mainuser-user-selo\" src=\"./imgs/icons/gold-medal.png\"/>";
                 echo "<p class=\"div-post-top-username\"><i>@".$sharedPost['nomePerfil']."</i>";
                 echo "</div>";
-                  if($sharedPost['nomeCidade']){
-                    echo " em ".$sharedPost['nomeCidade'].", ".$sharedPost['nomePais']." - ";
-                  }
+                
                   $tmpHora = explode(' ', $sharedPost['dataPost'])[1];
                   $tmpData = explode(' ', $sharedPost['dataPost'])[0];
                   $tmpData = explode('-', $tmpData);
@@ -500,14 +492,9 @@
             echo "<a href=navio.php?user=$post[codPerfil]><img src=\"".$post['iconPerfil']."\" alt=\"\" class=\"div-post-top-icon\"></a>";
             echo "<div class=\"div-post-top-infos\">";
             echo "<div class=\"row\">";
-              if($post['codSelo'] == 3)echo "<img class=\"coment-mainuser-user-selo\" src=\"./imgs/icons/bronze-medal.png\"/>";
-              if($post['codSelo'] == 2)echo "<img class=\"coment-mainuser-user-selo\" src=\"./imgs/icons/silver-medal.png\"/>";
-              if($post['codSelo'] == 1)echo "<img class=\"coment-mainuser-user-selo\" src=\"./imgs/icons/gold-medal.png\"/>";
               echo "<p class=\"div-post-top-username\"><i>@".$post['nomePerfil']."</i>";
             echo "</div>";
-              if($post['nomeCidade']){
-                echo " em ".$post['nomeCidade'].", ".$post['nomePais']." - ";
-              }
+              
               $tmpHora = explode(' ', $post['dataPost'])[1];
               $tmpData = explode(' ', $post['dataPost'])[0];
               $tmpData = explode('-', $tmpData);
@@ -672,9 +659,7 @@
                   }
                   echo ($comentario['textoPost'] ? $comentario['textoPost'] : '');
                   echo ", em ";
-                  if($comentario['nomeCidade']){
-                    echo $comentario['nomeCidade'].", ".$comentario['nomePais']." - ";
-                  }
+                  
                   $tmpHora = explode(' ', $comentario['dataPost'])[1];
                   $tmpData = explode(' ', $comentario['dataPost'])[0];
                   $tmpData = explode('-', $tmpData);
@@ -762,9 +747,7 @@
                           }
                           echo ($resposta['textoPost'] ? $resposta['textoPost'] : '');
                           echo ", em ";
-                          if($resposta['nomeCidade']){
-                            echo $resposta['nomeCidade'].", ".$resposta['nomePais']." - ";
-                          }
+                          
                           $tmpHora = explode(' ', $resposta['dataPost'])[1];
                           $tmpData = explode(' ', $resposta['dataPost'])[0];
                           $tmpData = explode('-', $tmpData);

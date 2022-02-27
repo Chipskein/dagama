@@ -1969,25 +1969,17 @@
                     interacao.isSharing as isSharing, 
                     interacao.emote as emote,
                     interacao.ativo as ativo,
-                    cidade.nome as nomeCidade,
-                    uf.nome as nomeUF,
                     pais.nome as nomePais,
                     porto.codigo as codPorto,
                     porto.nome as nomePorto,
                     perfil.codigo as codPerfil, 
                     perfil.username as nomePerfil,
-                    perfil.img as iconPerfil,
-                    selo.codigo as codSelo,
-                    selo.texto as nomeSelo
+                    perfil.img as iconPerfil
                 from interacao
                     join porto on interacao.porto = porto.codigo
                     join perfil on interacao.perfil = perfil.codigo
                     left join (select postPai, count(*) as qtd from interacao where postPai is not null and interacao.ativo=1 group by postPai) as tmpQtd on interacao.codigo = tmpQtd.postPai
-                    left join seloUser on perfil.codigo = seloUser.perfil and seloUser.porto = $porto
-                    left join selo on seloUser.selo = selo.codigo
-                    left join cidade on interacao.local = cidade.codigo
-                    left join uf on cidade.uf = uf.codigo
-                    left join pais on uf.pais = pais.codigo
+                    left join pais on interacao.local = pais.codigo
                 where 
                     interacao.ativo = 1 and
                     porto.codigo = $porto
