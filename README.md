@@ -25,4 +25,4 @@ O projeto dagama inicialmente foi desenvolvido por:
 ## Desenvolvedor Dessa versão
 * [Bruno Nascimento](https://github.com/Chipskein)
 ## Diagrama do Banco
-![dagama_proto](https://github.com/Chipskein/dagama/blob/main/backend/infra/dagama.png)
+![dagama_proto](https://github.com/Chipskein/dagama/blob/mysql_master/backend/infra/dagama.png)
