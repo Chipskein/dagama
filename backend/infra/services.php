@@ -1174,7 +1174,7 @@
     }
     /* 
     */
-    /*
+    
     function OndasDoMomento($top,$cidade){
         $db_connection=db_connection();
         $db=$db_connection['db'];
@@ -1183,24 +1183,22 @@
             if($db_type == 'mysql'){
                 $response=mysqli_query($db,"
                 select 
-                assunto.nome as nome, count(*) as total, cidade.nome as nomeCidade
+                    assunto.nome as nome,
+                    count(*) as total, 
+                    pais.nome as nomeCidade
                 from interacao 
-                join cidade on interacao.local=cidade.codigo
-                join uf on cidade.uf=uf.codigo
-                join pais on pais.codigo=uf.pais
+                join pais on pais.codigo=interacao.pais
                 join INTERACAO_ASSUNTO on interacao.codigo=INTERACAO_ASSUNTO.interacao
                 join assunto on INTERACAO_ASSUNTO.assunto=assunto.codigo
                 where 
-                    interacao.local= $cidade
+                    interacao.local=$cidade
                 group by assunto.codigo
                 having count(*) in (
                     select 
                     distinct
                     count(*) as total_per_assunto
                     from interacao 
-                    join cidade on interacao.local=cidade.codigo
-                    join uf on cidade.uf=uf.codigo
-                    join pais on pais.codigo=uf.pais
+                    join pais on pais.codigo=pais.local
                     join INTERACAO_ASSUNTO on interacao.codigo=INTERACAO_ASSUNTO.interacao
                     join assunto on INTERACAO_ASSUNTO.assunto=assunto.codigo
                     where 
@@ -1224,7 +1222,7 @@
         }
         else exit;
     }
-    */
+    
     /*-----------------------------------------*/    
 
     /* FRIENDS */

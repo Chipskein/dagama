@@ -31,13 +31,13 @@
       if (isset($_GET["offset"])) $result["offset"] = "offset=".$_GET["offset"];
       $result[$campo] = $campo."=".$valor;
       return("navio.php?user=$_GET[user]&".strtr(implode("", $result), " ", "+"));
-  }
-  function pages($campo, $valor){
-      $result = array();
-      if (isset($_GET["page"])) $result["page"] = "page=".$_GET["page"];
-      $result[$campo] = $campo."=".$valor;
-      return '&'.(strtr(implode("&",$result), " ", "+"));
-  }
+    }
+    function pages($campo, $valor){
+        $result = array();
+        if (isset($_GET["page"])) $result["page"] = "page=".$_GET["page"];
+        $result[$campo] = $campo."=".$valor;
+        return '&'.(strtr(implode("&",$result), " ", "+"));
+    }
     if(isset($_GET['user'])){
       $orderby = (isset($_GET["orderby"])) ? $_GET["orderby"] : "tmp1.data desc";
       $user=getUserInfo("$_GET[user]");
@@ -70,40 +70,13 @@
         $citacoes = [];
         
         // Local
-        $local = $user['cidade'];
+        $local = $user['pais'];
         $codPais = $_POST['insert-codigo-pais'];
         $novoPaisNome = $_POST['insert-nome-pais'];
         $codEstado = $_POST['insert-codigo-estado'];
         $novoEstadoNome = $_POST['insert-nome-estado'];
         $codCidade = $_POST['insert-codigo-cidade'];
         $novoCidadeNome = $_POST['insert-nome-cidade'];
-
-        if(isset($codPais) && isset($codEstado) && isset($codCidade)){
-          if($codPais != "" && $codEstado != "" && $codCidade != ""){
-            if($codPais == 0){
-              // cria novo pais, estado e cidade
-              $pais = [];//addPais($novoPaisNome);
-              $estado = [];//addEstado($novoEstadoNome, $pais);
-              $local = [];//addCidade($novoCidadeNome, $estado);
-            }
-            if($codPais != 0 && preg_match('#^[0-9]{1,}$#', $codPais)){  
-              if($codEstado == 0){
-                // cria novo estado e cidade
-                $estado = [];//addEstado($novoEstadoNome, $codPais);
-                $local = [];//addCidade($novoCidadeNome, $estado);
-              }
-            if($codEstado != 0 && preg_match('#^[0-9]{1,}$#', $codEstado)){
-              if($codCidade == 0){
-                  // cria nova cidade
-                  $local = [];//addCidade($novoCidadeNome, $codEstado);
-                }
-                if($codCidade != 0 && preg_match('#^[0-9]{1,}$#', $codCidade)){
-                  $local = $codCidade;
-                }
-              }
-            }
-          }
-        }
         $newAssuntos = [];
         for($c = 1; $c <= 5 ; $c++){
           if(isset($_POST['insert-new-assunto'.$c])){

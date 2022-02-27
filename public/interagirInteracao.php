@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="../responsive.css" media="screen and (max-width: 1680px)"/>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/responsive.css" media="screen and (max-width: 1680px)"/>
     <title>Dagama | Interagir</title>
 </head>
 <body>
@@ -16,7 +16,7 @@
   }
   if(isset($_SESSION['userid'])){
     $user = getUserInfo("$_SESSION[userid]");
-    $post = [];//getOriginalPost($_GET['interacao']);
+    $post = getOriginalPost($_GET['interacao']);
     $postPai = $post['postPai'] ? $post['postPai'] : $_GET['interacao'];
     $locaisArray = [];
     $assuntosArray = getAssuntos();
@@ -262,8 +262,8 @@
             // if($selo==1)echo "<img class=\"coment-mainuser-user-selo\" src=\"./imgs/icons/gold-medal.png\"/>";
             echo "<p class=\"div-post-top-username\"><i>@".$post['nomePerfil']."</i>";
             echo "</div>";
-              if($post['nomeCidade']){
-                echo " em ".$post['nomeCidade'].", ".$post['nomePais']." - ";
+              if(isset($post['nomePais'])){
+                echo "em $post[nomePais]";
               }
               $tmpHora = explode(' ', $post['dataPost'])[1];
               $tmpData = explode(' ', $post['dataPost'])[0];

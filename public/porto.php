@@ -26,7 +26,7 @@
       date_default_timezone_set('America/Sao_Paulo');
       if(date('l') == "Sunday" && date('h:i:s') == '00:00:00'){
         foreach ($allParticipantesPorto as $participante) {
-          upsertSelo($participante['codPart'], $_GET['porto']);
+          //upsertSelo($participante['codPart'], $_GET['porto']);
         }
       }
       $locaisArray = [];
@@ -772,7 +772,7 @@
                     echo "</div>";
                   }
                 }
-                if($resposta['qtdInteracao'] > 1){
+                if(isset($resposta['qtdInteracao'])&&$resposta['qtdInteracao'] > 1){
                   echo "<p align=center><a href=completeInteracao.php?interacao=$comentario[codInteracao]>Ver mais respostas</a></p>";
                 }
               echo "</div>";
@@ -789,10 +789,6 @@
     </div>
   </main>
 </div>
-<!-- <footer class="container-bottom" ><p align="center"><< 1 2 3 >></p></footer> -->
-<?php 
-  // echo "<script>img_perfil.style.backgroundImage=\"url($user[img])\"</script>";
-?>
 
 <script src="js/functions.js"></script>
 </body>
