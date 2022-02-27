@@ -1418,6 +1418,7 @@
     /*-----------------------------------------*/    
 
     /* FRIENDS */
+    /*
     function suggestFriends($user, $limit, $offset) {
         $db_connection=db_connection();
         $db=$db_connection['db'];
@@ -1544,6 +1545,7 @@
         }
         else exit;
     }
+    */
     function sendFriendRequest($user, $friend) {
         $db_connection=db_connection();
         $db=$db_connection['db'];
