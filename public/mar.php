@@ -88,10 +88,10 @@
             echo "<div class=\"order-btn\" >";
             echo "<p>Ordene por </p>";
             echo "<select onchange=\"document.getElementById('formOrderby').submit();\" id=\"select-ordenar\" name=\"orderby\">";
-            echo "<option value=\"data desc\" ".($_GET['orderby'] == "data desc" ? "selected" : "").">Data descrecente</option>";
-              echo "<option value=\"data asc\" ".($_GET['orderby'] == "data asc" ? "selected" : "").">Data crescente</option>";
-              echo "<option value=\"tmpQtd.qtd desc\" ".($_GET['orderby'] == "tmpQtd.qtd desc" ? "selected" : "").">Nome descrescente</option>";
-              echo "<option value=\"tmpQtd.qtd asc\" ".($_GET['orderby'] == "tmpQtd.qtd asc" ? "selected" : "").">Nome crescente</option>";
+            echo "<option value=\"data desc\" ".(isset($_GET['orderby'])&&$_GET['orderby'] == "data desc" ? "selected" : "").">Data descrecente</option>";
+              echo "<option value=\"data asc\" ".(isset($_GET['orderby'])&&$_GET['orderby'] == "data asc" ? "selected" : "").">Data crescente</option>";
+              echo "<option value=\"tmpQtd.qtd desc\" ".(isset($_GET['orderby'])&&$_GET['orderby'] == "tmpQtd.qtd desc" ? "selected" : "").">Nome descrescente</option>";
+              echo "<option value=\"tmpQtd.qtd asc\" ".(isset($_GET['orderby'])&&$_GET['orderby'] == "tmpQtd.qtd asc" ? "selected" : "").">Nome crescente</option>";
             echo "</select>";
             echo "</div>";
             echo "</form>";

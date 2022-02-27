@@ -668,7 +668,7 @@ main {
 		border-radius: 50%;
 		width: 40px;
 		height: 40px;
-		background-image: url('imgs/icons/camera.png');
+		background-image: url('../imgs/icons/camera.png');
 		background-size: 25px 25px;
 		background-repeat: no-repeat;
 		background-position: center;

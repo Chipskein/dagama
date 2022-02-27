@@ -2166,168 +2166,169 @@
                     porto.codigo = $porto
                 order by interacao.data desc
                 limit $limit offset $offset");
-                
-                while($row = mysqli_fetch_array($postsOriginais)){
-                    $postsArray[$row['codInteracao']] = $row;
+                if($postsOriginais){
+                    while($row = mysqli_fetch_array($postsOriginais)){
+                        $postsArray[$row['codInteracao']] = $row;
 
-                    $resCitacoesParent = mysqli_query($db,"select citacao.interacao as interacao, perfil.codigo as codPerfil, perfil.username as nomePerfil 
-                    from citacao join perfil on perfil.codigo = citacao.perfil 
-                    where 
-                        citacao.ativo = 1 and 
-                        citacao.interacao = $row[codInteracao]");
-                    $citacoes = [];
-                    while ($row2 = mysqli_fetch_array($resCitacoesParent)) {
-                        $citacoes[] = $row2;
-                    }
-                    $postsArray[$row['codInteracao']]['citacoes'] = $citacoes;
-                    
-                    $resAssuntosParent = mysqli_query($db,"
-                    select interacao.codigo as interacao, assunto.codigo as codAssunto, assunto.nome as nomeAssunto from interacao
-                        left join interacao_assunto on interacao.codigo = interacao_assunto.interacao
-                        left join assunto on interacao_assunto.assunto = assunto.codigo
-                    where
-                        interacao_assunto.ativo = 1 and
-                        interacao.codigo = $row[codInteracao]");
-                    $assuntos = [];
-                    while ($row2 = mysqli_fetch_array($resAssuntosParent)) {
-                        $assuntos[] = $row2;
-                    }
-                    $postsArray[$row['codInteracao']]['assuntos'] = $assuntos;
-                    $temInteracoes = mysqli_query($db,"
-                    select
-                        interacao.codigo as codInteracao, 
-                        interacao.post as codPost, 
-                        interacao.isReaction as isReaction, 
-                        interacao.texto as textoPost, 
-                        interacao.data as dataPost,
-                        interacao.isSharing as isSharing, 
-                        interacao.emote as emote,
-                        interacao.ativo as ativo,
-                        selo.codigo as codSelo,
-                        selo.texto as nomeSelo,
-                        case 
-                            when tmpQtd.qtd is null then 0
-                            else tmpQtd.qtd
-                        end as qtdInteracao,
-                        cidade.nome as nomeCidade,
-                        uf.nome as nomeUF,
-                        pais.nome as nomePais,
-                        perfil.codigo as codPerfil, 
-                        perfil.username as nomePerfil,
-                        perfil.img as iconPerfil
-                    from interacao
-                        join perfil on interacao.perfil = perfil.codigo
-                        left join seloUser on perfil.codigo = seloUser.perfil and seloUser.porto = $porto
-                        left join selo on seloUser.selo = selo.codigo
-                        left join cidade on cidade.codigo = interacao.local
-                        left join uf on cidade.uf = uf.codigo
-                        left join pais on uf.pais = pais.codigo
-                        left join (select post, count(*) as qtd from interacao where interacao.postPai is not null and interacao.post is not null and interacao.ativo = 1 group by interacao.post) as tmpQtd on interacao.codigo = tmpQtd.post
-                    where
-                        interacao.ativo = 1 and 
-                        interacao.isSharing is null 
-                        and interacao.postPai = $row[codInteracao] 
-                        and interacao.post = $row[codInteracao]");
-                    $childInteracoes = [];
-                    if($temInteracoes){
-                        while($row3 = mysqli_fetch_array($temInteracoes)){
-                            $childInteracoes[$row3['codInteracao']] = $row3;
-                            $resCitacoesChild = mysqli_query($db,"select citacao.interacao as interacao, perfil.codigo as codPerfil, perfil.username as nomePerfil 
-                            from citacao 
-                                join perfil on perfil.codigo = citacao.perfil 
-                            where 
-                                citacao.ativo = 1 and 
-                                citacao.interacao = $row3[codInteracao]");
-                            $citacoes = [];
-                            while ($row4 = mysqli_fetch_array($resCitacoesChild)) {
-                                $citacoes[] = $row4;
-                            }
-                            $childInteracoes[$row3['codInteracao']]['citacoes'] = $citacoes;
-                            $resAssuntosChild = mysqli_query($db,"
-                            select interacao.codigo as interacao, assunto.codigo as codAssunto, assunto.nome as nomeAssunto from interacao
-                                left join interacao_assunto on interacao.codigo = interacao_assunto.interacao
-                                left join assunto on interacao_assunto.assunto = assunto.codigo
-                            where
-                                interacao_assunto.ativo = 1 and
-                                interacao.codigo = $row3[codInteracao]");
-                            $assuntos = [];
-                            while ($row5 = mysqli_fetch_array($resAssuntosChild)) {
-                                $assuntos[] = $row5;
-                            }
-                            $childInteracoes[$row3['codInteracao']]['assuntos'] = $assuntos;
-
-                            $temInnerInteracoes = mysqli_query($db,"
-                            select
-                                interacao.codigo as codInteracao, 
-                                interacao.post as codPost, 
-                                interacao.isReaction as isReaction, 
-                                interacao.texto as textoPost, 
-                                interacao.data as dataPost,
-                                interacao.isSharing as isSharing, 
-                                interacao.emote as emote,
-                                interacao.ativo as ativo,
-                                case 
-                                    when tmpQtd.qtd is null then 0
-                                    else tmpQtd.qtd
-                                end as qtdInteracao,
-                                cidade.nome as nomeCidade,
-                                uf.nome as nomeUF,
-                                pais.nome as nomePais,
-                                perfil.codigo as codPerfil, 
-                                perfil.username as nomePerfil,
-                                perfil.img as iconPerfil,
-                                selo.codigo as codSelo,
-                                selo.texto as nomeSelo
-                            from interacao
-                                join perfil on interacao.perfil = perfil.codigo
-                                left join seloUser on perfil.codigo = seloUser.perfil and seloUser.porto = $porto
-                                left join selo on seloUser.selo = selo.codigo
-                                left join cidade on cidade.codigo = interacao.local
-                                left join uf on cidade.uf = uf.codigo
-                                left join pais on uf.pais = pais.codigo
-                                left join (select post, count(*) as qtd from interacao where interacao.postPai is not null and interacao.post is not null and interacao.ativo = 1 group by interacao.post) as tmpQtd on interacao.codigo = tmpQtd.post
-                            where 
-                                interacao.ativo = 1 and 
-                                interacao.isSharing is null and 
-                                interacao.postPai = $row[codInteracao] and 
-                                interacao.post = $row3[codInteracao]");
-                                
-                            $grandChildInteracoes = [];
-                            $childInteracoes[$row3['codInteracao']]['respostas'] = [];
-                            if($temInnerInteracoes){
-                                while ($row6 = mysqli_fetch_array($temInnerInteracoes)) {
-                                    $grandChildInteracoes[$row6['codInteracao']] = $row6;
-                                    $resCitacoesGrandChild = mysqli_query($db,"
-                                    select citacao.interacao as interacao, perfil.codigo as codPerfil, perfil.username as nomePerfil from citacao 
-                                        join perfil on perfil.codigo = citacao.perfil 
-                                    where 
-                                        citacao.ativo = 1 and 
-                                        citacao.interacao = $row6[codInteracao]");
-                                    $citacoes = [];
-                                    while ($row7 = mysqli_fetch_array($resCitacoesGrandChild)) {
-                                        $citacoes[] = $row7;
-                                    }
-                                    $grandChildInteracoes[$row6['codInteracao']]['citacoes'] = $citacoes;
-                                    
-                                    $resAssuntosGrandChild = mysqli_query($db,"
-                                    select interacao.codigo as interacao, assunto.codigo as codAssunto, assunto.nome as nomeAssunto from interacao
-                                        left join interacao_assunto on interacao.codigo = interacao_assunto.interacao
-                                        left join assunto on interacao_assunto.assunto = assunto.codigo
-                                    where
-                                        interacao_assunto.ativo = 1 and
-                                        interacao.codigo = ".$row6['codInteracao']);
-                                    $assuntos = [];
-                                    while ($row8 = mysqli_fetch_array($resAssuntosGrandChild)) {
-                                        $assuntos[] = $row8;
-                                    }
-                                    $grandChildInteracoes[$row6['codInteracao']]['assuntos'] = $assuntos;
-                                    $childInteracoes[$row3['codInteracao']]['respostas'][$row6['codInteracao']] = $grandChildInteracoes[$row6['codInteracao']];
-                                }                                
-                            }
-                            
+                        $resCitacoesParent = mysqli_query($db,"select citacao.interacao as interacao, perfil.codigo as codPerfil, perfil.username as nomePerfil 
+                        from citacao join perfil on perfil.codigo = citacao.perfil 
+                        where 
+                            citacao.ativo = 1 and 
+                            citacao.interacao = $row[codInteracao]");
+                        $citacoes = [];
+                        while ($row2 = mysqli_fetch_array($resCitacoesParent)) {
+                            $citacoes[] = $row2;
                         }
+                        $postsArray[$row['codInteracao']]['citacoes'] = $citacoes;
+                        
+                        $resAssuntosParent = mysqli_query($db,"
+                        select interacao.codigo as interacao, assunto.codigo as codAssunto, assunto.nome as nomeAssunto from interacao
+                            left join interacao_assunto on interacao.codigo = interacao_assunto.interacao
+                            left join assunto on interacao_assunto.assunto = assunto.codigo
+                        where
+                            interacao_assunto.ativo = 1 and
+                            interacao.codigo = $row[codInteracao]");
+                        $assuntos = [];
+                        while ($row2 = mysqli_fetch_array($resAssuntosParent)) {
+                            $assuntos[] = $row2;
+                        }
+                        $postsArray[$row['codInteracao']]['assuntos'] = $assuntos;
+                        $temInteracoes = mysqli_query($db,"
+                        select
+                            interacao.codigo as codInteracao, 
+                            interacao.post as codPost, 
+                            interacao.isReaction as isReaction, 
+                            interacao.texto as textoPost, 
+                            interacao.data as dataPost,
+                            interacao.isSharing as isSharing, 
+                            interacao.emote as emote,
+                            interacao.ativo as ativo,
+                            selo.codigo as codSelo,
+                            selo.texto as nomeSelo,
+                            case 
+                                when tmpQtd.qtd is null then 0
+                                else tmpQtd.qtd
+                            end as qtdInteracao,
+                            cidade.nome as nomeCidade,
+                            uf.nome as nomeUF,
+                            pais.nome as nomePais,
+                            perfil.codigo as codPerfil, 
+                            perfil.username as nomePerfil,
+                            perfil.img as iconPerfil
+                        from interacao
+                            join perfil on interacao.perfil = perfil.codigo
+                            left join seloUser on perfil.codigo = seloUser.perfil and seloUser.porto = $porto
+                            left join selo on seloUser.selo = selo.codigo
+                            left join cidade on cidade.codigo = interacao.local
+                            left join uf on cidade.uf = uf.codigo
+                            left join pais on uf.pais = pais.codigo
+                            left join (select post, count(*) as qtd from interacao where interacao.postPai is not null and interacao.post is not null and interacao.ativo = 1 group by interacao.post) as tmpQtd on interacao.codigo = tmpQtd.post
+                        where
+                            interacao.ativo = 1 and 
+                            interacao.isSharing is null 
+                            and interacao.postPai = $row[codInteracao] 
+                            and interacao.post = $row[codInteracao]");
+                        $childInteracoes = [];
+                        if($temInteracoes){
+                            while($row3 = mysqli_fetch_array($temInteracoes)){
+                                $childInteracoes[$row3['codInteracao']] = $row3;
+                                $resCitacoesChild = mysqli_query($db,"select citacao.interacao as interacao, perfil.codigo as codPerfil, perfil.username as nomePerfil 
+                                from citacao 
+                                    join perfil on perfil.codigo = citacao.perfil 
+                                where 
+                                    citacao.ativo = 1 and 
+                                    citacao.interacao = $row3[codInteracao]");
+                                $citacoes = [];
+                                while ($row4 = mysqli_fetch_array($resCitacoesChild)) {
+                                    $citacoes[] = $row4;
+                                }
+                                $childInteracoes[$row3['codInteracao']]['citacoes'] = $citacoes;
+                                $resAssuntosChild = mysqli_query($db,"
+                                select interacao.codigo as interacao, assunto.codigo as codAssunto, assunto.nome as nomeAssunto from interacao
+                                    left join interacao_assunto on interacao.codigo = interacao_assunto.interacao
+                                    left join assunto on interacao_assunto.assunto = assunto.codigo
+                                where
+                                    interacao_assunto.ativo = 1 and
+                                    interacao.codigo = $row3[codInteracao]");
+                                $assuntos = [];
+                                while ($row5 = mysqli_fetch_array($resAssuntosChild)) {
+                                    $assuntos[] = $row5;
+                                }
+                                $childInteracoes[$row3['codInteracao']]['assuntos'] = $assuntos;
+
+                                $temInnerInteracoes = mysqli_query($db,"
+                                select
+                                    interacao.codigo as codInteracao, 
+                                    interacao.post as codPost, 
+                                    interacao.isReaction as isReaction, 
+                                    interacao.texto as textoPost, 
+                                    interacao.data as dataPost,
+                                    interacao.isSharing as isSharing, 
+                                    interacao.emote as emote,
+                                    interacao.ativo as ativo,
+                                    case 
+                                        when tmpQtd.qtd is null then 0
+                                        else tmpQtd.qtd
+                                    end as qtdInteracao,
+                                    cidade.nome as nomeCidade,
+                                    uf.nome as nomeUF,
+                                    pais.nome as nomePais,
+                                    perfil.codigo as codPerfil, 
+                                    perfil.username as nomePerfil,
+                                    perfil.img as iconPerfil,
+                                    selo.codigo as codSelo,
+                                    selo.texto as nomeSelo
+                                from interacao
+                                    join perfil on interacao.perfil = perfil.codigo
+                                    left join seloUser on perfil.codigo = seloUser.perfil and seloUser.porto = $porto
+                                    left join selo on seloUser.selo = selo.codigo
+                                    left join cidade on cidade.codigo = interacao.local
+                                    left join uf on cidade.uf = uf.codigo
+                                    left join pais on uf.pais = pais.codigo
+                                    left join (select post, count(*) as qtd from interacao where interacao.postPai is not null and interacao.post is not null and interacao.ativo = 1 group by interacao.post) as tmpQtd on interacao.codigo = tmpQtd.post
+                                where 
+                                    interacao.ativo = 1 and 
+                                    interacao.isSharing is null and 
+                                    interacao.postPai = $row[codInteracao] and 
+                                    interacao.post = $row3[codInteracao]");
+                                    
+                                $grandChildInteracoes = [];
+                                $childInteracoes[$row3['codInteracao']]['respostas'] = [];
+                                if($temInnerInteracoes){
+                                    while ($row6 = mysqli_fetch_array($temInnerInteracoes)) {
+                                        $grandChildInteracoes[$row6['codInteracao']] = $row6;
+                                        $resCitacoesGrandChild = mysqli_query($db,"
+                                        select citacao.interacao as interacao, perfil.codigo as codPerfil, perfil.username as nomePerfil from citacao 
+                                            join perfil on perfil.codigo = citacao.perfil 
+                                        where 
+                                            citacao.ativo = 1 and 
+                                            citacao.interacao = $row6[codInteracao]");
+                                        $citacoes = [];
+                                        while ($row7 = mysqli_fetch_array($resCitacoesGrandChild)) {
+                                            $citacoes[] = $row7;
+                                        }
+                                        $grandChildInteracoes[$row6['codInteracao']]['citacoes'] = $citacoes;
+                                        
+                                        $resAssuntosGrandChild = mysqli_query($db,"
+                                        select interacao.codigo as interacao, assunto.codigo as codAssunto, assunto.nome as nomeAssunto from interacao
+                                            left join interacao_assunto on interacao.codigo = interacao_assunto.interacao
+                                            left join assunto on interacao_assunto.assunto = assunto.codigo
+                                        where
+                                            interacao_assunto.ativo = 1 and
+                                            interacao.codigo = ".$row6['codInteracao']);
+                                        $assuntos = [];
+                                        while ($row8 = mysqli_fetch_array($resAssuntosGrandChild)) {
+                                            $assuntos[] = $row8;
+                                        }
+                                        $grandChildInteracoes[$row6['codInteracao']]['assuntos'] = $assuntos;
+                                        $childInteracoes[$row3['codInteracao']]['respostas'][$row6['codInteracao']] = $grandChildInteracoes[$row6['codInteracao']];
+                                    }                                
+                                }
+                                
+                            }
+                        }
+                        $postsArray[$row['codInteracao']]['comentarios'] = $childInteracoes;
                     }
-                    $postsArray[$row['codInteracao']]['comentarios'] = $childInteracoes;
                 }
                 mysqli_close($db);
                 return $postsArray;
@@ -2360,8 +2361,10 @@
                     porto_participa.ativo = 1 and
                     porto.codigo = $porto
                 limit $limit offset $offset");
-                while ($row = mysqli_fetch_array($result)) {
-                    array_push($results, $row);
+                if($result){
+                    while ($row = mysqli_fetch_array($result)) {
+                        array_push($results, $row);
+                    }
                 }
                 mysqli_close($db);
                 return $results;
