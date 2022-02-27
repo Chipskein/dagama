@@ -20,7 +20,7 @@
     //validar porto
     if(isset($_GET['porto'])){
       $postsArray = [];//getPostsOnPorto($_GET['porto'], 0, 10);
-      $participantesPorto = getPortoParticipants($_GET['porto'], 0, 5);
+      $participantesPorto = [];//getPortoParticipants($_GET['porto'], 0, 5);
       $allParticipantesPorto = getAllPortoParticipants($_GET['porto']);
       $dateTest = getDate()['wday'];
       date_default_timezone_set('America/Sao_Paulo');
