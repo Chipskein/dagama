@@ -14,15 +14,18 @@ O projeto dagama inicialmente foi desenvolvido por:
 * Selos
 * Localização(cidade,estado) para apenas paises
 
-## Para Testar
-  [Heroku](https://dagama.herokuapp.com/)
-## Caso rode local
-     composer install
-**Inicie o servidor PHP com:**
-* localhost:8080
-* localhost:8081
-* localhost:8082
+## [Para Testar](https://dagama.herokuapp.com/)
+
+## Caso rode local:
+#### ⚠️ É necessário a instalar e configurar módulos do php-redis
+#### Instale as dependencias
+    composer install
+#### Configure as variaveis de ambiente como no .env.example e no credentrials.example.json
+#### Por fim inicie o webserver com
+      php -S localhost:8080 -t public/
+#### ou utilizar o [heroku-cli](https://devcenter.heroku.com/articles/heroku-cli)
+      heroku local local-server
 ## Desenvolvedor Dessa versão
 * [Bruno Nascimento](https://github.com/Chipskein)
 ## Diagrama do Banco
-![dagama_proto](https://github.com/Chipskein/dagama/blob/mysql_master/backend/infra/dagama.png)
+![dagama_proto](https://github.com/Chipskein/dagama/blob/mysql_master/database/dagama.png)
