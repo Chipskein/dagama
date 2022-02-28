@@ -1,7 +1,7 @@
 <?php
     use Dagama\Database;
     class PostController{
-        function getPosts($user, $offset,$limit,$order){
+        public static function getPosts($user, $offset,$limit,$order){
             $db=new Database();
             $con=$db->get_connection();
             if($con){
@@ -290,7 +290,7 @@
             }
             else exit;
         }
-        function getAllPosts($user){
+        public static function getAllPosts($user){
             $db=new Database();
             $con=$db->get_connection();
             if($con){
@@ -575,7 +575,7 @@
             }
             else exit;
         } 
-        function getOriginalPost($post){
+        public static function getOriginalPost($post){
             $db=new Database();
             $con=$db->get_connection();
             if($con){
@@ -635,7 +635,7 @@
             }
             else exit;
         }
-        function getOriginalPostOnPorto($post, $porto){
+        public static function getOriginalPostOnPorto($post, $porto){
             $db=new Database();
             $con=$db->get_connection();
             if($con){
@@ -695,7 +695,7 @@
             }
             else exit;
         }
-        function addInteracao($perfil, $texto, $perfil_posting, $porto, $isSharing, $post, $postPai, $isReaction, $emote, $local){
+        public static function addInteracao($perfil, $texto, $perfil_posting, $porto, $isSharing, $post, $postPai, $isReaction, $emote, $local){
             $db=new Database();
             $con=$db->get_connection();
             if($con){
@@ -722,7 +722,7 @@
             }
             else exit;
         }
-        function delInteracao($post){
+        public static function delInteracao($post){
             $db=new Database();
             $con=$db->get_connection();
             if($con){
@@ -739,7 +739,7 @@
             }
             else exit;
         }
-        function ediInteracao($interacao, $texto, $isReaction, $emote, $local){
+        public static function ediInteracao($interacao, $texto, $isReaction, $emote, $local){
             $db=new Database();
             $con=$db->get_connection();
             if($con){
@@ -760,7 +760,7 @@
             }
             else exit;
         }
-        function addCitacaoInteracao($user, $post){
+        public static function addCitacaoInteracao($user, $post){
             $db=new Database();
             $con=$db->get_connection();
             if($con){
@@ -788,7 +788,7 @@
             }
             else exit;
         }
-        function delCitacao($post, $pessoa){
+        public static function delCitacao($post, $pessoa){
             $db=new Database();
             $con=$db->get_connection();
             if($con){
@@ -803,7 +803,7 @@
             }
             else exit;
         }
-        function addAssuntoInteracao($post, $assunto){
+        public static function addAssuntoInteracao($post, $assunto){
             $db=new Database();
             $con=$db->get_connection();
             if($con){
@@ -818,7 +818,7 @@
             }
             else exit;
         }
-        function delAssuntoInteracao($post, $assunto){
+        public static function delAssuntoInteracao($post, $assunto){
             $db=new Database();
             $con=$db->get_connection();
             if($con){
