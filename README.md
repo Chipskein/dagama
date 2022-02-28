@@ -17,7 +17,8 @@ O projeto dagama inicialmente foi desenvolvido por:
 ## [Para Testar](https://dagama.herokuapp.com/)
 
 ## Caso rode local:
-#### ⚠️ É necessário a instalar e configurar módulos do php-redis
+#### ⚠️ É necessário instalar e configurar módulos do php-redis,php-mysql e o [Mariadb](https://mariadb.org/)
+
 #### Instale as dependencias
     composer install
 #### Configure as variaveis de ambiente como no .env.example e no credentrials.example.json
