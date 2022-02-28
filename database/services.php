@@ -1,4 +1,12 @@
 <?php
+    //.env exists connect with local database
+    if(preg_match("/localhost/","$_SERVER[HTTP_HOST]")) {
+        $dotenv_dir='../';
+        if (file_exists($dotenv_dir.'.env')) {
+            $dotenv = Dotenv\Dotenv::createImmutable($dotenv_dir, '.env');
+            $dotenv->load();
+        }
+    }
     require '../config/gdrive/driver.php';
     require '../config/mailer/mailer.php';
     require '../config/redis/redis.php';
