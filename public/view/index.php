@@ -70,7 +70,7 @@
         </form>
       </div>
     </div>
-  <script src="js/functions.js"></script>
+  <script src="/js/functions.js"></script>
   <script>
     imgInp.onchange = evt => {
       const [file] = imgInp.files

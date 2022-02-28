@@ -62,11 +62,7 @@
     };
 ?>
 <?php
-include './infra/services.php';
 
-    if(!isset($_SESSION)) { 
-        session_start(); 
-    } 
     if(!isset($_SESSION['userid'])){
         $erros = [];
         echo "<br>";

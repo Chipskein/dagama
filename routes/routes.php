@@ -3,6 +3,14 @@
     require '../database/services.php';
     use Pecee\SimpleRouter\SimpleRouter;
     $router=new SimpleRouter();
+    
+    /*
+    $router->error(function(){
+        echo "ERROR";
+        exit;
+    });
+    */
+    
     $router->get('/', function() {
         if(!isset($_SESSION)) session_start();
         if(isset($_SESSION['userid']))
@@ -19,7 +27,6 @@
     });
     $router->post('/login', function() {
         if(!isset($_SESSION)) session_start();
-
         if(!isset($_SESSION['userid']))
         {
             if(isset($_POST['email'])&&isset($_POST['password']))
@@ -42,7 +49,7 @@
                             exit;
                         }
                         else{
-                            header('Location: /');
+                            header("Location: /validateEmail/$passed[codigo]");
                             exit;
                         }
                     }
@@ -81,12 +88,24 @@
         }
         
     });
-
     $router->post('/register', function() {
         if(!isset($_SESSION)) session_start();
         if(!isset($_SESSION['userid']))
         {
-
+            $email = "$_POST[email]";
+            $username = "$_POST[username]";
+            $password = password_hash("$_POST[password]", PASSWORD_DEFAULT);
+            $bdate = "$_POST[bdate]";//converter bdate to yyyy/mm/dd
+            $pais=$_POST["pais"];
+            $genero = "$_POST[genero]";
+            $photo = null;
+            if($_FILES['photo']['tmp_name']) $photo = is_uploaded_file($_FILES['photo']['tmp_name']) ? $_FILES['photo'] : null;
+            $registered = Login_RegisterController::Register($email, $password, $bdate, $username, $genero, $pais, $photo);
+            if($registered){
+                $id=UserController::getIdbyEmail($email);
+                header("Location: /validateEmail/$id");
+                exit;                
+            } 
         }
         else
         {
@@ -94,6 +113,57 @@
             exit;
         }
     });
+    $router->get("/validateEmail/{id}",function ($id){
+        if(!isset($_SESSION)) session_start();
+        if(!isset($_SESSION['userid']))
+        {
+            $user=UserController::getUserInfoRegister($id);
+            if($user){
+               require "../public/view/validarEmail.php";
+               exit;
+            }
+            else exit;
+        }
+        else
+        {
+            require '../public/view/feed.php';
+            exit;
+        }
+    });
+    $router->get("/sendmail/{id}",function($id){
+        $user=UserController::getUserInfoRegister($id);
+        if($user){
+            if(!$user['ativo']||$user['ativo']=='f'){
+                $email="$user[email]";
+                $start_link='';
+                if(preg_match("/localhost/","$_SERVER[HTTP_HOST]")) $start_link="http://";
+                if(preg_match("/dagama.herokuapp/","$_SERVER[HTTP_HOST]")) $start_link="https://";
+                echo uniqid("",true);
+                $link=$start_link."TESTANDo";//"$_SERVER[HTTP_HOST]/backend/validate_acc.php?id="."$_GET[id]";
+                $html="
+                    <html lang=pt-BR>
+                    <head>
+                        <meta charset=UTF-8>
+                        <meta http-equiv=X-UA-Compatibl content=IE=edge>
+                        <meta name=viewport content=width=device-width, initial-scale=1.0>
+                    </head>
+                    <body>
+                        <a href=$link>link</a>
+                    </body>
+                    </html>
+                ";
+                //send_mail($email,"Dagama | Validar conta ",$html);
+                exit;
+            }
+            else{
+                header("Location: /");
+                exit;
+            }
+        };
+    });
+    
+
+
     $router->get('/createPorto', function() {
     });
     $router->post('/createPorto', function() {
@@ -103,7 +173,19 @@
         if(!isset($_SESSION)) session_start();
         if(isset($_SESSION['userid']))
         {
-
+            $user =UserController::getUserInfo("$_SESSION[userid]");
+            $postsArray =PortoController::getPostsOnPorto($id, 0, 10);
+            $participantesPorto = [];//PortoController::getPortoParticipants($id, 0, 5);
+            $allParticipantesPorto = PortoController::getAllPortoParticipants($id);
+            $locaisArray = [];
+            $assuntosArray = AssuntoController::getAssuntos();
+            $pessoasArray = UserController::getPessoas();
+            $paises=LocalController::getPaises();
+            $estados=[];
+            $cidades=[];
+            $portoInfo = PortoController::getPortInfo($id, $_SESSION['userid']);
+            require '../public/view/porto.php';
+            exit;
         }
         else
         {
@@ -143,28 +225,6 @@
             exit;
         }
     });
-    $router->post('/novoPost', function() {
-    });
-    $router->post('/deletePost', function() {
-    });
-    $router->post('/removeCitacao', function() {
-    });
-    $router->post('/sendFriendRequest', function() {
-    });
-
-
-
-    $router->post('/entrarPorto', function() {
-    });
-    $router->post('/sairPorto', function() {
-    });
-
-    $router->get('/about', function() {
-        require '../LICENSE';
-    });
-
-
-
     $router->get('/mar', function() {
         if(!isset($_SESSION)) session_start();
         if(isset($_SESSION['userid']))
@@ -191,4 +251,34 @@
             exit;
         }
     });
+
+
+
+
+
+
+
+
+
+    $router->post('/novoPost', function() {
+    });
+    $router->post('/deletePost', function() {
+    });
+    $router->post('/removeCitacao', function() {
+    });
+    $router->post('/sendFriendRequest', function() {
+    });
+
+
+
+    $router->post('/entrarPorto', function() {
+    });
+    $router->post('/sairPorto', function() {
+    });
+
+    $router->get('/about', function() {
+        require '../LICENSE';
+    });
+
+    
 ?>

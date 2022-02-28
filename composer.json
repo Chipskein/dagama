@@ -6,7 +6,8 @@
         "league/oauth2-google": "^4.0",
         "google/apiclient": "^2.0",
         "vlucas/phpdotenv": "^5.4",
-        "pecee/simple-router": "4.3.7.2"
+        "pecee/simple-router": "4.3.7.2",
+        "predis/predis": "^1.1"
     },
     "license": "MIT",
     "autoload": {

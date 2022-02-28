@@ -39,6 +39,7 @@ class Login_RegisterController{
         $con=$db->get_connection();
         $FOLDERS=array("root"=>"14oQWzTorITdqsK7IiFwfTYs91Gh_NcjS","avatares"=>"1Z3A4iqIe1eMerkdTEkXnjApRPupaPq-M","portos"=>"1e5T21RxDQ-4Kqw8EDVUBICGPeGIRSNHx","users"=>"1j2ivb8gBxV_AINaQ7FHjbd1OI0otCpEO");
         $link='https://upload.wikimedia.org/wikipedia/commons/4/4a/Pirate_icon.gif';
+        
         if($photo){
             $type=$photo['type'];
             $server_path=$photo['tmp_name'];

@@ -4,44 +4,25 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" href="./imgs/icon.png" type="image/jpg">
-  <link rel="stylesheet" href="css/styles.css">
-  <link rel="stylesheet" href="css/responsive.css" media="screen and (max-width: 1680px)"/>
+  <link rel="icon" href="/imgs/icon.png" type="image/jpg">
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen and (max-width: 1680px)"/>
   <title>Dagama | Porto</title>
 </head>
 <body>
 <?php
-  include '../backend/infra/services.php';
-  if(!isset($_SESSION)) { 
-    session_start(); 
-  }
-  if(isset($_SESSION['userid'])){
-    $user = getUserInfo("$_SESSION[userid]");
+ 
+ 
     //validar porto
-    if(isset($_GET['porto'])){
-      $postsArray = getPostsOnPorto($_GET['porto'], 0, 10);
-      $participantesPorto = [];//getPortoParticipants($_GET['porto'], 0, 5);
-      $allParticipantesPorto = getAllPortoParticipants($_GET['porto']);
-      $dateTest = getDate()['wday'];
-      date_default_timezone_set('America/Sao_Paulo');
-      if(date('l') == "Sunday" && date('h:i:s') == '00:00:00'){
-        foreach ($allParticipantesPorto as $participante) {
-          //upsertSelo($participante['codPart'], $_GET['porto']);
-        }
-      }
-      $locaisArray = [];
-      $assuntosArray = getAssuntos();
-      $pessoasArray = getPessoas();
-      $paises=getPaises();
-      $estados=[];
-      $cidades=[];
+    
       // $selo = 0;
+      /*
       if(isset($_POST['entrarPorto'])){
         $response = entrarPorto($_SESSION['userid'], $_GET['porto']);
         if(!$response){
           echo "Erro ao entrar no porto ".$response;
         } else {
-          header("refresh:0;url=porto.php?porto=$_GET[porto]"); 
+          header("refresh:0;url=/porto/$portoInfo[codigo]"); 
         }
       }
       if(isset($_POST['sairPorto'])){
@@ -49,7 +30,7 @@
         if(!$response){
           echo "Erro ao sair do porto";
         } else {
-          header("refresh:0;url=porto.php?porto=$_GET[porto]");
+          header("refresh:0;url=/porto/$portoInfo[codigo]");
         }
       }
       if(isset($_POST['excluirPorto'])){
@@ -60,7 +41,7 @@
           header("refresh:0;url=mar.php");
         }
       }
-
+    
       $portoInfo = getPortInfo($_GET['porto'], $_SESSION['userid']);
       if($portoInfo){
         // var_dump($portoInfo);
@@ -155,7 +136,7 @@
               addCitacaoInteracao($value, $response);
             }
           }
-          header("refresh:0;url=porto.php?porto=$_GET[porto]"); 
+          header("refresh:0;url=/porto/$portoInfo[codigo]"); 
         }
         else return false;
       }
@@ -167,7 +148,7 @@
         // ...
         if($erros == []){
           delInteracao($post);
-          header("refresh:0;url=porto.php?porto=$_GET[porto]"); 
+          header("refresh:0;url=/porto/$portoInfo[codigo]"); 
         }
       }
       if(isset($_POST['removeCitacao'])){
@@ -178,7 +159,7 @@
         // ...
         if($erros == []){
           delCitacao($post, $user);
-          header("refresh:0;url=porto.php?porto=$_GET[porto]"); 
+          header("refresh:0;url=/porto/$portoInfo[codigo]"); 
         }
       }
     }
@@ -193,25 +174,26 @@
     header("refresh:1;url=index.php");
     die();
   }
+  */
 ?>
 <div id=principal> 
   <header class="header-main">
-    <img class="header-icon" src="imgs/icon.png" alt="">
+    <img class="header-icon" src="/imgs/icon.png" alt="">
     <form class="header-searchBar" name="search" action="usuarios.php" method="get">
       <select id="select-filtro" name="select-filtro">
         <option value="perfil">Perfil</option>
         <option value="porto">Porto</option>
       </select>
       <input class="header-searchBar-input" name="username" type="text" placeholder="Faça sua pesquisa ..." />
-      <button type='submit'><img class="header-searchBar-icon" src="imgs/icons/search.png" alt="" srcset=""></button>
+      <button type='submit'><img class="header-searchBar-icon" src="/imgs/icons/search.png" alt="" srcset=""></button>
 
   </form>
     <div class="header-links">
       <?php 
-      echo "<a class=\"header-links-a\" href=feed.php>Mar</a> ";
-      echo "<a class=\"header-links-a a-selected\" href=mar.php>Portos</a> ";
-      echo "<a class=\"header-links-a\" href=navio.php?user=$_SESSION[userid]>Meu navio</a> ";
-      echo "<a class=\"header-links-a\" href=../backend/logoff.php>Sair </a><img class=\"header-links-icon\" src=\"imgs/icons/sair.png\" alt=\"\">";
+      echo "<a class=\"header-links-a\" href=/feed>Mar</a> ";
+      echo "<a class=\"header-links-a a-selected\" href=/mar>Portos</a> ";
+      echo "<a class=\"header-links-a\" href=/navio/$_SESSION[userid]>Meu navio</a> ";
+      echo "<a class=\"header-links-a\" href=/logoff >Sair </a><img class=\"header-links-icon\" src=\"/imgs/icons/sair.png\" alt=\"\">";
       ?>
     </div>
   </header>
@@ -283,13 +265,13 @@
             echo "<p class=\"insert-interacao-user-assuntos\"></p>";
           echo "</div>";
         echo "</div>";
-        echo "<form name=\"newPost\" action=\"porto.php?porto=$_GET[porto]\" method=\"post\" >";
+        echo "<form name=\"newPost\" action=\"/porto/$portoInfo[codigo]\" method=\"post\" >";
           echo "<textarea name=\"texto\" class=\"insert-interacao-input\" id=\"insert-interacao-input\" type=\"text\" placeholder=\"Escreva um post ...\" ></textarea>";
           echo "<div class=\"insert-interacao-smallBtns\">";
-            echo "<div class=\"insert-interacao-smallBtns-a\" onclick=\"newPostSelect('local')\"><img class=\"insert-interacao-smallBtns-icon\" src=\"imgs/icons/maps-and-flags.png\" alt=\"\" srcset=\"\">Adicionar um Local</div>";
-            echo "<div class=\"insert-interacao-smallBtns-a\" onclick=\"newPostSelect('pessoas')\"><img class=\"insert-interacao-smallBtns-icon\" src=\"imgs/icons/multiple-users-silhouette.png\" alt=\"\" srcset=\"\">Citar Pessoas</div>";
-            echo "<div class=\"insert-interacao-smallBtns-a\" onclick=\"newPostSelect('assuntos')\"><img class=\"insert-interacao-smallBtns-icon\" src=\"imgs/icons/price-tag.png\" alt=\"\" srcset=\"\">Assunto</div>";
-            echo "<div class=\"insert-interacao-smallBtns-a\" onclick=\"newPostSelect('reacoes')\"><img class=\"insert-interacao-smallBtns-icon\" src=\"imgs/icons/Like.png\" alt=\"\" srcset=\"\">Reação</div>";
+            echo "<div class=\"insert-interacao-smallBtns-a\" onclick=\"newPostSelect('local')\"><img class=\"insert-interacao-smallBtns-icon\" src=\"/imgs/icons/maps-and-flags.png\" alt=\"\" srcset=\"\">Adicionar um Local</div>";
+            echo "<div class=\"insert-interacao-smallBtns-a\" onclick=\"newPostSelect('pessoas')\"><img class=\"insert-interacao-smallBtns-icon\" src=\"/imgs/icons/multiple-users-silhouette.png\" alt=\"\" srcset=\"\">Citar Pessoas</div>";
+            echo "<div class=\"insert-interacao-smallBtns-a\" onclick=\"newPostSelect('assuntos')\"><img class=\"insert-interacao-smallBtns-icon\" src=\"/imgs/icons/price-tag.png\" alt=\"\" srcset=\"\">Assunto</div>";
+            echo "<div class=\"insert-interacao-smallBtns-a\" onclick=\"newPostSelect('reacoes')\"><img class=\"insert-interacao-smallBtns-icon\" src=\"/imgs/icons/Like.png\" alt=\"\" srcset=\"\">Reação</div>";
             // echo "<div class=\"insert-interacao-smallBtns-a\" onclick=\"newPostSelect('compartilhar')\"><img class=\"insert-interacao-smallBtns-icon\" src=\"imgs/icons/send.png\" alt=\"\" srcset=\"\">Compartilhar</div>";
           echo "</div>";
           echo "<input class=\"insert-interacao-submit\" type=\"submit\" name=\"novoPost\" />";
@@ -402,7 +384,7 @@
       foreach ($postsArray as $post) {
         // print_r($post);
         echo "<div class=\"div-post\">";
-          if($post['codPorto'] != $_GET['porto']){
+          if($post['codPorto'] != $portoInfo["codigo"]){
             echo "<p class=\"compartilhado-txt\"><i>Postado no porto <a href=porto.php?porto=$post[codPorto] class=\"txt-linktoporto\">$post[nomePorto]</a></i></p>";
           }
           //Share
@@ -518,16 +500,16 @@
             echo "</div>";
             if($post['isSharing'] && ($sharedPost['codPerfil'] == $_SESSION['userid'])){
               echo "<div class=\"div-post-top-editicons\">";
-              echo "<form action=\"porto.php?porto=$_GET[porto]\" method=\"post\">";
-              echo "<button type=\"submit\" name=\"deletePost\" value=\"$post[codInteracao]\"><img src=\"./imgs/icons/trash.png\" class=\"div-post-top-editicons-trash\" alt=\"\" /></button>";
+              echo "<form action=\"/porto/$portoInfo[codigo]\" method=\"post\">";
+              echo "<button type=\"submit\" name=\"deletePost\" value=\"$post[codInteracao]\"><img src=\"/imgs/icons/trash.png\" class=\"div-post-top-editicons-trash\" alt=\"\" /></button>";
               echo "</form>";
               echo "</div>";
             } 
             if($post['codPerfil'] == $_SESSION['userid']) {
               echo "<div class=\"div-post-top-editicons\">";
-              echo "<a href=\"editarInteracao.php?interacao=$post[codInteracao]\"><img src=\"./imgs/icons/pencil.png\" class=\"div-post-top-editicons-pencil\" alt=\"\" /></a>";
-              echo "<form action=\"porto.php?porto=$_GET[porto]\" method=\"post\">";
-              echo "<button type=\"submit\" name=\"deletePost\" value=\"$post[codInteracao]\"><img src=\"./imgs/icons/trash.png\" class=\"div-post-top-editicons-trash\" alt=\"\" /></button>";
+              echo "<a href=\"/editarInteracao/$post[codInteracao]\"><img src=\"/imgs/icons/pencil.png\" class=\"div-post-top-editicons-pencil\" alt=\"\" /></a>";
+              echo "<form action=\"/porto/$portoInfo[codigo]\" method=\"post\">";
+              echo "<button type=\"submit\" name=\"deletePost\" value=\"$post[codInteracao]\"><img src=\"/imgs/icons/trash.png\" class=\"div-post-top-editicons-trash\" alt=\"\" /></button>";
               echo "</form>";
               echo "</div>";
             }
@@ -581,12 +563,12 @@
           //Ícones
           echo "<div class=\"div-post-icons-bar\">";
             if($isMentioned) {
-              echo "<form action=\"porto.php?porto=$_GET[porto]\" method=\"post\">";
+              echo "<form action=\"/porto/$portoInfo[codigo]\" method=\"post\">";
               echo "<button type=\"submit\" name=\"removeCitacao\" class=\"interacao-remover-txt\" value=\"$post[codInteracao]\"><p>Remover sua citação</p></button>";
               echo "</form>";
             }
             echo "<div class=\"div-post-icons-bar-divs\">";
-              echo "<p>$post[qtdInteracao]</p><img src=\"imgs/icons/chat.png\" class=\"div-post-icons-bar-icons\" alt=\"\">";
+              echo "<p>$post[qtdInteracao]</p><img src=\"/imgs/icons/chat.png\" class=\"div-post-icons-bar-icons\" alt=\"\">";
             echo "</div>";
             echo "<div class=\"div-post-icons-bar-interagir\">";
               echo "<a href=\"interagirInteracao.php?interacao=$post[codInteracao]\"><img src=\"$user[img]\" class=\"div-post-icons-bar-interagir-icon\" alt=\"\"><p>Interagir...</p></a>";
@@ -670,12 +652,12 @@
                 echo "<a href=\"interagirInteracao.php?interacao=$comentario[codInteracao]\">Reagir</a>";
                   if($comentario['codPerfil'] == $_SESSION['userid']) {
                     echo "<a href=\"editarInteracao.php?interacao=$comentario[codInteracao]\"><p class=\"interacao-editar-txt\">- Editar -</p></a>";
-                    echo "<form action=\"porto.php?porto=$_GET[porto]\" method=\"post\">";
+                    echo "<form action=\"/porto/$portoInfo[codigo]\" method=\"post\">";
                     echo "<button type=\"submit\" name=\"deletePost\" value=\"$comentario[codInteracao]\"><p class=\"interacao-remover-txt\">Remover</p></button>";
                     echo "</form>";
                   }
                   if($comentario['codPerfil'] != $_SESSION['userid'] && $post['codPerfil'] == $_SESSION['userid']) {
-                    echo "<form action=\"porto.php?porto=$_GET[porto]\" method=\"post\">";
+                    echo "<form action=\"/porto/$portoInfo[codigo]\" method=\"post\">";
                     echo "<button type=\"submit\" name=\"deletePost\" value=\"$comentario[codInteracao]\"><p class=\"interacao-remover-txt\">- Remover</p></button>";
                     echo "</form>";
                   }
@@ -759,12 +741,12 @@
                       echo "<a href=\"interagirInteracao.php?interacao=$resposta[codInteracao]\">Reagir</a>";
                         if($resposta['codPerfil'] == $_SESSION['userid']) {
                           echo "<a href=\"editarInteracao.php?interacao=$resposta[codInteracao]\"><p class=\"interacao-editar-txt\">- Editar -</p></a>";
-                          echo "<form action=\"porto.php?porto=$_GET[porto]\" method=\"post\">";
+                          echo "<form action=\"/porto/$portoInfo[codigo]\" method=\"post\">";
                           echo "<button type=\"submit\" name=\"deletePost\" value=\"$resposta[codInteracao]\"><p class=\"interacao-remover-txt\">Remover</p></button>";
                           echo "</form>";
                         }
                         if($resposta['codPerfil'] != $_SESSION['userid'] && $comentario['codPerfil'] == $_SESSION['userid']) {
-                          echo "<form action=\"porto.php?porto=$_GET[porto]\" method=\"post\">";
+                          echo "<form action=\"/porto/$portoInfo[codigo]\" method=\"post\">";
                           echo "<button type=\"submit\" name=\"deletePost\" value=\"$resposta[codInteracao]\"><p class=\"interacao-remover-txt\">- Remover</p></button>";
                           echo "</form>";
                         }

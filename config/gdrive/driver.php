@@ -2,13 +2,7 @@
 
   function getClient(){
       $client = new Google\Client();
-      $GOOGLE_OAUTH_CREDENTIALS_PATH=NULL;
-      if(preg_match("/localhost/","$_SERVER[HTTP_HOST]")){
-        $GOOGLE_OAUTH_CREDENTIALS_PATH=$_SERVER["DOCUMENT_ROOT"]."/backend/gdrive/credentials.json";
-      }
-      else{
-        $GOOGLE_OAUTH_CREDENTIALS_PATH="/app/backend/gdrive/credentials.json";
-      }
+      $GOOGLE_OAUTH_CREDENTIALS_PATH="../config/gdrive/credentials.json";
       $client->setApplicationName("dagama-gdrive");
       $client->setAuthConfig($GOOGLE_OAUTH_CREDENTIALS_PATH);
       $client->addScope('https://www.googleapis.com/auth/drive');

@@ -9,6 +9,5 @@
        $dotenv = Dotenv\Dotenv::createImmutable($dotenv_dir, '.env');
        $dotenv->load();
    }
-   SimpleRouter::setDefaultNamespace('\Demo\Controllers');
    SimpleRouter::start();
 ?>
