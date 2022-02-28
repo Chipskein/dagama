@@ -278,8 +278,34 @@
 
 
     $router->get('/createPorto', function() {
+        if(!isset($_SESSION)) session_start();
+        if(isset($_SESSION['userid']))
+        {
+            require '../public/view/createPorto.php';
+        }
     });
     $router->post('/createPorto', function() {
+        if(!isset($_SESSION)) session_start();
+        if(isset($_SESSION['userid']))
+        {
+            if(isset($_POST['descr']) && isset($_POST['nome']))
+            {
+                $perfil = "$_SESSION[userid]";
+                $nome = "$_POST[nome]";
+                $descr = "$_POST[descr]";
+                $img= is_uploaded_file($_FILES['img']['tmp_name']) ? $_FILES['img']:null;
+                $registered = PortoController::addPorto($perfil,$nome,$descr,$img);
+                if($registered){
+                    header("Location: /mar");
+                    exit;
+                } 
+            }
+            else
+            {
+                header("Location: ".$_SERVER['HTTP_REFERER']);
+                exit;
+            }
+        }
     });
     
     $router->get('/porto/{id}', function($id) {
