@@ -4,24 +4,14 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" href="./imgs/icon.png" type="image/jpg">
-  <link rel="stylesheet" href="css/styles.css">
-  <link rel="stylesheet" href="css/responsive.css" media="screen and (max-width: 1680px)"/>
+  <link rel="icon" href="/imgs/icon.png" type="image/jpg">
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen and (max-width: 1680px)"/>
   <title>Dagama | Navio</title>
 </head>
 <body class=perfil>
 <?php
-  include '../backend/infra/services.php';
-  if(!isset($_SESSION)) { 
-    session_start(); 
-  }
-  $user=[];
-  if(!isset($_SESSION['userid'])){
-    echo "<h2 align=center>Para ver este conteudo faça um cadastro no dagama!!!</h2>";
-    header("refresh:1;url=index.php");
-    die();
-  }
-  else{
+
     function url($campo, $valor) {
       $result = array();
       // if (isset($_GET["sabor"])) $result["sabor"] = "sabor=".$_GET["sabor"];
@@ -30,7 +20,7 @@
       if (isset($_GET["orderby"])) $result["orderby"] = "orderby=".$_GET["orderby"];
       if (isset($_GET["offset"])) $result["offset"] = "offset=".$_GET["offset"];
       $result[$campo] = $campo."=".$valor;
-      return("navio.php?user=$_GET[user]&".strtr(implode("", $result), " ", "+"));
+      //return("/navio/$user[codigo]&".strtr(implode("", $result), " ", "+"));
     }
     function pages($campo, $valor){
         $result = array();
@@ -38,142 +28,115 @@
         $result[$campo] = $campo."=".$valor;
         return '&'.(strtr(implode("&",$result), " ", "+"));
     }
-    if(isset($_GET['user'])){
-      $orderby = (isset($_GET["orderby"])) ? $_GET["orderby"] : "tmp1.data desc";
-      $user=getUserInfo("$_GET[user]");
-      $userSelf=getUserInfo("$_SESSION[userid]");
-      if(!$user){
-        echo "Usuario inválido";
-        header("refresh:1;url=mar.php");
-        die();
+  /*
+  if(isset($_POST['novoPost'])){
+    $texto = ''.$_POST['texto'];
+    $reacao = isset($_POST['reacao']) ? $_POST['reacao'] : 0;
+    $isReaction = isset($_POST['reacao']) ? 1 : 0;
+    $assuntos = [];
+    $citacoes = [];
+    
+    // Local
+    $local = $user['pais'];
+    $codPais = $_POST['insert-codigo-pais'];
+    $novoPaisNome = $_POST['insert-nome-pais'];
+    $codEstado = $_POST['insert-codigo-estado'];
+    $novoEstadoNome = $_POST['insert-nome-estado'];
+    $codCidade = $_POST['insert-codigo-cidade'];
+    $novoCidadeNome = $_POST['insert-nome-cidade'];
+    $newAssuntos = [];
+    for($c = 1; $c <= 5 ; $c++){
+      if(isset($_POST['insert-new-assunto'.$c])){
+        $newAssuntos[] = $_POST['insert-new-assunto'.$c];
       }
-      $isOwner= "$_GET[user]"=="$_SESSION[userid]" ? true:false;
-      $limit = 5;
-      $offset = isset($_GET['offset']) ? $_GET['offset'] : 0;
-      $orderby = (isset($_GET["orderby"])) ? $_GET["offset"] : "tmp1.data desc";
-      $getAllPosts = getAllPosts($_GET['user']);
-      $postsArray = getPosts($_GET['user'], $offset, $limit, $orderby);
-      $amigosUser =[]; //getFriends($_GET['user'], 0, 3,'');
-      $portosArray = getAllPorto($_GET['user'], true, 0, 3, null);
-      $portosUser = getUserPortoQtd($_GET['user']);
-      $locaisArray = [];
-      $assuntosArray = getAssuntos();
-      $pessoasArray = getPessoas();
-      $paises=getPaises();
-      $estados=[];
-      $cidades=[];
-      if(isset($_POST['novoPost'])){
-        $texto = ''.$_POST['texto'];
-        $reacao = isset($_POST['reacao']) ? $_POST['reacao'] : 0;
-        $isReaction = isset($_POST['reacao']) ? 1 : 0;
-        $assuntos = [];
-        $citacoes = [];
-        
-        // Local
-        $local = $user['pais'];
-        $codPais = $_POST['insert-codigo-pais'];
-        $novoPaisNome = $_POST['insert-nome-pais'];
-        $codEstado = $_POST['insert-codigo-estado'];
-        $novoEstadoNome = $_POST['insert-nome-estado'];
-        $codCidade = $_POST['insert-codigo-cidade'];
-        $novoCidadeNome = $_POST['insert-nome-cidade'];
-        $newAssuntos = [];
-        for($c = 1; $c <= 5 ; $c++){
-          if(isset($_POST['insert-new-assunto'.$c])){
-            $newAssuntos[] = $_POST['insert-new-assunto'.$c];
-          }
-        }
-        if(count($newAssuntos) > 0){
-          foreach ($newAssuntos as $value) {
-            $assuntos[] = addAssunto($value);
-          }
-        }
+    }
+    if(count($newAssuntos) > 0){
+      foreach ($newAssuntos as $value) {
+        $assuntos[] = AssuntoController::addAssunto($value);
+      }
+    }
 
-        $qtdAssuntos = count(getAssuntos());
-        for($c = 1; $c <= $qtdAssuntos; $c++){
-            if(isset($_POST["assunto$c"])){
-                $assuntos[] = $_POST["assunto$c"];
-            }
+    $qtdAssuntos = count(AssuntoController::getAssuntos());
+    for($c = 1; $c <= $qtdAssuntos; $c++){
+        if(isset($_POST["assunto$c"])){
+            $assuntos[] = $_POST["assunto$c"];
         }
-        $qtdPessoas = count(getPessoas());
-        for($c = 1; $c <= $qtdPessoas; $c++){
-            if(isset($_POST["pessoa$c"])){
-                $citacoes[] = $_POST["pessoa$c"];
-            }
+    }
+    $qtdPessoas = count(UserController::getPessoas());
+    for($c = 1; $c <= $qtdPessoas; $c++){
+        if(isset($_POST["pessoa$c"])){
+            $citacoes[] = $_POST["pessoa$c"];
         }
-        $response = addInteracao($_SESSION['userid'], $texto, $_GET['user'], 0, 0, 0, 0, $isReaction, $reacao, $local);
-        if($response) {
-          if(count($assuntos) > 0){
-            foreach ($assuntos as $value) {
-              addAssuntoInteracao($response, $value);
-            }
-          }
-          if(count($citacoes) > 0){
-            foreach ($citacoes as $value) {
-              addCitacaoInteracao($value, $response);
-            }
-          }
-          header("refresh:0;url=navio.php?user=$_GET[user]"); 
-        }
-        else return false;
-      }
-      if(isset($_POST['deletePost'])){
-        $post = $_POST['deletePost'];
-        $user = $_SESSION['userid'];
-        $erros = [];
-        // Validação
-        // ...
-        if($erros == []){
-          delInteracao($post);
-          header("refresh:0;url=navio.php?user=$_GET[user]"); 
+    }
+    $response =PostController::addInteracao($_SESSION['userid'], $texto, $_GET['user'], 0, 0, 0, 0, $isReaction, $reacao, $local);
+    if($response) {
+      if(count($assuntos) > 0){
+        foreach ($assuntos as $value) {
+          PostController::addAssuntoInteracao($response, $value);
         }
       }
-      if(isset($_POST['removeCitacao'])){
-        $post = $_POST['removeCitacao'];
-        $user = $_SESSION['userid'];
-        $erros = [];
-        // Validação
-        // ...
-        if($erros == []){
-          delCitacao($post, $user);
-          header("refresh:0;url=navio.php?user=$_GET[user]"); 
+      if(count($citacoes) > 0){
+        foreach ($citacoes as $value) {
+          PostController::addCitacaoInteracao($value, $response);
         }
       }
-    } else{
-      echo "Usuario inválido";
-      header("refresh:1;url=mar.php");
-      die();
+      //header("refresh:0;url=navio.php?user=$_GET[user]"); 
+    }
+    else return false;
+  }
+  if(isset($_POST['deletePost'])){
+    $post = $_POST['deletePost'];
+    $user = $_SESSION['userid'];
+    $erros = [];
+    // Validação
+    // ...
+    if($erros == []){
+      PostController::delInteracao($post);
+      //header("refresh:0;url=navio.php?user=$_GET[user]"); 
     }
   }
+  if(isset($_POST['removeCitacao'])){
+    $post = $_POST['removeCitacao'];
+    $user = $_SESSION['userid'];
+    $erros = [];
+    // Validação
+    // ...
+    if($erros == []){
+      PostController::delCitacao($post, $user);
+      //header("refresh:0;url=navio.php?user=$_GET[user]"); 
+    }
+  }
+  
   if(isset($_FILES["photo"])){
     $photo=$_FILES["photo"];
     $oldphoto=$_SESSION['userimg'];//link
     $oldphotoid=substr($oldphoto,47);
-    $newimg=updateImg($_SESSION['userid'],$photo,$oldphotoid);
+    $newimg=UserController::updateImg($_SESSION['userid'],$photo,$oldphotoid);
     if($newimg){
       $_SESSION['userimg']="$newimg";
-      header("Refresh:0");
+      //header("Refresh:0");
     }
   }
+  */
 ?>
 <div id=principal> 
  <header class="header-main">
-    <img class="header-icon" src="imgs/icon.png" alt="">
+    <img class="header-icon" src="/imgs/icon.png" alt="">
         <form class="header-searchBar" name="search" action="usuarios.php" method="get">
       <select id="select-filtro" name="select-filtro">
         <option value="perfil">Perfil</option>
         <option value="porto">Porto</option>
       </select>
       <input class="header-searchBar-input" name="username" type="text" placeholder="Faça sua pesquisa ..." />
-      <button type='submit'><img class="header-searchBar-icon" src="imgs/icons/search.png" alt="" srcset=""></button>
+      <button type='submit'><img class="header-searchBar-icon" src="/imgs/icons/search.png" alt="" srcset=""></button>
 
   </form>
     <div class="header-links">
     <?php 
-      echo "<a class=\"header-links-a\" href=feed.php>Mar</a> ";
-      echo "<a class=\"header-links-a\" href=mar.php>Portos</a> ";
-      echo "<a class=\"header-links-a a-selected\" href=navio.php?user=$_SESSION[userid]>Meu navio</a> ";
-      echo "<a class=\"header-links-a\" href=../backend/logoff.php>Sair </a><img class=\"header-links-icon\" src=\"imgs/icons/sair.png\" alt=\"\">";
+      echo "<a class=\"header-links-a\" href=/feed>Mar</a> ";
+      echo "<a class=\"header-links-a\" href=/mar>Portos</a> ";
+      echo "<a class=\"header-links-a a-selected\" href=/navio/$_SESSION[userid]>Meu navio</a> ";
+      echo "<a class=\"header-links-a\" href=/logoff >Sair </a><img class=\"header-links-icon\" src=\"/imgs/icons/sair.png\" alt=\"\">";
     ?>
     </div>
   </header>
@@ -186,10 +149,10 @@
           foreach ($portosArray as $value) {
             echo "<div class=\"row porto-feed-container\">
               <div class=\"portos-img\" style=\"background-image: url($value[img])\"></div>
-              <a class=nomePort href=porto.php?porto=$value[codigo]>$value[nome]</a>
+              <a class=nomePort href=/porto/$value[codigo]>$value[nome]</a>
             </div>";
           }
-          echo "<br><a class=portosAtracadosMais href=portosUser.php?user=$_GET[user]>Ver todos</a>";
+          echo "<br><a class=portosAtracadosMais href=/portosUser/$user[codigo]>Ver todos</a>";
         } else {
           echo "<p>Sem portos ainda</p>";
         }
@@ -202,7 +165,7 @@
     <!--Add onlick change-->
       <br>
       <div id="img_perfil" class=perfil></div>
-      <form id=formPhoto action=<?php echo "navio.php?user=$_GET[user]"?> enctype=multipart/form-data method="POST">
+      <form id=formPhoto action="/navio/$user[codigo]" enctype=multipart/form-data method="POST">
           <input id="imgInp" class="hidden" type="file" name="photo">
       </form>
       <?php 
@@ -210,7 +173,7 @@
       ?>
       <?php echo "<div align=center class=divUsername>";
             echo "<h3 class=perfil>$user[username]</h3>";
-            if($isOwner) echo"<a href=editNavio.php?user=$_GET[user]><img class=img-pencil src=\"imgs/icons/clarity_pencil-line.png\"</img></a>";
+            if($isOwner) echo"<a href=/editNavio/$user[codigo]><img class=img-pencil src=\"/imgs/icons/clarity_pencil-line.png\"</img></a>";
             echo "</div>";
       ?>
     </div>
@@ -219,9 +182,9 @@
       echo "<div align=center>";
         echo "<div class=perfil-amigos>";
             if($user['ativo']){
-              echo "<a href=amigos.php?user=$_GET[user] class=amigos> Amigos: ".($amigosUser ? $amigosUser[0]['qtdAmigos'] : 0)."</a>";
+              echo "<a href=/amigos/$user[codigo] class=amigos> Amigos: ".($amigosUser ? $amigosUser[0]['qtdAmigos'] : 0)."</a>";
             }
-            if($isOwner) echo "<h3><a href=portosUser.php?owner&user=$_GET[user] class=amigos>Meus Portos: $portosUser</a></h3>";
+            if($isOwner) echo "<h3><a href=/portosUser/$user[codigo] class=amigos>Meus Portos: $portosUser</a></h3>";
         echo "</div>";
       echo "</div>";
     ?>
@@ -241,13 +204,13 @@
               echo "<p class=\"insert-interacao-user-assuntos\"></p>";
             echo "</div>";
           echo "</div>";
-          echo "<form name=\"newPost\" action=\"navio.php?user=$_GET[user]\" method=\"post\" >";
+          echo "<form name=\"newPost\" action=\"/newpost \" method=\"post\" >";
             echo "<textarea name=\"texto\" class=\"insert-interacao-input\" id=\"insert-interacao-input\" type=\"text\" placeholder=\"Escreva um post ...\" ></textarea>";
             echo "<div class=\"insert-interacao-smallBtns\">";
-              echo "<div class=\"insert-interacao-smallBtns-a\" onclick=\"newPostSelect('local')\"><img class=\"insert-interacao-smallBtns-icon\" src=\"imgs/icons/maps-and-flags.png\" alt=\"\" srcset=\"\">Adicionar um Local</div>";
-              echo "<div class=\"insert-interacao-smallBtns-a\" onclick=\"newPostSelect('pessoas')\"><img class=\"insert-interacao-smallBtns-icon\" src=\"imgs/icons/multiple-users-silhouette.png\" alt=\"\" srcset=\"\">Citar Pessoas</div>";
-              echo "<div class=\"insert-interacao-smallBtns-a\" onclick=\"newPostSelect('assuntos')\"><img class=\"insert-interacao-smallBtns-icon\" src=\"imgs/icons/price-tag.png\" alt=\"\" srcset=\"\">Assunto</div>";
-              echo "<div class=\"insert-interacao-smallBtns-a\" onclick=\"newPostSelect('reacoes')\"><img class=\"insert-interacao-smallBtns-icon\" src=\"imgs/icons/Like.png\" alt=\"\" srcset=\"\">Reação</div>";
+              echo "<div class=\"insert-interacao-smallBtns-a\" onclick=\"newPostSelect('local')\"><img class=\"insert-interacao-smallBtns-icon\" src=\"/imgs/icons/maps-and-flags.png\" alt=\"\" srcset=\"\">Adicionar um Local</div>";
+              echo "<div class=\"insert-interacao-smallBtns-a\" onclick=\"newPostSelect('pessoas')\"><img class=\"insert-interacao-smallBtns-icon\" src=\"/imgs/icons/multiple-users-silhouette.png\" alt=\"\" srcset=\"\">Citar Pessoas</div>";
+              echo "<div class=\"insert-interacao-smallBtns-a\" onclick=\"newPostSelect('assuntos')\"><img class=\"insert-interacao-smallBtns-icon\" src=\"/imgs/icons/price-tag.png\" alt=\"\" srcset=\"\">Assunto</div>";
+              echo "<div class=\"insert-interacao-smallBtns-a\" onclick=\"newPostSelect('reacoes')\"><img class=\"insert-interacao-smallBtns-icon\" src=\"/imgs/icons/Like.png\" alt=\"\" srcset=\"\">Reação</div>";
               // echo "<div class=\"insert-interacao-smallBtns-a\" onclick=\"newPostSelect('compartilhar')\"><img class=\"insert-interacao-smallBtns-icon\" src=\"imgs/icons/send.png\" alt=\"\" srcset=\"\">Compartilhar</div>";
             echo "</div>";
             echo "<input class=\"insert-interacao-submit\" type=\"submit\" name=\"novoPost\" />";
@@ -346,7 +309,7 @@
 
       // posts
     if($postsArray){
-      echo "<form action=\"navio.php?user=$_GET[user]\" id=\"formOrderby\" method=\"get\">";
+      echo "<form action=\"/navio/$user[codigo]\" id=\"formOrderby\" method=\"get\">";
       echo "<div class=\"order-btn\">";
       echo "<p>Ordene por </p>";
       echo "<select onchange=\"document.getElementById('formOrderby').submit();\" id=\"select-ordenar\" name=\"orderby\">";
@@ -361,7 +324,7 @@
         // print_r($post);
         echo "<div class=\"div-post\">";
           if($post['codPorto']){
-            echo "<p class=\"compartilhado-txt\"><i>Postado no porto <a href=porto.php?porto=$post[codPorto] class=\"txt-linktoporto\">$post[nomePorto]</a></i></p>";
+            echo "<p class=\"compartilhado-txt\"><i>Postado no porto <a href=/porto/$post[codPorto] class=\"txt-linktoporto\">$post[nomePorto]</a></i></p>";
           }
           //Share
           $sharedPost = 0;
@@ -488,15 +451,15 @@
             if($post['isSharing'] && ($sharedPost['codPerfil'] == $_SESSION['userid'])){
               echo "<div class=\"div-post-top-editicons\">";
               echo "<form action=\"navio.php?user=$_GET[user]\" method=\"post\">";
-              echo "<button type=\"submit\" name=\"deletePost\" value=\"$post[codInteracao]\"><img src=\"./imgs/icons/trash.png\" class=\"div-post-top-editicons-trash\" alt=\"\" /></button>";
+              echo "<button type=\"submit\" name=\"deletePost\" value=\"$post[codInteracao]\"><img src=\"/imgs/icons/trash.png\" class=\"div-post-top-editicons-trash\" alt=\"\" /></button>";
               echo "</form>";
               echo "</div>";
             } 
             if($post['codPerfil'] == $_SESSION['userid']) {
               echo "<div class=\"div-post-top-editicons\">";
-              echo "<a href=\"editarInteracao.php?interacao=$post[codInteracao]\"><img src=\"./imgs/icons/pencil.png\" class=\"div-post-top-editicons-pencil\" alt=\"\" /></a>";
-              echo "<form action=\"navio.php?user=$_GET[user]\" method=\"post\">";
-              echo "<button type=\"submit\" name=\"deletePost\" value=\"$post[codInteracao]\"><img src=\"./imgs/icons/trash.png\" class=\"div-post-top-editicons-trash\" alt=\"\" /></button>";
+              echo "<a href=\"editarInteracao.php?interacao=$post[codInteracao]\"><img src=\"/imgs/icons/pencil.png\" class=\"div-post-top-editicons-pencil\" alt=\"\" /></a>";
+              echo "<form action=\"/navio/$user[codigo]\" method=\"post\">";
+              echo "<button type=\"submit\" name=\"deletePost\" value=\"$post[codInteracao]\"><img src=\"/imgs/icons/trash.png\" class=\"div-post-top-editicons-trash\" alt=\"\" /></button>";
               echo "</form>";
               echo "</div>";
             }
@@ -555,7 +518,7 @@
               echo "</form>";
             }
             echo "<div class=\"div-post-icons-bar-divs\">";
-              echo "<p>$post[qtdInteracao]</p><img src=\"imgs/icons/chat.png\" class=\"div-post-icons-bar-icons\" alt=\"\">";
+              echo "<p>$post[qtdInteracao]</p><img src=\"/imgs/icons/chat.png\" class=\"div-post-icons-bar-icons\" alt=\"\">";
             echo "</div>";
             echo "<div class=\"div-post-icons-bar-interagir\">";
               echo "<a href=\"interagirInteracao.php?interacao=$post[codInteracao]\"><img src=\"$userSelf[img]\" class=\"div-post-icons-bar-interagir-icon\" alt=\"\"><p>Interagir...</p></a>";
@@ -640,7 +603,7 @@
                 echo "<a href=\"interagirInteracao.php?interacao=$comentario[codInteracao]\">Reagir</a>";
                   if($comentario['codPerfil'] == $_SESSION['userid']) {
                     echo "<a href=\"editarInteracao.php?interacao=$comentario[codInteracao]\"><p class=\"interacao-editar-txt\">- Editar -</p></a>";
-                    echo "<form action=\"navio.php?user=$_GET[user]\" method=\"post\">";
+                    echo "<form action=\"/navio/$user[codigo]\" method=\"post\">";
                     echo "<button type=\"submit\" name=\"deletePost\" value=\"$comentario[codInteracao]\"><p class=\"interacao-remover-txt\">Remover</p></button>";
                     echo "</form>";
                   }
@@ -795,12 +758,12 @@
         echo "</div>";
           if(count($amigosUser) > 0){
             foreach ($amigosUser as $amigo) {
-              echo "<a href=navio.php?user=$amigo[amigoCod]><div><img src=$amigo[imgAmigo] class=div-amigo-image><p class=nomeAmigo>$amigo[nameAmigo]</p></div></a>";
+              echo "<a href=/navio/$amigo[amigoCod]><div><img src=$amigo[imgAmigo] class=div-amigo-image><p class=nomeAmigo>$amigo[nameAmigo]</p></div></a>";
             }
           } else {
             echo $isOwner ? "<p>Você ainda não tem nenhum amigo</p>":"<p>Sem amigos</p>";
           }          
-          echo "<a class=portosAtracadosMais href=amigos.php?user=$_GET[user]>Ver mais</a>";
+          echo "<a class=portosAtracadosMais href=/amigos/$user[codigo]>Ver mais</a>";
       echo "</div>";
     }
   ?>
@@ -810,7 +773,7 @@
           <<  
           >>
 </footer>   -->
-<script src="js/functions.js"></script>
+<script src="/js/functions.js"></script>
 <script>
 const camera=document.getElementById("camera-icon");
 const img_perfil=document.getElementById("img_perfil");

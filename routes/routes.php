@@ -86,6 +86,7 @@
         if(!isset($_SESSION)) session_start();
         if(!isset($_SESSION['userid']))
         {
+
         }
         else
         {
@@ -98,9 +99,49 @@
     $router->post('/createPorto', function() {
     });
     
-    $router->get('/porto/{id}', function() {
+    $router->get('/porto/{id}', function($id) {
+        if(!isset($_SESSION)) session_start();
+        if(isset($_SESSION['userid']))
+        {
+
+        }
+        else
+        {
+            header("Location: /");
+            exit;
+        }
     });
-    $router->get('/navio/{id}', function() {
+    $router->get('/navio/{id}', function($id) {
+        if(!isset($_SESSION)) session_start();
+        if(isset($_SESSION['userid']))
+        {
+            $orderby = (isset($_GET["orderby"])) ? $_GET["orderby"] : "tmp1.data desc";
+            $user=UserController::getUserInfo("$id");
+            $userSelf=UserController::getUserInfo("$_SESSION[userid]");
+            $isOwner= "$id"=="$_SESSION[userid]" ? true:false;
+            $limit = 5;
+            $offset = isset($_GET['offset']) ? $_GET['offset'] : 0;
+            $orderby = (isset($_GET["orderby"])) ? $_GET["offset"] : "tmp1.data desc";
+            $getAllPosts =PostController::getAllPosts($id);
+            $postsArray = PostController::getPosts($id, $offset, $limit, $orderby);
+            $amigosUser =[]; //getFriends($id, 0, 3,'');
+            $portosArray =PortoController::getAllPorto($id, true, 0, 3, null);
+            $portosUser = PortoController::getUserPortoQtd($id);
+            $locaisArray = [];
+            $assuntosArray =AssuntoController::getAssuntos();
+            $pessoasArray = UserController::getPessoas();
+            $paises=LocalController::getPaises();
+            $estados=[];
+            $cidades=[];
+
+            require '../public/view/navio.php';
+            exit;
+        }
+        else
+        {
+            header("Location: /");
+            exit;
+        }
     });
     $router->post('/novoPost', function() {
     });
