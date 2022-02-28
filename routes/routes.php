@@ -135,11 +135,16 @@
         if($user){
             if(!$user['ativo']||$user['ativo']=='f'){
                 $email="$user[email]";
+                $userid="$user[codigo]";
                 $start_link='';
                 if(preg_match("/localhost/","$_SERVER[HTTP_HOST]")) $start_link="http://";
                 if(preg_match("/dagama.herokuapp/","$_SERVER[HTTP_HOST]")) $start_link="https://";
-                echo uniqid("",true);
-                $link=$start_link."TESTANDo";//"$_SERVER[HTTP_HOST]/backend/validate_acc.php?id="."$_GET[id]";
+                $urlid=uniqid("$userid",true);
+                $urlid=str_replace(".","",$urlid);
+                $uniqid=substr($urlid,1);
+                $redis=new Redis();
+                $redis->setKey($email,$uniqid);
+                $link=$start_link."$_SERVER[HTTP_HOST]/validateacc/$urlid";
                 $html="
                     <html lang=pt-BR>
                     <head>
@@ -152,7 +157,8 @@
                     </body>
                     </html>
                 ";
-                //send_mail($email,"Dagama | Validar conta ",$html);
+                send_mail($email,"Dagama | Validar conta ",$html);
+                header("Location: /validateEmail/$userid");
                 exit;
             }
             else{
@@ -161,7 +167,35 @@
             }
         };
     });
-    
+    $router->get("/validateacc/{urlid}",function($urlid){
+        $id=substr($urlid,0,1);
+        $uniqid=substr($urlid,1);
+
+        //verify redis
+
+
+
+
+
+
+
+
+
+
+
+
+
+        $user=UserController::getUserInfoRegister($id);
+        if($user){
+            if($user["ativo"]==0){
+                $activated=UserController::activateUser($id);
+                if($activated)
+                {
+
+                }
+            }
+        }
+    });
 
 
     $router->get('/createPorto', function() {
