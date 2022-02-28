@@ -51,7 +51,7 @@
             $db=new Database();
             $con=$db->get_connection();
             if($con){
-                $response = mysqli_query($con,"select codigo, email, ativo, img, username, pais from perfil where codigo=$id");
+                $response = mysqli_query($con,"select codigo, email, ativo, img, username, pais,senha as password from perfil where codigo=$id");
                 if($response) return mysqli_fetch_array($response);
                 else return false;
                 

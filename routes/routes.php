@@ -2,6 +2,7 @@
     require '../vendor/autoload.php';
     require '../database/services.php';
     use Pecee\SimpleRouter\SimpleRouter;
+
     $router=new SimpleRouter();
     
     /*
@@ -70,6 +71,61 @@
             exit;
         }
     });
+    $router->get('/auth',function(){
+        if(!isset($_SESSION)) session_start();
+        if(!isset($_SESSION['userid'])&&isset($_SESSION["tmp_mail"])&&isset($_SESSION["tmp_p"]))
+        {
+            $tmp_mail=$_SESSION["tmp_mail"];
+            $tmp_p=$_SESSION["tmp_p"];
+
+            unset($_SESSION["tmp_mail"]);
+            unset($_SESSION["tmp_p"]);
+            
+            session_destroy();
+
+            $regex_email="/^[a-zA-Z0-9\.]*@[a-z0-9\.]*\.[a-z]*$/";
+            if(preg_match($regex_email,$tmp_mail))
+            {
+                $email=$tmp_mail;
+                $pass=$tmp_p;
+                $passed=Login_RegisterController::Login2("$email","$pass");
+                var_dump($passed);
+                if($passed){
+                    if($passed['ativo']=='1'||$passed['ativo']==='t'){
+                        session_start();
+                        $USERID=$passed['codigo'];
+                        $USERIMG=$passed['img'];
+                        $USERNAME=$passed['username'];
+                        $_SESSION["userid"] = $USERID;
+                        $_SESSION["userimg"] = $USERIMG;
+                        $_SESSION["username"] = $USERNAME;
+                        header('Location: /feed');
+                        exit;
+                    }
+                    else{
+                        header("Location: /validateEmail/$passed[codigo]");
+                        exit;
+                    }
+                }
+                else{
+                    header('Location: /');
+                    exit;
+                }
+            }
+            else
+            {
+                header('Location: /');
+                exit;
+            }
+        
+        }
+        else
+        {
+            header("Location: /");
+            exit;
+        }
+    });
+
     $router->get('/logoff', function() {
         if(!isset($_SESSION)) session_start(); 
         if(isset($_SESSION['userid']))
@@ -131,71 +187,94 @@
         }
     });
     $router->get("/sendmail/{id}",function($id){
-        $user=UserController::getUserInfoRegister($id);
-        if($user){
-            if(!$user['ativo']||$user['ativo']=='f'){
-                $email="$user[email]";
-                $userid="$user[codigo]";
-                $start_link='';
-                if(preg_match("/localhost/","$_SERVER[HTTP_HOST]")) $start_link="http://";
-                if(preg_match("/dagama.herokuapp/","$_SERVER[HTTP_HOST]")) $start_link="https://";
-                $urlid=uniqid("$userid",true);
-                $urlid=str_replace(".","",$urlid);
-                $uniqid=substr($urlid,1);
-                $redis=new Redis();
-                $redis->setKey($email,$uniqid);
-                $link=$start_link."$_SERVER[HTTP_HOST]/validateacc/$urlid";
-                $html="
-                    <html lang=pt-BR>
-                    <head>
-                        <meta charset=UTF-8>
-                        <meta http-equiv=X-UA-Compatibl content=IE=edge>
-                        <meta name=viewport content=width=device-width, initial-scale=1.0>
-                    </head>
-                    <body>
-                        <a href=$link>link</a>
-                    </body>
-                    </html>
-                ";
-                send_mail($email,"Dagama | Validar conta ",$html);
-                header("Location: /validateEmail/$userid");
-                exit;
-            }
-            else{
-                header("Location: /");
-                exit;
-            }
-        };
+        if(!isset($_SESSION)) session_start();
+        if(!isset($_SESSION['userid'])){
+            $user=UserController::getUserInfoRegister($id);
+            if($user){
+                if(!$user['ativo']||$user['ativo']=='f'){
+                    $email="$user[email]";
+                    $userid="$user[codigo]";
+                    $start_link='';
+                    if(preg_match("/localhost/","$_SERVER[HTTP_HOST]")) $start_link="http://";
+                    if(preg_match("/dagama.herokuapp/","$_SERVER[HTTP_HOST]")) $start_link="https://";
+                    $urlid=uniqid("$userid",true);
+                    $urlid=str_replace(".","",$urlid);
+                    $uniqid=substr($urlid,1);
+                    
+                    $redis=new Redis();
+                    $redis->setKey($email,$uniqid);
+
+                    $link=$start_link."$_SERVER[HTTP_HOST]/validateacc/$urlid";
+                    $html="
+                        <html lang=pt-BR>
+                        <head>
+                            <meta charset=UTF-8>
+                            <meta http-equiv=X-UA-Compatibl content=IE=edge>
+                            <meta name=viewport content=width=device-width, initial-scale=1.0>
+                        </head>
+                        <body>
+                            <a href=$link>link</a>
+                        </body>
+                        </html>
+                    ";
+                    send_mail($email,"Dagama | Validar conta ",$html);
+                    header("Location: /validateEmail/$userid");
+                    exit;
+                }
+                else{
+                    header("Location: /");
+                    exit;
+                }
+            };
+        }
     });
     $router->get("/validateacc/{urlid}",function($urlid){
-        $id=substr($urlid,0,1);
-        $uniqid=substr($urlid,1);
-
-        //verify redis
-
-
-
-
-
-
-
-
-
-
-
-
-
-        $user=UserController::getUserInfoRegister($id);
-        if($user){
-            if($user["ativo"]==0){
-                $activated=UserController::activateUser($id);
-                if($activated)
+        if(!isset($_SESSION)) session_start();
+        if(!isset($_SESSION['userid'])){
+            $id=substr($urlid,0,1);
+            $uniqid=substr($urlid,1);
+            $user=UserController::getUserInfoRegister($id);
+            $redis=new Redis();
+            if($user){
+                $redis_uniqid=$redis->getKey($user["email"]);
+                if($redis_uniqid&&$redis_uniqid==$uniqid)
                 {
-
+                    if($user["ativo"]==0){
+                        $activated=UserController::activateUser($id);
+                        if($activated)
+                        {
+                            $_SESSION["tmp_mail"]=$user["email"];
+                            $_SESSION["tmp_p"]=$user["password"];
+                            header("Location: /auth");
+                            exit;
+                        }
+                    }
+                }
+                else
+                {
+                    header("Location: /");
+                    exit;
                 }
             }
         }
+        else
+        {
+            header("Location: /");
+        }
     });
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     $router->get('/createPorto', function() {

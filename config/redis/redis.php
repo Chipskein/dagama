@@ -19,12 +19,7 @@
       ];
       $this->redis=new Client($config);
     }
-    private function get_con(){
-      if($this->redis) return $this->redis;
-    }
-    private function close_con(){
-      if($this->redis) $this->redis->close();
-    }
+    
     public function setKey($key,$value)
     {
       if($this->redis)
