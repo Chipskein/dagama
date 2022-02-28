@@ -1,7 +1,7 @@
 <?php
      use Dagama\Database;
     class PortoController{
-        function getGrupos(){
+        public static function getGrupos(){
             $db=new Database();
             $con=$db->get_connection();
             if($con){
@@ -21,7 +21,7 @@
             }
             else exit;
         }
-        function getAllPorto($user, $isOwner, $offset, $limit, $order){
+        public static function getAllPorto($user, $isOwner, $offset, $limit, $order){
             $db=new Database();
             $con=$db->get_connection();
             if($con){
@@ -89,7 +89,7 @@
             }
             else exit;
         }
-        function getAllPortos($offset, $limit=10, $order, $where){
+        public static function getAllPortos($offset, $limit=10, $order, $where){
             $db=new Database();
             $con=$db->get_connection();
             //BUG FIX
@@ -141,7 +141,7 @@
             }
             else exit;
         }
-        function getUserPorto($user, $offset, $limit){
+        public static function getUserPorto($user, $offset, $limit){
             $db=new Database();
             $con=$db->get_connection();
             if($con){
@@ -174,7 +174,7 @@
             }
             else exit;
         }
-        function getUserPortoQtd($user){
+        public static function getUserPortoQtd($user){
             $db=new Database();
             $con=$db->get_connection();
             if($con){
@@ -194,7 +194,7 @@
             }
             else exit;
         }
-        function getTotalPorto(){
+        public static function getTotalPorto(){
             $db=new Database();
             $con=$db->get_connection();
             if($con){
@@ -210,7 +210,7 @@
             }
             else exit;
         }
-        function getPortInfo($porto, $user){
+        public static function getPortInfo($porto, $user){
             $db=new Database();
             $con=$db->get_connection();
             if($con){
@@ -257,7 +257,7 @@
             }
             else exit;
         }
-        function addPorto($perfil,$nome,$descr,$img){
+        public static function addPorto($perfil,$nome,$descr,$img){
             $db=new Database();
             $con=$db->get_connection();
             $FOLDERS=array("root"=>"14oQWzTorITdqsK7IiFwfTYs91Gh_NcjS","avatares"=>"1Z3A4iqIe1eMerkdTEkXnjApRPupaPq-M","portos"=>"1e5T21RxDQ-4Kqw8EDVUBICGPeGIRSNHx","users"=>"1j2ivb8gBxV_AINaQ7FHjbd1OI0otCpEO");
@@ -281,7 +281,7 @@
             }
             else exit; 
         }
-        function delPorto($porto){
+        public static function delPorto($porto){
             $db=new Database();
             $con=$db->get_connection();
             // $FOLDERS=array("root"=>"14oQWzTorITdqsK7IiFwfTYs91Gh_NcjS","avatares"=>"1Z3A4iqIe1eMerkdTEkXnjApRPupaPq-M","portos"=>"1e5T21RxDQ-4Kqw8EDVUBICGPeGIRSNHx","users"=>"1j2ivb8gBxV_AINaQ7FHjbd1OI0otCpEO");
@@ -304,7 +304,7 @@
             }
             else exit; 
         }
-        function entrarPorto($user, $porto){
+        public static function entrarPorto($user, $porto){
             $db=new Database();
             $con=$db->get_connection();
             if($con){
@@ -337,7 +337,7 @@
             }
             else exit;
         }
-        function sairPorto($user, $porto){
+        public static function sairPorto($user, $porto){
             $db=new Database();
             $con=$db->get_connection();
             if($con){
@@ -352,7 +352,7 @@
             }
             else exit;
         }
-        function editarPorto($porto,$newname,$newdescr,$newimg,$oldimgid){
+        public static function editarPorto($porto,$newname,$newdescr,$newimg,$oldimgid){
             $db=new Database();
             $con=$db->get_connection();
             $FOLDERS=array("root"=>"14oQWzTorITdqsK7IiFwfTYs91Gh_NcjS","avatares"=>"1Z3A4iqIe1eMerkdTEkXnjApRPupaPq-M","portos"=>"1e5T21RxDQ-4Kqw8EDVUBICGPeGIRSNHx","users"=>"1j2ivb8gBxV_AINaQ7FHjbd1OI0otCpEO");
@@ -378,7 +378,7 @@
             }
             else exit; 
         }
-        function getPostsOnPorto($porto, $offset, $limit=10){
+        public static function getPostsOnPorto($porto, $offset, $limit=10){
             $db=new Database();
             $con=$db->get_connection();
             if($con){
@@ -568,7 +568,7 @@
             }
             else exit;
         }
-        function getPortoParticipants($porto, $offset, $limit=10){
+        public static function getPortoParticipants($porto, $offset, $limit=10){
             $db=new Database();
             $con=$db->get_connection();
             if($con){
@@ -598,7 +598,7 @@
             }
             else exit;
         }
-        function getAllPortoParticipants($porto){
+        public static function getAllPortoParticipants($porto){
             $db=new Database();
             $con=$db->get_connection();
             if($con){

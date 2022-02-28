@@ -2,7 +2,7 @@
  use Dagama\Database;
 class Login_RegisterController{
 
-    function Login($email,$password){
+    public static function Login($email,$password){
         $db=new Database();
         $con=$db->get_connection();
         if($con){
@@ -19,7 +19,7 @@ class Login_RegisterController{
         }
         else exit;
     }
-    function Login2($email,$password){
+    public static function Login2($email,$password){
         $db=new Database();
         $con=$db->get_connection();
         if($con){
@@ -34,7 +34,7 @@ class Login_RegisterController{
         }
         else exit;
     }
-    function Register($email, $password, $bdate, $username, $genero, $pais,$photo){
+    public static function Register($email, $password, $bdate, $username, $genero, $pais,$photo){
         $db=new Database();
         $con=$db->get_connection();
         $FOLDERS=array("root"=>"14oQWzTorITdqsK7IiFwfTYs91Gh_NcjS","avatares"=>"1Z3A4iqIe1eMerkdTEkXnjApRPupaPq-M","portos"=>"1e5T21RxDQ-4Kqw8EDVUBICGPeGIRSNHx","users"=>"1j2ivb8gBxV_AINaQ7FHjbd1OI0otCpEO");
@@ -56,7 +56,7 @@ class Login_RegisterController{
         }
         else exit;  
     }
-    function getEmails(){ //remover
+    public static function getEmails(){ //remover
         $db=new Database();
         $con=$db->get_connection();
         if($con){
@@ -71,7 +71,7 @@ class Login_RegisterController{
         }
         else exit;
     }
-    function emailExists($email){ //substitui getEmails na validação
+    public static function emailExists($email){ //substitui getEmails na validação
         $db=new Database();
         $con=$db->get_connection();
         if($con){

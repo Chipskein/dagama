@@ -1,7 +1,7 @@
 <?php
     use Dagama\Database;
     class LocalController{
-        function getPaises(){
+        public static function getPaises(){
             $db=new Database();
             $con=$db->get_connection();
             if($con){

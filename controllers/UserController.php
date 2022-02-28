@@ -1,7 +1,7 @@
 <?php
      use Dagama\Database;
     class UserController{
-        function getAllUserInfo($offset,$limit,$where=''){
+        public static function getAllUserInfo($offset,$limit,$where=''){
             $db=new Database();
             $con=$db->get_connection();
             if($con){
@@ -27,7 +27,7 @@
             }
             else exit;
         }
-        function countAllUsers(){
+        public static function countAllUsers(){
             $db=new Database();
             $con=$db->get_connection();
             if($con){
@@ -47,7 +47,7 @@
             }
             else exit;
         }
-        function getUserInfoRegister($id){
+        public static function getUserInfoRegister($id){
             $db=new Database();
             $con=$db->get_connection();
             if($con){
@@ -58,7 +58,7 @@
             }
             else exit;
         }
-        function getUserInfo($id){
+        public static function getUserInfo($id){
             $db=new Database();
             $con=$db->get_connection();
             if($con){
@@ -69,7 +69,7 @@
             }
             else exit;
         }
-        function getIdbyEmail($email){
+        public static function getIdbyEmail($email){
             $db=new Database();
             $con=$db->get_connection();
             if($con){
@@ -86,7 +86,7 @@
             }
             else exit;
         }
-        function activateUser($id){
+        public static function activateUser($id){
             $db=new Database();
             $con=$db->get_connection();
             if($con){
@@ -110,7 +110,7 @@
             }
             else exit;
         }
-        function deactivateUser($user){
+        public static function deactivateUser($user){
             $db=new Database();
             $con=$db->get_connection();
             if($con){
@@ -120,7 +120,7 @@
             }
             else exit;
         }
-        function changeUserName($id,$name){
+        public static function changeUserName($id,$name){
             $db=new Database();
             $con=$db->get_connection();
             if($con){
@@ -131,7 +131,7 @@
             }
             else exit;
         }
-        function changeUserEmail($id,$email){
+        public static function changeUserEmail($id,$email){
             $db=new Database();
             $con=$db->get_connection();
             if($con){
@@ -142,7 +142,7 @@
             }
             else exit;
         }
-        function changeUserSenha($id,$senha){
+        public static function changeUserSenha($id,$senha){
             $db=new Database();
             $con=$db->get_connection();
             if($con){
@@ -152,7 +152,7 @@
                 
             }
         }
-        function updateImg($id,$img,$oldimgid){
+        public static function updateImg($id,$img,$oldimgid){
             $db=new Database();
             $con=$db->get_connection();
             $FOLDERS=array("root"=>"14oQWzTorITdqsK7IiFwfTYs91Gh_NcjS","avatares"=>"1Z3A4iqIe1eMerkdTEkXnjApRPupaPq-M","portos"=>"1e5T21RxDQ-4Kqw8EDVUBICGPeGIRSNHx","users"=>"1j2ivb8gBxV_AINaQ7FHjbd1OI0otCpEO");
@@ -184,7 +184,7 @@
             }
             else exit;
         }
-        function getPessoas(){
+        public static function getPessoas(){
             $db=new Database();
             $con=$db->get_connection();
             if($con){

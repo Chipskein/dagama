@@ -1,7 +1,7 @@
 <?php
     use Dagama\Database;
     class AssuntoController{
-        function getAssuntos(){
+        public static function getAssuntos(){
             $db=new Database();
             $con=$db->get_connection();
             if($con){
@@ -18,7 +18,7 @@
             }
             else exit;
         }
-        function addAssunto($nome){
+        public static function addAssunto($nome){
             $db=new Database();
             $con=$db->get_connection();
             if($con){
@@ -34,7 +34,7 @@
             }
             else exit;
         }
-        function delAssunto($assunto){
+        public static function delAssunto($assunto){
             $db=new Database();
             $con=$db->get_connection();
             if($con){

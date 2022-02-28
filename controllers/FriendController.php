@@ -2,7 +2,7 @@
   use Dagama\Database;
     class FriendController{
         /*
-        function suggestFriends($user, $limit, $offset) {
+        public static function suggestFriends($user, $limit, $offset) {
             $db_connection=db_connection();
             $db=$db_connection['db'];
             $db_type=$db_connection['db_type'];
@@ -129,7 +129,7 @@
             else exit;
         }
         */
-        function sendFriendRequest($user, $friend) {
+        public static function sendFriendRequest($user, $friend) {
             $db=new Database();
             $con=$db->get_connection();
             if($con){
@@ -162,7 +162,7 @@
             }
             else exit;
         }
-        function unsendFriendRequest($user, $friend) {
+        public static function unsendFriendRequest($user, $friend) {
             $db=new Database();
             $con=$db->get_connection();
             if($con){
@@ -180,7 +180,7 @@
             }
             else exit;
         }
-        function confirmFriendRequest($user, $friend) {
+        public static function confirmFriendRequest($user, $friend) {
             $db=new Database();
             $con=$db->get_connection();
             if($con){
@@ -196,7 +196,7 @@
             }
             else exit;
         }
-        function declineFriendRequest($user, $friend) {
+        public static function declineFriendRequest($user, $friend) {
             $db=new Database();
             $con=$db->get_connection();
             if($con){
@@ -212,7 +212,7 @@
             else exit;
         }
         /*
-        function getRequestAndFriends($user, $isOwner){
+        public static function getRequestAndFriends($user, $isOwner){
             $con_connection=db_connection();
             $con=$con_connection['db'];
             $db_type=$db_connection['db_type'];
@@ -244,7 +244,7 @@
             else exit;
         }
         */
-        function delFriend($user, $friend){
+        public static function delFriend($user, $friend){
             $db=new Database();
             $con=$db->get_connection();
             if($con){
@@ -260,7 +260,7 @@
             else exit;
         }
         /*
-        function getFriends($user, $offset, $limit, $where){
+        public static function getFriends($user, $offset, $limit, $where){
             $db_connection=db_connection();
             $db=$db_connection['db'];
             $db_type=$db_connection['db_type'];
