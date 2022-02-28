@@ -1,19 +1,8 @@
 <?php
-  if(preg_match("/localhost/","$_SERVER[HTTP_HOST]")){
-    require_once '../vendor/autoload.php';
-  }
-  else{
-    require_once '/app/vendor/autoload.php';
-  }
+
   function getClient(){
       $client = new Google\Client();
-      $GOOGLE_OAUTH_CREDENTIALS_PATH=NULL;
-      if(preg_match("/localhost/","$_SERVER[HTTP_HOST]")){
-        $GOOGLE_OAUTH_CREDENTIALS_PATH=$_SERVER["DOCUMENT_ROOT"]."/backend/gdrive/credentials.json";
-      }
-      else{
-        $GOOGLE_OAUTH_CREDENTIALS_PATH="/app/backend/gdrive/credentials.json";
-      }
+      $GOOGLE_OAUTH_CREDENTIALS_PATH="../google-credentials.json";
       $client->setApplicationName("dagama-gdrive");
       $client->setAuthConfig($GOOGLE_OAUTH_CREDENTIALS_PATH);
       $client->addScope('https://www.googleapis.com/auth/drive');
@@ -40,7 +29,7 @@
                 printf("%s (%s)\n<br>", $file->getName(), $file->getId());
             }
         }
-  }; 
+  }
   function insertFile($mimeType, $filename,$folderID,$newfilename) {
       $client=getClient();
       $service=new Google\Service\Drive($client);      
@@ -79,37 +68,7 @@
     catch(Exception $e){
       return $e->getMessage();
     }
-  };
-  /* 
-  SEM PERMISSÂO;
-    function getFile($file_id){
-      $client=getClient();
-      $service=new \Google\Service\Drive($client);
-      try{
-        $result=$service->files->get($file_id);
-        echo "<br>";
-        echo '<pre>' , var_dump($result) , '</pre>';
-        return $result;
-      }
-      catch(Exception $e){
-        return false;
-      }
-    };
-  */
-  //getAllfiles();
-
-  /*
-  //testando
-  if(isset($_FILES["foto"])){
-    $file=$_FILES["foto"];
-    $server_path=$file["tmp_name"];
-    $filename=$file["name"];
-    $filetype=$file["type"];
-    echo "PATH:$server_path<br>";
-    echo "FILE:$filename<br>";
-    echo "TYPE:$filetype<br>";
-    insertFile("$filetype","$server_path",$FOLDERS['avatares'],"$filename");
   }
-  */
+
 ?>
 

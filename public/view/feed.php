@@ -4,15 +4,13 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" href="./imgs/icon.png" type="image/jpg">
-  <link rel="stylesheet" href="css/styles.css">
-  <link rel="stylesheet" href="css/responsive.css" media="screen and (max-width: 1680px)"/>
+  <link rel="icon" href="/imgs/icon.png" type="image/jpg">
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen and (max-width: 1680px)"/>
   <title>Dagama | Feed</title>
 </head>
 <body>
 <?php
-  include '../backend/infra/services.php';
-  session_start();
   if(isset($_SESSION['userid'])){
     function url($campo, $valor) {
       $result = array();
@@ -23,36 +21,31 @@
       if (isset($_GET["offset"])) $result["offset"] = "offset=".$_GET["offset"];
       $result[$campo] = $campo."=".$valor;
       return("feed.php?user=$_SESSION[userid]&&".strtr(implode("&", $result), " ", "+"));
-  }
-  function pages($campo, $valor){
-      $result = array();
-      if (isset($_GET["page"])) $result["page"] = "page=".$_GET["page"];
-      $result[$campo] = $campo."=".$valor;
-      return '&'.(strtr(implode("&",$result), " ", "+"));
-  }
-  $user = getUserInfo("$_SESSION[userid]");
-  // $where = 'and username ===';
-  //   $SeachUser = getUserInfo("$_SESSION[userid]", $where);
-    // $offset = (isset($_GET["offset"])) ? max(0, min($_GET["offset"], $total-1)) : 0;
-    // $offset = $offset-($offset%$limit);
+    }
+    function pages($campo, $valor){
+        $result = array();
+        if (isset($_GET["page"])) $result["page"] = "page=".$_GET["page"];
+        $result[$campo] = $campo."=".$valor;
+        return '&'.(strtr(implode("&",$result), " ", "+"));
+    }
+    $user = UserController::getUserInfo("$_SESSION[userid]");
     $limit = 5;
     $offset = isset($_GET['offset']) ? $_GET['offset'] : 0;
     $orderby = (isset($_GET["orderby"])) ? $_GET["orderby"] : "tmp1.data desc";
     $locaisArray = [];
-    $assuntosArray = getAssuntos();
-    $pessoasArray = getPessoas();
+    $assuntosArray = AssuntoController::getAssuntos();
+    $pessoasArray = UserController::getPessoas();
     $topAssuntos=[];//OndasDoMomento(3,$user['pais']);
-    $paises=getPaises();
+    $paises=LocalController::getPaises();
     $estados=[];
     $cidades=[];
     $suggestFriends = [];//suggestFriends($_SESSION['userid'], 4, 0);
     $where = 'vi';
-    $postsArray = getPosts($_SESSION['userid'], $offset, $limit, $orderby);
-    $getAllPosts = getAllPosts($_SESSION['userid']);
-    $portosArray = getAllPorto($_SESSION['userid'], true, 0, 3, null, );
-    $portosArrayForShare = getAllPorto($_SESSION['userid'], true, 0, 0,null);
+    $postsArray = PostController::getPosts($_SESSION['userid'], $offset, $limit, $orderby);
+    $getAllPosts = PostController::getAllPosts($_SESSION['userid']);
+    $portosArray = PortoController::getAllPorto($_SESSION['userid'], true, 0, 3, null, );
+    $portosArrayForShare = PortoController::getAllPorto($_SESSION['userid'], true, 0, 0,null);
     $errorMessage = [];
-    // var_dump($_POST);
     if(isset($_POST['buttonAssunto'])){
       $addAssunto = addAssunto("$_POST[buttonAssunto]");
       header("refresh:0;url=feed.php?user=$_SESSION[userid]"); 
@@ -160,9 +153,7 @@
         delCitacao($post, $user);
         header("refresh:0;url=feed.php?user=$_SESSION[userid]"); 
       }
-    }
-
-    // sendFriendRequest para enviar solicitacao
+    }   
     if(isset($_POST['sendFriendRequest'])){
       $erros = [];
       if(!preg_match('#^[0-9]+$#', $_POST['sendFriendRequest'])){
@@ -186,7 +177,7 @@
       }
     }
 ?>
-<div id=principal>
+  <div id=principal>
   <header class="header-main">
     <img class="header-icon" src="imgs/icon.png" alt="">
     <form class="header-searchBar" name="search" action="usuarios.php" method="get">
@@ -200,10 +191,10 @@
   </form>
     <div class="header-links">
     <?php 
-      echo "<a class=\"header-links-a a-selected\" href=feed.php>Mar</a> ";
-      echo "<a class=\"header-links-a\" href=mar.php>Portos</a> ";
-      echo "<a class=\"header-links-a\" href=navio.php?user=$_SESSION[userid]>Meu navio</a> ";
-      echo "<a class=\"header-links-a\" href=../backend/logoff.php>Sair </a><img class=\"header-links-icon\" src=\"imgs/icons/sair.png\" alt=\"\">";
+      echo "<a class=\"header-links-a a-selected\" href=/feed >Mar</a> ";
+      echo "<a class=\"header-links-a\" href=/mar >Portos</a> ";
+      echo "<a class=\"header-links-a\" href=/navio/$_SESSION[userid] >Meu navio</a> ";
+      echo "<a class=\"header-links-a\" href=/logoff >Sair </a><img class=\"header-links-icon\" src=\"imgs/icons/sair.png\" alt=\"\">";
     ?>
     </div>
   </header>
@@ -215,10 +206,10 @@
         foreach ($portosArray as $value) {
           echo "<div class=\"row porto-feed-container\">
             <div class=\"portos-img\" style=\"background-image: url($value[img])\"></div>
-            <a class=nomePort href=porto.php?porto=$value[codigo]>$value[nome]</a>
+            <a class=nomePort href=/porto/$value[codigo] >$value[nome]</a>
           </div>";
         }
-        echo "<br><a class=portosAtracadosMais href=portosUser.php?user=$_SESSION[userid]>Ver todos</a>";
+        echo "<br><a class=portosAtracadosMais href=/portosUser/$_SESSION[userid] >Ver todos</a>";
       } else {
         echo "<p>Você não está em nenhum porto ainda</p>";
       }
@@ -836,9 +827,9 @@
     echo "</main>";    
   }
   else {
-    echo "<h2 align=center>Para ver este conteudo faça um cadastro no dagama!!!</h2>";
-    header("refresh:1;url=index.php");
-    die();
+    //echo "<h2 align=center>Para ver este conteudo faça um cadastro no dagama!!!</h2>";
+    //header("refresh:1;url=index.php");
+    //die();
   }
   ?>
   </div>

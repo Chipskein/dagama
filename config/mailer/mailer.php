@@ -1,14 +1,5 @@
 
 <?php
-if(preg_match("/localhost/","$_SERVER[HTTP_HOST]")){
-    require_once '../vendor/autoload.php';
-}
-else{
-    require_once '/app/vendor/autoload.php';
-}
-
-
-
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\OAuth;
@@ -54,10 +45,5 @@ function send_mail($addr_mail,$subject,$html){
         return true;
     }
 }
-
-//$teste=file_get_contents("pages/page1.html");
-//$email_to_send="abfn0905@gmail.com";
-//send_mail("$email_to_send","EMAIL DE TESTE","$teste");
-
 
  
