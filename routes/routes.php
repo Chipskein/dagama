@@ -17,16 +17,22 @@ use Pecee\SimpleRouter\SimpleRouter;
     
     $router->get("/search",function(){
         if(!isset($_SESSION))session_start();
-        $campo = $_GET['searchTerm'];
-        $limit=5;
-        $offset= isset($_GET['offset']) ? $_GET['offset']:0;
-        $order = null;
-        $portos = PortoController::getAllPortos($offset, $limit, $order, $campo);
-        $users=UserController::getAllUserInfo($offset,$limit,$campo);
-        $total=UserController::countAllUsers();
-
-        require '../public/view/usuarios.php';
-        exit;
+        if(isset($_GET['searchTerm'])&&trim($_GET['searchTerm'])!=''){
+            $campo = $_GET['searchTerm'];
+            $limit=5;
+            $offset= isset($_GET['offset']) ? $_GET['offset']:0;
+            $order = null;
+            $portos = PortoController::getAllPortos($offset, $limit, $order, $campo);
+            $users=UserController::getAllUserInfo($offset,$limit,$campo);
+            $total=UserController::countAllUsers();
+            require '../public/view/search.php';
+            exit;
+        }
+        else
+        {
+            header("Location: ".$_SERVER['HTTP_REFERER']);
+            exit;
+        }
     });
 
     $router->get('/', function() {
