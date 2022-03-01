@@ -18,5 +18,19 @@
     require '../controllers/PortoController.php';
     require '../controllers/PostController.php';
     require '../controllers/UserController.php';
+    
+    function url($campo, $valor,$route) {
+        $result = array();
+        if (isset($_GET["orderby"])) $result["orderby"] = "orderby=".$_GET["orderby"];
+        if (isset($_GET["offset"])) $result["offset"] = "offset=".$_GET["offset"];
+        $result[$campo] = $campo."=".$valor;
+        return("$route?".strtr(implode("&", $result), " ", "+"));
+      }
+    function pages($campo, $valor){
+        $result = array();
+        if (isset($_GET["page"])) $result["page"] = "page=".$_GET["page"];
+        $result[$campo] = $campo."=".$valor;
+        return '&'.(strtr(implode("&",$result), " ", "+"));
+    }
 
 ?>

@@ -102,7 +102,7 @@
             <p class="addporto-input-label">Nome: </p><input class="inputs" name="nome" type="text" required>
           </div>
           <div class="addporto-input-container">
-            <p class="addporto-input-label">Descrição: </p><textarea class="addporto-input-txtarea" name="descricao" required></textarea>
+            <p class="addporto-input-label">Descrição: </p><textarea class="addporto-input-txtarea" name="descr" required></textarea>
           </div>
         </div>
         <input type="submit" name="confirmar" value="Criar Porto" class="addporto-confirm">

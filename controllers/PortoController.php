@@ -269,7 +269,7 @@
             }
             if($con){
                 $verify = mysqli_query($con,"insert into porto (perfil,nome,descr,img) values ('".$perfil."', '".$nome."', '".$descr."', '".$link."'".")");
-                $portoId = $db->insert_id;
+                $portoId = mysqli_insert_id($con);
                 if($portoId) {
                     $db->close();
                     return $portoId;

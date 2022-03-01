@@ -7,7 +7,6 @@
             if($con){
                 $results=[];
                 if($where !== ''){
-                    echo $where;
                     $response = mysqli_query($con,"select * from perfil where username like '%$where%' limit $limit offset $offset");
                 }else {
                     $response = mysqli_query($con,"select * from perfil limit $limit offset $offset");

@@ -1,7 +1,9 @@
 <?php
     require '../vendor/autoload.php';
     require '../database/services.php';
-    use Pecee\SimpleRouter\SimpleRouter;
+
+use Dagama\Database;
+use Pecee\SimpleRouter\SimpleRouter;
 
     $router=new SimpleRouter();
     
@@ -12,6 +14,21 @@
     });
     */
     
+    
+    $router->get("/search",function(){
+        if(!isset($_SESSION))session_start();
+        $campo = $_GET['searchTerm'];
+        $limit=5;
+        $offset= isset($_GET['offset']) ? $_GET['offset']:0;
+        $order = null;
+        $portos = PortoController::getAllPortos($offset, $limit, $order, $campo);
+        $users=UserController::getAllUserInfo($offset,$limit,$campo);
+        $total=UserController::countAllUsers();
+
+        require '../public/view/usuarios.php';
+        exit;
+    });
+
     $router->get('/', function() {
         if(!isset($_SESSION)) session_start();
         if(isset($_SESSION['userid']))
@@ -264,19 +281,6 @@
     });
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
     $router->get('/createPorto', function() {
         if(!isset($_SESSION)) session_start();
         if(isset($_SESSION['userid']))
@@ -290,13 +294,14 @@
         {
             if(isset($_POST['descr']) && isset($_POST['nome']))
             {
+                
                 $perfil = "$_SESSION[userid]";
                 $nome = "$_POST[nome]";
                 $descr = "$_POST[descr]";
-                $img= is_uploaded_file($_FILES['img']['tmp_name']) ? $_FILES['img']:null;
+                $img= isset($_FILES['photo'])&&is_uploaded_file($_FILES['photo']['tmp_name']) ? $_FILES['photo']:null;
                 $registered = PortoController::addPorto($perfil,$nome,$descr,$img);
                 if($registered){
-                    header("Location: /mar");
+                    header("Location: /porto/$registered");
                     exit;
                 } 
             }
@@ -307,6 +312,7 @@
             }
         }
     });
+
     
     $router->get('/porto/{id}', function($id) {
         if(!isset($_SESSION)) session_start();
@@ -344,6 +350,7 @@
             $offset = isset($_GET['offset']) ? $_GET['offset'] : 0;
             $orderby = (isset($_GET["orderby"])) ? $_GET["offset"] : "tmp1.data desc";
             $getAllPosts =PostController::getAllPosts($id);
+            $total=count($getAllPosts);
             $postsArray = PostController::getPosts($id, $offset, $limit, $orderby);
             $amigosUser =[]; //getFriends($id, 0, 3,'');
             $portosArray =PortoController::getAllPorto($id, true, 0, 3, null);
@@ -368,6 +375,11 @@
         if(!isset($_SESSION)) session_start();
         if(isset($_SESSION['userid']))
         {
+            $limit=5;//mudar pra 10 dps
+            $offset= isset($_GET['offset']) ? $_GET['offset']:0;
+            $orderby = (isset($_GET["orderby"])) ? $_GET["orderby"] : "data desc";
+            $portos=PortoController::getAllPorto($_SESSION['userid'], false, $offset, $limit, $orderby);
+            $total=PortoController::getTotalPorto();
             require '../public/view/mar.php';
             exit;
         }
@@ -381,6 +393,25 @@
         if(!isset($_SESSION)) session_start();
         if(isset($_SESSION['userid']))
         {
+            $user = UserController::getUserInfo("$_SESSION[userid]");
+            $limit = 5;
+            $offset = isset($_GET['offset']) ? $_GET['offset'] : 0;
+            $orderby = (isset($_GET["orderby"])) ? $_GET["orderby"] : "tmp1.data desc";
+            $locaisArray = [];
+            $assuntosArray = AssuntoController::getAssuntos();
+            $pessoasArray = UserController::getPessoas();
+            $topAssuntos=[];//OndasDoMomento(3,$user['pais']);
+            $paises=LocalController::getPaises();
+            $estados=[];
+            $cidades=[];
+            $suggestFriends = [];//suggestFriends($_SESSION['userid'], 4, 0);
+            $where = 'vi';
+            $postsArray = PostController::getPosts($_SESSION['userid'], $offset, $limit, $orderby);
+            $getAllPosts = PostController::getAllPosts($_SESSION['userid']);
+            $total=count($getAllPosts);
+            $portosArray = PortoController::getAllPorto($_SESSION['userid'], true, 0, 3, null, );
+            $portosArrayForShare = PortoController::getAllPorto($_SESSION['userid'], true, 0, 0,null);
+            $errorMessage = [];
             require '../public/view/feed.php';
             exit;
         }
@@ -392,32 +423,13 @@
     });
 
 
-
-
-
-
-
-
-
-    $router->post('/novoPost', function() {
-    });
-    $router->post('/deletePost', function() {
-    });
-    $router->post('/removeCitacao', function() {
-    });
-    $router->post('/sendFriendRequest', function() {
-    });
-
-
-
-    $router->post('/entrarPorto', function() {
-    });
-    $router->post('/sairPorto', function() {
-    });
-
-    $router->get('/about', function() {
-        require '../LICENSE';
-    });
-
-    
+    $router->post('/addassunto',function(){});
+    $router->post('/newpost',function(){});
+    $router->post('/delpost',function(){});
+    $router->post('/rmcitac',function(){});
+    $router->post('/friendrequest',function(){});
+    $router->post('/entrarPorto', function() {});
+    $router->post('/sairPorto', function() {});
+    $router->get('/completeInteracao/$post',function($post){});
+ 
 ?>
