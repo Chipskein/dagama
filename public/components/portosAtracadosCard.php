@@ -10,7 +10,7 @@ echo "<div align=center class=background2>";
         <a class=nomePort href=/porto/$value[codigo] >$value[nome]</a>
         </div>";
     }
-    echo "<br><a class=portosAtracadosMais href=/portosUser/$_SESSION[userid] >Ver todos</a>";
+    echo "<br><a class=portosAtracadosMais href=/portosUser/$user[codigo] >Ver todos</a>";
     } else {
     echo "<p>Você não está em nenhum porto ainda</p>";
     }

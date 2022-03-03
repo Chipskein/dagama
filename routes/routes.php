@@ -285,7 +285,24 @@ use Pecee\SimpleRouter\SimpleRouter;
             header("Location: /");
         }
     });
-
+    $router->get("/amigos/{id}",function($id){
+        echo $id;
+    });
+    $router->get("/portosUser/{id}",function($id){
+        if(!isset($_SESSION)) session_start(); 
+        if(isset($_SESSION['userid']))
+        {
+            $limit=10;//mudar pra 10 dps
+            $offset= isset($_GET['offset']) ? $_GET['offset']:0;
+            $IsOwner=false;
+            
+            if($_SESSION['userid'] == $id) $IsOwner=true;
+            $portos = PortoController::getAllPorto($id, $IsOwner, $offset, $limit, 0);          
+            $total=count(PortoController::getUserPorto($id, null, null));
+            require '../public/view/portosUser.php';
+            exit;
+        }
+    });
 
     $router->get('/createPorto', function() {
         if(!isset($_SESSION)) session_start();
@@ -428,7 +445,7 @@ use Pecee\SimpleRouter\SimpleRouter;
         }
     });
 
-
+    $router->post('/delporto',function(){});
     $router->post('/addassunto',function(){});
     $router->post('/newpost',function(){});
     $router->post('/delpost',function(){});
