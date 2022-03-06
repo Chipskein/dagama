@@ -7,13 +7,13 @@ use Pecee\SimpleRouter\SimpleRouter;
 
     $router=new SimpleRouter();
     
-    
+    /*
     $router->error(function($er){
         echo "Um Erro ocorreu";
         var_dump($er);
         exit;
     });
-    
+    */
     $router->get("/search",function(){
         if(!isset($_SESSION))session_start();
         if(isset($_GET['searchTerm'])&&trim($_GET['searchTerm'])!=''){
