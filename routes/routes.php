@@ -252,7 +252,7 @@ use Pecee\SimpleRouter\SimpleRouter;
     });
     $router->get("/validateacc/{urlid}",function($urlid){
         if(!isset($_SESSION)) session_start();
-        if(!isset($_SESSION['userid'])&&isset($_SESSION['size'])){
+        if(!isset($_SESSION['userid'])&&isset($_GET['size'])){
             $size=$_GET["size"];
             $id=substr($urlid,0,$size);
             $uniqid=substr($urlid,$size);
