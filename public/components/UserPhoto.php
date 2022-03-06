@@ -6,7 +6,7 @@
     if($isOwner)echo "<div id=camera-icon></div>";
     echo "<div align=center class=divUsername>";
     echo "<h3 class=perfil>$user[username]</h3>";
-    if($isOwner) echo"<a href=/editNavio/$user[codigo]><img class=img-pencil src=\"/imgs/icons/clarity_pencil-line.png\"</img></a>";
+    if($isOwner) echo"<a href=/editNavio><img class=img-pencil src=\"/imgs/icons/clarity_pencil-line.png\"</img></a>";
     echo "</div>";
   echo "</div>";
   echo "<br>";

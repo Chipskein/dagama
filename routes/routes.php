@@ -7,13 +7,12 @@ use Pecee\SimpleRouter\SimpleRouter;
 
     $router=new SimpleRouter();
     
-    /*
-    $router->error(function(){
-        echo "ERROR";
+    
+    $router->error(function($er){
+        echo "Um Erro ocorreu";
+        var_dump($er);
         exit;
     });
-    */
-    
     
     $router->get("/search",function(){
         if(!isset($_SESSION))session_start();
@@ -286,7 +285,31 @@ use Pecee\SimpleRouter\SimpleRouter;
         }
     });
     $router->get("/amigos/{id}",function($id){
-        echo $id;
+        if(!isset($_SESSION)) session_start();
+        if(isset($_GET['username'])){
+            $where = $_GET['username'];
+          } 
+        else{
+            $where = '';
+        }
+        if(isset($id)){
+            $offset=0;
+            $total = 5;
+            $limit = 5;
+            $amigosUser =[];//getFriends($id, $offset, 10,$where);
+            if($_SESSION['userid'] == $id){
+            $amigos=[];//getRequestAndFriends($_SESSION["userid"],false);
+            if(isset($_POST['desfazerAmizade'])){
+                $response = FriendController::delFriend($_SESSION['userid'], $_POST['amigo']);
+                if($response) header("refresh:1;url=amigos.php");
+                else echo "Erro ao desfazer amizade...";
+            }
+            }
+        } 
+
+
+
+        require '../public/view/amigos.php';
     });
     $router->get("/portosUser/{id}",function($id){
         if(!isset($_SESSION)) session_start(); 
@@ -444,6 +467,22 @@ use Pecee\SimpleRouter\SimpleRouter;
             exit;
         }
     });
+    $router->get('/editNavio',function(){
+        if(!isset($_SESSION)) session_start();
+        if(!isset($_SESSION['userid'])){
+            echo "<h2 align=center>Para ver este conteudo faça um cadastro no dagama!!!</h2>";
+            header("refresh:1;url=index.php");
+            exit;
+        }
+        $user=UserController::getUserInfo("$_SESSION[userid]");
+        require '../public/view/editNavio.php';
+    });
+
+
+
+
+
+
 
     $router->post('/delporto',function(){});
     $router->post('/addassunto',function(){});
