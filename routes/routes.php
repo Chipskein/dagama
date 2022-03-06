@@ -216,17 +216,17 @@ use Pecee\SimpleRouter\SimpleRouter;
                 if(!$user['ativo']||$user['ativo']=='f'){
                     $email="$user[email]";
                     $userid="$user[codigo]";
+                    $size=strlen($userid);
                     $start_link='';
                     if(preg_match("/localhost/","$_SERVER[HTTP_HOST]")) $start_link="http://";
                     if(preg_match("/dagama.herokuapp/","$_SERVER[HTTP_HOST]")) $start_link="https://";
                     $urlid=uniqid("$userid",true);
                     $urlid=str_replace(".","",$urlid);
-                    $uniqid=substr($urlid,1);
-                    
+                    $uniqid=substr($urlid,$size);
                     $redis=new Redis();
                     $redis->setKey($email,$uniqid);
 
-                    $link=$start_link."$_SERVER[HTTP_HOST]/validateacc/$urlid";
+                    $link=$start_link."$_SERVER[HTTP_HOST]/validateacc/$urlid?size=$size";
                     $html="
                         <html lang=pt-BR>
                         <head>
@@ -252,13 +252,12 @@ use Pecee\SimpleRouter\SimpleRouter;
     });
     $router->get("/validateacc/{urlid}",function($urlid){
         if(!isset($_SESSION)) session_start();
-        if(!isset($_SESSION['userid'])){
-            $id=substr($urlid,0,1);
-            $uniqid=substr($urlid,1);
+        if(!isset($_SESSION['userid'])&&isset($_SESSION['size'])){
+            $size=$_GET["size"];
+            $id=substr($urlid,0,$size);
+            $uniqid=substr($urlid,$size);
             $user=UserController::getUserInfoRegister($id);
             $redis=new Redis();
-            var_dump($user);
-            var_dump($redis);
             if($user){
                 $redis_uniqid=$redis->getKey($user["email"]);
                 if($redis_uniqid&&$redis_uniqid==$uniqid)
