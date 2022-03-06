@@ -257,10 +257,13 @@ use Pecee\SimpleRouter\SimpleRouter;
             $uniqid=substr($urlid,1);
             $user=UserController::getUserInfoRegister($id);
             $redis=new Redis();
+            var_dump($user);
+            var_dump($redis);
             if($user){
                 $redis_uniqid=$redis->getKey($user["email"]);
                 if($redis_uniqid&&$redis_uniqid==$uniqid)
                 {
+                    echo "entrou aq";
                     if($user["ativo"]==0){
                         $activated=UserController::activateUser($id);
                         if($activated)
