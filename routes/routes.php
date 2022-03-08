@@ -2,8 +2,7 @@
     require '../vendor/autoload.php';
     require '../database/services.php';
 
-use Dagama\Database;
-use Pecee\SimpleRouter\SimpleRouter;
+    use Pecee\SimpleRouter\SimpleRouter;
 
     $router=new SimpleRouter();
     
@@ -33,7 +32,6 @@ use Pecee\SimpleRouter\SimpleRouter;
             exit;
         }
     });
-
     $router->get('/', function() {
         if(!isset($_SESSION)) session_start();
         if(isset($_SESSION['userid']))
@@ -147,7 +145,6 @@ use Pecee\SimpleRouter\SimpleRouter;
             exit;
         }
     });
-
     $router->get('/logoff', function() {
         if(!isset($_SESSION)) session_start(); 
         if(isset($_SESSION['userid']))
@@ -328,7 +325,6 @@ use Pecee\SimpleRouter\SimpleRouter;
             exit;
         }
     });
-
     $router->get('/createPorto', function() {
         if(!isset($_SESSION)) session_start();
         if(isset($_SESSION['userid']))
@@ -360,8 +356,6 @@ use Pecee\SimpleRouter\SimpleRouter;
             }
         }
     });
-
-    
     $router->get('/porto/{id}', function($id) {
         if(!isset($_SESSION)) session_start();
         if(isset($_SESSION['userid']))
@@ -479,6 +473,51 @@ use Pecee\SimpleRouter\SimpleRouter;
         $user=UserController::getUserInfo("$_SESSION[userid]");
         require '../public/view/editNavio.php';
     });
+    $router->post('/delporto',function(){
+        if(!isset($_SESSION)) session_start();
+        if(isset($_POST['excluirPorto'])&&isset($_POST['PortoCod'])){
+            $response = PortoController::delPorto($_POST['PortoCod']);
+            if($response)
+            {
+                header("Location:/mar");
+            } 
+            header("Location:/mar");
+            exit;
+        }
+    });
+    $router->get('/entrarPorto/{id}', function($id) {
+        if(!isset($_SESSION)) session_start();
+        if(isset($_SESSION["userid"]))
+        {
+            $response = PortoController::entrarPorto($_SESSION['userid'],$id);
+            if(!$response){
+              echo "Erro ao entrar no porto";
+            } 
+            else {
+              header("Location:/porto/$id"); 
+            }
+        }
+
+    });
+    $router->get('/sairPorto/{id}', function($id) {
+        if(!isset($_SESSION)) session_start();
+        if(isset($_SESSION["userid"]))
+        {
+            $response = PortoController::sairPorto($_SESSION['userid'],$id);
+            if(!$response)
+            {
+              echo "Erro ao sair do porto";
+            } 
+            else 
+            {
+              header("Location:/mar");
+            }
+        }
+    });
+    $router->post('/editarPorto',function(){
+        if(!isset($_SESSION)) session_start(); 
+        require '../public/view/editarPorto.php';
+    });
 
 
 
@@ -486,14 +525,11 @@ use Pecee\SimpleRouter\SimpleRouter;
 
 
 
-    $router->post('/delporto',function(){});
     $router->post('/addassunto',function(){});
     $router->post('/newpost',function(){});
     $router->post('/delpost',function(){});
     $router->post('/rmcitac',function(){});
     $router->post('/friendrequest',function(){});
-    $router->post('/entrarPorto', function() {});
-    $router->post('/sairPorto', function() {});
     $router->get('/completeInteracao/$post',function($post){});
  
 ?>

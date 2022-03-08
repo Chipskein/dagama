@@ -31,6 +31,7 @@
             echo "<form action=\"/delporto\" name=\"porto-form\" method=\"post\" >";
             if($IsOwner){
               echo "<button class=\"insert-interacao-del\">Deletar</button>";
+              echo "<input type=\"hidden\" name=\"PortoCod\" value=\"$porto[codigo]\"/>";
               echo "<input type=\"hidden\" name=\"excluirPorto\" value=\"deletar\"/>";
             }
             echo "</form>";

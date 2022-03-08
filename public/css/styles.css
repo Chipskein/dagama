@@ -1375,6 +1375,8 @@ main {
 .insert-interacao-entrar-text {
 	text-align: center;
 	margin-top: 10px;
+	color: var(--azulEscuro-color);
+
 }
 
 

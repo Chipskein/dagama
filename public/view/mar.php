@@ -43,13 +43,17 @@
           echo "<div class=\"porto-icon\" style=\"background-image: url($porto[img])\"></div>";
           echo "<h2 class=mar_porto><a href=/porto/$porto[codigo]>$porto[nome]</a></h2>";
           echo "<div class=text-porto> <p class=mar_porto>$porto[descr] </p> </div>";
-          echo "<form action=\"/porto.php/$porto[codigo]\" name=\"porto-form\" method=\"post\" >";
-          if($porto['participa']){
-            echo "<button class=\"insert-interacao-participa\"> <p class=\"insert-interacao-entrar-text\">Participando</p></button>";
-            // echo "<input type=\"hidden\" name=\"sairPorto\" value=\"sair\"/>";
-          } else {
-            echo "<button class=\"insert-interacao-entrar\">Entrar</button>";
-            echo "<input type=\"hidden\" name=\"entrarPorto\" value=\"entrar\"/>";
+          if($porto['participa'])
+          {
+            //echo "<form action=\"/sairPorto/$porto[codigo]\" name=\"porto-form\" method=\"get\" >";
+            echo "<a class=\"insert-interacao-participa\" href=\"/sairPorto/$porto[codigo]\"> <p class=\"insert-interacao-entrar-text\">Sair</p></a>";
+            //echo "<input type=\"hidden\" name=\"sairPorto\" value=\"sair\"/>";
+          } 
+          else 
+          {
+            //echo "<form action=\"/entrarPorto/$porto[codigo]\" name=\"porto-form\" method=\"get\" >";
+            echo "<a class=\"insert-interacao-entrar\" href=\"/entrarPorto/$porto[codigo]\"><p class=\"insert-interacao-entrar-text\">Entrar</p></a>";
+            //echo "<input type=\"hidden\" name=\"entrarPorto\" value=\"entrar\"/>";
           }
           echo "</form>";
         echo "</div>";

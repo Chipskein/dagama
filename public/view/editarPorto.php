@@ -1,24 +1,17 @@
 
 <!DOCTYPE html>
 <html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/styles.css">
-    <link rel="icon" href="./imgs/icon.png" type="image/jpg">
-    <title>Dagama | Editar Porto</title>
-</head>
+<?php
+  $title="Editar Porto";
+  require 'components/head.php';
+?>
 <body>
 <?php
-  include '../backend/infra/services.php';
-  if(!isset($_SESSION)) { 
-    session_start(); 
-  }
+ 
   if(isset($_SESSION['userid'])){
     if((isset($_POST["porto"])&&isset($_POST["oldimg"])&&isset($_POST["oldnome"])&&isset($_POST["olddescr"])&&isset($_POST['owner']))||isset($_POST['confirmar'])){
         if(isset($_POST["porto"])&&isset($_POST["oldimg"])&&isset($_POST["oldnome"])&&isset($_POST["olddescr"])&&isset($_POST['owner'])){
-            if($_POST['owner']!=$_SESSION['userid']) header("refresh=1;url=mar.php");
+            if($_POST['owner']!=$_SESSION['userid']) header("Location:/mar");
             echo "<script>let oldlink='$_POST[oldimg]';let oldname='$_POST[oldnome]';let olddescr='$_POST[olddescr]';</script>";
         }
         // var_dump($_POST);
@@ -66,9 +59,9 @@
                 $img = is_uploaded_file($_FILES['photo']['tmp_name']) ? $_FILES['photo'] : null;
                 $oldphotoid= isset($_POST['oldimglink']) ? substr("$_POST[oldimglink]",47):null;;
                 $id=false;
-                $id = editarPorto($porto, $nome, $descr, $img,$oldphotoid);
+                $id = PortoController::editarPorto($porto, $nome, $descr, $img,$oldphotoid);
                 if($id) {
-                  header("refresh:1;url=porto.php?porto=$porto");
+                  header("Location:/porto/$porto");
                   die();
                 } 
                 else {
@@ -79,40 +72,15 @@
             }
         }
     }
-    else{
-        echo "ERRO";
-        header("refresh:1;url=mar.php");
-    }
   }
-  else {
-    echo "<h2 align=center>Para ver este conteudo faça um cadastro no dagama!!!</h2>";
-    header("refresh:1;url=index.php");
-    die();
-  }
+ 
 ?>
-    <header class="header-main">
-    <img class="header-icon" src="imgs/icon.png" alt="">
-    <form class="header-searchBar" name="search" action="usuarios.php" method="get">
-      <select id="select-filtro" name="select-filtro">
-        <option value="perfil">Perfil</option>
-        <option value="porto">Porto</option>
-      </select>
-      <input class="header-searchBar-input" name="username" type="text" placeholder="Faça sua pesquisa ..." />
-      <button type='submit'><img class="header-searchBar-icon" src="imgs/icons/search.png" alt="" srcset=""></button>
-
-  </form>
-    <div class="header-links">
-    <?php 
-      echo "<a class=\"header-links-a\" href=feed.php>Mar</a> ";
-      echo "<a class=\"header-links-a a-selected\" href=mar.php>Portos</a> ";
-      echo "<a class=\"header-links-a\" href=navio.php?user=$_SESSION[userid]>Meu navio</a> ";
-      echo "<a class=\"header-links-a\" href=../backend/logoff.php>Sair </a><img class=\"header-links-icon\" src=\"imgs/icons/sair.png\" alt=\"\">";
-    ?>
-    </div>
-  </header>
+  <?php
+    require 'components/header.php';
+  ?>
   <main class="container-center">
     <div class="addporto-form-container">
-      <form action="editarPorto.php" method="post" id="formAddPorto" name="formAddPorto" enctype="multipart/form-data">
+      <form action="/editarPorto" method="post" id="formAddPorto" name="formAddPorto" enctype="multipart/form-data">
         <?php
           if(isset($_POST['oldimg'])){
             if(preg_match("/drive.google.com/","$_POST[oldimg]")) echo "<input type=\"hidden\" name=\"oldimglink\" value=\"$_POST[oldimg]\"/>";
@@ -133,27 +101,25 @@
         <input type="submit" name="confirmar" value="Alterar" class="addporto-confirm">
       </form>
     </div>
-<?php
 
-?>
   </main>
 
-<script>
-    const img_perfil=document.getElementById("porto_img_banner");
-    const inputname=document.getElementById("inputname");
-    const inputdescr=document.getElementById("inputdescr");
-    img_perfil.style.backgroundImage=`url(${oldlink})`;
-    inputname.value=oldname;
-    inputdescr.value=olddescr
-    imgInp.onchange = evt => {
-        const [file] = imgInp.files
-        if (file) {
-            img_perfil.style.backgroundImage=`url(${URL.createObjectURL(file)})`;
-        }
-        else{
-            img_perfil.style.backgroundImage=`url(${oldlink})`;
-        }
-    }
-</script>
+  <script>
+      const img_perfil=document.getElementById("porto_img_banner");
+      const inputname=document.getElementById("inputname");
+      const inputdescr=document.getElementById("inputdescr");
+      img_perfil.style.backgroundImage=`url(${oldlink})`;
+      inputname.value=oldname;
+      inputdescr.value=olddescr
+      imgInp.onchange = evt => {
+          const [file] = imgInp.files
+          if (file) {
+              img_perfil.style.backgroundImage=`url(${URL.createObjectURL(file)})`;
+          }
+          else{
+              img_perfil.style.backgroundImage=`url(${oldlink})`;
+          }
+      }
+  </script>
 </body>
 </html>

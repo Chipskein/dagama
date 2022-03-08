@@ -1,14 +1,9 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" href="/imgs/icon.png" type="image/jpg">
-  <link rel="stylesheet" href="/css/styles.css">
-  <link rel="stylesheet" href="/css/responsive.css" media="screen and (max-width: 1680px)"/>
-  <title>Dagama | Porto</title>
-</head>
+<?php
+  $title='Porto';
+  require 'components/head.php';
+?>
 <body>
 <?php
  
@@ -177,44 +172,24 @@
   */
 ?>
 <div id=principal> 
-  <header class="header-main">
-    <img class="header-icon" src="/imgs/icon.png" alt="">
-    <form class="header-searchBar" name="search" action="usuarios.php" method="get">
-      <select id="select-filtro" name="select-filtro">
-        <option value="perfil">Perfil</option>
-        <option value="porto">Porto</option>
-      </select>
-      <input class="header-searchBar-input" name="username" type="text" placeholder="Faça sua pesquisa ..." />
-      <button type='submit'><img class="header-searchBar-icon" src="/imgs/icons/search.png" alt="" srcset=""></button>
-
-  </form>
-    <div class="header-links">
-      <?php 
-      echo "<a class=\"header-links-a\" href=/feed>Mar</a> ";
-      echo "<a class=\"header-links-a a-selected\" href=/mar>Portos</a> ";
-      echo "<a class=\"header-links-a\" href=/navio/$_SESSION[userid]>Meu navio</a> ";
-      echo "<a class=\"header-links-a\" href=/logoff >Sair </a><img class=\"header-links-icon\" src=\"/imgs/icons/sair.png\" alt=\"\">";
-      ?>
-    </div>
-  </header>
+<?php
+  require 'components/header.php';
+?>
   <aside id=direita align=center>
   <div class="container-aside-porto" >
     <?php 
       echo "<div class=\"porto-img\" style=\"background-image: url($portoInfo[img])\"></div>";
       echo "<p class=portoTitle>$portoInfo[nome]</p>";
       echo "<div class=\"portoDesc\"><p>$portoInfo[descr]</p></div>";
-      echo "<form action=\"porto.php?porto=$portoInfo[codigo]\" name=\"porto-form\" method=\"post\" >";
+      
       if($portoInfo['participa'] && !$portoInfo['owner']){
-        echo "<button class=\"porto-sair-btn\"><p class=\"porto-entrar-btn-txt\">Sair</p></button>";
-        echo "<input type=\"hidden\" name=\"sairPorto\" value=\"sair\"/>";
+        echo "<a href='/sairPorto/$portoInfo[codigo]' class=\"porto-sair-btn\"><p class=\"porto-entrar-btn-txt\">Sair</p></a>";
       }
       if(!$portoInfo['participa'] && !$portoInfo['owner']){
-        echo "<button class=\"porto-entrar-btn\">Entrar</button>";
-        echo "<input type=\"hidden\" name=\"entrarPorto\" value=\"entrar\"/>";
+        echo "<a href='/entrarPorto/$portoInfo[codigo]' class=\"porto-entrar-btn\">Entrar</a>";
       }
-      echo "</form>";
       if($portoInfo['owner']){
-        echo "<form id=formEditar action=editarPorto.php method=POST >";
+        echo "<form id=formEditar action=/editarPorto method=POST >";
         echo "<button class=\"porto-sair-btn\"> <p class=\"porto-entrar-btn-txt\">Editar porto</p></button>";
         echo "<input type=\"hidden\" name=\"porto\" value=\"$portoInfo[codigo]\"/>";
         echo "<input type=\"hidden\" name=\"oldimg\" value=\"$portoInfo[img]\"/>";
@@ -233,7 +208,7 @@
           <p class=portoAsidePartText>Ademir: </p>
         </div>
         <?php
-          echo "<a href=navio.php?user=".$portoInfo['codAdm']."><div><img src=\"".$portoInfo['imgAdm']."\" class=div-amigo-image><p class=nomeAmigo>👑 ".$portoInfo['nomeAdm']."</p></div></a>";
+          echo "<a href=/navio/".$portoInfo['codAdm']."><div><img src=\"".$portoInfo['imgAdm']."\" class=div-amigo-image><p class=nomeAmigo>👑 ".$portoInfo['nomeAdm']."</p></div></a>";
         ?>
         <div>
           <p class=portoAsidePartText>Participantes: </p>
@@ -772,6 +747,6 @@
   </main>
 </div>
 
-<script src="js/functions.js"></script>
+<script src="/js/functions.js"></script>
 </body>
 </html>
